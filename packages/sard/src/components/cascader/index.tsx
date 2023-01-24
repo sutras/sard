@@ -145,7 +145,7 @@ export const Cascader: FC<CascaderProps> = (props) => {
       <Tabs
         {...Object.assign({ animated: true }, tabsProps)}
         scrollCount={0}
-        activeName={activeTabName}
+        activeKey={activeTabName}
         onChange={handleTagChange}
       >
         {(() => {

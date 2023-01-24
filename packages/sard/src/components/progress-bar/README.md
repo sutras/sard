@@ -7,10 +7,20 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { ProgressBar } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Thickness.tsx",
+    "./demo/Color.tsx",
+    "./demo/Striped.tsx",
+    "./demo/Slot.tsx"
+  ]
+</script>
 
 ## API
 

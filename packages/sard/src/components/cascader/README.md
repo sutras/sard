@@ -7,10 +7,18 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Cascader } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Popout.tsx",
+    "./demo/Swipeable.tsx"
+  ]
+</script>
 
 ## API
 

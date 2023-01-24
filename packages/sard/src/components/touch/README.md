@@ -7,10 +7,23 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Touch } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Tap.tsx",
+    "./demo/DoubleTap.tsx",
+    "./demo/Press.tsx",
+    "./demo/Pan.tsx",
+    "./demo/PanSwipe.tsx",
+    "./demo/Swipe.tsx",
+    "./demo/Pinch.tsx",
+    "./demo/Rotate.tsx"
+  ]
+</script>
 
 ## API
 

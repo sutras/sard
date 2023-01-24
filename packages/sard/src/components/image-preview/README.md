@@ -7,10 +7,18 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { ImagePreview } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Imperative.tsx",
+    "./demo/DefaultIndex.tsx"
+  ]
+</script>
 
 ## API
 

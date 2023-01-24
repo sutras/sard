@@ -7,10 +7,20 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { DatetimePicker } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Type.tsx",
+    "./demo/Minmax.tsx",
+    "./demo/Filter.tsx",
+    "./demo/Formatter.tsx"
+  ]
+</script>
 
 ## API
 

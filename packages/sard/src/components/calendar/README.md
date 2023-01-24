@@ -7,10 +7,20 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Calendar } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Popout.tsx",
+    "./demo/Multiple.tsx",
+    "./demo/Range.tsx",
+    "./demo/MinMax.tsx"
+  ]
+</script>
 
 ## API
 

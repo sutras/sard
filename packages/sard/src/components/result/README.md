@@ -7,10 +7,18 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Result } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Extra.tsx",
+    "./demo/Icon.tsx"
+  ]
+</script>
 
 ## API
 

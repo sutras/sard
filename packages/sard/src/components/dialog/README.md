@@ -7,10 +7,22 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Dialog } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Confirm.tsx",
+    "./demo/Async.tsx",
+    "./demo/Imperative.tsx",
+    "./demo/Rounded.tsx",
+    "./demo/Headed.tsx",
+    "./demo/Agent.tsx"
+  ]
+</script>
 
 ## API
 

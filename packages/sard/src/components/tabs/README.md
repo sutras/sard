@@ -7,10 +7,32 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Tabs } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Card.tsx",
+    "./demo/Pill.tsx",
+    "./demo/Border.tsx",
+    "./demo/Name.tsx",
+    "./demo/Disabled.tsx",
+    "./demo/Controlled.tsx",
+    "./demo/CustomLabel.tsx",
+    "./demo/Scroll.tsx",
+    "./demo/Style.tsx",
+    "./demo/Sticky.tsx",
+    "./demo/Slot.tsx",
+    "./demo/Animated.tsx",
+    "./demo/Swipeable.tsx",
+    "./demo/Scrollspy.tsx",
+    "./demo/Vertical.tsx",
+    "./demo/VerticalScrollspy.tsx"
+  ]
+</script>
 
 ## API
 

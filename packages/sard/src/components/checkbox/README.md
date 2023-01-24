@@ -7,10 +7,22 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Checkbox } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Controlled.tsx",
+    "./demo/Type.tsx",
+    "./demo/Disabled.tsx",
+    "./demo/Group.tsx",
+    "./demo/Size.tsx",
+    "./demo/Color.tsx"
+  ]
+</script>
 
 ## API
 

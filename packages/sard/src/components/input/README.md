@@ -7,10 +7,25 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Input } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Controlled.tsx",
+    "./demo/Style.tsx",
+    "./demo/type.tsx",
+    "./demo/Clearable.tsx",
+    "./demo/Disabled.tsx",
+    "./demo/ReadOnly.tsx",
+    "./demo/Slot.tsx",
+    "./demo/Border.tsx",
+    "./demo/Flush.tsx"
+  ]
+</script>
 
 ## API
 

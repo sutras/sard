@@ -7,10 +7,23 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Tag } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Theme.tsx",
+    "./demo/Plain.tsx",
+    "./demo/Round.tsx",
+    "./demo/Mark.tsx",
+    "./demo/Size.tsx",
+    "./demo/Style.tsx",
+    "./demo/Closable.tsx"
+  ]
+</script>
 
 ## API
 

@@ -7,7 +7,7 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Style } from 'sard'
 ```
 
 ## 代码演示

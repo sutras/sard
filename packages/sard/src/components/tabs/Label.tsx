@@ -8,7 +8,7 @@ export interface TabLabelProps extends CommonComponentProps {
   activeStyle?: CSSProperties
   children?: ReactNode | ((active: boolean) => ReactNode)
   name: any
-  activeName?: any
+  activeKey?: any
   onClick?: (name: any) => void
   disabled?: boolean
   showLine?: boolean
@@ -24,7 +24,7 @@ export const TabLabel = forwardRef<HTMLElement, TabLabelProps>((props, ref) => {
     activeStyle,
     children,
     name,
-    activeName,
+    activeKey,
     onClick,
     disabled,
     showLine,
@@ -34,7 +34,7 @@ export const TabLabel = forwardRef<HTMLElement, TabLabelProps>((props, ref) => {
     ...restProps
   } = props
 
-  const active = name === activeName
+  const active = name === activeKey
 
   const handleClick = () => {
     if (!disabled) {

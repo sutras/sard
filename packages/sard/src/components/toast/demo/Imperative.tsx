@@ -1,7 +1,7 @@
-/**
- * @docs
- * @title 命令式
+/*
+### 命令式
  */
+
 import { Toast, Button } from 'sard'
 
 export default function () {

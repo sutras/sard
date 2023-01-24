@@ -7,10 +7,21 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Popout } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Loose.tsx",
+    "./demo/NeedPopup.tsx",
+    "./demo/Simple.tsx",
+    "./demo/Format.tsx",
+    "./demo/Cell.tsx"
+  ]
+</script>
 
 ## API
 

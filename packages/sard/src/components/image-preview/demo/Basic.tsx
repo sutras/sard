@@ -5,6 +5,8 @@
 import { ImagePreview, Button } from 'sard'
 import { useState } from 'react'
 
+const logoHref = new URL('../../../../public/logo.svg', import.meta.url).href
+
 export default function () {
   const [visible, setVisible] = useState(false)
   return (
@@ -13,13 +15,7 @@ export default function () {
       <ImagePreview
         visible={visible}
         onVisible={setVisible}
-        images={[
-          '/images/one-piece1.jpg',
-          '/images/one-piece2.jpg',
-          '/images/one-piece3.jpg',
-          '/images/one-piece4.jpg',
-          '/images/one-piece5.jpg',
-        ]}
+        images={[logoHref, logoHref, logoHref]}
       />
     </>
   )

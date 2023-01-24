@@ -7,10 +7,22 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Icon } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/FullName.tsx",
+    "./demo/Size.tsx",
+    "./demo/Color.tsx",
+    "./demo/Type.tsx",
+    "./demo/Image.tsx",
+    "./demo/Internal.tsx"
+  ]
+</script>
 
 ## API
 

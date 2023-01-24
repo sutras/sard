@@ -14,7 +14,7 @@ export interface IndexBarItemProps extends CommonComponentProps {
   style?: CSSProperties
   children?: ReactNode
   name?: any
-  activeName?: any
+  activeKey?: any
   offset?: number | string
   anchorClass?: string
   anchorStyle?: CSSProperties
@@ -27,7 +27,7 @@ export const IndexBarItem = forwardRef<HTMLElement, IndexBarItemProps>(
       style,
       children,
       name,
-      activeName,
+      activeKey,
       offset,
       anchorClass,
       anchorStyle,

@@ -7,10 +7,19 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Navbar } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Item.tsx",
+    "./demo/Flow.tsx",
+    "./demo/Content.tsx"
+  ]
+</script>
 
 ## API
 

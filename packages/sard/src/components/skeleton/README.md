@@ -7,10 +7,22 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Skeleton } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Title.tsx",
+    "./demo/Avatar.tsx",
+    "./demo/AvatarSquare.tsx",
+    "./demo/Round.tsx",
+    "./demo/Animated.tsx",
+    "./demo/Loading.tsx"
+  ]
+</script>
 
 ## API
 

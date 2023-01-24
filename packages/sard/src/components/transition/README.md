@@ -1,4 +1,4 @@
-# Transition Transition
+# Transition 过渡
 
 ### 介绍
 
@@ -7,10 +7,17 @@ Transition
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Transition, CSSTransition } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Transition.tsx",
+    "./demo/CSSTransition.tsx"
+  ]
+</script>
 
 ## API
 

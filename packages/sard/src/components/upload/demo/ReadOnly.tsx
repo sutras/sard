@@ -8,7 +8,7 @@ import { Upload, UploadPreviewProps } from 'sard'
 export default function () {
   const [list, setList] = useState<UploadPreviewProps[]>(() => [
     {
-      url: '/images/demo.jpeg',
+      url: new URL('../../../../public/logo.svg', import.meta.url).href,
     },
   ])
 

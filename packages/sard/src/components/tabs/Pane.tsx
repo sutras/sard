@@ -10,7 +10,7 @@ export interface TabPaneProps extends CommonComponentProps {
   labelStyle?: CSSProperties
   labelClass?: string
   name?: any
-  activeName?: any
+  activeKey?: any
   disabled?: boolean
 }
 
@@ -26,11 +26,11 @@ export const TabPane = forwardRef<HTMLElement, TabPaneProps>((props, ref) => {
     labelStyle,
     labelClass,
     name,
-    activeName,
+    activeKey,
     ...restProps
   } = props
 
-  const active = name === activeName
+  const active = name === activeKey
 
   const tabPaneClass = classNames(
     's-tab-pane',

@@ -1,7 +1,7 @@
-/**
- * @docs
- * @title 尺寸
- */
+/*
+### 尺寸
+*/
+
 import { Tag } from 'sard'
 
 export default function () {

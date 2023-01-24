@@ -7,10 +7,21 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Picker } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Multiple.tsx",
+    "./demo/DefaultIndex.tsx",
+    "./demo/Disabled.tsx",
+    "./demo/FieldNames.tsx",
+    "./demo/Popout.tsx"
+  ]
+</script>
 
 ## API
 

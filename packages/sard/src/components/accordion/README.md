@@ -20,6 +20,18 @@ import { Accordion } from 'sard'
 <code src="./demo/Slot.tsx"></code>
 <code src="./demo/Duration.tsx"></code>
 
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/DefaultActiveName.tsx",
+    "./demo/Multiple.tsx",
+    "./demo/Controlled.tsx",
+    "./demo/Disabled.tsx",
+    "./demo/Slot.tsx",
+    "./demo/Duration.tsx"
+  ]
+</script>
+
 ## API
 
 ### Accordion Props

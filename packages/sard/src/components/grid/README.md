@@ -7,10 +7,21 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Row, Col } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Offset.tsx",
+    "./demo/Justify.tsx",
+    "./demo/Align.tsx",
+    "./demo/Gutter.tsx",
+    "./demo/Order.tsx"
+  ]
+</script>
 
 ## API
 

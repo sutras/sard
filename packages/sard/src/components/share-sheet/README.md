@@ -7,10 +7,19 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { ShareSheet } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/MultiLine.tsx",
+    "./demo/Description.tsx",
+    "./demo/Image.tsx"
+  ]
+</script>
 
 ## API
 

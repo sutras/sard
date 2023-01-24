@@ -35,8 +35,8 @@ export interface TabsProps extends CommonComponentProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  defaultActiveName?: any
-  activeName?: any
+  defaultActiveKey?: any
+  activeKey?: any
   onChange?: (name: any) => void
   onLabelClick?: (name: any) => void
   scrollCount?: number
@@ -75,8 +75,8 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
   const {
     className,
     children,
-    defaultActiveName,
-    activeName,
+    defaultActiveKey,
+    activeKey,
     onChange,
     onLabelClick,
     scrollCount = 5,
@@ -109,7 +109,7 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     const firstPane = Children.toArray(
       children,
     )[0] as ReactElement<TabPaneProps>
-    return activeName ?? defaultActiveName ?? firstPane?.props.name ?? 0
+    return activeKey ?? defaultActiveKey ?? firstPane?.props.name ?? 0
   })
 
   const wrapperRef = useRef<HTMLElement>()
@@ -120,10 +120,10 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
 
   // 受控
   useEffect(() => {
-    if (!scrollspy && activeName != null) {
-      setInnerName(activeName)
+    if (!scrollspy && activeKey != null) {
+      setInnerName(activeKey)
     }
-  }, [activeName])
+  }, [activeKey])
 
   useEffect(() => {
     swiperRef.current?.swipeTo(innerName)
@@ -170,7 +170,7 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
   const switchTo = (name: any, animated?: boolean) => {
     if (name !== innerName) {
       // 非受控
-      if (scrollspy || activeName == null) {
+      if (scrollspy || activeKey == null) {
         setInnerName(name)
       }
       onChange?.(name)
@@ -233,7 +233,7 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
             {cloneElement(pane, {
               key: name,
               name,
-              activeName: innerName,
+              activeKey: innerName,
               ref: (el: any) => paneSet.set(name, el),
             })}
           </Comp>
@@ -270,7 +270,7 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
                   activeStyle={activeLabelStyle}
                   disabled={pane.props.disabled}
                   name={name}
-                  activeName={innerName}
+                  activeKey={innerName}
                   ref={(el: any) => labelSet.set(name, el)}
                   showLine={type === 'card' || type === 'line'}
                   line={line}

@@ -5,18 +5,20 @@
 import { useState } from 'react'
 import { Upload, UploadPreviewProps } from 'sard'
 
+const logoHref = new URL('../../../../public/logo.svg', import.meta.url).href
+
 export default function () {
   const [list, setList] = useState<UploadPreviewProps[]>(() => [
     {
-      url: '/images/demo.jpeg',
+      url: logoHref,
     },
     {
-      url: '/images/demo.jpeg',
+      url: logoHref,
       status: 'uploading',
       message: '正在上传',
     },
     {
-      url: '/images/demo.jpeg',
+      url: logoHref,
       status: 'failed',
       message: '上传失败',
     },

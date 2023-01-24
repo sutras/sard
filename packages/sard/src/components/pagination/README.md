@@ -7,10 +7,22 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Pagination } from 'sard'
 ```
 
 ## 代码演示
+
+const cases = [Basic, Controlled, Ellipsis, Simple, Custom]
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Controlled.tsx",
+    "./demo/Ellipsis.tsx",
+    "./demo/Simple.tsx",
+    "./demo/Custom.tsx"
+  ]
+</script>
 
 ## API
 

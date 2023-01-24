@@ -7,10 +7,22 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Switch } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Size.tsx",
+    "./demo/Color.tsx",
+    "./demo/Disabled.tsx",
+    "./demo/Value.tsx",
+    "./demo/Loading.tsx",
+    "./demo/Async.tsx"
+  ]
+</script>
 
 ## API
 

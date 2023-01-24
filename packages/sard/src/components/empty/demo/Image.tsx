@@ -7,7 +7,9 @@ import { Empty, Icon } from 'sard'
 export default function () {
   return (
     <>
-      <Empty icon={<Icon name="/images/empty.svg"></Icon>} />
+      <Empty
+        icon={<Icon name={new URL('./empty.svg', import.meta.url).href}></Icon>}
+      />
     </>
   )
 }

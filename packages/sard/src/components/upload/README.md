@@ -7,10 +7,25 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Upload } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Controlled.tsx",
+    "./demo/Status.tsx",
+    "./demo/MaxCount.tsx",
+    "./demo/MaxSize.tsx",
+    "./demo/BeforeRead.tsx",
+    "./demo/Disabled.tsx",
+    "./demo/ReadOnly.tsx",
+    "./demo/Select.tsx",
+    "./demo/Children.tsx"
+  ]
+</script>
 
 ## API
 

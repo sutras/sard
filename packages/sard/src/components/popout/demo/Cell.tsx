@@ -11,7 +11,7 @@ import {
   Cascader,
   CascaderOption,
 } from 'sard'
-import area from '../../../assets/json/area.json'
+import area from '../../../../assets/area.json'
 
 export default function () {
   return (

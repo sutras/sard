@@ -7,10 +7,27 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Avatar } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Shape.tsx",
+    "./demo/Size.tsx",
+    "./demo/FontSize.tsx",
+    "./demo/Image.tsx",
+    "./demo/Slot.tsx",
+    "./demo/Style.tsx",
+    "./demo/Extra.tsx",
+    "./demo/Group.tsx",
+    "./demo/Gap.tsx",
+    "./demo/Direction.tsx",
+    "./demo/MaxCount.tsx"
+  ]
+</script>
 
 ## API
 

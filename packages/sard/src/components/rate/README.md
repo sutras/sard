@@ -7,10 +7,22 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Rate } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Half.tsx",
+    "./demo/Icon.tsx",
+    "./demo/Color.tsx",
+    "./demo/Size.tsx",
+    "./demo/Count.tsx",
+    "./demo/Disabled.tsx"
+  ]
+</script>
 
 ## API
 

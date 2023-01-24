@@ -7,10 +7,25 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Slider } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Range.tsx",
+    "./demo/Controlled.tsx",
+    "./demo/Minmax.tsx",
+    "./demo/Step.tsx",
+    "./demo/Color.tsx",
+    "./demo/Size.tsx",
+    "./demo/Vertical.tsx",
+    "./demo/Disabled.tsx",
+    "./demo/Slot.tsx"
+  ]
+</script>
 
 ## API
 

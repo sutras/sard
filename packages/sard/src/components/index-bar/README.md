@@ -7,10 +7,16 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { IndexBar } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx"
+  ]
+</script>
 
 ## API
 

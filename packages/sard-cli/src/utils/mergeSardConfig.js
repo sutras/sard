@@ -3,6 +3,7 @@ import { deepMerge } from './deepMerge.js'
 const defaultSardConfig = {
   name: '',
   styles: [],
+  base: '/',
   publicDir: 'public',
   buildSite: {
     outDir: 'docs',

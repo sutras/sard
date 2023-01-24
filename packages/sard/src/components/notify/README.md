@@ -7,10 +7,22 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Notify } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Type.tsx",
+    "./demo/Color.tsx",
+    "./demo/Duration.tsx",
+    "./demo/Placement.tsx",
+    "./demo/Imperative.tsx",
+    "./demo/Agent.tsx"
+  ]
+</script>
 
 ## API
 

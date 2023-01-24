@@ -7,10 +7,21 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { ActionSheet } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Cancel.tsx",
+    "./demo/Label.tsx",
+    "./demo/Status.tsx",
+    "./demo/Title.tsx",
+    "./demo/Custom.tsx"
+  ]
+</script>
 
 ## API
 

@@ -7,10 +7,21 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Cell } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Clickable.tsx",
+    "./demo/Icon.tsx",
+    "./demo/Group.tsx",
+    "./demo/Header.tsx",
+    "./demo/Wide.tsx"
+  ]
+</script>
 
 ## API
 

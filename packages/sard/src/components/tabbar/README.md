@@ -7,10 +7,20 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Tabbar } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Icon.tsx",
+    "./demo/Color.tsx",
+    "./demo/Fixed.tsx",
+    "./demo/Badge.tsx"
+  ]
+</script>
 
 ## API
 

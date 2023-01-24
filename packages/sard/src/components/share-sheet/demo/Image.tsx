@@ -19,7 +19,7 @@ export default function () {
       icon: {
         type: 'default',
         size: '48px',
-        name: '/images/instagram.png',
+        name: new URL('../../../../public/logo.svg', import.meta.url).href,
       },
     },
     {

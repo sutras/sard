@@ -1,7 +1,7 @@
-/**
- * @docs
- * @title 额外内容
+/*
+### 额外内容
  */
+
 import { Empty, Button, Icon } from 'sard'
 
 export default function () {

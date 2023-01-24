@@ -7,10 +7,19 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { ProgressCircle } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Thickness.tsx",
+    "./demo/Color.tsx",
+    "./demo/Size.tsx"
+  ]
+</script>
 
 ## API
 

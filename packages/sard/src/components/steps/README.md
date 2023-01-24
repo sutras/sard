@@ -7,10 +7,24 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Steps } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Center.tsx",
+    "./demo/Vertical.tsx",
+    "./demo/VerticalCenter.tsx",
+    "./demo/Error.tsx",
+    "./demo/Icon.tsx",
+    "./demo/Status.tsx",
+    "./demo/Clickable.tsx",
+    "./demo/Disabled.tsx"
+  ]
+</script>
 
 ## API
 

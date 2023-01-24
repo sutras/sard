@@ -7,10 +7,19 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Toast } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Imperative.tsx",
+    "./demo/Icon.tsx",
+    "./demo/Agent.tsx"
+  ]
+</script>
 
 ## API
 

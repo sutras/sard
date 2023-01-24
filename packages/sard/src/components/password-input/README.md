@@ -7,10 +7,20 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { PasswordInput } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Native.tsx",
+    "./demo/Underline.tsx",
+    "./demo/Gap.tsx",
+    "./demo/PlainText.tsx"
+  ]
+</script>
 
 ## API
 

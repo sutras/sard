@@ -7,10 +7,20 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Swiper } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Imperative.tsx",
+    "./demo/Vertical.tsx",
+    "./demo/Autoplay.tsx",
+    "./demo/Circular.tsx"
+  ]
+</script>
 
 ## API
 

@@ -7,7 +7,7 @@ Template
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Template } from 'sard'
 ```
 
 ## 代码演示

@@ -7,10 +7,22 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { NumberKeyboard } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Point.tsx",
+    "./demo/Card.tsx",
+    "./demo/Title.tsx",
+    "./demo/Random.tsx",
+    "./demo/TwoWay.tsx",
+    "./demo/Simple.tsx"
+  ]
+</script>
 
 ## API
 

@@ -8,7 +8,9 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 export default function () {
   return (
     <>
-      <Avatar src="/images/demo.jpeg" />
+      <Avatar
+        src={new URL('../../../../public/logo.svg', import.meta.url).href}
+      />
     </>
   )
 }

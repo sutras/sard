@@ -29,6 +29,7 @@ export function mergeViteConfig(options) {
         react(),
       ],
       root: SITE_DIR,
+      base: sardConfig.base,
       publicDir: resolve(CWD, sardConfig.publicDir),
       server: {
         port: DEV_PORT,

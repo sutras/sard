@@ -7,10 +7,20 @@
 ### 引入
 
 ```js
-import {} from 'sard'
+import { Empty } from 'sard'
 ```
 
 ## 代码演示
+
+<script type="code">
+  [
+    "./demo/Basic.tsx",
+    "./demo/Description.tsx",
+    "./demo/Size.tsx",
+    "./demo/Image.tsx",
+    "./demo/Extra.tsx"
+  ]
+</script>
 
 ## API
 

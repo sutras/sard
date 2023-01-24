@@ -36,8 +36,8 @@ export interface IndexBarProps extends CommonComponentProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  defaultActiveName?: any
-  activeName?: any
+  defaultActiveKey?: any
+  activeKey?: any
   offset?: number
   anchorClass?: string
   anchorStyle?: CSSProperties
@@ -59,8 +59,8 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
     className,
     style,
     children,
-    defaultActiveName,
-    activeName,
+    defaultActiveKey,
+    activeKey,
     offset = 0,
     anchorClass,
     anchorStyle,
@@ -75,7 +75,7 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
     const firstPane = Children.toArray(
       children,
     )[0] as ReactElement<IndexBarItemProps>
-    return activeName ?? defaultActiveName ?? firstPane?.props.name ?? 0
+    return activeKey ?? defaultActiveKey ?? firstPane?.props.name ?? 0
   })
 
   const scrollLock = useRef(false)
@@ -201,7 +201,7 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
           return cloneElement(item, {
             key: name,
             name,
-            activeName: innerName,
+            activeKey: innerName,
             offset,
             ref: (el: any) => itemSet.set(name, el),
             anchorClass: classNames(anchorClass, item.props.anchorClass),

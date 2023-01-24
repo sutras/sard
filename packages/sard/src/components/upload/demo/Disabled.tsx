@@ -10,7 +10,7 @@ export default function () {
       <Upload
         previewList={[
           {
-            url: '/images/demo.jpeg',
+            url: new URL('../../../../public/logo.svg', import.meta.url).href,
           },
         ]}
         disabled
