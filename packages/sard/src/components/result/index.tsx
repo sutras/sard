@@ -13,7 +13,7 @@ export interface ResultProps extends CommonComponentProps {
   description?: ReactNode
 }
 
-const statusIconMap = {
+const mapStatusIcon = {
   success: 'check-circle-fill',
   info: 'info-circle-fill',
   warning: 'warning-fill',
@@ -37,7 +37,7 @@ export const Result: FC<ResultProps> = (props) => {
   return (
     <div {...restProps} className={resultClass}>
       <div className="s-result-icon">
-        {icon ?? <Icon prefix="si" name={statusIconMap[status]}></Icon>}
+        {icon ?? <Icon prefix="si" name={mapStatusIcon[status]}></Icon>}
       </div>
       {title && <div className="s-result-title">{title}</div>}
       {description && <div className="s-result-description">{description}</div>}

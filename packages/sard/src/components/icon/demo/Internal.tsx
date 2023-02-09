@@ -1,5 +1,5 @@
 /*
-### 内置icon
+### 内置图标
 */
 
 import { Icon } from 'sard'

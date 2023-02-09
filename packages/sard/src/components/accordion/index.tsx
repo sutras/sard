@@ -8,13 +8,12 @@ import {
 } from 'react'
 import classNames from 'classnames'
 import { useControlledValue } from '../../use'
-import { CommonComponentProps } from '../../utils/types'
 
 import { AccordionItem, AccordionItemProps } from './Item'
 
 export * from './Item'
 
-interface AccordionBaseProps extends CommonComponentProps {
+interface AccordionBaseProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -53,7 +52,7 @@ export const Accordion: AccordionFC = (props) => {
     ...restProps
   } = props
 
-  const [innerKey, setInnerKey] = useControlledValue<
+  const [innerActiveKey, setInnerActiveKey] = useControlledValue<
     (string | number)[] | string | number
   >(props, {
     defaultValuePropName: 'defaultActiveKey',
@@ -61,16 +60,16 @@ export const Accordion: AccordionFC = (props) => {
     defaultValue: multiple ? [] : '',
   })
 
-  const handleItemClick = (tabKey: string | number) => {
+  const handleItemClick = (innerKey: string | number) => {
     let key: any
-    if (Array.isArray(innerKey)) {
-      key = innerKey.includes(tabKey)
-        ? innerKey.filter((item: string | number) => item !== tabKey)
-        : [...innerKey, tabKey]
+    if (Array.isArray(innerActiveKey)) {
+      key = innerActiveKey.includes(innerKey)
+        ? innerActiveKey.filter((item: string | number) => item !== innerKey)
+        : [...innerActiveKey, innerKey]
     } else {
-      key = tabKey !== innerKey ? tabKey : ''
+      key = innerKey !== innerActiveKey ? innerKey : ''
     }
-    setInnerKey(key)
+    setInnerActiveKey(key)
 
     onChange?.(key)
   }
@@ -82,12 +81,12 @@ export const Accordion: AccordionFC = (props) => {
       {Children.map(
         children as ReactElement<AccordionItemProps>,
         (item: ReactElement<AccordionItemProps>, index: number) => {
-          const tabKey = item.key ?? index
+          const innerKey = item.key ?? index
           return cloneElement(item, {
-            tabKey,
-            activeKey: innerKey,
+            innerKey,
+            activeKey: innerActiveKey,
             duration: item.props.duration ?? duration,
-            onClick: () => handleItemClick(tabKey),
+            onClick: () => handleItemClick(innerKey),
           })
         },
       )}

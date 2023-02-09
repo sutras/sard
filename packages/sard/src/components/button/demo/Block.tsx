@@ -6,25 +6,23 @@ import { Button } from 'sard'
 
 export default function () {
   return (
-    <>
-      <Button block style={{ marginBottom: 10 }} type="primary">
-        primary
-      </Button>{' '}
-      <Button block style={{ marginBottom: 10 }} type="secondary">
-        secondary
-      </Button>{' '}
-      <Button block style={{ marginBottom: 10 }} type="mild">
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+      <Button block>default</Button>
+      <Button block type="pale">
+        pale
+      </Button>
+      <Button block type="mild">
         mild
-      </Button>{' '}
-      <Button block style={{ marginBottom: 10 }} type="outlined">
-        outlined
-      </Button>{' '}
-      <Button block style={{ marginBottom: 10 }} type="text">
+      </Button>
+      <Button block type="outline">
+        outline
+      </Button>
+      <Button block type="text">
         text
-      </Button>{' '}
-      <Button block style={{ marginBottom: 10 }} type="pale-text">
+      </Button>
+      <Button block type="pale-text">
         pale-text
-      </Button>{' '}
-    </>
+      </Button>
+    </div>
   )
 }

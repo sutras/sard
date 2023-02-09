@@ -98,3 +98,11 @@ $s-slider-padding: math.div($s-slider-thumb-height, 2)
 .s-slider-disabled {
   @include disabled;
 }
+
+// # 禁用状态
+.s-slider-readonly {
+  .s-slider-track,
+  .s-slider-thumb {
+    cursor: default;
+  }
+}

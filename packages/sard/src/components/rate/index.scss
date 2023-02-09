@@ -14,6 +14,7 @@ $s-rate-star-color: $s-warning !default;
   flex-direction: row;
   white-space: nowrap;
   font-size: $s-rate-font-size;
+  user-select: none;
   cursor: pointer;
   touch-action: pan-y;
 
@@ -42,7 +43,12 @@ $s-rate-star-color: $s-warning !default;
   }
 }
 
-.s-rate-disabled {
+.s-rate-readonly {
   cursor: default;
   touch-action: auto;
+}
+
+.s-rate-disabled {
+  touch-action: auto;
+  @include disabled;
 }

@@ -7,8 +7,8 @@ import { useState } from 'react'
 
 export default function () {
   const [activeKey, setActiveName] = useState(0)
-  const handleChange = (name: any) => {
-    setActiveName(name)
+  const handleChange = (key: number) => {
+    setActiveName(key)
   }
 
   return (

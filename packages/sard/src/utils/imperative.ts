@@ -8,32 +8,17 @@ import {
 } from 'react'
 
 import { createRoot } from 'react-dom/client'
-
-export function mountComponent() {
-  const container = document.createElement('div')
-  document.body.appendChild(container)
-
-  const root = createRoot(container)
-
-  return {
-    unmount() {
-      setTimeout(() => {
-        root.unmount()
-        document.body.removeChild(container)
-      })
-    },
-    mount(element: ReactNode) {
-      root.render(element)
-    },
-    container,
-  }
-}
+import { PopupProps } from '../components/popup'
 
 export type AgentProps<
-  ComponentProps extends { onVisible?(visible: boolean): void },
+  ComponentProps extends {
+    onVisible?: (visible: boolean) => void
+    popupProps?: PopupProps
+  },
 > = {
   id?: string
   $$afterRender?: () => void
+  popupProps?: PopupProps
 } & ComponentProps
 
 export interface AgentRef<ComponentProps> {
@@ -41,7 +26,7 @@ export interface AgentRef<ComponentProps> {
   hide(): void
 }
 
-export interface IdAgentMap<ComponentProps, ComponentRef> {
+export interface MapIdAgent<ComponentProps, ComponentRef> {
   [id: string]: MutableRefObject<AgentRef<ComponentProps> & ComponentRef>
 }
 
@@ -51,7 +36,7 @@ export function useAgent<
 >(
   component,
   agentProps: AgentProps<ComponentProps>,
-  idAgentMap: IdAgentMap<ComponentProps, ComponentRef>,
+  mapIdAgent: MapIdAgent<ComponentProps, ComponentRef>,
   defaultId: string,
 ) {
   const { id = defaultId, $$afterRender, ...restProps } = agentProps
@@ -64,10 +49,10 @@ export function useAgent<
   const ref = useRef<ComponentRef & AgentRef<ComponentProps>>()
 
   useEffect(() => {
-    idAgentMap[id] = ref
+    mapIdAgent[id] = ref
 
     return () => {
-      delete idAgentMap[id]
+      delete mapIdAgent[id]
     }
   }, [id])
 
@@ -96,4 +81,50 @@ export function useAgent<
     },
     ref: componentRef,
   } as any)
+}
+
+export function mountComponent() {
+  const container = document.createElement('div')
+  document.body.appendChild(container)
+
+  const root = createRoot(container)
+
+  return {
+    unmount() {
+      setTimeout(() => {
+        root.unmount()
+        document.body.removeChild(container)
+      })
+    },
+    mount(element: ReactNode) {
+      root.render(element)
+    },
+    container,
+  }
+}
+
+export function mountAgent<ComponentProps, ComponentRef>(
+  id: string,
+  agent: (
+    agentProps: AgentProps<ComponentProps>,
+  ) => React.CElement<any, React.Component<any, any, any>>,
+  mapIdAgent: MapIdAgent<ComponentProps, ComponentRef>,
+  props: ComponentProps,
+) {
+  const { mount, unmount, container } = mountComponent()
+
+  const element = createElement(agent, {
+    id,
+    $$afterRender() {
+      mapIdAgent[id]?.current?.show(props)
+    },
+    popupProps: {
+      container,
+      onExited() {
+        unmount()
+      },
+    },
+  } as unknown as AgentProps<ComponentProps>)
+
+  mount(element)
 }

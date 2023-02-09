@@ -28,11 +28,11 @@ export default function () {
 
   return (
     <>
-      <Slider defaultValue={50} end={endButton} />
+      <Slider defaultValue={50} endThumb={endButton} />
       <Slider
         defaultValue={[20, 80]}
-        start={startButton}
-        end={endButton}
+        startThumb={startButton}
+        endThumb={endButton}
         range
       />
     </>

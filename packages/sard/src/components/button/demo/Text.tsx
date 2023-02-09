@@ -6,28 +6,25 @@ import { Button } from 'sard'
 
 export default function () {
   return (
-    <>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
       <Button type="text" theme="primary">
         primary
-      </Button>{' '}
+      </Button>
       <Button type="text" theme="secondary">
         secondary
-      </Button>{' '}
+      </Button>
       <Button type="text" theme="success">
         success
-      </Button>{' '}
+      </Button>
       <Button type="text" theme="info">
         info
-      </Button>{' '}
+      </Button>
       <Button type="text" theme="warning">
         warning
-      </Button>{' '}
+      </Button>
       <Button type="text" theme="danger">
         danger
-      </Button>{' '}
-      <Button type="text" theme="dark">
-        dark
-      </Button>{' '}
-    </>
+      </Button>
+    </div>
   )
 }

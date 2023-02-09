@@ -1,5 +1,5 @@
 /*
-### 图片 Icon
+### 图片类型图标
 */
 
 import {
@@ -15,29 +15,21 @@ export default function () {
   const [visible, setVisible] = useState(false)
   const itemList: ShareSheetItemList = [
     {
-      title: 'Instagram',
-      icon: {
-        type: 'default',
-        size: '48px',
-        name: new URL('../../../../public/logo.svg', import.meta.url).href,
-      },
+      name: 'Instagram',
+      icon: new URL('../../../../public/logo.svg', import.meta.url).href,
     },
     {
-      title: 'Wechat',
+      name: 'Wechat',
+      color: '#fff',
+      background: '#0bc15f',
       icon: {
-        fullName: 'bi-wechat',
-        frameColor: '#0bc15f',
+        name: 'bi-wechat',
       },
     },
   ]
 
   const handleSelect = (item: ShareSheetItemProps) => {
-    setVisible(false)
-    Toast.text(item.title as string)
-  }
-
-  const handleCancel = () => {
-    setVisible(false)
+    Toast.text(item.name)
   }
 
   return (
@@ -47,8 +39,9 @@ export default function () {
         visible={visible}
         itemList={itemList}
         cancel="取消"
+        actionClosable
         onSelect={handleSelect}
-        onCancel={handleCancel}
+        onClose={setVisible}
       />
     </>
   )

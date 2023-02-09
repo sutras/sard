@@ -2,50 +2,55 @@
 ### 描述
 */
 
-import { ShareSheet, ActionSheetItemProps, Toast, Button } from 'sard'
+import {
+  ShareSheet,
+  ShareSheetItemProps,
+  ShareSheetItemList,
+  Toast,
+  Button,
+} from 'sard'
 import { useState } from 'react'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
 export default function () {
   const [visible, setVisible] = useState(false)
-  const itemList = [
+  const itemList: ShareSheetItemList = [
     {
-      title: 'Wechat',
+      name: 'Wechat',
+      color: '#fff',
+      background: '#0bc15f',
       icon: {
-        fullName: 'bi-wechat',
-        frameColor: '#0bc15f',
+        name: 'bi-wechat',
       },
     },
     {
-      title: 'Alipay',
+      name: 'Alipay',
+      color: '#fff',
+      background: '#1677ff',
       icon: {
-        fullName: 'bi-alipay',
-        frameColor: '#1677ff',
+        name: 'bi-alipay',
       },
     },
     {
-      title: 'Twitter',
+      name: 'Twitter',
+      color: '#fff',
+      background: '#1d9bf0',
       icon: {
-        fullName: 'bi-twitter',
-        frameColor: '#1d9bf0',
+        name: 'bi-twitter',
       },
     },
     {
-      title: 'Facebook',
+      name: 'Facebook',
+      color: '#fff',
+      background: '#1877f2',
       icon: {
-        fullName: 'bi-facebook',
-        frameColor: '#1877f2',
+        name: 'bi-facebook',
       },
     },
   ]
 
-  const handleSelect = (item: ActionSheetItemProps) => {
-    setVisible(false)
-    Toast.text(item.title as string)
-  }
-
-  const handleCancel = () => {
-    setVisible(false)
+  const handleSelect = (item: ShareSheetItemProps) => {
+    Toast.text(item.name)
   }
 
   return (
@@ -57,8 +62,9 @@ export default function () {
         title="分享到"
         description="这是描述"
         cancel="取消"
+        actionClosable
         onSelect={handleSelect}
-        onCancel={handleCancel}
+        onClose={setVisible}
       />
     </>
   )

@@ -5,5 +5,5 @@
 import { Input } from 'sard'
 
 export default function () {
-  return <Input defaultValue="非受控组件" placeholder="非受控组件" />
+  return <Input defaultValue="非受控组件" />
 }

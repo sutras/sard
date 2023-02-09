@@ -19,7 +19,7 @@ export default function () {
         onChange={setValue}
         clearable
         onClick={() => setVisible(true)}
-        onClear={() => setValue('')}
+        onClear={setValue}
       />
 
       <Popout

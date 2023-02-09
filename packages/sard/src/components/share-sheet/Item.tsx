@@ -1,55 +1,80 @@
-import { CSSProperties, FC, ReactNode } from 'react'
+import { CSSProperties, FC, ReactNode, MouseEvent, useMemo } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 import { Icon, IconProps } from '../icon'
+import { isFileUrl } from '../../utils'
 
-export interface ShareSheetItemProps extends CommonComponentProps {
+export interface ShareSheetItemProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  title?: ReactNode
+  name?: ReactNode
   label?: ReactNode
   color?: string
-  icon?: IconProps
-  onClick?: (props: ShareSheetItemProps) => any
+  background?: string
+  icon?: IconProps | string
+  disabled?: boolean
+  onClick?: (event: MouseEvent) => void
 }
 
 export const ShareSheetItem: FC<ShareSheetItemProps> = (props) => {
   const {
     className,
-    style,
     children,
-    title,
+    name,
     label,
     color,
+    background,
     icon,
+    disabled,
     onClick,
     ...restProps
   } = props
 
-  const shareSheetItemClass = classNames('s-share-sheet-item', className)
-  const shareSheetItemStyle = {
+  const isImg = useMemo(() => {
+    return typeof icon === 'string' && isFileUrl(icon)
+  }, [icon])
+
+  const handleClick = (event: MouseEvent) => {
+    if (!disabled) {
+      onClick?.(event)
+    }
+  }
+
+  const shareSheetItemClass = classNames(
+    's-share-sheet-item',
+    {
+      's-share-sheet-item-disabled': disabled,
+    },
+    className,
+  )
+
+  const iconStyle = {
     color,
-    ...style,
+    backgroundColor: background,
   }
 
   return (
-    <div
+    <button
       {...restProps}
+      type="button"
       className={shareSheetItemClass}
-      style={shareSheetItemStyle}
-      onClick={() => onClick?.(props)}
+      onClick={handleClick}
+      disabled={disabled}
     >
       {children || (
         <>
-          <div className="s-share-sheet-item-icon">
-            <Icon type="circle" size="24px" frameSize="48px" {...icon}></Icon>
-          </div>
-          {title && <div className="s-share-sheet-item-title">{title}</div>}
-          {label && <div className="s-share-sheet-item-label">{label}</div>}
+          {isImg ? (
+            <img className="s-share-sheet-img" src={icon as string} />
+          ) : (
+            <div className="s-share-sheet-icon" style={iconStyle}>
+              <Icon {...(icon as IconProps)}></Icon>
+            </div>
+          )}
+          {name && <div className="s-share-sheet-name">{name}</div>}
+          {label && <div className="s-share-sheet-label">{label}</div>}
         </>
       )}
-    </div>
+    </button>
   )
 }
 

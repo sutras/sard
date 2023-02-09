@@ -1,8 +1,7 @@
 import { CSSProperties, FC, ReactNode } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 
-export interface ProgressBarProps extends CommonComponentProps {
+export interface ProgressBarProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -11,7 +10,7 @@ export interface ProgressBarProps extends CommonComponentProps {
   trackColor?: string
   striped?: boolean
   animated?: boolean
-  thickness?: string
+  thickness?: string | number
 }
 
 export const ProgressBar: FC<ProgressBarProps> = (props) => {

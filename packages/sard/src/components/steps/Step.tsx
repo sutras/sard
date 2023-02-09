@@ -1,11 +1,10 @@
-import { CSSProperties, FC, ReactNode } from 'react'
+import { CSSProperties, FC, ReactNode, MouseEvent } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 
 import { StepsStatus } from './index'
 import { Icon } from '../icon'
 
-export interface StepsStepProps extends CommonComponentProps {
+export interface StepsStepProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode | ((status: StepsStatus) => ReactNode)
@@ -13,10 +12,10 @@ export interface StepsStepProps extends CommonComponentProps {
   status?: StepsStatus
   lineColor?: string
   disabled?: boolean
-  onClick?: () => void
+  onClick?: (event: MouseEvent) => void
 }
 
-const statusIconMap = {
+const mapStatusIcon = {
   finish: 'check-circle-fill',
   process: 'circle',
   wait: 'circle',
@@ -35,9 +34,9 @@ export const StepsStep: FC<StepsStepProps> = (props) => {
     ...restProps
   } = props
 
-  const handleClick = () => {
+  const handleClick = (event: MouseEvent) => {
     if (!disabled) {
-      onClick?.()
+      onClick?.(event)
     }
   }
 
@@ -63,8 +62,8 @@ export const StepsStep: FC<StepsStepProps> = (props) => {
         ></div>
         <div className="s-steps-icon">
           {typeof icon === 'function'
-            ? icon(status as StepsStatus)
-            : icon ?? <Icon prefix="si" name={statusIconMap[status]}></Icon>}
+            ? icon(status)
+            : icon ?? <Icon prefix="si" name={mapStatusIcon[status]}></Icon>}
         </div>
         <div
           className="s-steps-line s-steps-line-after"

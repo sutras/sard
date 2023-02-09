@@ -1,23 +1,15 @@
-import {
-  CSSProperties,
-  FC,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import { CSSProperties, FC, ReactNode, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import { Transition } from '../transition/index'
-import { useEvent, useSelectorId } from '../../use'
-import { CommonComponentProps } from '../../utils/types'
-import { getBoundingClientRect } from '../../utils/dom'
+import { useEvent } from '../../use'
+import { reflow } from '../../utils'
 
-export interface CollapseProps extends CommonComponentProps {
+export interface CollapseProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
   visible?: boolean
-  timeout?: number
+  duration?: number
   onEnter?: () => void
   onEntering?: () => void
   onEntered?: () => void
@@ -26,13 +18,16 @@ export interface CollapseProps extends CommonComponentProps {
   onExited?: () => void
 }
 
+const CLS_SHOW = 's-show'
+const CLS_COLLAPSING = 's-collapsing'
+
 export const Collapse: FC<CollapseProps> = (props) => {
   const {
     className,
     style,
     children,
     visible,
-    timeout = 500,
+    duration = 500,
     onEnter,
     onEntering,
     onEntered,
@@ -42,87 +37,82 @@ export const Collapse: FC<CollapseProps> = (props) => {
     ...restProps
   } = props
 
-  const [show, setShow] = useState(visible)
-  const [collapsing, setCollapsing] = useState(false)
-  const [height, setHeight] = useState<number | ''>('')
-
-  const collapseId = useSelectorId()
-
   const timer = useRef(0)
 
+  const elRef = useRef<HTMLDivElement>(null)
+
+  const handleEnter = useEvent(() => {
+    onEnter?.()
+  })
+
+  const handleEntering = useEvent(() => {
+    const el = elRef.current
+    if (el) {
+      el.classList.add(CLS_SHOW)
+      const height = el.offsetHeight
+      el.style.height = '0px'
+      reflow(el)
+      el.style.height = height + 'px'
+      el.classList.add(CLS_COLLAPSING)
+    }
+    onEntering?.()
+  })
+
+  const handleEntered = useEvent(() => {
+    const el = elRef.current
+    if (el) {
+      el.classList.remove(CLS_COLLAPSING)
+      el.style.height = ''
+    }
+    onEntered?.()
+  })
+
+  const handleExit = useEvent(() => {
+    onExit?.()
+  })
+
+  const handleExiting = useEvent(() => {
+    const el = elRef.current
+    if (el) {
+      const height = el.offsetHeight
+      el.style.height = height + 'px'
+      reflow(el)
+      el.style.height = '0px'
+      el.classList.add(CLS_COLLAPSING)
+    }
+    onExiting?.()
+  })
+
+  const handleExited = useEvent(() => {
+    const el = elRef.current
+    if (el) {
+      el.classList.remove(CLS_SHOW, CLS_COLLAPSING)
+      el.style.height = ''
+    }
+    onExited?.()
+  })
+
   useEffect(() => {
+    if (visible && elRef.current) {
+      elRef.current.classList.add(CLS_SHOW)
+    }
+
     return () => {
       clearTimeout(timer.current)
     }
   }, [])
 
-  const handleEnter = useEvent(() => {
-    getBoundingClientRect(collapseId, (rect) => {
-      setHeight(0)
-      setShow(true)
-      setCollapsing(true)
-
-      clearTimeout(timer.current)
-      timer.current = window.setTimeout(() => {
-        setHeight(rect.height)
-      }, 100)
-    })
-    onEnter?.()
-  })
-
-  const handleEntering = useEvent(() => {
-    onEntering?.()
-  })
-
-  const handleEntered = useEvent(() => {
-    setHeight('')
-    setCollapsing(false)
-    onEntered?.()
-  })
-
-  const handleExit = useEvent(() => {
-    getBoundingClientRect(collapseId, (rect) => {
-      setHeight(rect.height)
-      setCollapsing(true)
-
-      clearTimeout(timer.current)
-      timer.current = window.setTimeout(() => {
-        setHeight(0)
-      }, 100)
-    })
-    onExit?.()
-  })
-
-  const handleExiting = useEvent(() => {
-    onExiting?.()
-  })
-
-  const handleExited = useEvent(() => {
-    setHeight('')
-    setShow(false)
-    setCollapsing(false)
-    onExited?.()
-  })
-
-  const collapseClass = classNames(
-    's-collapse',
-    {
-      's-collapse-show': show,
-      's-collapse-collapsing': collapsing,
-    },
-    className,
-  )
+  const collapseClass = classNames('s-collapse', className)
 
   const collapseStyle = {
     ...style,
-    height,
-    transitionDuration: timeout + 'ms',
+    transitionDuration: duration + 'ms',
   }
 
   return (
     <Transition
       {...restProps}
-      timeout={timeout}
+      timeout={duration}
       in={visible}
       onEnter={handleEnter}
       onEntering={handleEntering}
@@ -131,10 +121,8 @@ export const Collapse: FC<CollapseProps> = (props) => {
       onExiting={handleExiting}
       onExited={handleExited}
     >
-      <div className={collapseClass} style={collapseStyle}>
-        <div className="s-colllapse-content" id={collapseId}>
-          {children}
-        </div>
+      <div ref={elRef} className={collapseClass} style={collapseStyle}>
+        {children}
       </div>
     </Transition>
   )

@@ -1,13 +1,13 @@
 import { Notify, NotifyProps, NotifyRef } from './index'
-import { useAgent, AgentProps, IdAgentMap } from '../../utils/imperative'
+import { useAgent, AgentProps, MapIdAgent } from '../../utils/imperative'
 
-export const idAgentMap: IdAgentMap<NotifyProps, NotifyRef> = {}
+export const mapIdAgent: MapIdAgent<NotifyProps, NotifyRef> = {}
 
 export const NotifyAgent = (agentProps: AgentProps<NotifyProps>) => {
   return useAgent<NotifyProps, NotifyRef>(
     Notify,
     agentProps,
-    idAgentMap,
+    mapIdAgent,
     'notify',
   )
 }

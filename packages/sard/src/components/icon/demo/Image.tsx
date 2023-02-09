@@ -1,5 +1,5 @@
 /*
-### 图片 Url
+### 图片类型图标
 */
 
 import { Icon } from 'sard'

@@ -1,7 +1,7 @@
 /*
 ### 代理
 
-代理组件用于小程序。通过预先放置带有id属性的组件，以便可以通过命令式进行使用。
+代理通过预先放置带有可选id属性的组件，通过命令式指定id进行调用。
 */
 
 import { Notify, Button } from 'sard'
@@ -9,16 +9,7 @@ import { Notify, Button } from 'sard'
 export default function () {
   return (
     <>
-      <Button
-        onClick={() =>
-          Notify.show({
-            type: 'info',
-            message: '这是一条通知',
-          })
-        }
-      >
-        显示通知
-      </Button>{' '}
+      <Button onClick={() => Notify.show('这是一条通知')}>显示通知</Button>{' '}
       <Button onClick={() => Notify.success('这是一条通知')}>
         显示成功通知
       </Button>{' '}

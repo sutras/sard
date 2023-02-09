@@ -18,17 +18,12 @@ export default function () {
     },
     {
       title: '动作3',
+      loading: true,
     },
   ]
 
   const handleSelect = (item: ActionSheetItemProps, index: number) => {
-    setVisible(false)
     console.log(item, index)
-  }
-
-  const handleCancel = () => {
-    setVisible(false)
-    console.log('cancel')
   }
 
   return (
@@ -38,8 +33,9 @@ export default function () {
         visible={visible}
         itemList={itemList}
         cancel="取消"
+        actionClosable
         onSelect={handleSelect}
-        onCancel={handleCancel}
+        onClose={setVisible}
       />
     </>
   )

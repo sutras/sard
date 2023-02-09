@@ -1,20 +1,19 @@
-import { CSSProperties, FC, ReactNode } from 'react'
+import { CSSProperties, FC, ReactNode, MouseEvent } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 import { Icon } from '../icon'
 import { Collapse } from '../collapse'
 
-export interface AccordionItemProps extends CommonComponentProps {
+export interface AccordionItemProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
   title?: ReactNode
   icon?: ReactNode | ((active: boolean) => ReactNode)
-  tabKey?: string | number
+  innerKey?: string | number
   activeKey?: string | number | (string | number)[]
   disabled?: boolean
   duration?: number
-  onClick?: () => void
+  onClick?: (event: MouseEvent) => void
 }
 
 export const AccordionItem: FC<AccordionItemProps> = (props) => {
@@ -23,7 +22,7 @@ export const AccordionItem: FC<AccordionItemProps> = (props) => {
     children,
     title,
     icon,
-    tabKey,
+    innerKey,
     activeKey,
     disabled,
     duration = 300,
@@ -31,15 +30,15 @@ export const AccordionItem: FC<AccordionItemProps> = (props) => {
     ...restProps
   } = props
 
-  const handleClick = () => {
+  const handleClick = (event: MouseEvent) => {
     if (!disabled) {
-      onClick?.()
+      onClick?.(event)
     }
   }
 
   const active = Array.isArray(activeKey)
-    ? activeKey.includes(tabKey)
-    : tabKey === activeKey
+    ? activeKey.includes(innerKey)
+    : innerKey === activeKey
 
   const itemClass = classNames(
     's-accordion-item',
@@ -67,7 +66,7 @@ export const AccordionItem: FC<AccordionItemProps> = (props) => {
         </div>
       </div>
       <Collapse
-        timeout={duration}
+        duration={duration}
         visible={active}
         className="s-accordion-item-wrapper"
       >

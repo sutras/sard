@@ -14,17 +14,13 @@ export default function () {
         defaultChecked={!loading}
         onChange={(check) => setLoading(!check)}
       ></Switch>
+      <br />
+      <br />
 
       <Skeleton avatar title animated loading={loading}>
         <div style={{ display: 'flex' }}>
           <div style={{ flex: 'none', marginRight: 15 }}>
-            <Icon
-              prefix="si"
-              name="person"
-              size={18}
-              type="circle"
-              frameSize={32}
-            ></Icon>
+            <Icon prefix="si" name="person" size={32}></Icon>
           </div>
           <div style={{ flex: 1 }}>
             <div style={{ marginBottom: 10, fontSize: '1.2em' }}>

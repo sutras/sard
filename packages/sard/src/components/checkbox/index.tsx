@@ -1,13 +1,12 @@
-import { CSSProperties, ReactNode, useContext, FC } from 'react'
+import { CSSProperties, ReactNode, useContext, FC, MouseEvent } from 'react'
 import classNames from 'classnames'
 import { useControlledValue } from '../../use'
 import { CheckboxGroup, CheckboxGroupContext } from './Group'
-import { CommonComponentProps } from '../../utils/types'
 import { Icon } from '../icon'
 
 export * from './Group'
 
-export interface CheckboxProps extends CommonComponentProps {
+export interface CheckboxProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -15,15 +14,15 @@ export interface CheckboxProps extends CommonComponentProps {
   defaultChecked?: boolean
   value?: any
   disabled?: boolean
-  size?: string
+  size?: string | number
   type?: 'square' | 'circle'
   icon?: (checked: boolean) => ReactNode
   checkedColor?: string
-  onChange?: (checked: boolean, value: any) => any
-  onClick?: () => any
+  onChange?: (checked: boolean, value: any) => void
+  onClick?: (event: MouseEvent) => void
 }
 
-const typeIconMap = {
+const mapTypeIcon = {
   square: ['square', 'check-square-fill'],
   circle: ['circle', 'check-circle-fill'],
 }
@@ -38,7 +37,7 @@ export const Checkbox: CheckboxFC = (props) => {
     children,
     checked,
     defaultChecked,
-    value = '',
+    value,
     disabled = false,
     size,
     type = 'square',
@@ -73,11 +72,11 @@ export const Checkbox: CheckboxFC = (props) => {
     }
   }
 
-  const handleCheckboxClick = () => {
+  const handleCheckboxClick = (event: MouseEvent) => {
     if (!disabled) {
       toggle()
     }
-    onClick?.()
+    onClick?.(event)
   }
 
   const iconStyle = {
@@ -100,7 +99,7 @@ export const Checkbox: CheckboxFC = (props) => {
         {icon ? (
           icon(isChecked)
         ) : (
-          <Icon prefix="si" name={typeIconMap[type][isChecked ? 1 : 0]}></Icon>
+          <Icon prefix="si" name={mapTypeIcon[type][isChecked ? 1 : 0]}></Icon>
         )}
       </div>
       {children && <div className="s-checkbox-label">{children}</div>}

@@ -23,7 +23,7 @@ $s-notify-color: $s-white !default;
 @each $color,
   $value
     in (
-      info: $s-primary,
+      primary: $s-primary,
       success: $s-success,
       warning: $s-warning,
       error: $s-danger

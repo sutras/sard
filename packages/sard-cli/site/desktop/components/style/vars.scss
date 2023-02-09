@@ -1,8 +1,3 @@
-:root {
-  --doc-navbar-height: 60px;
-  --doc-sider-width: 250px;
-}
-
 $gray-100: #f8f9fa !default;
 $gray-200: #e9ecef !default;
 $gray-300: #dee2e6 !default;
@@ -14,6 +9,11 @@ $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 
 $doc-primary: #4694d1 !default;
+
+:root {
+  --doc-navbar-height: 60px;
+  --doc-sider-width: 250px;
+}
 
 :root {
   --doc-white: #fff;
@@ -29,6 +29,9 @@ $doc-primary: #4694d1 !default;
   --doc-black: #000;
 
   --doc-primary: #4694d1;
+  --doc-code-color: #d63384;
+  --doc-code-font-family: source-code-pro, Menlo, Monaco, Consolas,
+    'Courier New', monospace;
 }
 
 :root {

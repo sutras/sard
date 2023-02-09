@@ -2,44 +2,43 @@ import { CSSProperties, FC, ReactNode } from 'react'
 import classNames from 'classnames'
 import { useEvent } from '../../use'
 import { Popup, PopupProps } from '../popup'
-import { CommonComponentProps } from '../../utils/types'
 import { ActionSheetItem, ActionSheetItemProps } from './Item'
 
-export * from './Item'
+export type { ActionSheetItemProps } from './Item'
 
-export interface ActionSheetProps extends CommonComponentProps {
+export interface ActionSheetProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
+  visible?: boolean
   maskClosable?: boolean
+  actionClosable?: boolean
   title?: ReactNode
   description?: ReactNode
   itemList?: ActionSheetItemProps[]
-  itemColor?: string
   cancel?: ReactNode
-  onSelect?: (itemProps: ActionSheetItemProps, index: number) => any
-  onCancel?: () => any
-  visible?: boolean
+  onSelect?: (itemProps: ActionSheetItemProps, index: number) => void
+  onCancel?: (visible: false) => void
+  onClose?: (visible: false) => void
   popupProps?: PopupProps
 }
 
-export interface ActionSheetFC extends FC<ActionSheetProps> {
-  Item: typeof ActionSheetItem
-}
+export interface ActionSheetFC extends FC<ActionSheetProps> {}
 
 export const ActionSheet: ActionSheetFC = (props) => {
   const {
     className,
     children,
+    visible,
     maskClosable = true,
+    actionClosable,
     title,
     description,
     itemList = [],
-    itemColor,
     cancel,
     onSelect,
     onCancel,
-    visible,
+    onClose,
     popupProps = {},
     ...restProps
   } = props
@@ -49,17 +48,22 @@ export const ActionSheet: ActionSheetFC = (props) => {
   const handleItemClick = useEvent(
     (itemProps: ActionSheetItemProps, index: number) => {
       onSelect?.(itemProps, index)
+      if (actionClosable) {
+        onClose?.(false)
+      }
     },
   )
 
   const handleMaskClick = useEvent(() => {
     if (maskClosable) {
-      onCancel?.()
+      popupProps?.onMaskClick?.()
+      onClose?.(false)
     }
   })
 
   const handleCancelClick = useEvent(() => {
-    onCancel?.()
+    onCancel?.(false)
+    onClose?.(false)
   })
 
   const actionSheetClass = classNames(
@@ -92,7 +96,10 @@ export const ActionSheet: ActionSheetFC = (props) => {
               <ActionSheetItem
                 {...itemProps}
                 key={index}
-                onClick={() => handleItemClick(itemProps, index)}
+                onClick={(event) => {
+                  handleItemClick(itemProps, index)
+                  itemProps.onClick?.(event)
+                }}
               />
             ))}
         </div>
@@ -108,7 +115,5 @@ export const ActionSheet: ActionSheetFC = (props) => {
     </Popup>
   )
 }
-
-ActionSheet.Item = ActionSheetItem
 
 export default ActionSheet

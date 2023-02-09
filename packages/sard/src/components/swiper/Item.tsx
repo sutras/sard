@@ -7,9 +7,8 @@ import {
   PropsWithoutRef,
 } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 
-export interface SwiperItemProps extends CommonComponentProps {
+export interface SwiperItemProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode

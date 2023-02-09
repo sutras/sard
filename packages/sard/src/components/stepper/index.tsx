@@ -1,21 +1,20 @@
 import {
   CSSProperties,
   FC,
+  FocusEvent,
   ReactNode,
   useEffect,
   useRef,
   useState,
 } from 'react'
 import classNames from 'classnames'
-import { useControlledValue } from '../../use'
-import { CommonComponentProps } from '../../utils/types'
+import { useControlledValue, useEvent, useStrike } from '../../use'
 import { minmax } from '../../utils'
 import { PRESS_DOWN, PRESS_UP } from '../../strike'
 import { Icon } from '../icon'
 import { Input } from '../input'
-import { useEvent, useStrike } from '../../use'
 
-export interface StepperProps extends CommonComponentProps {
+export interface StepperProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -32,8 +31,8 @@ export interface StepperProps extends CommonComponentProps {
   press?: boolean
   interval?: number
   onChange?: (value: number) => void
-  onBlur?: () => void
-  onFocus?: () => void
+  onBlur?: (event: FocusEvent) => void
+  onFocus?: (event: FocusEvent) => void
 }
 
 export const Stepper: FC<StepperProps> = (props) => {
@@ -43,8 +42,8 @@ export const Stepper: FC<StepperProps> = (props) => {
     inputWidth,
     value,
     defaultValue,
-    min = -Infinity,
-    max = Infinity,
+    min = Number.MIN_SAFE_INTEGER,
+    max = Number.MAX_SAFE_INTEGER,
     step = 1,
     precision,
     placeholder,
@@ -76,7 +75,7 @@ export const Stepper: FC<StepperProps> = (props) => {
   const adjustValue = useEvent((value: number) => {
     value = minmax(value, min, max)
     if (precision != null) {
-      value = ~~(Math.pow(10, precision) * value) / Math.pow(10, precision)
+      value = +value.toFixed(precision)
     }
     return value
   })
@@ -147,10 +146,11 @@ export const Stepper: FC<StepperProps> = (props) => {
   const handleChange = (value: string) => {
     setInputValue(value)
   }
-  const handleBlur = () => {
+  const handleBlur = (event: FocusEvent) => {
     setValue(
       inputValue === '' ? undefined : adjustValue(Number(inputValue) || 0),
     )
+    onBlur?.(event)
   }
 
   const StepperClass = classNames(
@@ -177,13 +177,14 @@ export const Stepper: FC<StepperProps> = (props) => {
 
   return (
     <div {...restProps} className={StepperClass}>
-      <div
+      <button
         {...decreaseBinding}
         className={decreaseButtonClass}
         onClick={handleDecrease}
+        disabled={disabled}
       >
         <Icon prefix="si" name="minus"></Icon>
-      </div>
+      </button>
       <Input
         className="s-stepper-input"
         placeholder={placeholder}
@@ -191,16 +192,18 @@ export const Stepper: FC<StepperProps> = (props) => {
         value={inputValue}
         onChange={handleChange}
         onBlur={handleBlur}
+        onFocus={onFocus}
         disabled={disabled}
         readOnly={readOnly}
       />
-      <div
+      <button
         {...increaseBinding}
         className={increaseButtonClass}
         onClick={handleIncrease}
+        disabled={disabled}
       >
         <Icon prefix="si" name="plus"></Icon>
-      </div>
+      </button>
     </div>
   )
 }

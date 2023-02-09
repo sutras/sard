@@ -27,9 +27,9 @@ $s-dialog-message-color: $s-gray-700 !default;
 
 $s-dialog-footer-border-color: $s-border-color !default;
 
-$s-dialog-rounded-button-footer-padding-x: 16px !default;
-$s-dialog-rounded-button-footer-padding-y: 16px !default;
-$s-dialog-rounded-button-button-gap: 16px !default;
+$s-dialog-round-button-footer-padding-x: 16px !default;
+$s-dialog-round-button-footer-padding-y: 16px !default;
+$s-dialog-round-button-button-gap: 16px !default;
 
 // #endvariables
 
@@ -101,7 +101,7 @@ $s-dialog-rounded-button-button-gap: 16px !default;
       display: flex;
       flex-direction: row;
 
-      .s-dialog:not(.s-dialog-rounded-button) & {
+      .s-dialog:not(.s-dialog-round-button) & {
         @include border-top($s-dialog-footer-border-color);
       }
 
@@ -109,7 +109,7 @@ $s-dialog-rounded-button-button-gap: 16px !default;
         .s-dialog-button {
           flex: 1 1 0;
 
-          .s-dialog:not(.s-dialog-rounded-button) & {
+          .s-dialog:not(.s-dialog-round-button) & {
             border-radius: 0;
 
             &:first-child {
@@ -132,15 +132,15 @@ $s-dialog-rounded-button-button-gap: 16px !default;
   }
 }
 
-.s-dialog-rounded-button {
+.s-dialog-round-button {
   .s-dialog-footer {
-    padding-left: $s-dialog-rounded-button-footer-padding-x;
-    padding-right: $s-dialog-rounded-button-footer-padding-x;
-    padding-bottom: $s-dialog-rounded-button-footer-padding-y;
+    padding-left: $s-dialog-round-button-footer-padding-x;
+    padding-right: $s-dialog-round-button-footer-padding-x;
+    padding-bottom: $s-dialog-round-button-footer-padding-y;
   }
 
   .s-dialog-button:not(:first-child) {
-    margin-left: $s-dialog-rounded-button-button-gap;
+    margin-left: $s-dialog-round-button-button-gap;
   }
 }
 

@@ -2,7 +2,7 @@
 
 ### 介绍
 
-空状态时的占位提示
+空状态时的占位提示。
 
 ### 引入
 
@@ -24,7 +24,14 @@ import { Empty } from 'sard'
 
 ## API
 
-### Props
+### EmptyProps
+
+| 属性        | 描述                   | 类型            | 默认值     |
+| ----------- | ---------------------- | --------------- | ---------- |
+| children    | 放置额外内容           | React.ReactNode | -          |
+| icon        | 自定义图标             | React.ReactNode | -          |
+| iconProps   | 图标组件的 `iconProps` | IconProps       | -          |
+| description | 描述信息               | React.ReactNode | '暂无数据' |
 
 ## 主题定制
 

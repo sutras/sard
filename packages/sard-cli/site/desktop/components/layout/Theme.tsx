@@ -4,7 +4,7 @@ const themeKey = 'sardTheme'
 
 const defaultTheme = 'light'
 
-const themeIconMap = {
+const mapThemeIcon = {
   light: 'bi-sun-fill',
   dark: 'bi-moon-stars-fill',
 }
@@ -37,7 +37,7 @@ export default function Theme() {
 
   return (
     <div className="doc-theme" onClick={toggleTheme}>
-      <span className={themeIconMap[theme]}></span>
+      <span className={mapThemeIcon[theme]}></span>
     </div>
   )
 }

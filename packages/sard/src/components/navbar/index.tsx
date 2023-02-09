@@ -1,20 +1,20 @@
 import { CSSProperties, FC, ReactNode } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 
 import { NavbarItem } from './Item'
 
 export * from './Item'
 
-export interface NavbarProps extends CommonComponentProps {
+export interface NavbarProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
   title?: ReactNode
-  titleStyle?: CSSProperties
-  left?: ReactNode
-  right?: ReactNode
+  prepend?: ReactNode
+  append?: ReactNode
   flow?: boolean
+  fixed?: boolean
+  zIndex?: string | number
 }
 
 export interface NavbarFC extends FC<NavbarProps> {
@@ -27,10 +27,11 @@ export const Navbar: NavbarFC = (props) => {
     style,
     children,
     title,
-    titleStyle,
-    left,
-    right,
-    flow = false,
+    prepend,
+    append,
+    flow,
+    fixed,
+    zIndex = 1,
     ...restProps
   } = props
 
@@ -38,21 +39,23 @@ export const Navbar: NavbarFC = (props) => {
     's-navbar',
     {
       's-navbar-flow': flow,
+      's-navbar-fixed': fixed,
     },
     className,
   )
 
+  const navbarStyle = {
+    zIndex: fixed ? zIndex : '',
+    ...style,
+  }
+
   return (
-    <div {...restProps} className={navbarClass}>
-      {left && <div className="s-navbar-left">{left}</div>}
+    <div {...restProps} className={navbarClass} style={navbarStyle}>
+      {prepend && <div className="s-navbar-prepend">{prepend}</div>}
       <div className="s-navbar-content">
-        {children ?? (
-          <div className="s-navbar-title" style={titleStyle}>
-            {title}
-          </div>
-        )}
+        {children || <div className="s-navbar-title">{title}</div>}
       </div>
-      {right && <div className="s-navbar-right">{right}</div>}
+      {append && <div className="s-navbar-append">{append}</div>}
     </div>
   )
 }

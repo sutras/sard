@@ -580,12 +580,12 @@ export function treeToMap(
 }
 
 export function pickNullish(
-  target1: { [p: string]: any },
-  target2: { [p: string]: any },
+  first: { [p: string]: any },
+  second: { [p: string]: any },
   properties: string[],
 ) {
   return properties.reduce((result, prop) => {
-    result[prop] = target1[prop] ?? target2[prop]
+    result[prop] = first[prop] ?? second[prop]
     return result
   }, {} as { [p: string]: any })
 }
@@ -633,4 +633,12 @@ export function getTransformOrigin(rect: Rect, scaleRect: Rect) {
       (ratio - 1) +
     rect.height / 2
   return [originX, originY]
+}
+
+export function splitUnit(target: number | string) {
+  const result = /([+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|))([a-z]+|%|)$/i.exec(
+    String(target),
+  ) || [0, '']
+
+  return [+result[1], result[2]] as [number, string]
 }

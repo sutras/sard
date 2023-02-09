@@ -1,28 +1,20 @@
 import { CSSProperties, FC, ReactNode, useContext } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 
 import { RowContext } from './Row'
 
-export interface ColProps extends CommonComponentProps {
+export interface ColProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  span?: number | 'auto' | 'none' | ''
-  offset?: number | ''
+  span?: number | 'auto' | 'none'
+  offset?: number
   order?: number
 }
 
 export const Col: FC<ColProps> = (props) => {
-  const {
-    children,
-    className,
-    style,
-    span = '',
-    offset = '',
-    order,
-    ...restProps
-  } = props
+  const { children, className, style, span, offset, order, ...restProps } =
+    props
 
   const colClass = classNames(
     's-col',
@@ -35,20 +27,20 @@ export const Col: FC<ColProps> = (props) => {
 
   const context = useContext(RowContext)
 
-  const colStyle = Object.assign(
-    order != null
+  const colStyle = {
+    ...(order != null
       ? {
           order,
         }
-      : {},
-    context && context.gutter
+      : null),
+    ...(context.gutter
       ? {
-          paddingLeft: context.gutter / 2 + 'px',
-          paddingRight: context.gutter / 2 + 'px',
+          paddingLeft: context.gap[0] + context.gap[1],
+          paddingRight: context.gap[0] + context.gap[1],
         }
-      : null,
-    style,
-  )
+      : null),
+    ...style,
+  }
 
   return (
     <div {...restProps} className={colClass} style={colStyle}>

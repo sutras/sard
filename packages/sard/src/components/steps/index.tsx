@@ -1,6 +1,5 @@
 import { CSSProperties, ReactNode, Children, cloneElement, FC } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 
 import { StepsStep, StepsStepProps } from './Step'
 
@@ -8,18 +7,17 @@ export * from './Step'
 
 export type StepsStatus = 'wait' | 'process' | 'error' | 'finish'
 
-export interface StepsProps extends CommonComponentProps {
+export interface StepsProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
   center?: boolean
-  direction?: 'horizontal' | 'vertical'
-  active?: number
+  vertical?: boolean
+  current?: number
   status?: StepsStatus
   lineColor?: string
   clickable?: boolean
   disabled?: boolean
-  onChange?: (active: number) => void
 }
 
 export interface StepsFC extends FC<StepsProps> {
@@ -31,20 +29,19 @@ export const Steps: StepsFC = (props) => {
     className,
     children,
     center = false,
-    direction = 'horizontal',
-    active = 0,
+    vertical,
+    current = 0,
     status,
     lineColor,
     clickable,
     disabled = false,
-    onChange,
     ...restProps
   } = props
 
   const stepsClass = classNames(
     's-steps',
-    `s-steps-${direction}`,
     {
+      's-steps-vertical': vertical,
       's-steps-center': center,
       's-steps-clickable': clickable,
     },
@@ -59,9 +56,9 @@ export const Steps: StepsFC = (props) => {
           return cloneElement(item, {
             status:
               item.props.status ??
-              (index < active
+              (index < current
                 ? 'finish'
-                : index === active
+                : index === current
                 ? status ?? 'process'
                 : 'wait'),
             lineColor: item.props.lineColor ?? lineColor,

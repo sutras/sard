@@ -1,19 +1,18 @@
-import { CSSProperties, FC, ReactNode, useContext } from 'react'
+import { CSSProperties, FC, ReactNode } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 import { Icon, IconProps } from '../icon'
 
 import { AvatarGroup } from './Group'
 
 export * from './Group'
 
-export interface AvatarProps extends CommonComponentProps {
+export interface AvatarProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
   shape?: 'circle' | 'square'
   size?: number | string
-  fontSize?: number | string
+  iconSize?: number | string
   src?: string
   iconProps?: IconProps
   extra?: ReactNode
@@ -30,7 +29,7 @@ export const Avatar: AvatarFC = (props) => {
     children,
     shape = 'circle',
     size,
-    fontSize,
+    iconSize,
     src,
     iconProps,
     extra,
@@ -42,7 +41,7 @@ export const Avatar: AvatarFC = (props) => {
   const avatarStyle = {
     width: size,
     height: size,
-    fontSize,
+    fontSize: iconSize,
     ...style,
   }
 

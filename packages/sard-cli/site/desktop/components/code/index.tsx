@@ -11,7 +11,7 @@ export function Code(props: CodeProps) {
 
   const [visible, setVisible] = useState(false)
 
-  const copyRef = useRef()
+  const copyRef = useRef<HTMLDivElement>()
 
   const codeRef = useRef(null)
 
@@ -28,9 +28,9 @@ export function Code(props: CodeProps) {
       clipboard.on('success', () => {
         setCopySuccess(true)
         clearTimeout(timer.current)
-        timer.current = window.setTimeout(() => {
+        timer.current = setTimeout(() => {
           setCopySuccess(false)
-        }, 1000)
+        }, 1000) as unknown as number
       })
     }
     return () => clipboard?.destroy?.()
@@ -40,7 +40,7 @@ export function Code(props: CodeProps) {
     <div className="doc-code">
       <div className="doc-code-header">
         <div className="doc-code-tool">
-          <div className="doc-code-tool-item" title="复制" ref={copyRef as any}>
+          <div className="doc-code-tool-item" title="复制" ref={copyRef}>
             <span className="doc-code-tool-icon bi-files"></span>
             {copySuccess && (
               <div className="doc-code-copy-success">复制成功</div>

@@ -19,6 +19,14 @@ export function useMapSet<K, V>(initData: [K, V][]) {
     return data.current.findIndex((item) => item[1] === value)
   }, [])
 
+  const getKeyByIndex = useCallback((index) => {
+    return data.current[index]?.[0]
+  }, [])
+
+  const getValueByIndex = useCallback((index) => {
+    return data.current[index]?.[1]
+  }, [])
+
   const set = useCallback((key: K, value: V) => {
     const item = data.current.find((item) => item[0] === key)
     if (!item) {
@@ -47,6 +55,8 @@ export function useMapSet<K, V>(initData: [K, V][]) {
     clear,
     getIndexByName,
     getIndexByValue,
+    getKeyByIndex,
+    getValueByIndex,
   })
 
   return ref.current

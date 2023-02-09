@@ -12,21 +12,19 @@ import classNames from 'classnames'
 import { Popup, PopupProps } from '../popup'
 import { useSetTimeout } from '../../use'
 
-import { CommonComponentProps } from '../../utils/types'
-
-import { show, info, success, warning, error, hide } from './imperative'
+import { show, success, warning, error, hide, hideAll } from './imperative'
 import { NotifyAgent } from './Agent'
 
-export interface NotifyProps extends CommonComponentProps {
+export interface NotifyProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  type?: 'info' | 'success' | 'warning' | 'error'
+  type?: 'primary' | 'success' | 'warning' | 'error'
   message?: ReactNode
   duration?: number
   color?: string
   background?: string
-  onTimeout?: () => void
+  onTimeout?: (visible: false) => void
   visible?: boolean
   onVisible?: (visible: boolean) => void
   popupProps?: PopupProps
@@ -42,11 +40,11 @@ export interface NotifyFC
     PropsWithoutRef<NotifyProps> & RefAttributes<NotifyRef>
   > {
   show: typeof show
-  info: typeof info
   success: typeof success
   warning: typeof warning
   error: typeof error
   hide: typeof hide
+  hideAll: typeof hideAll
   Agent: typeof NotifyAgent
 }
 
@@ -55,7 +53,7 @@ export const Notify: NotifyFC = forwardRef((props, ref) => {
     className,
     style,
     children,
-    type = 'info',
+    type = 'primary',
     message,
     duration = 3000,
     color,
@@ -75,7 +73,7 @@ export const Notify: NotifyFC = forwardRef((props, ref) => {
   } = popupProps
 
   const { reset, clear } = useSetTimeout(() => {
-    onTimeout?.()
+    onTimeout?.(false)
     onVisible?.(false)
   }, duration)
 
@@ -85,7 +83,7 @@ export const Notify: NotifyFC = forwardRef((props, ref) => {
     } else {
       clear()
     }
-  }, [visible])
+  }, [visible, type])
 
   useEffect(() => {
     reset()
@@ -119,11 +117,11 @@ export const Notify: NotifyFC = forwardRef((props, ref) => {
 }) as NotifyFC
 
 Notify.show = show
-Notify.info = info
 Notify.success = success
 Notify.warning = warning
 Notify.error = error
 Notify.hide = hide
+Notify.hideAll = hideAll
 Notify.Agent = NotifyAgent
 
 export { NotifyAgent }

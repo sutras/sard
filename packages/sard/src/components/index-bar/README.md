@@ -2,7 +2,7 @@
 
 ### 介绍
 
-用于列表分类展示和索引定位
+用于列表分类展示和索引定位。
 
 ### 引入
 
@@ -20,7 +20,7 @@ import { IndexBar } from 'sard'
 
 ## API
 
-### Props
+### IndexBarProps
 
 ## 主题定制
 

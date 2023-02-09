@@ -11,8 +11,8 @@ export default function () {
       <Rate
         defaultValue={2.5}
         allowHalf
-        icon={<Icon fullName="bi-heart-fill"></Icon>}
-        voidIcon={<Icon fullName="bi-heart"></Icon>}
+        icon={<Icon name="bi-heart-fill"></Icon>}
+        voidIcon={<Icon name="bi-heart"></Icon>}
       />
       <div>
         <Rate defaultValue={2.5} allowHalf icon="好" voidIcon="好" />

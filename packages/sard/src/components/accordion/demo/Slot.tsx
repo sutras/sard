@@ -12,12 +12,12 @@ export default function () {
         <Accordion.Item
           title={
             <>
-              <Icon fullName="bi-cup-hot"></Icon> <span>标题1</span>
+              <Icon name="bi-cup-hot"></Icon> <span>标题1</span>
             </>
           }
           icon={(active) => (
             <Icon
-              fullName={active ? 'bi-arrows-expand' : 'bi-arrows-collapse'}
+              name={active ? 'bi-arrows-expand' : 'bi-arrows-collapse'}
             ></Icon>
           )}
         >

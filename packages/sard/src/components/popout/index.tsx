@@ -3,7 +3,6 @@ import {
   CSSProperties,
   FC,
   ReactNode,
-  useEffect,
   useRef,
   useState,
 } from 'react'
@@ -219,9 +218,9 @@ export const Popout: PopoutFC = (props) => {
                   {showCancel && (
                     <Button
                       className="s-popout-cancel s-popout-button"
-                      type="secondary"
+                      type="pale"
                       theme="primary"
-                      rounded
+                      round
                       {...cancelProps}
                       onClick={handleCancel}
                     >
@@ -231,9 +230,9 @@ export const Popout: PopoutFC = (props) => {
                   {showConfirm && (
                     <Button
                       className="s-popout-confirm s-popout-button"
-                      type="primary"
+                      type="default"
                       theme="primary"
-                      rounded
+                      round
                       {...confirmProps}
                       disabled={confirmDisabled}
                       onClick={handleConfirm}

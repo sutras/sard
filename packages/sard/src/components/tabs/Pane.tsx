@@ -1,16 +1,15 @@
-import { CSSProperties, ForwardedRef, forwardRef, ReactNode } from 'react'
+import { CSSProperties, forwardRef, ReactNode } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 
-export interface TabPaneProps extends CommonComponentProps {
+export interface TabPaneProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
   label?: ReactNode | ((active: boolean) => ReactNode)
   labelStyle?: CSSProperties
   labelClass?: string
-  name?: any
-  activeKey?: any
+  innerKey?: number | string
+  activeKey?: number | string
   disabled?: boolean
 }
 
@@ -25,12 +24,12 @@ export const TabPane = forwardRef<HTMLElement, TabPaneProps>((props, ref) => {
     label,
     labelStyle,
     labelClass,
-    name,
+    innerKey,
     activeKey,
     ...restProps
   } = props
 
-  const active = name === activeKey
+  const active = innerKey === activeKey
 
   const tabPaneClass = classNames(
     's-tab-pane',

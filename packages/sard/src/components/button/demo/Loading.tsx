@@ -6,11 +6,18 @@ import { Button } from 'sard'
 
 export default function () {
   return (
-    <>
-      <Button loading>primary</Button>{' '}
+    <div
+      style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        gap: 10,
+      }}
+    >
+      <Button loading>primary</Button>
       <Button loading loadingText="加载中">
         primary
-      </Button>{' '}
+      </Button>
       <Button
         loading
         loadingText="加载中"
@@ -18,10 +25,10 @@ export default function () {
         loadingProps={{ type: 'clock' }}
       >
         primary
-      </Button>{' '}
+      </Button>
       <Button loading loadingText="加载中" loadingProps={{ type: 'clock' }}>
         primary
-      </Button>{' '}
+      </Button>
       <Button
         loading
         loadingText="加载中"
@@ -29,7 +36,7 @@ export default function () {
         loadingProps={{ type: 'clock' }}
       >
         primary
-      </Button>{' '}
-    </>
+      </Button>
+    </div>
   )
 }

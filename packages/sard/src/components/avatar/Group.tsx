@@ -7,15 +7,14 @@ import {
   FC,
 } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 
 import { Avatar, AvatarProps } from './index'
 
-export interface AvatarGroupProps extends CommonComponentProps {
+export interface AvatarGroupProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  gap?: number
+  gap?: string | number
   direction?: 'left' | 'right'
   maxCount?: number
 }

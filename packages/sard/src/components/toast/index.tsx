@@ -13,12 +13,11 @@ import { Loading, LoadingProps } from '../loading'
 import { Popup, PopupProps } from '../popup'
 import { Icon } from '../icon'
 import { useSetTimeout } from '../../use'
-import { CommonComponentProps } from '../../utils/types'
 
-import { show, text, success, fail, loading, hide } from './imperative'
+import { show, success, fail, loading, hide, hideAll } from './imperative'
 import { ToastAgent } from './Agent'
 
-export interface ToastProps extends CommonComponentProps {
+export interface ToastProps {
   className?: string
   style?: CSSProperties
   type?: 'text' | 'loading' | 'success' | 'fail' | 'custom'
@@ -42,11 +41,11 @@ export interface ToastFC
     PropsWithoutRef<ToastProps> & RefAttributes<ToastRef>
   > {
   show: typeof show
-  text: typeof text
   success: typeof success
   fail: typeof fail
   loading: typeof loading
-  hide: typeof loading
+  hide: typeof hide
+  hideAll: typeof hideAll
   Agent: typeof ToastAgent
 }
 
@@ -57,7 +56,7 @@ export const Toast: ToastFC = forwardRef((props, ref) => {
     title,
     icon,
     loadingProps,
-    duration = 1500,
+    duration = 2000,
     onTimeout,
     visible = false,
     onVisible,
@@ -101,7 +100,7 @@ export const Toast: ToastFC = forwardRef((props, ref) => {
   const toastClass = classNames(
     's-toast',
     {
-      's-toast-text': type === 'text',
+      's-toast-text': type === 'text' && !icon,
     },
     className,
   )
@@ -115,7 +114,7 @@ export const Toast: ToastFC = forwardRef((props, ref) => {
       mask={mask}
     >
       <div {...(restProps as any)} className={toastClass}>
-        {type !== 'text' && (
+        {(type !== 'text' || icon) && (
           <div className="s-toast-icon">
             {icon ||
               (type === 'loading' ? (
@@ -132,11 +131,11 @@ export const Toast: ToastFC = forwardRef((props, ref) => {
 }) as ToastFC
 
 Toast.show = show
-Toast.text = text
 Toast.success = success
 Toast.fail = fail
 Toast.loading = loading
 Toast.hide = hide
+Toast.hideAll = hideAll
 Toast.Agent = ToastAgent
 
 export default Toast

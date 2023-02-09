@@ -1,20 +1,14 @@
-import { CSSProperties, FC } from 'react'
+import { CSSProperties, FC, useMemo } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
+import { isFileUrl } from '../../utils'
 
-export interface IconProps extends CommonComponentProps {
+export interface IconProps {
   className?: string
   style?: CSSProperties
   name?: string
-  fullName?: string
   prefix?: string
-  family?: string
-  divider?: string
   size?: string | number
   color?: string
-  type?: 'default' | 'rounded' | 'circle'
-  frameSize?: string | number
-  frameColor?: string
   onClick?: () => void
 }
 
@@ -23,27 +17,21 @@ export const Icon: FC<IconProps> = (props) => {
     className,
     style,
     name = '',
-    fullName,
-    prefix = '',
-    family,
-    divider = '-',
+    prefix,
     size = '',
     color = '',
-    type = 'default',
-    frameSize = '30px',
-    frameColor = '',
     ...restProps
   } = props
 
-  const isImg = name.includes('/')
+  const isImg = useMemo(() => {
+    return isFileUrl(name)
+  }, [name])
 
   const iconClass = classNames(
     's-icon',
     {
-      [family || prefix]: !isImg,
-      [fullName || prefix + divider + name]: !isImg,
-      's-icon-frame': type !== 'default',
-      ['s-icon-frame-' + type]: type !== 'default',
+      [prefix]: prefix && !isImg,
+      [prefix ? `${prefix}-${name}` : name]: !isImg,
     },
     className,
   )
@@ -51,12 +39,6 @@ export const Icon: FC<IconProps> = (props) => {
     fontSize: size,
     color: color,
     ...style,
-  }
-  if (type !== 'default') {
-    iconStyle.width = iconStyle.height = frameSize
-    if (frameColor) {
-      iconStyle.backgroundColor = frameColor
-    }
   }
 
   return (

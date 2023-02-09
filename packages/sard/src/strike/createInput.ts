@@ -7,20 +7,13 @@ import { SUPPORT_TOUCH } from './utils'
 
 const MOUSE_WINDOW_EVENTS = 'mousemove mouseup'
 
-function directionGuard(
-  config: DefaultConfig,
-  knock: Knock,
-  callback: (...args: any[]) => any,
-) {
+function directionGuard(config: DefaultConfig, knock: Knock) {
   if (config.lockDirection) {
-    if (
-      config.direction === 'all' ||
-      config.direction === knock.lockDirection
-    ) {
-      callback()
-    }
-  } else if (config.direction !== 'none') {
-    callback()
+    return (
+      config.direction === 'all' || config.direction === knock.lockDirection
+    )
+  } else {
+    return config.direction !== 'none'
   }
 }
 
@@ -35,6 +28,7 @@ function createHandler(
   config: DefaultConfig,
 ): StrikeInputHandler {
   let isMouseDown = false
+  let firstDirectionJudge: 'pending' | 'correct' | 'incorrect' = 'pending'
 
   return (ev: MouseEvent | TouchEvent) => {
     const type = ev.type
@@ -100,16 +94,25 @@ function createHandler(
           return
         }
 
+        if (firstDirectionJudge === 'correct' && type === 'mousemove') {
+          ev.preventDefault()
+        }
+
         fingers.update(touches, (knock: Knock) => {
           if (knock.firstFinger) {
             if (config.swipe || config.pan) {
-              directionGuard(config, knock, () => {
-                knock.expectedDirection = true
-                if (type === 'mousemove') {
-                  ev.preventDefault()
+              if (firstDirectionJudge === 'pending') {
+                const correct = directionGuard(config, knock)
+                if (correct) {
+                  knock.expectedDirection = true
+                  firstDirectionJudge = 'correct'
+                } else {
+                  firstDirectionJudge = 'incorrect'
                 }
+              }
+              if (firstDirectionJudge === 'correct') {
                 gestures.pan.move(ev, knock)
-              })
+              }
             }
             gestures.press.move(ev, knock)
           }
@@ -137,6 +140,7 @@ function createHandler(
         if (!isTouch) {
           isMouseDown = false
         }
+        firstDirectionJudge = 'pending'
 
         fingers.update(touches, (knock: Knock) => {
           if (knock.firstFinger) {

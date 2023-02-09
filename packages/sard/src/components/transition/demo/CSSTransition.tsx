@@ -2,11 +2,12 @@
 ### CSSTransition
 */
 
-import { CSSTransition, Button } from 'sard'
+import { CSSTransition, CSSTransitionProps, Button, Radio } from 'sard'
 import { useState } from 'react'
 
 export default function () {
   const [visible, setVisible] = useState(true)
+  const [type, setType] = useState<CSSTransitionProps['type']>('fade')
 
   const handleClick = () => {
     setVisible((visible) => !visible)
@@ -14,16 +15,38 @@ export default function () {
 
   return (
     <>
-      <Button onClick={handleClick}>Toggle</Button>
+      <Radio.Group value={type} onChange={setType} vertical>
+        {[
+          'fade',
+          'slide-top',
+          'slide-right',
+          'slide-bottom',
+          'slide-left',
+          'zoom',
+          'collapse',
+        ].map((type) => {
+          return (
+            <Radio key={type} value={type}>
+              {type}
+            </Radio>
+          )
+        })}
+      </Radio.Group>
 
-      <CSSTransition in={visible} timeout={2000}>
+      <br />
+      <br />
+
+      <Button onClick={handleClick}>Toggle Visible</Button>
+
+      <br />
+      <br />
+
+      <CSSTransition in={visible} type={type} timeout={300}>
         <section
-          className="aaa"
           style={{
             width: 100,
             height: 100,
             background: 'orange',
-            transitionDuration: '2s',
           }}
         ></section>
       </CSSTransition>

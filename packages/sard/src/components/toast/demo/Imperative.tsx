@@ -7,7 +7,7 @@ import { Toast, Button } from 'sard'
 export default function () {
   return (
     <>
-      <Button onClick={() => Toast.text('文本提示')}>文本提示</Button>{' '}
+      <Button onClick={() => Toast.show('文本提示')}>文本提示</Button>{' '}
       <Button onClick={() => Toast.success('成功')}>成功提示</Button>{' '}
       <Button
         onClick={() =>

@@ -1,14 +1,14 @@
 import { CSSProperties, FC, ReactNode, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import { Transition } from '../transition/index'
-import { useEvent } from '../../use/useEvent'
+import useEvent from '../../use/useEvent'
 
 export interface CollapseProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
   visible?: boolean
-  timeout?: number
+  duration?: number
   onEnter?: () => void
   onEntering?: () => void
   onEntered?: () => void
@@ -23,7 +23,7 @@ export const Collapse: FC<CollapseProps> = (props) => {
     style,
     children,
     visible,
-    timeout = 500,
+    duration = 500,
     onEnter,
     onEntering,
     onEntered,
@@ -37,29 +37,29 @@ export const Collapse: FC<CollapseProps> = (props) => {
 
   const elRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    return () => {
-      clearTimeout(timer.current)
-    }
-  }, [])
-
   const handleEnter = useEvent(() => {
     onEnter?.()
   })
 
   const handleEntering = useEvent(() => {
-    elRef.current.classList.add('show')
-    const height = elRef.current.offsetHeight
-    elRef.current.style.height = '0px'
-    elRef.current.offsetHeight
-    elRef.current.style.height = height + 'px'
-    elRef.current.classList.add('collapsing')
+    const el = elRef.current
+    if (el) {
+      el.classList.add('doc-show')
+      const height = el.offsetHeight
+      el.style.height = '0px'
+      el.offsetHeight
+      el.style.height = height + 'px'
+      el.classList.add('doc-collapsing')
+    }
     onEntering?.()
   })
 
   const handleEntered = useEvent(() => {
-    elRef.current.classList.remove('collapsing')
-    elRef.current.style.height = ''
+    const el = elRef.current
+    if (el) {
+      el.classList.remove('doc-collapsing')
+      el.style.height = ''
+    }
     onEntered?.()
   })
 
@@ -68,31 +68,48 @@ export const Collapse: FC<CollapseProps> = (props) => {
   })
 
   const handleExiting = useEvent(() => {
-    const height = elRef.current.offsetHeight
-    elRef.current.style.height = height + 'px'
-    elRef.current.offsetHeight
-    elRef.current.style.height = '0px'
-    elRef.current.classList.add('collapsing')
+    const el = elRef.current
+    if (el) {
+      const height = el.offsetHeight
+      el.style.height = height + 'px'
+      el.offsetHeight
+      el.style.height = '0px'
+      el.classList.add('doc-collapsing')
+    }
     onExiting?.()
   })
 
   const handleExited = useEvent(() => {
-    elRef.current.classList.remove('show', 'collapsing')
-    elRef.current.style.height = ''
+    const el = elRef.current
+    if (el) {
+      el.classList.remove('doc-show', 'doc-collapsing')
+      el.style.height = ''
+    }
     onExited?.()
   })
+
+  useEffect(() => {
+    if (visible && elRef.current) {
+      elRef.current.classList.add('doc-show')
+    }
+
+    return () => {
+      clearTimeout(timer.current)
+    }
+  }, [])
 
   const collapseClass = classNames('doc-collapse', className)
 
   const collapseStyle = {
     ...style,
-    transitionDuration: timeout + 'ms',
+    transitionDuration: duration + 'ms',
   }
 
   return (
     <Transition
+      {...restProps}
+      timeout={duration}
       in={visible}
-      timeout={timeout}
       onEnter={handleEnter}
       onEntering={handleEntering}
       onEntered={handleEntered}
@@ -100,12 +117,7 @@ export const Collapse: FC<CollapseProps> = (props) => {
       onExiting={handleExiting}
       onExited={handleExited}
     >
-      <div
-        {...restProps}
-        className={collapseClass}
-        style={collapseStyle}
-        ref={elRef}
-      >
+      <div ref={elRef} className={collapseClass} style={collapseStyle}>
         {children}
       </div>
     </Transition>

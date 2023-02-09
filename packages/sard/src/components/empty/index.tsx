@@ -1,9 +1,8 @@
 import { CSSProperties, FC, ReactNode } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 import { Icon, IconProps } from '../icon'
 
-export interface EmptyProps extends CommonComponentProps {
+export interface EmptyProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode

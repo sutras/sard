@@ -7,12 +7,12 @@ import { useState } from 'react'
 
 export default function () {
   const [value, setValue] = useState([0, 50] as [number, number])
-  const handleChanging = (value: [number, number]) => {
+  const handleChange = (value: [number, number]) => {
     setValue(value)
   }
   return (
     <>
-      <Slider defaultValue={value} range onChange={handleChanging} />
+      <Slider defaultValue={value} range onChange={handleChange} />
       {value.join(',')}
     </>
   )

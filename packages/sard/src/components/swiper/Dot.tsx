@@ -1,8 +1,7 @@
 import { CSSProperties, FC } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 
-export interface SwiperDotProps extends CommonComponentProps {
+export interface SwiperDotProps {
   className?: string
   style?: CSSProperties
   size?: number

@@ -23,6 +23,10 @@ $s-input-append-gap-left: 10px !default;
 $s-input-clear-margin-left: 0.5em !default;
 $s-input-clear-padding-x: 0.5em !default;
 $s-input-clear-color: $s-weak !default;
+
+$s-input-count-margin-left: 0.5em !default;
+$s-input-count-font-size: 14px !default;
+$s-input-count-color: $s-gray-500 !default;
 // #endvariables
 
 .s-input {
@@ -50,8 +54,6 @@ $s-input-clear-color: $s-weak !default;
       margin-right: $s-input-prepend-gap-right;
     }
     .s-input-control {
-      all: inherit;
-      position: static;
       display: flex;
       flex: 1 1 0;
       align-self: stretch;
@@ -63,9 +65,21 @@ $s-input-clear-color: $s-weak !default;
       margin: 0;
       padding: 0;
       border: none;
-      border-radius: 0;
-      opacity: 1;
-      transform: none;
+      resize: none;
+
+      font: inherit;
+      line-height: inherit;
+      color: inherit;
+      text-align: inherit;
+      text-shadow: inherit;
+      text-indent: inherit;
+      text-decoration: inherit;
+      text-transform: inherit;
+      text-emphasis: inherit;
+      text-rendering: inherit;
+      letter-spacing: inherit;
+      word-spacing: inherit;
+      background-color: inherit;
 
       &:focus,
       &:active {
@@ -98,16 +112,21 @@ $s-input-clear-color: $s-weak !default;
       cursor: pointer;
       user-select: none;
     }
+    .s-input-count {
+      margin-left: $s-input-count-margin-left;
+      font-size: $s-input-count-font-size;
+      color: $s-input-count-color;
+    }
   }
 }
 
 // # 没有边框
-.s-input-no-border {
+.s-input-borderless {
   border: none;
 }
 
 // # 齐平的
-.s-input-flush {
+.s-input-inlaid {
   padding: 0;
   border: none;
   font-size: inherit;
@@ -126,3 +145,14 @@ $s-input-clear-color: $s-weak !default;
 
 // # 只读状态
 // .s-input-readonly { }
+
+// # 字数统计
+.s-input-is-textarea {
+  position: relative;
+
+  .s-input-count {
+    position: absolute;
+    top: 100%;
+    right: 0;
+  }
+}

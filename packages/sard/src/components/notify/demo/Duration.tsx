@@ -12,12 +12,7 @@ export default function () {
     <>
       <Button onClick={() => setVisible(true)}>显示不会消失的通知</Button>{' '}
       <Button onClick={() => setVisible(false)}>隐藏通知</Button>
-      <Notify
-        visible={visible}
-        duration={0}
-        message="这是一条通知"
-        onTimeout={() => setVisible(false)}
-      />
+      <Notify visible={visible} duration={0} message="这是一条通知" />
     </>
   )
 }

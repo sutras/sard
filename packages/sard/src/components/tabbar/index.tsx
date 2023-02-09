@@ -1,36 +1,30 @@
 import {
   CSSProperties,
-  ReactNode,
   ReactElement,
-  createContext,
   Children,
   cloneElement,
   FC,
+  MouseEvent,
 } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
+import { pickNullish } from '../../utils'
+import { useControlledValue } from '../../use'
 
-import { TabbarItem, TabbarItemProps } from './Item'
+import { TabbarItem } from './Item'
 
 export * from './Item'
 
-export interface TabbarContext {
-  color?: string
-  activeColor?: string
-  activeIndex?: number
-}
-
-export const TabbarContext = createContext<TabbarContext>({} as TabbarContext)
-
-export interface TabbarProps extends CommonComponentProps {
+export interface TabbarProps {
   className?: string
   style?: CSSProperties
-  children?: ReactNode
+  children?: ReactElement | ReactElement[]
+  activeKey?: number | string
+  defaultActiveKey?: number | string
   color?: string
   activeColor?: string
-  activeIndex?: number
   fixed?: boolean
-  onChange?: (index: number) => void
+  zIndex?: number | string
+  onChange?: (key: number | string) => void
 }
 
 export interface TabbarFC extends FC<TabbarProps> {
@@ -42,17 +36,30 @@ export const Tabbar: TabbarFC = (props) => {
     className,
     style,
     children,
+    activeKey,
+    defaultActiveKey,
     color,
     activeColor,
-    activeIndex,
     fixed = true,
+    zIndex,
     onChange,
     ...restProps
   } = props
 
-  const handleItemClick = (index: number, element: ReactNode) => {
-    onChange?.(index)
-    ;(element as ReactElement<TabbarItemProps>).props?.onClick?.(index)
+  const [innerActiveKey, setInnerActiveKey] = useControlledValue<
+    number | string
+  >(props, {
+    defaultValuePropName: 'defaultActiveKey',
+    valuePropName: 'activeKey',
+  })
+
+  const handleItemClick = (
+    key: number | string,
+    element: ReactElement,
+    event: MouseEvent,
+  ) => {
+    setInnerActiveKey(key)
+    element.props?.onClick?.(event)
   }
 
   const tabbarClass = classNames(
@@ -63,17 +70,24 @@ export const Tabbar: TabbarFC = (props) => {
     className,
   )
 
+  const tabbarStyle = {
+    zIndex: fixed ? zIndex : '',
+    ...style,
+  }
+
   return (
-    <div {...restProps} className={tabbarClass}>
-      {Children.map(children, (element, index) =>
-        cloneElement(element as React.ReactElement, {
-          color,
-          activeColor,
-          index,
-          activeIndex,
-          onClick: (index: number) => handleItemClick(index, element),
-        }),
-      )}
+    <div {...restProps} className={tabbarClass} style={tabbarStyle}>
+      {Children.map(children, (element, index) => {
+        const innerKey = element.key ?? index
+
+        return cloneElement(element, {
+          ...pickNullish(element.props, props, ['color', 'activeColor']),
+          innerKey,
+          activeKey: innerActiveKey,
+          onClick: (event: MouseEvent) =>
+            handleItemClick(innerKey, element, event),
+        })
+      })}
     </div>
   )
 }

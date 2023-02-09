@@ -1,13 +1,10 @@
-import { CSSProperties, ReactNode, useRef, FC } from 'react'
+import { CSSProperties, ReactNode, useRef, FC, useEffect } from 'react'
 import classNames from 'classnames'
-import { useControlledValue } from '../../use'
-import { CommonComponentProps } from '../../utils/types'
+import { useControlledValue, useEvent, useStrike } from '../../use'
 import { Icon } from '../icon'
-import { useEvent, useSelectorId, useStrike } from '../../use'
-import { PAN_START, PAN_MOVE, TAP, StrikePanEvent } from '../../strike'
-import { getBoundingClientRect } from '../../utils/dom'
+import { PAN_START, PAN_MOVE, TAP, StrikePanEvent, PAN_END } from '../../strike'
 
-export interface RateProps extends CommonComponentProps {
+export interface RateProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -23,6 +20,7 @@ export interface RateProps extends CommonComponentProps {
   color?: string
   voidColor?: string
   disabled?: boolean
+  readOnly?: boolean
   onChange?: (value: number) => void
 }
 
@@ -34,7 +32,7 @@ export const Rate: FC<RateProps> = (props) => {
     value,
     defaultValue,
     allowHalf,
-    allowClear = true,
+    allowClear,
     count = 5,
     size,
     spacing,
@@ -42,53 +40,73 @@ export const Rate: FC<RateProps> = (props) => {
     voidIcon,
     color,
     voidColor,
+    readOnly,
     disabled,
     onChange,
     ...restProps
   } = props
 
-  const rateId = useSelectorId()
-
   const [innerValue, setInnerValue] = useControlledValue<number>(props, {
     defaultValue: 0,
   })
 
-  const itemsBoundary = useRef<[number, number][]>([])
-
   const panStartLeft = useRef(0)
+  const rateRef = useRef<HTMLDivElement>()
+
+  const itemsBoundary = useRef<[number, number][]>([])
+  const items = useRef([])
+  const itemRefCallback = (i, el) => {
+    if (i === 0) {
+      items.current = []
+    }
+    items.current[i] = el
+  }
+
+  const itemStars = useRef<HTMLDivElement[]>([])
+  const itemStarRefCallback = (i, el) => {
+    if (i === 0) {
+      itemStars.current = []
+    }
+    itemStars.current[i] = el
+  }
+
+  const tempValue = useRef(innerValue)
+
+  const updateStar = () => {
+    itemStars.current.forEach((el, i) => {
+      const diff = i + 1 - tempValue.current
+      el.style.width =
+        (diff <= 0 ? 1 : diff > 1 ? 0 : tempValue.current % 1) + 'em'
+    })
+  }
 
   const setValueByCurrent = (current: number) => {
-    if (current === innerValue) {
-      return
-    }
-    setInnerValue(current)
+    tempValue.current = current
+    updateStar()
   }
 
   const handlePanstart = useEvent(() => {
-    if (disabled) {
+    if (readOnly || disabled) {
       return
     }
-    getBoundingClientRect(rateId, (rect) => {
-      panStartLeft.current = rect.left
-    })
+    if (rateRef.current) {
+      panStartLeft.current = rateRef.current.getBoundingClientRect().left
+    }
     itemsBoundary.current = []
-    Array(count)
-      .fill(0)
-      .map((_, index) => {
-        getBoundingClientRect(rateId + '_' + index, (rect) => {
-          itemsBoundary.current[index] = [rect.left, rect.right]
-        })
-      })
+    items.current.forEach((el, i) => {
+      const rect = el.getBoundingClientRect()
+      itemsBoundary.current[i] = [rect.left, rect.right]
+    })
   })
 
   const handlePanChange = ({ x }: StrikePanEvent) => {
-    if (disabled) {
+    if (readOnly || disabled) {
       return
     }
     const offsetX = x - panStartLeft.current
     const boundaries = itemsBoundary.current
     if (offsetX < 0) {
-      setValueByCurrent(0)
+      setValueByCurrent(allowClear ? 0 : allowHalf ? 0.5 : 1)
       return
     }
 
@@ -109,10 +127,18 @@ export const Rate: FC<RateProps> = (props) => {
     handlePanChange(event)
   })
 
+  const handlePanend = useEvent(() => {
+    if (readOnly || disabled) {
+      return
+    }
+    setInnerValue(tempValue.current)
+  })
+
   const rateBinding = useStrike(
     (strike) => {
       strike.on(PAN_START, handlePanstart)
       strike.on(PAN_MOVE, handlePanmove)
+      strike.on(PAN_END, handlePanend)
       strike.on(TAP, handleTap)
     },
     {
@@ -123,10 +149,15 @@ export const Rate: FC<RateProps> = (props) => {
     },
   )
 
+  useEffect(() => {
+    setValueByCurrent(innerValue)
+  }, [innerValue, itemStars.current])
+
   const rateClass = classNames(
     's-rate',
     {
       's-rate-disabled': disabled,
+      's-rate-readonly': readOnly,
     },
     className,
   )
@@ -139,40 +170,37 @@ export const Rate: FC<RateProps> = (props) => {
   return (
     <div
       {...restProps}
+      {...rateBinding}
       className={rateClass}
       style={rateStyle}
-      {...rateBinding}
-      id={rateId}
+      ref={rateRef}
     >
       {Array(count)
         .fill(0)
         .map((_, index) => {
           const itemValue = index + 1
-          const diff = itemValue - innerValue
 
           return (
             <div
               className="s-rate-item"
               key={itemValue}
               style={{
-                marginLeft: itemValue !== 1 && spacing != null ? spacing : '',
+                marginLeft: itemValue !== 1 ? spacing : '',
               }}
-              id={rateId + '_' + index}
+              ref={(el) => itemRefCallback(index, el)}
             >
               <div className="s-rate-star-void" style={{ color: voidColor }}>
                 {voidIcon ?? <Icon prefix="si" name="star"></Icon>}
               </div>
-              {diff < 1 && (
-                <div
-                  className="s-rate-star"
-                  style={{
-                    width: diff > 0 ? (innerValue % 1) + 'em' : '',
-                    color: color,
-                  }}
-                >
-                  {icon ?? <Icon prefix="si" name="star-fill"></Icon>}
-                </div>
-              )}
+              <div
+                className="s-rate-star"
+                style={{
+                  color: color,
+                }}
+                ref={(el) => itemStarRefCallback(index, el)}
+              >
+                {icon ?? <Icon prefix="si" name="star-fill"></Icon>}
+              </div>
             </div>
           )
         })}

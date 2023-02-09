@@ -2,7 +2,7 @@
 
 ### 介绍
 
-Template
+Template。
 
 ### 引入
 

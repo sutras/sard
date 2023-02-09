@@ -9,7 +9,7 @@ export default function () {
   const [count, setCount] = useState<number>()
   return (
     <>
-      <Stepper value={count} onChange={(val) => setCount(val)} />
+      <Stepper value={count} onChange={setCount} />
     </>
   )
 }

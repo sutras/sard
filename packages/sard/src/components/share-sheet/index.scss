@@ -6,7 +6,7 @@ $s-share-sheet-border-radius: $s-border-radius-xl !default;
 $s-share-sheet-bg: $s-white !default;
 
 $s-share-sheet-header-padding: 14px !default;
-$s-share-sheet-header-border-color: $s-gray-200;
+$s-share-sheet-header-border-color: $s-gray-200 !default;
 
 $s-share-sheet-title-font-size: $s-font-size-lg !default;
 
@@ -20,17 +20,21 @@ $s-share-sheet-row-padding-x: 8px !default;
 
 $s-share-sheet-item-active-opacity: $s-active-opacity !default;
 
-$s-share-sheet-item-icon-margin-x: 16px !default;
+$s-share-sheet-icon-margin-x: 16px !default;
+$s-share-sheet-icon-size: 48px !default;
+$s-share-sheet-icon-font-size: 24px !default;
+$s-share-sheet-icon-color: $s-gray-600 !default;
+$s-share-sheet-icon-bg: $s-gray-200 !default;
 
-$s-share-sheet-item-title-margin-top: 8px !default;
-$s-share-sheet-item-title-padding-x: 4px !default;
-$s-share-sheet-item-title-font-size: $s-font-size !default;
-$s-share-sheet-item-title-color: $s-muted !default;
+$s-share-sheet-name-margin-top: 8px !default;
+$s-share-sheet-name-padding-x: 4px !default;
+$s-share-sheet-name-font-size: $s-font-size !default;
+$s-share-sheet-name-color: $s-muted !default;
 
-$s-share-sheet-item-label-margin-top: 0 !default;
-$s-share-sheet-item-label-padding-x: 4px !default;
-$s-share-sheet-item-label-font-size: $s-font-size-sm !default;
-$s-share-sheet-item-label-color: $s-weak !default;
+$s-share-sheet-label-margin-top: 0 !default;
+$s-share-sheet-label-padding-x: 4px !default;
+$s-share-sheet-label-font-size: $s-font-size-sm !default;
+$s-share-sheet-label-color: $s-weak !default;
 
 $s-share-sheet-gap-bg: $s-bg-gap !default;
 $s-share-sheet-gap-height: 8px !default;
@@ -45,91 +49,122 @@ $s-share-sheet-cancel-active-bg: $s-bg-active !default;
   border-top-left-radius: $s-share-sheet-border-radius;
   border-top-right-radius: $s-share-sheet-border-radius;
   background-color: $s-share-sheet-bg;
-}
-.s-share-sheet-header {
-  position: relative;
-  padding: $s-share-sheet-header-padding;
-
-  @include border-bottom($s-share-sheet-header-border-color);
 
   @at-root {
-    .s-share-sheet-title {
-      font-size: $s-share-sheet-title-font-size;
-      text-align: center;
-    }
-    .s-share-sheet-description {
-      font-size: $s-share-sheet-description-font-size;
-      text-align: center;
-      color: $s-share-sheet-description-color;
+    .s-share-sheet-header {
+      position: relative;
+      padding: $s-share-sheet-header-padding;
 
-      .s-share-sheet-title ~ & {
-        margin-top: $s-share-sheet-description-margin-top;
+      @include border-bottom($s-share-sheet-header-border-color);
+
+      @at-root {
+        .s-share-sheet-title {
+          font-size: $s-share-sheet-title-font-size;
+          text-align: center;
+        }
+        .s-share-sheet-description {
+          font-size: $s-share-sheet-description-font-size;
+          text-align: center;
+          color: $s-share-sheet-description-color;
+
+          .s-share-sheet-title ~ & {
+            margin-top: $s-share-sheet-description-margin-top;
+          }
+        }
+      }
+    }
+
+    .s-share-sheet-body {
+      @at-root {
+        .s-share-sheet-row {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          padding: $s-share-sheet-row-padding-y $s-share-sheet-row-padding-x;
+          overflow-x: auto;
+          overflow-y: hidden;
+          &::-webkit-scrollbar {
+            height: 0;
+          }
+          &:not(:first-child) {
+            @include border-top($s-share-sheet-row-border-color);
+          }
+          .s-share-sheet.s-share-sheet-headless &:first-child {
+            border-top-left-radius: $s-share-sheet-border-radius;
+            border-top-right-radius: $s-share-sheet-border-radius;
+          }
+
+          @at-root {
+            .s-share-sheet-item {
+              @include button-flush;
+
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              cursor: pointer;
+              user-select: none;
+
+              &:not(.s-share-sheet-item-disabled):not([disabled]):active {
+                opacity: $s-share-sheet-item-active-opacity;
+              }
+
+              @at-root {
+                .s-share-sheet-icon {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  width: $s-share-sheet-icon-size;
+                  height: $s-share-sheet-icon-size;
+                  margin: 0 $s-share-sheet-icon-margin-x;
+                  border-radius: 100%;
+                  font-size: $s-share-sheet-icon-font-size;
+                  color: $s-share-sheet-icon-color;
+                  background-color: $s-share-sheet-icon-bg;
+                }
+                .s-share-sheet-img {
+                  display: block;
+                  width: $s-share-sheet-icon-size;
+                  height: $s-share-sheet-icon-size;
+                  object-fit: contain;
+                }
+                .s-share-sheet-name {
+                  margin-top: $s-share-sheet-name-margin-top;
+                  padding: 0 $s-share-sheet-name-padding-x;
+                  font-size: $s-share-sheet-name-font-size;
+                  color: $s-share-sheet-name-color;
+                }
+                .s-share-sheet-label {
+                  margin-top: $s-share-sheet-label-margin-top;
+                  padding: 0 $s-share-sheet-label-padding-x;
+                  font-size: $s-share-sheet-label-font-size;
+                  color: $s-share-sheet-label-color;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .s-share-sheet-gap {
+      height: $s-share-sheet-gap-height;
+      background-color: $s-share-sheet-gap-bg;
+    }
+
+    .s-share-sheet-cancel {
+      font-size: $s-share-sheet-cancel-font-size;
+      padding: $s-share-sheet-cancel-padding;
+      text-align: center;
+      cursor: pointer;
+      background-color: $s-share-sheet-cancel-bg;
+      &:active {
+        background-color: $s-share-sheet-cancel-active-bg;
       }
     }
   }
 }
 
-.s-share-sheet-row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  padding: $s-share-sheet-row-padding-y $s-share-sheet-row-padding-x;
-  overflow-x: auto;
-  overflow-y: hidden;
-  &::-webkit-scrollbar {
-    height: 0;
-  }
-  &:not(:first-child) {
-    @include border-top($s-share-sheet-row-border-color);
-  }
-  .s-share-sheet.s-share-sheet-headless &:first-child {
-    border-top-left-radius: $s-share-sheet-border-radius;
-    border-top-right-radius: $s-share-sheet-border-radius;
-  }
-}
-
-.s-share-sheet-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  user-select: none;
-  &:active {
-    opacity: $s-share-sheet-item-active-opacity;
-  }
-
-  @at-root {
-    .s-share-sheet-item-icon {
-      display: flex;
-      margin: 0 $s-share-sheet-item-icon-margin-x;
-    }
-    .s-share-sheet-item-title {
-      margin-top: $s-share-sheet-item-title-margin-top;
-      padding: 0 $s-share-sheet-item-title-padding-x;
-      font-size: $s-share-sheet-item-title-font-size;
-      color: $s-share-sheet-item-title-color;
-    }
-    .s-share-sheet-item-label {
-      margin-top: $s-share-sheet-item-label-margin-top;
-      padding: 0 $s-share-sheet-item-label-padding-x;
-      font-size: $s-share-sheet-item-label-font-size;
-      color: $s-share-sheet-item-label-color;
-    }
-  }
-}
-
-.s-share-sheet-gap {
-  height: $s-share-sheet-gap-height;
-  background-color: $s-share-sheet-gap-bg;
-}
-
-.s-share-sheet-cancel {
-  font-size: $s-share-sheet-cancel-font-size;
-  padding: $s-share-sheet-cancel-padding;
-  text-align: center;
-  cursor: pointer;
-  background-color: $s-share-sheet-cancel-bg;
-  &:active {
-    background-color: $s-share-sheet-cancel-active-bg;
-  }
+// 禁用
+.s-share-sheet-item-disabled {
+  @include disabled;
 }

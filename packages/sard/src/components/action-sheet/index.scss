@@ -39,6 +39,7 @@ $s-action-sheet-cancel-active-bg: $s-bg-active !default;
   border-top-right-radius: $s-action-sheet-border-radius;
   background-color: $s-action-sheet-bg;
 }
+
 .s-action-sheet-header {
   position: relative;
   padding: $s-action-sheet-header-padding;
@@ -68,23 +69,30 @@ $s-action-sheet-cancel-active-bg: $s-bg-active !default;
 }
 
 .s-action-sheet-item {
+  @include button-flush;
+
   position: relative;
+  display: block;
+  width: 100%;
   padding: $s-action-sheet-item-padding;
   text-align: center;
   cursor: pointer;
+  user-select: none;
   background-color: $s-action-sheet-item-bg;
-  &:active {
-    background-color: $s-action-sheet-item-active-bg;
-  }
-  .s-action-sheet.s-action-sheet-headless &:first-child {
+
+  .s-action-sheet-headless &:first-child {
     border-top-left-radius: $s-action-sheet-border-radius;
     border-top-right-radius: $s-action-sheet-border-radius;
   }
+
   &:not(:first-child) {
     @include border-top($s-action-sheet-item-border-color);
   }
-  &.s-action-sheet-item-disabled {
-    @include disabled-text;
+
+  &:not([disabled]):not(.s-action-sheet-item-disabled):not(
+      .s-action-sheet-item-loading
+    ):active {
+    background-color: $s-action-sheet-item-active-bg;
   }
 
   @at-root {
@@ -99,12 +107,23 @@ $s-action-sheet-cancel-active-bg: $s-bg-active !default;
   }
 }
 
+// 禁用
+.s-action-sheet-item-disabled {
+  @include disabled-text;
+}
+
+// loading
+.s-action-sheet-item-loading {
+  cursor: default;
+}
+
 .s-action-sheet-cancel {
   font-size: $s-action-sheet-cancel-font-size;
   padding: $s-action-sheet-cancel-padding;
   text-align: center;
   cursor: pointer;
   background-color: $s-action-sheet-cancel-bg;
+
   &:active {
     background-color: $s-action-sheet-cancel-active-bg;
   }

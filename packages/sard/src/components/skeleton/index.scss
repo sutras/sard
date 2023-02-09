@@ -3,100 +3,112 @@
 
 // #variables
 $s-skeleton-bg: $s-gray-200 !default;
-$s-skeleton-dark-bg: $s-gray-300 !default;
+$s-skeleton-dark-bg: $s-gray-400 !default;
 $s-skeleton-border-radius: $s-border-radius-sm !default;
 
+$s-skeleton-avatar-size: 32px !default;
 $s-skeleton-avatar-margin-right: 15px !default;
 
 $s-skeleton-content-padding-top: 5px !default;
 
 $s-skeleton-title-width: 40% !default;
-$s-skeleton-title-height: 15px !default;
+$s-skeleton-title-height: 20px !default;
 $s-skeleton-title-gap: 20px !default;
 
 $s-skeleton-row-last-width: 60% !default;
-$s-skeleton-row-height: 15px !default;
+$s-skeleton-row-gap: 15px !default;
+
+$s-skeleton-block-height: 15px !default;
+
 $s-skeleton-row-gap: 15px !default;
 
 // #endvariables
 
-.s-skeleton {
-  display: flex;
-  flex-wrap: nowrap;
-
-  @at-root {
-    .s-skeleton-avatar {
-      flex: none;
-      margin-right: $s-skeleton-avatar-margin-right;
-      background-color: $s-skeleton-bg;
-    }
-    .s-skeleton-avatar-round {
-      border-radius: 50%;
-    }
-    .s-skeleton-avatar-square {
-      border-radius: $s-skeleton-border-radius;
-    }
-
-    .s-skeleton-content {
-      flex: 1;
-
-      .s-skeleton-avatar ~ & {
-        padding-top: $s-skeleton-content-padding-top;
-      }
-
-      @at-root {
-        .s-skeleton-title {
-          width: $s-skeleton-title-width;
-          height: $s-skeleton-title-height;
-          background-color: $s-skeleton-bg;
-
-          + .s-skeleton-row {
-            margin-top: $s-skeleton-title-gap;
-          }
-        }
-        .s-skeleton-row {
-          height: $s-skeleton-row-height;
-          background-color: $s-skeleton-bg;
-
-          &:last-child {
-            width: $s-skeleton-row-last-width;
-          }
-          ~ .s-skeleton-row {
-            margin-top: $s-skeleton-row-gap;
-          }
-        }
-      }
-    }
-  }
-}
-
-.s-skeleton-round {
-  .s-skeleton-title,
-  .s-skeleton-row {
-    border-radius: 100px;
-  }
-}
-
-.s-skeleton-animated {
-  .s-skeleton-avatar,
-  .s-skeleton-title,
-  .s-skeleton-row {
-    background: linear-gradient(
-      90deg,
-      color.change($s-skeleton-bg, $alpha: 0.8) 25%,
-      color.change($s-skeleton-dark-bg, $alpha: 1) 40%,
-      color.change($s-skeleton-bg, $alpha: 0.8) 60%
-    );
-    background-size: 400% 100%;
-    animation: s-skeleton-animated 1.5s ease infinite;
-  }
-}
-
+// # animated
 @keyframes s-skeleton-animated {
   0% {
     background-position: 100% 50%;
   }
   100% {
     background-position: 0 50%;
+  }
+}
+
+.s-skeleton-animated {
+  background: linear-gradient(
+    90deg,
+    color.change($s-skeleton-bg, $alpha: 0.2) 25%,
+    color.change($s-skeleton-dark-bg, $alpha: 0.6) 40%,
+    color.change($s-skeleton-bg, $alpha: 0.2) 60%
+  );
+  background-size: 400% 100%;
+  animation: s-skeleton-animated 1.5s ease infinite;
+}
+
+// # block
+.s-skeleton-block {
+  width: 100%;
+  height: $s-skeleton-block-height;
+  background-color: $s-skeleton-bg;
+  border-radius: $s-skeleton-border-radius;
+}
+
+// # round
+.s-skeleton-round {
+  border-radius: 9999px;
+}
+
+// # avatar
+.s-skeleton-avatar {
+  flex: none;
+  width: $s-skeleton-avatar-size;
+  height: $s-skeleton-avatar-size;
+  background-color: $s-skeleton-bg;
+}
+.s-skeleton-avatar-round {
+  border-radius: 50%;
+}
+.s-skeleton-avatar-square {
+  border-radius: $s-skeleton-border-radius;
+}
+
+// # title
+.s-skeleton-title {
+  width: $s-skeleton-title-width;
+  height: $s-skeleton-title-height;
+  background-color: $s-skeleton-bg;
+}
+
+// # paragraph
+.s-skeleton-row {
+  &:not(:first-child) {
+    margin-top: $s-skeleton-row-gap;
+  }
+  &:last-child {
+    width: $s-skeleton-row-last-width;
+  }
+}
+
+// # skeleton
+.s-skeleton {
+  display: flex;
+  flex-wrap: nowrap;
+
+  @at-root {
+    .s-skeleton-content {
+      flex: 1;
+
+      .s-skeleton-avatar ~ & {
+        padding-top: $s-skeleton-content-padding-top;
+      }
+    }
+  }
+
+  .s-skeleton-avatar {
+    margin-right: $s-skeleton-avatar-margin-right;
+  }
+
+  .s-skeleton-title ~ .s-skeleton-paragraph {
+    margin-top: $s-skeleton-title-gap;
   }
 }

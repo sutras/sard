@@ -6,8 +6,10 @@ import { Loading } from 'sard'
 
 export default function () {
   return (
-    <>
-      <Loading /> <Loading type="clock" />
-    </>
+    <div style={{ display: 'flex', gap: 10 }}>
+      <Loading />
+      <Loading type="clock" />
+      <Loading type="circular" />
+    </div>
   )
 }

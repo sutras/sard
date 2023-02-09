@@ -39,7 +39,7 @@ $s-tag-close-margin-left: 3px !default;
 // 默认类型主题色
 @each $color, $value in $s-theme-colors {
   .s-tag-#{$color} {
-    color: color-contrast($value);
+    color: $s-white;
     background-color: $value;
 
     // 镂空主题色

@@ -14,6 +14,7 @@ import {
   ExoticComponent,
   PropsWithoutRef,
   RefAttributes,
+  useMemo,
 } from 'react'
 import classNames from 'classnames'
 import { CommonComponentProps } from '../../utils/types'
@@ -28,17 +29,17 @@ import { pageScrollTop } from '../../utils/dom'
 export * from './Pane'
 
 export interface TabsRef {
-  scrollTo(name: any, animated?: boolean): void
+  scrollTo(innerKey: number | string, animated?: boolean): void
 }
 
 export interface TabsProps extends CommonComponentProps {
   className?: string
   style?: CSSProperties
-  children?: ReactNode
-  defaultActiveKey?: any
-  activeKey?: any
-  onChange?: (name: any) => void
-  onLabelClick?: (name: any) => void
+  children?: ReactElement | ReactElement[]
+  defaultActiveKey?: number | string
+  activeKey?: number | string
+  onChange?: (key: number | string) => void
+  onLabelClick?: (key: number | string) => void
   scrollCount?: number
   type?: 'line' | 'card' | 'pill' | 'border'
   headerClass?: string
@@ -105,31 +106,37 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     ...restProps
   } = props
 
-  const [innerName, setInnerName] = useState(() => {
-    const firstPane = Children.toArray(
-      children,
-    )[0] as ReactElement<TabPaneProps>
-    return activeKey ?? defaultActiveKey ?? firstPane?.props.name ?? 0
+  const [innerActiveKey, setInnerActiveKey] = useState<number | string>(() => {
+    let firstPane = children
+    if (Array.isArray(firstPane)) {
+      firstPane = firstPane[0]
+    }
+    return activeKey ?? defaultActiveKey ?? firstPane?.key ?? 0
   })
 
-  const wrapperRef = useRef<HTMLElement>()
+  const wrapperRef = useRef<HTMLDivElement>()
 
   const swiperRef = useRef<SwiperRef>(null)
 
-  const labelSet = useMapSet<any, HTMLElement>([])
+  const labelSet = useMapSet<number | string, HTMLElement>([])
+
+  const activeIndex = useMemo(() => {
+    const index = labelSet.getIndexByName(innerActiveKey)
+    return index === -1 ? 0 : index
+  }, [innerActiveKey])
 
   // 受控
   useEffect(() => {
     if (!scrollspy && activeKey != null) {
-      setInnerName(activeKey)
+      setInnerActiveKey(activeKey)
     }
   }, [activeKey])
 
   useEffect(() => {
-    swiperRef.current?.swipeTo(innerName)
-
-    const label = labelSet.get(innerName)
+    const label = labelSet.get(innerActiveKey)
     if (wrapperRef.current && label) {
+      swiperRef.current?.swipeTo(labelSet.getIndexByName(innerActiveKey))
+
       wrapperRef.current.scrollTo({
         left:
           label.offsetLeft -
@@ -137,11 +144,12 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
         behavior: 'smooth',
       })
     }
-  }, [innerName])
+  }, [innerActiveKey])
 
-  const handleSwiperChange = useEvent((name: any) => {
-    setInnerName(name)
-    onChange?.(name)
+  const handleSwiperChange = useEvent((index: number) => {
+    const key = labelSet.getKeyByIndex(index)
+    setInnerActiveKey(key)
+    onChange?.(key)
   })
 
   const paneSet = useMapSet<any, HTMLElement>([])
@@ -151,12 +159,12 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     scrollLock.current = false
   }, 500)
 
-  const scrollTo = (name: any, animated = true) => {
+  const scrollTo = (key: number | string, animated = true) => {
     if (!scrollspy) {
       return
     }
 
-    const el = paneSet.get(name)
+    const el = paneSet.get(key)
 
     if (el) {
       const top = el.getBoundingClientRect().top + window.scrollY - offset
@@ -167,20 +175,20 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     }
   }
 
-  const switchTo = (name: any, animated?: boolean) => {
-    if (name !== innerName) {
+  const switchTo = (key: number | string, animated?: boolean) => {
+    if (key !== innerActiveKey) {
       // 非受控
       if (scrollspy || activeKey == null) {
-        setInnerName(name)
+        setInnerActiveKey(key)
       }
-      onChange?.(name)
+      onChange?.(key)
     }
-    scrollTo(name, animated)
+    scrollTo(key, animated)
   }
 
-  const handleLabelClick = (name: any) => {
-    onLabelClick?.(name)
-    switchTo(name, true)
+  const handleLabelClick = (key: number | string) => {
+    onLabelClick?.(key)
+    switchTo(key, true)
   }
 
   useScroll(
@@ -192,7 +200,7 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
       matchScrollVisible(
         srcData.map((item) => item[1]),
         (index) => {
-          setInnerName(srcData[index][0])
+          setInnerActiveKey(srcData[index][0])
         },
         offset,
       )
@@ -204,8 +212,8 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
   )
 
   useImperativeHandle(ref, () => ({
-    scrollTo(name: any, animated?: boolean) {
-      switchTo(name, animated)
+    scrollTo(key: number | string, animated?: boolean) {
+      switchTo(key, animated)
     },
   }))
 
@@ -222,24 +230,28 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     className,
   )
 
-  const renderPane = (Comp: SwiperItem | ExoticComponent) => {
-    return Children.map(
-      children as ReactElement<TabPaneProps>,
-      (pane: ReactElement<TabPaneProps>, index: number) => {
-        const name = pane.props.name ?? index
+  const renderLine = () => {
+    if (Children.count(children) > scrollCount || type !== 'line') {
+      return null
+    }
+    return null
+  }
 
-        return (
-          <Comp>
-            {cloneElement(pane, {
-              key: name,
-              name,
-              activeKey: innerName,
-              ref: (el: any) => paneSet.set(name, el),
-            })}
-          </Comp>
-        )
-      },
-    )
+  const renderPane = (Comp: SwiperItem | ExoticComponent) => {
+    return Children.map(children, (element, index) => {
+      const key = element.key ?? index
+
+      return (
+        <Comp>
+          {cloneElement(element, {
+            key,
+            innerKey: key,
+            activeKey: innerActiveKey,
+            ref: (el: any) => paneSet.set(key, el),
+          })}
+        </Comp>
+      )
+    })
   }
 
   return (
@@ -252,16 +264,15 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
         <div
           className={classNames('s-tab-label-wrapper', wrapperClass)}
           style={wrapperStyle}
-          ref={wrapperRef as any}
+          ref={wrapperRef}
         >
           {Children.map(
             children as ReactElement<TabPaneProps>,
-            (pane: ReactElement<TabPaneProps>, index: any) => {
-              const name = pane.props.name ?? index
+            (pane: ReactElement<TabPaneProps>, index: number) => {
+              const innerKey = pane.key ?? index
 
               return (
                 <TabLabel
-                  key={name}
                   className={classNames(labelClass, pane.props.labelClass)}
                   style={{
                     ...labelStyle,
@@ -269,9 +280,10 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
                   }}
                   activeStyle={activeLabelStyle}
                   disabled={pane.props.disabled}
-                  name={name}
-                  activeKey={innerName}
-                  ref={(el: any) => labelSet.set(name, el)}
+                  key={innerKey}
+                  innerKey={innerKey}
+                  activeKey={innerActiveKey}
+                  ref={(el) => labelSet.set(innerKey, el)}
                   showLine={type === 'card' || type === 'line'}
                   line={line}
                   lineWidth={lineWidth}
@@ -285,13 +297,14 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
           )}
         </div>
         {append && <div className="s-tab-append">{append}</div>}
+        {renderLine()}
       </div>
       <div className={classNames('s-tab-body', bodyClass)} style={bodyStyle}>
         {animated || swipeable ? (
           <Swiper
             {...Object.assign({ duration: 300 }, swiperProps)}
             ref={swiperRef}
-            defaultIndex={innerName}
+            defaultIndex={activeIndex}
             onChange={handleSwiperChange}
             touchable={swipeable}
           >

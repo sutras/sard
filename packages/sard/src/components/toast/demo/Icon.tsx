@@ -1,5 +1,5 @@
 /*
-### 自定义 icon
+### 自定义图标
 */
 
 import { Toast, Icon, Button } from 'sard'
@@ -11,7 +11,7 @@ export default function () {
       <Button
         onClick={() =>
           Toast.show('休息一下', {
-            icon: <Icon fullName="bi-cup-hot"></Icon>,
+            icon: <Icon name="bi-cup-hot"></Icon>,
           })
         }
       >

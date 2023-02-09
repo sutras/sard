@@ -20,7 +20,7 @@ export default function () {
         onChange={handleChange}
         select={
           <>
-            <Icon style={{ fontSize: 20 }} fullName="bi-camera"></Icon>
+            <Icon style={{ fontSize: 20 }} name="bi-camera"></Icon>
             <div style={{ fontSize: 12, marginTop: 5 }}>上传图片</div>
           </>
         }

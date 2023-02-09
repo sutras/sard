@@ -4,7 +4,6 @@
 
 import { useState } from 'react'
 import { Collapse, Button } from 'sard'
-import './index.css'
 
 export default function Component() {
   const [visible, setVisible] = useState(true)
@@ -16,8 +15,10 @@ export default function Component() {
   return (
     <>
       <Button onClick={handleClick}>toggle</Button>
+      <br />
+      <br />
       <Collapse visible={visible}>
-        <div style={{ backgroundColor: 'orange', padding: 1 }}>
+        <div style={{ backgroundColor: 'orange', padding: 10 }}>
           <p>collapse</p>
           <p>collapse</p>
           <p>collapse</p>

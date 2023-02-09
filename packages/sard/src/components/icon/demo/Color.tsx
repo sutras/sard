@@ -8,7 +8,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 export default function () {
   return (
     <>
-      <Icon fullName="bi-cup-hot" color="orange" />
+      <Icon name="bi-cup-hot" color="orange" />
     </>
   )
 }

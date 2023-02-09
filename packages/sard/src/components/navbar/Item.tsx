@@ -1,21 +1,20 @@
-import { CSSProperties, FC, ReactNode } from 'react'
+import { CSSProperties, FC, ReactNode, MouseEvent } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 
-export interface NavbarItemProps extends CommonComponentProps {
+export interface NavbarItemProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  onClick?: () => void
+  onClick?: (event: MouseEvent) => void
 }
 
 export const NavbarItem: FC<NavbarItemProps> = (props) => {
-  const { className, children, onClick, ...restProps } = props
+  const { className, children, ...restProps } = props
 
   const itemClass = classNames('s-navbar-item', className)
 
   return (
-    <div {...restProps} className={itemClass} onClick={onClick}>
+    <div {...restProps} className={itemClass}>
       {children}
     </div>
   )

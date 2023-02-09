@@ -1,11 +1,12 @@
 @mixin disabled {
-  pointer-events: $s-disabled-pointer-events;
+  // pointer-events: $s-disabled-pointer-events;
   opacity: $s-disabled-opacity;
   cursor: $s-disabled-cursor;
+  filter: grayscale(100%);
 }
 
 @mixin disabled-text {
-  pointer-events: $s-disabled-pointer-events;
+  // pointer-events: $s-disabled-pointer-events;
   color: $s-disabled-color;
   cursor: $s-disabled-cursor;
 }

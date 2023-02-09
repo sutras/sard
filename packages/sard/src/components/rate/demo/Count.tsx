@@ -10,12 +10,7 @@ export default function () {
 
   return (
     <>
-      <Slider
-        min={1}
-        max={9}
-        value={count}
-        onChange={(value: number) => setCount(value)}
-      ></Slider>
+      <Slider min={1} max={9} value={count} onChange={setCount}></Slider>
       <Rate count={count} defaultValue={1.5} allowHalf />
     </>
   )

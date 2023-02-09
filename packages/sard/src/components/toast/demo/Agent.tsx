@@ -1,7 +1,7 @@
 /*
 ### 代理
 
-代理组件用于小程序。通过预先放置带有id属性的组件，以便可以通过命令式进行使用。
+代理通过预先放置带有可选id属性的组件，通过命令式指定id进行调用。
 */
 
 import { Toast, Button } from 'sard'
@@ -9,7 +9,7 @@ import { Toast, Button } from 'sard'
 export default function () {
   return (
     <>
-      <Button onClick={() => Toast.text('文本提示')}>文本提示</Button>{' '}
+      <Button onClick={() => Toast.show('文本提示')}>文本提示</Button>{' '}
       <Button onClick={() => Toast.success('成功')}>成功提示</Button>{' '}
       <Button
         onClick={() =>

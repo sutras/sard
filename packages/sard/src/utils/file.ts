@@ -7,6 +7,15 @@ export function isImageUrl(url: string) {
   return /\.(?:jpg|jpeg|png|gif|svg|bmp|webp)$/i.test(url)
 }
 
+/**
+ * @description: 判断url是否为文件url
+ * @param {string} url
+ * @return {boolean}
+ */
+export function isFileUrl(url: string) {
+  return url.includes('/')
+}
+
 export type FileReaderResultType = 'file' | 'dataUrl' | 'text'
 
 /**

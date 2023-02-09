@@ -13,7 +13,7 @@ export default function () {
         total={100}
         pageSize={10}
         current={current}
-        onChange={(page) => setCurrent(page)}
+        onChange={setCurrent}
       />
     </>
   )

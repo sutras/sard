@@ -1,20 +1,19 @@
-import { CSSProperties, memo, ReactNode } from 'react'
+import { CSSProperties, memo, ReactNode, MouseEvent } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 import { Icon, IconProps } from '../icon'
 import { Badge, BadgeProps } from '../badge'
 
-export interface TabbarItemProps extends CommonComponentProps {
+export interface TabbarItemProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
+  activeKey?: number | string
+  innerKey?: number | string
   icon?: IconProps | ((active: boolean) => ReactNode)
-  index?: number
-  activeIndex?: number
   color?: string
   activeColor?: string
   badge?: BadgeProps
-  onClick?: (index: number) => void
+  onClick?: (event: MouseEvent) => void
 }
 
 export const TabbarItem = memo((props: TabbarItemProps) => {
@@ -23,8 +22,8 @@ export const TabbarItem = memo((props: TabbarItemProps) => {
     style,
     children,
     icon,
-    index,
-    activeIndex,
+    innerKey,
+    activeKey,
     color,
     activeColor,
     badge,
@@ -32,11 +31,11 @@ export const TabbarItem = memo((props: TabbarItemProps) => {
     ...restProps
   } = props
 
-  const handleClick = () => {
-    onClick?.(index as number)
+  const handleClick = (event: MouseEvent) => {
+    onClick?.(event)
   }
 
-  const active = index === activeIndex
+  const active = innerKey === activeKey
 
   const tabbarClass = classNames(
     's-tabbar-item',
@@ -60,7 +59,7 @@ export const TabbarItem = memo((props: TabbarItemProps) => {
     >
       <div className="s-tabbar-item-icon">
         {typeof icon === 'function' ? icon(active) : <Icon {...icon}></Icon>}
-        <Badge {...badge} fixed></Badge>
+        {badge && <Badge {...badge} fixed></Badge>}
       </div>
       <div className="s-tabbar-item-text">{children}</div>
     </div>

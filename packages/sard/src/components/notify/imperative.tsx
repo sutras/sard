@@ -1,75 +1,71 @@
-import { createElement, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { NotifyProps } from './index'
 import { isNotReactNode } from '../../utils'
-import { mountComponent } from '../../utils/imperative'
-import { idAgentMap, NotifyAgent } from './Agent'
+import { mountAgent } from '../../utils/imperative'
+import { mapIdAgent, NotifyAgent } from './Agent'
 
-export interface NotifyShortcut {
-  (propsOrMessage: ReactNode | NotifyProps, props?: NotifyProps): void
+export interface NotifyOptions extends NotifyProps {
+  id?: string
 }
 
 export interface NotifyShow {
+  (options: NotifyOptions): void
+  (message: ReactNode, options?: NotifyOptions): void
+}
+
+export interface NotifyInternalShow {
   (
-    propsOrTitle: ReactNode | NotifyProps,
-    props?: NotifyProps,
-    innerType?: NotifyProps['type'],
+    optionsOrMessage: ReactNode | NotifyOptions,
+    options?: NotifyOptions,
+    innerType?: NotifyOptions['type'],
   ): void
 }
 
-export const show: NotifyShow = (propsOrMessage, props = {}, innerType) => {
-  if (isNotReactNode(propsOrMessage)) {
-    props = propsOrMessage as NotifyProps
+const internalShow: NotifyInternalShow = (
+  optionsOrMessage,
+  options = {},
+  internalType = 'primary',
+) => {
+  if (isNotReactNode(optionsOrMessage)) {
+    options = optionsOrMessage as NotifyOptions
   } else {
-    props.message = propsOrMessage as ReactNode
+    options.message = optionsOrMessage as ReactNode
   }
 
-  if (innerType) {
-    props.type = innerType
-  }
+  options.type = internalType
 
-  const { id = 'notify' } = props
+  const { id = 'notify' } = options
 
-  const ref = idAgentMap[id]
+  const ref = mapIdAgent[id]
 
   if (ref) {
     ref.current?.reset()
-    ref.current?.show(props)
+    ref.current?.show(options)
   } else {
-    const { mount, unmount, container } = mountComponent()
-
-    const element = createElement(NotifyAgent, {
-      id,
-      $$afterRender() {
-        idAgentMap[id]?.current?.show(props)
-      },
-      popupProps: {
-        container,
-        onExited() {
-          unmount()
-        },
-      },
-    })
-
-    mount(element)
+    mountAgent(id, NotifyAgent, mapIdAgent, options)
   }
 }
 
-export const info: NotifyShortcut = (propsOrMessage, props) => {
-  show(propsOrMessage, props, 'info')
+export const show: NotifyShow = (optionsOrMessage, options?) => {
+  internalShow(optionsOrMessage, options)
 }
 
-export const success: NotifyShortcut = (propsOrMessage, props) => {
-  show(propsOrMessage, props, 'success')
+export const success: NotifyShow = (optionsOrMessage, options?) => {
+  internalShow(optionsOrMessage, options, 'success')
 }
 
-export const warning: NotifyShortcut = (propsOrMessage, props) => {
-  show(propsOrMessage, props, 'warning')
+export const warning: NotifyShow = (optionsOrMessage, options?) => {
+  internalShow(optionsOrMessage, options, 'warning')
 }
 
-export const error: NotifyShortcut = (propsOrMessage, props) => {
-  show(propsOrMessage, props, 'error')
+export const error: NotifyShow = (optionsOrMessage, options?) => {
+  internalShow(optionsOrMessage, options, 'error')
 }
 
-export const hide = () => {
-  Object.keys(idAgentMap).forEach((key) => idAgentMap[key]?.current?.hide())
+export const hide = (id = 'notify') => {
+  mapIdAgent[id]?.current?.hide()
+}
+
+export const hideAll = () => {
+  Object.keys(mapIdAgent).forEach((key) => mapIdAgent[key]?.current?.hide())
 }

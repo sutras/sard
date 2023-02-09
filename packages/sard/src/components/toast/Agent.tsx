@@ -1,10 +1,10 @@
 import { Toast, ToastProps, ToastRef } from './index'
-import { useAgent, AgentProps, IdAgentMap } from '../../utils/imperative'
+import { useAgent, AgentProps, MapIdAgent } from '../../utils/imperative'
 
-export const idAgentMap: IdAgentMap<ToastProps, ToastRef> = {}
+export const mapIdAgent: MapIdAgent<ToastProps, ToastRef> = {}
 
 export const ToastAgent = (agentProps: AgentProps<ToastProps>) => {
-  return useAgent<ToastProps, ToastRef>(Toast, agentProps, idAgentMap, 'toast')
+  return useAgent<ToastProps, ToastRef>(Toast, agentProps, mapIdAgent, 'toast')
 }
 
 export default ToastAgent

@@ -20,13 +20,7 @@ export default function () {
   ]
 
   const handleSelect = (item: ActionSheetItemProps, index: number) => {
-    setVisible(false)
     console.log(item, index)
-  }
-
-  const handleCancel = () => {
-    setVisible(false)
-    console.log('cancel')
   }
 
   return (
@@ -37,8 +31,9 @@ export default function () {
         description="这是描述"
         visible={visible}
         itemList={itemList}
+        actionClosable
         onSelect={handleSelect}
-        onCancel={handleCancel}
+        onClose={setVisible}
       />
     </>
   )

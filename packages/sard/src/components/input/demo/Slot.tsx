@@ -10,7 +10,7 @@ export default function () {
     <>
       <Input
         placeholder="自定义样式"
-        prepend={<Icon fullName="bi-search" color="#999" />}
+        prepend={<Icon name="bi-search" color="#999" />}
       />
       <Input
         placeholder="自定义样式"

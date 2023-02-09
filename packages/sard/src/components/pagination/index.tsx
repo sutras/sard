@@ -1,10 +1,9 @@
 import { CSSProperties, FC, ReactNode } from 'react'
 import classNames from 'classnames'
 import { useControlledValue } from '../../use'
-import { CommonComponentProps } from '../../utils/types'
 import { getPageRange, minmax } from '../../utils'
 
-export interface PaginationProps extends CommonComponentProps {
+export interface PaginationProps {
   className?: string
   style?: CSSProperties
   total?: number
@@ -18,7 +17,7 @@ export interface PaginationProps extends CommonComponentProps {
   ellipsis?: boolean
   prev?: ReactNode
   next?: ReactNode
-  page?: (page: number) => ReactNode
+  page?: (page: number, active: boolean) => ReactNode
   onChange?: (page: number) => void
 }
 
@@ -94,7 +93,7 @@ export const Pagination: FC<PaginationProps> = (props) => {
               (i === length - 1 && page !== innerPageCount))
               ? '...'
               : pageSlot
-              ? pageSlot(page)
+              ? pageSlot(page, innerCurrent === page)
               : page}
           </div>
         )

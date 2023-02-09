@@ -28,8 +28,13 @@ $s-stepper-button-active-bg: $s-gray-300 !default;
       align-items: center;
       width: $s-stepper-button-width;
       font-size: $s-stepper-button-font-size;
-      background-color: $s-stepper-bg;
-      user-select: none;
+      border: none;
+
+      &,
+      &:disabled {
+        color: inherit;
+        background-color: $s-stepper-bg;
+      }
 
       .s-stepper:not(.s-stepper-readonly) &:not(.s-stepper-button-disabled) {
         cursor: pointer;

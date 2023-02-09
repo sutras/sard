@@ -15,7 +15,7 @@ export default function () {
       <NumberKeyboard
         title={
           <>
-            <Icon fullName="bi-shield-lock-fill"></Icon>
+            <Icon name="bi-shield-lock-fill"></Icon>
             <span style={{ marginLeft: 5, verticalAlign: 'middle' }}>
               安全键盘
             </span>

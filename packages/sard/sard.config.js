@@ -124,7 +124,7 @@ export default {
                 filePath: 'src/components/rate',
               },
               {
-                title: 'Slider 滑动选择器',
+                title: 'Slider 滑动器选择器',
                 path: 'slider',
                 filePath: 'src/components/slider',
               },

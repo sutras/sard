@@ -1,14 +1,14 @@
-import { CSSProperties, FC, ReactNode } from 'react'
+import { CSSProperties, FC, ReactNode, MouseEvent } from 'react'
 import classNames from 'classnames'
 import { useControlledValue } from '../../use'
-import { CommonComponentProps } from '../../utils/types'
 
-export interface PasswordInputProps extends CommonComponentProps {
+export interface PasswordInputProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
   value?: string
   defaultValue?: string
+  onChange?: (value: string) => void
   length?: number
   type?: 'border' | 'underline'
   gap?: number | string
@@ -16,9 +16,8 @@ export interface PasswordInputProps extends CommonComponentProps {
   focused?: boolean
   defaultFocused?: boolean
   onFocused?: (focused: boolean) => void
-  onClick?: () => void
+  onClick?: (event: MouseEvent) => void
   native?: boolean
-  onChange?: (value: string) => void
 }
 
 export const PasswordInput: FC<PasswordInputProps> = (props) => {
@@ -28,6 +27,7 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
     children,
     value,
     defaultValue,
+    onChange,
     length = 6,
     type = 'border',
     gap,
@@ -37,7 +37,6 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
     onFocused,
     onClick,
     native,
-    onChange,
     ...restProps
   } = props
 
@@ -52,8 +51,8 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
     defaultValue: false,
   })
 
-  const handleClick = () => {
-    onClick?.()
+  const handleClick = (event: MouseEvent) => {
+    onClick?.(event)
   }
 
   const handleChange = (event: any) => {
@@ -97,7 +96,9 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
               key={i}
               className={classNames('s-password-input-item', {
                 's-password-input-item-active':
-                  innerFocused && i === innerValue.length,
+                  innerFocused &&
+                  (i === innerValue.length ||
+                    (i === innerValue.length - 1 && i === length - 1)),
               })}
             >
               {i < innerValue.length &&

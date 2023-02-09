@@ -7,7 +7,7 @@ import { Skeleton } from 'sard'
 export default function () {
   return (
     <>
-      <Skeleton avatar avatarShape="square" title />
+      <Skeleton avatar avatarRound={false} title />
     </>
   )
 }

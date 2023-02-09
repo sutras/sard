@@ -14,7 +14,7 @@ import {
   PickerColumn,
   PickerColumnExternalProps,
   PickerColumnOption,
-  PickerColumnImperative,
+  PickerColumnRef,
   FieldNames,
 } from './Column'
 import { arrayEqual } from '../../utils'
@@ -91,7 +91,7 @@ export const Picker = forwardRef<PickerRef, PickerProps>((props, ref) => {
     return Object.assign({}, defaultFieldNames, fieldNames)
   }, [fieldNames])
 
-  const columnImperativeList = useRef<PickerColumnImperative[]>([])
+  const columnImperativeList = useRef<PickerColumnRef[]>([])
 
   const columnAnimating = useRef<{ [p: string]: boolean }>({})
 

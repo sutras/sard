@@ -9,7 +9,7 @@ export default function () {
   return (
     <>
       <Avatar>
-        <Icon fullName="bi-person-circle"></Icon>
+        <Icon name="bi-person-circle"></Icon>
       </Avatar>
 
       <Avatar>字</Avatar>

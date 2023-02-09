@@ -3,18 +3,12 @@
 // #variables
 // #endvariables
 .s-collapse {
-  position: relative;
-  width: 100%;
-  transition: height 300ms;
+  transition: height 500ms;
 
-  &:not(.s-collapse-show) {
-    position: absolute;
-    z-index: -10;
-    height: 0;
-    visibility: hidden;
-    overflow: hidden;
+  &:not(.s-show) {
+    display: none;
   }
-  &.s-collapse-collapsing {
+  &.s-collapsing {
     overflow: hidden;
   }
 }

@@ -3,18 +3,21 @@
 @import '../style/variables.scss';
 
 // #variables
-$s-loading-spinner-width: 1em;
-$s-loading-spinner-height: 1em;
-$s-loading-spinner-min-width: 16px;
-$s-loading-spinner-min-height: 16px;
-$s-loading-spinner-animation-duration: 0.8s !default;
-$s-loading-spinner-border-width: 2px !default;
+
+$s-loading-icon-size: 1em;
+$s-loading-icon-min-width: 16px;
+$s-loading-icon-min-height: 16px;
+$s-loading-icon-animation-duration: 0.8s !default;
+$s-loading-icon-border-width: 2px !default;
 
 $s-loading-scale-number: 12 !default;
 $s-loading-scale-width: 8% !default;
 $s-loading-scale-min-width: 1.5px !default;
 $s-loading-scale-height: 28% !default;
 $s-loading-scale-border-radius: 40% !default;
+
+$s-loading-spinner-animation-duration: 2s !default;
+$s-loading-spinner-circle-animation-duration: 1.5s !default;
 
 $s-loading-text-margin-left: 0.5em !default;
 $s-loading-text-vertical-margin-top: 0.5em !default;
@@ -27,26 +30,32 @@ $s-loading-text-vertical-margin-top: 0.5em !default;
   justify-content: center;
   align-items: center;
   vertical-align: middle;
+
   &.s-loading-vertical {
     flex-direction: column;
   }
+
+  @at-root {
+    .s-loading-icon {
+      position: relative;
+      box-sizing: border-box;
+      width: $s-loading-icon-size;
+      height: $s-loading-icon-size;
+      min-width: $s-loading-icon-min-width;
+      min-height: $s-loading-icon-min-height;
+    }
+
+    .s-loading-text {
+      margin-left: $s-loading-text-margin-left;
+
+      .s-loading-vertical & {
+        margin-left: 0;
+        margin-top: $s-loading-text-vertical-margin-top;
+      }
+    }
+  }
 }
-.s-loading-spinner {
-  position: relative;
-  box-sizing: border-box;
-  width: $s-loading-spinner-width;
-  height: $s-loading-spinner-height;
-  min-width: $s-loading-spinner-min-width;
-  min-height: $s-loading-spinner-min-height;
-  color: inherit;
-  animation: s-loading-rotate $s-loading-spinner-animation-duration linear
-    infinite;
-}
-.s-loading-spinner-border {
-  border: $s-loading-spinner-border-width solid transparent;
-  border-radius: 100%;
-  border-top-color: initial;
-}
+
 @keyframes s-loading-rotate {
   from {
     transform: rotate(0deg);
@@ -55,9 +64,50 @@ $s-loading-text-vertical-margin-top: 0.5em !default;
     transform: rotate(1turn);
   }
 }
-.s-loading-spinner-clock {
-  animation-timing-function: steps(#{$s-loading-scale-number});
+
+// # spinner
+@keyframes s-loading-spinner {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -50;
+  }
+
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -138;
+  }
 }
+
+.s-loading-spinner {
+  animation: s-loading-rotate $s-loading-spinner-animation-duration linear
+    infinite;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    circle {
+      animation: s-loading-spinner $s-loading-spinner-circle-animation-duration
+        ease-in-out infinite;
+      stroke: currentColor;
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+  }
+}
+
+// # clock
+.s-loading-clock {
+  animation: s-loading-rotate $s-loading-icon-animation-duration
+    steps(#{$s-loading-scale-number}) infinite;
+}
+
 .s-loading-scale {
   position: absolute;
   top: 0;
@@ -76,16 +126,18 @@ $s-loading-text-vertical-margin-top: 0.5em !default;
     background-color: currentColor;
   }
 }
+
 @for $i from 1 through $s-loading-scale-number {
   .s-loading-scale:nth-child(#{$i}) {
     opacity: tofixed(1 - math.div(1, $s-loading-scale-number) * ($i - 1), 6);
     transform: rotate(#{math.div(360, $s-loading-scale-number) * $i}deg);
   }
 }
-.s-loading-text {
-  margin-left: $s-loading-text-margin-left;
-  .s-loading-vertical & {
-    margin-left: 0;
-    margin-top: $s-loading-text-vertical-margin-top;
-  }
+
+// # circular
+.s-loading-circular {
+  border: 0.1em solid transparent;
+  border-radius: 100%;
+  border-top-color: initial;
+  animation: s-loading-rotate $s-loading-icon-animation-duration linear infinite;
 }

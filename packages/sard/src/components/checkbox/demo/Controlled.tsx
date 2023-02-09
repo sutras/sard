@@ -9,7 +9,7 @@ export default function () {
   const [checked, setChecked] = useState(false)
 
   return (
-    <Checkbox checked={checked} onChange={(checked) => setChecked(checked)}>
+    <Checkbox checked={checked} onChange={setChecked}>
       {checked ? '已选中' : '未选中'}
     </Checkbox>
   )

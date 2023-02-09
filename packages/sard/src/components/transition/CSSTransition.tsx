@@ -2,7 +2,7 @@ import { FC, useState } from 'react'
 import classNames from 'classnames'
 import { Transition, TransitionProps } from './index'
 
-interface CSSTransitionProps extends TransitionProps {
+export interface CSSTransitionProps extends TransitionProps {
   type?:
     | 'fade'
     | 'slide-top'
@@ -11,11 +11,14 @@ interface CSSTransitionProps extends TransitionProps {
     | 'slide-left'
     | 'zoom'
     | 'collapse'
+
+  name?: string
 }
 
 export const CSSTransition: FC<CSSTransitionProps> = (props) => {
   const {
     type = 'fade',
+    name,
     onEnter,
     onEntering,
     onEntered,
@@ -29,8 +32,10 @@ export const CSSTransition: FC<CSSTransitionProps> = (props) => {
 
   const [className, setClassName] = useState('')
 
-  const addClass = (...phases: string[]) => {
-    setClassName(phases.map((phase) => prefix + '-' + phase).join(' '))
+  const addClass = (...stages: string[]) => {
+    setClassName(
+      stages.map((stage) => (name || prefix) + '-' + stage).join(' '),
+    )
   }
 
   const handleEnter = () => {

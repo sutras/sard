@@ -1,16 +1,19 @@
-import { CSSProperties, FC, ReactNode } from 'react'
+import { CSSProperties, FC, ReactNode, MouseEvent } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
+import { LoadingProps } from '../loading'
+import Loading from '../loading'
 
-export interface ActionSheetItemProps extends CommonComponentProps {
+export interface ActionSheetItemProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
   title?: ReactNode
   label?: ReactNode
-  disabled?: boolean
   color?: string
-  onClick?: (props: ActionSheetItemProps) => any
+  loading?: boolean
+  loadingProps?: LoadingProps
+  disabled?: boolean
+  onClick?: (event: MouseEvent) => void
 }
 
 export const ActionSheetItem: FC<ActionSheetItemProps> = (props) => {
@@ -21,15 +24,24 @@ export const ActionSheetItem: FC<ActionSheetItemProps> = (props) => {
     title,
     label,
     color,
+    loading,
+    loadingProps,
     disabled,
     onClick,
     ...restProps
   } = props
 
+  const handleClick = (event: MouseEvent) => {
+    if (!disabled && !loading) {
+      onClick?.(event)
+    }
+  }
+
   const actionSheetItemClass = classNames(
     's-action-sheet-item',
     {
       's-action-sheet-item-disabled': disabled,
+      's-action-sheet-item-loading': loading,
     },
     className,
   )
@@ -39,19 +51,23 @@ export const ActionSheetItem: FC<ActionSheetItemProps> = (props) => {
   }
 
   return (
-    <div
+    <button
       {...restProps}
+      type="button"
       className={actionSheetItemClass}
       style={actionSheetItemStyle}
-      onClick={() => onClick?.(props)}
+      onClick={handleClick}
+      disabled={disabled}
     >
-      {children || (
+      {loading ? (
+        <Loading {...loadingProps}></Loading>
+      ) : (
         <>
           {title && <div className="s-action-sheet-item-title">{title}</div>}
           {label && <div className="s-action-sheet-item-label">{label}</div>}
         </>
       )}
-    </div>
+    </button>
   )
 }
 

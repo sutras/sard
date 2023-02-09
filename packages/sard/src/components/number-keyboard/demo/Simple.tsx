@@ -16,7 +16,7 @@ export default function () {
           readOnly
           placeholder="请输入验证码"
           clearable
-          onClear={() => setValue('')}
+          onClear={setValue}
         />
       </NumberKeyboard>
     </>

@@ -1,5 +1,11 @@
 @use 'sass:color';
 
+@mixin button-active {
+  &:not([disabled]):not(.s-button-disabled):not(.s-button-loading):active {
+    @content;
+  }
+}
+
 @mixin button-size(
   $height,
   $padding-y,
@@ -13,97 +19,8 @@
   font-size: $s-font-size;
 }
 
-@mixin button-primary-theme($color, $textColor, $activeAlpha) {
-  &,
-  &.s-button-disabled {
-    color: $color;
-    background-color: currentColor;
-
-    &::after {
-      background-color: rgba(0, 0, 0, $activeAlpha);
-    }
-  }
-  &:not([disabled]):active,
-  &:not(.s-button-disabled):active {
-    &::after {
-      opacity: 1;
-    }
-  }
-  .s-button-content {
-    color: $textColor;
-  }
-}
-
-@mixin button-secondary-theme($color, $bgAlpha, $activeAlpha) {
-  &,
-  &.s-button-disabled {
-    color: $color;
-
-    &::before {
-      opacity: $bgAlpha;
-    }
-    &::after {
-      background-color: rgba(0, 0, 0, $activeAlpha);
-    }
-  }
-  &:not([disabled]):active,
-  &:not(.s-button-disabled):active {
-    &::after {
-      opacity: 1;
-    }
-  }
-}
-
-@mixin button-mild-theme($color, $bg, $activeAlpha) {
-  &,
-  &.s-button-disabled {
-    color: $color;
-    background-color: $bg;
-
-    &::after {
-      background-color: rgba(0, 0, 0, $activeAlpha);
-    }
-  }
-  &:not([disabled]):active,
-  &:not(.s-button-disabled):active {
-    &::after {
-      opacity: 1;
-    }
-  }
-}
-
-@mixin button-outlined-theme($color, $activeAlpha) {
-  &,
-  &.s-button-disabled {
-    border-color: currentColor;
-    color: $color;
-  }
-  &:not([disabled]):active,
-  &:not(.s-button-disabled):active {
-    &::after {
-      opacity: $activeAlpha;
-    }
-  }
-}
-
-@mixin button-text-theme($color, $activeBg) {
-  &,
-  &.s-button-disabled {
-    color: $color;
-  }
-  &:not([disabled]):active,
-  &:not(.s-button-disabled):active {
-    background-color: $activeBg;
-  }
-}
-
-@mixin button-pale-text-theme($color, $alpha) {
-  &,
-  &.s-button-disabled {
-    color: $color;
-  }
-  &:not([disabled]):active,
-  &:not(.s-button-disabled):active {
-    opacity: $alpha;
-  }
+@mixin button-flush {
+  padding: 0;
+  border: none;
+  background-color: transparent;
 }

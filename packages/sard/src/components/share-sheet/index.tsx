@@ -3,24 +3,25 @@ import classNames from 'classnames'
 import { useEvent } from '../../use'
 import { Popup, PopupProps } from '../popup'
 import { ShareSheetItem, ShareSheetItemProps } from './Item'
-import { CommonComponentProps } from '../../utils/types'
 
 export * from './Item'
 
 export type ShareSheetItemList = ShareSheetItemProps[] | ShareSheetItemProps[][]
 
-export interface ShareSheetProps extends CommonComponentProps {
+export interface ShareSheetProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  maskClosable?: boolean
+  itemList?: ShareSheetItemList
+  visible?: boolean
   title?: ReactNode
   description?: ReactNode
-  itemList?: ShareSheetItemList
   cancel?: ReactNode
-  onSelect?: (itemProps: ShareSheetItemProps, index: number) => any
-  onCancel?: () => any
-  visible?: boolean
+  maskClosable?: boolean
+  actionClosable?: boolean
+  onSelect?: (itemProps: ShareSheetItemProps, index: number) => void
+  onCancel?: (visible: false) => void
+  onClose?: (visible: false) => void
   popupProps?: PopupProps
 }
 
@@ -32,14 +33,16 @@ export const ShareSheet: ShareSheetFC = ((props) => {
   const {
     className,
     children,
+    itemList = [],
     visible,
-    maskClosable = true,
     title,
     description,
-    itemList = [],
     cancel,
+    maskClosable = true,
+    actionClosable,
     onSelect,
     onCancel,
+    onClose,
     popupProps = {},
     ...restProps
   } = props
@@ -49,17 +52,22 @@ export const ShareSheet: ShareSheetFC = ((props) => {
   const handleItemClick = useEvent(
     (itemProps: ShareSheetItemProps, index: number) => {
       onSelect?.(itemProps, index)
+      if (actionClosable) {
+        onClose?.(false)
+      }
     },
   )
 
   const handleMaskClick = useEvent(() => {
     if (maskClosable) {
-      onCancel?.()
+      popupProps?.onMaskClick?.()
+      onClose?.(false)
     }
   })
 
   const handleCancelClick = useEvent(() => {
-    onCancel?.()
+    onCancel?.(false)
+    onClose?.(false)
   })
 
   const shareSheetClass = classNames(
@@ -73,11 +81,14 @@ export const ShareSheet: ShareSheetFC = ((props) => {
   const row = (list: ShareSheetItemProps[], index?: number) => {
     return (
       <div className="s-share-sheet-row" key={index}>
-        {list.map((ItemProps, index) => (
+        {list.map((itemProps, index) => (
           <ShareSheetItem
-            {...ItemProps}
+            {...itemProps}
             key={index}
-            onClick={() => handleItemClick(ItemProps, index)}
+            onClick={(event) => {
+              handleItemClick(itemProps, index)
+              itemProps.onClick?.(event)
+            }}
           />
         ))}
       </div>
@@ -103,9 +114,7 @@ export const ShareSheet: ShareSheetFC = ((props) => {
         <div className="s-share-sheet-body">
           {children ||
             (itemList.length && Array.isArray(itemList[0])
-              ? (itemList as ShareSheetItemProps[][]).map((list, index) =>
-                  row(list, index),
-                )
+              ? itemList.map((list, index) => row(list, index))
               : row(itemList as ShareSheetItemProps[]))}
         </div>
         {cancel && (

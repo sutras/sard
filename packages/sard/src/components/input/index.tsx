@@ -1,66 +1,62 @@
-import { CSSProperties, useState, useEffect, FC } from 'react'
+import {
+  CSSProperties,
+  useState,
+  ReactNode,
+  MouseEvent,
+  FocusEvent,
+  ChangeEvent,
+  useRef,
+  useEffect,
+  forwardRef,
+} from 'react'
 import classNames from 'classnames'
 import { useControlledValue } from '../../use'
-import { CommonComponentProps } from '../../utils/types'
 import { Icon } from '../icon'
+import { AutoHeight, resizeTextArea } from '../../utils/dom'
 
-export interface InputProps extends CommonComponentProps {
+export interface InputProps {
   className?: string
   style?: CSSProperties
   value?: string | number
   defaultValue?: string | number
-  type?:
-    | 'text'
-    | 'number'
-    | 'idcard'
-    | 'digit'
-    | 'tel'
-    | 'password'
-    | 'textarea'
+  type?: 'text' | 'number' | 'tel' | 'password' | 'textarea' | 'url' | 'search'
   placeholder?: string
-  placeholderStyle?: string
-  placeholderClass?: string
   disabled?: boolean
   readOnly?: boolean
-  maxlength?: number
-  cursorSpacing?: number
-  focus?: boolean
-  autoHeight?: boolean
-  fixed?: boolean
-  confirmType?: 'send' | 'search' | 'next' | 'go' | 'done' | ''
-  confirmHold?: boolean
-  showConfirmBar?: boolean
-  cursor?: number
-  selectionStart?: number
-  selectionEnd?: number
-  adjustPosition?: boolean
-  holdKeyboard?: boolean
-  autoBlur?: boolean
-  border?: boolean
-  flush?: boolean
-  prepend?: any
-  append?: any
+  maxLength?: number
+  showCount?: boolean
+  autoFocus?: boolean
+  autoHeight?: AutoHeight
+  borderless?: boolean
+  inlaid?: boolean
+  prepend?: ReactNode
+  append?: ReactNode
   rows?: number
   clearable?: boolean
-  clear?: any
-  onClear?: () => void
+  clear?: ReactNode
+  onClear?: (value: '') => void
   onChange?: (value: string) => void
-  onFocus?: (event: any) => void
-  onBlur?: (event: any) => void
-  onClick?: (event: any) => void
+  onFocus?: (event: FocusEvent) => void
+  onBlur?: (event: FocusEvent) => void
+  onClick?: (event: MouseEvent) => void
 }
 
-export const Input: FC<InputProps> = (props) => {
+type InputRef = HTMLInputElement | HTMLTextAreaElement
+
+export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const {
     className,
     value,
     defaultValue,
     type = 'text',
     placeholder = '',
-    disabled = false,
-    readOnly = false,
-    border = true,
-    flush,
+    disabled,
+    readOnly,
+    maxLength,
+    showCount,
+    autoHeight,
+    borderless,
+    inlaid,
     prepend,
     append,
     rows,
@@ -83,33 +79,50 @@ export const Input: FC<InputProps> = (props) => {
 
   const [focused, setFocused] = useState(false)
 
-  const handleFocus = (event: any) => {
+  const handleFocus = (event: FocusEvent) => {
     setFocused(true)
     onFocus?.(event)
   }
 
-  const handleBlur = (event: any) => {
+  const handleBlur = (event: FocusEvent) => {
     setFocused(false)
     onBlur?.(event)
   }
 
   const handleClear = () => {
     setInnerValue('')
-    onClear?.()
+    onClear?.('')
   }
 
-  const handleChange = (event: any) => {
-    setInnerValue(event.target.value)
+  const innerMaxLength = Number(maxLength) || 0
+
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    let value = event.target.value
+    if (innerMaxLength) {
+      value = value.slice(0, innerMaxLength)
+    }
+    setInnerValue(value)
   }
+
+  const inputRef = useRef<HTMLInputElement & HTMLTextAreaElement>()
+
+  useEffect(() => {
+    if (type === 'textarea' && inputRef.current) {
+      resizeTextArea(inputRef.current, autoHeight)
+    }
+  }, [innerValue, autoHeight, type])
 
   const inputClass = classNames(
     's-input',
     {
-      's-input-flush': flush,
-      's-input-no-border': !border,
+      's-input-inlaid': inlaid,
+      's-input-borderless': borderless,
       's-input-disabled': disabled,
       's-input-readonly': readOnly,
       's-input-focused': focused,
+      's-input-is-textarea': type === 'textarea',
     },
     className,
   )
@@ -127,13 +140,26 @@ export const Input: FC<InputProps> = (props) => {
     onClick,
   }
 
+  const refCallback = (el) => {
+    if (typeof ref === 'function') {
+      ref(el)
+    } else if (ref) {
+      ref.current = el
+    }
+    inputRef.current = el
+  }
+
   return (
     <div {...restProps} className={inputClass}>
       {prepend && <div className="s-input-prepend">{prepend}</div>}
       {type === 'textarea' ? (
-        <textarea {...controlProps} rows={rows} />
+        <textarea
+          {...controlProps}
+          ref={refCallback}
+          rows={autoHeight ? 1 : rows}
+        />
       ) : (
-        <input {...controlProps} type={type} />
+        <input {...controlProps} ref={refCallback} type={type} />
       )}
       {append && <div className="s-input-append">{append}</div>}
       {clearable && innerValue && (
@@ -147,8 +173,14 @@ export const Input: FC<InputProps> = (props) => {
           )}
         </div>
       )}
+      {showCount && (
+        <div className="s-input-count">
+          {String(innerValue).length}
+          {innerMaxLength && ' / ' + innerMaxLength}
+        </div>
+      )}
     </div>
   )
-}
+})
 
 export default Input

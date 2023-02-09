@@ -1,14 +1,14 @@
 /*
-### 自定义图片
+### 图片类型图标
 */
 
-import { Empty, Icon } from 'sard'
+import { Empty } from 'sard'
 
 export default function () {
   return (
     <>
       <Empty
-        icon={<Icon name={new URL('./empty.svg', import.meta.url).href}></Icon>}
+        iconProps={{ name: new URL('./empty.svg', import.meta.url).href }}
       />
     </>
   )

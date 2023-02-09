@@ -1,11 +1,11 @@
 .doc-collapse {
-  transition: height 0.3s;
+  transition: height 0.5s;
 
-  &:not(.show) {
+  &:not(.doc-show) {
     display: none;
   }
 
-  &.collapsing {
+  &.doc-collapsing {
     overflow: hidden;
   }
 }

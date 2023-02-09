@@ -134,7 +134,7 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
   }, [innerName])
 
   // 触摸切换
-  const navRef = useRef<HTMLElement>(null)
+  const navRef = useRef<HTMLDivElement>(null)
   const downHeightRef = useRef(0)
   const downRectTopRef = useRef(0)
   const itemCount = useRef(0)
@@ -210,12 +210,7 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
         },
       )}
 
-      <div
-        className="s-index-bar-nav"
-        {...navBinding}
-        ref={navRef as any}
-        id={navId}
-      >
+      <div className="s-index-bar-nav" {...navBinding} ref={navRef} id={navId}>
         {Children.map(
           children as ReactElement<IndexBarItemProps>,
           (item: ReactElement<IndexBarItemProps>, index: number) => {

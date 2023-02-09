@@ -9,7 +9,7 @@ export default function () {
     <>
       <Tabs
         prepend={<span style={{ fontWeight: 'bold' }}>推荐</span>}
-        append={<Icon size={20} fullName="bi-list"></Icon>}
+        append={<Icon size={20} name="bi-list"></Icon>}
       >
         <TabPane label="标签1">内容1</TabPane>
         <TabPane label="标签2">内容2</TabPane>

@@ -1,9 +1,8 @@
-import { CSSProperties, FC, ReactNode } from 'react'
+import { CSSProperties, FC, ReactNode, MouseEvent } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 import { Icon } from '../icon'
 
-export interface TagProps extends CommonComponentProps {
+export interface TagProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -15,17 +14,13 @@ export interface TagProps extends CommonComponentProps {
     | 'info'
     | 'warning'
     | 'danger'
-    | 'light'
-    | 'dark'
-    | 'muted'
-    | 'weak'
   round?: boolean
   plain?: boolean
   mark?: boolean
   size?: 'small' | 'medium' | 'large'
   closable?: boolean
   onClose?: () => void
-  onClick?: () => void
+  onClick?: (event: MouseEvent) => void
 }
 
 export const Tag: FC<TagProps> = (props) => {

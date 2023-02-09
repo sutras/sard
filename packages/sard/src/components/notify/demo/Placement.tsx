@@ -10,12 +10,13 @@ export default function () {
 
   return (
     <>
-      <Button onClick={() => setVisible(true)}>显示通知</Button>
+      <Button onClick={() => setVisible(true)}>在底部显示通知</Button>{' '}
+      <Button onClick={() => setVisible(false)}>隐藏通知</Button>
       <Notify
         visible={visible}
         message="这是一条通知"
         popupProps={{ placement: 'bottom' }}
-        onTimeout={() => setVisible(false)}
+        onTimeout={setVisible}
       />
     </>
   )

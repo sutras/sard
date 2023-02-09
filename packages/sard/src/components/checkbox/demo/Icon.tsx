@@ -1,5 +1,5 @@
 /*
-### 自定义icon
+### 自定义图标
 */
 
 import { Checkbox, Icon } from 'sard'
@@ -9,9 +9,7 @@ export default function () {
   return (
     <Checkbox
       icon={(checked) => (
-        <Icon
-          fullName={checked ? 'bi-patch-check-fill' : 'bi-patch-check'}
-        ></Icon>
+        <Icon name={checked ? 'bi-patch-check-fill' : 'bi-patch-check'}></Icon>
       )}
     >
       复选框

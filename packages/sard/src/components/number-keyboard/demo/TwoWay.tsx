@@ -17,7 +17,7 @@ export default function () {
         onClick={() => setVisible(true)}
         placeholder="请输入验证码"
         clearable
-        onClear={() => setValue('')}
+        onClear={setValue}
       />
 
       <NumberKeyboard

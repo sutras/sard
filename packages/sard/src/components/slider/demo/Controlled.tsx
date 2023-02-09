@@ -8,7 +8,7 @@ import { useState } from 'react'
 export default function () {
   const [value, setValue] = useState(50)
   const [rangeValue, setRangeValue] = useState([20, 80] as [number, number])
-  const handleChanging = (value: number) => {
+  const handleChange = (value: number) => {
     setValue(value)
   }
   const handleRangeChanging = (value: [number, number]) => {
@@ -17,7 +17,7 @@ export default function () {
 
   return (
     <>
-      <Slider value={value} onChange={handleChanging} />
+      <Slider value={value} onChange={handleChange} />
       <Button onClick={() => setValue(50)}>change to 50</Button> {value}
       <br />
       <br />

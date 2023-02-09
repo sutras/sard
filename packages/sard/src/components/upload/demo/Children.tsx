@@ -17,7 +17,7 @@ export default function () {
     <>
       <Upload previewList={list} onChange={handleChange}>
         <Button>
-          <Icon fullName="bi-upload"></Icon>
+          <Icon name="bi-upload"></Icon>
           <span style={{ marginLeft: 5 }}>文件上传</span>
         </Button>
       </Upload>

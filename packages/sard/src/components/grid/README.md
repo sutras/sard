@@ -25,7 +25,21 @@ import { Row, Col } from 'sard'
 
 ## API
 
-### Props
+### RowProps
+
+| 属性    | 描述         | 类型                                                              | 默认值 |
+| ------- | ------------ | ----------------------------------------------------------------- | ------ |
+| gutter  | 列间距       | number \|string                                                   | 0      |
+| justify | 水平对齐方式 | 'start' \| 'center' \| 'end' \| 'around' \| 'between' \| 'evenly' | -      |
+| align   | 垂直对齐方式 | 'start' \| 'center' \| 'end' \| 'stretch'                         | -      |
+
+### ColProps
+
+| 属性   | 描述           | 类型                       | 默认值 |
+| ------ | -------------- | -------------------------- | ------ |
+| span   | 列元素宽度     | number \| 'auto' \| 'none' | -      |
+| offset | 列元素偏移距离 | number                     | -      |
+| order  | 列元素顺序     | number                     | -      |
 
 ## 主题定制
 

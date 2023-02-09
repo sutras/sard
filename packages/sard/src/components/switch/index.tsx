@@ -1,23 +1,23 @@
-import { CSSProperties, FC } from 'react'
+import { CSSProperties, FC, MouseEvent } from 'react'
 import classNames from 'classnames'
 import { useControlledValue } from '../../use'
 import Loading from '../loading'
-import { CommonComponentProps } from '../../utils/types'
 
-export interface SwitchProps extends CommonComponentProps {
+export interface SwitchProps {
   className?: string
   style?: CSSProperties
   checked?: boolean
   defaultChecked?: boolean
   disabled?: boolean
-  size?: string
+  readOnly?: boolean
+  size?: string | number
   checkedColor?: string
   uncheckedColor?: string
   checkedValue?: any
   uncheckedValue?: any
   loading?: boolean
-  onChange?: (check: any, value: any) => any
-  onClick?: () => any
+  onChange?: (checked: boolean, value: any) => void
+  onClick?: (event: MouseEvent) => void
 }
 
 export const Switch: FC<SwitchProps> = (props) => {
@@ -27,6 +27,7 @@ export const Switch: FC<SwitchProps> = (props) => {
     checked,
     defaultChecked,
     disabled = false,
+    readOnly = false,
     size,
     checkedColor,
     uncheckedColor,
@@ -44,8 +45,8 @@ export const Switch: FC<SwitchProps> = (props) => {
     defaultValue: false,
   })
 
-  const onSwitchClick = () => {
-    if (disabled || loading) {
+  const onSwitchClick = (event: MouseEvent) => {
+    if (disabled || readOnly || loading) {
       return
     }
 
@@ -54,7 +55,7 @@ export const Switch: FC<SwitchProps> = (props) => {
       !innerChecked ? checkedValue : uncheckedValue,
     )
 
-    onClick?.()
+    onClick?.(event)
   }
 
   const switchClass = classNames(
@@ -62,6 +63,7 @@ export const Switch: FC<SwitchProps> = (props) => {
     {
       's-switch-checked': innerChecked,
       's-switch-disabled': disabled,
+      's-switch-readonly': readOnly,
       's-switch-is-loading': loading,
     },
     className,

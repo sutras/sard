@@ -1,13 +1,12 @@
-import { CSSProperties, ReactNode, useContext, FC } from 'react'
+import { CSSProperties, ReactNode, useContext, FC, MouseEvent } from 'react'
 import classNames from 'classnames'
 import { useControlledValue } from '../../use'
 import { RadioGroup, RadioGroupContext } from './Group'
-import { CommonComponentProps } from '../../utils/types'
 import { Icon } from '../icon'
 
 export * from './Group'
 
-export interface RadioProps extends CommonComponentProps {
+export interface RadioProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -15,15 +14,15 @@ export interface RadioProps extends CommonComponentProps {
   defaultChecked?: boolean
   value?: any
   disabled?: boolean
-  size?: string
+  size?: string | number
   type?: 'record' | 'check'
   icon?: (checked: boolean) => ReactNode
   checkedColor?: string
-  onChange?: (checked: boolean, value: any) => any
-  onClick?: () => any
+  onChange?: (checked: boolean, value: any) => void
+  onClick?: (event: MouseEvent) => void
 }
 
-const typeIconMap = {
+const mapTypeIcon = {
   record: ['circle', 'record-circle'],
   check: ['circle', 'check-circle-fill'],
 }
@@ -71,11 +70,11 @@ export const Radio: RadioFC = (props) => {
     }
   }
 
-  const handleRadioClick = () => {
+  const handleRadioClick = (event: MouseEvent) => {
     if (!disabled) {
       toggle()
     }
-    onClick?.()
+    onClick?.(event)
   }
 
   const iconStyle = {
@@ -98,7 +97,7 @@ export const Radio: RadioFC = (props) => {
         {icon ? (
           icon(isChecked)
         ) : (
-          <Icon prefix="si" name={typeIconMap[type][isChecked ? 1 : 0]}></Icon>
+          <Icon prefix="si" name={mapTypeIcon[type][isChecked ? 1 : 0]}></Icon>
         )}
       </div>
       {children && <div className="s-radio-label">{children}</div>}

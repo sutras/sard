@@ -74,3 +74,26 @@ export function getBoundingClientRect(
     }
   }
 }
+
+export type AutoHeight = boolean | { minHeight?: number; maxHeight?: number }
+// | { minRows?: number; maxRows?: number }
+
+export function resizeTextArea(
+  el: HTMLInputElement & HTMLTextAreaElement,
+  autoHeight: AutoHeight,
+) {
+  if (!autoHeight) {
+    return
+  }
+
+  el.style.height = 'auto'
+
+  let height = el.scrollHeight
+
+  if (autoHeight !== true) {
+    const { minHeight = 0, maxHeight = Number.MAX_SAFE_INTEGER } = autoHeight
+    height = Math.min(Math.max(minHeight, height), maxHeight)
+  }
+
+  el.style.height = height + 'px'
+}

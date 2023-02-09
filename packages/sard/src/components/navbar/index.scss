@@ -15,6 +15,7 @@ $s-navbar-item-padding-x: 10px !default;
 
 .s-navbar {
   position: relative;
+  box-sizing: border-box;
   display: flex;
   height: $s-navbar-height;
   align-items: center;
@@ -22,61 +23,72 @@ $s-navbar-item-padding-x: 10px !default;
   background-color: $s-navbar-bg;
 
   @include border-bottom($s-navbar-border-color);
-}
 
-.s-navbar-content {
-  display: flex;
-  height: 100%;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
+  @at-root {
+    .s-navbar-content {
+      display: flex;
+      height: 100%;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
 
-.s-navbar-title {
-  width: 100%;
-  max-width: $s-navbar-title-max-width;
-  font-size: $s-navbar-title-font-size;
-  text-align: center;
-  color: $s-navbar-title-color;
-  @include ellipsis;
-}
+      @at-root {
+        .s-navbar-title {
+          width: 100%;
+          max-width: $s-navbar-title-max-width;
+          font-size: $s-navbar-title-font-size;
+          text-align: center;
+          color: $s-navbar-title-color;
+          @include ellipsis;
+        }
+      }
+    }
 
-.s-navbar-left,
-.s-navbar-right {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  display: flex;
-  flex: none;
-  align-items: center;
-  height: 100%;
-}
-.s-navbar-left {
-  left: 0;
-}
-.s-navbar-right {
-  right: 0;
-}
+    .s-navbar-prepend,
+    .s-navbar-append {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      flex: none;
+      align-items: center;
+      height: 100%;
+    }
+    .s-navbar-prepend {
+      left: 0;
+    }
+    .s-navbar-append {
+      right: 0;
+    }
 
-.s-navbar-item {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  padding: 0 $s-navbar-item-padding-x;
-  user-select: none;
-  line-height: 1;
-  cursor: pointer;
+    .s-navbar-item {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      padding: 0 $s-navbar-item-padding-x;
+      user-select: none;
+      line-height: 1;
+      cursor: pointer;
+    }
+  }
 }
 
 .s-navbar-flow {
-  .s-navbar-left,
-  .s-navbar-right {
+  .s-navbar-prepend,
+  .s-navbar-append {
     position: relative;
   }
 
   .s-navbar-title {
     max-width: 100%;
   }
+}
+
+.s-navbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
 }

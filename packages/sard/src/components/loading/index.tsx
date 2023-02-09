@@ -1,24 +1,33 @@
 import { CSSProperties, FC, ReactNode } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 
-export interface LoadingProps extends CommonComponentProps {
+export interface LoadingProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  type?: 'border' | 'clock'
+  type?: 'spinner' | 'clock' | 'circular'
   color?: string
   size?: string | number
-  text?: string
+  text?: ReactNode
   vertical?: boolean
 }
+
+const clockIcon = Array(12)
+  .fill(0)
+  .map((_, i) => <div key={i} className="s-loading-scale"></div>)
+
+const spinIcon = (
+  <svg viewBox="25 25 50 50">
+    <circle cx="50" cy="50" r="22" fill="none" />
+  </svg>
+)
 
 export const Loading: FC<LoadingProps> = (props) => {
   const {
     className,
     style,
     children,
-    type = 'border',
+    type = 'spinner',
     color = '',
     size = '',
     text = '',
@@ -37,25 +46,31 @@ export const Loading: FC<LoadingProps> = (props) => {
     color,
     ...style,
   }
-  const spinnerClass = classNames(
-    's-loading-spinner',
-    's-loading-spinner-' + type,
-  )
-  const spinnerStyle = {
+  const iconClass = classNames('s-loading-icon', 's-loading-' + type)
+  const iconStyle = {
     fontSize: size,
+  }
+
+  const renderIcon = () => {
+    return (
+      <div className={iconClass} style={iconStyle}>
+        {type === 'spinner' ? spinIcon : type === 'clock' ? clockIcon : null}
+      </div>
+    )
+  }
+
+  const renderText = () => {
+    return (
+      (children || text) && (
+        <div className="s-loading-text">{children || text}</div>
+      )
+    )
   }
 
   return (
     <div {...restProps} className={loadingClass} style={loadingStyle}>
-      <div className={spinnerClass} style={spinnerStyle}>
-        {type === 'clock' &&
-          Array(12)
-            .fill(0)
-            .map((_, i) => <div key={i} className="s-loading-scale"></div>)}
-      </div>
-      {(children || text) && (
-        <div className="s-loading-text">{children || text}</div>
-      )}
+      {renderIcon()}
+      {renderText()}
     </div>
   )
 }

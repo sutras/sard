@@ -6,25 +6,23 @@ import { Button } from 'sard'
 
 export default function () {
   return (
-    <>
-      <Button disabled type="primary">
-        primary
-      </Button>{' '}
-      <Button disabled type="secondary">
-        secondary
-      </Button>{' '}
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+      <Button disabled>default</Button>
+      <Button disabled type="pale">
+        pale
+      </Button>
       <Button disabled type="mild">
         mild
-      </Button>{' '}
-      <Button disabled type="outlined">
-        outlined
-      </Button>{' '}
+      </Button>
+      <Button disabled type="outline">
+        outline
+      </Button>
       <Button disabled type="text">
         text
-      </Button>{' '}
+      </Button>
       <Button disabled type="pale-text">
         pale-text
-      </Button>{' '}
-    </>
+      </Button>
+    </div>
   )
 }

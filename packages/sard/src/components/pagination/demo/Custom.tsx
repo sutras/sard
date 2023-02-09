@@ -11,11 +11,9 @@ export default function () {
       <Pagination
         total={100}
         pageSize={10}
-        prev={<Icon fullName="bi-chevron-double-left"></Icon>}
-        next={<Icon fullName="bi-chevron-double-right"></Icon>}
-        page={(page) =>
-          page === 2 ? <Icon fullName="bi-cup-hot"></Icon> : page
-        }
+        prev={<Icon name="bi-chevron-double-left"></Icon>}
+        next={<Icon name="bi-chevron-double-right"></Icon>}
+        page={(page) => (page === 2 ? <Icon name="bi-cup-hot"></Icon> : page)}
       />
     </>
   )

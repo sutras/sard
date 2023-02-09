@@ -30,11 +30,11 @@ export default function () {
     <>
       <Form onSubmit={handleSubmit}>
         <Form.Item label="用户名">
-          <Input placeholder="请输入用户名" flush></Input>
+          <Input placeholder="请输入用户名" inlaid></Input>
         </Form.Item>
 
         <Form.Item label="密码" error="密码错误">
-          <Input type="password" placeholder="请输入密码" flush></Input>
+          <Input type="password" placeholder="请输入密码" inlaid></Input>
         </Form.Item>
 
         <Form.Item label="性别">
@@ -61,7 +61,7 @@ export default function () {
           <Upload />
         </Form.Item>
 
-        <Form.Item label="滑块">
+        <Form.Item label="滑动器">
           <Slider defaultValue={25} />
         </Form.Item>
 
@@ -74,7 +74,7 @@ export default function () {
         </Form.Item>
 
         <Form.Item label="备注">
-          <Input type="textarea" flush placeholder="请输入备注" />
+          <Input type="textarea" placeholder="请输入备注" />
         </Form.Item>
 
         <Form.Item label="省市区">
@@ -89,11 +89,9 @@ export default function () {
             >
               <Input
                 readOnly
-                flush
+                inlaid
                 placeholder="请选择省市区"
-                append={
-                  <Icon color="#ccc" fullName="bi-caret-right-fill"></Icon>
-                }
+                append={<Icon color="#ccc" name="bi-caret-right-fill"></Icon>}
               />
             </Popout.Target>
             <Popout.Bridge>
@@ -110,11 +108,9 @@ export default function () {
             <Popout.Target select value clear>
               <Input
                 readOnly
-                flush
+                inlaid
                 placeholder="请选择出生日期"
-                append={
-                  <Icon color="#ccc" fullName="bi-caret-right-fill"></Icon>
-                }
+                append={<Icon color="#ccc" name="bi-caret-right-fill"></Icon>}
               />
             </Popout.Target>
             <Popout.Bridge>

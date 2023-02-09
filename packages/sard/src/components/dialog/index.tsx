@@ -12,7 +12,6 @@ import classNames from 'classnames'
 import { Popup, PopupProps } from '../popup'
 import { Button, ButtonProps } from '../button'
 import { Icon } from '../icon'
-import { CommonComponentProps } from '../../utils/types'
 import { useEvent } from '../../use'
 
 import { DialogAgent } from './Agent'
@@ -20,37 +19,6 @@ import { show, alert, confirm } from './imperative'
 
 const CANCEL = 'cancel'
 const CONFIRM = 'confirm'
-
-type CloseType = 'cancel' | 'confirm'
-
-type DialogButtonType = 'rounded' | 'text'
-
-export interface DialogProps extends CommonComponentProps {
-  className?: string
-  style?: CSSProperties
-  children?: ReactNode
-  maskClosable?: boolean
-  title?: ReactNode
-  message?: ReactNode
-  header?: ReactNode
-  headed?: boolean
-  footer?: ReactNode
-  buttonType?: DialogButtonType
-  showCancel?: boolean
-  cancelText?: ReactNode
-  cancelProps?: ButtonProps
-  showConfirm?: boolean
-  confirmText?: ReactNode
-  confirmProps?: ButtonProps
-  onCancel?: () => void
-  onConfirm?: () => void
-  beforeClose?: (done: () => void, type: CloseType) => void
-  visible?: boolean
-  onVisible?: (visible: boolean) => void
-  popupProps?: PopupProps
-}
-
-export interface DialogRef {}
 
 const buttonProps: {
   [p in DialogButtonType]: {
@@ -69,19 +37,50 @@ const buttonProps: {
       size: 'large',
     },
   },
-  rounded: {
+  round: {
     cancel: {
-      type: 'secondary',
+      type: 'pale',
       theme: 'primary',
-      rounded: true,
+      round: true,
     },
     confirm: {
-      type: 'primary',
+      type: 'default',
       theme: 'primary',
-      rounded: true,
+      round: true,
     },
   },
 }
+
+type CloseType = 'cancel' | 'confirm'
+
+type DialogButtonType = 'round' | 'text'
+
+export interface DialogProps {
+  className?: string
+  style?: CSSProperties
+  children?: ReactNode
+  title?: ReactNode
+  message?: ReactNode
+  header?: ReactNode
+  footer?: ReactNode
+  headed?: boolean
+  buttonType?: DialogButtonType
+  showCancel?: boolean
+  cancelText?: ReactNode
+  cancelProps?: ButtonProps
+  showConfirm?: boolean
+  confirmText?: ReactNode
+  confirmProps?: ButtonProps
+  maskClosable?: boolean
+  onCancel?: () => void
+  onConfirm?: () => void
+  beforeClose?: (done: () => void, type: CloseType) => void
+  visible?: boolean
+  onVisible?: (visible: boolean) => void
+  popupProps?: PopupProps
+}
+
+export interface DialogRef {}
 
 export interface DialogFC
   extends ForwardRefExoticComponent<
@@ -98,7 +97,6 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
     const {
       className,
       children,
-      maskClosable = false,
       title,
       message,
       header,
@@ -111,6 +109,7 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
       showConfirm = true,
       confirmText = '确定',
       confirmProps,
+      maskClosable = false,
       onCancel,
       onConfirm,
       beforeClose,
@@ -182,7 +181,7 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
       {
         's-dialog-headed': headed,
         's-dialog-untitled': !title,
-        's-dialog-rounded-button': buttonType === 'rounded',
+        's-dialog-round-button': buttonType === 'round',
       },
       className,
     )

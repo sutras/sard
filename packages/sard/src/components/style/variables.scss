@@ -44,8 +44,6 @@ $s-theme-colors: (
   info: $s-info,
   warning: $s-warning,
   danger: $s-danger,
-  light: $s-light,
-  dark: $s-dark,
 ) !default;
 
 // # 文本颜色
@@ -106,7 +104,7 @@ $s-mask-dark: rgba(0, 0, 0, 0.7) !default;
 
 // # 禁用状态
 $s-disabled-pointer-events: none !default;
-$s-disabled-opacity: 0.4 !default;
+$s-disabled-opacity: 0.6 !default;
 $s-disabled-cursor: default !default;
 $s-disabled-color: $s-gray-400 !default;
 

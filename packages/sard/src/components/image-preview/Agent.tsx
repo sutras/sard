@@ -1,7 +1,7 @@
 import { ImagePreview, ImagePreviewProps, ImagePreviewRef } from './index'
-import { useAgent, AgentProps, IdAgentMap } from '../../utils/imperative'
+import { useAgent, AgentProps, MapIdAgent } from '../../utils/imperative'
 
-export const idAgentMap: IdAgentMap<ImagePreviewProps, ImagePreviewRef> = {}
+export const mapIdAgent: MapIdAgent<ImagePreviewProps, ImagePreviewRef> = {}
 
 export const ImagePreviewAgent = (
   agentProps: AgentProps<ImagePreviewProps>,
@@ -9,7 +9,7 @@ export const ImagePreviewAgent = (
   return useAgent<ImagePreviewProps, ImagePreviewRef>(
     ImagePreview,
     agentProps,
-    idAgentMap,
+    mapIdAgent,
     'image-preview',
   )
 }

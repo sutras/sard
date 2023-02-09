@@ -12,7 +12,6 @@ import {
   RefAttributes,
 } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 import { animate, getRectDampingValue } from '../../utils'
 import {
   PAN_END,
@@ -41,7 +40,7 @@ const CLIENT_WIDTH = 'clientWidth'
 const VERTICAL = 'vertical'
 const HORIZONTAL = 'horizontal'
 
-export interface SwiperProps extends CommonComponentProps {
+export interface SwiperProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -447,17 +446,17 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
         {children}
       </div>
       {itemCount !== 0 &&
-        ((dots && dots(itemCount, activeIndex)) ||
-          (showDots && (
-            <SwiperDot
-              size={itemCount}
-              activeIndex={activeIndex}
-              color={dotColor}
-              activeColor={dotActiveColor}
-              clickable={dotClickable}
-              onClick={(index) => dotClickable && swipeTo(index)}
-            ></SwiperDot>
-          )))}
+        showDots &&
+        ((dots && dots(itemCount, activeIndex)) || (
+          <SwiperDot
+            size={itemCount}
+            activeIndex={activeIndex}
+            color={dotColor}
+            activeColor={dotActiveColor}
+            clickable={dotClickable}
+            onClick={(index) => dotClickable && swipeTo(index)}
+          ></SwiperDot>
+        ))}
     </div>
   )
 }) as SwiperFC

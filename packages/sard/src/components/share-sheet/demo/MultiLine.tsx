@@ -2,111 +2,123 @@
 ### 多行
 */
 
-import { ShareSheet, ActionSheetItemProps, Toast, Button } from 'sard'
+import {
+  ShareSheet,
+  ShareSheetItemProps,
+  ShareSheetItemList,
+  Toast,
+  Button,
+} from 'sard'
 import { useState } from 'react'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
 export default function () {
   const [visible, setVisible] = useState(false)
-  const itemList = [
+  const itemList: ShareSheetItemList = [
     [
       {
-        title: 'Wechat',
+        name: 'Wechat',
+        color: '#fff',
+        background: '#0bc15f',
         icon: {
-          fullName: 'bi-wechat',
-          frameColor: '#0bc15f',
+          name: 'bi-wechat',
         },
       },
       {
-        title: 'Alipay',
+        name: 'Alipay',
+        color: '#fff',
+        background: '#1677ff',
         icon: {
-          fullName: 'bi-alipay',
-          frameColor: '#1677ff',
+          name: 'bi-alipay',
         },
       },
       {
-        title: 'Twitter',
+        name: 'Twitter',
+        color: '#fff',
+        background: '#1d9bf0',
         icon: {
-          fullName: 'bi-twitter',
-          frameColor: '#1d9bf0',
+          name: 'bi-twitter',
         },
       },
       {
-        title: 'Facebook',
+        name: 'Facebook',
+        color: '#fff',
+        background: '#1877f2',
         icon: {
-          fullName: 'bi-facebook',
-          frameColor: '#1877f2',
+          name: 'bi-facebook',
         },
       },
     ],
     [
       {
-        title: 'Spotify',
+        name: 'Spotify',
+        color: '#fff',
+        background: '#1ed760',
         icon: {
-          fullName: 'bi-spotify',
-          frameColor: '#1ed760',
+          name: 'bi-spotify',
         },
       },
       {
-        title: 'Tiktok',
+        name: 'Tiktok',
+        color: '#fff',
+        background: '#000',
         icon: {
-          fullName: 'bi-tiktok',
-          frameColor: '#000',
+          name: 'bi-tiktok',
         },
       },
       {
-        title: 'Skype',
+        name: 'Skype',
+        color: '#fff',
+        background: '#0b64a4',
         icon: {
-          fullName: 'bi-skype',
-          frameColor: '#0b64a4',
+          name: 'bi-skype',
         },
       },
       {
-        title: 'Youtube',
+        name: 'Youtube',
+        color: '#fff',
+        background: '#ff0000',
         icon: {
-          fullName: 'bi-youtube',
-          frameColor: '#ff0000',
+          name: 'bi-youtube',
         },
       },
       {
-        title: 'Paypal',
+        name: 'Paypal',
+        color: '#fff',
+        background: '#0070ba',
         icon: {
-          fullName: 'bi-paypal',
-          frameColor: '#0070ba',
+          name: 'bi-paypal',
         },
       },
       {
-        title: 'Whatsapp',
+        name: 'Whatsapp',
+        color: '#fff',
+        background: '#128c7e',
         icon: {
-          fullName: 'bi-whatsapp',
-          frameColor: '#128c7e',
+          name: 'bi-whatsapp',
         },
       },
       {
-        title: 'Telegram',
+        name: 'Telegram',
+        color: '#fff',
+        background: '#0088cc',
         icon: {
-          fullName: 'bi-telegram',
-          frameColor: '#0088cc',
+          name: 'bi-telegram',
         },
       },
       {
-        title: 'Snapchat',
+        name: 'Snapchat',
+        color: '#000',
+        background: '#fffc00',
         icon: {
-          fullName: 'bi-snapchat',
-          color: '#000',
-          frameColor: '#fffc00',
+          name: 'bi-snapchat',
         },
       },
     ],
   ]
 
-  const handleSelect = (item: ActionSheetItemProps) => {
-    setVisible(false)
-    Toast.text(item.title as string)
-  }
-
-  const handleCancel = () => {
-    setVisible(false)
+  const handleSelect = (item: ShareSheetItemProps) => {
+    Toast.text(item.name)
   }
 
   return (
@@ -117,8 +129,9 @@ export default function () {
         visible={visible}
         itemList={itemList}
         cancel="取消"
+        actionClosable
         onSelect={handleSelect}
-        onCancel={handleCancel}
+        onClose={setVisible}
       />
     </>
   )

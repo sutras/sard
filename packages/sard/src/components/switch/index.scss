@@ -88,6 +88,11 @@ $s-switch-loading-color: inherit !default;
   @include disabled;
 }
 
+// # 只读状态
+.s-switch-readonly {
+  cursor: default;
+}
+
 // # 加载状态
 .s-switch-is-loading {
   pointer-events: $s-switch-is-loading-pointer-events;

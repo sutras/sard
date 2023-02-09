@@ -1,15 +1,14 @@
 import { CSSProperties, forwardRef, ReactNode } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 
-export interface TabLabelProps extends CommonComponentProps {
+export interface TabLabelProps {
   className?: string
   style?: CSSProperties
   activeStyle?: CSSProperties
   children?: ReactNode | ((active: boolean) => ReactNode)
-  name: any
-  activeKey?: any
-  onClick?: (name: any) => void
+  innerKey: number | string
+  activeKey?: number | string
+  onClick?: (innerKey: number | string) => void
   disabled?: boolean
   showLine?: boolean
   line?: ReactNode
@@ -23,7 +22,7 @@ export const TabLabel = forwardRef<HTMLElement, TabLabelProps>((props, ref) => {
     style,
     activeStyle,
     children,
-    name,
+    innerKey,
     activeKey,
     onClick,
     disabled,
@@ -34,11 +33,11 @@ export const TabLabel = forwardRef<HTMLElement, TabLabelProps>((props, ref) => {
     ...restProps
   } = props
 
-  const active = name === activeKey
+  const active = innerKey === activeKey
 
   const handleClick = () => {
     if (!disabled) {
-      onClick?.(name)
+      onClick?.(innerKey)
     }
   }
 

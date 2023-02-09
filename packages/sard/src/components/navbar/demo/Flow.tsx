@@ -11,23 +11,22 @@ export default function () {
   return (
     <Navbar
       flow
-      title="发现"
-      titleStyle={{ textAlign: 'left' }}
-      left={
+      title={<div style={{ textAlign: 'left' }}>发现</div>}
+      prepend={
         <Navbar.Item>
-          <Icon fullName="bi-list"></Icon>
+          <Icon name="bi-list"></Icon>
         </Navbar.Item>
       }
-      right={
+      append={
         <>
           <Navbar.Item>
-            <Icon fullName="bi-search"></Icon>
+            <Icon name="bi-search"></Icon>
           </Navbar.Item>
           <Navbar.Item>
-            <Icon fullName="bi-bell"></Icon>
+            <Icon name="bi-bell"></Icon>
           </Navbar.Item>
           <Navbar.Item>
-            <Icon fullName="bi-three-dots-vertical"></Icon>
+            <Icon name="bi-three-dots-vertical"></Icon>
           </Navbar.Item>
         </>
       }

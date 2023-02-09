@@ -1,9 +1,8 @@
 import { CSSProperties, ReactNode, memo, NamedExoticComponent } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 import { isVisibleEmpty } from '../../utils'
 
-export interface BadgeProps extends CommonComponentProps {
+export interface BadgeProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode

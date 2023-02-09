@@ -1,5 +1,5 @@
 /*
-### 类型
+### 图标类型
 */
 
 import { Checkbox } from 'sard'

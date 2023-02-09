@@ -1,5 +1,5 @@
 /*
-### 自定义icon
+### 自定义图标
 */
 
 import { Radio, Icon } from 'sard'
@@ -10,9 +10,7 @@ export default function () {
     <Radio.Group
       defaultValue="normal"
       icon={(checked) => (
-        <Icon
-          fullName={checked ? 'bi-patch-check-fill' : 'bi-patch-check'}
-        ></Icon>
+        <Icon name={checked ? 'bi-patch-check-fill' : 'bi-patch-check'}></Icon>
       )}
     >
       <Radio value="normal">正常</Radio>

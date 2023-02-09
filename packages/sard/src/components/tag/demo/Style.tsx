@@ -6,8 +6,8 @@ import { Tag } from 'sard'
 
 export default function () {
   return (
-    <>
-      <Tag style={{ background: 'orange', color: 'white' }}>标签</Tag>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+      <Tag style={{ background: '#ffeed0', color: 'orange' }}>标签</Tag>
       <Tag
         plain
         style={{
@@ -16,6 +16,6 @@ export default function () {
       >
         标签
       </Tag>
-    </>
+    </div>
   )
 }

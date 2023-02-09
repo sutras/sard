@@ -6,7 +6,7 @@ import { Tag } from 'sard'
 
 export default function () {
   return (
-    <>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
       <Tag plain theme="primary">
         primary
       </Tag>
@@ -25,12 +25,6 @@ export default function () {
       <Tag plain theme="danger">
         danger
       </Tag>
-      <Tag plain theme="light">
-        light
-      </Tag>
-      <Tag plain theme="dark">
-        dark
-      </Tag>
-    </>
+    </div>
   )
 }

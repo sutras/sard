@@ -9,13 +9,12 @@ import {
   useState,
 } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 import { useEvent } from '../../use'
 
 export interface CountDownRef {
-  start(): void
-  pause(): void
-  reset(): void
+  start: () => void
+  pause: () => void
+  reset: () => void
 }
 
 export interface CurrentTime {
@@ -27,7 +26,7 @@ export interface CurrentTime {
   total: number
 }
 
-export interface CountDownProps extends CommonComponentProps {
+export interface CountDownProps {
   className?: string
   style?: CSSProperties
   children?: (time: CurrentTime) => ReactNode
@@ -35,12 +34,23 @@ export interface CountDownProps extends CommonComponentProps {
   autoStart?: boolean
   format?: string
   interval?: number
-  onChange?: (time: number) => void
+  onChange?: (time: CurrentTime) => void
   onFinish?: () => void
 }
 
 function padZero(n: number, length = 2) {
   return String(n).padStart(length, '0')
+}
+
+function getCurrentTime(current) {
+  return {
+    milliseconds: current % 1000,
+    seconds: ~~(current / 1000) % 60,
+    minutes: ~~(current / 1000 / 60) % 60,
+    hours: ~~(current / 1000 / 60 / 60) % 60,
+    days: ~~(current / 1000 / 60 / 60 / 24),
+    total: current,
+  }
 }
 
 export const CountDown = forwardRef<CountDownRef, CountDownProps>(
@@ -61,16 +71,7 @@ export const CountDown = forwardRef<CountDownRef, CountDownProps>(
     const pausedTime = useRef(0)
     const playedTime = useRef(0)
 
-    const currentTime = useMemo(() => {
-      return {
-        milliseconds: current % 1000,
-        seconds: ~~(current / 1000) % 60,
-        minutes: ~~(current / 1000 / 60) % 60,
-        hours: ~~(current / 1000 / 60 / 60) % 60,
-        days: ~~(current / 1000 / 60 / 60 / 24),
-        total: current,
-      }
-    }, [current])
+    const currentTime = useMemo(() => getCurrentTime(current), [current])
 
     const timer = useRef(0)
     const paused = useRef(true)
@@ -79,7 +80,7 @@ export const CountDown = forwardRef<CountDownRef, CountDownProps>(
       const tickTime = Date.now() - playedTime.current
       const nextCurrent = Math.max(current - tickTime, 0)
       setCurrent(nextCurrent)
-      onChange?.(nextCurrent)
+      onChange?.(getCurrentTime(nextCurrent))
       if (nextCurrent === 0) {
         pause()
         onFinish?.()
@@ -109,8 +110,6 @@ export const CountDown = forwardRef<CountDownRef, CountDownProps>(
       setCurrent(time ?? 0)
     })
 
-    useEffect(() => pause, [])
-
     useImperativeHandle(ref, () => ({
       start,
       pause,
@@ -121,6 +120,8 @@ export const CountDown = forwardRef<CountDownRef, CountDownProps>(
       if (autoStart) {
         start()
       }
+
+      return pause
     }, [])
 
     const formatTime = () => {

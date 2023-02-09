@@ -12,7 +12,7 @@ export default function () {
     <>
       <Switch
         checked={checked}
-        onChange={(e, v) => (setChecked(e), setValue(v))}
+        onChange={(checked, value) => (setChecked(checked), setValue(value))}
         checkedValue="on"
         uncheckedValue="off"
       />

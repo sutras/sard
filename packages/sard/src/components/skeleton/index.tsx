@@ -1,61 +1,67 @@
 import { CSSProperties, FC, ReactNode } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
+import { SkeletonBlock } from './Block'
+import { SkeletonAvatar } from './Avatar'
+import { SkeletonTitle } from './Title'
+import { SkeletonParagraph } from './Paragraph'
 
-export interface SkeletonProps extends CommonComponentProps {
+export * from './Block'
+export * from './Avatar'
+export * from './Title'
+export * from './Paragraph'
+
+export interface SkeletonProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  row?: number
+  rows?: number
   title?: boolean
   avatar?: boolean
   avatarSize?: number | string
-  avatarShape?: 'round' | 'square'
+  avatarRound?: boolean
   round?: boolean
   loading?: boolean
   animated?: boolean
 }
 
-export const Skeleton: FC<SkeletonProps> = (props: SkeletonProps) => {
+export interface SkeletonFC extends FC<SkeletonProps> {
+  Block: typeof SkeletonBlock
+  Avatar: typeof SkeletonAvatar
+  Title: typeof SkeletonTitle
+  Paragraph: typeof SkeletonParagraph
+}
+
+export const Skeleton: SkeletonFC = (props) => {
   const {
     className,
     children,
-    row = 3,
+    rows = 3,
     title = false,
     avatar = false,
     avatarSize = 32,
-    avatarShape = 'round',
+    avatarRound = true,
     round = false,
     loading = true,
     animated = false,
     ...restProps
   } = props
 
-  const skeletonClass = classNames('s-skeleton', className, {
-    's-skeleton-round': round,
-    's-skeleton-animated': animated,
-  })
+  const skeletonClass = classNames('s-skeleton', className)
 
   return (
     <>
       {loading ? (
         <div {...restProps} className={skeletonClass}>
           {avatar && (
-            <div
-              className={classNames(
-                's-skeleton-avatar',
-                `s-skeleton-avatar-${avatarShape}`,
-              )}
-              style={{ width: avatarSize, height: avatarSize }}
-            ></div>
+            <SkeletonAvatar
+              size={avatarSize}
+              animated={animated}
+              round={avatarRound}
+            />
           )}
           <div className="s-skeleton-content">
-            {title && <div className="s-skeleton-title"></div>}
-            {Array(row)
-              .fill(0)
-              .map((_, i) => (
-                <div key={i} className="s-skeleton-row"></div>
-              ))}
+            {title && <SkeletonTitle animated={animated} round={round} />}
+            <SkeletonParagraph rows={rows} animated={animated} round={round} />
           </div>
         </div>
       ) : (
@@ -64,5 +70,10 @@ export const Skeleton: FC<SkeletonProps> = (props: SkeletonProps) => {
     </>
   )
 }
+
+Skeleton.Block = SkeletonBlock
+Skeleton.Avatar = SkeletonAvatar
+Skeleton.Title = SkeletonTitle
+Skeleton.Paragraph = SkeletonParagraph
 
 export default Skeleton

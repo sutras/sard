@@ -24,18 +24,14 @@ export default function () {
           }
         `}
       </style>
-      <CountDown
-        time={1000 * 60 * 60 * 2}
-        format="HH 时 mm 分 ss 秒"
-        interval={93}
-      >
+      <CountDown time={1000 * 60 * 60 * 2} interval={93}>
         {(time: CurrentTime) => (
           <div className="time-wrap">
-            <div className="time">{time.hours}</div>
+            <div className="time">{String(time.hours).padStart(2, '0')}</div>
             <div className="colon">:</div>
-            <div className="time">{time.minutes}</div>
+            <div className="time">{String(time.minutes).padStart(2, '0')}</div>
             <div className="colon">:</div>
-            <div className="time">{time.seconds}</div>
+            <div className="time">{String(time.seconds).padStart(2, '0')}</div>
           </div>
         )}
       </CountDown>

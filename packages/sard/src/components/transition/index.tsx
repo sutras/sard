@@ -8,31 +8,27 @@ import {
 } from 'react'
 import { useCallbackState } from '../../use'
 
-export const ENTER = 'enter'
 export const ENTERING = 'entering'
 export const ENTERED = 'entered'
-export const EXIT = 'exit'
 export const EXITING = 'exiting'
 export const EXITED = 'exited'
 
-type Status = 'enter' | 'entering' | 'entered' | 'exit' | 'exiting' | 'exited'
+type Status = 'entering' | 'entered' | 'exiting' | 'exited'
 
 export interface TransitionProps {
-  children:
-    | ReactElement
-    | ((status: Status, props: { [p: string]: any }) => ReactElement)
   in?: boolean
+  children?:
+    | ReactElement
+    | ((status: Status, props: { [p: string]: any }) => ReactElement | null)
   mountOnEnter?: boolean
   unmountOnExit?: boolean
   appear?: boolean
   enter?: boolean
   exit?: boolean
   timeout?: number | { enter?: number; exit?: number; appear?: number }
-  onBeforeEnter?: () => void
   onEnter?: () => void
   onEntering?: () => void
   onEntered?: () => void
-  onBeforeExit?: () => void
   onExit?: () => void
   onExiting?: () => void
   onExited?: () => void
@@ -60,12 +56,10 @@ export const Transition: FC<TransitionProps> = (props) => {
     exit = true,
     timeout,
 
-    onBeforeEnter = noop,
     onEnter = noop,
     onEntering = noop,
     onEntered = noop,
 
-    onBeforeExit = noop,
     onExit = noop,
     onExiting = noop,
     onExited = noop,
@@ -135,15 +129,9 @@ export const Transition: FC<TransitionProps> = (props) => {
     cancelNextCallback()
 
     if (_in) {
-      if (status === EXIT) {
-        onExiting()
-      }
-      onExited()
+      onExited?.()
     } else {
-      if (status === ENTER) {
-        onEntering()
-      }
-      onEntered()
+      onEntered?.()
     }
   }
 
@@ -165,47 +153,42 @@ export const Transition: FC<TransitionProps> = (props) => {
 
   useEffect(() => {
     if (_in) {
-      if (status !== ENTER && status !== ENTERING && status !== ENTERED) {
+      if (status !== ENTERING && status !== ENTERED) {
         if (willAppear.current) {
           willAppear.current = false
         } else {
           finishNextCallback(_in)
         }
-        onBeforeEnter()
-        setStatus(ENTER, () => {
-          onEnter()
-        })
-      } else if (status === ENTER) {
-        setStatus(ENTERING, () => {
-          onEntering()
-        })
 
-        const timeouts = getTimeouts()
-        const timeout = willAppear.current
-          ? timeouts.appear
-          : enter
-          ? timeouts.enter
-          : 0
-        onTransitionEnd(timeout, () => {
-          setStatus(ENTERED, () => {
-            onEntered()
+        onEnter?.()
+        setStatus(ENTERING, () => {
+          onEntering?.()
+
+          const timeouts = getTimeouts()
+          const timeout = willAppear.current
+            ? timeouts.appear
+            : enter
+            ? timeouts.enter
+            : 0
+          onTransitionEnd(timeout, () => {
+            setStatus(ENTERED, () => {
+              onEntered?.()
+            })
           })
         })
       }
     } else {
-      if (status !== EXIT && status !== EXITING && status !== EXITED) {
+      if (status !== EXITING && status !== EXITED) {
         finishNextCallback(_in)
-        setStatus(EXIT, () => {
-          onExit()
-        })
-      } else if (status === EXIT) {
-        setStatus(EXITING, () => {
-          onExiting()
-        })
 
-        onTransitionEnd(exit ? getTimeouts().exit : 0, () => {
-          setStatus(EXITED, () => {
-            onExited()
+        onExit?.()
+        setStatus(EXITING, () => {
+          onExiting?.()
+
+          onTransitionEnd(exit ? getTimeouts().exit : 0, () => {
+            setStatus(EXITED, () => {
+              onExited?.()
+            })
           })
         })
       }
@@ -223,6 +206,10 @@ export const Transition: FC<TransitionProps> = (props) => {
 
   if (typeof children === 'function') {
     return children(status, restProps)
+  }
+
+  if (!children) {
+    return null
   }
 
   const element = Children.only(children)

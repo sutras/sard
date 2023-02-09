@@ -9,7 +9,7 @@ export default function () {
     Dialog.alert({
       title: '提示',
       message: '此功能暂时无法使用',
-      buttonType: 'rounded',
+      buttonType: 'round',
     })
   }
 
@@ -17,7 +17,7 @@ export default function () {
     Dialog.confirm({
       title: '提示',
       message: '确定删除？',
-      buttonType: 'rounded',
+      buttonType: 'round',
     })
   }
 

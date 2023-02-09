@@ -1,11 +1,4 @@
-import {
-  CSSProperties,
-  ForwardedRef,
-  forwardRef,
-  ReactNode,
-  ForwardRefExoticComponent,
-  RefAttributes,
-} from 'react'
+import { CSSProperties, forwardRef, ReactNode } from 'react'
 import classNames from 'classnames'
 import { CommonComponentProps } from '../../utils/types'
 

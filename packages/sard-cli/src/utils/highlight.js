@@ -7,7 +7,7 @@ export function highlight(code, lang) {
   return Prism.highlight(code, Prism.languages[lang], lang)
 }
 
-export function hlCallback(code, lang) {
+export function hlCallback(code = '', lang = 'text') {
   try {
     return `<pre class="language-${lang}"><code class="language-${lang}">${highlight(
       code,

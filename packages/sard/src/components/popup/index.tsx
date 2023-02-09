@@ -5,12 +5,11 @@ import {
   useRef,
   ReactElement,
   FC,
+  MouseEvent,
 } from 'react'
 import { createPortal } from 'react-dom'
 import classNames from 'classnames'
 import { useEvent } from '../../use'
-import { CommonComponentProps } from '../../utils/types'
-
 import { CSSTransition } from '../transition/CSSTransition'
 import { isMiniProgram } from '../../utils/dom'
 
@@ -23,20 +22,20 @@ const aniClass = {
   'center-fade': 'fade',
 }
 
-export interface PopupProps extends CommonComponentProps {
+export interface PopupProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
   visible?: boolean
   lockScroll?: boolean
   zIndex?: number
-  timeout?: number
+  duration?: number
   placement?: 'top' | 'right' | 'bottom' | 'left' | 'center' | 'center-fade'
   mask?: boolean
   maskClass?: string
   maskStyle?: CSSProperties
   container?: Element
-  onMaskClick?: () => void
+  onMaskClick?: (event: MouseEvent) => void
   onEnter?: () => void
   onEntering?: () => void
   onEntered?: () => void
@@ -53,7 +52,7 @@ export const Popup: FC<PopupProps> = (props) => {
     visible = false,
     lockScroll = true,
     zIndex,
-    timeout = 300,
+    duration = 300,
     placement = 'center',
     mask = true,
     maskClass,
@@ -72,8 +71,8 @@ export const Popup: FC<PopupProps> = (props) => {
   const [popupVisible, setPopupVisible] = useState(visible)
   const [isHiding, setIsHiding] = useState(!visible)
 
-  const handleMaskClick = useEvent(() => {
-    onMaskClick?.()
+  const handleMaskClick = useEvent((event: MouseEvent) => {
+    onMaskClick?.(event)
   })
 
   const handleEnter = useEvent(() => {
@@ -125,7 +124,7 @@ export const Popup: FC<PopupProps> = (props) => {
 
   const render = (
     <div className={popupClass} style={popupStyle}>
-      <CSSTransition in={visible} timeout={timeout} type="fade">
+      <CSSTransition in={visible} timeout={duration} type="fade">
         {mask ? (
           <div
             className={classNames('s-popup-mask', maskClass)}
@@ -134,16 +133,12 @@ export const Popup: FC<PopupProps> = (props) => {
             }}
             onClick={handleMaskClick}
           ></div>
-        ) : (
-          ((() => {
-            void 0
-          }) as () => ReactElement)
-        )}
+        ) : null}
       </CSSTransition>
       <div className={dialogClass} ref={dialogRef}>
         <CSSTransition
           in={visible}
-          timeout={timeout}
+          timeout={duration}
           type={aniClass[placement] as any}
           onEnter={handleEnter}
           onEntering={handleEntering}

@@ -1,24 +1,15 @@
 import { CSSProperties, ReactNode, FC, MouseEvent } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 import { Loading, LoadingProps } from '../loading'
 
-export interface ButtonProps extends CommonComponentProps {
+export interface ButtonProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  type?: 'primary' | 'secondary' | 'mild' | 'outlined' | 'text' | 'pale-text'
-  theme?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'info'
-    | 'warning'
-    | 'danger'
-    | 'light'
-    | 'dark'
+  type?: 'default' | 'pale' | 'mild' | 'outline' | 'text' | 'pale-text'
+  theme?: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger'
   size?: 'medium' | 'small' | 'large'
-  rounded?: boolean
+  round?: boolean
   block?: boolean
   disabled?: boolean
   loading?: boolean
@@ -32,10 +23,10 @@ export const Button: FC<ButtonProps> = (props) => {
   const {
     className,
     children,
-    type = 'primary',
+    type = 'default',
     theme = 'primary',
     size = 'medium',
-    rounded = false,
+    round = false,
     block = false,
     disabled = false,
     loading = false,
@@ -46,18 +37,18 @@ export const Button: FC<ButtonProps> = (props) => {
   } = props
 
   const handleClick = (event: MouseEvent) => {
-    if (disabled || loading) {
-      return
+    if (!disabled && !loading) {
+      onClick?.(event)
     }
-    onClick?.(event)
   }
 
   const buttonClass = classNames(
     's-button',
-    's-button-' + (type !== 'primary' ? type + '-' : '') + theme,
+    's-button-' + theme,
     {
+      ['s-button-' + type]: type !== 'default',
       ['s-button-' + size]: size !== 'medium',
-      's-button-rounded': rounded,
+      's-button-round': round,
       's-button-block': block,
       's-button-disabled': disabled,
       's-button-loading': loading,

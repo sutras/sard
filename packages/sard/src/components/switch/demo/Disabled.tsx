@@ -7,8 +7,8 @@ import { Switch } from 'sard'
 export default function () {
   return (
     <>
-      <Switch defaultChecked disabled />
       <Switch disabled />
+      <Switch defaultChecked disabled />
     </>
   )
 }

@@ -1,79 +1,71 @@
-import { createElement, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { ToastProps } from './index'
 import { isNotReactNode } from '../../utils'
-import { mountComponent } from '../../utils/imperative'
-import { idAgentMap, ToastAgent } from './Agent'
+import { mountAgent } from '../../utils/imperative'
+import { mapIdAgent, ToastAgent } from './Agent'
 
-export interface ToastShortcut {
-  (propsOrTitle: ReactNode | ToastProps, props?: ToastProps): void
+export interface ToastOptions extends ToastProps {
+  id?: string
 }
 
 export interface ToastShow {
+  (options: ToastOptions): void
+  (title: ReactNode, options?: ToastOptions): void
+}
+
+export interface ToastInternalShow {
   (
-    propsOrTitle: ReactNode | ToastProps,
-    props?: ToastProps,
-    internalType?: ToastProps['type'],
+    optionsOrTitle: ReactNode | ToastOptions,
+    options?: ToastOptions,
+    internalType?: ToastOptions['type'],
   ): void
 }
 
-export const show: ToastShow = (
-  propsOrTitle,
-  props = {},
-  internalType = 'custom',
+const internalShow: ToastInternalShow = (
+  optionsOrTitle,
+  options = {},
+  internalType = 'text',
 ) => {
-  if (isNotReactNode(propsOrTitle)) {
-    props = propsOrTitle as ToastProps
+  if (isNotReactNode(optionsOrTitle)) {
+    options = optionsOrTitle as ToastOptions
   } else {
-    props.title = propsOrTitle as ReactNode
+    options.title = optionsOrTitle as ReactNode
   }
 
-  if (internalType) {
-    props.type = internalType
-  }
+  options.type = internalType
 
-  const { id = 'toast' } = props
+  const { id = 'toast' } = options
 
-  const ref = idAgentMap[id]
+  const ref = mapIdAgent[id]
 
   if (ref) {
     ref.current?.reset()
-    ref.current?.show(props)
+    ref.current?.show(options)
   } else {
-    const { mount, unmount, container } = mountComponent()
-
-    const element = createElement(ToastAgent, {
-      id,
-      $$afterRender() {
-        idAgentMap[id]?.current?.show(props)
-      },
-      popupProps: {
-        container,
-        onExited() {
-          unmount()
-        },
-      },
-    })
-
-    mount(element)
+    mountAgent(id, ToastAgent, mapIdAgent, options)
   }
 }
 
-export const text: ToastShortcut = (propsOrTitle, props) => {
-  show(propsOrTitle, props, 'text')
+export const show: ToastShow = (optionsOrTitle, options?) => {
+  internalShow(optionsOrTitle, options)
 }
 
-export const success: ToastShortcut = (propsOrTitle, props) => {
-  show(propsOrTitle, props, 'success')
+export const success: ToastShow = (optionsOrTitle, options?) => {
+  internalShow(optionsOrTitle, options, 'success')
 }
 
-export const fail: ToastShortcut = (propsOrTitle, props) => {
-  show(propsOrTitle, props, 'fail')
+export const fail: ToastShow = (optionsOrTitle, options?) => {
+  internalShow(optionsOrTitle, options, 'fail')
 }
 
-export const loading: ToastShortcut = (propsOrTitle, props) => {
-  show(propsOrTitle, props, 'loading')
+export const loading: ToastShow = (optionsOrTitle, options?) => {
+  internalShow(optionsOrTitle, options, 'loading')
 }
 
-export const hide = () => {
-  Object.keys(idAgentMap).forEach((key) => idAgentMap[key]?.current?.hide())
+export const hide = (id = 'toast') => {
+  mapIdAgent[id]?.current?.hide()
+}
+
+export const hideAll = () => {
+  Object.keys(mapIdAgent).forEach((key) => mapIdAgent[key]?.current?.hide())
 }

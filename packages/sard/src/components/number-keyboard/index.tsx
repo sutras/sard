@@ -10,15 +10,13 @@ import {
   useRef,
 } from 'react'
 import classNames from 'classnames'
-import { useControlledValue } from '../../use'
-import { CommonComponentProps } from '../../utils/types'
+import { useControlledValue, useEvent } from '../../use'
 import { shuffle } from '../../utils'
 import { Icon } from '../icon'
 import { Button, ButtonProps } from '../button'
 import { Popup, PopupProps } from '../popup'
-import { useEvent } from '../../use'
 
-export interface NumberKeyboardProps extends CommonComponentProps {
+export interface NumberKeyboardProps {
   className?: string
   style?: CSSProperties
   children?: ReactElement
@@ -40,11 +38,11 @@ export interface NumberKeyboardProps extends CommonComponentProps {
   onConfirm?: (visible: false) => void
   extraKey?: string
   random?: boolean
-  triggerProp?: string
-  hideType?: string
-  focusedProp?: string
   maxLength?: number
+  hideType?: string
   popupProps?: PopupProps
+  triggerProp?: string
+  focusedProp?: string
 }
 
 export const NumberKeyboard: FC<NumberKeyboardProps> = (props) => {
@@ -69,11 +67,11 @@ export const NumberKeyboard: FC<NumberKeyboardProps> = (props) => {
     onConfirm,
     extraKey,
     random,
-    triggerProp = 'onClick',
-    hideType = 'click',
-    focusedProp,
-    maxLength = Infinity,
+    maxLength = Number.MAX_SAFE_INTEGER,
     popupProps = {},
+    hideType = 'click',
+    triggerProp = 'onClick',
+    focusedProp,
     ...restProps
   } = props
 
@@ -108,20 +106,16 @@ export const NumberKeyboard: FC<NumberKeyboardProps> = (props) => {
     defaultValue: false,
   })
 
-  const keyboardRef = useRef<HTMLElement>(null)
-
-  const setVisible = (show: boolean) => {
-    setInnerVisible(show)
-  }
+  const keyboardRef = useRef<HTMLDivElement>(null)
 
   const handleCancel = useEvent(() => {
-    setVisible(false)
+    setInnerVisible(false)
     onCancel?.(false)
     onClose?.(false)
   })
 
   const handleConfirm = useEvent(() => {
-    setVisible(false)
+    setInnerVisible(false)
     onConfirm?.(false)
     onClose?.(false)
   })
@@ -133,7 +127,7 @@ export const NumberKeyboard: FC<NumberKeyboardProps> = (props) => {
     const handler = (event: Event) => {
       if (keyboardRef.current) {
         if (!keyboardRef.current.contains(event.target as HTMLElement)) {
-          setVisible(false)
+          setInnerVisible(false)
         }
       }
     }
@@ -194,11 +188,7 @@ export const NumberKeyboard: FC<NumberKeyboardProps> = (props) => {
         mask={mask}
         lockScroll={lockScroll}
       >
-        <div
-          {...restProps}
-          className={numberKeyboardClass}
-          ref={keyboardRef as any}
-        >
+        <div {...restProps} className={numberKeyboardClass} ref={keyboardRef}>
           <div className="s-number-keyboard-header">
             <Button
               className="s-number-keyboard-cancel s-number-keyboard-button"

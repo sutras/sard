@@ -2,8 +2,7 @@
 ### 图片类型
 */
 
-import { Avatar, Icon } from 'sard'
-import 'bootstrap-icons/font/bootstrap-icons.css'
+import { Avatar } from 'sard'
 
 export default function () {
   return (

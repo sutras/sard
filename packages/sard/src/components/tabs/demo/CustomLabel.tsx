@@ -12,7 +12,7 @@ export default function () {
         <TabPane
           label={
             <span>
-              <Icon fullName="bi-cup-hot"></Icon> 标签1
+              <Icon name="bi-cup-hot"></Icon> 标签1
             </span>
           }
         >
@@ -21,7 +21,7 @@ export default function () {
         <TabPane
           label={(active) => (
             <span>
-              <Icon fullName={active ? 'bi-cup-hot-fill' : 'bi-cup-hot'}></Icon>{' '}
+              <Icon name={active ? 'bi-cup-hot-fill' : 'bi-cup-hot'}></Icon>{' '}
               标签1
             </span>
           )}

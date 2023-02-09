@@ -6,34 +6,34 @@ import {
   ReactElement,
   cloneElement,
   FC,
+  useMemo,
 } from 'react'
 import classNames from 'classnames'
 import { useControlledValue } from '../../use'
-import { CommonComponentProps } from '../../utils/types'
 import { pickNullish } from '../../utils'
 
 import { RadioProps } from './index'
 
 export interface RadioGroupContext {
   value: any
-  onChange: (value: any) => any
+  onChange: (value: any) => void
 }
 
 export const RadioGroupContext = createContext<RadioGroupContext | null>(null)
 
-export interface RadioGroupProps extends CommonComponentProps {
+export interface RadioGroupProps {
   className?: string
   style?: CSSProperties
+  children?: any
   value?: any
   defaultValue?: any
   vertical?: boolean
   disabled?: boolean
-  size?: string
+  size?: string | number
   type?: RadioProps['type']
   icon?: (checked: boolean) => ReactNode
   checkedColor?: string
-  children?: any
-  onChange?: (value: any) => any
+  onChange?: (value: any) => void
 }
 
 export const RadioGroup: FC<RadioGroupProps> = (props) => {
@@ -60,10 +60,13 @@ export const RadioGroup: FC<RadioGroupProps> = (props) => {
     setInnerValue(val)
   }
 
-  const context = {
-    value: innerValue,
-    onChange: innerChange,
-  }
+  const context = useMemo(
+    () => ({
+      value: innerValue,
+      onChange: innerChange,
+    }),
+    [innerValue, innerChange],
+  )
 
   const radioGroupClass = classNames(
     's-radio-group',

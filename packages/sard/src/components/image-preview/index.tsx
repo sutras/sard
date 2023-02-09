@@ -138,7 +138,7 @@ export const ImagePreview: ImagePreviewFC = forwardRef((props, ref) => {
             onAnimateEnd={handleAnimateEnd}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            ref={swiperRef as any}
+            ref={swiperRef}
           >
             {images.map((url, i) => (
               <ImagePreviewItem

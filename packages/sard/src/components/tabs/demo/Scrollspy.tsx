@@ -9,9 +9,9 @@ export default function () {
     <>
       <Tabs
         scrollspy
-        offset={98}
+        offset={108}
         sticky
-        headerStyle={{ top: 50, background: '#fff' }}
+        headerStyle={{ top: 60, background: '#fff' }}
       >
         {Array(7)
           .fill(0)

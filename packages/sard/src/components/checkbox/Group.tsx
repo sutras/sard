@@ -1,13 +1,12 @@
 import {
   createContext,
-  useState,
-  useEffect,
   CSSProperties,
   ReactNode,
   cloneElement,
   ReactElement,
   Children,
   FC,
+  useMemo,
 } from 'react'
 import classNames from 'classnames'
 import { useControlledValue } from '../../use'
@@ -18,7 +17,7 @@ import { CheckboxProps } from './index'
 
 export interface CheckboxGroupContext {
   value: any[]
-  onChange: (value: any[]) => any
+  onChange: (value: any[]) => void
 }
 
 export const CheckboxGroupContext = createContext<CheckboxGroupContext | null>(
@@ -32,7 +31,7 @@ export interface CheckboxGroupProps extends CommonComponentProps {
   defaultValue?: any[]
   vertical?: boolean
   disabled?: boolean
-  size?: string
+  size?: string | number
   type?: CheckboxProps['type']
   icon?: (checked: boolean) => ReactNode
   checkedColor?: string
@@ -64,10 +63,13 @@ export const CheckboxGroup: FC<CheckboxGroupProps> = (props) => {
     setInnerValue(val)
   }
 
-  const context = {
-    value: innerValue,
-    onChange: innerChange,
-  }
+  const context = useMemo(
+    () => ({
+      value: innerValue,
+      onChange: innerChange,
+    }),
+    [innerValue, innerChange],
+  )
 
   const checkboxGroupClass = classNames(
     's-checkbox-group',

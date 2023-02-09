@@ -1,43 +1,27 @@
-import { createElement } from 'react'
 import { DialogProps } from './index'
-import { idAgentMap, DialogAgent } from './Agent'
-import { mountComponent } from '../../utils/imperative'
+import { mapIdAgent, DialogAgent } from './Agent'
+import { mountAgent } from '../../utils/imperative'
 
 export interface DialogOptions extends DialogProps {
   id?: string
 }
 
-export const show = (props: DialogOptions) => {
-  const { id = 'dialog' } = props
+export const show = (options: DialogOptions) => {
+  const { id = 'dialog' } = options
 
-  const ref = idAgentMap[id]
+  const ref = mapIdAgent[id]
 
   if (ref) {
-    ref.current?.show(props)
+    ref.current?.show(options)
   } else {
-    const { mount, unmount, container } = mountComponent()
-
-    const element = createElement(DialogAgent, {
-      id,
-      $$afterRender() {
-        idAgentMap[id]?.current?.show(props)
-      },
-      popupProps: {
-        container,
-        onExited() {
-          unmount()
-        },
-      },
-    })
-
-    mount(element)
+    mountAgent(id, DialogAgent, mapIdAgent, options)
   }
 }
 
-export const alert = (props: DialogOptions) => {
-  show({ ...props, showCancel: false })
+export const alert = (options: DialogOptions) => {
+  show({ ...options, showCancel: false })
 }
 
-export const confirm = (props: DialogOptions) => {
-  show({ ...props, showCancel: true })
+export const confirm = (options: DialogOptions) => {
+  show({ ...options, showCancel: true })
 }

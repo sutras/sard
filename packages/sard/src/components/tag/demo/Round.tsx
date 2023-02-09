@@ -7,7 +7,7 @@ import { Tag } from 'sard'
 export default function () {
   return (
     <>
-      <Tag round>primary</Tag>
+      <Tag round>标签</Tag>
     </>
   )
 }

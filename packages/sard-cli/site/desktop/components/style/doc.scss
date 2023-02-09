@@ -29,6 +29,14 @@
     margin: 0 0 15px;
   }
 
+  code:not([class*='language-']) {
+    padding: 0 3px;
+    font-size: 0.9em;
+    word-wrap: break-word;
+    color: var(--doc-emphasis-color);
+    background: rgba(255, 229, 100, 0.2);
+  }
+
   @at-root {
     .doc-card {
       padding: 20px;
@@ -73,74 +81,78 @@
 
     .doc-table-responsive {
       overflow-x: auto;
+
+      table {
+        width: 100%;
+        color: var(--doc-body-color);
+        font-size: 14px;
+        line-height: 1.5;
+        border-collapse: collapse;
+
+        th {
+          padding: 8px 10px;
+          font-weight: 600;
+          text-align: left;
+        }
+
+        td {
+          padding: 8px;
+          border-top: 1px solid var(--doc-border-color);
+
+          &:nth-child(1) {
+            width: 15%;
+            font-weight: 600;
+          }
+
+          &:nth-child(2) {
+            width: 45%;
+            min-width: 100px;
+          }
+
+          &:nth-child(3) {
+            width: 25%;
+            font-size: 0.9em;
+            color: var(--doc-code-color);
+            word-wrap: break-word;
+          }
+
+          &:nth-child(4) {
+            width: 15%;
+          }
+
+          &:nth-child(1),
+          &:nth-child(3),
+          &:nth-child(4) {
+            font-family: var(--doc-code-font-family);
+          }
+        }
+
+        th,
+        td {
+          &:first-child {
+            padding-left: 0;
+          }
+        }
+
+        th,
+        td {
+          &:last-child {
+            padding-right: 0;
+          }
+        }
+      }
     }
   }
+}
 
-  table {
-    width: 100%;
-    margin-top: 12px;
-    color: var(--doc-body-color);
-    font-size: 14px;
-    line-height: 1.5;
-    border-collapse: collapse;
+@media (max-width: 768px) {
+  .doc-content {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 
-    th {
-      padding: 8px 10px;
-      font-weight: 600;
-      text-align: left;
-    }
-
-    th:first-child {
-      padding-left: 0;
-    }
-
-    th:last-child {
-      padding-right: 0;
-    }
-
-    td {
-      padding: 8px;
-      border-top: 1px solid var(--doc-border-color);
-    }
-
-    td:first-child {
-      padding-left: 0;
-    }
-
-    td:first-child code {
-      margin: 0;
-      padding: 2px 6px;
-      color: var(--doc-primary);
-      font-weight: 600;
-      font-size: 11px;
-      background-color: rgba(25, 137, 250, 0.1);
-      border-radius: 20px;
-    }
-
-    td:last-child {
-      padding-right: 0;
-    }
-
-    em {
-      display: inline-block;
-      color: #4fc08d;
-      font-size: 14px;
-      font-family: Source Code Pro, Monaco, Inconsolata, monospace;
-      font-style: normal;
-      max-width: 300px;
-      -webkit-font-smoothing: auto;
-    }
-
-    code {
-      display: inline;
-      margin: 0 2px;
-      padding: 2px 5px;
-      font-size: 14px;
-      font-family: inherit;
-      font-weight: 600;
-      word-break: keep-all;
-      border-radius: 4px;
-      -webkit-font-smoothing: antialiased;
-    }
+  .doc-card {
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }

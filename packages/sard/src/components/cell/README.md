@@ -2,7 +2,7 @@
 
 ### 介绍
 
-表示列表中单个展示项
+表示列表中单个展示项，结合单元格组常用于个人中心、设置等页面列表。
 
 ### 引入
 
@@ -17,15 +17,34 @@ import { Cell } from 'sard'
     "./demo/Basic.tsx",
     "./demo/Clickable.tsx",
     "./demo/Icon.tsx",
-    "./demo/Group.tsx",
-    "./demo/Header.tsx",
-    "./demo/Wide.tsx"
+    "./demo/Inset.tsx",
+    "./demo/Group.tsx"
   ]
 </script>
 
 ## API
 
-### Props
+### CellProps
+
+| 属性           | 描述                           | 类型                              | 默认值  |
+| -------------- | ------------------------------ | --------------------------------- | ------- |
+| title          | 左侧标题                       | React.ReactNode                   | -       |
+| label          | 标题下方的描述信息             | React.ReactNode                   | -       |
+| value          | 右侧值                         | React.ReactNode                   | -       |
+| isLink         | 是否展示右侧箭头并开启点击反馈 | boolean                           | false   |
+| arrowDirection | 箭头方向                       | 'up' \| 'right' \| 'down'         | 'right' |
+| arrow          | 自定义箭头                     | React.ReactNode                   | -       |
+| icon           | 左侧图标                       | React.ReactNode                   | -       |
+| inset          | 内嵌图标                       | boolean                           | false   |
+| onClick        | 点击单元格时触发               | (event: React.MouseEvent) => void | -       |
+
+### CellGroupProps
+
+| 属性   | 描述                 | 类型            | 默认值 |
+| ------ | -------------------- | --------------- | ------ |
+| title  | 单元格组标题         | React.ReactNode | -      |
+| label  | 单元格组底部描述信息 | React.ReactNode | -      |
+| inlaid | 嵌入式状态           | boolean         | false  |
 
 ## 主题定制
 

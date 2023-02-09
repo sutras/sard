@@ -1,6 +1,6 @@
+import { createContext, CSSProperties, FC, ReactNode, useMemo } from 'react'
 import classNames from 'classnames'
-import { createContext, CSSProperties, FC, ReactNode } from 'react'
-import { CommonComponentProps } from '../../utils/types'
+import { splitUnit } from '../../utils'
 
 const mapJustify = {
   start: 'flex-start',
@@ -18,30 +18,31 @@ const mapAlign = {
 }
 
 export interface RowContext {
-  gutter: number
+  gutter: number | string
+  gap: [number, string]
 }
 
 export const RowContext = createContext<RowContext | null>(null)
 
-export interface RowProps extends CommonComponentProps {
+export interface RowProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  gutter?: number
+  gutter?: number | string
   justify?: 'start' | 'center' | 'end' | 'around' | 'between' | 'evenly'
   align?: 'start' | 'center' | 'end' | 'stretch'
 }
 
 export const Row: FC<RowProps> = (props) => {
-  const {
-    className,
-    style,
-    children,
-    gutter = 0,
-    justify,
-    align,
-    ...restProps
-  } = props
+  const { className, style, children, gutter, justify, align, ...restProps } =
+    props
+
+  const gap = useMemo(() => {
+    if (gutter) {
+      const result = splitUnit(gutter)
+      return [result[0] / 2, result[1] || 'px'] as [number, string]
+    }
+  }, [gutter])
 
   const rowStyle = Object.assign(
     {
@@ -50,8 +51,8 @@ export const Row: FC<RowProps> = (props) => {
     },
     gutter
       ? {
-          marginLeft: -gutter / 2 + 'px',
-          marginRight: -gutter / 2 + 'px',
+          marginLeft: -gap[0] + gap[1],
+          marginRight: -gap[0] + gap[1],
         }
       : null,
     style,
@@ -59,9 +60,13 @@ export const Row: FC<RowProps> = (props) => {
 
   const rowClass = classNames('s-row', className)
 
-  const context = {
-    gutter,
-  }
+  const context = useMemo(
+    () => ({
+      gutter,
+      gap,
+    }),
+    [gutter],
+  )
 
   return (
     <div {...restProps} className={rowClass} style={rowStyle}>

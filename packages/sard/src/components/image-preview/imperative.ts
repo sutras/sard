@@ -1,7 +1,6 @@
-import { createElement } from 'react'
 import { ImagePreviewProps } from './index'
-import { idAgentMap, ImagePreviewAgent } from './Agent'
-import { mountComponent } from '../../utils/imperative'
+import { mapIdAgent, ImagePreviewAgent } from './Agent'
+import { mountAgent } from '../../utils/imperative'
 
 export interface ImagePreviewOptions extends ImagePreviewProps {
   id?: string
@@ -10,26 +9,11 @@ export interface ImagePreviewOptions extends ImagePreviewProps {
 export const show = (props: ImagePreviewProps) => {
   const { id = 'image-preview' } = props
 
-  const ref = idAgentMap[id]
+  const ref = mapIdAgent[id]
 
   if (ref) {
     ref.current?.show(props)
   } else {
-    const { mount, unmount, container } = mountComponent()
-
-    const element = createElement(ImagePreviewAgent, {
-      id,
-      $$afterRender() {
-        idAgentMap[id]?.current?.show(props)
-      },
-      popupProps: {
-        container,
-        onExited() {
-          unmount()
-        },
-      },
-    })
-
-    mount(element)
+    mountAgent(id, ImagePreviewAgent, mapIdAgent, props)
   }
 }

@@ -9,7 +9,7 @@ export default function () {
     Dialog.alert({
       title: '提示',
       message: '此功能暂时无法使用',
-      buttonType: 'rounded',
+      buttonType: 'round',
       headed: true,
     })
   }
@@ -18,7 +18,7 @@ export default function () {
     Dialog.confirm({
       title: '提示',
       message: '确定删除？',
-      buttonType: 'rounded',
+      buttonType: 'round',
       headed: true,
     })
   }
@@ -26,7 +26,7 @@ export default function () {
   const showUntitledAlert = () => {
     Dialog.alert({
       message: '此功能暂时无法使用',
-      buttonType: 'rounded',
+      buttonType: 'round',
       headed: true,
     })
   }
@@ -34,7 +34,7 @@ export default function () {
   const showUntitledConfirm = () => {
     Dialog.confirm({
       message: '确定删除？',
-      buttonType: 'rounded',
+      buttonType: 'round',
       headed: true,
     })
   }

@@ -14,11 +14,10 @@ export default function () {
         max={100}
         min={0}
         onChange={setPercent}
+        style={{ marginBottom: 10 }}
       ></Stepper>
 
-      <ProgressCircle percent={percent} style={{ marginTop: 10 }}>
-        {percent}%
-      </ProgressCircle>
+      <ProgressCircle percent={percent}>{percent}%</ProgressCircle>
     </>
   )
 }

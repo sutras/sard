@@ -8,10 +8,10 @@ import { useState } from 'react'
 export default function () {
   const [checked, setChecked] = useState(false)
   const [loading, setLoading] = useState(false)
-  const handleChange = (e: any) => {
+  const handleChange = (checked: boolean) => {
     setLoading(true)
     setTimeout(() => {
-      setChecked(e)
+      setChecked(checked)
       setLoading(false)
     }, 500)
   }

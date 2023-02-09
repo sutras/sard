@@ -7,7 +7,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 
 export default function () {
   return (
-    <Badge value={<Icon fullName="bi-cup-hot"></Icon>}>
+    <Badge value={<Icon name="bi-cup-hot"></Icon>}>
       <Button>消息</Button>
     </Badge>
   )

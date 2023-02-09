@@ -7,16 +7,7 @@ import { Notify, Button } from 'sard'
 export default function () {
   return (
     <>
-      <Button
-        onClick={() =>
-          Notify.show({
-            type: 'info',
-            message: '这是一条通知',
-          })
-        }
-      >
-        显示通知
-      </Button>{' '}
+      <Button onClick={() => Notify.show('这是一条通知')}>显示通知</Button>{' '}
       <Button onClick={() => Notify.success('这是一条通知')}>
         显示成功通知
       </Button>{' '}
@@ -32,7 +23,7 @@ export default function () {
       <Button
         onClick={() =>
           Notify.error({
-            message: '这是一条通知',
+            message: '这是一条不会关闭的通知',
             duration: 0,
           })
         }

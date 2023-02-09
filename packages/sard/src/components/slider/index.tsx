@@ -9,15 +9,13 @@ import {
   FC,
 } from 'react'
 import classNames from 'classnames'
-import { useStrike, UseStrikeConfig, useEvent, useSelectorId } from '../../use'
+import { useStrike, UseStrikeConfig, useEvent } from '../../use'
 import { minmax, mround } from '../../utils'
 import { PAN_END, PAN_MOVE, PAN_START } from '../../strike'
-import { CommonComponentProps } from '../../utils/types'
-import { getBoundingClientRect } from '../../utils/dom'
 
 type RangeValue = [number, number]
 
-export interface SliderBaseProps extends CommonComponentProps {
+export interface SliderBaseProps {
   className?: string
   style?: CSSProperties
   min?: number
@@ -25,29 +23,30 @@ export interface SliderBaseProps extends CommonComponentProps {
   step?: number
   vertical?: boolean
   disabled?: boolean
+  readOnly?: boolean
   pieceColor?: string
   trackColor?: string
-  trackSize?: string
+  trackSize?: string | number
   thumbColor?: string
-  thumbSize?: string
-  start?: (value: number) => ReactNode
-  end?: (value: number) => ReactNode
+  thumbSize?: string | number
+  startThumb?: (value: number) => ReactNode
+  endThumb?: (value: number) => ReactNode
 }
 
 export interface SliderSingleProps extends SliderBaseProps {
   range?: false
   value?: number
   defaultValue?: number
-  onAfterChange?: (value: number) => void
   onChange?: (value: number) => void
+  onAfterChange?: (value: number) => void
 }
 
 export interface SliderRangeProps extends SliderBaseProps {
   range?: true
   value?: RangeValue
   defaultValue?: RangeValue
-  onAfterChange?: (value: RangeValue) => void
   onChange?: (value: RangeValue) => void
+  onAfterChange?: (value: RangeValue) => void
 }
 
 export type SliderProps = SliderSingleProps | SliderRangeProps
@@ -66,20 +65,21 @@ export const Slider: FC<SliderProps> = (props) => {
     range = false,
     vertical = false,
     disabled = false,
+    readOnly = false,
     pieceColor = '',
     trackColor = '',
     trackSize = '',
     thumbColor = '',
     thumbSize = '',
-    start,
-    end,
+    startThumb,
+    endThumb,
     onAfterChange,
     onChange,
     ...restProps
   } = props
 
   const [isDown, setIsDown] = useState(false)
-  const trackId = useSelectorId()
+  const trackRef = useRef<HTMLDivElement>()
   const trackSizeRef = useRef(0)
   const downCoord = useRef(0)
   const downRatio = useRef(0)
@@ -112,7 +112,10 @@ export const Slider: FC<SliderProps> = (props) => {
 
   // 受控
   useEffect(() => {
-    if (value == null) return
+    if (value == null) {
+      return
+    }
+
     let [startValue, endValue] = (range ? value : [min, value]) as RangeValue
     startValue = minmax(mround(startValue, step), min, max)
     endValue = minmax(mround(endValue, step), min, max)
@@ -132,27 +135,34 @@ export const Slider: FC<SliderProps> = (props) => {
       start: startRatio,
       end: endRatio,
     })
+
     return [startRatio, endRatio]
   }, [startValue, endValue, min, max])
 
   const handlePanStart = useEvent(({ x, y }) => {
-    if (disabled) return
+    if (disabled || readOnly) {
+      return
+    }
+
     Object.assign(downValue.current, oldValue.current)
-    getBoundingClientRect(trackId, (rect) => {
-      const size = (trackSizeRef.current = vertical ? rect.height : rect.width)
-      const rectCoord = vertical ? rect.top : rect.left
-      const clientCoord = (downCoord.current = vertical ? y : x)
-      const { start: startRatio, end: endRatio } = currRatio.current
-      const offset = clientCoord - rectCoord
-      if (range) {
-        const startDist = Math.abs(offset - startRatio * size)
-        const endDist = Math.abs(offset - endRatio * size)
-        isNearStart.current = startDist < endDist
-      }
-      downRatio.current = offset / size
-      oldRatio.current = isNearStart.current ? startRatio : endRatio
-      setIsDown(true)
-    })
+
+    const rect = trackRef.current.getBoundingClientRect()
+
+    const size = (trackSizeRef.current = vertical ? rect.height : rect.width)
+    const rectCoord = vertical ? rect.top : rect.left
+    const clientCoord = (downCoord.current = vertical ? y : x)
+    const { start: startRatio, end: endRatio } = currRatio.current
+    const offset = clientCoord - rectCoord
+
+    if (range) {
+      const startDist = Math.abs(offset - startRatio * size)
+      const endDist = Math.abs(offset - endRatio * size)
+      isNearStart.current = startDist < endDist
+    }
+
+    downRatio.current = offset / size
+    oldRatio.current = isNearStart.current ? startRatio : endRatio
+    setIsDown(true)
   })
 
   const handleRatio = (ratio: number) => {
@@ -207,7 +217,9 @@ export const Slider: FC<SliderProps> = (props) => {
   }
 
   const handlePanMove = useEvent(({ x, y }) => {
-    if (disabled) return
+    if (disabled || readOnly) {
+      return
+    }
 
     const clientCoord = vertical ? y : x
     const ratio =
@@ -217,9 +229,14 @@ export const Slider: FC<SliderProps> = (props) => {
   })
 
   const handlePanEnd = useEvent(() => {
-    if (disabled) return
+    if (disabled || readOnly) {
+      return
+    }
+
     setIsDown(false)
+
     const { start: startValue, end: endValue } = downValue.current
+
     if (
       oldValue.current.start !== startValue ||
       oldValue.current.end !== endValue
@@ -249,7 +266,10 @@ export const Slider: FC<SliderProps> = (props) => {
   }, strikeConfig)
 
   const handleSliderClick = useEvent((event) => {
-    if (disabled) return
+    if (disabled || readOnly) {
+      return
+    }
+
     const { clientX, clientY } = event
     handlePanStart({
       x: clientX,
@@ -286,6 +306,7 @@ export const Slider: FC<SliderProps> = (props) => {
       's-slider-is-down': isDown,
       's-slider-vertical': vertical,
       's-slider-disabled': disabled,
+      's-slider-readonly': readOnly,
     },
     className,
   )
@@ -298,7 +319,7 @@ export const Slider: FC<SliderProps> = (props) => {
   return (
     <div {...restProps} className={sliderClass}>
       <div
-        id={trackId}
+        ref={trackRef}
         className="s-slider-track"
         style={trackStyle}
         onClick={handleSliderClick}
@@ -310,7 +331,7 @@ export const Slider: FC<SliderProps> = (props) => {
               className="s-slider-thumb-container s-slider-thumb-container-start"
               onClick={stopPropagation}
             >
-              {start ? start(startValue) : thumbElement()}
+              {startThumb ? startThumb(startValue) : thumbElement()}
             </div>
           )}
 
@@ -319,7 +340,7 @@ export const Slider: FC<SliderProps> = (props) => {
             className="s-slider-thumb-container s-slider-thumb-container-end"
             onClick={stopPropagation}
           >
-            {end ? end(endValue) : thumbElement()}
+            {endThumb ? endThumb(endValue) : thumbElement()}
           </div>
         </div>
       </div>
@@ -328,17 +349,3 @@ export const Slider: FC<SliderProps> = (props) => {
 }
 
 export default Slider
-
-/* 
-# 功能
-[x] change事件
-[x] afterChangeHandler事件
-[x] click 选择
-[x] 受控和非受控
-[x] 步长
-[x] change 不初始触发
-[x] 内部 value 分解为 start 和 end
-
-# 问题
-[ ] 第一个滑动滑动时，第二个滑块如处于中间位置则会小幅度左右滑动
-*/
