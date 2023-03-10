@@ -38,6 +38,7 @@ $s-cascader-option-active-bg: $s-bg-active !default;
 
       &.s-cascader-option-selected {
         color: $s-cascader-selected-color;
+        font-weight: bold;
       }
 
       @at-root {

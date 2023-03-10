@@ -49,6 +49,7 @@ $s-action-sheet-cancel-active-bg: $s-bg-active !default;
   @at-root {
     .s-action-sheet-title {
       font-size: $s-action-sheet-title-font-size;
+      font-weight: bold;
       text-align: center;
     }
     .s-action-sheet-description {

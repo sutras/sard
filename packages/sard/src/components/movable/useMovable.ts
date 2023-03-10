@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from 'react'
+import { RefObject, useEffect, useMemo, useRef } from 'react'
 import { useStrike, useEvent } from '../../use'
 import {
   animate,
@@ -6,17 +6,27 @@ import {
   getInBoundValue,
   getOverflowRangeInArea,
   minmax,
+  getDampingValue,
+  transitionEnd,
 } from '../../utils'
 
-import { PAN_END, PAN_MOVE, PAN_START, StrikePanEvent } from '../../strike'
+import {
+  PAN_END,
+  PAN_MOVE,
+  PAN_START,
+  PINCH_START,
+  PINCH_MOVE,
+  PINCH_END,
+  StrikePanEvent,
+  StrikePinchEvent,
+} from '../../strike'
 
 export interface UseMovableOptions {
-  x?: number
-  y?: number
   defaultX?: number
   defaultY?: number
   direction?: 'all' | 'vertical' | 'horizontal' | 'none'
   inertia?: boolean
+  maxSpeed?: number
   inertiaDuration?: number
   inertiaTime?: number
   outOfBounds?: boolean
@@ -25,11 +35,18 @@ export interface UseMovableOptions {
   reboundDuration?: number
   touchable?: boolean
   lockDirection?: boolean
-  onChange?: (x: number, y: number) => void
-  onPanStart?: () => void
-  onPanMove?: () => void
-  onPanEnd?: () => void
+  scale?: boolean
+  minScale?: number
+  maxScale?: number
+  onChange?: (x: number, y: number, scale: number) => void
+  onWillChange?: (willChange: 'auto' | 'transform') => void
+  onPanStart?: (event: StrikePanEvent) => void
+  onPanMove?: (event: StrikePanEvent) => void
+  onPanEnd?: (event: StrikePanEvent) => void
   onMoveEnd?: (x: number, y: number) => void
+  onPinchStart?: (event: StrikePinchEvent) => void
+  onPinchMove?: (event: StrikePinchEvent) => void
+  onPinchEnd?: (event: StrikePinchEvent) => void
 }
 
 type EmptyFunc = () => void
@@ -48,55 +65,44 @@ export interface BoundingRect {
 }
 
 export function useMovable(
-  areaBoundingRect: BoundingRect,
+  elRef: RefObject<HTMLElement>,
+  areaRect: BoundingRect,
   options: UseMovableOptions = {},
 ) {
   const {
-    x: propX,
-    y: propY,
-    defaultX,
-    defaultY,
+    defaultX = 0,
+    defaultY = 0,
     direction = DIR_ALL,
     inertia = false,
+    maxSpeed = 4,
     inertiaDuration = 300,
-    inertiaTime = 300,
+    inertiaTime = 200,
     inertiaMaxOverflow = 50,
     outOfBounds = false,
     damping = 5,
     reboundDuration = 200,
     touchable = true,
     lockDirection = false,
+    scale = false,
+    minScale = 0.5,
+    maxScale = 5,
     onChange,
+    onWillChange,
     onPanStart,
     onPanMove,
     onPanEnd,
     onMoveEnd,
+    onPinchStart,
+    onPinchMove,
+    onPinchEnd,
   } = options
 
-  const [innerX, setInnerX] = useState(defaultX || propX || 0)
-  const [innerY, setInnerY] = useState(defaultY || propY || 0)
-  const immediateX = useRef(innerX)
-  const immediateY = useRef(innerY)
-  const setInnerXAgent = (value: number) => {
-    immediateX.current = value
-    setInnerX(value)
-  }
-  const setInnerYAgent = (value: number) => {
-    immediateY.current = value
-    setInnerY(value)
-  }
+  const currentX = useRef(defaultX)
+  const currentY = useRef(defaultY)
 
-  const [willChange, setWillChange] = useState('')
-
-  // 受控
-  useEffect(() => {
-    if (propX != null) {
-      setInnerXAgent(propX)
-    }
-    if (propY != null) {
-      setInnerYAgent(propY)
-    }
-  }, [propX, propY])
+  const innerDamping = useMemo(() => {
+    return Math.max(1, damping)
+  }, [damping])
 
   const downCoord = useRef({
     x: 0,
@@ -111,6 +117,8 @@ export function useMovable(
     y: null,
   })
 
+  const finishScaleReboundAnimate = useRef(null)
+
   const stopInertiaAnimate = useRef<{
     x: null | EmptyFunc
     y: null | EmptyFunc
@@ -124,15 +132,6 @@ export function useMovable(
     y: 0,
     width: 0,
     height: 0,
-  })
-
-  const updateRect = useEvent((rect: BoundingRect) => {
-    Object.assign(viewRect.current, {
-      x: rect.x,
-      y: rect.y,
-      width: rect.width,
-      height: rect.height,
-    })
   })
 
   const stopAnimate = useEvent(() => {
@@ -150,60 +149,59 @@ export function useMovable(
       stopReboundAnimate.current.y = null
       stopInertiaAnimate.current.x = null
       stopInertiaAnimate.current.y = null
-      onMoveEnd?.(immediateX.current, immediateY.current)
+      onMoveEnd?.(currentX.current, currentY.current)
     }
+    finishScaleReboundAnimate.current?.()
   })
 
-  const handlePanStart = useEvent(() => {
-    onPanStart?.()
-    stopAnimate()
-
+  const updateDownCoord = useEvent(() => {
     function getDownCoord(side: SideType, curr: number) {
       return getRectDampingValue(
         curr,
-        areaBoundingRect[side],
+        areaRect[side],
         viewRect.current[side],
-        outOfBounds ? damping : 0,
+        outOfBounds ? innerDamping : 0,
       )
     }
 
-    downCoord.current.x = getDownCoord('width', innerX)
-    downCoord.current.y = getDownCoord('height', innerY)
+    downCoord.current.x = getDownCoord('width', currentX.current)
+    downCoord.current.y = getDownCoord('height', currentY.current)
+  })
 
-    setWillChange('transform')
+  const handlePanStart = useEvent((event: StrikePanEvent) => {
+    onPanStart?.(event)
+    stopAnimate()
+
+    updateDownCoord()
+
+    onWillChange?.('transform')
   })
 
   const handlePanMove = useEvent((event: StrikePanEvent) => {
-    onPanMove?.()
-    let x = event.deltaX + downCoord.current.x
-    let y = event.deltaY + downCoord.current.y
+    onPanMove?.(event)
+    const x = event.deltaX + downCoord.current.x
+    const y = event.deltaY + downCoord.current.y
 
     function getCurrCoord(side: SideType, curr: number) {
       return getRectDampingValue(
         curr,
-        areaBoundingRect[side],
+        areaRect[side],
         viewRect.current[side],
-        outOfBounds ? 1 / damping || 0 : 0,
+        outOfBounds ? 1 / innerDamping || 0 : 0,
       )
     }
 
-    x =
+    currentX.current =
       direction === DIR_ALL || direction === DIR_HORIZONTAL
         ? getCurrCoord('width', x)
-        : immediateX.current
-    y =
+        : currentX.current
+
+    currentY.current =
       direction === DIR_ALL || direction === DIR_VERTICAL
         ? getCurrCoord('height', y)
-        : immediateY.current
+        : currentY.current
 
-    // 非受控
-    if (propX == null) {
-      setInnerXAgent(x)
-    }
-    if (propY == null) {
-      setInnerYAgent(y)
-    }
-    onChange?.(x, y)
+    onChange?.(currentX.current, currentY.current, currentScale.current)
   })
 
   const setReboundAnimate = (axis: 'x' | 'y', from: number, to: number) => {
@@ -213,47 +211,47 @@ export function useMovable(
       duration: reboundDuration,
       step(value) {
         if (axis === 'x') {
-          if (propX == null) {
-            setInnerXAgent(value)
-          }
-          onChange?.(value, immediateY.current)
+          onChange?.(
+            (currentX.current = value),
+            currentY.current,
+            currentScale.current,
+          )
         }
         if (axis === 'y') {
-          if (propY == null) {
-            setInnerYAgent(value)
-          }
-          onChange?.(immediateX.current, value)
+          onChange?.(
+            currentX.current,
+            (currentY.current = value),
+            currentScale.current,
+          )
         }
       },
       finish() {
-        onMoveEnd?.(immediateX.current, immediateY.current)
+        onMoveEnd?.(currentX.current, currentY.current)
         stopReboundAnimate.current[axis] = null
       },
     })
   }
 
-  const handlePanEnd = useEvent((event: StrikePanEvent) => {
-    onPanEnd?.()
-
+  const correctPosition = useEvent((event?: StrikePanEvent) => {
     const reboundAnimate = (side: SideType, axis: 'x' | 'y', coord: number) => {
-      const to = getInBoundValue(
-        coord,
-        areaBoundingRect[side],
-        viewRect.current[side],
-      )
+      const to = getInBoundValue(coord, areaRect[side], viewRect.current[side])
       const from = coord
 
       if (from !== to) {
         setReboundAnimate(axis, from, to)
       } else {
         // 惯性
-        if (inertia) {
-          const speed = minmax(event[axis === 'x' ? 'speedX' : 'speedY'], -8, 8)
+        if (event && inertia) {
+          const speed = minmax(
+            event[axis === 'x' ? 'speedX' : 'speedY'],
+            -maxSpeed,
+            maxSpeed,
+          )
           const to = from + speed * inertiaTime
-          const overflow = inertiaMaxOverflow * damping
+          const overflow = inertiaMaxOverflow * innerDamping
           const overflowRange = getOverflowRangeInArea(
             overflow,
-            areaBoundingRect[side],
+            areaRect[side],
             viewRect.current[side],
           )
           stopInertiaAnimate.current[axis] = animate({
@@ -263,38 +261,39 @@ export function useMovable(
             step(value) {
               const dampedValue = getRectDampingValue(
                 value,
-                areaBoundingRect[side],
+                areaRect[side],
                 viewRect.current[side],
-                outOfBounds ? 1 / damping || 0 : 0,
+                outOfBounds ? 1 / innerDamping || 0 : 0,
               )
               if (axis === 'x') {
-                if (propX == null) {
-                  setInnerXAgent(dampedValue)
-                }
-                onChange?.(dampedValue, immediateY.current)
+                onChange?.(
+                  (currentX.current = dampedValue),
+                  currentY.current,
+                  currentScale.current,
+                )
               }
               if (axis === 'y') {
-                if (propY == null) {
-                  setInnerYAgent(dampedValue)
-                }
-                onChange?.(immediateX.current, dampedValue)
+                onChange?.(
+                  currentX.current,
+                  (currentY.current = dampedValue),
+                  currentScale.current,
+                )
               }
             },
             finish() {
               stopInertiaAnimate.current[axis] = null
 
-              const from =
-                axis === 'x' ? immediateX.current : immediateY.current
+              const from = axis === 'x' ? currentX.current : currentY.current
               const to = getInBoundValue(
                 from,
-                areaBoundingRect[side],
+                areaRect[side],
                 viewRect.current[side],
               )
 
               if (from !== to) {
                 setReboundAnimate(axis, from, to)
               } else {
-                onMoveEnd?.(immediateX.current, immediateY.current)
+                onMoveEnd?.(currentX.current, currentY.current)
               }
             },
           })
@@ -303,19 +302,27 @@ export function useMovable(
     }
 
     if (direction === DIR_ALL || direction === DIR_HORIZONTAL) {
-      reboundAnimate('width', 'x', immediateX.current)
+      reboundAnimate('width', 'x', currentX.current)
     }
     if (direction === DIR_ALL || direction === DIR_VERTICAL) {
-      reboundAnimate('height', 'y', immediateY.current)
+      reboundAnimate('height', 'y', currentY.current)
     }
-    if (!direction) {
-      onMoveEnd?.(immediateX.current, immediateY.current)
-    }
-
-    setWillChange('auto')
   })
 
-  const binding = useStrike(
+  const handlePanEnd = useEvent((event: StrikePanEvent) => {
+    onPanEnd?.(event)
+
+    correctPosition(event)
+
+    if (!direction) {
+      onMoveEnd?.(currentX.current, currentY.current)
+    }
+
+    onWillChange?.('auto')
+  })
+
+  const panStrike = useStrike(
+    elRef,
     (strike) => {
       strike.on(PAN_START, handlePanStart)
       strike.on(PAN_MOVE, handlePanMove)
@@ -323,19 +330,143 @@ export function useMovable(
     },
     {
       pan: true,
+    },
+    {
       direction,
       lockDirection,
+      binding: touchable,
     },
-    touchable,
+  )
+
+  const pinchStartOffsetX = useRef(0)
+  const pinchStartOffsetY = useRef(0)
+  const consistentScale = useRef(1)
+  const currentScale = useRef(1)
+
+  const setTransitionDuration = (duration: number) => {
+    if (elRef.current) {
+      elRef.current.style.transitionDuration = duration + 'ms'
+    }
+  }
+
+  const handlePinchStart = useEvent((event: StrikePinchEvent) => {
+    onPinchStart?.(event)
+
+    panStrike.unbind()
+
+    const rect = elRef.current.getBoundingClientRect()
+
+    const offsetX = event.x - rect.left
+    const offsetY = event.y - rect.top
+
+    pinchStartOffsetX.current = offsetX
+    pinchStartOffsetY.current = offsetY
+
+    elRef.current.style.transformOrigin = `${(offsetX / rect.width) * 100}% ${
+      (offsetY / rect.height) * 100
+    }%`
+
+    onWillChange?.('transform')
+  })
+
+  const handlePinchMove = useEvent((event: StrikePinchEvent) => {
+    onPinchMove?.(event)
+
+    currentScale.current = getDampingValue(
+      event.scale,
+      minScale / consistentScale.current,
+      maxScale / consistentScale.current,
+      0.2,
+    )
+
+    onChange?.(currentX.current, currentY.current, currentScale.current)
+  })
+
+  const handlePinchEnd = useEvent((event: StrikePinchEvent) => {
+    onPinchEnd?.(event)
+
+    const offsetX = pinchStartOffsetX.current
+    const offsetY = pinchStartOffsetY.current
+
+    const nextCurrentScale = minmax(
+      currentScale.current,
+      minScale / consistentScale.current,
+      maxScale / consistentScale.current,
+    )
+
+    const finish = () => {
+      currentX.current = currentX.current - offsetX * (currentScale.current - 1)
+      currentY.current = currentY.current - offsetY * (currentScale.current - 1)
+
+      viewRect.current.width *= currentScale.current
+      viewRect.current.height *= currentScale.current
+
+      consistentScale.current *= currentScale.current
+
+      currentScale.current = 1
+
+      onChange?.(currentX.current, currentY.current, currentScale.current)
+      onWillChange?.('auto')
+      elRef.current.style.transformOrigin = '0 0'
+      elRef.current.style.width = `${viewRect.current.width}px`
+      elRef.current.style.height = `${viewRect.current.height}px`
+
+      correctPosition()
+
+      panStrike.bind()
+    }
+
+    if (nextCurrentScale !== currentScale.current) {
+      setTransitionDuration(reboundDuration)
+      currentScale.current = nextCurrentScale
+      onChange?.(currentX.current, currentY.current, currentScale.current)
+
+      finishScaleReboundAnimate.current = transitionEnd(() => {
+        setTransitionDuration(0)
+        finish()
+      }, reboundDuration).finish
+    } else {
+      finish()
+    }
+  })
+
+  useStrike(
+    elRef,
+    (strike) => {
+      strike.on(PINCH_START, handlePinchStart)
+      strike.on(PINCH_MOVE, handlePinchMove)
+      strike.on(PINCH_END, handlePinchEnd)
+    },
+    null,
+    {
+      pinch: scale,
+    },
   )
 
   useEffect(() => stopAnimate, [])
+
+  const updateViewRect = useEvent((rect: BoundingRect) => {
+    Object.assign(viewRect.current, {
+      x: rect.x,
+      y: rect.y,
+      width: rect.width,
+      height: rect.height,
+    })
+  })
+
+  const setCoord = useEvent((x: number, y: number) => {
+    if (x !== undefined) {
+      currentX.current = x
+    }
+    if (y !== undefined) {
+      currentY.current = y
+    }
+    onChange?.(currentX.current, currentY.current, currentScale.current)
+  })
+
   return {
-    updateRect,
-    willChange,
-    binding,
-    x: innerX,
-    y: innerY,
+    updateViewRect,
+    setCoord,
   }
 }
 

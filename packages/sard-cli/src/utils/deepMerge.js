@@ -14,8 +14,8 @@ export function deepMerge() {
     clone
 
   for (; i < l; i++) {
-    // 不处理null和undefined
-    if ((options = arguments[i]) != null) {
+    options = arguments[i]
+    if (options !== null && options !== undefined) {
       for (name in options) {
         src = target[name]
         copy = options[name]
@@ -39,7 +39,7 @@ export function deepMerge() {
         }
 
         // 不添加未定义的值
-        else if (copy !== void 0) {
+        else if (copy !== undefined) {
           target[name] = copy
         }
       }

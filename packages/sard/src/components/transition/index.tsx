@@ -42,7 +42,7 @@ interface NextCallback {
 }
 
 function noop() {
-  void 0
+  null
 }
 
 export const Transition: FC<TransitionProps> = (props) => {
@@ -93,7 +93,7 @@ export const Transition: FC<TransitionProps> = (props) => {
     let exit, enter, appear
     exit = enter = appear = timeout as number
 
-    if (timeout != null && typeof timeout !== 'number') {
+    if (timeout !== undefined && typeof timeout !== 'number') {
       exit = timeout.exit
       enter = timeout.enter
       appear = timeout.appear ?? enter

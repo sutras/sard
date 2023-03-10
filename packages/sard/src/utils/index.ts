@@ -1,3 +1,5 @@
+import { ReactElement } from 'react'
+
 export * from './animate'
 export * from './date'
 export * from './file'
@@ -39,7 +41,7 @@ export function getDecimalsLength(n: number | string) {
  * @return {number}
  */
 export function round(n: number, precision = 0) {
-  return Math.round(+(n + 'e' + precision)) / Math.pow(10, precision)
+  return Math.round(+(n + 'e' + precision)) / 10 ** precision
 }
 
 /**
@@ -241,8 +243,8 @@ export function extend(...args: any[]) {
     clone
 
   for (; i < l; i++) {
-    // 不处理null和undefined
-    if ((options = args[i]) != null) {
+    options = args[i]
+    if (options !== null && options !== undefined) {
       for (name in options) {
         src = target[name]
         copy = options[name]
@@ -268,7 +270,7 @@ export function extend(...args: any[]) {
           target[name] = extend(clone, copy)
 
           // 不添加未定义的值
-        } else if (copy !== void 0) {
+        } else if (copy !== undefined) {
           target[name] = copy
         }
       }
@@ -291,13 +293,27 @@ export function arrayEqual(arr1: any[], arr2: any[]) {
 /**
  * @description: 判断一个对象是否为看得到的空
  * @param {any} target
- * @return {*}
+ * @return {boolean}
  */
 export function isVisibleEmpty(target: any) {
   return (
     target === null ||
-    target === void 0 ||
+    target === undefined ||
     (typeof target === 'string' && target.trim() === '')
+  )
+}
+
+/**
+ * @description: 判断一个值是否为空
+ * @param {any} value
+ * @return {boolean}
+ */
+export function isEmptyValue(value: any) {
+  return (
+    value === null ||
+    value === undefined ||
+    (typeof value === 'string' && value.trim() === '') ||
+    (Array.isArray(value) && value.length === 0)
   )
 }
 
@@ -635,10 +651,70 @@ export function getTransformOrigin(rect: Rect, scaleRect: Rect) {
   return [originX, originY]
 }
 
+/**
+ * @description: 将一个可选单位的字符串或数值拆分为数值和单位组成的数组
+ * @param {number | string} target
+ * @return {[number, string]}
+ */
 export function splitUnit(target: number | string) {
   const result = /([+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|))([a-z]+|%|)$/i.exec(
     String(target),
   ) || [0, '']
 
   return [+result[1], result[2]] as [number, string]
+}
+
+/**
+ * @description: 确保接收 children 为 ReactElement 数组
+ * @param {number | string} target
+ * @return {[number, string]}
+ */
+export function toElementArray(children: ReactElement | ReactElement[]) {
+  if (Array.isArray(children)) {
+    return children
+  }
+  return [children]
+}
+
+/**
+ * @description: 自定义 transitionEnd 事件
+ * @param {function} callback 结束后的回调
+ * @param {number} duration 结束的时间
+ * @return {{}}
+ */
+export function transitionEnd(
+  callback: (...args: any[]) => any,
+  duration = 300,
+) {
+  let timer = 0
+
+  const clear = () => {
+    if (timer) {
+      clearTimeout(timer)
+      timer = 0
+    }
+  }
+
+  const start = () => {
+    clear()
+
+    timer = window.setTimeout(() => {
+      timer = 0
+      callback()
+    }, duration)
+  }
+
+  const finish = () => {
+    if (timer) {
+      clear()
+      callback()
+    }
+  }
+
+  start()
+
+  return {
+    clear,
+    finish,
+  }
 }

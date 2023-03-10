@@ -5,7 +5,7 @@
 import { useState } from 'react'
 import { Upload, UploadPreviewProps } from 'sard'
 
-const logoHref = new URL('../../../../public/logo.svg', import.meta.url).href
+const logoHref = new URL('../../../../public/pic1.jpg', import.meta.url).href
 
 export default function () {
   const [list, setList] = useState<UploadPreviewProps[]>(() => [

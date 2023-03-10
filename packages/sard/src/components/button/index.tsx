@@ -1,4 +1,10 @@
-import { CSSProperties, ReactNode, FC, MouseEvent } from 'react'
+import {
+  CSSProperties,
+  ReactNode,
+  FC,
+  MouseEvent,
+  ButtonHTMLAttributes,
+} from 'react'
 import classNames from 'classnames'
 import { Loading, LoadingProps } from '../loading'
 
@@ -16,6 +22,7 @@ export interface ButtonProps {
   loadingText?: ReactNode
   loadingProps?: LoadingProps
   onClick?: (event: MouseEvent) => void
+  htmlType?: 'submit' | 'reset' | 'button'
   [propName: string]: any
 }
 
@@ -33,6 +40,7 @@ export const Button: FC<ButtonProps> = (props) => {
     loadingText,
     loadingProps,
     onClick,
+    htmlType = 'button',
     ...restProps
   } = props
 
@@ -62,6 +70,7 @@ export const Button: FC<ButtonProps> = (props) => {
       className={buttonClass}
       disabled={disabled}
       onClick={handleClick}
+      type={htmlType}
     >
       <div className="s-button-content">
         {loading ? (

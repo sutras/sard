@@ -8,11 +8,11 @@ export default function () {
   const columns = Array(1)
     .fill(0)
     .map((_, i) =>
-      Array(10)
+      Array(60)
         .fill(0)
         .map((_, j) => ({
           value: `${i}-${j}`,
-          label: `${i + 1}年级${j + 1}班`,
+          label: `column${i}-item${j}`,
         })),
     )
 

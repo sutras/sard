@@ -30,6 +30,7 @@ $s-picker-focus-border-color: rgba(0, 0, 0, 0.1) !default;
   height: $s-picker-height;
   overflow: hidden;
   user-select: none;
+  -webkit-user-drag: none;
 }
 
 .s-picker-column-group {
@@ -74,7 +75,9 @@ $s-picker-focus-border-color: rgba(0, 0, 0, 0.1) !default;
   align-items: center;
   pointer-events: none;
 
-  @include border-vertical($s-picker-focus-border-color);
+  @include border-vertical($s-picker-focus-border-color) {
+    z-index: 2;
+  }
 }
 
 .s-picker-action-area {
@@ -96,7 +99,7 @@ $s-picker-focus-border-color: rgba(0, 0, 0, 0.1) !default;
   overflow: hidden;
   font-size: $s-picker-item-font-size;
   @include ellipsis;
-  cursor: pointer;
+  cursor: grab;
 
   @at-root {
     .s-picker-item-disabled {

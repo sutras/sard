@@ -10,7 +10,7 @@ $s-calendar-week-item-font-size: $s-font-size !default;
 
 $s-calendar-month-title-height: 40px !default;
 $s-calendar-month-title-font-size: $s-font-size !default;
-$s-calendar-month-title-font-weight: 500 !default;
+$s-calendar-month-title-font-weight: bold !default;
 $s-calendar-month-body-row-gap: 4px !default;
 
 $s-calendar-day-height: 56px !default;
@@ -23,7 +23,7 @@ $s-calendar-day-middle-opacity: 0.1 !default;
 $s-calendar-month-mark-font-size: 160px !default;
 $s-calendar-month-mark-color: $s-gray-200 !default;
 
-$s-calendar-body-height: $s-calendar-day-height * 5 +
+$s-calendar-body-height: $s-calendar-day-height * 4 +
   $s-calendar-month-body-row-gap * 4 + $s-calendar-month-title-height !default;
 // #endvariables
 
@@ -115,6 +115,8 @@ $s-calendar-body-height: $s-calendar-day-height * 5 +
           justify-content: center;
           align-items: center;
           cursor: pointer;
+          transition: $s-transition-duration-fast;
+
           &.s-calendar-day-disabled {
             @include disabled-text;
           }

@@ -134,7 +134,8 @@ export const Rate: FC<RateProps> = (props) => {
     setInnerValue(tempValue.current)
   })
 
-  const rateBinding = useStrike(
+  useStrike(
+    rateRef,
     (strike) => {
       strike.on(PAN_START, handlePanstart)
       strike.on(PAN_MOVE, handlePanmove)
@@ -168,13 +169,7 @@ export const Rate: FC<RateProps> = (props) => {
   }
 
   return (
-    <div
-      {...restProps}
-      {...rateBinding}
-      className={rateClass}
-      style={rateStyle}
-      ref={rateRef}
-    >
+    <div {...restProps} className={rateClass} style={rateStyle} ref={rateRef}>
       {Array(count)
         .fill(0)
         .map((_, index) => {

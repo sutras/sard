@@ -14,7 +14,7 @@ export default function () {
 
   const handleOverSize = (fileItem: UploadFileItem) => {
     console.log(fileItem)
-    Toast.text('文件大小不能超过512KB')
+    Toast.show('文件大小不能超过512KB')
   }
 
   const [list2, setList2] = useState<UploadPreviewProps[]>([])
@@ -25,7 +25,7 @@ export default function () {
 
   const handleMaxSize = (file: File) => {
     if (file.type.indexOf('image') === 0 && file.size > 512 * 1024) {
-      Toast.text('图片大小不能超过512KB')
+      Toast.show('图片大小不能超过512KB')
       return true
     }
     return false

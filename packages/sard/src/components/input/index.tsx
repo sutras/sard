@@ -5,6 +5,7 @@ import {
   MouseEvent,
   FocusEvent,
   ChangeEvent,
+  CompositionEvent,
   useRef,
   useEffect,
   forwardRef,
@@ -89,21 +90,48 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     onBlur?.(event)
   }
 
-  const handleClear = () => {
+  const handleClear = (event: MouseEvent) => {
+    event.stopPropagation()
+
     setInnerValue('')
     onClear?.('')
   }
 
   const innerMaxLength = Number(maxLength) || 0
 
+  const limitMaxLength = (value: string) => {
+    if (innerMaxLength) {
+      return value.slice(0, innerMaxLength)
+    }
+    return value
+  }
+
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    let value = event.target.value
-    if (innerMaxLength) {
-      value = value.slice(0, innerMaxLength)
+    if (isComposing.current) {
+      setInnerValue(event.target.value)
+    } else {
+      setInnerValue(limitMaxLength(event.target.value))
     }
-    setInnerValue(value)
+  }
+
+  const isComposing = useRef(false)
+
+  const handleCompositionStart = () => {
+    isComposing.current = true
+  }
+
+  const handleCompositionEnd = (
+    event: CompositionEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    isComposing.current = false
+
+    setInnerValue(
+      limitMaxLength(
+        (event.target as HTMLInputElement | HTMLTextAreaElement).value,
+      ),
+    )
   }
 
   const inputRef = useRef<HTMLInputElement & HTMLTextAreaElement>()
@@ -135,12 +163,14 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     disabled,
     readOnly,
     onChange: handleChange,
+    onCompositionStart: handleCompositionStart,
+    onCompositionEnd: handleCompositionEnd,
     onFocus: handleFocus,
     onBlur: handleBlur,
     onClick,
   }
 
-  const refCallback = (el) => {
+  const inputRefCb = (el) => {
     if (typeof ref === 'function') {
       ref(el)
     } else if (ref) {
@@ -149,21 +179,29 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     inputRef.current = el
   }
 
+  const handleRootClick = (event: MouseEvent) => {
+    if (event.currentTarget === event.target) {
+      inputRef.current?.focus()
+    }
+
+    onClick?.(event)
+  }
+
   return (
-    <div {...restProps} className={inputClass}>
+    <div {...restProps} className={inputClass} onClick={handleRootClick}>
       {prepend && <div className="s-input-prepend">{prepend}</div>}
       {type === 'textarea' ? (
         <textarea
           {...controlProps}
-          ref={refCallback}
+          ref={inputRefCb}
           rows={autoHeight ? 1 : rows}
         />
       ) : (
-        <input {...controlProps} ref={refCallback} type={type} />
+        <input {...controlProps} ref={inputRefCb} type={type} />
       )}
       {append && <div className="s-input-append">{append}</div>}
       {clearable && innerValue && (
-        <div className="s-input-clear" onClick={handleClear}>
+        <button className="s-input-clear" onClick={handleClear} type="button">
           {clear || (
             <Icon
               prefix="si"
@@ -171,7 +209,7 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
               className="s-input-clear-icon"
             ></Icon>
           )}
-        </div>
+        </button>
       )}
       {showCount && (
         <div className="s-input-count">

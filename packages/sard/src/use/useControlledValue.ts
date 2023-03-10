@@ -1,52 +1,62 @@
 /**
- * 简化受控组件状态的操作
- * ==========================
+ * 封装受控组件状态的操作。
  */
 
 import { useRef, useMemo, SetStateAction } from 'react'
-import useUpdate from './useUpdate'
+import useForceRender from './useForceRender'
 import useEvent from './useEvent'
 
-interface Options<T> {
+export interface useControlledValueOptions<T> {
   defaultValue?: T | (() => T)
   defaultValuePropName?: string
   valuePropName?: string
   trigger?: string
-  preset?: (state: T) => T
+  transform?: (value: T) => T
+  controlled?: (value: T) => T
+}
+
+const getDefaultValue = (defaultValue: any) => {
+  return typeof defaultValue === 'function' ? defaultValue() : defaultValue
 }
 
 export function useControlledValue<T = any>(
   props: any,
-  options: Options<T> = {},
+  options: useControlledValueOptions<T> = {},
 ) {
   const {
     defaultValue,
     defaultValuePropName = 'defaultValue',
     valuePropName = 'value',
     trigger = 'onChange',
-    preset,
+    transform,
+    controlled,
   } = options
 
-  const value = props[valuePropName]
-  const isControlled = value != null
+  const value: T = props[valuePropName]
+  const isControlled = value !== undefined
+
+  let changeFromOuter: T
+
+  const updateFromInner = useRef(false)
 
   const stateRef = useRef<T>(
     useMemo(() => {
-      const val = isControlled
+      const val: T = isControlled
         ? value
-        : props[defaultValuePropName] ??
-          (typeof defaultValue === 'function'
-            ? (defaultValue as (...args: any[]) => any)()
-            : defaultValue)
-      return preset ? preset(val) : val
+        : props[defaultValuePropName] ?? getDefaultValue(defaultValue)
+      return transform ? transform(val) : val
     }, []),
   )
 
+  const oldState = stateRef.current
+
   if (isControlled) {
-    stateRef.current = preset ? preset(value) : value
+    let nextValue = controlled ? controlled(value) : value
+    nextValue = transform ? transform(nextValue) : nextValue
+    stateRef.current = nextValue
   }
 
-  const update = useUpdate()
+  const forceRender = useForceRender()
 
   function setState(val: SetStateAction<T>, ...args: any[]) {
     const nextState =
@@ -60,12 +70,24 @@ export function useControlledValue<T = any>(
 
     if (!isControlled) {
       stateRef.current = nextState
-      update()
+      forceRender()
     }
+
+    updateFromInner.current = true
     props[trigger]?.(nextState, ...args)
   }
 
-  return [stateRef.current, useEvent(setState)] as const
+  if (
+    isControlled &&
+    !updateFromInner.current &&
+    oldState !== stateRef.current
+  ) {
+    changeFromOuter = stateRef.current
+  }
+
+  updateFromInner.current = false
+
+  return [stateRef.current, useEvent(setState), changeFromOuter] as const
 }
 
 export default useControlledValue

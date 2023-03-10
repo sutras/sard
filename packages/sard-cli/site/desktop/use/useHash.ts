@@ -3,11 +3,11 @@ import { useCallback, useEffect } from 'react'
 export function useHash(selector: string) {
   const handler = useCallback(
     (event: Event) => {
-      event.preventDefault()
-
       const element = event.target as HTMLElement
 
       if (element.matches(selector)) {
+        event.preventDefault()
+
         const targetSelector =
           element.getAttribute('href') || element.dataset.href
         if (targetSelector) {

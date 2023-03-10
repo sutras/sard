@@ -60,6 +60,7 @@ $s-share-sheet-cancel-active-bg: $s-bg-active !default;
       @at-root {
         .s-share-sheet-title {
           font-size: $s-share-sheet-title-font-size;
+          font-weight: bold;
           text-align: center;
         }
         .s-share-sheet-description {
@@ -83,6 +84,8 @@ $s-share-sheet-cancel-active-bg: $s-bg-active !default;
           padding: $s-share-sheet-row-padding-y $s-share-sheet-row-padding-x;
           overflow-x: auto;
           overflow-y: hidden;
+          touch-action: pan-x;
+
           &::-webkit-scrollbar {
             height: 0;
           }

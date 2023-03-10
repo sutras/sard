@@ -99,6 +99,8 @@ $s-template: 1em;
       z-index: 20;
       cursor: pointer;
 
+      @include button-flush;
+
       @at-root {
         .s-upload-preview-close {
           margin-right: 2px;

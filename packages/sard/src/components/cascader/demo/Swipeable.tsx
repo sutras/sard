@@ -9,23 +9,29 @@ export default function () {
   return (
     <>
       <Popout title="请选择省市区">
-        <Popout.Target
-          select
-          value
-          clear
-          format={(_, options: CascaderOption[]) =>
-            options.map((option) => option.name).join('/')
-          }
-        >
-          <Input readOnly placeholder="请选择省市区" clearable />
-        </Popout.Target>
-        <Popout.Bridge>
+        <Popout.Outlet>
+          {({ value, triggerArgs: [, options = []], setVisible, setValue }) => (
+            <Input
+              value={
+                (value?.length &&
+                  options.map((option) => option.name).join('/')) ||
+                ''
+              }
+              clearable
+              onClear={() => setValue()}
+              onClick={() => setVisible(true)}
+              readOnly
+              placeholder="请选择省市区"
+            />
+          )}
+        </Popout.Outlet>
+        <Popout.Target>
           <Cascader
             options={area}
             fieldNames={{ label: 'name', value: 'code' }}
             tabsProps={{ swipeable: true }}
           />
-        </Popout.Bridge>
+        </Popout.Target>
       </Popout>
     </>
   )

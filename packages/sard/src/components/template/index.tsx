@@ -1,7 +1,6 @@
 import { CSSProperties, FC, ReactNode } from 'react'
-import { CommonComponentProps } from '../../utils/types'
 
-export interface TemplateProps extends CommonComponentProps {
+export interface TemplateProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode

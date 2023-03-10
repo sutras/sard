@@ -21,7 +21,7 @@ $s-index-bar-hint-bg: $s-mask !default;
 
 $s-index-bar-hint-text-font-size: 24px !default;
 $s-index-bar-hint-text-line-height: 1 !default;
-$s-index-bar-hint-text-font-weight: 700 !default;
+$s-index-bar-hint-text-font-weight: bold !default;
 $s-index-bar-hint-text-color: $s-white !default;
 // #endvariables
 
@@ -47,14 +47,16 @@ $s-index-bar-hint-text-color: $s-white !default;
   padding: $s-index-bar-nav-padding;
   touch-action: pan-x;
 }
+
 .s-index-bar-nav-item {
   font-size: $s-index-bar-nav-item-font-size;
   line-height: 1;
   padding: $s-index-bar-nav-item-padding;
   text-align: center;
   color: $s-index-bar-nav-item-color;
-  cursor: pointer;
   border-radius: $s-index-bar-nav-item-border-radius;
+  cursor: pointer;
+  user-select: none;
 
   &.s-index-bar-nav-item-active {
     color: $s-index-bar-nav-item-active-color;

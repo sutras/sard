@@ -4,8 +4,11 @@ import { Chopsticks } from './createChopsticks'
 import { DefaultConfig } from './defaultConfig'
 import { SyntheticTouches } from './types'
 import { SUPPORT_TOUCH } from './utils'
+import { preventDefault } from '../utils/dom'
 
+const MOUSE_TARGET_EVENTS = 'mousedown'
 const MOUSE_WINDOW_EVENTS = 'mousemove mouseup'
+const TOUCH_TARGET_EVENTS = 'touchstart touchmove touchend touchcancel'
 
 function directionGuard(config: DefaultConfig, knock: Knock) {
   if (config.lockDirection) {
@@ -18,7 +21,7 @@ function directionGuard(config: DefaultConfig, knock: Knock) {
 }
 
 export interface StrikeInputHandler {
-  (ev: MouseEvent | TouchEvent): void
+  (event: MouseEvent | TouchEvent): void
 }
 
 function createHandler(
@@ -30,10 +33,10 @@ function createHandler(
   let isMouseDown = false
   let firstDirectionJudge: 'pending' | 'correct' | 'incorrect' = 'pending'
 
-  return (ev: MouseEvent | TouchEvent) => {
-    const type = ev.type
+  return (event: MouseEvent | TouchEvent) => {
+    const type = event.type
     let touches: SyntheticTouches
-    const isTouch = 'touches' in ev
+    const isTouch = 'touches' in event
 
     // 避免同时触发 mouse 和 touch 事件
     if (SUPPORT_TOUCH && !isTouch) {
@@ -41,19 +44,21 @@ function createHandler(
     }
 
     if (isTouch) {
-      touches = Array.from((ev as TouchEvent).changedTouches).map((touch) => ({
-        clientX: touch.clientX,
-        clientY: touch.clientY,
-        identifier: touch.identifier,
-        target: touch.target,
-      }))
+      touches = Array.from((event as TouchEvent).changedTouches).map(
+        (touch) => ({
+          clientX: touch.clientX,
+          clientY: touch.clientY,
+          identifier: touch.identifier,
+          target: touch.target,
+        }),
+      )
     } else {
       touches = [
         {
-          clientX: (ev as MouseEvent).clientX,
-          clientY: (ev as MouseEvent).clientY,
+          clientX: (event as MouseEvent).clientX,
+          clientY: (event as MouseEvent).clientY,
           identifier: 0,
-          target: ev.target as EventTarget,
+          target: event.target as EventTarget,
         },
       ]
     }
@@ -66,22 +71,22 @@ function createHandler(
         }
 
         fingers.add(
-          ev.currentTarget as EventTarget,
+          event.currentTarget as EventTarget,
           touches,
           (knock: Knock) => {
             if (knock.firstFinger) {
-              gestures.pan.down(ev, knock)
-              gestures.press.down(ev, knock)
+              gestures.pan.down(event, knock)
+              gestures.press.down(event, knock)
             }
 
             if (config.rotate || config.pinch) {
               // 凑齐筷子
               if (chopsticks.update(touches)) {
                 if (type === 'mousedown') {
-                  ev.preventDefault()
+                  preventDefault(event)
                 }
-                gestures.pinch.down(ev, knock)
-                gestures.rotate.down(ev, knock)
+                gestures.pinch.down(event, knock)
+                gestures.rotate.down(event, knock)
               }
             }
           },
@@ -94,8 +99,8 @@ function createHandler(
           return
         }
 
-        if (firstDirectionJudge === 'correct' && type === 'mousemove') {
-          ev.preventDefault()
+        if (firstDirectionJudge === 'correct') {
+          preventDefault(event)
         }
 
         fingers.update(touches, (knock: Knock) => {
@@ -111,10 +116,10 @@ function createHandler(
                 }
               }
               if (firstDirectionJudge === 'correct') {
-                gestures.pan.move(ev, knock)
+                gestures.pan.move(event, knock)
               }
             }
-            gestures.press.move(ev, knock)
+            gestures.press.move(event, knock)
           }
 
           if (
@@ -122,11 +127,9 @@ function createHandler(
             chopsticks.isPaired() &&
             chopsticks.isMove(touches)
           ) {
-            if (type === 'mousemove') {
-              ev.preventDefault()
-            }
-            gestures.pinch.move(ev, knock)
-            gestures.rotate.move(ev, knock)
+            preventDefault(event)
+            gestures.pinch.move(event, knock)
+            gestures.rotate.move(event, knock)
           }
         })
 
@@ -144,16 +147,16 @@ function createHandler(
 
         fingers.update(touches, (knock: Knock) => {
           if (knock.firstFinger) {
-            gestures.tap.up(ev, knock)
-            gestures.swipe.up(ev, knock)
-            gestures.pan.up(ev, knock)
-            gestures.press.up(ev, knock)
+            gestures.tap.up(event, knock)
+            gestures.swipe.up(event, knock)
+            gestures.pan.up(event, knock)
+            gestures.press.up(event, knock)
           }
 
           if (config.rotate || config.pinch) {
-            chopsticks.remove(touches, ev, (chopsticks) => {
-              gestures.pinch.up(ev, knock, chopsticks)
-              gestures.rotate.up(ev, knock, chopsticks)
+            chopsticks.remove(touches, event, (chopsticks) => {
+              gestures.pinch.up(event, knock, chopsticks)
+              gestures.rotate.up(event, knock, chopsticks)
             })
           }
         })
@@ -170,7 +173,9 @@ function addEventListeners(
   handler: EventListenerOrEventListenerObject,
 ) {
   types.split(' ').forEach((type) => {
-    el.addEventListener(type, handler, false)
+    el.addEventListener(type, handler, {
+      passive: false,
+    })
   })
 }
 
@@ -185,6 +190,7 @@ function removeEventListeners(
 }
 
 export function createInput(
+  el: EventTarget,
   fingers: Fingers,
   chopsticks: Chopsticks,
   gestures: Gestures,
@@ -197,21 +203,21 @@ export function createInput(
     config,
   ) as EventListener
 
-  function init() {
-    if (typeof window === 'object') {
-      addEventListeners(window, MOUSE_WINDOW_EVENTS, handler)
-    }
+  function bind() {
+    addEventListeners(el, TOUCH_TARGET_EVENTS, handler)
+    addEventListeners(el, MOUSE_TARGET_EVENTS, handler)
+    addEventListeners(window, MOUSE_WINDOW_EVENTS, handler)
   }
 
-  function destroy() {
-    if (typeof window === 'object') {
-      removeEventListeners(window, MOUSE_WINDOW_EVENTS, handler)
-    }
+  function unbind() {
+    removeEventListeners(el, TOUCH_TARGET_EVENTS, handler)
+    removeEventListeners(el, MOUSE_TARGET_EVENTS, handler)
+    removeEventListeners(window, MOUSE_WINDOW_EVENTS, handler)
   }
 
   return {
-    init,
-    destroy,
+    bind,
+    unbind,
     handler: handler as StrikeInputHandler,
   }
 }

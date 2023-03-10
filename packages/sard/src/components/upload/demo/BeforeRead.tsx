@@ -14,7 +14,7 @@ export default function () {
 
   const handleBeforeRead = (file: File) => {
     if (file.type.indexOf('image') !== 0) {
-      Toast.text('只能上传图片')
+      Toast.show('只能上传图片')
       return false
     }
     return true

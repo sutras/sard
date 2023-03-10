@@ -1,4 +1,4 @@
-import { ReactNode, CSSProperties, FC } from 'react'
+import { ReactNode, CSSProperties, FC, MouseEvent } from 'react'
 import classNames from 'classnames'
 import { useEvent } from '../../use'
 import { Popup, PopupProps } from '../popup'
@@ -58,9 +58,9 @@ export const ShareSheet: ShareSheetFC = ((props) => {
     },
   )
 
-  const handleMaskClick = useEvent(() => {
+  const handleMaskClick = useEvent((event: MouseEvent) => {
     if (maskClosable) {
-      popupProps?.onMaskClick?.()
+      popupProps?.onMaskClick?.(event)
       onClose?.(false)
     }
   })

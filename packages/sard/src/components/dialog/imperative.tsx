@@ -1,4 +1,4 @@
-import { DialogProps } from './index'
+import { DialogProps } from './Dialog'
 import { mapIdAgent, DialogAgent } from './Agent'
 import { mountAgent } from '../../utils/imperative'
 

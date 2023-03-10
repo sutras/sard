@@ -79,7 +79,7 @@ export const Accordion: AccordionFC = (props) => {
   return (
     <div {...restProps} className={accordionClass}>
       {Children.map(
-        children as ReactElement<AccordionItemProps>,
+        children,
         (item: ReactElement<AccordionItemProps>, index: number) => {
           const innerKey = item.key ?? index
           return cloneElement(item, {

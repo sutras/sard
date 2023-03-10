@@ -3,7 +3,7 @@
 
 // #variables
 $s-dialog-width: 320px !default;
-$s-dialog-small-scrren-width: 93.75vw !default;
+$s-dialog-max-width: 90vw !default;
 $s-dialog-bg: $s-white !default;
 $s-dialog-border-radius: $s-border-radius-xl !default;
 
@@ -37,12 +37,9 @@ $s-dialog-round-button-button-gap: 16px !default;
   display: flex;
   flex-direction: column;
   width: $s-dialog-width;
+  max-width: $s-dialog-max-width;
   background-color: $s-dialog-bg;
   border-radius: $s-dialog-border-radius;
-
-  @media (max-width: 320px) {
-    width: $s-dialog-small-scrren-width;
-  }
 
   @at-root {
     .s-dialog-header {
@@ -63,6 +60,7 @@ $s-dialog-round-button-button-gap: 16px !default;
       @at-root {
         .s-dialog-title {
           font-size: $s-dialog-title-font-size;
+          font-weight: bold;
           text-align: center;
         }
 

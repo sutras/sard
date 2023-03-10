@@ -9,23 +9,28 @@ $s-tab-label-active-color: $s-dark !default;
 
 $s-tab-auto-label-padding-x: 15px !default;
 
-$s-tab-card-label-active-bg: $s-white !default;
+$s-tab-label-card-label-active-bg: $s-white !default;
+
 $s-tab-label-line-width: 40px !default;
 $s-tab-label-line-height: 3px !default;
 $s-tab-label-line-bg: $s-primary !default;
 
-$s-tab-border-label-wrapper-border-radius: $s-border-radius-sm !default;
-$s-tab-border-label-wrapper-border-color: $s-primary !default;
-$s-tab-border-label-height: 28px !default;
-$s-tab-border-label-active-color: $s-white !default;
+$s-tab-label-border-border-radius: $s-border-radius-sm !default;
+$s-tab-label-border-border-color: $s-primary !default;
+$s-tab-label-border-label-height: 28px !default;
+$s-tab-label-border-label-active-color: $s-white !default;
 
-$s-tab-pill-label-height: 28px !default;
-$s-tab-pill-label-border-radius: 9999px !default;
-$s-tab-pill-label-active-bg: $s-primary !default;
-$s-tab-pill-label-active-color: $s-white !default;
+$s-tab-label-pill-label-height: 28px !default;
+$s-tab-label-pill-label-border-radius: 9999px !default;
+$s-tab-label-pill-label-active-bg: $s-primary !default;
+$s-tab-label-pill-label-active-color: $s-white !default;
 
 $s-tab-vertical-label-height: 40px !default;
 $s-tab-vertical-label-padding-x: 15px !default;
+
+$s-tab-inkbar-width: 40px !default;
+$s-tab-inkbar-height: 3px !default;
+$s-tab-inkbar-bg: $s-primary !default;
 
 $s-tab-prepend-gap: 5px !default;
 $s-tab-append-gap: 5px !default;
@@ -75,67 +80,60 @@ $s-tab-append-gap: 5px !default;
 
     // # label-活动状态
     .s-tab-label-active {
+      font-weight: bold;
       color: $s-tab-label-active-color;
     }
   }
 }
 
-.s-tab-label-line {
+.s-tab-inkbar-wrapper {
   position: absolute;
   bottom: 0;
-  left: 50%;
+  left: 0;
+  display: flex;
   transform: translateX(-50%);
-  width: $s-tab-label-line-width;
-  height: $s-tab-label-line-height;
-  background-color: $s-tab-label-line-bg;
+  text-align: center;
+  pointer-events: none;
 
-  .s-tab-label:not(.s-tab-label-active) & {
-    width: 0;
-  }
-}
-
-.s-tab-label-active .s-tab-label-line {
-  animation: s-tab-streak-horizontal 0.3s;
-
-  .s-tab-vertical & {
-    animation: s-tab-streak-vertical 0.3s;
-  }
-}
-
-@keyframes s-tab-streak-horizontal {
-  from {
-    width: 0;
-  }
-}
-@keyframes s-tab-streak-vertical {
-  from {
-    height: 0;
+  @at-root {
+    .s-tab-inkbar {
+      width: $s-tab-inkbar-width;
+      height: $s-tab-inkbar-height;
+      background-color: $s-tab-inkbar-bg;
+    }
   }
 }
 
 // 卡片标签
-.s-tab-card {
+.s-tab-label-card {
   .s-tab-label {
     &.s-tab-label-active {
-      background-color: $s-tab-card-label-active-bg;
+      background-color: $s-tab-label-card-label-active-bg;
     }
   }
   .s-tab-label-line {
+    position: absolute;
     top: 0;
-    bottom: auto;
+    left: auto;
+    right: auto;
     width: 100%;
+    height: $s-tab-label-line-height;
+    background-color: $s-tab-label-line-bg;
+  }
+  .s-tab-label:not(.s-tab-label-active) .s-tab-label-line {
+    display: none;
   }
 }
 
 // 边框标签
-.s-tab-border {
-  .s-tab-label-wrapper {
+.s-tab-label-border {
+  &.s-tab-label-wrapper {
     border: 1px solid currentColor;
-    border-radius: $s-tab-border-label-wrapper-border-radius;
-    color: $s-tab-border-label-wrapper-border-color;
+    border-radius: $s-tab-label-border-border-radius;
+    color: $s-tab-label-border-border-color;
   }
   .s-tab-label {
-    height: $s-tab-border-label-height;
+    height: $s-tab-label-border-label-height;
     color: inherit;
     ~ .s-tab-label {
       border-left: 1px solid currentColor;
@@ -143,21 +141,21 @@ $s-tab-append-gap: 5px !default;
     &.s-tab-label-active {
       background-color: currentColor;
       .s-tab-label-text {
-        color: $s-tab-border-label-active-color;
+        color: $s-tab-label-border-label-active-color;
       }
     }
   }
 }
 
 // 胶囊
-.s-tab-pill {
+.s-tab-label-pill {
   .s-tab-label {
-    height: $s-tab-pill-label-height;
-    border-radius: $s-tab-pill-label-border-radius;
+    height: $s-tab-label-pill-label-height;
+    border-radius: $s-tab-label-pill-label-border-radius;
     &.s-tab-label-active {
-      background-color: $s-tab-pill-label-active-bg;
+      background-color: $s-tab-label-pill-label-active-bg;
       .s-tab-label-text {
-        color: $s-tab-pill-label-active-color;
+        color: $s-tab-label-pill-label-active-color;
       }
     }
   }
@@ -244,12 +242,25 @@ $s-tab-append-gap: 5px !default;
     width: $s-tab-label-line-height;
     height: 100%;
   }
-  &.s-tab-card .s-tab-label-line {
+  .s-tab-label-card .s-tab-label-line {
     left: 0;
     right: auto;
   }
 
-  &.s-tab-border {
+  .s-tab-inkbar-wrapper {
+    left: auto;
+    bottom: auto;
+    right: 0;
+    top: 0;
+    transform: translateY(-50%);
+
+    .s-tab-inkbar {
+      height: $s-tab-inkbar-width;
+      width: $s-tab-inkbar-height;
+    }
+  }
+
+  .s-tab-label-border {
     .s-tab-label {
       ~ .s-tab-label {
         border-left: none;

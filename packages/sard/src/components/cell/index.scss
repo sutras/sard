@@ -200,6 +200,7 @@ $s-cell-arrow-color: $s-text-weak !default;
               line-height: $s-cell-value-line-height;
               color: $s-cell-value-color;
               word-wrap: break-word;
+              text-align: right;
             }
             .s-cell-arrow {
               margin-left: $s-cell-arrow-gap-left;

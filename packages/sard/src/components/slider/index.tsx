@@ -9,7 +9,7 @@ import {
   FC,
 } from 'react'
 import classNames from 'classnames'
-import { useStrike, UseStrikeConfig, useEvent } from '../../use'
+import { UseStrikeConfig, useEvent, useStrike } from '../../use'
 import { minmax, mround } from '../../utils'
 import { PAN_END, PAN_MOVE, PAN_START } from '../../strike'
 
@@ -112,7 +112,7 @@ export const Slider: FC<SliderProps> = (props) => {
 
   // 受控
   useEffect(() => {
-    if (value == null) {
+    if (value === undefined) {
       return
     }
 
@@ -206,7 +206,7 @@ export const Slider: FC<SliderProps> = (props) => {
         end: endValue,
       })
       // 非受控
-      if (value == null) {
+      if (value === undefined) {
         setStartValue(startValue)
         setEndValue(endValue)
       }
@@ -247,23 +247,40 @@ export const Slider: FC<SliderProps> = (props) => {
     }
   })
 
-  const strikeConfig = {
-    pan: true,
-    direction: vertical ? VERTICAL : HORIZONTAL,
-    lockDirection: false,
-  } as UseStrikeConfig
+  const startThumbRef = useRef()
+  const endThumbRef = useRef()
 
-  const startThumbBinding = useStrike((strike) => {
-    strike.on(PAN_START, handlePanStart)
-    strike.on(PAN_MOVE, handlePanMove)
-    strike.on(PAN_END, handlePanEnd)
-  }, strikeConfig)
+  useStrike(
+    startThumbRef,
+    (strike) => {
+      strike.on(PAN_START, handlePanStart)
+      strike.on(PAN_MOVE, handlePanMove)
+      strike.on(PAN_END, handlePanEnd)
+    },
+    {
+      pan: true,
+      lockDirection: false,
+    },
+    {
+      direction: vertical ? VERTICAL : HORIZONTAL,
+    },
+  )
 
-  const endThumbBinding = useStrike((strike) => {
-    strike.on(PAN_START, handlePanStart)
-    strike.on(PAN_MOVE, handlePanMove)
-    strike.on(PAN_END, handlePanEnd)
-  }, strikeConfig)
+  useStrike(
+    endThumbRef,
+    (strike) => {
+      strike.on(PAN_START, handlePanStart)
+      strike.on(PAN_MOVE, handlePanMove)
+      strike.on(PAN_END, handlePanEnd)
+    },
+    {
+      pan: true,
+      lockDirection: false,
+    },
+    {
+      direction: vertical ? VERTICAL : HORIZONTAL,
+    },
+  )
 
   const handleSliderClick = useEvent((event) => {
     if (disabled || readOnly) {
@@ -327,7 +344,7 @@ export const Slider: FC<SliderProps> = (props) => {
         <div className="s-slider-track-piece" style={pieceStyle}>
           {range && (
             <div
-              {...startThumbBinding}
+              ref={startThumbRef}
               className="s-slider-thumb-container s-slider-thumb-container-start"
               onClick={stopPropagation}
             >
@@ -336,7 +353,7 @@ export const Slider: FC<SliderProps> = (props) => {
           )}
 
           <div
-            {...endThumbBinding}
+            ref={endThumbRef}
             className="s-slider-thumb-container s-slider-thumb-container-end"
             onClick={stopPropagation}
           >

@@ -10,7 +10,7 @@ import classNames from 'classnames'
 import { pickNullish } from '../../utils'
 import { useControlledValue } from '../../use'
 
-import { TabbarItem } from './Item'
+import { TabbarItem, TabbarItemProps } from './Item'
 
 export * from './Item'
 
@@ -77,17 +77,20 @@ export const Tabbar: TabbarFC = (props) => {
 
   return (
     <div {...restProps} className={tabbarClass} style={tabbarStyle}>
-      {Children.map(children, (element, index) => {
-        const innerKey = element.key ?? index
+      {Children.map(
+        children,
+        (element: ReactElement<TabbarItemProps>, index) => {
+          const innerKey = element.key ?? index
 
-        return cloneElement(element, {
-          ...pickNullish(element.props, props, ['color', 'activeColor']),
-          innerKey,
-          activeKey: innerActiveKey,
-          onClick: (event: MouseEvent) =>
-            handleItemClick(innerKey, element, event),
-        })
-      })}
+          return cloneElement(element, {
+            ...pickNullish(element.props, props, ['color', 'activeColor']),
+            innerKey,
+            activeKey: innerActiveKey,
+            onClick: (event: MouseEvent) =>
+              handleItemClick(innerKey, element, event),
+          })
+        },
+      )}
     </div>
   )
 }

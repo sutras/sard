@@ -3,17 +3,16 @@ import {
   useRef,
   forwardRef,
   useImperativeHandle,
-  ForwardedRef,
   useMemo,
+  useEffect,
 } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
-import { useInertRef, useEvent } from '../../use'
+import { useEvent, useControlledValue } from '../../use'
 
 import {
   PickerColumn,
   PickerColumnExternalProps,
-  PickerColumnOption,
+  PickerOption,
   PickerColumnRef,
   FieldNames,
 } from './Column'
@@ -21,35 +20,26 @@ import { arrayEqual } from '../../utils'
 
 export * from './Column'
 
-export interface PickerPrivateProps extends CommonComponentProps {
+export interface PickerPrivateProps {
   className?: string
   style?: CSSProperties
-  columns?: PickerColumnOption[][]
-  defaultIndex?: number[]
-  onChange?: (
-    value: any[],
-    pickedOptions: PickerColumnOption[],
-    pickedIndexes: number[],
-  ) => void
-  onColumnChange?: (columnIndex: number, index: number) => void
+  columns?: PickerOption[][]
   fieldNames?: FieldNames
+  value?: any[]
+  defaultValue?: any[]
+  onChange?: (value: any[], options: PickerOption[]) => void
+  onColumnChange?: (
+    columnIndex: number,
+    option: PickerOption,
+    index: number,
+  ) => void
 }
 
 export type PickerProps = PickerPrivateProps & PickerColumnExternalProps
 
 export interface PickerRef {
-  getIndexes: () => number[]
-  getOptions: () => PickerColumnOption[]
-  setIndexes: (
-    indexes: number[],
-    emitChange?: boolean,
-    animated?: boolean,
-  ) => void
-  setIndexesByValue: (
-    values: any[],
-    emitChange?: boolean,
-    animated?: boolean,
-  ) => void
+  getOptions: () => PickerOption[]
+  pickImmediately: () => void
   setIndexesForcibly: (indexes: number[]) => void
 }
 
@@ -62,68 +52,60 @@ const defaultFieldNames = {
 export const Picker = forwardRef<PickerRef, PickerProps>((props, ref) => {
   const {
     // picker-column props
-    height,
+    itemHeight,
     focusHeight,
-    duration,
-    correctDuration,
-    damping,
-    inertiaTime,
-    fieldNames,
 
     // picker props
     className,
     style,
     columns = [],
-    defaultIndex = [],
+    fieldNames,
     onChange,
     onColumnChange,
     ...restProps
   } = props
 
-  const tempIndexes = useRef<number[]>([])
-  const currentIndexes = useInertRef(() => {
-    const indexes = columns.map((_, i) => defaultIndex[i] || 0)
-    tempIndexes.current = indexes.slice()
-    return indexes
-  })
-
-  const fieldKeys = useMemo(() => {
+  const mergedFieldNames = useMemo(() => {
     return Object.assign({}, defaultFieldNames, fieldNames)
   }, [fieldNames])
 
-  const columnImperativeList = useRef<PickerColumnRef[]>([])
+  const [innerValue, setInnerValue] = useControlledValue(props, {
+    defaultValue() {
+      return columns.map((column) => column[0][mergedFieldNames.value])
+    },
+  })
+
+  useEffect(() => {
+    columnRefList.current.map((column, index) =>
+      column.setIndexByValueForcibly(innerValue[index]),
+    )
+  }, [innerValue])
+
+  const columnRefList = useRef<PickerColumnRef[]>([])
 
   const columnAnimating = useRef<{ [p: string]: boolean }>({})
 
-  const refHandle = useEvent((el) => {
+  const refCallback = useEvent((el) => {
     if (el) {
-      columnImperativeList.current[el.getColumnIndex()] = el
+      columnRefList.current[el.getColumnIndex()] = el
     }
   })
 
-  const handleChange = useEvent((columnIndex: number, index: number) => {
-    tempIndexes.current = columnImperativeList.current.map((column) =>
-      column.getIndex(),
-    )
+  const handleColumnChange = useEvent((index: number, columnIndex: number) => {
+    const options = columnRefList.current.map((column) => column.getOption())
 
-    onColumnChange?.(columnIndex, index)
+    onColumnChange?.(columnIndex, options[index], index)
 
     const allDone = Object.keys(columnAnimating.current).every(
       (key) => !columnAnimating.current[key],
     )
 
-    if (allDone && !arrayEqual(tempIndexes.current, currentIndexes.current)) {
-      currentIndexes.current = tempIndexes.current.slice()
+    if (allDone) {
+      const values = options.map((option) => option[mergedFieldNames.value])
 
-      const pickedOptions = columns.map(
-        (column, i) => column[currentIndexes.current[i]],
-      )
-
-      onChange?.(
-        pickedOptions.map((option) => option[fieldKeys.value]),
-        pickedOptions,
-        currentIndexes.current.slice(),
-      )
+      if (!arrayEqual(values, innerValue)) {
+        setInnerValue(values, options)
+      }
     }
   })
 
@@ -135,42 +117,24 @@ export const Picker = forwardRef<PickerRef, PickerProps>((props, ref) => {
     columnAnimating.current[columnIndex] = false
   })
 
-  const getIndexes = useEvent(() => {
-    return currentIndexes.current.slice()
+  const getOptions = useEvent(() => {
+    return columnRefList.current.map((col) => col.getOption())
   })
 
-  const getOptions = useEvent(() =>
-    columnImperativeList.current.map((col) => col.getOption()),
-  )
-
-  const setIndexes = useEvent(
-    (indexes: number[], emitChange?: boolean, animated?: boolean) => {
-      columnImperativeList.current.forEach((col, i) =>
-        col.setIndex(indexes[i], emitChange, animated),
-      )
-    },
-  )
-
-  const setIndexesByValue = useEvent(
-    (values: any[], emitChange?: boolean, animated?: boolean) => {
-      columnImperativeList.current.forEach((col, i) =>
-        col.setIndexByValue(values[i], emitChange, animated),
-      )
-    },
-  )
+  const pickImmediately = useEvent(() => {
+    return columnRefList.current.map((col) => col.pickImmediately())
+  })
 
   const setIndexesForcibly = useEvent((indexes: number[]) => {
-    columnImperativeList.current.forEach((col, i) =>
+    return columnRefList.current.map((col, i) =>
       col.setIndexForcibly(indexes[i]),
     )
   })
 
   useImperativeHandle(ref, () => ({
-    setIndexes,
-    setIndexesByValue,
-    setIndexesForcibly,
-    getIndexes,
     getOptions,
+    pickImmediately,
+    setIndexesForcibly,
   }))
 
   const pickerClass = classNames('s-picker', className)
@@ -182,18 +146,13 @@ export const Picker = forwardRef<PickerRef, PickerProps>((props, ref) => {
           return (
             <PickerColumn
               key={columnIndex}
-              ref={refHandle}
-              height={height}
+              ref={refCallback}
+              itemHeight={itemHeight}
               focusHeight={focusHeight}
-              duration={duration}
-              correctDuration={correctDuration}
-              damping={damping}
-              inertiaTime={inertiaTime}
               column={column}
               columnIndex={columnIndex}
-              defaultIndex={defaultIndex[columnIndex]}
-              fieldNames={fieldKeys}
-              onChange={handleChange}
+              fieldNames={mergedFieldNames}
+              onChange={handleColumnChange}
               onPickStart={handlePickStart}
               onPickEnd={handlePickEnd}
             ></PickerColumn>

@@ -14,37 +14,38 @@ import {
   RefAttributes,
 } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 
 import { IndexBarItem, IndexBarItemProps } from './Item'
 import {
-  useMapSet,
+  useIndexableMap,
   useScroll,
   useSetTimeout,
   useStrike,
   useEvent,
-  useSelectorId,
+  useControlledValue,
 } from '../../use'
 import { matchScrollVisible, minmax } from '../../utils'
+import { pageScrollTop } from '../../utils/dom'
 import { PAN_END, PAN_MOVE, PAN_START, StrikePanEvent } from '../../strike'
-import { getBoundingClientRect, pageScrollTop } from '../../utils/dom'
 import { CSSTransition } from '../transition/CSSTransition'
 
 export * from './Item'
 
-export interface IndexBarProps extends CommonComponentProps {
+export interface IndexBarProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  defaultActiveKey?: any
-  activeKey?: any
+  defaultActiveKey?: number | string
+  activeKey?: number | string
+  onChange?: (key: number | string) => void
   offset?: number
+  initialScroll?: boolean
   anchorClass?: string
   anchorStyle?: CSSProperties
 }
 
 export interface IndexBarRef {
-  scrollTo(name: any): void
+  scrollTo: (key: number | string) => void
 }
 
 export interface IndexBarFC
@@ -61,55 +62,71 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
     children,
     defaultActiveKey,
     activeKey,
+    onChange,
     offset = 0,
+    initialScroll,
     anchorClass,
     anchorStyle,
     ...restProps
   } = props
 
-  const offsetRef = useRef(offset)
-  const itemSet = useMapSet<any, HTMLElement>([])
-  const childrenRef = useRef(children)
+  const itemMap = useIndexableMap<number | string, HTMLElement>([])
 
-  const [innerName, setInnerName] = useState(() => {
-    const firstPane = Children.toArray(
-      children,
-    )[0] as ReactElement<IndexBarItemProps>
-    return activeKey ?? defaultActiveKey ?? firstPane?.props.name ?? 0
-  })
+  const [innerActiveKey, setInnerActiveKey, outerActiveKey] =
+    useControlledValue<number | string>(props, {
+      valuePropName: 'activeKey',
+      defaultValuePropName: 'defaultActiveKey',
+      defaultValue() {
+        const firstPane = Children.toArray(
+          children,
+        )[0] as ReactElement<IndexBarItemProps>
+        return firstPane?.key ?? 0
+      },
+    })
 
-  const scrollLock = useRef(false)
+  const lockScroll = useRef(false)
   const { reset } = useSetTimeout(() => {
-    scrollLock.current = false
+    lockScroll.current = false
   }, 250)
 
-  const scrollTo = useEvent((name: any) => {
-    const el = itemSet.get(name)
+  const scrollTo = useEvent((key: number | string) => {
+    const el = itemMap.get(key)
 
     if (el) {
-      const top =
-        el.getBoundingClientRect().top + window.scrollY - offsetRef.current
+      const top = el.getBoundingClientRect().top + window.scrollY - offset
 
       reset()
-      scrollLock.current = true
+      lockScroll.current = true
       pageScrollTop(top, false)
 
-      setInnerName(name)
+      setInnerActiveKey(key)
     }
   })
 
+  if (outerActiveKey) {
+    console.log('outerActiveKey: ', outerActiveKey)
+
+    scrollTo(outerActiveKey)
+  }
+
+  useEffect(() => {
+    if (initialScroll) {
+      scrollTo(innerActiveKey)
+    }
+  }, [])
+
   useScroll(
     () => {
-      if (scrollLock.current) {
+      if (lockScroll.current) {
         return
       }
-      const srcData = itemSet.getData()
+      const srcData = itemMap.data
       matchScrollVisible(
         srcData.map((item) => item[1]),
         (index) => {
-          setInnerName(srcData[index][0])
+          setInnerActiveKey(srcData[index][0])
         },
-        offsetRef.current,
+        offset,
       )
     },
     150,
@@ -124,57 +141,55 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
   const [hintTop, setHintTop] = useState('')
 
   const getTipsTop = () => {
-    const index = itemSet.getIndexByName(innerName)
+    const index = itemMap.getIndexByKey(innerActiveKey)
     const length = Children.count(children)
     return ((index + 0.5) / length) * 100 + '%'
   }
 
   useEffect(() => {
     setHintTop(getTipsTop())
-  }, [innerName])
+  }, [innerActiveKey])
 
   // 触摸切换
   const navRef = useRef<HTMLDivElement>(null)
-  const downHeightRef = useRef(0)
-  const downRectTopRef = useRef(0)
+  const downNavHeightRef = useRef(0)
+  const downNavTopRef = useRef(0)
   const itemCount = useRef(0)
 
   const scrollByOffset = useEvent((offsetY) => {
     const index = minmax(
-      Math.floor((offsetY / downHeightRef.current) * itemCount.current),
+      Math.floor((offsetY / downNavHeightRef.current) * itemCount.current),
       0,
       itemCount.current - 1,
     )
 
-    const name = itemSet.getData()[index][0]
-    if (name !== innerName) {
-      scrollTo(name)
+    const key = itemMap.getKeyByIndex(index)
+    if (key !== innerActiveKey) {
+      scrollTo(key)
     }
   })
 
   const handlePanStart = useEvent((event: StrikePanEvent) => {
-    downHeightRef.current = navRef.current?.getBoundingClientRect().height || 0
-    itemCount.current = Children.count(childrenRef.current)
+    itemCount.current = Children.count(children)
 
-    getBoundingClientRect(navId, (rect) => {
-      downRectTopRef.current = rect.top
-      scrollByOffset(event.y - rect.top)
-    })
+    const navRect = navRef.current.getBoundingClientRect()
+    downNavHeightRef.current = navRect.height || 0
+    downNavTopRef.current = navRect.top
+    scrollByOffset(event.y - navRect.top)
 
     setTipsIn(true)
   })
 
   const handlePanMove = useEvent((event: StrikePanEvent) => {
-    scrollByOffset(event.y - downRectTopRef.current)
+    scrollByOffset(event.y - downNavTopRef.current)
   })
 
   const handlePanEnd = useEvent(() => {
     setTipsIn(false)
   })
 
-  const navId = useSelectorId()
-
-  const navBinding = useStrike(
+  useStrike(
+    navRef,
     (strike) => {
       strike.on(PAN_START, handlePanStart)
       strike.on(PAN_MOVE, handlePanMove)
@@ -194,34 +209,36 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
   return (
     <div {...(restProps as any)} className={indexBarClass}>
       {Children.map(
-        children as ReactElement<IndexBarItemProps>,
-        (item: ReactElement<IndexBarItemProps>, index: number) => {
-          const name = item.props.name ?? index
+        children,
+        (
+          item: ReactElement<IndexBarItemProps & { ref: any }>,
+          index: number,
+        ) => {
+          const key = item.key ?? index
 
           return cloneElement(item, {
-            key: name,
-            name,
-            activeKey: innerName,
+            key,
+            activeKey: innerActiveKey,
             offset,
-            ref: (el: any) => itemSet.set(name, el),
+            ref: (el: any) => itemMap.set(key, el),
             anchorClass: classNames(anchorClass, item.props.anchorClass),
             anchorStyle: { ...anchorStyle, ...item.props.anchorStyle },
           })
         },
       )}
 
-      <div className="s-index-bar-nav" {...navBinding} ref={navRef} id={navId}>
+      <div className="s-index-bar-nav" ref={navRef}>
         {Children.map(
-          children as ReactElement<IndexBarItemProps>,
+          children,
           (item: ReactElement<IndexBarItemProps>, index: number) => {
-            const name = item.props.name ?? index
+            const key = item.key ?? index
             return (
               <div
                 className={classNames('s-index-bar-nav-item', {
-                  's-index-bar-nav-item-active': name === innerName,
+                  's-index-bar-nav-item-active': key === innerActiveKey,
                 })}
               >
-                {name}
+                {item.props.title}
               </div>
             )
           },
@@ -238,7 +255,7 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
             })}
             style={{ top: hintTop }}
           >
-            <div className="s-index-bar-hint-text">{innerName}</div>
+            <div className="s-index-bar-hint-text">{innerActiveKey}</div>
           </div>
         </CSSTransition>
       </div>

@@ -45,6 +45,7 @@ import { Button } from 'sard'
 | loadingText  | 加载文本               | React.ReactNode                                                          | -         |
 | loadingProps | `Loading` 组件 `props` | LoadingProps                                                             | -         |
 | onClick      | 点击按钮时触发         | (event: React.MouseEvent) => void                                        | -         |
+| htmlType     | 按钮原生类型           | 'submit' \| 'reset' \| 'button'                                          | 'button'  |
 
 ## 主题定制
 

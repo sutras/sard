@@ -1,6 +1,5 @@
 /**
- * 简化受控组件状态的操作
- * ==========================
+ * 在保持函数引用不变的前提下，可以在函数里面访问最新的变量。
  */
 
 import { useRef, useCallback } from 'react'
@@ -11,8 +10,7 @@ export function useEvent<T extends (...args: any[]) => any>(callback: T) {
   callbackRef.current = callback
 
   return useCallback((...args: any[]) => {
-    const callback = callbackRef.current
-    return callback?.(...args)
+    return callbackRef.current?.(...args)
   }, [])
 }
 

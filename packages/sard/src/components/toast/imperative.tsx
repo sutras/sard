@@ -1,8 +1,8 @@
 import { ReactNode } from 'react'
-import { ToastProps } from './index'
+import { ToastProps } from './Toast'
+import { mapIdAgent, ToastAgent } from './Agent'
 import { isNotReactNode } from '../../utils'
 import { mountAgent } from '../../utils/imperative'
-import { mapIdAgent, ToastAgent } from './Agent'
 
 export interface ToastOptions extends ToastProps {
   id?: string

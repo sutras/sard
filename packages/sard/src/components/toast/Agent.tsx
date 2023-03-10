@@ -1,4 +1,4 @@
-import { Toast, ToastProps, ToastRef } from './index'
+import { Toast, ToastProps, ToastRef } from './Toast'
 import { useAgent, AgentProps, MapIdAgent } from '../../utils/imperative'
 
 export const mapIdAgent: MapIdAgent<ToastProps, ToastRef> = {}

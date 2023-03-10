@@ -1,8 +1,8 @@
 import { ReactNode } from 'react'
-import { NotifyProps } from './index'
+import { NotifyProps } from './Notify'
+import { mapIdAgent, NotifyAgent } from './Agent'
 import { isNotReactNode } from '../../utils'
 import { mountAgent } from '../../utils/imperative'
-import { mapIdAgent, NotifyAgent } from './Agent'
 
 export interface NotifyOptions extends NotifyProps {
   id?: string

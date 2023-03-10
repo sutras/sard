@@ -9,15 +9,7 @@ export default function () {
   return (
     <>
       <Tabs>
-        <TabPane
-          label={
-            <span>
-              <Icon name="bi-cup-hot"></Icon> 标签1
-            </span>
-          }
-        >
-          内容1
-        </TabPane>
+        <TabPane label="标签1">内容1</TabPane>
         <TabPane
           label={(active) => (
             <span>

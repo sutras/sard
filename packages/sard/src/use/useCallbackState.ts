@@ -1,3 +1,8 @@
+/**
+ * useState 的变体，
+ * 可以给 setState 传递第二个函数参数，其函数会在 state 改变后触发。
+ */
+
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 interface Callback<S> {

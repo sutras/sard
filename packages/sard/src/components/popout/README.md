@@ -2,7 +2,7 @@
 
 ### 介绍
 
-底部弹出框，内置了一些工具操作，可作为 picker 等组件的弹出框容器。
+底部弹出框，可以控制组件的展示与交互，可作为 `Picker` 等组件的弹出框容器。
 
 ### 引入
 
@@ -15,10 +15,11 @@ import { Popout } from 'sard'
 <script type="code">
   [
     "./demo/Basic.tsx",
-    "./demo/Loose.tsx",
+    "./demo/Compact.tsx",
     "./demo/NeedPopup.tsx",
     "./demo/Simple.tsx",
-    "./demo/Format.tsx",
+    "./demo/Controlled.tsx",
+    "./demo/Fast.tsx",
     "./demo/Cell.tsx"
   ]
 </script>

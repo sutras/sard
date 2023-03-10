@@ -46,7 +46,7 @@ export const Pagination: FC<PaginationProps> = (props) => {
     defaultValuePropName: 'defaultCurrent',
     valuePropName: 'current',
     defaultValue: 1,
-    preset(current) {
+    transform(current) {
       return minmax(current, 1, innerPageCount)
     },
   })

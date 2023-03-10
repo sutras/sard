@@ -12,13 +12,14 @@ export default function () {
         .fill(0)
         .map((_, j) => ({
           value: `${i}-${j}`,
-          label: `${i + 1}年级${j + 1}班`,
+          label: `column${i}-item${j}` + `${j % 2 === 0 ? '-disabled' : ''}`,
+          disabled: j % 2 === 0,
         })),
     )
 
   return (
     <>
-      <Picker columns={columns} defaultIndex={[2, 3]} />
+      <Picker columns={columns} defaultValue={['0-1', '1-3']} />
     </>
   )
 }

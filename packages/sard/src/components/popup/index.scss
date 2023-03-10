@@ -7,14 +7,19 @@ $popup-mask-bg: $s-mask !default;
 
 .s-popup {
   position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: $popup-z-index;
+  overflow: hidden;
   pointer-events: none;
   &:not(.s-popup-visible) {
     display: none;
   }
 }
 .s-popup-mask {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
@@ -31,7 +36,7 @@ $popup-mask-bg: $s-mask !default;
   }
 }
 .s-popup-dialog {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
@@ -61,6 +66,7 @@ $popup-mask-bg: $s-mask !default;
 .s-popup-content {
   box-sizing: border-box;
   pointer-events: auto;
+
   .s-popup-hiding & {
     pointer-events: none;
   }

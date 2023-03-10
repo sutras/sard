@@ -43,6 +43,7 @@ $s-popout-button-gap: 16px !default;
           margin-right: auto;
           text-align: center;
           font-size: $s-popout-title-font-size;
+          font-weight: bold;
           @include ellipsis;
         }
 

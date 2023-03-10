@@ -1,8 +1,12 @@
+@import './icon/index.scss';
+@import './loading/index.scss';
+@import './popup/index.scss';
+@import './button/index.scss';
+
 @import './accordion/index.scss';
 @import './action-sheet/index.scss';
 @import './avatar/index.scss';
 @import './badge/index.scss';
-@import './button/index.scss';
 @import './calendar/index.scss';
 @import './cascader/index.scss';
 @import './cell/index.scss';
@@ -15,11 +19,9 @@
 @import './empty/index.scss';
 @import './form/index.scss';
 @import './grid/index.scss';
-@import './icon/index.scss';
 @import './image-preview/index.scss';
 @import './index-bar/index.scss';
 @import './input/index.scss';
-@import './loading/index.scss';
 @import './movable/index.scss';
 @import './navbar/index.scss';
 @import './notify/index.scss';
@@ -28,7 +30,6 @@
 @import './password-input/index.scss';
 @import './picker/index.scss';
 @import './popout/index.scss';
-@import './popup/index.scss';
 @import './progress-bar/index.scss';
 @import './progress-circle/index.scss';
 @import './radio/index.scss';

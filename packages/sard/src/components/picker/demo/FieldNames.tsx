@@ -12,7 +12,7 @@ export default function () {
         .fill(0)
         .map((_, j) => ({
           id: `${i}-${j}`,
-          text: `${i + 1}年级${j + 1}班`,
+          text: `column${i}-item${j}`,
         })),
     )
 

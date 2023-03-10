@@ -2,11 +2,12 @@
 ### 惯性
 */
 
-import { Movable } from 'sard'
+import { useCallback, useEffect, useRef } from 'react'
+import { Movable, MovableAreaRef } from 'sard'
 
 export default function () {
   const areaStyle = {
-    width: '640px',
+    width: '100%',
     height: '320px',
     backgroundColor: '#eee',
   }
@@ -16,8 +17,22 @@ export default function () {
     backgroundColor: 'rgba(255, 165, 0, .3)',
   }
 
+  const areaRef = useRef<MovableAreaRef>()
+
+  const handler = useCallback(() => {
+    areaRef.current.updateAreaRect()
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('resize', handler)
+
+    return () => {
+      window.removeEventListener('resize', handler)
+    }
+  }, [])
+
   return (
-    <Movable.Area style={areaStyle}>
+    <Movable.Area style={areaStyle} ref={areaRef}>
       <Movable.View style={viewStyle} inertia outOfBounds></Movable.View>
     </Movable.Area>
   )

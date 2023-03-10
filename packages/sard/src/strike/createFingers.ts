@@ -12,7 +12,6 @@ export interface Track extends Point {
 }
 
 export interface Knock {
-  eventTarget: object
   currentTarget: EventTarget | null
   target: EventTarget | null
   startX: number
@@ -61,7 +60,6 @@ export interface Fingers {
 }
 
 export function createKnock(
-  eventTarget: object,
   currentTarget: EventTarget,
   x: number,
   y: number,
@@ -69,7 +67,6 @@ export function createKnock(
   const time = Date.now()
 
   return {
-    eventTarget,
     currentTarget,
     target: null,
     startX: x,
@@ -124,10 +121,7 @@ export function updateKnock(
 }
 
 // 保存所有手指的信息
-export function createFingers(
-  eventTarget: object,
-  config: DefaultConfig,
-): Fingers {
+export function createFingers(config: DefaultConfig): Fingers {
   const knocks: Knocks = {}
   let firstFinger = -1
 
@@ -144,7 +138,7 @@ export function createFingers(
 
       const x = touch.clientX
       const y = touch.clientY
-      const knock = createKnock(eventTarget, currentTarget, x, y)
+      const knock = createKnock(currentTarget, x, y)
       knock.target = touch.target
       knock.firstFinger = firstFinger === touch.identifier
       knocks[touch.identifier] = knock

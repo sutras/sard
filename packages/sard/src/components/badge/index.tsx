@@ -10,6 +10,7 @@ export interface BadgeProps {
   max?: number
   showZero?: boolean
   color?: string
+  textColor?: string
   isDot?: boolean
   fixed?: boolean
 }
@@ -22,6 +23,7 @@ export const Badge: NamedExoticComponent<BadgeProps> = memo((props) => {
     max = 99,
     showZero = false,
     color,
+    textColor,
     isDot,
     fixed,
     ...restProps
@@ -43,10 +45,15 @@ export const Badge: NamedExoticComponent<BadgeProps> = memo((props) => {
     's-badge-fixed': !fixed && !isVisibleEmpty(children),
   })
 
+  const contentStyle = {
+    backgroundColor: color,
+    color: textColor,
+  }
+
   return (
     <div {...restProps} className={badgeClass}>
       {children}
-      <div className={contentClass} style={{ backgroundColor: color }}>
+      <div className={contentClass} style={contentStyle}>
         {isDot
           ? ''
           : typeof value === 'number' && value > max

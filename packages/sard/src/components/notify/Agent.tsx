@@ -1,4 +1,4 @@
-import { Notify, NotifyProps, NotifyRef } from './index'
+import { Notify, NotifyProps, NotifyRef } from './Notify'
 import { useAgent, AgentProps, MapIdAgent } from '../../utils/imperative'
 
 export const mapIdAgent: MapIdAgent<NotifyProps, NotifyRef> = {}

@@ -28,7 +28,7 @@ export const Col: FC<ColProps> = (props) => {
   const context = useContext(RowContext)
 
   const colStyle = {
-    ...(order != null
+    ...(order !== undefined
       ? {
           order,
         }

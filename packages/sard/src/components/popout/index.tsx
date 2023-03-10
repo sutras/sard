@@ -1,29 +1,28 @@
 import {
-  createContext,
   CSSProperties,
   FC,
   ReactNode,
   useRef,
   useState,
+  MouseEvent,
+  useMemo,
+  useEffect,
 } from 'react'
 import classNames from 'classnames'
 import { useControlledValue } from '../../use'
-import { CommonComponentProps } from '../../utils/types'
 import { Popup, PopupProps } from '../popup'
 import { Button, ButtonProps } from '../button'
 import { Icon } from '../icon'
 import { useEvent } from '../../use'
-import PopoutBridge from './Bridge'
 import PopoutTarget from './Target'
 import PopoutOutlet from './Outlet'
-import PopoutClear from './Clear'
-import PopoutSelect from './Select'
+import PopoutContext from './PopoutContext'
+import { isEmptyValue } from '../../utils'
 
-export * from './Bridge'
 export * from './Target'
 export * from './Outlet'
 
-export interface PopoutProps extends CommonComponentProps {
+export interface PopoutProps {
   className?: string
   style?: CSSProperties
   title?: ReactNode
@@ -37,35 +36,21 @@ export interface PopoutProps extends CommonComponentProps {
   showConfirm?: boolean
   confirmText?: ReactNode
   confirmProps?: ButtonProps
+  showClose?: boolean
   type?: 'compact' | 'loose'
+  fast?: boolean
   onClose?: (visible: false) => void
   onCancel?: (visible: false) => void
   onConfirm?: (visible: false) => void
   popupProps?: PopupProps
+  value?: any
+  defaultValue?: any
+  onChange?: (value: any) => void
 }
-
-export interface PopoutContext {
-  setTarget: (target?: ReactNode) => void
-  setVisible: (visible: boolean) => void
-  setChangeArgs: (...args: any[]) => void
-  setConfirmDisabled: (disabled: boolean) => void
-  setEnter: (callback: (...args: any[]) => any) => void
-  setTmpChangeArgs: (...args: any[]) => void
-  clear: () => void
-}
-export const PopoutContext = createContext<PopoutContext>({} as PopoutContext)
-
-export type PopoutChangeArgsContext = any[]
-export const PopoutChangeArgsContext = createContext<PopoutChangeArgsContext>(
-  [],
-)
 
 export interface PopoutFC extends FC<PopoutProps> {
-  Bridge: typeof PopoutBridge
   Target: typeof PopoutTarget
   Outlet: typeof PopoutOutlet
-  Clear: typeof PopoutClear
-  Select: typeof PopoutSelect
 }
 
 export const Popout: PopoutFC = (props) => {
@@ -82,11 +67,16 @@ export const Popout: PopoutFC = (props) => {
     showConfirm = true,
     confirmText = '确定',
     confirmProps,
+    showClose = true,
     type = 'loose',
+    fast = false,
     onClose,
     onCancel,
     onConfirm,
     popupProps = {},
+    value,
+    defaultValue,
+    onChange,
     ...restProps
   } = props
 
@@ -104,14 +94,43 @@ export const Popout: PopoutFC = (props) => {
     defaultValue: false,
   })
 
+  const [innerValue, setInnerValue] = useControlledValue<any>(props, {})
+
+  const [bridgeValue, setBridgeValue] = useState<any>()
+  const [triggerArgs, setTriggerArgs] = useState([])
+  const [outlet, setOutlet] = useState(null)
+  const tempTriggerArgs = useRef<any[]>([])
+  const [target, setTarget] = useState(false)
+
+  const confirmDisabled = useMemo(() => {
+    if (!target) {
+      return false
+    }
+    return isEmptyValue(bridgeValue)
+  }, [target, bridgeValue])
+
   const setVisible = (show: boolean) => {
     setInnerVisible(show)
   }
 
-  const handleMaskClick = useEvent(() => {
+  const handleChange = useEvent((args: any[]) => {
+    tempTriggerArgs.current = args
+
+    setBridgeValue(args[0])
+
+    if (fast) {
+      handleConfirm()
+    }
+  })
+
+  useEffect(() => {
+    setBridgeValue(innerValue)
+  }, [innerValue])
+
+  const handleMaskClick = useEvent((event: MouseEvent) => {
     setVisible(false)
     onClose?.(false)
-    onMaskClick?.()
+    onMaskClick?.(event)
   })
 
   const handleCancel = useEvent(() => {
@@ -121,13 +140,12 @@ export const Popout: PopoutFC = (props) => {
   })
 
   const handleConfirm = useEvent(() => {
-    setChangeArgs(tmpChangeArgs.current.slice())
+    setTriggerArgs(tempTriggerArgs.current.slice())
+    setInnerValue(tempTriggerArgs.current[0])
     setVisible(false)
     onConfirm?.(false)
     onClose?.(false)
   })
-
-  const [target, setTarget] = useState<ReactNode>(null)
 
   const enter = useRef<(...args: any[]) => any>()
   const handleEnter = useEvent(() => {
@@ -135,125 +153,105 @@ export const Popout: PopoutFC = (props) => {
     onEnter?.()
   })
 
-  const [changeArgs, setChangeArgs] = useState<PopoutChangeArgsContext>([])
-  const tmpChangeArgs = useRef<PopoutChangeArgsContext>([])
+  const context = useMemo(
+    () => ({
+      value: innerValue,
+      bridgeValue,
+      triggerArgs,
+      setValue: (value) => {
+        setBridgeValue(value)
+        setInnerValue(value)
+      },
+      handleChange,
+      setOutlet,
+      setTarget,
+      setVisible: setInnerVisible,
+    }),
+    [innerValue, bridgeValue, triggerArgs],
+  )
 
-  const [confirmDisabled, setConfirmDisabled] = useState(false)
+  const renderCancelButton = (
+    type: ButtonProps['type'],
+    theme: ButtonProps['theme'],
+    round: boolean,
+  ) => {
+    return (
+      <Button
+        className="s-popout-cancel s-popout-button"
+        type={type}
+        theme={theme}
+        round={round}
+        {...cancelProps}
+        onClick={handleCancel}
+      >
+        {cancelText}
+      </Button>
+    )
+  }
 
-  const clear = useEvent(() => {
-    if (changeArgs.length !== 0) {
-      setChangeArgs([])
-    }
-  })
-
-  const popoutContext = useRef<PopoutContext>({
-    setTarget,
-    setVisible,
-    setChangeArgs,
-    setConfirmDisabled,
-    setEnter: (callback) => {
-      enter.current = callback
-    },
-    setTmpChangeArgs: (changeArgs) => {
-      tmpChangeArgs.current = changeArgs
-    },
-    clear,
-  })
-
-  const popoutClass = classNames('s-popout', 's-popout-' + type, className)
+  const renderConfirmButton = (type: ButtonProps['type'], round: boolean) => {
+    return (
+      <Button
+        className="s-popout-confirm s-popout-button"
+        type={type}
+        theme="primary"
+        round={round}
+        disabled={confirmDisabled}
+        onClick={handleConfirm}
+        {...confirmProps}
+      >
+        {confirmText}
+      </Button>
+    )
+  }
 
   return (
     <>
-      <PopoutContext.Provider value={popoutContext.current}>
-        <PopoutChangeArgsContext.Provider value={changeArgs}>
-          {target}
-          <Popup
-            {...restPopupProps}
-            placement={placement}
-            visible={innerVisible}
-            onMaskClick={handleMaskClick}
-            onEnter={handleEnter}
+      <PopoutContext.Provider value={context}>
+        {outlet}
+        <Popup
+          {...restPopupProps}
+          placement={placement}
+          visible={innerVisible}
+          onMaskClick={handleMaskClick}
+          onEnter={handleEnter}
+        >
+          <div
+            {...restProps}
+            className={classNames('s-popout', 's-popout-' + type, className)}
           >
-            <div {...restProps} className={popoutClass}>
-              <div className="s-popout-header">
-                {type === 'compact' && (
-                  <Button
-                    className="s-popout-cancel s-popout-button"
-                    type="pale-text"
-                    theme="secondary"
-                    {...cancelProps}
-                    onClick={handleCancel}
-                  >
-                    {cancelText}
-                  </Button>
-                )}
-                {title && <div className="s-popout-title">{title}</div>}
-                {type === 'compact' && (
-                  <Button
-                    className="s-popout-confirm s-popout-button"
-                    type="pale-text"
-                    theme="primary"
-                    {...confirmProps}
-                    disabled={confirmDisabled}
-                    onClick={handleConfirm}
-                  >
-                    {confirmText}
-                  </Button>
-                )}
-                {type === 'loose' && (
-                  <Button
-                    className="s-popout-close"
-                    type="pale-text"
-                    theme="secondary"
-                    size="large"
-                    onClick={handleCancel}
-                  >
-                    <Icon prefix="si" name="close"></Icon>
-                  </Button>
-                )}
-              </div>
-              <div className="s-popout-body">{children}</div>
-              {type === 'loose' && (
-                <div className="s-popout-footer">
-                  {showCancel && (
-                    <Button
-                      className="s-popout-cancel s-popout-button"
-                      type="pale"
-                      theme="primary"
-                      round
-                      {...cancelProps}
-                      onClick={handleCancel}
-                    >
-                      {cancelText}
-                    </Button>
-                  )}
-                  {showConfirm && (
-                    <Button
-                      className="s-popout-confirm s-popout-button"
-                      type="default"
-                      theme="primary"
-                      round
-                      {...confirmProps}
-                      disabled={confirmDisabled}
-                      onClick={handleConfirm}
-                    >
-                      {confirmText}
-                    </Button>
-                  )}
-                </div>
+            <div className="s-popout-header">
+              {type === 'compact' &&
+                renderCancelButton('pale-text', 'secondary', false)}
+              {title && <div className="s-popout-title">{title}</div>}
+              {type === 'compact' && renderConfirmButton('pale-text', false)}
+              {type === 'loose' && showClose && (
+                <Button
+                  className="s-popout-close"
+                  type="pale-text"
+                  theme="secondary"
+                  size="large"
+                  onClick={handleCancel}
+                >
+                  <Icon prefix="si" name="close"></Icon>
+                </Button>
               )}
             </div>
-          </Popup>
-        </PopoutChangeArgsContext.Provider>
+            <div className="s-popout-body">{children}</div>
+            {type === 'loose' && (
+              <div className="s-popout-footer">
+                {showCancel && renderCancelButton('pale', 'primary', true)}
+                {showConfirm && renderConfirmButton('default', true)}
+              </div>
+            )}
+          </div>
+        </Popup>
       </PopoutContext.Provider>
     </>
   )
 }
 
-Popout.Bridge = PopoutBridge
 Popout.Target = PopoutTarget
 Popout.Outlet = PopoutOutlet
-Popout.Clear = PopoutClear
-Popout.Select = PopoutSelect
 
 export default Popout

@@ -1,14 +1,6 @@
-import {
-  CSSProperties,
-  FC,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import { CSSProperties, FC, ReactNode, useRef } from 'react'
 import classNames from 'classnames'
 import { useControlledValue } from '../../use'
-import { CommonComponentProps } from '../../utils/types'
 import { readFileContent, FileReaderResultType } from '../../utils'
 import { Icon } from '../icon'
 
@@ -24,41 +16,38 @@ interface ChainNode {
   (data: any, next: (...args: any[]) => void): void
 }
 
-export interface UploadBaseProps extends CommonComponentProps {
+export interface UploadProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
   accept?: string
+  multiple?: boolean
   capture?: boolean | 'user' | 'environment'
   previewList?: UploadPreviewProps[]
   defaultPreviewList?: UploadPreviewProps[]
   maxCount?: number
   maxSize?: number | ((file: File) => boolean)
+  overSize?: (
+    previewProps: UploadProps['multiple'] extends true
+      ? UploadFileItem[]
+      : UploadFileItem,
+  ) => void
   select?: ReactNode
   resultType?: FileReaderResultType
   disabled?: boolean
   readOnly?: boolean
   beforeRead?: (file: File) => boolean | Promise<File>
+  afterRead?: (
+    previewProps: UploadProps['multiple'] extends true
+      ? UploadFileItem[]
+      : UploadFileItem,
+  ) => void
   onChange?: (previewPropsList: UploadPreviewProps[]) => void
   removable?: boolean
   remove?: ReactNode
   beforeRemove?: (...args: any[]) => boolean | Promise<void>
   onRemove?: (index: number) => void
 }
-
-export interface UploadSingleProps extends UploadBaseProps {
-  multiple?: false
-  afterRead?: (previewProps: UploadFileItem) => void
-  overSize?: (previewProps: UploadFileItem) => void
-}
-
-export interface UploadMutipleProps extends UploadBaseProps {
-  multiple: true
-  afterRead?: (previewPropsList: UploadFileItem[]) => void
-  overSize?: (previewPropsList: UploadFileItem[]) => void
-}
-
-export type UploadProps = UploadSingleProps | UploadMutipleProps
 
 export interface UploadFC extends FC<UploadProps> {
   Preview: typeof UploadPreview
@@ -68,8 +57,8 @@ export const Upload: UploadFC = (props) => {
   const {
     className,
     children,
+    accept = 'image/*',
     multiple,
-    accept,
     capture,
     previewList,
     defaultPreviewList,
@@ -186,7 +175,7 @@ export const Upload: UploadFC = (props) => {
 
     if (invalid.length) {
       if (multiple) {
-        overSize?.(invalid)
+        overSize?.(invalid as any)
       } else {
         overSize?.(invalid[0])
       }
@@ -198,7 +187,11 @@ export const Upload: UploadFC = (props) => {
     }
   }
 
-  const afterReadNode: ChainNode = (fileList: UploadFileItem[]) => {
+  const afterReadNode: ChainNode = (
+    fileList: UploadProps['multiple'] extends true
+      ? UploadFileItem[]
+      : UploadFileItem,
+  ) => {
     if (multiple) {
       afterRead?.(fileList)
     } else {
@@ -225,7 +218,7 @@ export const Upload: UploadFC = (props) => {
         node(data, next)
       },
       () => {
-        void 0
+        null
       },
     )
 
@@ -235,7 +228,7 @@ export const Upload: UploadFC = (props) => {
   const handleRemove = useEvent((index: number, item: UploadPreviewProps) => {
     const list = innerPreviewList.filter((_, i) => i !== index)
     // 非受控
-    if (previewList == null) {
+    if (previewList === undefined) {
       setInnerPreviewList(list)
     }
     onChange?.(list)

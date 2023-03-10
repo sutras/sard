@@ -153,7 +153,7 @@ export const NumberKeyboard: FC<NumberKeyboardProps> = (props) => {
   const numberKeyboardClass = classNames(
     's-number-keyboard',
     {
-      's-number-keyboard-has-extra': extraKey != null,
+      's-number-keyboard-has-extra': extraKey !== undefined,
     },
     className,
   )
@@ -162,7 +162,7 @@ export const NumberKeyboard: FC<NumberKeyboardProps> = (props) => {
   try {
     target = Children.only(children)
   } catch {
-    void 0
+    null
   }
 
   return (

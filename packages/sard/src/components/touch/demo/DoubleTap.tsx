@@ -2,14 +2,17 @@
 ### DoubleTap
 */
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useStrike } from 'sard'
 import './index.css'
 
 export default function () {
   const [msg, setMsg] = useState<any>(null)
 
-  const binding = useStrike(
+  const ref = useRef()
+
+  useStrike(
+    ref,
     (strike) => {
       strike.on('doubletap', (event: any) => {
         console.log(event.type)
@@ -29,7 +32,7 @@ export default function () {
 
   return (
     <>
-      <div {...binding} className="demo-touch-box"></div>
+      <div ref={ref} className="demo-touch-box"></div>
       <div>{msg}</div>
     </>
   )

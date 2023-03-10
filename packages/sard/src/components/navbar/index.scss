@@ -38,6 +38,7 @@ $s-navbar-item-padding-x: 10px !default;
           width: 100%;
           max-width: $s-navbar-title-max-width;
           font-size: $s-navbar-title-font-size;
+          font-weight: bold;
           text-align: center;
           color: $s-navbar-title-color;
           @include ellipsis;

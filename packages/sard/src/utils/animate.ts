@@ -40,7 +40,7 @@ export function animate({
   to = 0,
   duration = 0,
   step = () => {
-    void 0
+    null
   },
   finish,
   easing = easeOutQuad,

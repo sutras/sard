@@ -1,6 +1,14 @@
-import { CSSProperties, useRef, useState, useMemo, FC } from 'react'
-import { Picker, PickerProps, PickerColumnOption, PickerRef } from '../picker'
-import { useMemoRef, useInertRef, useEvent } from '../../use'
+import {
+  CSSProperties,
+  useRef,
+  useState,
+  useMemo,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from 'react'
+import { Picker, PickerColumnExternalProps, PickerRef } from '../picker'
+import { useEvent, useControlledValue } from '../../use'
 import { getDaysInMonth, minmax } from '../../utils'
 
 export type DatetimeLetter = 'y' | 'M' | 'd' | 'h' | 'm' | 's'
@@ -11,13 +19,14 @@ export interface DatetimeColumnOption {
   zerofill?: string
 }
 
-export interface DatetimePickerProps extends Omit<PickerProps, 'onChange'> {
+export interface DatetimePickerProps extends PickerColumnExternalProps {
   className?: string
   style?: CSSProperties
   type?: string | DatetimeLetter[]
   min?: Date
   max?: Date
   value?: Date
+  defaultValue?: Date
   filter?: (
     letter: DatetimeLetter,
     value: number,
@@ -32,6 +41,8 @@ export interface DatetimePickerProps extends Omit<PickerProps, 'onChange'> {
   ) => any
   onChange?: (value: Date) => void
 }
+
+export type DatetimePickerRef = Pick<PickerRef, 'pickImmediately'>
 
 export type DateEvery = [number, number, number, number, number, number]
 
@@ -63,7 +74,9 @@ const strategies: Strategies = {
   s: [5, 2, 0, 59, (d) => d.getSeconds(), (d, val) => d.setSeconds(val)],
 }
 
-function getBoundaryValue(isMax: boolean, endDate: Date, currDate: Date) {
+const letterArray: DatetimeLetter[] = ['y', 'M', 'd', 'h', 'm', 's']
+
+function getBoundaryValue(isMax: boolean, endDate: Date, currentDate: Date) {
   const currEvery = [endDate.getFullYear()]
   const minOrMaxIndex = isMax ? 3 : 2
   let aside = true
@@ -73,9 +86,12 @@ function getBoundaryValue(isMax: boolean, endDate: Date, currDate: Date) {
     const strategy = strategies[letter]
     let minOrMax = strategy[minOrMaxIndex] as number
     if (isMax && letter === 'd') {
-      minOrMax = getDaysInMonth(currDate.getFullYear(), currDate.getMonth() + 1)
+      minOrMax = getDaysInMonth(
+        currentDate.getFullYear(),
+        currentDate.getMonth() + 1,
+      )
     }
-    aside = aside && currEvery[index] === prevGetter(currDate)
+    aside = aside && currEvery[index] === prevGetter(currentDate)
 
     currEvery[index + 1] = aside ? strategy[4](endDate) : minOrMax
     prevGetter = strategy[4]
@@ -110,14 +126,60 @@ function correctDate(date: DateEvery, minDate: Date, maxDate: Date) {
   })
 }
 
-const letterArray: DatetimeLetter[] = ['y', 'M', 'd', 'h', 'm', 's']
+const getColumnData = (
+  count: number,
+  start: number,
+  length: number,
+  letter: DatetimeLetter,
+  currentDate: Date,
+  filter: (
+    letter: DatetimeLetter,
+    value: number,
+    date: Date,
+    index: number,
+  ) => boolean,
+  formatter: (
+    letter: DatetimeLetter,
+    option: DatetimeColumnOption,
+    date: Date,
+    index: number,
+  ) => any,
+) => {
+  let column = Array(count)
+    .fill(0)
+    .map(
+      (_, i) =>
+        ({
+          value: i + start,
+        } as DatetimeColumnOption),
+    )
 
-export const DatetimePicker: FC<DatetimePickerProps> = (props) => {
+  if (filter) {
+    column = column.filter((option, i) =>
+      filter(letter, option.value, currentDate, i),
+    )
+  }
+  column.forEach((option) => {
+    option.zerofill = option.label = String(option.value).padStart(length, '0')
+  })
+  if (formatter) {
+    column.forEach((option, i) => {
+      option.label = formatter(letter, option, currentDate, i)
+    })
+  }
+  return column
+}
+
+export const DatetimePicker = forwardRef<
+  DatetimePickerRef,
+  DatetimePickerProps
+>((props, ref) => {
   const {
     type = 'yMdhm',
     min,
     max,
     value,
+    defaultValue,
     filter,
     formatter,
     onChange,
@@ -139,66 +201,50 @@ export const DatetimePicker: FC<DatetimePickerProps> = (props) => {
     return maxDate < minDate ? new Date(minDate) : maxDate
   }, [max])
 
-  const valueRef = useMemoRef(() => {
-    const currDate = value || new Date()
-    return currDate < minDate
-      ? minDate
-      : currDate > maxDate
-      ? maxDate
-      : currDate
-  }, [value])
+  const [innerValue, setInnerValue] = useControlledValue(props, {
+    defaultValue() {
+      return new Date()
+    },
+    transform(value) {
+      return value.getTime() < minDate.getTime()
+        ? minDate
+        : value.getTime() > maxDate.getTime()
+        ? maxDate
+        : value
+    },
+    controlled(value) {
+      return value === null ? new Date() : value
+    },
+  })
+
+  const pickerValue = useMemo(() => {
+    return innerType.map((letter) => {
+      return strategies[letter][4](innerValue)
+    })
+  }, [innerValue, innerType])
 
   const pickerRef = useRef<PickerRef>({} as PickerRef)
   const columnsMap = useRef<{ [p: string]: DatetimeColumnOption[] }>({})
 
-  const getColumnData = (
-    count: number,
-    start: number,
-    length: number,
-    letter: DatetimeLetter,
-  ) => {
-    let column = Array(count)
-      .fill(0)
-      .map(
-        (_, i) =>
-          ({
-            value: i + start,
-          } as DatetimeColumnOption),
-      )
-
-    if (filter) {
-      column = column.filter((option, i) =>
-        filter(letter, option.value, valueRef.current, i),
-      )
-    }
-    column.forEach((option) => {
-      option.zerofill = option.label = String(option.value).padStart(
-        length,
-        '0',
-      )
-    })
-    if (formatter) {
-      column.forEach((option, i) => {
-        option.label = formatter(letter, option, valueRef.current, i)
-      })
-    }
-    return column
-  }
-
   const minValuesRef = useRef<number[]>([])
   const maxValuesRef = useRef<number[]>([])
-  const createColumnData = (types: DatetimeLetter[]) => {
-    minValuesRef.current = getBoundaryValue(false, minDate, valueRef.current)
-    maxValuesRef.current = getBoundaryValue(true, maxDate, valueRef.current)
+
+  const createColumnData = (types: DatetimeLetter[], currentDate: Date) => {
+    minValuesRef.current = getBoundaryValue(false, minDate, currentDate)
+    maxValuesRef.current = getBoundaryValue(true, maxDate, currentDate)
 
     const getColumnDataByType = (letter: DatetimeLetter) => {
       const strategy = strategies[letter]
       const index = strategy[0]
+
       return getColumnData(
         maxValuesRef.current[index] - minValuesRef.current[index] + 1,
         minValuesRef.current[index],
         strategy[1],
         letter,
+        currentDate,
+        filter,
+        formatter,
       )
     }
 
@@ -211,21 +257,12 @@ export const DatetimePicker: FC<DatetimePickerProps> = (props) => {
   }
 
   const [columns, setColumns] = useState<DatetimeColumnOption[][]>(() =>
-    createColumnData(innerType),
+    createColumnData(innerType, innerValue),
   )
 
-  const defaultIndex = useInertRef<number[]>(() =>
-    innerType.map((letter, i) => {
-      const strategy = strategies[letter]
-      return columns[i].findIndex(
-        (option) => option.value === strategy[4](valueRef.current),
-      )
-    }),
-  )
-
-  const getChangedLetter = () => {
-    const minValues = getBoundaryValue(false, minDate, valueRef.current)
-    const maxValues = getBoundaryValue(true, maxDate, valueRef.current)
+  const getChangedLetter = (currentDate: Date) => {
+    const minValues = getBoundaryValue(false, minDate, currentDate)
+    const maxValues = getBoundaryValue(true, maxDate, currentDate)
 
     return letterArray.filter(
       (_, i) =>
@@ -234,24 +271,11 @@ export const DatetimePicker: FC<DatetimePickerProps> = (props) => {
     )
   }
 
-  const handleChange = useEvent((value, options: PickerColumnOption) => {
-    const currEvery = letterArray.map((letter) => {
-      const stratery = strategies[letter]
-      for (let i = 0, l = innerType.length; i < l; i++) {
-        if (innerType[i] === letter && options[i]) {
-          return options[i].value
-        }
-      }
-      return stratery[4](valueRef.current)
-    })
-    correctDate(currEvery as DateEvery, minDate, maxDate)
+  const updateColumns = useEvent((currentDate: Date, currEvery?: number[]) => {
+    const changedLetter = getChangedLetter(currentDate)
 
-    currEvery[1]--
-    valueRef.current = new Date(...(currEvery as DateEvery))
-
-    const changedLetter = getChangedLetter()
     if (changedLetter.length) {
-      const changedColumns = createColumnData(changedLetter)
+      const changedColumns = createColumnData(changedLetter, currentDate)
       const columns = innerType.map((letter) => {
         for (let i = 0, l = changedLetter.length; i < l; i++) {
           if (changedLetter[i] === letter) {
@@ -260,29 +284,62 @@ export const DatetimePicker: FC<DatetimePickerProps> = (props) => {
         }
         return columnsMap.current[letter]
       })
+
       setColumns(columns)
 
-      currEvery[1]++
-      pickerRef.current.setIndexesForcibly(
-        innerType.map((letter, i) => {
-          const value = currEvery[strategies[letter][0]]
-          return columns[i].findIndex((option) => option.value === value)
-        }),
-      )
-    } else {
-      onChange?.(new Date(valueRef.current))
+      if (currEvery) {
+        currEvery[1]++
+        pickerRef.current.setIndexesForcibly(
+          innerType.map((letter, i) => {
+            const value = currEvery[strategies[letter][0]]
+            return columns[i].findIndex((option) => option.value === value)
+          }),
+        )
+      }
     }
   })
+
+  const handleChange = useEvent((value: number[]) => {
+    const currEvery = letterArray.map((letter) => {
+      const stratery = strategies[letter]
+      for (let i = 0, l = innerType.length; i < l; i++) {
+        if (innerType[i] === letter) {
+          return value[i]
+        }
+      }
+      return stratery[4](innerValue)
+    })
+    correctDate(currEvery as DateEvery, minDate, maxDate)
+
+    currEvery[1]--
+    const nextDate = new Date(...(currEvery as DateEvery))
+
+    updateColumns(nextDate, currEvery)
+
+    setInnerValue(nextDate)
+  })
+
+  useEffect(() => {
+    if (value !== undefined) {
+      updateColumns(innerValue)
+    }
+  })
+
+  useImperativeHandle(ref, () => ({
+    pickImmediately() {
+      pickerRef.current?.pickImmediately()
+    },
+  }))
 
   return (
     <Picker
       {...restProps}
       columns={columns}
-      defaultIndex={defaultIndex.current}
+      value={pickerValue}
       onChange={handleChange}
       ref={pickerRef}
     ></Picker>
   )
-}
+})
 
 export default DatetimePicker

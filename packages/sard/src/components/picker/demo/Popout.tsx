@@ -2,7 +2,7 @@
 ### 配合弹出框使用
 */
 
-import { Picker, PickerColumnOption, Popout, Input } from 'sard'
+import { Picker, PickerOption, Popout, Input } from 'sard'
 
 export default function () {
   const columns = Array(1)
@@ -12,26 +12,32 @@ export default function () {
         .fill(0)
         .map((_, j) => ({
           value: `${i}-${j}`,
-          label: `${i + 1}年级${j + 1}班`,
+          label: `column${i}-item${j}`,
         })),
     )
 
   return (
     <>
-      <Popout title="请选择班级">
-        <Popout.Target
-          select
-          value
-          clear
-          format={(_, options: PickerColumnOption[]) =>
-            options.map((option) => option.label).join('/')
-          }
-        >
-          <Input readOnly placeholder="请选择班级" clearable />
-        </Popout.Target>
-        <Popout.Bridge>
+      <Popout title="请选择">
+        <Popout.Outlet>
+          {({ value, setValue, triggerArgs: [, options = []], setVisible }) => (
+            <Input
+              value={
+                (value?.length &&
+                  options.map((option) => option.name).join('/')) ||
+                ''
+              }
+              onClear={() => setValue()}
+              onClick={() => setVisible(true)}
+              clearable
+              readOnly
+              placeholder="请选择"
+            />
+          )}
+        </Popout.Outlet>
+        <Popout.Target>
           <Picker columns={columns} />
-        </Popout.Bridge>
+        </Popout.Target>
       </Popout>
     </>
   )

@@ -3,15 +3,15 @@ import { throttle, DebounceOptions } from '../utils'
 import { useEvent } from './useEvent'
 
 export function useScroll(
-  func: (...args: any[]) => any,
+  callback: (...args: any[]) => any,
   wait: any,
   options?: DebounceOptions,
   target: { current: any } = { current: window },
 ) {
-  const fn = useEvent(func)
+  const cb = useEvent(callback)
 
   useEffect(() => {
-    const handler = throttle(fn, wait, options)
+    const handler = throttle(cb, wait, options)
     target.current?.addEventListener('scroll', handler)
 
     return () => {

@@ -1,99 +1,75 @@
-import {
-  MouseEventHandler,
-  TouchEventHandler,
-  useCallback,
-  useEffect,
-  useRef,
-} from 'react'
+import { MutableRefObject, useEffect, useRef } from 'react'
 import { createStrike, Strike, PartialConfig } from '../strike'
+import useEvent from './useEvent'
 
-export type UseStrikeConfig = PartialConfig
-
-export interface UseStrikeBinding {
-  onTouchStart: TouchEventHandler
-  onTouchMove: TouchEventHandler
-  onTouchEnd: TouchEventHandler
-  onTouchCancel: TouchEventHandler
-  onMouseDown: MouseEventHandler
+export type UseStrikeConfig = PartialConfig & {
+  binding?: boolean
 }
 
 export function useStrike(
+  elRef: MutableRefObject<HTMLElement>,
   callback: (strike: Strike) => void,
   config: UseStrikeConfig = {},
-  init = true,
-): UseStrikeBinding {
-  const strike = useRef<Strike>()
-  const unsubscribe = useRef<any>()
+  dynamicConfig: UseStrikeConfig = {
+    binding: true,
+  },
+) {
+  const strike = useRef<Strike>(null)
+  const binding = useRef(false)
 
-  useEffect(() => {
-    strike.current = createStrike({
-      ...config,
-      init: false,
-    })
-    return () => {
-      strike.current?.destroy()
+  const bind = useEvent(() => {
+    if (!binding.current && strike.current) {
+      strike.current.init()
+      callback(strike.current)
+      binding.current = true
     }
-  }, [])
+  })
+
+  const unbind = useEvent(() => {
+    if (binding.current && strike.current) {
+      strike.current.destroy()
+      binding.current = false
+    }
+  })
+
+  const configure = useEvent((config) => {
+    strike.current?.configure(config)
+  })
 
   useEffect(() => {
-    if (strike.current) {
-      if (init) {
-        strike.current.init()
-        unsubscribe.current = callback(strike.current)
-      } else {
-        strike.current.destroy()
-        if (typeof unsubscribe.current === 'function') {
-          unsubscribe.current()
-          unsubscribe.current = null
-        }
+    if (elRef.current) {
+      strike.current = createStrike(elRef.current, {
+        ...config,
+        ...dynamicConfig,
+      })
+
+      if (config?.init) {
+        bind()
       }
     }
-  }, [init])
-
-  const eventHandler = useCallback((event: TouchEvent | MouseEvent) => {
-    strike.current?.handler(event)
+    return () => {
+      unbind()
+      strike.current?.destroy()
+      strike.current = null
+    }
   }, [])
 
   useEffect(() => {
-    strike.current?.configure(config)
-  }, [config])
+    if (dynamicConfig) {
+      const binding = dynamicConfig.binding
+      if (binding === null || binding === undefined || binding) {
+        configure(dynamicConfig)
+        bind()
+      } else {
+        unbind()
+      }
+    }
+  }, [dynamicConfig])
 
   return {
-    onTouchStart: eventHandler as unknown as TouchEventHandler,
-    onTouchMove: eventHandler as unknown as TouchEventHandler,
-    onTouchEnd: eventHandler as unknown as TouchEventHandler,
-    onTouchCancel: eventHandler as unknown as TouchEventHandler,
-    onMouseDown: eventHandler as unknown as MouseEventHandler,
-  }
-}
-
-export function useMergeStrike(handlerList: UseStrikeBinding[]) {
-  const onTouchStart = useCallback((event: React.TouchEvent) => {
-    handlerList.forEach((strikeBinding) => strikeBinding.onTouchStart(event))
-  }, [])
-
-  const onTouchMove = useCallback((event: React.TouchEvent) => {
-    handlerList.forEach((strikeBinding) => strikeBinding.onTouchMove(event))
-  }, [])
-
-  const onTouchEnd = useCallback((event: React.TouchEvent) => {
-    handlerList.forEach((strikeBinding) => strikeBinding.onTouchEnd(event))
-  }, [])
-
-  const onTouchCancel = useCallback((event: React.TouchEvent) => {
-    handlerList.forEach((strikeBinding) => strikeBinding.onTouchCancel(event))
-  }, [])
-
-  const onMouseDown = useCallback((event: React.MouseEvent) => {
-    handlerList.forEach((strikeBinding) => strikeBinding.onMouseDown(event))
-  }, [])
-
-  return {
-    onTouchStart,
-    onTouchMove,
-    onTouchEnd,
-    onTouchCancel,
-    onMouseDown,
+    bind,
+    unbind,
+    configure,
   }
 }
 

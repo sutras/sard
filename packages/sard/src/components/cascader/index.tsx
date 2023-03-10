@@ -9,7 +9,7 @@ import {
 } from 'react'
 import classNames from 'classnames'
 import { CommonComponentProps } from '../../utils/types'
-import { Tabs, TabsProps } from '../tabs'
+import { Tabs, TabsProps, TabsRef } from '../tabs'
 import Icon from '../icon'
 
 export interface CascaderOption {
@@ -65,13 +65,18 @@ export const Cascader: FC<CascaderProps> = (props) => {
     ...restProps
   } = props
 
-  const fieldkeys = Object.assign({}, defaultFieldNames, fieldNames)
+  const fieldkeys = useMemo(
+    () => Object.assign({}, defaultFieldNames, fieldNames),
+    [fieldNames],
+  )
 
   const completed = useRef(false)
 
   const [innerValue, setInnerValue] = useState(() => {
     return value ?? defaultValue ?? []
   })
+
+  const tabRef = useRef<TabsRef>()
 
   const optionsColumns = useMemo<CascaderOption[][]>(() => {
     const columns = [options]
@@ -90,31 +95,39 @@ export const Cascader: FC<CascaderProps> = (props) => {
     return columns
   }, [innerValue])
 
-  useEffect(() => {
-    if (completed.current) {
-      completed.current = false
-      onChange?.(
-        innerValue,
-        innerValue.map(
-          (value, index) =>
-            optionsColumns[index].find(
-              (option) => option[fieldkeys.value] === value,
-            ) as CascaderOption,
-        ),
-      )
-    }
-  }, [innerValue])
-
   // 受控
   useEffect(() => {
-    if (value != null) {
+    if (value !== undefined) {
       setInnerValue(value)
     }
   }, [value])
 
-  const [activeTabName, setActiveTabName] = useState(0)
+  const handleChange = () => {
+    onChange?.(
+      innerValue,
+      innerValue.map(
+        (value, index) =>
+          optionsColumns[index].find(
+            (option) => option[fieldkeys.value] === value,
+          ) as CascaderOption,
+      ),
+    )
+  }
+
+  useEffect(() => {
+    if (completed.current) {
+      handleChange()
+    }
+  }, [innerValue])
+
+  useEffect(() => {
+    setActiveKey(Math.min(innerValue.length, optionsColumns.length - 1))
+    tabRef.current?.setInkbarStyle()
+  }, [innerValue, optionsColumns])
+
+  const [activeKey, setActiveKey] = useState(0)
   const handleTagChange = (index: number) => {
-    setActiveTabName(index)
+    setActiveKey(index)
   }
 
   const handleOptionClick = (
@@ -122,83 +135,85 @@ export const Cascader: FC<CascaderProps> = (props) => {
     columnIndex: number,
     selected: boolean,
   ) => {
-    const hasChildren =
-      Array.isArray(option.children) && option.children.length > 0
+    completed.current =
+      !Array.isArray(option.children) || option.children.length === 0
 
     if (!selected) {
       setInnerValue(
         innerValue.slice(0, columnIndex).concat(option[fieldkeys.value]),
       )
-      if (!hasChildren) {
-        completed.current = true
-      }
-      onSelect?.(option, columnIndex)
     }
 
-    if (hasChildren) {
-      setActiveTabName(columnIndex + 1)
+    onSelect?.(option, columnIndex)
+
+    if (selected && completed.current) {
+      handleChange()
+    }
+
+    if (!completed.current) {
+      setActiveKey(columnIndex + 1)
     }
   }
 
   return (
     <div className={classNames('s-cascader', className)} {...restProps}>
       <Tabs
-        {...Object.assign({ animated: true }, tabsProps)}
+        animated
+        {...tabsProps}
+        ref={tabRef}
         scrollCount={0}
-        activeKey={activeTabName}
+        activeKey={String(activeKey)}
         onChange={handleTagChange}
       >
-        {(() => {
-          return optionsColumns.map((options, columnIndex) => {
-            const selectedValue = innerValue[columnIndex]
-            const selectedOption =
-              selectedValue != null
-                ? options.find(
-                    (option) => option[fieldkeys.value] === selectedValue,
-                  )
-                : undefined
-            return (
-              <Tabs.Pane
-                label={
-                  selectedOption == null
-                    ? placeholder
-                    : selectedOption[fieldkeys.label]
-                }
-                labelClass={classNames('s-cascader-label', {
-                  's-cascader-label-unselected': selectedOption == null,
-                })}
-                key={columnIndex}
-              >
-                <div className="s-cascader-options">
-                  {options.map((option) => {
-                    const value = option[fieldkeys.value]
-                    const selected = selectedValue === value
-                    return (
-                      <div
-                        className={classNames('s-cascader-option', {
-                          's-cascader-option-selected': selected,
-                        })}
-                        onClick={() =>
-                          handleOptionClick(option, columnIndex, selected)
-                        }
-                        key={value}
-                      >
-                        <div className="s-cascader-option-label">
-                          {labelRender
-                            ? labelRender(option, selected)
-                            : option[fieldkeys.label]}
-                        </div>
-                        <div className="s-cascader-option-icon">
-                          <Icon prefix="si" name="success"></Icon>
-                        </div>
+        {optionsColumns.map((options, columnIndex) => {
+          const selectedValue = innerValue[columnIndex]
+          const selectedOption =
+            selectedValue !== undefined
+              ? options.find(
+                  (option) => option[fieldkeys.value] === selectedValue,
+                )
+              : undefined
+          return (
+            <Tabs.Pane
+              label={
+                selectedOption === undefined
+                  ? placeholder
+                  : selectedOption[fieldkeys.label]
+              }
+              labelClass={classNames('s-cascader-label', {
+                's-cascader-label-unselected': selectedOption === undefined,
+              })}
+              key={columnIndex}
+            >
+              <div className="s-cascader-options">
+                {options.map((option) => {
+                  const value = option[fieldkeys.value]
+                  const selected = selectedValue === value
+                  return (
+                    <div
+                      className={classNames('s-cascader-option', {
+                        's-cascader-option-selected': selected,
+                      })}
+                      onClick={() =>
+                        handleOptionClick(option, columnIndex, selected)
+                      }
+                      key={value}
+                    >
+                      <div className="s-cascader-option-label">
+                        {labelRender
+                          ? labelRender(option, selected)
+                          : option[fieldkeys.label]}
                       </div>
-                    )
-                  })}
-                </div>
-              </Tabs.Pane>
-            )
-          })
-        })()}
+                      <div className="s-cascader-option-icon">
+                        <Icon prefix="si" name="success"></Icon>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </Tabs.Pane>
+          )
+        })}
       </Tabs>
     </div>
   )

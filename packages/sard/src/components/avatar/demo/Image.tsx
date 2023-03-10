@@ -8,7 +8,7 @@ export default function () {
   return (
     <>
       <Avatar
-        src={new URL('../../../../public/logo.svg', import.meta.url).href}
+        src={new URL('../../../../public/pic1.jpg', import.meta.url).href}
       />
     </>
   )

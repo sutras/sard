@@ -1,8 +1,9 @@
-import { EventType } from './createEvent'
+import { PubSub } from '../utils/createPubSub'
 import { createKnock, Fingers, Knock, updateKnock } from './createFingers'
 import { Chopsticks } from './createChopsticks'
 import { getDistanceByTowPoints, getDirectionByTwoPoints } from './utils'
 import { DefaultConfig } from './defaultConfig'
+import { preventDefault } from '../utils/dom'
 
 const UP = 'up'
 const RIGHT = 'right'
@@ -123,27 +124,27 @@ export interface StrikeRotateEvent extends StrikeBaseEvent {
 export function createGestures(
   fingers: Fingers,
   chopsticks: Chopsticks,
-  event: EventType,
+  pubSub: PubSub,
   config: DefaultConfig,
 ): Gestures {
-  const { emit } = event
+  const { emit } = pubSub
   let lastTapTime = 0 // 记录最后一次tap的时间
   // 记录最后一次tap的坐标
   let lastTapX: number
   let lastTapY: number
   let doubleTapStatus = 0 // 双击成立的状态
 
-  function agentEmit<E>(type: string, payload: any, ev: Event) {
-    emit(payload.eventTarget, type, {
+  function agentEmit<E>(type: string, payload: any, event: Event) {
+    emit(type, {
       ...payload,
       type,
-      originalEvent: ev,
+      originalEvent: event,
     } as E)
   }
 
   return {
     tap: {
-      up(ev: TouchOrMouseEvent, knock: Knock) {
+      up(event: TouchOrMouseEvent, knock: Knock) {
         if (!config.tap) {
           return
         }
@@ -153,7 +154,7 @@ export function createGestures(
           fingers.getStartDistance(knock) <= config.tapMaxDistance
         ) {
           // 触发tap事件
-          agentEmit<StrikeTapEvent>(TAP, knock, ev)
+          agentEmit<StrikeTapEvent>(TAP, knock, event)
 
           doubleTapStatus++
 
@@ -167,7 +168,7 @@ export function createGestures(
                 knock.startY,
               ) <= config.doubleTabMaxDistance
             ) {
-              agentEmit<StrikeDoubleTapEvent>(DOUBLE_TAP, knock, ev)
+              agentEmit<StrikeDoubleTapEvent>(DOUBLE_TAP, knock, event)
               doubleTapStatus = 0
             } else {
               doubleTapStatus--
@@ -181,34 +182,32 @@ export function createGestures(
       },
     },
     press: {
-      down(ev: TouchOrMouseEvent, knock: Knock) {
+      down(event: TouchOrMouseEvent, knock: Knock) {
         if (!config.press) {
           return
         }
 
         knock.pressTimer = setTimeout(function () {
           if (fingers.getStartDistance(knock) <= config.pressMaxDistance) {
-            if (ev.type === 'mousedown') {
-              ev.preventDefault()
-            }
+            preventDefault(event)
             knock.isPress = true
-            agentEmit<StrikePressEvent>(PRESS_DOWN, knock, ev)
+            agentEmit<StrikePressEvent>(PRESS_DOWN, knock, event)
           }
         }, config.pressMinTime) as unknown as number
       },
-      move(ev: TouchOrMouseEvent, knock: Knock) {
+      move(event: TouchOrMouseEvent, knock: Knock) {
         if (!config.press) {
           return
         }
 
         if (knock.isPress) {
-          if (ev.type === 'mousemove') {
-            ev.preventDefault()
+          if (event.type === 'mousemove') {
+            preventDefault(event)
           }
-          agentEmit<StrikePressEvent>(PRESS_MOVE, knock, ev)
+          agentEmit<StrikePressEvent>(PRESS_MOVE, knock, event)
         }
       },
-      up(ev: TouchOrMouseEvent, knock: Knock) {
+      up(event: TouchOrMouseEvent, knock: Knock) {
         if (!config.press) {
           return
         }
@@ -219,12 +218,12 @@ export function createGestures(
         }
         if (knock.isPress) {
           knock.isPress = false
-          agentEmit<StrikePressEvent>(PRESS_UP, knock, ev)
+          agentEmit<StrikePressEvent>(PRESS_UP, knock, event)
         }
       },
     },
     swipe: {
-      up(ev: TouchOrMouseEvent, knock: Knock) {
+      up(event: TouchOrMouseEvent, knock: Knock) {
         if (!config.swipe) {
           return
         }
@@ -239,13 +238,13 @@ export function createGestures(
             direction,
           }
 
-          agentEmit<StrikeSwipeEvent>(SWIPE, payload, ev)
-          agentEmit<StrikeSwipeEvent>(SWIPE + direction, payload, ev)
+          agentEmit<StrikeSwipeEvent>(SWIPE, payload, event)
+          agentEmit<StrikeSwipeEvent>(SWIPE + direction, payload, event)
         }
       },
     },
     pan: {
-      down(ev: TouchOrMouseEvent, knock: Knock) {
+      down(event: TouchOrMouseEvent, knock: Knock) {
         if (!config.pan) {
           return
         }
@@ -257,10 +256,10 @@ export function createGestures(
             ...knock,
             swipe: false,
           },
-          ev,
+          event,
         )
       },
-      move(ev: TouchOrMouseEvent, knock: Knock) {
+      move(event: TouchOrMouseEvent, knock: Knock) {
         if (!config.pan) {
           return
         }
@@ -277,14 +276,15 @@ export function createGestures(
           }
 
           fingers.track(knock)
-          agentEmit<StrikePanEvent>(PAN_MOVE, payload, ev)
-          agentEmit<StrikePanEvent>(PAN + direction, payload, ev)
+
+          agentEmit<StrikePanEvent>(PAN_MOVE, payload, event)
+          agentEmit<StrikePanEvent>(PAN + direction, payload, event)
 
           knock.recordX = knock.x
           knock.recordY = knock.y
         }
       },
-      up(ev: TouchOrMouseEvent, knock: Knock) {
+      up(event: TouchOrMouseEvent, knock: Knock) {
         if (!config.pan) {
           return
         }
@@ -340,15 +340,15 @@ export function createGestures(
           )
           payload.direction = direction
           payload.swipe = true
-          agentEmit<StrikePanEvent>(PAN_SWIPE + direction, payload, ev)
+          agentEmit<StrikePanEvent>(PAN_SWIPE + direction, payload, event)
         }
 
         // panend
-        agentEmit<StrikePanEvent>(PAN_END, payload, ev)
+        agentEmit<StrikePanEvent>(PAN_END, payload, event)
       },
     },
     rotate: {
-      down(ev: TouchOrMouseEvent, knock: Knock) {
+      down(event: TouchOrMouseEvent, knock: Knock) {
         if (!config.rotate) {
           return
         }
@@ -359,10 +359,10 @@ export function createGestures(
           {
             degrees: 0,
           },
-          ev,
+          event,
         )
       },
-      move(ev: TouchOrMouseEvent, knock: Knock) {
+      move(event: TouchOrMouseEvent, knock: Knock) {
         if (!config.rotate) {
           return
         }
@@ -394,11 +394,11 @@ export function createGestures(
             {
               degrees: chopsticks.degrees,
             },
-            ev,
+            event,
           )
         }
       },
-      up(ev: TouchOrMouseEvent, knock: Knock) {
+      up(event: TouchOrMouseEvent, knock: Knock) {
         if (!config.rotate) {
           return
         }
@@ -410,12 +410,12 @@ export function createGestures(
           {
             degrees: chopsticks.degrees,
           },
-          ev,
+          event,
         )
       },
     },
     pinch: {
-      down(ev: TouchOrMouseEvent, knock: Knock) {
+      down(event: TouchOrMouseEvent, knock: Knock) {
         if (!config.pinch) {
           return
         }
@@ -423,12 +423,7 @@ export function createGestures(
           chopsticks.getDistance()
 
         const [x, y] = chopsticks.getOrigin()
-        const originKnock = createKnock(
-          knock.eventTarget,
-          knock.currentTarget,
-          x,
-          y,
-        )
+        const originKnock = createKnock(knock.currentTarget, x, y)
 
         chopsticks.originKnock = originKnock
 
@@ -440,10 +435,10 @@ export function createGestures(
             next: chopsticks.identifiers[1],
             ...originKnock,
           },
-          ev,
+          event,
         )
       },
-      move(ev: TouchOrMouseEvent, knock: Knock) {
+      move(event: TouchOrMouseEvent, knock: Knock) {
         if (!config.pinch) {
           return
         }
@@ -471,16 +466,16 @@ export function createGestures(
             ...originKnock,
           }
 
-          agentEmit<StrikePinchEvent>(PINCH_MOVE, payload, ev)
+          agentEmit<StrikePinchEvent>(PINCH_MOVE, payload, event)
           if (isOut) {
-            agentEmit<StrikePinchEvent>(PINCH_OUT, payload, ev)
+            agentEmit<StrikePinchEvent>(PINCH_OUT, payload, event)
           } else if (isIn) {
-            agentEmit<StrikePinchEvent>(PINCH_IN, payload, ev)
+            agentEmit<StrikePinchEvent>(PINCH_IN, payload, event)
           }
           chopsticks.beforeDistance = chopsticks.distance
         }
       },
-      up(ev: TouchOrMouseEvent, knock: Knock, identifiers: number[]) {
+      up(event: TouchOrMouseEvent, knock: Knock, identifiers: number[]) {
         if (!config.pinch) {
           return
         }
@@ -497,7 +492,7 @@ export function createGestures(
           ...originKnock,
         }
 
-        agentEmit<StrikePinchEvent>(PINCH_END, payload, ev)
+        agentEmit<StrikePinchEvent>(PINCH_END, payload, event)
       },
     },
   }

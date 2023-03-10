@@ -17,7 +17,7 @@ $s-loading-scale-height: 28% !default;
 $s-loading-scale-border-radius: 40% !default;
 
 $s-loading-spinner-animation-duration: 2s !default;
-$s-loading-spinner-circle-animation-duration: 1.5s !default;
+$s-loading-spinner-circle-animation-duration: 2s !default;
 
 $s-loading-text-margin-left: 0.5em !default;
 $s-loading-text-vertical-margin-top: 0.5em !default;
@@ -66,20 +66,25 @@ $s-loading-text-vertical-margin-top: 0.5em !default;
 }
 
 // # spinner
+$s-loading-perimeter: math.$pi * 22 * 2;
+$s-loading-one: $s-loading-perimeter * 0.25;
+$s-loading-three: $s-loading-perimeter * 0.75;
+$s-loading-four: $s-loading-perimeter;
+
 @keyframes s-loading-spinner {
   0% {
-    stroke-dasharray: 1, 200;
+    stroke-dasharray: 1, $s-loading-four;
     stroke-dashoffset: 0;
   }
 
   50% {
-    stroke-dasharray: 90, 150;
-    stroke-dashoffset: -50;
+    stroke-dasharray: $s-loading-three, $s-loading-four;
+    stroke-dashoffset: -$s-loading-one;
   }
 
   100% {
-    stroke-dasharray: 90, 150;
-    stroke-dashoffset: -138;
+    stroke-dasharray: $s-loading-three, $s-loading-four;
+    stroke-dashoffset: -$s-loading-four + 1;
   }
 }
 
@@ -96,7 +101,7 @@ $s-loading-text-vertical-margin-top: 0.5em !default;
       animation: s-loading-spinner $s-loading-spinner-circle-animation-duration
         ease-in-out infinite;
       stroke: currentColor;
-      stroke-width: 3;
+      stroke-width: 4;
       stroke-linecap: round;
     }
   }

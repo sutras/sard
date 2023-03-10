@@ -7,18 +7,26 @@ import { Popout, Calendar, Input } from 'sard'
 export default function () {
   return (
     <Popout title="请选择日期">
-      <Popout.Target select value clear>
-        <Input
-          type="textarea"
-          rows={3}
-          readOnly
-          placeholder="请选择日期"
-          clearable
+      <Popout.Outlet>
+        {({ value, setValue, setVisible }) => (
+          <Input
+            type="textarea"
+            value={value?.join(', ')}
+            onClear={() => setValue([])}
+            clearable
+            onClick={() => setVisible(true)}
+            autoHeight
+            readOnly
+            placeholder="请选择日期"
+          />
+        )}
+      </Popout.Outlet>
+      <Popout.Target>
+        <Calendar
+          type="multiple"
+          defaultValue={[new Date(2022, 8, 25), new Date(2022, 8, 28)]}
         />
       </Popout.Target>
-      <Popout.Bridge>
-        <Calendar type="multiple" defaultValue={['2022-09-25', '2022-09-28']} />
-      </Popout.Bridge>
     </Popout>
   )
 }

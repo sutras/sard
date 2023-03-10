@@ -2,7 +2,6 @@ export * from './createStrike'
 export * from './createGestures'
 export * from './createFingers'
 export * from './createChopsticks'
-export * from './createEvent'
 export * from './createInput'
 export * from './defaultConfig'
 

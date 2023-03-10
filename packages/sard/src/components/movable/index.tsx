@@ -6,7 +6,7 @@ export * from './View'
 export * from './useMovable'
 
 export function Movable() {
-  void 0
+  null
 }
 
 Movable.Area = MovableArea

@@ -1,404 +1,339 @@
 import {
   FC,
+  MutableRefObject,
   useEffect,
-  useLayoutEffect,
-  useMemo,
   useRef,
   useState,
+  MouseEvent,
+  TouchEvent,
 } from 'react'
-import { CommonComponentProps } from '../../utils/types'
-import {
-  animate,
-  getTransformOrigin,
-  minmax,
-  getDampingValue,
-} from '../../utils'
-import {
-  DOUBLE_TAP,
-  PINCH_START,
-  PINCH_MOVE,
-  PINCH_END,
-  StrikePinchEvent,
-  StrikeTapEvent,
-} from '../../strike'
-import {
-  useEvent,
-  useMergeStrike,
-  useResize,
-  useSelectorId,
-  useStrike,
-} from '../../use'
+import classNames from 'classnames'
+import { minmax } from '../../utils'
+import { DOUBLE_TAP } from '../../strike'
+import { useEvent, useInertRef, useResize, useStrike } from '../../use'
 import { SwiperItem } from '../swiper'
-import { useMovable, UseMovableOptions } from '../movable'
-import { getBoundingClientRect } from '../../utils/dom'
+import { getDistanceByTowPoints } from '../../strike/utils'
 
-export interface ImagePreviewItemProps extends CommonComponentProps {
+export interface ImagePreviewItemProps {
   url: string
   doubletapScale?: number
   minScale?: number
   maxScale?: number
-  onProcessing: (processing: boolean) => void
-  swiperProcessing: boolean
+  swiping: MutableRefObject<boolean>
   visible: boolean
-}
-
-enum CodeDirMap {
-  'none',
-  'horizontal',
-  'vertical',
-  'all',
+  activeIndex: number
 }
 
 export const ImagePreviewItem: FC<ImagePreviewItemProps> = (props) => {
   const {
     url,
-    doubletapScale = 3,
+    doubletapScale = 2,
     minScale = 1,
-    maxScale = 7,
-    onProcessing,
-    swiperProcessing,
+    maxScale = 3,
+    swiping,
     visible,
+    activeIndex,
   } = props
 
-  const [previewScale, setPreviewScale] = useState(1)
-  const [x, setX] = useState(0)
-  const [y, setY] = useState(0)
-  const [scale, setScale] = useState(1)
+  const moveX = useRef(0)
+  const moveY = useRef(0)
+  const startMoveX = useRef(0)
+  const startMoveY = useRef(0)
+  const scale = useRef(1)
+  const startScale = useRef(1)
+  const startDistance = useRef(10)
+  const isMouseDown = useRef(false)
+  const startX = useRef(0)
+  const startY = useRef(0)
+  const deltaX = useRef(0)
+  const deltaY = useRef(0)
+  const zooming = useRef(false)
+  const moving = useRef(false)
+  const isMoving = useRef(false)
 
-  const [transformOrigin, setTransformOrigin] = useState('')
-  const stopDoubleTapScaleAnimate = useRef<(...args: any[]) => any>()
+  const naturalWidth = useRef(0)
+  const naturalHeight = useRef(0)
+  const viewportWidth = useInertRef(() => window.innerWidth)
+  const viewportHeight = useInertRef(() => window.innerHeight)
+  const maxMoveX = useRef(0)
+  const maxMoveY = useRef(0)
 
-  const [direction, setDirection] =
-    useState<UseMovableOptions['direction']>('all')
+  const [isVertical, setIsVertical] = useState(false)
 
-  const [movable, setMovable] = useState(false)
+  const wrapRef = useRef<HTMLElement>(null)
+  const swiperItemRef = useRef<HTMLDivElement>(null)
 
-  const [viewportSize, setViewportSize] = useState(() => [
-    window.innerWidth,
-    window.innerHeight,
-  ])
-  useResize(() => {
-    setViewportSize([window.innerWidth, window.innerHeight])
-  }, 150)
-
-  const [naturalSize, setNaturalSize] = useState([0, 0])
-  const handleLoad = (event: any) => {
-    setNaturalSize([event.target.naturalWidth, event.target.naturalHeight])
-  }
-
-  const [containWidth, containHeight] = useMemo(() => {
-    const aspectRatio = naturalSize[0] / naturalSize[1] || 0
-    const wider = aspectRatio > viewportSize[0] / viewportSize[1]
-    const width = wider ? viewportSize[0] : aspectRatio * viewportSize[1]
-    const height = !wider ? viewportSize[1] : viewportSize[0] / aspectRatio
-    return [width, height]
-  }, [naturalSize, viewportSize])
-
-  const getNextPosition = (
-    relativeScale: number,
-    prevOffsetX: number,
-    prevOffsetY: number,
-    prevAbsoluteScale: number,
-    prevX: number,
-    prevY: number,
-    correct = true,
-  ): [number, number, UseMovableOptions['direction']] => {
-    let nextX = 0
-    let nextY = 0
-
-    nextX = prevX + prevOffsetX - prevOffsetX * relativeScale
-    nextY = prevY + prevOffsetY - prevOffsetY * relativeScale
-
-    const nextWidth = relativeScale * (containWidth * prevAbsoluteScale)
-    const nextHeight = relativeScale * (containHeight * prevAbsoluteScale)
-    if (correct && nextWidth <= viewportSize[0]) {
-      nextX = (viewportSize[0] - nextWidth) / 2
-    } else {
-      nextX = minmax(nextX, viewportSize[0] - nextWidth, 0)
+  const setTransform = () => {
+    if (wrapRef.current) {
+      wrapRef.current.style.transform = `translate3d(${moveX.current}px, ${moveY.current}px, 0) scale(${scale.current})`
     }
-    if (correct && nextHeight <= viewportSize[1]) {
-      nextY = (viewportSize[1] - nextHeight) / 2
-    } else {
-      nextY = minmax(nextY, viewportSize[1] - nextHeight, 0)
+  }
+
+  const resetTransform = () => {
+    moveX.current = 0
+    moveY.current = 0
+    scale.current = 1
+    setTransform()
+  }
+
+  const setTransitionDuration = (duration: number) => {
+    if (wrapRef.current) {
+      wrapRef.current.style.transitionDuration = duration + 'ms'
     }
-
-    const dir = CodeDirMap[
-      (nextWidth <= viewportSize[0] ? 0 : 1) +
-        (nextHeight <= viewportSize[1] ? 0 : 2)
-    ] as UseMovableOptions['direction']
-
-    return [nextX, nextY, dir]
   }
 
-  const setContainPosition = () => {
-    const [x, y] = getContainPosition()
-    setX(x)
-    setY(y)
+  const updateMaxMoveBoundary = () => {
+    const isVertical =
+      naturalWidth.current / naturalHeight.current <
+      viewportWidth.current / viewportHeight.current
+
+    setIsVertical(isVertical)
+
+    const displayWidth = isVertical
+      ? (naturalWidth.current / naturalHeight.current) * viewportHeight.current
+      : viewportWidth.current
+
+    maxMoveX.current = Math.max(
+      0,
+      (scale.current * displayWidth - viewportWidth.current) / 2,
+    )
+
+    const displayHeight = !isVertical
+      ? (naturalHeight.current / naturalWidth.current) * viewportWidth.current
+      : viewportHeight.current
+
+    maxMoveY.current = Math.max(
+      0,
+      (scale.current * displayHeight - viewportHeight.current) / 2,
+    )
   }
 
-  const getContainPosition = (): [number, number, undefined] => {
-    return [
-      (viewportSize[0] - containWidth) / 2,
-      (viewportSize[1] - containHeight) / 2,
-      undefined,
-    ]
-  }
-
-  useLayoutEffect(() => {
-    setContainPosition()
-  }, [naturalSize])
-
-  const [zooming, setZooming] = useState(false)
-  const handleDoubleTap = useEvent((event: StrikeTapEvent) => {
-    if (zooming) {
+  const handleTouchStart = (event: MouseEvent | TouchEvent) => {
+    if (swiping.current) {
       return
     }
-    setMovable(false)
-    onProcessing(true)
-    setZooming(true)
 
-    const nextScale = scale === 1 ? doubletapScale : 1
-    const nextPreviewScale = scale === 1 ? doubletapScale : 1 / scale
+    const isTouch = 'touches' in event
 
-    getBoundingClientRect(scaleId, (rect) => {
-      const offsetX = event.x - rect.left
-      const offsetY = event.y - rect.top
-
-      const [nextX, nextY, dir] =
-        nextScale === 1
-          ? getContainPosition()
-          : getNextPosition(nextScale, offsetX, offsetY, 1, x, y)
-
-      const currWidth = containWidth * scale
-      const currHeight = containHeight * scale
-      const nextWidth = currWidth * nextPreviewScale
-      const nextHeight = currHeight * nextPreviewScale
-      const origin = getTransformOrigin(
-        {
-          x,
-          y,
-          width: currWidth,
-          height: currHeight,
-        },
-        { x: nextX, y: nextY, width: nextWidth, height: nextHeight },
-      )
-
-      setTransformOrigin(origin.map((n) => n + 'px').join(' '))
-
-      stopDoubleTapScaleAnimate.current = animate({
-        from: 1,
-        to: nextPreviewScale,
-        duration: 200,
-        step(value) {
-          setPreviewScale(value)
-        },
-        finish() {
-          setPreviewScale(1)
-          setX(nextX)
-          setY(nextY)
-          setDirection(dir)
-          setScale(nextScale)
-          if (nextScale === 1) {
-            onProcessing(false)
-          }
-          if (nextScale > 1) {
-            setMovable(true)
-          }
-          setZooming(false)
-        },
-      })
-    })
-  })
-
-  const [pinching, setPinching] = useState(false)
-  const pinchStartOffsetX = useRef(0)
-  const pinchStartOffsetY = useRef(0)
-  const immediatePreviewScale = useRef(0)
-
-  const handlePinchStart = useEvent((event: StrikePinchEvent) => {
-    setPinching(true)
-    setMovable(false)
-    onProcessing(true)
-
-    getBoundingClientRect(scaleId, (rect) => {
-      const offsetX = event.x - rect.left
-      const offsetY = event.y - rect.top
-
-      pinchStartOffsetX.current = offsetX
-      pinchStartOffsetY.current = offsetY
-
-      setTransformOrigin(`${offsetX}px ${offsetY}px`)
-    })
-  })
-
-  const handlePinchMove = useEvent((event: StrikePinchEvent) => {
-    setPreviewScale(
-      (immediatePreviewScale.current = getDampingValue(
-        event.scale,
-        minScale / scale,
-        maxScale / scale,
-        0.2,
-      )),
-    )
-  })
-
-  const stopReboundAnimate = useRef<(...args: any[]) => any>()
-  const handlePinchEnd = useEvent((event: StrikePinchEvent) => {
-    const offsetX = pinchStartOffsetX.current
-    const offsetY = pinchStartOffsetY.current
-    const prevScale = scale
-    const prevX = x
-    const prevY = y
-
-    const nextPreviewScale = minmax(
-      event.scale,
-      minScale / scale,
-      maxScale / scale,
-    )
-
-    const nextScale = nextPreviewScale * scale
-
-    const handleFinish = () => {
-      setPreviewScale(1)
-      const [nextX, nextY, dir] = getNextPosition(
-        immediatePreviewScale.current,
-        offsetX,
-        offsetY,
-        prevScale,
-        prevX,
-        prevY,
-      )
-      setX(nextX)
-      setY(nextY)
-      setDirection(dir)
-      setScale(nextScale)
-      if (nextScale === 1) {
-        onProcessing(false)
-      }
-      if (nextScale > 1) {
-        setMovable(true)
-      }
-
-      setPinching(false)
+    if ('ontouchstart' in window && !isTouch) {
+      return
     }
 
-    if (immediatePreviewScale.current !== nextPreviewScale) {
-      stopReboundAnimate.current = animate({
-        from: immediatePreviewScale.current,
-        to: nextPreviewScale,
-        duration: 200,
-        step(value) {
-          setPreviewScale(value)
-        },
-        finish() {
-          immediatePreviewScale.current = nextPreviewScale
-          handleFinish()
-        },
-      })
+    if (!isTouch) {
+      isMouseDown.current = true
+    }
+
+    const touches = isTouch ? event.touches : [event]
+
+    startX.current = touches[0].clientX
+    startY.current = touches[0].clientY
+    startMoveX.current = moveX.current
+    startMoveY.current = moveY.current
+    moving.current = touches.length === 1 && scale.current !== 1
+
+    isMoving.current = false
+
+    zooming.current = touches.length === 2
+
+    if (zooming.current) {
+      startScale.current = scale.current
+      startDistance.current = getDistanceByTowPoints(
+        touches[0].clientX,
+        touches[0].clientY,
+        touches[1].clientX,
+        touches[1].clientY,
+      )
+    }
+
+    if (zooming.current || moving.current) {
+      setTransitionDuration(0)
+    }
+  }
+
+  const handleTouchMove = (event: MouseEvent | TouchEvent) => {
+    if (swiping.current) {
+      return
+    }
+
+    const isTouch = 'touches' in event
+
+    if ('ontouchstart' in window && !isTouch) {
+      return
+    }
+
+    if (!isTouch && !isMouseDown.current) {
+      return
+    }
+
+    if (!isTouch) {
+      event.preventDefault()
+    }
+
+    const touches = isTouch ? event.touches : [event]
+
+    if (touches.length > 1) {
+      event.stopPropagation()
+    }
+
+    if (zooming.current) {
+      event.stopPropagation()
+
+      if (touches.length === 2) {
+        const distance = getDistanceByTowPoints(
+          touches[0].clientX,
+          touches[0].clientY,
+          touches[1].clientX,
+          touches[1].clientY,
+        )
+        const nextScale =
+          (distance / startDistance.current) * startScale.current
+        scale.current = minmax(nextScale, minScale / 2, maxScale + 1)
+        updateMaxMoveBoundary()
+      }
+    }
+
+    if (moving.current) {
+      deltaX.current = touches[0].clientX - startX.current
+      deltaY.current = touches[0].clientY - startY.current
+      const nextMoveX = deltaX.current + startMoveX.current
+      const nextMoveY = deltaY.current + startMoveY.current
+
+      if (
+        !isMoving.current &&
+        (nextMoveX > maxMoveX.current || nextMoveX < -maxMoveX.current)
+      ) {
+        moving.current = false
+        return
+      }
+      event.stopPropagation()
+
+      isMoving.current = true
+
+      moveX.current = minmax(nextMoveX, -maxMoveX.current, maxMoveX.current)
+      moveY.current = minmax(nextMoveY, -maxMoveY.current, maxMoveY.current)
+    }
+
+    setTransform()
+  }
+
+  const handleTouchEnd = (event: MouseEvent | TouchEvent) => {
+    if (swiping.current) {
+      if (scale.current !== 1) {
+        setTransitionDuration(300)
+      }
+      return
+    }
+
+    const isTouch = 'touches' in event
+
+    if ('ontouchstart' in window && !isTouch) {
+      return
+    }
+
+    if (!isTouch) {
+      isMouseDown.current = false
+    }
+
+    const touches = isTouch ? event.touches : [event]
+
+    if (zooming.current || moving.current) {
+      if (touches.length === 0) {
+        moving.current = false
+
+        if (zooming.current) {
+          scale.current = minmax(scale.current, minScale, maxScale)
+          updateMaxMoveBoundary()
+
+          moveX.current = minmax(
+            moveX.current,
+            -maxMoveX.current,
+            maxMoveX.current,
+          )
+          moveY.current = minmax(
+            moveY.current,
+            -maxMoveY.current,
+            maxMoveY.current,
+          )
+
+          setTransform()
+
+          zooming.current = false
+        }
+
+        setTransitionDuration(300)
+      }
+    }
+  }
+
+  const handleDoubleTap = useEvent(() => {
+    if (swiping.current) {
+      return
+    }
+
+    if (scale.current === 1) {
+      scale.current = doubletapScale
     } else {
-      handleFinish()
+      scale.current = 1
     }
+    updateMaxMoveBoundary()
+
+    moveX.current = 0
+    moveY.current = 0
+
+    setTransitionDuration(300)
+
+    setTransform()
   })
 
-  const scaleTapBinding = useStrike(
+  useStrike(
+    swiperItemRef,
     (strike) => {
       strike.on(DOUBLE_TAP, handleDoubleTap)
     },
     {
       tap: true,
     },
-    !swiperProcessing && !pinching,
   )
 
-  const scaleId = useSelectorId()
+  const handleLoad = (event: any) => {
+    naturalWidth.current = event.target.naturalWidth
+    naturalHeight.current = event.target.naturalHeight
+    updateMaxMoveBoundary()
+  }
 
-  const scalePinchBinding = useStrike(
-    (strike) => {
-      strike.on(PINCH_START, handlePinchStart)
-      strike.on(PINCH_MOVE, handlePinchMove)
-      strike.on(PINCH_END, handlePinchEnd)
-    },
-    {
-      pinch: true,
-    },
-    !swiperProcessing && !zooming,
-  )
-
-  const {
-    updateRect,
-    willChange,
-    binding: movableBinding,
-  } = useMovable(
-    {
-      x: 0,
-      y: 0,
-      width: viewportSize[0],
-      height: viewportSize[1],
-    },
-    {
-      x,
-      y,
-      inertia: true,
-      outOfBounds: true,
-      touchable: !swiperProcessing && !zooming && !pinching && movable,
-      direction,
-      onChange(x, y) {
-        setX(x)
-        setY(y)
-      },
-    },
-  )
-
-  const scaleBinding = useMergeStrike([
-    scaleTapBinding,
-    scalePinchBinding,
-    movableBinding,
-  ])
-
-  useEffect(() => {
-    updateRect({
-      x,
-      y,
-      width: containWidth * scale,
-      height: containHeight * scale,
-    })
-  }, [scale, containWidth, containHeight])
+  useResize(() => {
+    viewportWidth.current = window.innerWidth
+    viewportHeight.current = window.innerHeight
+    updateMaxMoveBoundary()
+  }, 150)
 
   useEffect(() => {
     if (!visible) {
-      stopDoubleTapScaleAnimate.current?.()
-      setTransformOrigin('')
-      setScale(1)
-      setMovable(false)
-      setZooming(false)
-      onProcessing(false)
-      setContainPosition()
+      resetTransform()
     }
   }, [visible])
 
-  useEffect(
-    () => () => {
-      stopDoubleTapScaleAnimate.current?.()
-      stopReboundAnimate.current?.()
-    },
-    [],
-  )
-
-  const scaleStyle = {
-    width: containWidth * scale,
-    height: containHeight * scale,
-    transform: `translate3d(${x}px, ${y}px, 0) scale(${previewScale})`,
-    transformOrigin: transformOrigin,
-    willChange,
-  }
+  useEffect(() => {
+    resetTransform()
+  }, [activeIndex])
 
   return (
-    <SwiperItem className="s-image-preview-item">
+    <SwiperItem
+      className="s-image-preview-item"
+      ref={swiperItemRef}
+      onTouchStart={handleTouchStart}
+      onTouchMoveCapture={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
+      onMouseDown={handleTouchStart}
+      onMouseMove={handleTouchMove}
+      onMouseUp={handleTouchEnd}
+    >
       <div
-        className="s-image-preview-scale"
-        {...scaleBinding}
-        style={scaleStyle}
-        id={scaleId}
+        className={classNames('s-image-preview-wrap', {
+          's-image-preview-wrap-vertical': isVertical,
+        })}
+        ref={wrapRef as any}
       >
         <img className="s-image-preview-img" src={url} onLoad={handleLoad} />
       </div>

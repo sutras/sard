@@ -41,6 +41,7 @@ $s-input-count-color: $s-gray-500 !default;
   font-size: $s-input-control-font-size;
   line-height: $s-input-control-line-height;
   transition: $s-input-transition-duration;
+  cursor: text;
 
   // &:active {
   //   background-color: $s-input-active-bg;
@@ -100,6 +101,8 @@ $s-input-count-color: $s-gray-500 !default;
       margin-left: $s-input-append-gap-left;
     }
     .s-input-clear {
+      @include button-flush;
+
       display: flex;
       flex: none;
       align-self: stretch;

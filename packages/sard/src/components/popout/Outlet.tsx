@@ -1,25 +1,23 @@
-import { useContext, ReactNode, FC } from 'react'
-import { CommonComponentProps } from '../../utils/types'
-import { PopoutChangeArgsContext } from './index'
+import { useContext, FC, useEffect } from 'react'
 
-export interface PopoutOutletProps extends CommonComponentProps {
-  format?: (...args: any[]) => ReactNode
+import PopoutContext, { PopoutCallbackParams } from './PopoutContext'
+
+export interface PopoutOutletProps {
+  children?: (params: PopoutCallbackParams) => any
 }
 
 export const PopoutOutlet: FC<PopoutOutletProps> = (props) => {
-  const { format } = props
+  const { children } = props
 
-  const changeArgs = useContext(PopoutChangeArgsContext)
+  const popoutContext = useContext(PopoutContext)
 
-  return (
-    <>
-      {changeArgs[0] != null
-        ? format
-          ? format(...changeArgs)
-          : changeArgs[0]
-        : null}
-    </>
-  )
+  useEffect(() => {
+    popoutContext.setOutlet(
+      typeof children === 'function' ? children(popoutContext) : null,
+    )
+  }, [popoutContext])
+
+  return null
 }
 
 export default PopoutOutlet

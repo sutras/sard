@@ -7,12 +7,21 @@ import { Popout, Calendar, Input } from 'sard'
 export default function () {
   return (
     <Popout title="请选择日期">
-      <Popout.Target select value clear>
-        <Input readOnly placeholder="请选择日期" clearable />
-      </Popout.Target>
-      <Popout.Bridge>
+      <Popout.Outlet>
+        {({ value, setValue, setVisible }) => (
+          <Input
+            value={value || ''}
+            clearable
+            onClear={() => setValue()}
+            onClick={() => setVisible(true)}
+            readOnly
+            placeholder="请选择日期"
+          />
+        )}
+      </Popout.Outlet>
+      <Popout.Target>
         <Calendar />
-      </Popout.Bridge>
+      </Popout.Target>
     </Popout>
   )
 }

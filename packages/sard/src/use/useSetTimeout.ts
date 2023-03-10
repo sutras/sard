@@ -1,3 +1,7 @@
+/**
+ * 使在函数组件中更好使用 setTimeout，可以重置或清除定时器
+ */
+
 import { useEffect, useRef } from 'react'
 import { useEvent } from './useEvent'
 

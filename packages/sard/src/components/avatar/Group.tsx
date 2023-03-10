@@ -35,19 +35,16 @@ export const AvatarGroup: FC<AvatarGroupProps> = (props) => {
 
   return (
     <div {...restProps} className={groupClass}>
-      {Children.map(
-        children as ReactElement<AvatarProps>,
-        (item: ReactElement<AvatarProps>, index) => {
-          return index > maxCount - 1
-            ? null
-            : cloneElement(item, {
-                style: {
-                  marginLeft: index === 0 ? 0 : gap,
-                  zIndex: direction === 'left' ? count - index : void 0,
-                },
-              })
-        },
-      )}
+      {Children.map(children, (item: ReactElement<AvatarProps>, index) => {
+        return index > maxCount - 1
+          ? null
+          : cloneElement(item, {
+              style: {
+                marginLeft: index === 0 ? 0 : gap,
+                zIndex: direction === 'left' ? count - index : undefined,
+              },
+            })
+      })}
       {count > maxCount && (
         <Avatar className="s-avatar-rest">+{count - maxCount}</Avatar>
       )}

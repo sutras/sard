@@ -1,7 +1,6 @@
 import {
   CSSProperties,
   ReactNode,
-  RefObject,
   forwardRef,
   useImperativeHandle,
   useRef,
@@ -9,82 +8,76 @@ import {
   useEffect,
 } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 
 import { UseMovableOptions, useMovable, BoundingRect } from './useMovable'
 import { MovableAreaContext } from './Area'
 
-export interface MovableViewProps
-  extends CommonComponentProps,
-    UseMovableOptions {
-  rootRef?: RefObject<HTMLDivElement | null>
+export interface MovableViewProps extends UseMovableOptions {
   className?: string
   style?: CSSProperties
   children?: ReactNode
 }
 
 export interface MovableViewRef {
-  updateRect(rect?: BoundingRect): void
-}
-
-function translate3d(x: number, y: number, z: number) {
-  return `translate3d(${x}px, ${y}px, ${z}px)`
+  updateViewRect(rect?: BoundingRect): void
 }
 
 export const MovableView = forwardRef<MovableViewRef, MovableViewProps>(
   (props, ref) => {
     const {
-      rootRef,
       className,
-      style,
       children,
-      x,
-      y,
       defaultX,
       defaultY,
       direction,
       inertia,
+      maxSpeed,
       inertiaDuration,
       inertiaTime,
-      outOfBounds,
       inertiaMaxOverflow,
+      outOfBounds,
       damping,
       reboundDuration,
       lockDirection,
+      scale,
+      minScale,
+      maxScale,
       onChange,
+      onWillChange,
       onPanStart,
       onPanMove,
       onPanEnd,
+      onMoveEnd,
       ...restProps
     } = props
 
     const viewRef = useRef<HTMLDivElement>(null)
     const areaRect = useContext(MovableAreaContext)
 
-    const {
-      updateRect,
-      x: innerX,
-      y: innerY,
-      willChange,
-    } = useMovable(areaRect, props)
+    const { updateViewRect } = useMovable(viewRef, areaRect, {
+      ...props,
+      onChange(x, y, scale) {
+        viewRef.current.style.transform = `translate3d(${x}px, ${y}px, 0px) scale(${scale})`
+        onChange?.(x, y, scale)
+      },
+      onWillChange(willChange) {
+        viewRef.current.style.willChange = willChange
+        onWillChange?.(willChange)
+      },
+    })
 
     useEffect(() => {
-      updateRect(viewRef.current?.getBoundingClientRect())
+      updateViewRect(viewRef.current?.getBoundingClientRect())
     }, [])
 
     useImperativeHandle(ref, () => ({
-      updateRect,
+      updateViewRect,
     }))
 
-    const areaClass = classNames('s-movable-view', className)
-    const viewStyle = {
-      transform: translate3d(innerX, innerY, 0),
-      willChange,
-      ...style,
-    }
+    const viewClass = classNames('s-movable-view', className)
 
     return (
-      <div {...restProps} ref={viewRef} className={areaClass} style={viewStyle}>
+      <div {...restProps} ref={viewRef} className={viewClass}>
         {children}
       </div>
     )
@@ -92,20 +85,3 @@ export const MovableView = forwardRef<MovableViewRef, MovableViewProps>(
 )
 
 export default MovableView
-
-/* 
-
-# 优化
-- 值改变时才触发 onChange
-
-# 功能开发
-[x] 超出边界
-[x] 固定方向
-[-] 动态尺寸
-[ ] 相对单位（百分比）
-[x] 惯性
-
-# 问题
-[x] 锁定方向阻止默认行为
-
-*/

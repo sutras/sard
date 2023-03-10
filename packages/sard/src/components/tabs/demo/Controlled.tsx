@@ -2,23 +2,18 @@
 ### 受控组件
 */
 
-import { Tabs, TabPane } from 'sard'
+import { Tabs, TabPane, Button } from 'sard'
 import { useState } from 'react'
 
 export default function () {
-  const [activeKey, setActiveName] = useState(0)
-
-  const handleChange = (index: number) => {
-    if (index !== 1) {
-      setActiveName(index)
-    }
-  }
+  const [activeKey, setActiveKey] = useState<number | string>(1)
 
   return (
     <>
-      <Tabs activeKey={activeKey} onChange={handleChange}>
+      <Button onClick={() => setActiveKey(2)}>切换到标签3</Button>
+      <Tabs activeKey={activeKey} onChange={setActiveKey}>
         <TabPane label="标签1">内容1</TabPane>
-        <TabPane label="标签2(点击无效)">内容2</TabPane>
+        <TabPane label="标签2">内容2</TabPane>
         <TabPane label="标签3">内容3</TabPane>
       </Tabs>
     </>

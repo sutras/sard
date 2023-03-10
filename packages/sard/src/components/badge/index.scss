@@ -4,7 +4,9 @@
 $s-badge-content-padding-x: 4px !default;
 $s-badge-content-padding-y: 2px !default;
 $s-badge-content-font-size: 12px !default;
-$s-badge-content-min-width: $s-badge-content-padding-y !default;
+$s-badge-content-min-width: calc(
+  $s-badge-content-padding-y * 2 + $s-badge-content-font-size
+) !default;
 $s-badge-content-bg: $s-danger !default;
 $s-badge-content-color: $s-white !default;
 
@@ -28,8 +30,9 @@ $s-badge-content-dot-size: 8px !default;
   box-sizing: border-box;
   display: inline-flex;
   flex: none;
+  justify-content: center;
   align-self: center;
-  min-width: calc($s-badge-content-padding-y * 2 + $s-badge-content-font-size);
+  min-width: $s-badge-content-min-width;
   padding: $s-badge-content-padding-y $s-badge-content-padding-x;
   font-size: $s-badge-content-font-size;
   line-height: 1;

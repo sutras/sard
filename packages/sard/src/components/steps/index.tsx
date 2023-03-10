@@ -1,4 +1,11 @@
-import { CSSProperties, ReactNode, Children, cloneElement, FC } from 'react'
+import {
+  CSSProperties,
+  ReactNode,
+  Children,
+  cloneElement,
+  FC,
+  ReactElement,
+} from 'react'
 import classNames from 'classnames'
 
 import { StepsStep, StepsStepProps } from './Step'
@@ -50,22 +57,19 @@ export const Steps: StepsFC = (props) => {
 
   return (
     <div {...restProps} className={stepsClass}>
-      {Children.map(
-        children as React.ReactElement,
-        (item: React.ReactElement<StepsStepProps>, index) => {
-          return cloneElement(item, {
-            status:
-              item.props.status ??
-              (index < current
-                ? 'finish'
-                : index === current
-                ? status ?? 'process'
-                : 'wait'),
-            lineColor: item.props.lineColor ?? lineColor,
-            disabled: item.props.disabled ?? disabled,
-          })
-        },
-      )}
+      {Children.map(children, (item: ReactElement<StepsStepProps>, index) => {
+        return cloneElement(item, {
+          status:
+            item.props.status ??
+            (index < current
+              ? 'finish'
+              : index === current
+              ? status ?? 'process'
+              : 'wait'),
+          lineColor: item.props.lineColor ?? lineColor,
+          disabled: item.props.disabled ?? disabled,
+        })
+      })}
     </div>
   )
 }

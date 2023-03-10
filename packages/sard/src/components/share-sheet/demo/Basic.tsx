@@ -50,7 +50,7 @@ export default function () {
   ]
 
   const handleSelect = (item: ShareSheetItemProps) => {
-    Toast.text(item.name)
+    Toast.show(item.name)
   }
 
   return (

@@ -62,7 +62,7 @@ export const Stepper: FC<StepperProps> = (props) => {
   const [inputValue, setInputValue] = useState(value ?? defaultValue ?? '')
 
   useEffect(() => {
-    if (value != null) {
+    if (value !== undefined) {
       setInputValue(value)
     }
   }, [value])
@@ -74,7 +74,7 @@ export const Stepper: FC<StepperProps> = (props) => {
 
   const adjustValue = useEvent((value: number) => {
     value = minmax(value, min, max)
-    if (precision != null) {
+    if (precision !== undefined) {
       value = +value.toFixed(precision)
     }
     return value
@@ -121,7 +121,12 @@ export const Stepper: FC<StepperProps> = (props) => {
     clearInterval(delta > 0 ? increaseTimer.current : decreaseTimer.current)
   })
 
-  const decreaseBinding = useStrike(
+  const shouldBind = press && !disabled && !readOnly
+  const decreaseRef = useRef()
+  const increaseRef = useRef()
+
+  useStrike(
+    decreaseRef,
     (strike) => {
       strike.on(PRESS_DOWN, () => handlePressDown(-1))
       strike.on(PRESS_UP, () => handlePressUp(-1))
@@ -129,10 +134,13 @@ export const Stepper: FC<StepperProps> = (props) => {
     {
       press: true,
     },
-    press && !disabled && !readOnly,
+    {
+      binding: shouldBind,
+    },
   )
 
-  const increaseBinding = useStrike(
+  useStrike(
+    increaseRef,
     (strike) => {
       strike.on(PRESS_DOWN, () => handlePressDown(1))
       strike.on(PRESS_UP, () => handlePressUp(1))
@@ -140,7 +148,9 @@ export const Stepper: FC<StepperProps> = (props) => {
     {
       press: true,
     },
-    press && !disabled && !readOnly,
+    {
+      binding: shouldBind,
+    },
   )
 
   const handleChange = (value: string) => {
@@ -165,20 +175,23 @@ export const Stepper: FC<StepperProps> = (props) => {
   const decreaseButtonClass = classNames(
     's-stepper-button s-stepper-decrease',
     {
-      's-stepper-button-disabled': innerValue != null && innerValue <= min,
+      's-stepper-button-disabled':
+        innerValue !== undefined && innerValue <= min,
     },
   )
   const increaseButtonClass = classNames(
     's-stepper-button s-stepper-increase',
     {
-      's-stepper-button-disabled': innerValue != null && innerValue >= max,
+      's-stepper-button-disabled':
+        innerValue !== undefined && innerValue >= max,
     },
   )
 
   return (
     <div {...restProps} className={StepperClass}>
       <button
-        {...decreaseBinding}
+        type="button"
+        ref={decreaseRef}
         className={decreaseButtonClass}
         onClick={handleDecrease}
         disabled={disabled}
@@ -197,7 +210,8 @@ export const Stepper: FC<StepperProps> = (props) => {
         readOnly={readOnly}
       />
       <button
-        {...increaseBinding}
+        type="button"
+        ref={increaseRef}
         className={increaseButtonClass}
         onClick={handleIncrease}
         disabled={disabled}

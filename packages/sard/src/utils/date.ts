@@ -1,5 +1,3 @@
-export * from './EasyDate'
-
 // 获取一个月中的天数
 export function getDaysInMonth(year: number, month: number) {
   if (month === 2) {
@@ -9,6 +7,12 @@ export function getDaysInMonth(year: number, month: number) {
   }
 }
 
+// 获取一个月中一号对应的星期
 export function getWeekOnFirstDay(year: number, month: number) {
   return new Date(year, month - 1, 1).getDay()
+}
+
+// 获取 Date 中的总天数
+export function getDaysInDate(date: Date) {
+  return Math.floor(date.getTime() / 1000 / 60 / 60 / 24)
 }

@@ -1,26 +1,10 @@
-const globalHost =
-  (globalThis as any).wx ?? (globalThis as any).taro ?? globalThis
-
-export function isMiniProgram() {
-  return (globalThis as any).wx
-  // if (typeof process != 'undefined') {
-  //   return !!process.env.TARO_ENV
-  // }
-  // return false
-}
+import { MouseEvent, TouchEvent } from 'react'
 
 export function pageScrollTop(top: number, animated = true) {
-  if (isMiniProgram()) {
-    globalHost.pageScrollTop({
-      scrollTop: top,
-      duration: animated ? 300 : 0,
-    })
-  } else {
-    globalHost.scrollTo({
-      top,
-      behavior: animated ? 'smooth' : 'instant',
-    })
-  }
+  window.scrollTo({
+    top,
+    behavior: animated ? 'smooth' : 'auto',
+  })
 }
 
 interface windowResizeHandler {
@@ -29,50 +13,17 @@ interface windowResizeHandler {
 }
 
 export function onWindowResize(listener: windowResizeHandler) {
-  if (isMiniProgram()) {
-    globalHost.onWindowResize(listener)
-  } else {
-    listener.__sard_listener = () => {
-      listener({
-        windowWidth: globalHost.innerWidth,
-        windowHeight: globalHost.innerHeight,
-      })
-    }
-    globalHost.addEventListener('resize', listener.__sard_listener)
+  listener.__sard_listener = () => {
+    listener({
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
+    })
   }
+  window.addEventListener('resize', listener.__sard_listener)
 }
 
 export function offWindowResize(listener: windowResizeHandler) {
-  if (isMiniProgram()) {
-    globalHost.offWindowResize(listener)
-  } else {
-    globalHost.removeEventListener('resize', listener.__sard_listener)
-  }
-}
-
-export function getBoundingClientRect(
-  id: string,
-  callback: (rect: {
-    left: number
-    right: number
-    top: number
-    bottom: number
-    width: number
-    height: number
-  }) => void,
-) {
-  if (isMiniProgram()) {
-    globalHost
-      .createSelectorQuery()
-      .select('#' + id)
-      .boundingClientRect(callback)
-      .exec()
-  } else {
-    const el = document.getElementById(id)
-    if (el) {
-      callback(el.getBoundingClientRect())
-    }
-  }
+  window.removeEventListener('resize', listener.__sard_listener)
 }
 
 export type AutoHeight = boolean | { minHeight?: number; maxHeight?: number }
@@ -96,4 +47,35 @@ export function resizeTextArea(
   }
 
   el.style.height = height + 'px'
+}
+
+/**
+ * @description: 获取目标元素在根元素内的可滚动的祖先元素
+ * @param {HTMLElement} target 目标元素，通常为 Event.target
+ * @param {HTMLElement} root 根元素
+ * @return {HTMLElement}
+ */
+export function getScrollParent(target: HTMLElement, root: HTMLElement) {
+  let current = target
+
+  while (current && current.nodeType === 1 && current !== root) {
+    const { overflowY } = window.getComputedStyle(current)
+    if (['scroll', 'auto', 'overlay'].includes(overflowY)) {
+      return current
+    }
+    current = current.parentNode as HTMLElement
+  }
+
+  return root
+}
+
+/**
+ * @description: 阻止浏览器默认行为
+ * @param {Event} event
+ * @return {void}
+ */
+export const preventDefault = (event: Event | MouseEvent | TouchEvent) => {
+  if (typeof event.cancelable !== 'boolean' || event.cancelable) {
+    event.preventDefault()
+  }
 }

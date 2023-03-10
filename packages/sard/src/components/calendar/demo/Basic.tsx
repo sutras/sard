@@ -2,12 +2,17 @@
 ### 基础使用
 */
 
-import { Calendar, Toast } from 'sard'
+import { useState } from 'react'
+import { Calendar } from 'sard'
 
 export default function () {
-  const handleChange = (date: string) => {
-    Toast.text(date)
+  const handleChange = (date) => {
+    console.log(date)
+
+    setValue(date)
   }
 
-  return <Calendar defaultValue="2022-09-25" onChange={handleChange} />
+  const [value, setValue] = useState<Date[]>([])
+
+  return <Calendar value={value} type="range" onChange={handleChange} />
 }

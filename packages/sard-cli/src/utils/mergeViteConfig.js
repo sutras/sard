@@ -1,5 +1,6 @@
 import { relative, resolve } from 'node:path'
 import react from '@vitejs/plugin-react'
+import autoprefixer from 'autoprefixer'
 import {
   CWD,
   DEV_PORT,
@@ -44,6 +45,11 @@ export function mergeViteConfig(options) {
       },
       resolve: {
         alias: sardConfig.alias,
+      },
+      css: {
+        postcss: {
+          plugins: [autoprefixer({})],
+        },
       },
     },
     options,

@@ -2,14 +2,17 @@
 ### Swipe
 */
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useStrike } from 'sard'
 import './index.css'
 
 export default function () {
   const [msg, setMsg] = useState<any>(null)
 
-  const binding = useStrike(
+  const ref = useRef()
+
+  useStrike(
+    ref,
     (strike) => {
       ;['swipeup', 'swiperight', 'swipedown', 'swipeleft'].forEach((type) => {
         strike.on(type, (event: any) => {
@@ -33,7 +36,7 @@ export default function () {
   return (
     <>
       <div
-        {...binding}
+        ref={ref}
         className="demo-touch-box"
         style={{ touchAction: 'none' }}
       ></div>

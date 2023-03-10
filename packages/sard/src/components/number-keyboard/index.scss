@@ -22,6 +22,7 @@ $s-number-keyboard-key-active-bg: $s-bg-active !default;
 
 .s-number-keyboard {
   background-color: $s-number-keyboard-bg;
+  touch-action: none;
 
   @at-root {
     .s-number-keyboard-header {

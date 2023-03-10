@@ -23,12 +23,14 @@ $s-stepper-button-active-bg: $s-gray-300 !default;
 
   @at-root {
     .s-stepper-button {
+      @include button-flush;
+
       display: flex;
       justify-content: center;
       align-items: center;
       width: $s-stepper-button-width;
       font-size: $s-stepper-button-font-size;
-      border: none;
+      user-select: none;
 
       &,
       &:disabled {

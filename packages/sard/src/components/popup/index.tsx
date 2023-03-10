@@ -3,7 +3,6 @@ import {
   useState,
   CSSProperties,
   useRef,
-  ReactElement,
   FC,
   MouseEvent,
 } from 'react'
@@ -11,7 +10,7 @@ import { createPortal } from 'react-dom'
 import classNames from 'classnames'
 import { useEvent } from '../../use'
 import { CSSTransition } from '../transition/CSSTransition'
-import { isMiniProgram } from '../../utils/dom'
+import useLockScroll from '../../use/useLockScroll'
 
 const aniClass = {
   top: 'slide-top',
@@ -34,6 +33,8 @@ export interface PopupProps {
   mask?: boolean
   maskClass?: string
   maskStyle?: CSSProperties
+  contentClass?: string
+  contentStyle?: CSSProperties
   container?: Element
   onMaskClick?: (event: MouseEvent) => void
   onEnter?: () => void
@@ -57,6 +58,8 @@ export const Popup: FC<PopupProps> = (props) => {
     mask = true,
     maskClass,
     maskStyle,
+    contentClass,
+    contentStyle,
     container = document.body,
     onMaskClick,
     onEnter,
@@ -71,6 +74,10 @@ export const Popup: FC<PopupProps> = (props) => {
   const [popupVisible, setPopupVisible] = useState(visible)
   const [isHiding, setIsHiding] = useState(!visible)
 
+  const popupRef = useRef<HTMLElement>()
+
+  const { lock, unlock } = useLockScroll(popupRef, 'popup-lock-scroll')
+
   const handleMaskClick = useEvent((event: MouseEvent) => {
     onMaskClick?.(event)
   })
@@ -79,7 +86,7 @@ export const Popup: FC<PopupProps> = (props) => {
     setIsHiding(false)
     setPopupVisible(true)
     if (lockScroll) {
-      document.body.classList.add('popup-lock-scroll')
+      lock()
     }
     onEnter?.()
   })
@@ -94,9 +101,7 @@ export const Popup: FC<PopupProps> = (props) => {
 
   const handleExit = useEvent(() => {
     setIsHiding(true)
-    if (lockScroll) {
-      document.body.classList.remove('popup-lock-scroll')
-    }
+    unlock()
     onExit?.()
   })
 
@@ -112,18 +117,28 @@ export const Popup: FC<PopupProps> = (props) => {
 
   const dialogRef = useRef<HTMLDivElement>(null)
 
-  const popupClass = classNames('s-popup', {
-    's-popup-visible': popupVisible,
-    's-popup-hiding': isHiding,
-  })
+  const popupClass = classNames(
+    's-popup',
+    {
+      's-popup-visible': popupVisible,
+      's-popup-hiding': isHiding,
+    },
+    className,
+  )
+
   const popupStyle = {
     zIndex,
+    ...style,
   }
   const dialogClass = classNames('s-popup-dialog', `s-popup-${placement}`)
-  const contentClass = classNames('s-popup-content', className)
 
   const render = (
-    <div className={popupClass} style={popupStyle}>
+    <div
+      className={popupClass}
+      ref={popupRef as any}
+      style={popupStyle}
+      {...restProps}
+    >
       <CSSTransition in={visible} timeout={duration} type="fade">
         {mask ? (
           <div
@@ -148,11 +163,8 @@ export const Popup: FC<PopupProps> = (props) => {
           onExited={handleExited}
         >
           <div
-            {...restProps}
-            className={contentClass}
-            style={{
-              ...style,
-            }}
+            className={classNames('s-popup-content', contentClass)}
+            style={contentStyle}
           >
             {children}
           </div>
@@ -161,7 +173,7 @@ export const Popup: FC<PopupProps> = (props) => {
     </div>
   )
 
-  return isMiniProgram() ? render : createPortal(render, container)
+  return createPortal(render, container)
 }
 
 export default Popup

@@ -15,7 +15,7 @@ export default function () {
   const [visible, setVisible] = useState(false)
   const itemList: ShareSheetItemList = [
     {
-      name: 'Instagram',
+      name: 'Sard',
       icon: new URL('../../../../public/logo.svg', import.meta.url).href,
     },
     {
@@ -29,7 +29,7 @@ export default function () {
   ]
 
   const handleSelect = (item: ShareSheetItemProps) => {
-    Toast.text(item.name)
+    Toast.show(item.name)
   }
 
   return (

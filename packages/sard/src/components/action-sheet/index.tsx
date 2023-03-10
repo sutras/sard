@@ -1,4 +1,4 @@
-import { CSSProperties, FC, ReactNode } from 'react'
+import { CSSProperties, FC, ReactNode, MouseEvent } from 'react'
 import classNames from 'classnames'
 import { useEvent } from '../../use'
 import { Popup, PopupProps } from '../popup'
@@ -54,9 +54,9 @@ export const ActionSheet: ActionSheetFC = (props) => {
     },
   )
 
-  const handleMaskClick = useEvent(() => {
+  const handleMaskClick = useEvent((event: MouseEvent) => {
     if (maskClosable) {
-      popupProps?.onMaskClick?.()
+      popupProps?.onMaskClick?.(event)
       onClose?.(false)
     }
   })

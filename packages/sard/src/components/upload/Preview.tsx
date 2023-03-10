@@ -1,13 +1,12 @@
 import { CSSProperties, FC, ReactNode, SyntheticEvent } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 import { Icon } from '../icon'
 import { Loading } from '../loading'
 import { isImageFile } from './utils'
 
 export type UploadStatus = 'uploading' | 'failed' | 'done'
 
-export interface UploadPreviewProps extends CommonComponentProps {
+export interface UploadPreviewProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -81,7 +80,7 @@ export const UploadPreview: FC<UploadPreviewProps> = (props) => {
             remove()
           })
           .catch(() => {
-            void 0
+            null
           })
         return
       }
@@ -121,13 +120,17 @@ export const UploadPreview: FC<UploadPreviewProps> = (props) => {
         </div>
       )}
       {removable && !disabled && !readOnly && status !== 'uploading' && (
-        <div className="s-upload-preview-remove" onClick={handleRemove}>
+        <button
+          type="button"
+          className="s-upload-preview-remove"
+          onClick={handleRemove}
+        >
           {remove ?? (
             <div className="s-upload-preview-close">
               <Icon prefix="si" name="close"></Icon>
             </div>
           )}
-        </div>
+        </button>
       )}
     </div>
   )

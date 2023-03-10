@@ -4,12 +4,14 @@
 
 import { ImagePreview, Button } from 'sard'
 
-const logoHref = new URL('../../../../public/logo.svg', import.meta.url).href
-
 export default function () {
   const handleClick = () => {
     ImagePreview.show({
-      images: [logoHref, logoHref, logoHref],
+      images: [
+        new URL('../../../../public/pic1.jpg', import.meta.url).href,
+        new URL('../../../../public/pic2.jpg', import.meta.url).href,
+        new URL('../../../../public/pic3.jpg', import.meta.url).href,
+      ],
     })
   }
 

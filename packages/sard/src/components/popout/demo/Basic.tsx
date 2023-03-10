@@ -15,8 +15,8 @@ export default function () {
         visible={visible}
         title="标题"
         onClose={setVisible}
-        onConfirm={() => Toast.text('确定')}
-        onCancel={() => Toast.text('取消')}
+        onConfirm={() => Toast.show('确定')}
+        onCancel={() => Toast.show('取消')}
       >
         <div>弹出框内容</div>
         <div>弹出框内容</div>

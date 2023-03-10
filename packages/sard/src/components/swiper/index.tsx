@@ -10,9 +10,10 @@ import {
   Children,
   PropsWithoutRef,
   RefAttributes,
+  useMemo,
 } from 'react'
 import classNames from 'classnames'
-import { animate, getRectDampingValue } from '../../utils'
+import { animate, getRectDampingValue, minmax } from '../../utils'
 import {
   PAN_END,
   PAN_SWIPE_LEFT,
@@ -24,7 +25,7 @@ import {
   StrikePanEvent,
 } from '../../strike'
 
-import { useStrike, useAutoplay, useEvent } from '../../use'
+import { useAutoplay, useEvent, useStrike } from '../../use'
 
 import { SwiperItem } from './Item'
 import { SwiperDot } from './Dot'
@@ -48,31 +49,30 @@ export interface SwiperProps {
   autoplay?: boolean
   interval?: number
   duration?: number
-  circular?: boolean
+  loop?: boolean
   vertical?: boolean
-  easing?: string
   damping?: number
   showDots?: boolean
   // 自定义指示器
-  dots?: (size: number, activeIndex: number) => ReactNode
+  dots?: (count: number, activeIndex: number) => ReactNode
   dotColor?: string
   dotActiveColor?: string
   dotClickable?: boolean
+  touchable?: boolean
   onChange?: (index: number) => void
-  onTransitionStart?: () => void
-  onTransitionEnd?: () => void
   onAnimateStart?: () => void
   onAnimateEnd?: () => void
   onTouchStart?: (event: StrikePanEvent) => void
   onTouchMove?: (event: StrikePanEvent) => void
   onTouchEnd?: (event: StrikePanEvent) => void
-  touchable?: boolean
+  onProcessStart?: () => void
+  onProcessEnd?: () => void
 }
 
 export interface SwiperRef {
-  swipeTo(index: number, animated?: boolean): void
-  prev(animated?: boolean): void
-  next(animated?: boolean): void
+  swipeTo: (index: number, animated?: boolean) => void
+  prev: (animated?: boolean) => void
+  next: (animated?: boolean) => void
 }
 
 export interface SwiperFC
@@ -89,26 +89,25 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
     children,
     defaultIndex = 0,
     autoplay = false,
-    interval = 1500,
+    interval = 3000,
     duration = 400,
-    circular = false,
+    loop = false,
     vertical = false,
-    easing = 'ease-out',
     damping = 3,
     showDots = false,
     dots,
     dotColor,
     dotActiveColor,
     dotClickable = false,
+    touchable = true,
     onChange,
     onAnimateStart,
     onAnimateEnd,
-    onTransitionStart,
-    onTransitionEnd,
     onTouchStart,
     onTouchMove,
     onTouchEnd,
-    touchable = true,
+    onProcessStart,
+    onProcessEnd,
     ...restProps
   } = props
 
@@ -117,21 +116,9 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
   const translate = useRef(0)
   const itemList = useRef<HTMLElement[]>([])
   const animateFinish = useRef(true)
+  const isProcessing = useRef(false)
 
   const [activeIndex, setActiveIndex] = useState(defaultIndex)
-
-  const wrapperStyle = {
-    transitionTimingFunction: easing,
-  }
-
-  const swiperClass = classNames(
-    's-swiper',
-    {
-      's-swiper-vertical': vertical,
-      's-swiper-touchable': touchable,
-    },
-    className,
-  )
 
   const itemCount = Children.count(children)
 
@@ -148,24 +135,35 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
     }
   }
 
-  const stopAnimate = () => {
+  const stopAnimate = (ignoreStartStop = false) => {
     if (stopSlide.current) {
       stopSlide.current?.()
       stopSlide.current = null
       onAnimateEnd?.()
+
+      if (!ignoreStartStop && isProcessing.current) {
+        isProcessing.current = false
+        onProcessEnd?.()
+      }
     }
   }
 
   const startAnimate = (to: number, duration: number) => {
     stopAnimate()
     animateFinish.current = false
+
+    if (!isProcessing.current) {
+      isProcessing.current = true
+      onProcessStart?.()
+    }
+
     onAnimateStart?.()
     stopSlide.current = animate({
       from: translate.current,
       to,
       duration,
       step(value) {
-        if (circular) {
+        if (loop) {
           updateItemsTranslate(value)
         }
         setWrapperTranslate(value)
@@ -174,6 +172,11 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
         stopSlide.current = null
         animateFinish.current = true
         onAnimateEnd?.()
+
+        if (isProcessing.current) {
+          isProcessing.current = false
+          onProcessEnd?.()
+        }
       },
     })
   }
@@ -213,11 +216,12 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
 
   const handlePanStart = useEvent((event: StrikePanEvent) => {
     stopAutoPlay()
-    stopAnimate()
+    stopAnimate(true)
 
     onTouchStart?.(event)
 
-    const el = event.target as HTMLElement
+    const el = event.currentTarget as HTMLElement
+
     const wrapper = wrapperRef.current as HTMLElement
     itemList.current = Array.from(wrapper.children) as HTMLElement[]
     const wrapperRect = wrapper.getBoundingClientRect()
@@ -236,7 +240,7 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
       wrapperRect[direction] - containerRect[direction] - borderSize
     downTranslate.current = offset
 
-    if (!circular) {
+    if (!loop) {
       downTranslate.current = getRectDampingValue(
         offset,
         containerSize.current,
@@ -249,10 +253,15 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
   const handlePanMove = useEvent((event: StrikePanEvent) => {
     onTouchMove?.(event)
 
+    if (!isProcessing.current) {
+      isProcessing.current = true
+      onProcessStart?.()
+    }
+
     moving.current = true
     let offset = downTranslate.current + event[vertical ? DELTA_Y : DELTA_X]
 
-    if (circular) {
+    if (loop) {
       updateItemsTranslate(offset / containerSize.current)
     } else {
       offset = getRectDampingValue(
@@ -277,10 +286,7 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
 
     if (!moving.current) {
       if (!animateFinish.current) {
-        startAnimate(
-          circular ? -oldCircularIndex.current : -activeIndex,
-          duration,
-        )
+        startAnimate(loop ? -oldCircularIndex.current : -activeIndex, duration)
       }
       autoPlay()
       return
@@ -299,7 +305,7 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
     const offset = downTranslate.current + event[vertical ? DELTA_Y : DELTA_X]
 
     if (itemCount > 0) {
-      if (circular) {
+      if (loop) {
         const modOffset = offset % wrapperSize.current
         const sign = modOffset < 0 ? 1 : -1
         const spanCount = modOffset / containerSize.current
@@ -343,7 +349,7 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
 
     startAnimate(-index, duration)
 
-    if (circular) {
+    if (loop) {
       if (index < 0) {
         index += itemCount
       } else if (index >= itemCount) {
@@ -355,7 +361,10 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
     autoPlay()
   })
 
-  const containerBinding = useStrike(
+  const containerRef = useRef()
+
+  useStrike(
+    containerRef,
     (strike) => {
       strike.on(PAN_START, handlePanStart)
       strike.on(PAN_MOVE, handlePanMove)
@@ -367,10 +376,16 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
     },
     {
       pan: true,
-      direction: vertical ? VERTICAL : HORIZONTAL,
       lockDirection: true,
+      init: touchable,
     },
-    touchable,
+    useMemo(
+      () => ({
+        binding: touchable,
+        direction: vertical ? VERTICAL : HORIZONTAL,
+      }),
+      [touchable, vertical],
+    ),
   )
 
   const setTranslateByIndex = (index: number, animated = true) => {
@@ -378,11 +393,7 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
 
     if (wrapper) {
       const itemCount = Children.count(children)
-      if (itemCount === 0 || index < 0) {
-        index = 0
-      } else if (index > itemCount - 1) {
-        index = itemCount - 1
-      }
+      index = minmax(index, 0, itemCount === 0 ? 0 : itemCount - 1)
       itemList.current = Array.from(wrapper.children) as HTMLElement[]
       setActiveIndex(index)
       startAnimate(-index, animated ? duration : 0)
@@ -440,9 +451,18 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
     next,
   }))
 
+  const swiperClass = classNames(
+    's-swiper',
+    {
+      's-swiper-vertical': vertical,
+      's-swiper-touchable': touchable,
+    },
+    className,
+  )
+
   return (
-    <div {...(restProps as any)} {...containerBinding} className={swiperClass}>
-      <div ref={wrapperRef} className="s-swiper-wrapper" style={wrapperStyle}>
+    <div {...(restProps as any)} ref={containerRef} className={swiperClass}>
+      <div ref={wrapperRef} className="s-swiper-wrapper">
         {children}
       </div>
       {itemCount !== 0 &&
@@ -464,47 +484,3 @@ export const Swiper: SwiperFC = forwardRef((props, ref) => {
 Swiper.Item = SwiperItem
 
 export default Swiper
-
-/*  
-        ┌─────┐
-        └─────┘
-  ┌─────┬─────┬─────┐
-  └─────┴─────┴─────┘
-  
-        ╔═════╗
-        ╚═════╝
-  ┌─────┬─────┬─────┐
-  └─────┴─────┴─────┘
-
-
-  ╰────────────
-  ────────────╯
-
- */
-
-/* 问题
-  ==============================
-  [x] 不符合指定方向，在 end 时依然会切换
-  [x] children 必须为数组
-  [ ] 滑动未结束，再次以意料外方向滑动时，不会阻止浏览器默认行为，轮播图会停止滑动；
-      想要行为：不管滑动方向为何，只要未切换完毕，都阻止浏览器默认行为（既可正常滑动）
-
-  */
-
-/* 无缝衔接
-===============================
-# offset < 0
-overOffset = -offset + containerSize - wrapperSize
-spanCount = Math.ceil(overOffset / containerSize)
-if (index < spanCount) {
-  setTranslate(item, itemCount)
-}
-
-# offset >= 0
-overOffset = offset
-spanCount = Math.ceil(overOffset / containerSize)
-if (itemCount - index <= spanCount) {
-  setTranslate(item, -itemCount)
-}
-
-*/

@@ -1,13 +1,12 @@
 import { CSSProperties, forwardRef, ReactNode } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 
-export interface IndexBarItemProps extends CommonComponentProps {
+export interface IndexBarItemProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  name?: any
-  activeKey?: any
+  title?: ReactNode
+  activeKey?: number | string
   offset?: number | string
   anchorClass?: string
   anchorStyle?: CSSProperties
@@ -19,7 +18,7 @@ export const IndexBarItem = forwardRef<HTMLElement, IndexBarItemProps>(
       className,
       style,
       children,
-      name,
+      title,
       activeKey,
       offset,
       anchorClass,
@@ -35,7 +34,7 @@ export const IndexBarItem = forwardRef<HTMLElement, IndexBarItemProps>(
           className={classNames('s-index-bar-anchor', anchorClass)}
           style={{ ...anchorStyle, top: offset }}
         >
-          {name}
+          {title}
         </div>
         <div className="s-index-bar-content">{children}</div>
       </div>

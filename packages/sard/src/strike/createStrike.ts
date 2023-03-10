@@ -1,56 +1,36 @@
-import { createInput, StrikeInputHandler } from './createInput'
+import { createInput } from './createInput'
 import { createGestures } from './createGestures'
 import { createFingers } from './createFingers'
-import { createEvent } from './createEvent'
+import { createPubSub, PubSub } from '../utils/createPubSub'
 import { createChopsticks } from './createChopsticks'
 import { defaultConfig, PartialConfig } from './defaultConfig'
 
 export type { PartialConfig } from './defaultConfig'
 
-export interface Strike {
-  on(type: string, handler: (...args: any[]) => any): void
-  once(type: string, handler: (...args: any[]) => any): void
-  off(type?: string, handler?: (...args: any[]) => any): void
-  emit(type: string, payload?: any): void
+export interface Strike extends PubSub {
   init(): void
   destroy(): void
   configure(partialConfig?: PartialConfig): void
-  handler: StrikeInputHandler
 }
 
-export function createStrike(partialConfig?: PartialConfig): Strike {
+export function createStrike(
+  el: EventTarget,
+  partialConfig?: PartialConfig,
+): Strike {
   const config = Object.assign({}, defaultConfig, partialConfig)
   let initialized = false
 
-  const eventTarget = {}
-
-  function on(type: string, handler: (...args: any[]) => any) {
-    event.on(eventTarget, type, handler)
-  }
-
-  function once(type: string, handler: (...args: any[]) => any) {
-    event.once(eventTarget, type, handler)
-  }
-
-  function off(type?: string, handler?: (...args: any[]) => any) {
-    event.off(eventTarget, type, handler)
-  }
-
-  function emit(type: string, payload?: any) {
-    event.off(eventTarget, type, payload)
-  }
-
-  const event = createEvent()
-  const fingers = createFingers(eventTarget, config)
+  const pubSub = createPubSub()
+  const fingers = createFingers(config)
   const chopsticks = createChopsticks(fingers.knocks)
-  const gestures = createGestures(fingers, chopsticks, event, config)
-  const input = createInput(fingers, chopsticks, gestures, config)
+  const gestures = createGestures(fingers, chopsticks, pubSub, config)
+  const input = createInput(el, fingers, chopsticks, gestures, config)
 
   function init() {
     if (initialized) {
       return
     }
-    input.init()
+    input.bind()
     initialized = true
   }
 
@@ -58,8 +38,8 @@ export function createStrike(partialConfig?: PartialConfig): Strike {
     if (!initialized) {
       return
     }
-    input.destroy()
-    event.off(eventTarget)
+    input.unbind()
+    pubSub.off()
     fingers.clear()
     chopsticks.clear()
     initialized = false
@@ -74,13 +54,9 @@ export function createStrike(partialConfig?: PartialConfig): Strike {
   }
 
   return {
-    on,
-    once,
-    off,
-    emit,
+    ...pubSub,
     init,
     destroy,
     configure,
-    handler: input.handler,
   }
 }

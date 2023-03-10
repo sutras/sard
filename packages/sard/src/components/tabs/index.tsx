@@ -15,10 +15,16 @@ import {
   PropsWithoutRef,
   RefAttributes,
   useMemo,
+  useCallback,
 } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
-import { useMapSet, useScroll, useSetTimeout, useEvent } from '../../use'
+import {
+  useIndexableMap,
+  useScroll,
+  useSetTimeout,
+  useEvent,
+  useResize,
+} from '../../use'
 import { Swiper, SwiperItem, SwiperProps, SwiperRef } from '../swiper'
 
 import { TabPane, TabPaneProps } from './Pane'
@@ -29,10 +35,11 @@ import { pageScrollTop } from '../../utils/dom'
 export * from './Pane'
 
 export interface TabsRef {
-  scrollTo(innerKey: number | string, animated?: boolean): void
+  scrollTo: (innerKey: number | string, animated?: boolean) => void
+  setInkbarStyle: () => void
 }
 
-export interface TabsProps extends CommonComponentProps {
+export interface TabsProps {
   className?: string
   style?: CSSProperties
   children?: ReactElement | ReactElement[]
@@ -40,8 +47,12 @@ export interface TabsProps extends CommonComponentProps {
   activeKey?: number | string
   onChange?: (key: number | string) => void
   onLabelClick?: (key: number | string) => void
+  inkbarWrapperStyle?: CSSProperties
+  inkbarWidth?: 'auto' | string
+  inkbarStyle?: CSSProperties
+  inkbar?: ReactNode
   scrollCount?: number
-  type?: 'line' | 'card' | 'pill' | 'border'
+  type?: 'inkbar' | 'card' | 'pill' | 'border'
   headerClass?: string
   headerStyle?: CSSProperties
   bodyClass?: string
@@ -80,8 +91,12 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     activeKey,
     onChange,
     onLabelClick,
+    inkbarWrapperStyle,
+    inkbarWidth = '40px',
+    inkbarStyle,
+    inkbar,
     scrollCount = 5,
-    type = 'line',
+    type = 'inkbar',
     headerClass,
     headerStyle,
     bodyClass,
@@ -106,36 +121,67 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     ...restProps
   } = props
 
-  const [innerActiveKey, setInnerActiveKey] = useState<number | string>(() => {
+  const initialActiveKey = useMemo(() => {
     let firstPane = children
     if (Array.isArray(firstPane)) {
       firstPane = firstPane[0]
     }
     return activeKey ?? defaultActiveKey ?? firstPane?.key ?? 0
-  })
+  }, [])
+
+  const [innerActiveKey, setInnerActiveKey] = useState<number | string>(
+    initialActiveKey,
+  )
+
+  const activeLabel = useRef<HTMLElement>()
 
   const wrapperRef = useRef<HTMLDivElement>()
+  const inkbarWrapperRef = useRef<HTMLElement>()
+  const inkbarRef = useRef<HTMLElement>()
+  const inkbarCbRef = useCallback((node) => {
+    inkbarRef.current = node
+    inkbarResizeObserver(node)
+  }, [])
+
+  const resizeObserver = useRef<ResizeObserver>()
+
+  // 解决祖先不显示时无法获取墨水条宽高的问题
+  const inkbarResizeObserver = (node: HTMLElement | null) => {
+    resizeObserver.current?.disconnect()
+    if (node) {
+      resizeObserver.current = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          if (entry.contentRect.width > 0 && entry.contentRect.height > 0) {
+            setInkbarStyle()
+          }
+        }
+      })
+
+      resizeObserver.current.observe(node)
+    }
+  }
 
   const swiperRef = useRef<SwiperRef>(null)
 
-  const labelSet = useMapSet<number | string, HTMLElement>([])
+  const labelMap = useIndexableMap<number | string, HTMLElement>([])
 
   const activeIndex = useMemo(() => {
-    const index = labelSet.getIndexByName(innerActiveKey)
+    const index = labelMap.getIndexByKey(innerActiveKey)
     return index === -1 ? 0 : index
   }, [innerActiveKey])
 
   // 受控
   useEffect(() => {
-    if (!scrollspy && activeKey != null) {
+    if (!scrollspy && activeKey !== undefined) {
       setInnerActiveKey(activeKey)
     }
   }, [activeKey])
 
   useEffect(() => {
-    const label = labelSet.get(innerActiveKey)
+    const label = labelMap.get(innerActiveKey)
+
     if (wrapperRef.current && label) {
-      swiperRef.current?.swipeTo(labelSet.getIndexByName(innerActiveKey))
+      swiperRef.current?.swipeTo(labelMap.getIndexByKey(innerActiveKey))
 
       wrapperRef.current.scrollTo({
         left:
@@ -147,16 +193,72 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
   }, [innerActiveKey])
 
   const handleSwiperChange = useEvent((index: number) => {
-    const key = labelSet.getKeyByIndex(index)
+    const key = labelMap.getKeyByIndex(index)
     setInnerActiveKey(key)
     onChange?.(key)
   })
 
-  const paneSet = useMapSet<any, HTMLElement>([])
-  const scrollLock = useRef(false)
+  const setInkbarStyle = () => {
+    const wrapper = wrapperRef.current
+    const currentLabel = activeLabel.current
+    const inkbar = inkbarRef.current
+    const inkbarWrapper = inkbarWrapperRef.current
+
+    if (wrapper && currentLabel && wrapper.offsetWidth > 0) {
+      const wWidth = wrapper[vertical ? 'offsetHeight' : 'offsetWidth']
+      const cWidth = currentLabel[vertical ? 'offsetHeight' : 'offsetWidth']
+      const oLeft = currentLabel[vertical ? 'offsetTop' : 'offsetLeft']
+      const sLeft = oLeft - (wWidth / 2 - cWidth / 2)
+
+      wrapper.scrollTo({
+        [vertical ? 'top' : 'left']: sLeft,
+        behavior: 'smooth',
+      })
+
+      if (inkbarWrapper) {
+        inkbarWrapper.style[vertical ? 'top' : 'left'] =
+          oLeft + cWidth / 2 + 'px'
+      }
+      if (inkbar) {
+        inkbar.style[vertical ? 'height' : 'width'] =
+          inkbarWidth === 'auto' ? cWidth + 'px' : inkbarWidth
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (wrapperRef.current) {
+      activeLabel.current = labelMap.get(innerActiveKey)
+    }
+
+    setInkbarStyle()
+  }, [innerActiveKey])
+
+  useResize(
+    () => {
+      setInkbarStyle()
+    },
+    150,
+    {
+      leading: false,
+    },
+  )
+
+  useEffect(() => {
+    if (
+      type === 'inkbar' &&
+      initialActiveKey !== innerActiveKey &&
+      inkbarWrapperRef.current
+    ) {
+      inkbarWrapperRef.current.style.transitionDuration = '0.3s'
+    }
+  }, [innerActiveKey])
+
+  const paneMap = useIndexableMap<any, HTMLElement>([])
+  const lockScroll = useRef(false)
 
   const { reset } = useSetTimeout(() => {
-    scrollLock.current = false
+    lockScroll.current = false
   }, 500)
 
   const scrollTo = (key: number | string, animated = true) => {
@@ -164,13 +266,13 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
       return
     }
 
-    const el = paneSet.get(key)
+    const el = paneMap.get(key)
 
     if (el) {
       const top = el.getBoundingClientRect().top + window.scrollY - offset
 
       reset()
-      scrollLock.current = true
+      lockScroll.current = true
       pageScrollTop(top, animated)
     }
   }
@@ -178,7 +280,7 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
   const switchTo = (key: number | string, animated?: boolean) => {
     if (key !== innerActiveKey) {
       // 非受控
-      if (scrollspy || activeKey == null) {
+      if (scrollspy || activeKey === undefined) {
         setInnerActiveKey(key)
       }
       onChange?.(key)
@@ -193,10 +295,10 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
 
   useScroll(
     () => {
-      if (!scrollspy || scrollLock.current) {
+      if (!scrollspy || lockScroll.current) {
         return
       }
-      const srcData = paneSet.getData()
+      const srcData = paneMap.data
       matchScrollVisible(
         srcData.map((item) => item[1]),
         (index) => {
@@ -215,11 +317,11 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     scrollTo(key: number | string, animated?: boolean) {
       switchTo(key, animated)
     },
+    setInkbarStyle,
   }))
 
   const tabsClass = classNames(
     's-tab',
-    's-tab-' + type,
     {
       's-tab-auto': Children.count(children) > scrollCount,
       's-tab-sticky': sticky,
@@ -230,28 +332,44 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     className,
   )
 
-  const renderLine = () => {
-    if (Children.count(children) > scrollCount || type !== 'line') {
-      return null
-    }
-    return null
+  const renderInkbar = () => {
+    return (
+      type === 'inkbar' && (
+        <div
+          ref={inkbarWrapperRef as any}
+          className="s-tab-inkbar-wrapper"
+          style={inkbarWrapperStyle}
+        >
+          {inkbar || (
+            <div
+              className="s-tab-inkbar"
+              ref={inkbarCbRef}
+              style={inkbarStyle}
+            ></div>
+          )}
+        </div>
+      )
+    )
   }
 
   const renderPane = (Comp: SwiperItem | ExoticComponent) => {
-    return Children.map(children, (element, index) => {
-      const key = element.key ?? index
+    return Children.map(
+      children,
+      (element: ReactElement<TabPaneProps & { ref: any }>, index) => {
+        const key = element.key ?? index
 
-      return (
-        <Comp>
-          {cloneElement(element, {
-            key,
-            innerKey: key,
-            activeKey: innerActiveKey,
-            ref: (el: any) => paneSet.set(key, el),
-          })}
-        </Comp>
-      )
-    })
+        return (
+          <Comp>
+            {cloneElement(element, {
+              key,
+              innerKey: key,
+              activeKey: innerActiveKey,
+              ref: (el: any) => paneMap.set(key, el),
+            })}
+          </Comp>
+        )
+      },
+    )
   }
 
   return (
@@ -262,12 +380,16 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
       >
         {prepend && <div className="s-tab-prepend">{prepend}</div>}
         <div
-          className={classNames('s-tab-label-wrapper', wrapperClass)}
+          className={classNames(
+            's-tab-label-wrapper',
+            's-tab-label-' + type,
+            wrapperClass,
+          )}
           style={wrapperStyle}
           ref={wrapperRef}
         >
           {Children.map(
-            children as ReactElement<TabPaneProps>,
+            children,
             (pane: ReactElement<TabPaneProps>, index: number) => {
               const innerKey = pane.key ?? index
 
@@ -283,8 +405,8 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
                   key={innerKey}
                   innerKey={innerKey}
                   activeKey={innerActiveKey}
-                  ref={(el) => labelSet.set(innerKey, el)}
-                  showLine={type === 'card' || type === 'line'}
+                  ref={(el) => labelMap.set(innerKey, el)}
+                  showLine={type === 'card'}
                   line={line}
                   lineWidth={lineWidth}
                   lineStyle={lineStyle}
@@ -295,14 +417,15 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
               )
             },
           )}
+          {renderInkbar()}
         </div>
         {append && <div className="s-tab-append">{append}</div>}
-        {renderLine()}
       </div>
       <div className={classNames('s-tab-body', bodyClass)} style={bodyStyle}>
         {animated || swipeable ? (
           <Swiper
-            {...Object.assign({ duration: 300 }, swiperProps)}
+            duration={300}
+            {...swiperProps}
             ref={swiperRef}
             defaultIndex={activeIndex}
             onChange={handleSwiperChange}

@@ -4,7 +4,7 @@
 
 import { DatetimePicker, DatetimeLetter, DatetimeColumnOption } from 'sard'
 
-const weeks = ['日', '一', '二', '三', '四', '五', '六']
+// const weeks = ['日', '一', '二', '三', '四', '五', '六']
 
 export default function () {
   const formatter = (
@@ -19,9 +19,10 @@ export default function () {
       return option.zerofill + '月'
     }
     if (letter === 'd') {
-      const d = new Date(date)
-      d.setDate(option.value)
-      return `${option.zerofill}日 星期${weeks[d.getDay()]}`
+      return `${option.zerofill}日`
+      // const d = new Date(date)
+      // d.setDate(option.value)
+      // return `${option.zerofill}日 星期${weeks[d.getDay()]}`
     }
   }
 

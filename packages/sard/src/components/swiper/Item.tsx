@@ -5,13 +5,16 @@ import {
   ForwardRefExoticComponent,
   RefAttributes,
   PropsWithoutRef,
+  MouseEvent,
+  HTMLAttributes,
 } from 'react'
 import classNames from 'classnames'
 
-export interface SwiperItemProps {
+export interface SwiperItemProps extends HTMLAttributes<HTMLDivElement> {
   className?: string
   style?: CSSProperties
   children?: ReactNode
+  onClick?: (event: MouseEvent) => void
 }
 
 export type SwiperItem = ForwardRefExoticComponent<

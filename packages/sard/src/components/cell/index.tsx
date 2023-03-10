@@ -51,24 +51,34 @@ export const Cell: CellFC = (props) => {
 
   return (
     <div {...restProps} className={cellClass} onClick={onClick}>
-      {icon != null && (
+      {icon !== undefined && (
         <div className="s-cell-header">
           <div className="s-cell-icon">{icon}</div>
         </div>
       )}
       <div className="s-cell-content">
-        <div className="s-cell-body">
-          {title != null && <div className="s-cell-title">{title}</div>}
-          {label != null && <div className="s-cell-label">{label}</div>}
-        </div>
-        <div className="s-cell-footer">
-          {value != null && <div className="s-cell-value">{value}</div>}
-          {isLink && (
-            <div className="s-cell-arrow">
-              {arrow ?? <Icon prefix="si" name={arrowDirection}></Icon>}
+        {children || (
+          <>
+            <div className="s-cell-body">
+              {title !== undefined && (
+                <div className="s-cell-title">{title}</div>
+              )}
+              {label !== undefined && (
+                <div className="s-cell-label">{label}</div>
+              )}
             </div>
-          )}
-        </div>
+            <div className="s-cell-footer">
+              {value !== undefined && (
+                <div className="s-cell-value">{value}</div>
+              )}
+              {isLink && (
+                <div className="s-cell-arrow">
+                  {arrow ?? <Icon prefix="si" name={arrowDirection}></Icon>}
+                </div>
+              )}
+            </div>
+          </>
+        )}
       </div>
     </div>
   )

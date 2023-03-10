@@ -24,7 +24,7 @@ import { CountDown } from 'sard'
 
 ## API
 
-### Props
+### CountDownProps
 
 | 属性      | 描述                   | 类型                                   | 默认值     |
 | --------- | ---------------------- | -------------------------------------- | ---------- |
@@ -36,7 +36,7 @@ import { CountDown } from 'sard'
 | onChange  | 倒计时变化时触发       | (time: CurrentTime) => void            | -          |
 | onFinish  | 倒计时结束时触发       | () => void                             | -          |
 
-### 方法
+### CountDown 方法
 
 | 名称  | 描述       | 类型       |
 | ----- | ---------- | ---------- |

@@ -10,7 +10,6 @@ import {
   useImperativeHandle,
 } from 'react'
 import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 import { BoundingRect } from './useMovable'
 
 export type MovableAreaContext = BoundingRect
@@ -22,20 +21,19 @@ export const MovableAreaContext = createContext<MovableAreaContext>({
   height: 0,
 })
 
-export interface MovableAreaProps extends CommonComponentProps {
+export interface MovableAreaProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
-  resize?: boolean
 }
 
 export interface MovableAreaRef {
-  updateRect(rect?: BoundingRect): void
+  updateAreaRect: (rect?: BoundingRect) => void
 }
 
 export const MovableArea = forwardRef<MovableAreaRef, MovableAreaProps>(
   (props, ref) => {
-    const { className, children, resize = false, ...restProps } = props
+    const { className, children, ...restProps } = props
 
     const areaRef = useRef<HTMLDivElement>(null)
     const [rect, setRect] = useState<MovableAreaContext>({
@@ -45,7 +43,7 @@ export const MovableArea = forwardRef<MovableAreaRef, MovableAreaProps>(
       height: 0,
     })
 
-    const updateRect = useCallback((boundingRect?: BoundingRect) => {
+    const updateAreaRect = useCallback((boundingRect?: BoundingRect) => {
       if (areaRef.current) {
         const rect: BoundingRect =
           boundingRect ?? (areaRef.current as any).getBoundingClientRect()
@@ -59,11 +57,11 @@ export const MovableArea = forwardRef<MovableAreaRef, MovableAreaProps>(
     }, [])
 
     useEffect(() => {
-      updateRect()
+      updateAreaRect()
     }, [])
 
     useImperativeHandle(ref, () => ({
-      updateRect,
+      updateAreaRect,
     }))
 
     const areaClass = classNames('s-movable-area', className)

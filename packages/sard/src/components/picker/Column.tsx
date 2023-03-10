@@ -5,12 +5,13 @@ import {
   useImperativeHandle,
   memo,
   ForwardedRef,
+  useMemo,
 } from 'react'
-import classNames from 'classnames'
-import { CommonComponentProps } from '../../utils/types'
 import {
   animate,
+  AnimateStop,
   easeOutCubic,
+  easeOutQuad,
   getRectDampingValue,
   minmax,
   spreadEach,
@@ -23,9 +24,10 @@ import {
   PAN_START,
   StrikePanEvent,
 } from '../../strike'
-import { useStrike, useEvent } from '../../use'
+import { useEvent, useStrike } from '../../use'
+import PickerItem from './Item'
 
-export interface PickerColumnOption {
+export interface PickerOption {
   label?: any
   value?: any
   disabled?: boolean
@@ -40,50 +42,69 @@ export interface FieldNames {
   children?: string
 }
 
-export interface PickerColumnInternalProps extends CommonComponentProps {
-  column: PickerColumnOption[]
+export interface PickerColumnInternalProps {
+  column: PickerOption[]
   columnIndex: number
   fieldNames: FieldNames
   defaultIndex?: number
-  onChange?: (columnIndex: number, index: number) => any
-  onPickStart?: (columnIndex: number) => any
-  onPickEnd?: (columnIndex: number, index: number) => any
+  onChange?: (index: number, columnIndex: number) => void
+  onPickStart?: (columnIndex: number) => void
+  onPickEnd?: (columnIndex: number) => void
 }
 
-export interface PickerColumnExternalProps extends CommonComponentProps {
-  height?: number
+export interface PickerColumnExternalProps {
+  itemHeight?: number
   focusHeight?: number
-  duration?: number
-  correctDuration?: number
-  damping?: number
-  inertiaTime?: number
 }
 
 export type PickerColumnProps = PickerColumnInternalProps &
   PickerColumnExternalProps
 
 export interface PickerColumnRef {
-  setIndex: (index: number, emitChange?: boolean, animated?: boolean) => void
+  getIndex: () => number
+  getOption: () => PickerOption
+  getColumnIndex: () => number
+  setIndex: (index: number, emitChange?: boolean, animated?: boolean) => boolean
   setIndexByValue: (
     value: any,
     emitChange?: boolean,
     animated?: boolean,
-  ) => void
-  setIndexForcibly: (index: number) => void
-  getIndex: () => number
-  getOption: () => PickerColumnOption
-  getColumnIndex: () => number
+  ) => boolean
+  setIndexForcibly: (index: number) => boolean
+  setIndexByValueForcibly: (value: any) => boolean
+  pickImmediately: () => void
 }
+
+const mapBounceDuration = {
+  noBounce: 1200,
+  weekBounce: 650,
+  strongBounce: 500,
+}
+
+const mapBounceEase = {
+  noBounce: easeOutCubic,
+  weekBounce: easeOutQuad,
+  strongBounce: easeOutQuad,
+}
+
+const mapBounceInertiaOverflowExtra = {
+  noBounce: 0,
+  weekBounce: 0.8,
+  strongBounce: 1.2,
+}
+
+const bounceThreshold = 300
+const correctDuration = 300
+const damping = 4
+const inertiaTime = 250
+
+const maxOverflowCount = 2
 
 export const PickerColumn = memo(
   forwardRef((props: PickerColumnProps, ref: ForwardedRef<PickerColumnRef>) => {
     const {
-      height = 48,
+      itemHeight = 48,
       focusHeight = 56,
-      duration = 1000,
-      correctDuration = 300,
-      damping = 5,
-      inertiaTime = 250,
       column,
       columnIndex,
       fieldNames,
@@ -95,17 +116,15 @@ export const PickerColumn = memo(
     } = props
 
     const isPicking = useRef(false)
+    const isMoving = useRef(false)
 
     const groupRef = useRef<HTMLDivElement>(null)
     const translate = useRef(0)
-    const stopInertia = useRef<(...args: any[]) => any>()
-    const stopCorrect = useRef<(...args: any[]) => any>()
-
-    const columnMap = useRef<{ [prop: number]: PickerColumnOption }>({})
-    const currentIndex = useRef(minmax(defaultIndex, 0, column.length - 1))
-
-    const moving = useRef(false)
     const downTranslate = useRef(0)
+    const stopInertia = useRef<AnimateStop>()
+    const stopCorrect = useRef<AnimateStop>()
+
+    const currentIndex = useRef(minmax(defaultIndex, 0, column.length - 1))
 
     const setTranslate = (value: number) => {
       translate.current = value
@@ -121,18 +140,20 @@ export const PickerColumn = memo(
       }
     }
 
-    const pickEnd = (index: number) => {
-      isPicking.current = false
-      onPickEnd?.(columnIndex, index)
+    const pickEnd = () => {
+      if (isPicking.current) {
+        isPicking.current = false
+        onPickEnd?.(columnIndex)
+      }
     }
 
-    const finish = (index: number, emitChange = true) => {
-      pickEnd(index)
+    const complete = (index: number, emitChange = true) => {
+      pickEnd()
 
       if (currentIndex.current !== index) {
         currentIndex.current = index
         if (emitChange) {
-          onChange?.(columnIndex, index)
+          onChange?.(index, columnIndex)
         }
       }
     }
@@ -148,9 +169,9 @@ export const PickerColumn = memo(
           -spreadEach(
             column,
             (option) => !option.disabled,
-            Math.abs(Math.round(to / height)),
-            Math.round((to % height) / height) ? -1 : 1,
-          ) * height
+            Math.abs(Math.round(to / itemHeight)),
+            Math.round((to % itemHeight) / itemHeight) ? -1 : 1,
+          ) * itemHeight
       }
 
       stopCorrect.current = animate({
@@ -161,16 +182,16 @@ export const PickerColumn = memo(
           setTranslate(value)
         },
         finish(value) {
-          finish(Math.abs(value / height), emitChange)
+          complete(Math.abs(value / itemHeight), emitChange)
         },
       })
     }
 
-    const getCurrDampedVaule = (value: number, division = false) => {
+    const getCurrentDampedVaule = (value: number, division = false) => {
       return getRectDampingValue(
         value,
-        height,
-        height * column.length,
+        itemHeight,
+        itemHeight * column.length,
         division ? 1 / damping || 0 : damping,
       )
     }
@@ -178,41 +199,58 @@ export const PickerColumn = memo(
     const handlePanStart = useEvent(() => {
       stopInertia.current?.()
       stopCorrect.current?.()
-      downTranslate.current = getCurrDampedVaule(translate.current)
+      downTranslate.current = getCurrentDampedVaule(translate.current)
     })
 
     const handlePanMove = useEvent((event: StrikePanEvent) => {
-      moving.current = true
+      isMoving.current = true
       setTranslate(
-        getCurrDampedVaule(downTranslate.current + event.deltaY, true),
+        getCurrentDampedVaule(downTranslate.current + event.deltaY, true),
       )
     })
 
     const handlePanSwipe = useEvent((event: StrikePanEvent) => {
       const itemCount = column.length
-      const endEdge = (1 - itemCount) * height
+      const endEdge = (1 - itemCount) * itemHeight
+      const isOverflow = translate.current > 0 || translate.current < endEdge
+
+      if (isOverflow) {
+        return
+      }
+
       const dir = event.type === PAN_SWIPE_UP ? -1 : 1
+
       let to = translate.current + dir * (event.speed * inertiaTime)
-      to = Math.round(to / height) * height
+      to = Math.round(to / itemHeight) * itemHeight
+
+      let type = 'noBounce'
+      if (to > bounceThreshold || to < endEdge - bounceThreshold) {
+        type = 'strongBounce'
+      } else if (to > 0 || to < endEdge) {
+        type = 'weekBounce'
+      }
+
+      const maxOverflow = maxOverflowCount * itemHeight
+      to = minmax(to, endEdge - maxOverflow, maxOverflow)
 
       pickStart()
 
       stopInertia.current = animate({
         from: translate.current,
         to,
-        duration,
-        easing: easeOutCubic,
+        duration: mapBounceDuration[type],
+        easing: mapBounceEase[type],
         step(value) {
-          const extra = 1
+          const extra = mapBounceInertiaOverflowExtra[type]
           const withinTranslate = minmax(
             value,
-            (1 - itemCount - extra) * height,
-            extra * height,
+            (1 - itemCount - extra) * itemHeight,
+            extra * itemHeight,
           )
 
           if (value !== withinTranslate) {
             stopInertia.current?.()
-            toCorrectPosition(withinTranslate > 0 ? 0 : endEdge)
+            toCorrectPosition(withinTranslate >= 0 ? 0 : endEdge)
           } else {
             setTranslate(value)
           }
@@ -221,10 +259,10 @@ export const PickerColumn = memo(
           if (value > 0 || value < endEdge) {
             toCorrectPosition(value > 0 ? 0 : endEdge)
           } else {
-            if (column[-value / height].disabled) {
+            if (column[-value / itemHeight].disabled) {
               toCorrectPosition(value)
             } else {
-              finish(Math.abs(value / height))
+              complete(Math.abs(value / itemHeight))
             }
           }
         },
@@ -232,30 +270,35 @@ export const PickerColumn = memo(
     })
 
     const handlePanEnd = useEvent((event: StrikePanEvent) => {
-      if (moving.current) {
+      if (isMoving.current) {
         setTimeout(() => {
-          moving.current = false
+          isMoving.current = false
         }, 0)
       }
 
+      const endEdge = (1 - column.length) * itemHeight
+      const isOverflow = translate.current > 0 || translate.current < endEdge
+
       if (
         event.swipe &&
-        (event.direction === 'up' || event.direction === 'down')
+        (event.direction === 'up' || event.direction === 'down') &&
+        !isOverflow
       ) {
         return
       }
 
-      const itemCount = column.length
-      const endEdge = (1 - itemCount) * height
-
       pickStart()
 
       toCorrectPosition(
-        -Math.round(minmax(translate.current, endEdge, 0) / height) * height,
+        -Math.round(minmax(translate.current, endEdge, 0) / itemHeight) *
+          itemHeight,
       )
     })
 
-    const columnBinding = useStrike(
+    const columnRef = useRef()
+
+    useStrike(
+      columnRef,
       (strike) => {
         strike.on(PAN_START, handlePanStart)
         strike.on(PAN_MOVE, handlePanMove)
@@ -270,7 +313,7 @@ export const PickerColumn = memo(
     )
 
     useEffect(() => {
-      setTranslate(-currentIndex.current * height)
+      setTranslate(-currentIndex.current * itemHeight)
 
       return () => {
         stopInertia.current?.()
@@ -278,51 +321,12 @@ export const PickerColumn = memo(
       }
     }, [])
 
-    const handleItemClick = (index: number, option: PickerColumnOption) => {
-      if (moving.current || option.disabled) {
+    const handleItemClick = (index: number, option: PickerOption) => {
+      if (isMoving.current || option.disabled) {
         return
       }
       setIndex(index, true, true)
     }
-
-    const setIndex = useEvent(
-      (index: number, emitChange = false, animated = false) => {
-        index = minmax(index, 0, column.length - 1)
-        if (index === currentIndex.current) {
-          return
-        }
-        stopInertia.current?.()
-        stopCorrect.current?.()
-        const to = -index * height
-
-        pickStart()
-
-        toCorrectPosition(to, true, animated, emitChange)
-      },
-    )
-
-    const setIndexByValue = useEvent(
-      (value: any, emitChange?: boolean, animated?: boolean) => {
-        column.some((option, index) => {
-          if (option[fieldNames.value as string] === value) {
-            setIndex(index, emitChange, animated)
-            return true
-          }
-        })
-      },
-    )
-
-    // no limit, no disabled, no animate, no emit change
-    const setIndexForcibly = useEvent((index: number) => {
-      if (index === currentIndex.current) {
-        return
-      }
-      stopInertia.current?.()
-      stopCorrect.current?.()
-      const to = -index * height
-      currentIndex.current = index
-      setTranslate(to)
-    })
 
     const getIndex = useEvent(() => {
       return currentIndex.current
@@ -336,37 +340,100 @@ export const PickerColumn = memo(
       return columnIndex
     })
 
+    const setIndex = useEvent(
+      (index: number, emitChange = false, animated = false) => {
+        index = minmax(index, 0, column.length - 1)
+        if (index === currentIndex.current) {
+          return false
+        }
+        stopInertia.current?.()
+        stopCorrect.current?.()
+        const to = -index * itemHeight
+
+        pickStart()
+
+        toCorrectPosition(to, true, animated, emitChange)
+        return true
+      },
+    )
+
+    const setIndexByValue = useEvent(
+      (value: any, emitChange?: boolean, animated?: boolean) => {
+        return column.some((option, index) => {
+          if (option[fieldNames.value] === value) {
+            setIndex(index, emitChange, animated)
+            return true
+          }
+        })
+      },
+    )
+
+    // no disabled, no animate, no emit change
+    const setIndexForcibly = useEvent((index: number) => {
+      index = minmax(index, 0, column.length - 1)
+      stopInertia.current?.()
+      stopCorrect.current?.()
+      const to = -index * itemHeight
+      currentIndex.current = index
+      setTranslate(to)
+      pickEnd()
+      return true
+    })
+
+    const setIndexByValueForcibly = useEvent((value: any) => {
+      const index = column.findIndex(
+        (option) => option[fieldNames.value] === value,
+      )
+
+      if (index !== -1) {
+        return setIndexForcibly(index)
+      } else {
+        return false
+      }
+    })
+
+    const pickImmediately = useEvent(() => {
+      stopInertia.current?.()
+      stopCorrect.current?.()
+
+      const endEdge = (1 - column.length) * itemHeight
+      const to =
+        -Math.round(minmax(translate.current, endEdge, 0) / itemHeight) *
+        itemHeight
+
+      toCorrectPosition(to, false, false, true)
+    })
+
     useImperativeHandle(ref, () => ({
-      setIndex,
-      setIndexByValue,
-      setIndexForcibly,
       getIndex,
       getOption,
       getColumnIndex,
+      setIndex,
+      setIndexByValue,
+      setIndexForcibly,
+      setIndexByValueForcibly,
+      pickImmediately,
     }))
 
     return (
-      <div {...restProps} {...columnBinding} className="s-picker-column">
+      <div {...restProps} ref={columnRef} className="s-picker-column">
         <div className="s-picker-mask s-picker-mask-top"></div>
         <div className="s-picker-focus" style={{ height: focusHeight + 'px' }}>
           <div
             className="s-picker-action-area"
-            style={{ height: height + 'px' }}
+            style={{ height: itemHeight + 'px' }}
           >
             <div className="s-picker-item-group" ref={groupRef}>
-              {column.map((option, i) => {
-                columnMap.current[i] = option
+              {column.map((item, i) => {
                 return (
-                  <div
+                  <PickerItem
+                    {...item}
                     key={i}
-                    className={classNames('s-picker-item', {
-                      's-picker-item-disabled': option.disabled,
-                    })}
-                    style={{ height: height + 'px' }}
-                    onClick={() => handleItemClick(i, option)}
+                    height={itemHeight}
+                    onClick={() => handleItemClick(i, item)}
                   >
-                    {option[fieldNames.label as string]}
-                  </div>
+                    {item[fieldNames.label]}
+                  </PickerItem>
                 )
               })}
             </div>

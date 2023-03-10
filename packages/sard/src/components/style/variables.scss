@@ -94,8 +94,8 @@ $s-line-height-lg: 2 !default;
 
 // # 阴影
 $s-box-shadow-sm: 0 1px 3px rgb(0 0 0 / 40%);
-$s-box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
-$s-box-shadow-lg: 0 3px 10px rgb(0 0 0 / 15%);
+$s-box-shadow: 0 2px 6px rgb(0 0 0 / 5%);
+$s-box-shadow-lg: 0 3px 12px rgb(0 0 0 / 8%);
 $s-box-shadow-right: 1px 0 3px rgb(0 0 0 / 5%);
 
 // # 遮罩
@@ -117,3 +117,4 @@ $s-loading-cursor: default !default;
 
 // # transition
 $s-transition-duration: 0.3s !default;
+$s-transition-duration-fast: 0.15s !default;

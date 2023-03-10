@@ -3,9 +3,10 @@ $indent-gap: 15px !default;
 
 .doc-catalog {
   position: sticky;
-  width: 162px;
+  min-width: 162px;
   top: var(--doc-navbar-height);
   height: calc(100vh - var(--doc-navbar-height));
+  overflow-y: auto;
   padding: 0 20px;
 
   ul {
