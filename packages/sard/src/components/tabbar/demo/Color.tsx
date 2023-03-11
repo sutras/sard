@@ -10,7 +10,7 @@ export default function () {
     <Tabbar
       defaultActiveKey={0}
       fixed={false}
-      color="rebeccapurple"
+      color="fuchsia"
       activeColor="orange"
     >
       <Tabbar.Item icon={{ name: 'bi-house-door-fill' }}>首页</Tabbar.Item>

@@ -26,6 +26,7 @@ export default {
       title: 'Sard | React Component',
       description: 'Sard | React 移动端 UI 组件库',
     },
+    themeDataName: 'sTheme',
     routes: [
       {
         title: '首页',
@@ -50,6 +51,11 @@ export default {
                 title: 'icon 图标',
                 path: 'icon',
                 filePath: 'src/components/icon',
+              },
+              {
+                title: 'style 样式',
+                path: 'style',
+                filePath: 'src/components/style',
               },
             ],
           },
@@ -318,7 +324,7 @@ export default {
                 filePath: 'src/components/popup',
               },
               {
-                title: 'Transition 过渡?',
+                title: 'Transition 过渡',
                 path: 'transition',
                 filePath: 'src/components/transition',
               },

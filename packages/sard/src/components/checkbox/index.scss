@@ -1,17 +1,17 @@
-@use 'sass:math';
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-checkbox-icon-font-size: 1.25em !default;
-$s-checkbox-icon-color: $s-gray-300 !default;
-$s-checkbox-icon-checked-color: $s-primary !default;
-$s-checkbox-icon-transition-duration: $s-transition-duration !default;
+:root {
+  --s-checkbox-icon-font-size: 1.25em;
+  --s-checkbox-icon-color: var(--s-tertiary-color);
+  --s-checkbox-icon-checked-color: var(--s-primary);
+  --s-checkbox-icon-transition-duration: var(--s-duration);
 
-$s-checkbox-label-margin-left: 0.5em !default;
+  --s-checkbox-label-margin-left: 0.5em;
 
-$s-checkbox-margin-left: 1em !default;
-$s-checkbox-margin-top: 1em !default;
+  --s-checkbox-margin-left: 1em;
+  --s-checkbox-margin-top: 1em;
+}
 // #endvariables
 
 .s-checkbox {
@@ -23,14 +23,14 @@ $s-checkbox-margin-top: 1em !default;
 
   @at-root {
     .s-checkbox-icon {
-      font-size: $s-checkbox-icon-font-size;
+      font-size: var(--s-checkbox-icon-font-size);
       line-height: 1;
-      color: $s-checkbox-icon-color;
-      transition: color $s-checkbox-icon-transition-duration;
+      color: var(--s-checkbox-icon-color);
+      transition: color var(--s-checkbox-icon-transition-duration);
     }
     .s-checkbox-label {
       display: flex;
-      margin-left: $s-checkbox-label-margin-left;
+      margin-left: var(--s-checkbox-label-margin-left);
       user-select: auto;
     }
   }
@@ -39,7 +39,7 @@ $s-checkbox-margin-top: 1em !default;
 // # 选中状态
 .s-checkbox-checked {
   .s-checkbox-icon {
-    color: $s-checkbox-icon-checked-color;
+    color: var(--s-checkbox-icon-checked-color);
   }
 }
 
@@ -57,7 +57,7 @@ $s-checkbox-margin-top: 1em !default;
   align-items: center;
 
   &:not(.s-checkbox-group-vertical) .s-checkbox ~ .s-checkbox {
-    margin-left: $s-checkbox-margin-left;
+    margin-left: var(--s-checkbox-margin-left);
   }
 }
 .s-checkbox-group-vertical {
@@ -65,6 +65,6 @@ $s-checkbox-margin-top: 1em !default;
   justify-content: flex-start;
   align-items: flex-start;
   .s-checkbox ~ .s-checkbox {
-    margin-top: $s-checkbox-margin-top;
+    margin-top: var(--s-checkbox-margin-top);
   }
 }

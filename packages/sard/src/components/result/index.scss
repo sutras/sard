@@ -1,22 +1,22 @@
-@import '../style/variables.scss';
-
 // #variables
-$s-result-icon-font-size: 64px !default;
+:root {
+  --s-result-icon-font-size: 64px;
 
-$s-result-success-color: $s-success !default;
-$s-result-info-color: $s-info !default;
-$s-result-warning-color: $s-warning !default;
-$s-result-error-color: $s-danger !default;
-$s-result-question-color: $s-primary !default;
+  --s-result-success-color: var(--s-success);
+  --s-result-info-color: var(--s-info);
+  --s-result-warning-color: var(--s-warning);
+  --s-result-error-color: var(--s-danger);
+  --s-result-question-color: var(--s-primary);
 
-$s-result-title-margin-top: 15px !default;
-$s-result-title-font-size: $s-font-size-xl !default;
+  --s-result-title-margin-top: 15px;
+  --s-result-title-font-size: var(--s-text-xl);
 
-$s-result-description-margin-top: 5px !default;
-$s-result-description-font-size: $s-font-size !default;
-$s-result-description-color: $s-muted !default;
+  --s-result-description-margin-top: 5px;
+  --s-result-description-font-size: var(--s-text-base);
+  --s-result-description-color: var(--s-tertiary-color);
 
-$s-result-extra-margin-top: 20px !default;
+  --s-result-extra-margin-top: 20px;
+}
 // #endvariables
 
 .s-result {
@@ -28,40 +28,40 @@ $s-result-extra-margin-top: 20px !default;
 
   @at-root {
     .s-result-icon {
-      font-size: $s-result-icon-font-size;
+      font-size: var(--s-result-icon-font-size);
       line-height: 1;
       text-align: center;
     }
     .s-result-title {
-      margin-top: $s-result-title-margin-top;
-      font-size: $s-result-title-font-size;
+      margin-top: var(--s-result-title-margin-top);
+      font-size: var(--s-result-title-font-size);
       text-align: center;
     }
     .s-result-description {
-      margin-top: $s-result-description-margin-top;
-      font-size: $s-result-description-font-size;
-      color: $s-result-description-color;
+      margin-top: var(--s-result-description-margin-top);
+      font-size: var(--s-result-description-font-size);
+      color: var(--s-result-description-color);
       text-align: center;
     }
     .s-result-extra {
-      margin-top: $s-result-extra-margin-top;
+      margin-top: var(--s-result-extra-margin-top);
     }
   }
 }
 
 // 状态类型
 .s-result-success .s-result-icon {
-  color: $s-result-success-color;
+  color: var(--s-result-success-color);
 }
 .s-result-info .s-result-icon {
-  color: $s-result-info-color;
+  color: var(--s-result-info-color);
 }
 .s-result-warning .s-result-icon {
-  color: $s-result-warning-color;
+  color: var(--s-result-warning-color);
 }
 .s-result-error .s-result-icon {
-  color: $s-result-error-color;
+  color: var(--s-result-error-color);
 }
 .s-result-question .s-result-icon {
-  color: $s-result-question-color;
+  color: var(--s-result-question-color);
 }

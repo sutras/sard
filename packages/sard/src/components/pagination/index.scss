@@ -1,26 +1,25 @@
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-pagination-border-radius: $s-border-radius !default;
+:root {
+  --s-pagination-border-radius: var(--s-rounded);
 
-$s-pagination-item-height: 40px !default;
-$s-pagination-item-min-width: 40px !default;
-$s-pagination-item-padding-x: 10px !default;
-$s-pagination-item-border-color: $s-border-color !default;
-$s-pagination-item-font-size: $s-font-size !default;
-$s-pagination-item-color: $s-primary !default;
+  --s-pagination-item-height: 40px;
+  --s-pagination-item-min-width: 40px;
+  --s-pagination-item-padding-x: 10px;
+  --s-pagination-item-border-color: var(--s-border-color);
+  --s-pagination-item-font-size: var(--s-text-base);
+  --s-pagination-item-color: var(--s-primary);
+  --s-pagination-item-active-bg: var(--s-active-bg);
 
-$s-pagination-item-active-color: $s-white !default;
-$s-pagination-item-active-border-color: $s-primary !default;
-$s-pagination-item-active-bg: $s-primary !default;
+  --s-pagination-item-current-color: var(--s-white);
+  --s-pagination-item-current-border-color: var(--s-primary);
+  --s-pagination-item-current-bg: var(--s-primary);
 
-$s-pagination-item-disabled-color: $s-weak !default;
-
-$s-pagination-ratio-height: 40px !default;
-$s-pagination-ratio-font-size: $s-font-size !default;
-$s-pagination-ratio-color: $s-text-body !default;
-
+  --s-pagination-ratio-height: 40px;
+  --s-pagination-ratio-font-size: var(--s-text-base);
+  --s-pagination-ratio-color: var(--s-body-color);
+}
 // #endvariables
 
 .s-pagination {
@@ -28,23 +27,23 @@ $s-pagination-ratio-color: $s-text-body !default;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  border-radius: $s-pagination-border-radius;
+  border-radius: var(--s-pagination-border-radius);
   user-select: none;
 }
 
 .s-pagination-item {
   box-sizing: border-box;
   display: flex;
-  height: $s-pagination-item-height;
-  min-width: $s-pagination-item-min-width;
-  padding: 0 $s-pagination-item-padding-x;
+  height: var(--s-pagination-item-height);
+  min-width: var(--s-pagination-item-min-width);
+  padding: 0 var(--s-pagination-item-padding-x);
   flex: none;
   justify-content: center;
   align-items: center;
-  border: 1px solid $s-pagination-item-border-color;
-  font-size: $s-pagination-item-font-size;
+  border: 1px solid var(--s-pagination-item-border-color);
+  font-size: var(--s-pagination-item-font-size);
   white-space: nowrap;
-  color: $s-pagination-item-color;
+  color: var(--s-pagination-item-color);
   cursor: pointer;
   user-select: none;
 
@@ -66,16 +65,19 @@ $s-pagination-ratio-color: $s-text-body !default;
     border-radius: inherit;
   }
 
-  &.s-pagination-item-active {
+  &.s-pagination-item-current {
     z-index: 3;
-    color: $s-pagination-item-active-color;
-    border-color: $s-pagination-item-active-border-color;
-    background-color: $s-pagination-item-active-bg;
+    color: var(--s-pagination-item-current-color);
+    border-color: var(--s-pagination-item-current-border-color);
+    background-color: var(--s-pagination-item-current-bg);
   }
 
   &.s-pagination-item-disabled {
-    color: $s-pagination-item-disabled-color;
     @include disabled;
+  }
+
+  &:not(.s-pagination-item-disabled):active {
+    background-color: var(--s-pagination-item-active-bg);
   }
 }
 
@@ -89,9 +91,9 @@ $s-pagination-ratio-color: $s-text-body !default;
   flex: 1;
   align-items: center;
   justify-content: center;
-  height: $s-pagination-ratio-height;
-  font-size: $s-pagination-ratio-font-size;
-  color: $s-pagination-ratio-color;
+  height: var(--s-pagination-ratio-height);
+  font-size: var(--s-pagination-ratio-font-size);
+  color: var(--s-pagination-ratio-color);
 }
 
 .s-pagination-simple {

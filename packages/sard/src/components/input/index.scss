@@ -1,32 +1,33 @@
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-input-padding-y: 6.5px !default;
-$s-input-padding-x: 16px !default;
-$s-input-border-radius: $s-border-radius !default;
-$s-input-border-color: $s-border-color !default;
-$s-input-active-bg: transparent !default;
-$s-input-transition-duration: $s-transition-duration !default;
+:root {
+  --s-input-padding-y: 6.5px;
+  --s-input-padding-x: 16px;
+  --s-input-border-radius: var(--s-rounded);
+  --s-input-border-color: var(--s-border-color);
+  --s-input-active-bg: transparent;
+  --s-input-transition-duration: var(--s-duration);
 
-$s-input-focused-border-color: $s-primary !default;
+  --s-input-focused-border-color: var(--s-primary);
 
-$s-input-control-font-size: $s-font-size !default;
-$s-input-control-line-height: 1.5 !default;
-$s-input-control-min-height: 1em * $s-input-control-line-height !default;
+  --s-input-control-font-size: var(--s-text-base);
+  --s-input-control-line-height: 1.5;
+  --s-input-control-min-height: calc(1em * var(--s-input-control-line-height));
 
-$s-input-placeholder-color: $s-text-weak !default;
+  --s-input-placeholder-color: var(--s-deemphasis-color);
 
-$s-input-prepend-gap-right: 10px !default;
-$s-input-append-gap-left: 10px !default;
+  --s-input-prepend-gap-right: 10px;
+  --s-input-append-gap-left: 10px;
 
-$s-input-clear-margin-left: 0.5em !default;
-$s-input-clear-padding-x: 0.5em !default;
-$s-input-clear-color: $s-weak !default;
+  --s-input-clear-margin-left: 0.5em;
+  --s-input-clear-padding-x: 0.5em;
+  --s-input-clear-color: var(--s-tertiary-color);
 
-$s-input-count-margin-left: 0.5em !default;
-$s-input-count-font-size: 14px !default;
-$s-input-count-color: $s-gray-500 !default;
+  --s-input-count-margin-left: 0.5em;
+  --s-input-count-font-size: 14px;
+  --s-input-count-color: var(--s-tertiary-color);
+}
 // #endvariables
 
 .s-input {
@@ -34,17 +35,17 @@ $s-input-count-color: $s-gray-500 !default;
   display: flex;
   align-items: center;
   flex: 1 1 0;
-  padding: $s-input-padding-y $s-input-padding-x;
-  border: 1px solid $s-input-border-color;
-  border-radius: $s-input-border-radius;
+  padding: var(--s-input-padding-y) var(--s-input-padding-x);
+  border: 1px solid var(--s-input-border-color);
+  border-radius: var(--s-input-border-radius);
   font-family: inherit;
-  font-size: $s-input-control-font-size;
-  line-height: $s-input-control-line-height;
-  transition: $s-input-transition-duration;
+  font-size: var(--s-input-control-font-size);
+  line-height: var(--s-input-control-line-height);
+  transition: var(--s-input-transition-duration);
   cursor: text;
 
   // &:active {
-  //   background-color: $s-input-active-bg;
+  //   background-color: var(--s-input-active-bg);
   // }
 
   @at-root {
@@ -52,7 +53,7 @@ $s-input-count-color: $s-gray-500 !default;
       display: flex;
       align-items: center;
       flex: none;
-      margin-right: $s-input-prepend-gap-right;
+      margin-right: var(--s-input-prepend-gap-right);
     }
     .s-input-control {
       display: flex;
@@ -62,7 +63,7 @@ $s-input-count-color: $s-gray-500 !default;
       max-width: 100%;
       min-width: 0;
       height: auto;
-      min-height: $s-input-control-min-height;
+      min-height: var(--s-input-control-min-height);
       margin: 0;
       padding: 0;
       border: none;
@@ -87,10 +88,8 @@ $s-input-count-color: $s-gray-500 !default;
         outline: none;
       }
 
-      @at-root {
-        .s-input-placeholder {
-          color: $s-input-placeholder-color;
-        }
+      &::-webkit-input-placeholder {
+        color: var(--s-input-placeholder-color);
       }
     }
     .s-input-append {
@@ -98,7 +97,7 @@ $s-input-count-color: $s-gray-500 !default;
       align-items: center;
       justify-content: center;
       flex: none;
-      margin-left: $s-input-append-gap-left;
+      margin-left: var(--s-input-append-gap-left);
     }
     .s-input-clear {
       @include button-flush;
@@ -108,17 +107,16 @@ $s-input-count-color: $s-gray-500 !default;
       align-self: stretch;
       justify-content: center;
       align-items: center;
-      margin-left: $s-input-clear-margin-left;
-      margin-right: -$s-input-clear-padding-x;
-      padding: 0 $s-input-clear-padding-x;
-      color: $s-input-clear-color;
+      margin-left: var(--s-input-clear-margin-left);
+      padding: 0 var(--s-input-clear-padding-x);
+      color: var(--s-input-clear-color);
       cursor: pointer;
       user-select: none;
     }
     .s-input-count {
-      margin-left: $s-input-count-margin-left;
-      font-size: $s-input-count-font-size;
-      color: $s-input-count-color;
+      margin-left: var(--s-input-count-margin-left);
+      font-size: var(--s-input-count-font-size);
+      color: var(--s-input-count-color);
     }
   }
 }
@@ -138,7 +136,7 @@ $s-input-count-color: $s-gray-500 !default;
 
 // # 焦点状态
 .s-input-focused {
-  border-color: $s-input-focused-border-color;
+  border-color: var(--s-input-focused-border-color);
 }
 
 // # 禁用状态

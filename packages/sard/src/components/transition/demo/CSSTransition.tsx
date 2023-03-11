@@ -34,18 +34,15 @@ export default function () {
       </Radio.Group>
 
       <br />
-      <br />
 
       <Button onClick={handleClick}>Toggle Visible</Button>
-
-      <br />
-      <br />
 
       <CSSTransition in={visible} type={type} timeout={300}>
         <section
           style={{
             width: 100,
             height: 100,
+            margin: 100,
             background: 'orange',
           }}
         ></section>

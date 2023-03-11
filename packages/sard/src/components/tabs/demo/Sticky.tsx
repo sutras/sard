@@ -7,7 +7,10 @@ import { Tabs, TabPane } from 'sard'
 export default function () {
   return (
     <>
-      <Tabs sticky headerStyle={{ top: 50, background: '#fff' }}>
+      <Tabs
+        sticky
+        headerStyle={{ top: 60, background: 'var(--s-emphasis-bg)' }}
+      >
         {Array(3)
           .fill(0)
           .map((_, i) => (

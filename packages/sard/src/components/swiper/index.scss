@@ -1,13 +1,13 @@
-@import '../style/variables.scss';
-
 // #variables
-$s-swiper-dots-gap: 10px !default;
-$s-swiper-dot-width: 8px !default;
-$s-swiper-dot-height: 8px !default;
-$s-swiper-dot-gap: 8px !default;
-$s-swiper-dot-border-radius: 50% !default;
-$s-swiper-dot-bg: rgba(255, 255, 255, 0.3) !default;
-$s-swiper-dot-active-bg: rgba(255, 255, 255, 1) !default;
+:root {
+  --s-swiper-dots-gap: 10px;
+  --s-swiper-dot-width: 8px;
+  --s-swiper-dot-height: 8px;
+  --s-swiper-dot-gap: 8px;
+  --s-swiper-dot-border-radius: 50%;
+  --s-swiper-dot-bg: rgba(255, 255, 255, 0.3);
+  --s-swiper-dot-active-bg: rgba(255, 255, 255, 1);
+}
 // #endvariables
 
 .s-swiper {
@@ -47,14 +47,14 @@ $s-swiper-dot-active-bg: rgba(255, 255, 255, 1) !default;
 }
 .s-swiper-dots {
   position: absolute;
-  bottom: $s-swiper-dots-gap;
+  bottom: var(--s-swiper-dots-gap);
   left: 50%;
   display: flex;
   transform: translateX(-50%);
 
   .s-swiper-vertical & {
     bottom: auto;
-    left: $s-swiper-dots-gap;
+    left: var(--s-swiper-dots-gap);
     top: 50%;
     flex-direction: column;
     transform: translateY(-50%);
@@ -62,19 +62,19 @@ $s-swiper-dot-active-bg: rgba(255, 255, 255, 1) !default;
 
   @at-root {
     .s-swiper-dot {
-      width: $s-swiper-dot-width;
-      height: $s-swiper-dot-height;
-      border-radius: $s-swiper-dot-border-radius;
-      background-color: $s-swiper-dot-bg;
+      width: var(--s-swiper-dot-width);
+      height: var(--s-swiper-dot-height);
+      border-radius: var(--s-swiper-dot-border-radius);
+      background-color: var(--s-swiper-dot-bg);
       &:not(:first-child) {
-        margin-left: $s-swiper-dot-gap;
+        margin-left: var(--s-swiper-dot-gap);
         .s-swiper-vertical & {
           margin-left: 0;
-          margin-top: $s-swiper-dot-gap;
+          margin-top: var(--s-swiper-dot-gap);
         }
       }
       &.s-swiper-dot-active {
-        background-color: $s-swiper-dot-active-bg;
+        background-color: var(--s-swiper-dot-active-bg);
       }
       .s-swiper-dot-clickable & {
         cursor: pointer;

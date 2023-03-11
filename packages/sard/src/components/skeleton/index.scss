@@ -1,27 +1,28 @@
-@use 'sass:color';
-@import '../style/variables.scss';
-
 // #variables
-$s-skeleton-bg: $s-gray-200 !default;
-$s-skeleton-dark-bg: $s-gray-400 !default;
-$s-skeleton-border-radius: $s-border-radius-sm !default;
+:root {
+  --s-skeleton-bg: var(--s-secondary-bg);
+  --s-skeleton-bg-rgb: var(--s-secondary-bg-rgb);
+  --s-skeleton-dark-bg-rgb: var(--s-gray-400-rgb);
+  --s-skeleton-border-radius: var(--s-rounded-sm);
 
-$s-skeleton-avatar-size: 32px !default;
-$s-skeleton-avatar-margin-right: 15px !default;
+  --s-skeleton-avatar-size: 32px;
+  --s-skeleton-avatar-margin-right: 15px;
 
-$s-skeleton-content-padding-top: 5px !default;
+  --s-skeleton-title-width: 40%;
+  --s-skeleton-title-height: 20px;
+  --s-skeleton-title-gap: 20px;
 
-$s-skeleton-title-width: 40% !default;
-$s-skeleton-title-height: 20px !default;
-$s-skeleton-title-gap: 20px !default;
+  --s-skeleton-row-last-width: 60%;
+  --s-skeleton-row-gap: 15px;
 
-$s-skeleton-row-last-width: 60% !default;
-$s-skeleton-row-gap: 15px !default;
+  --s-skeleton-block-height: 15px;
 
-$s-skeleton-block-height: 15px !default;
+  --s-skeleton-row-gap: 15px;
+}
 
-$s-skeleton-row-gap: 15px !default;
-
+[data-s-theme='dark'] {
+  --s-skeleton-dark-bg-rgb: var(--s-gray-600-rgb);
+}
 // #endvariables
 
 // # animated
@@ -37,9 +38,9 @@ $s-skeleton-row-gap: 15px !default;
 .s-skeleton-animated {
   background: linear-gradient(
     90deg,
-    color.change($s-skeleton-bg, $alpha: 0.2) 25%,
-    color.change($s-skeleton-dark-bg, $alpha: 0.6) 40%,
-    color.change($s-skeleton-bg, $alpha: 0.2) 60%
+    rgb(var(--s-skeleton-bg-rgb), 0.2) 25%,
+    rgb(var(--s-skeleton-dark-bg-rgb), 0.6) 40%,
+    rgb(var(--s-skeleton-bg-rgb), 0.2) 60%
   );
   background-size: 400% 100%;
   animation: s-skeleton-animated 1.5s ease infinite;
@@ -48,9 +49,9 @@ $s-skeleton-row-gap: 15px !default;
 // # block
 .s-skeleton-block {
   width: 100%;
-  height: $s-skeleton-block-height;
-  background-color: $s-skeleton-bg;
-  border-radius: $s-skeleton-border-radius;
+  height: var(--s-skeleton-block-height);
+  background-color: var(--s-skeleton-bg);
+  border-radius: var(--s-skeleton-border-radius);
 }
 
 // # round
@@ -61,31 +62,31 @@ $s-skeleton-row-gap: 15px !default;
 // # avatar
 .s-skeleton-avatar {
   flex: none;
-  width: $s-skeleton-avatar-size;
-  height: $s-skeleton-avatar-size;
-  background-color: $s-skeleton-bg;
+  width: var(--s-skeleton-avatar-size);
+  height: var(--s-skeleton-avatar-size);
+  background-color: var(--s-skeleton-bg);
 }
 .s-skeleton-avatar-round {
   border-radius: 50%;
 }
 .s-skeleton-avatar-square {
-  border-radius: $s-skeleton-border-radius;
+  border-radius: var(--s-skeleton-border-radius);
 }
 
 // # title
 .s-skeleton-title {
-  width: $s-skeleton-title-width;
-  height: $s-skeleton-title-height;
-  background-color: $s-skeleton-bg;
+  width: var(--s-skeleton-title-width);
+  height: var(--s-skeleton-title-height);
+  background-color: var(--s-skeleton-bg);
 }
 
 // # paragraph
 .s-skeleton-row {
   &:not(:first-child) {
-    margin-top: $s-skeleton-row-gap;
+    margin-top: var(--s-skeleton-row-gap);
   }
   &:last-child {
-    width: $s-skeleton-row-last-width;
+    width: var(--s-skeleton-row-last-width);
   }
 }
 
@@ -97,18 +98,14 @@ $s-skeleton-row-gap: 15px !default;
   @at-root {
     .s-skeleton-content {
       flex: 1;
-
-      .s-skeleton-avatar ~ & {
-        padding-top: $s-skeleton-content-padding-top;
-      }
     }
   }
 
   .s-skeleton-avatar {
-    margin-right: $s-skeleton-avatar-margin-right;
+    margin-right: var(--s-skeleton-avatar-margin-right);
   }
 
   .s-skeleton-title ~ .s-skeleton-paragraph {
-    margin-top: $s-skeleton-title-gap;
+    margin-top: var(--s-skeleton-title-gap);
   }
 }

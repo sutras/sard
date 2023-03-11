@@ -2,6 +2,7 @@ import MarkdownIt from 'markdown-it'
 import { normalizePath } from 'vite'
 import path from 'node:path'
 import esbuild from 'esbuild'
+import { readFileSync, existsSync } from 'fs'
 import {
   MD_DEMO_CODE_R,
   MD_DEMO_CODE_SEPARATOR,
@@ -46,6 +47,25 @@ const renderStrategies = {
   },
 }
 
+function getVariables(text) {
+  const result =
+    /(?<=#variables)[\s\S]*?(?=\/\/\s*#endvariables)/.exec(text)?.[0] || ''
+  return result
+    .replace(/^\s*|\s*$/g, '')
+    .replace(/^/, '```scss\n')
+    .replace(/$/, '\n```')
+}
+
+function extractCssVariables(id) {
+  const file = path.resolve(path.dirname(id), 'index.scss')
+
+  if (existsSync(file)) {
+    return getVariables(readFileSync(file, 'utf-8'))
+  } else {
+    return ''
+  }
+}
+
 function transform(code, id, md) {
   if (!MD_PATH_R.test(id)) {
     return
@@ -65,6 +85,10 @@ function transform(code, id, md) {
     }
     return html_block(tokens, idx, options, env, self)
   }
+
+  code = code.replace('%{variables}', () => {
+    return extractCssVariables(id)
+  })
 
   let html = md.render(code)
 

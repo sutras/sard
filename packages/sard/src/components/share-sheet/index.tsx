@@ -120,9 +120,12 @@ export const ShareSheet: ShareSheetFC = ((props) => {
         {cancel && (
           <>
             <div className="s-share-sheet-gap"></div>
-            <div className="s-share-sheet-cancel" onClick={handleCancelClick}>
+            <button
+              className="s-share-sheet-cancel"
+              onClick={handleCancelClick}
+            >
               {cancel}
-            </div>
+            </button>
           </>
         )}
       </div>

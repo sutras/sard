@@ -20,7 +20,7 @@ export default function () {
   }
   const endStyle = {
     ...buttonStyle,
-    backgroundColor: 'rebeccapurple',
+    backgroundColor: 'fuchsia',
   }
 
   const startButton = (value: number) => <div style={startStyle}>{value}</div>

@@ -62,8 +62,6 @@ type DatetimeLetter = 'y' | 'M' | 'd' | 'h' | 'm' | 's'
 
 ## 主题定制
 
-### SCSS
+### CSS 变量
 
-```scss
-
-```
+%{variables}

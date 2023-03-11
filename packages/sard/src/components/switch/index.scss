@@ -1,50 +1,52 @@
-@use 'sass:math';
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-switch-width: 1.6667em !default;
-$s-switch-height: 1em !default;
-$s-switch-border-width: 0 !default;
-$s-switch-border-color: $s-border-color !default;
-$s-switch-font-size: 30px !default;
-$s-switch-transition-duration: $s-transition-duration !default;
-$s-switch-bg: $s-gray-300 !default;
-$s-switch-checked-bg: $s-primary !default;
+:root {
+  --s-switch-width: 1.6667em;
+  --s-switch-height: 1em;
+  --s-switch-border-width: 0;
+  --s-switch-border-color: var(--s-border-color);
+  --s-switch-font-size: 30px;
+  --s-switch-transition-duration: var(--s-duration);
+  --s-switch-bg: var(--s-secondary-bg);
+  --s-switch-checked-bg: var(--s-primary);
 
-$s-switch-is-loading-pointer-events: $s-loading-pointer-events !default;
-$s-switch-is-loading-cursor: $s-loading-cursor !default;
-$s-switch-is-loading-opacity: 0.6 !default;
+  --s-switch-is-loading-pointer-events: var(--s-loading-pointer-events);
+  --s-switch-is-loading-cursor: var(--s-loading-cursor);
+  --s-switch-is-loading-opacity: var(--s-loading-opacity);
 
-$s-switch-thumb-width: $s-switch-height !default;
-$s-switch-thumb-height: $s-switch-height !default;
-$s-switch-thumb-border-width: 2px !default;
-$s-switch-thumb-border-radius: 50% !default;
-$s-switch-thumb-bg: #fff !default;
-$s-switch-thumb-box-shadow: none !default;
-$s-switch-thumb-transition-duration: $s-transition-duration !default;
-$s-switch-thumb-checked-left: $s-switch-width - $s-switch-thumb-width !default;
+  --s-switch-thumb-width: var(--s-switch-height);
+  --s-switch-thumb-height: var(--s-switch-height);
+  --s-switch-thumb-border-width: 2px;
+  --s-switch-thumb-border-radius: 50%;
+  --s-switch-thumb-bg: var(--s-white);
+  --s-switch-thumb-box-shadow: none;
+  --s-switch-thumb-transition-duration: var(--s-duration);
+  --s-switch-thumb-checked-left: calc(
+    var(--s-switch-width) - var(--s-switch-thumb-width)
+  );
 
-$s-switch-loading-font-size: 0.5em !default;
-$s-switch-loading-color: inherit !default;
+  --s-switch-loading-font-size: 0.5em;
+  --s-switch-loading-color: inherit;
+}
 // #endvariables
 
 .s-switch {
   position: relative;
   box-sizing: content-box;
   display: inline-flex;
-  width: $s-switch-width;
-  height: $s-switch-height;
-  border: $s-switch-border-width solid $s-switch-border-color;
-  border-radius: $s-switch-height;
-  font-size: $s-switch-font-size;
-  background-color: $s-switch-bg;
+  width: var(--s-switch-width);
+  height: var(--s-switch-height);
+  border: var(--s-switch-border-width) solid var(--s-switch-border-color);
+  border-radius: var(--s-switch-height);
+  font-size: var(--s-switch-font-size);
+  background-color: var(--s-switch-bg);
   vertical-align: middle;
   user-select: none;
   cursor: pointer;
-  transition: background-color $s-switch-transition-duration,
-    border-color $s-switch-transition-duration,
-    opacity $s-switch-transition-duration;
+  transition: background-color var(--s-switch-transition-duration),
+    border-color var(--s-switch-transition-duration),
+    opacity var(--s-switch-transition-duration);
 
   @at-root {
     .s-switch-thumb {
@@ -55,19 +57,19 @@ $s-switch-loading-color: inherit !default;
       display: flex;
       justify-content: center;
       align-items: center;
-      width: $s-switch-thumb-width;
-      height: $s-switch-thumb-height;
-      border: $s-switch-thumb-border-width solid transparent;
-      border-radius: $s-switch-thumb-border-radius;
+      width: var(--s-switch-thumb-width);
+      height: var(--s-switch-thumb-height);
+      border: var(--s-switch-thumb-border-width) solid transparent;
+      border-radius: var(--s-switch-thumb-border-radius);
       background-clip: content-box;
-      background-color: $s-switch-thumb-bg;
-      box-shadow: $s-switch-thumb-box-shadow;
-      transition: transform $s-switch-thumb-transition-duration;
+      background-color: var(--s-switch-thumb-bg);
+      box-shadow: var(--s-switch-thumb-box-shadow);
+      transition: transform var(--s-switch-thumb-transition-duration);
 
       @at-root {
         .s-switch-loading {
-          font-size: $s-switch-loading-font-size;
-          color: $s-switch-loading-color;
+          font-size: var(--s-switch-loading-font-size);
+          color: var(--s-switch-loading-color);
         }
       }
     }
@@ -77,9 +79,9 @@ $s-switch-loading-color: inherit !default;
 // # 开启状态
 .s-switch-checked {
   border-color: transparent;
-  background-color: $s-switch-checked-bg;
+  background-color: var(--s-switch-checked-bg);
   .s-switch-thumb {
-    transform: translateX($s-switch-thumb-checked-left);
+    transform: translateX(var(--s-switch-thumb-checked-left));
   }
 }
 
@@ -95,7 +97,7 @@ $s-switch-loading-color: inherit !default;
 
 // # 加载状态
 .s-switch-is-loading {
-  pointer-events: $s-switch-is-loading-pointer-events;
-  opacity: $s-switch-is-loading-opacity;
-  cursor: $s-switch-is-loading-cursor;
+  pointer-events: var(--s-switch-is-loading-pointer-events);
+  opacity: var(--s-switch-is-loading-opacity);
+  cursor: var(--s-switch-is-loading-cursor);
 }

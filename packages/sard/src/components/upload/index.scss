@@ -1,9 +1,48 @@
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-template: 1em;
+:root {
+  --s-upload-preview-width: 80px;
+  --s-upload-preview-height: 80px;
+  --s-upload-preview-gap: 8px;
+  --s-upload-preview-border-radius: var(--s-rounded);
+  --s-upload-preview-bg: var(--s-secondary-bg);
 
+  --s-upload-preview-file-color: var(--s-body-color);
+  --s-upload-preview-file-icon-font-size: 20px;
+  --s-upload-preview-file-name-margin-top: 5px;
+  --s-upload-preview-file-name-padding-x: 5px;
+  --s-upload-preview-file-name-font-size: var(--s-text-sm);
+
+  --s-upload-preview-status-color: var(--s-white);
+  --s-upload-preview-status-bg: var(--s-mask-dark);
+  --s-upload-preview-status-icon-font-size: 20px;
+  --s-upload-preview-status-message-margin-top: 5px;
+  --s-upload-preview-status-message-padding-x: 5px;
+  --s-upload-preview-status-message-font-size: var(--s-text-sm);
+
+  --s-upload-preview-close-top: 2px;
+  --s-upload-preview-close-right: 2px;
+  --s-upload-preview-close-width: 20px;
+  --s-upload-preview-close-height: 20px;
+  --s-upload-preview-close-font-size: var(--s-text-sm);
+  --s-upload-preview-close-color: var(--s-white);
+  --s-upload-preview-close-bg: var(--s-mask-dark);
+
+  --s-upload-select-width: 80px;
+  --s-upload-select-height: 80px;
+  --s-upload-select-font-size: 24px;
+  --s-upload-select-color: var(--s-secondary-color);
+  --s-upload-select-border-radius: var(--s-rounded);
+  --s-upload-select-bg: var(--s-secondary-bg);
+  --s-upload-select-active-bg: var(--s-gray-300);
+
+  --s-upload-input-wrapper-margin-bottom: 10px;
+}
+
+[data-s-theme='dark'] {
+  --s-upload-select-active-bg: var(--s-gray-600);
+}
 // #endvariables
 
 .s-upload {
@@ -13,21 +52,21 @@ $s-template: 1em;
     .s-upload-wrapper {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: var(--s-upload-preview-gap);
     }
   }
 }
 
 .s-upload-preview {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: var(--s-upload-preview-width);
+  height: var(--s-upload-preview-height);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-radius: $s-border-radius;
-  background-color: $s-gray-200;
+  border-radius: var(--s-upload-preview-border-radius);
+  background-color: var(--s-upload-preview-bg);
   cursor: pointer;
 
   @at-root {
@@ -45,18 +84,18 @@ $s-template: 1em;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: $s-gray-800;
+      color: var(--s-upload-preview-file-color);
 
       @at-root {
         .s-upload-preview-file-icon {
-          font-size: 20px;
+          font-size: var(--s-upload-preview-file-icon-font-size);
         }
         .s-upload-preview-file-name {
           box-sizing: border-box;
           max-width: 100%;
-          padding: 0 5px;
-          margin-top: 5px;
-          font-size: 12px;
+          padding: 0 var(--s-upload-preview-file-name-padding-x);
+          margin-top: var(--s-upload-preview-file-name-margin-top);
+          font-size: var(--s-upload-preview-file-name-font-size);
           @include ellipsis;
         }
       }
@@ -73,20 +112,20 @@ $s-template: 1em;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: $s-white;
-      background-color: $s-mask-dark;
+      color: var(--s-upload-preview-status-color);
+      background-color: var(--s-upload-preview-status-bg);
 
       @at-root {
         .s-upload-preview-status-icon {
           display: flex;
-          font-size: 20px;
+          font-size: var(--s-upload-preview-status-icon-font-size);
         }
         .s-upload-preview-status-message {
           box-sizing: border-box;
           max-width: 100%;
-          padding: 0 5px;
-          margin-top: 5px;
-          font-size: 12px;
+          padding: 0 var(--s-upload-preview-status-message-padding-x);
+          margin-top: var(--s-upload-preview-status-message-margin-top);
+          font-size: var(--s-upload-preview-status-message-font-size);
           @include ellipsis;
         }
       }
@@ -103,17 +142,17 @@ $s-template: 1em;
 
       @at-root {
         .s-upload-preview-close {
-          margin-right: 2px;
-          margin-top: 2px;
+          margin-right: var(--s-upload-preview-close-right);
+          margin-top: var(--s-upload-preview-close-top);
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 20px;
-          height: 20px;
-          font-size: 12px;
+          width: var(--s-upload-preview-close-width);
+          height: var(--s-upload-preview-close-height);
+          font-size: var(--s-upload-preview-close-font-size);
           border-radius: 50%;
-          background-color: $s-gray-600;
-          color: $s-white;
+          color: var(--s-upload-preview-close-color);
+          background-color: var(--s-upload-preview-close-bg);
         }
       }
     }
@@ -126,16 +165,16 @@ $s-template: 1em;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 80px;
-  height: 80px;
-  font-size: 24px;
-  color: $s-gray-600;
-  border-radius: $s-border-radius;
-  background-color: $s-gray-200;
+  width: var(--s-upload-select-width);
+  height: var(--s-upload-select-height);
+  font-size: var(--s-upload-select-font-size);
+  color: var(--s-upload-select-color);
+  border-radius: var(--s-upload-select-border-radius);
+  background-color: var(--s-upload-select-bg);
   cursor: pointer;
 
   .s-upload:not(.s-upload-disabled) &:active {
-    background-color: $s-gray-300;
+    background-color: var(--s-upload-select-active-bg);
   }
 
   .s-upload-disabled & {
@@ -159,7 +198,7 @@ $s-template: 1em;
 
 .s-upload-input-wrapper {
   position: relative;
-  margin-bottom: 10px;
+  margin-bottom: var(--s-upload-input-wrapper-margin-bottom);
 
   .s-upload-disabled & {
     @include disabled;

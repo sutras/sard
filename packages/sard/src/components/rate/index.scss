@@ -1,19 +1,23 @@
-@import '../style/variables.scss';
-
 // #variables
-$s-rate-font-size: 20px !default;
+:root {
+  --s-rate-font-size: 20px;
 
-$s-rate-item-margin-left: 10px !default;
+  --s-rate-item-margin-left: 10px;
 
-$s-rate-star-void-color: $s-gray-400 !default;
-$s-rate-star-color: $s-warning !default;
+  --s-rate-star-void-color: var(--s-tertiary-color);
+  --s-rate-star-color: var(--s-warning);
+}
+
+[data-s-theme='dark'] {
+  // --s-rate-star-void-color: var(--s-gray-500);
+}
 // #endvariables
 
 .s-rate {
   display: inline-flex;
   flex-direction: row;
   white-space: nowrap;
-  font-size: $s-rate-font-size;
+  font-size: var(--s-rate-font-size);
   user-select: none;
   cursor: pointer;
   touch-action: pan-y;
@@ -23,20 +27,20 @@ $s-rate-star-color: $s-warning !default;
       position: relative;
 
       ~ .s-rate-item {
-        margin-left: $s-rate-item-margin-left;
+        margin-left: var(--s-rate-item-margin-left);
       }
 
       @at-root {
         .s-rate-star-void {
           position: relative;
-          color: $s-rate-star-void-color;
+          color: var(--s-rate-star-void-color);
         }
         .s-rate-star {
           position: absolute;
           top: 0;
           left: 0;
           overflow: hidden;
-          color: $s-rate-star-color;
+          color: var(--s-rate-star-color);
         }
       }
     }

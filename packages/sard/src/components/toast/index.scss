@@ -1,24 +1,23 @@
-@import '../style/variables.scss';
-
 // #variables
-$s-toast-font-size: $s-font-size !default;
-$s-toast-width: $s-toast-font-size * 9 !default;
-$s-toast-not-text-min-height: $s-toast-font-size * 9 !default;
-$s-toast-padding-x: $s-toast-font-size !default;
-$s-toast-padding-y: $s-toast-font-size !default;
-$s-toast-border-radius: $s-border-radius-lg !default;
-$s-toast-color: $s-white !default;
-$s-toast-bg: $s-mask-dark !default;
+:root {
+  --s-toast-font-size: var(--s-text-base);
+  --s-toast-width: calc(var(--s-toast-font-size) * 9);
+  --s-toast-not-text-min-height: var(--s-toast-width);
+  --s-toast-padding-x: var(--s-toast-font-size);
+  --s-toast-padding-y: var(--s-toast-font-size);
+  --s-toast-border-radius: var(--s-rounded-lg);
+  --s-toast-color: var(--s-white);
+  --s-toast-bg: var(--s-mask-dark);
 
-$s-toast-text-max-width: 80vw !default;
-$s-toast-text-padding-y: 10px !default;
+  --s-toast-text-max-width: 80vw;
+  --s-toast-text-padding-y: 10px;
 
-$s-toast-icon-margin-bottom: 8px !default;
-$s-toast-icon-font-size: 36px !default;
+  --s-toast-icon-margin-bottom: 8px;
+  --s-toast-icon-font-size: 36px;
 
-$s-toast-title-font-size: $s-toast-font-size !default;
-$s-toast-title-line-height: $s-line-height !default;
-
+  --s-toast-title-font-size: var(--s-toast-font-size);
+  --s-toast-title-line-height: var(--s-leading-normal);
+}
 // #endvariables
 
 .s-toast {
@@ -27,20 +26,20 @@ $s-toast-title-line-height: $s-line-height !default;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  width: $s-toast-width;
-  padding: $s-toast-padding-y $s-toast-padding-x;
-  border-radius: $s-toast-border-radius;
-  color: $s-toast-color;
-  background-color: $s-toast-bg;
+  width: var(--s-toast-width);
+  padding: var(--s-toast-padding-y) var(--s-toast-padding-x);
+  border-radius: var(--s-toast-border-radius);
+  color: var(--s-toast-color);
+  background-color: var(--s-toast-bg);
 
   &:not(.s-toast-text) {
-    min-height: $s-toast-not-text-min-height;
+    min-height: var(--s-toast-not-text-min-height);
   }
   &.s-toast-text {
     width: auto;
-    max-width: $s-toast-text-max-width;
-    padding-top: $s-toast-text-padding-y;
-    padding-bottom: $s-toast-text-padding-y;
+    max-width: var(--s-toast-text-max-width);
+    padding-top: var(--s-toast-text-padding-y);
+    padding-bottom: var(--s-toast-text-padding-y);
     white-space: normal;
     word-break: break-all;
   }
@@ -51,12 +50,12 @@ $s-toast-title-line-height: $s-line-height !default;
   align-items: center;
   width: 1em;
   height: 1em;
-  margin-bottom: $s-toast-icon-margin-bottom;
-  font-size: $s-toast-icon-font-size;
+  margin-bottom: var(--s-toast-icon-margin-bottom);
+  font-size: var(--s-toast-icon-font-size);
   text-align: center;
 }
 .s-toast-title {
-  font-size: $s-toast-title-font-size;
-  line-height: $s-toast-title-line-height;
+  font-size: var(--s-toast-title-font-size);
+  line-height: var(--s-toast-title-line-height);
   text-align: center;
 }

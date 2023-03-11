@@ -1,45 +1,51 @@
 @import '../style/variables.scss';
-@import '../style/functions.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-button-height: 36px !default;
-$s-button-padding-y: 0 !default;
-$s-button-padding-x: $s-font-size !default;
-$s-button-border-radius: $s-border-radius !default;
-$s-button-font-size: $s-font-size !default;
+:root {
+  --s-button-height: 36px;
+  --s-button-padding-y: 0;
+  --s-button-padding-x: 15px;
+  --s-button-border-radius: var(--s-rounded);
+  --s-button-font-size: var(--s-text-base);
 
-$s-button-height-sm: 28px !default;
-$s-button-padding-y-sm: 0 !default;
-$s-button-padding-x-sm: $s-font-size-sm !default;
-$s-button-border-radius-sm: $s-border-radius-sm !default;
-$s-button-font-size-sm: $s-font-size-sm !default;
+  --s-button-height-sm: 28px;
+  --s-button-padding-y-sm: 0;
+  --s-button-padding-x-sm: 8px;
+  --s-button-border-radius-sm: var(--s-rounded-sm);
+  --s-button-font-size-sm: var(--s-text-sm);
 
-$s-button-height-lg: 50px !default;
-$s-button-padding-y-lg: 0 !default;
-$s-button-padding-x-lg: $s-font-size-lg !default;
-$s-button-border-radius-lg: $s-border-radius-lg !default;
-$s-button-font-size-lg: $s-font-size-lg !default;
+  --s-button-height-lg: 50px;
+  --s-button-padding-y-lg: 0;
+  --s-button-padding-x-lg: 20px;
+  --s-button-border-radius-lg: var(--s-rounded-lg);
+  --s-button-font-size-lg: var(--s-text-lg);
 
-$s-button-line-height: $s-line-height !default;
-$s-button-white-space: nowrap !default;
-$s-button-border-width: 1px !default;
+  --s-button-line-height: var(--s-leading-normal);
 
-$s-button-alpha-opacity: $s-active-opacity !default;
+  --s-button-border-width: 1px;
 
-$s-button-active-bg-shade-amount: 20% !default;
-$s-button-active-bg-tint-amount: 20% !default;
-$s-button-active-bg-more-tint-amount: 90% !default;
+  --s-button-transition-duration: var(--s-duration);
 
-$s-button-active-bg: $s-bg-active !default;
+  --s-button-active-opacity: var(--s-active-opacity);
 
-$s-button-transition-duration: $s-transition-duration !default;
+  --s-button-content-color: var(--s-white);
 
-$s-button-round-border-radius: 1000px !default;
+  --s-button-mild-bg: var(--s-gray-200);
 
-$s-button-loading-opacity: 0.6 !default;
-$s-button-loading-text-margin-left: 0.5rem !default;
+  --s-button-pale-bg-opacity: 0.25;
 
+  --s-button-text-active-bg: var(--s-gray-200);
+
+  --s-button-loading-pointer-events: var(--s-loading-pointer-events);
+  --s-button-loading-opacity: var(--s-loading-opacity);
+  --s-button-loading-cursor: var(--s-loading-cursor);
+  --s-button-loading-text-margin-left: 0.5em;
+}
+
+[data-s-theme='dark'] {
+  --s-button-text-active-bg: var(--s-gray-700);
+}
 // #endvariables
 
 .s-button {
@@ -53,21 +59,21 @@ $s-button-loading-text-margin-left: 0.5rem !default;
   border-radius: inherit;
   vertical-align: middle;
   font-family: inherit;
-  line-height: $s-button-line-height;
-  white-space: $s-button-white-space;
+  line-height: var(--s-button-line-height);
+  white-space: nowrap;
   text-align: center;
   background-clip: border-box;
   background-color: currentColor;
   user-select: none;
   cursor: pointer;
-  transition: $s-button-transition-duration;
+  transition: var(--s-button-transition-duration);
 
   @include button-size(
-    $s-button-height,
-    $s-button-padding-y,
-    $s-button-padding-x,
-    $s-button-border-radius,
-    $s-button-font-size
+    var(--s-button-height),
+    var(--s-button-padding-y),
+    var(--s-button-padding-x),
+    var(--s-button-border-radius),
+    var(--s-button-font-size)
   );
 
   &::before,
@@ -102,7 +108,7 @@ $s-button-loading-text-margin-left: 0.5rem !default;
       align-items: center;
       justify-content: center;
       user-select: none;
-      color: $s-white;
+      color: var(--s-button-content-color);
     }
   }
 
@@ -113,63 +119,64 @@ $s-button-loading-text-margin-left: 0.5rem !default;
   }
 }
 
-// 尺寸
+// # 尺寸
 .s-button-small {
   @include button-size(
-    $s-button-height-sm,
-    $s-button-padding-y-sm,
-    $s-button-padding-x-sm,
-    $s-button-border-radius-sm,
-    $s-button-font-size-sm
+    var(--s-button-height-sm),
+    var(--s-button-padding-y-sm),
+    var(--s-button-padding-x-sm),
+    var(--s-button-border-radius-sm),
+    var(--s-button-font-size-sm)
   );
 }
 .s-button-large {
   @include button-size(
-    $s-button-height-lg,
-    $s-button-padding-y-lg,
-    $s-button-padding-x-lg,
-    $s-button-border-radius-lg,
-    $s-button-font-size-lg
+    var(--s-button-height-lg),
+    var(--s-button-padding-y-lg),
+    var(--s-button-padding-x-lg),
+    var(--s-button-border-radius-lg),
+    var(--s-button-font-size-lg)
   );
 }
 
-// 圆形按钮
+// # 圆形按钮
 .s-button-round {
-  border-radius: $s-button-round-border-radius;
+  border-radius: var(--s-rounded-full);
 }
 
-// 块级按钮
+// # 块级按钮
 .s-button-block {
   display: flex;
   width: 100%;
 }
 
-// 禁用状态
+// # 禁用状态
 .s-button[disabled],
 .s-button-disabled {
   @include disabled;
 }
 
-// 加载中
+// # 加载中
 .s-button-loading {
-  cursor: default;
-  opacity: $s-button-loading-opacity;
+  pointer-events: var(--s-button-loading-pointer-events);
+  opacity: var(--s-button-loading-opacity);
+  cursor: var(--s-button-loading-cursor);
 
   @at-root {
     .s-button-loading-text {
-      margin-left: $s-button-loading-text-margin-left;
+      margin-left: var(--s-button-loading-text-margin-left);
     }
   }
 }
 
-// 主题色
+// # 主题色
 @each $color, $value in $s-theme-colors {
   .s-button-#{$color} {
     color: $value;
   }
 }
 
-// 淡颜色类型
+// # 淡颜色类型
 .s-button-pale {
   background-color: transparent;
 
@@ -178,7 +185,7 @@ $s-button-loading-text-margin-left: 0.5rem !default;
   }
 
   &::before {
-    opacity: 0.125;
+    opacity: var(--s-button-pale-bg-opacity);
   }
 
   @include button-active {
@@ -188,9 +195,9 @@ $s-button-loading-text-margin-left: 0.5rem !default;
   }
 }
 
-// 温和类型
+// # 温和类型
 .s-button-mild {
-  background-color: $s-gray-200;
+  background-color: var(--s-button-mild-bg);
 
   .s-button-content {
     color: currentColor;
@@ -203,9 +210,9 @@ $s-button-loading-text-margin-left: 0.5rem !default;
   }
 }
 
-// 轮廓类型
+// # 轮廓类型
 .s-button-outline {
-  border: $s-button-border-width solid currentColor;
+  border: var(--s-button-border-width) solid currentColor;
   background-color: transparent;
 
   .s-button-content {
@@ -219,7 +226,7 @@ $s-button-loading-text-margin-left: 0.5rem !default;
   }
 }
 
-// 文本类型
+// # 文本类型
 .s-button-text {
   background-color: transparent;
 
@@ -228,7 +235,7 @@ $s-button-loading-text-margin-left: 0.5rem !default;
   }
 
   @include button-active {
-    background-color: $s-gray-200;
+    background-color: var(--s-button-text-active-bg);
 
     &::after {
       opacity: 0;
@@ -236,7 +243,7 @@ $s-button-loading-text-margin-left: 0.5rem !default;
   }
 }
 
-// 淡文本类型
+// # 淡文本类型
 .s-button-pale-text {
   background-color: transparent;
 
@@ -245,7 +252,7 @@ $s-button-loading-text-margin-left: 0.5rem !default;
   }
 
   @include button-active {
-    opacity: $s-button-alpha-opacity;
+    opacity: var(--s-button-active-opacity);
 
     &::after {
       opacity: 0;

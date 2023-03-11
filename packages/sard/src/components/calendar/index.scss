@@ -1,30 +1,35 @@
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-calendar-header-box-shadow: $s-box-shadow-lg !default;
-$s-calendar-title-font-size: $s-font-size !default;
-$s-calendar-title-line-height: $s-line-height !default;
-$s-calendar-week-item-height: 36px !default;
-$s-calendar-week-item-font-size: $s-font-size !default;
+:root {
+  --s-calendar-header-box-shadow: var(--s-shadow-lg);
+  --s-calendar-title-font-size: var(--s-text-base);
+  --s-calendar-title-line-height: var(--s-leading-normal);
+  --s-calendar-week-item-height: 36px;
+  --s-calendar-week-item-font-size: var(--s-text-base);
 
-$s-calendar-month-title-height: 40px !default;
-$s-calendar-month-title-font-size: $s-font-size !default;
-$s-calendar-month-title-font-weight: bold !default;
-$s-calendar-month-body-row-gap: 4px !default;
+  --s-calendar-month-title-height: 40px;
+  --s-calendar-month-title-font-size: var(--s-text-base);
+  --s-calendar-month-title-font-weight: bold;
+  --s-calendar-month-title-color: var(--s-emphasis-color);
+  --s-calendar-month-body-row-gap: 4px;
 
-$s-calendar-day-height: 56px !default;
-$s-calendar-day-active-bg: $s-bg-active !default;
-$s-calendar-day-selected-border-radius: $s-border-radius !default;
-$s-calendar-day-selected-color: $s-white !default;
-$s-calendar-day-selected-bg: $s-primary !default;
-$s-calendar-day-middle-opacity: 0.1 !default;
+  --s-calendar-day-height: 56px;
+  --s-calendar-day-active-bg: var(--s-bg-active);
+  --s-calendar-day-selected-border-radius: var(--s-rounded);
+  --s-calendar-day-selected-color: var(--s-white);
+  --s-calendar-day-selected-bg: var(--s-primary);
+  --s-calendar-day-middle-opacity: 0.125;
 
-$s-calendar-month-mark-font-size: 160px !default;
-$s-calendar-month-mark-color: $s-gray-200 !default;
+  --s-calendar-month-mark-font-size: 160px;
+  --s-calendar-month-mark-color: var(--s-deemphasis-color);
+  --s-calendar-month-mark-opacity: 0.2;
 
-$s-calendar-body-height: $s-calendar-day-height * 4 +
-  $s-calendar-month-body-row-gap * 4 + $s-calendar-month-title-height !default;
+  --s-calendar-body-height: calc(
+    var(--s-calendar-day-height) * 4 + var(--s-calendar-month-body-row-gap) * 4 +
+      var(--s-calendar-month-title-height)
+  );
+}
 // #endvariables
 
 .s-calendar {
@@ -39,7 +44,7 @@ $s-calendar-body-height: $s-calendar-day-height * 4 +
   display: flex;
   flex-direction: column;
   flex: none;
-  box-shadow: $s-calendar-header-box-shadow;
+  box-shadow: var(--s-calendar-header-box-shadow);
 
   @at-root {
     .s-calendar-title {
@@ -47,8 +52,8 @@ $s-calendar-body-height: $s-calendar-day-height * 4 +
       justify-content: center;
       align-items: center;
       text-align: center;
-      font-size: $s-calendar-title-font-size;
-      line-height: $s-calendar-title-line-height;
+      font-size: var(--s-calendar-title-font-size);
+      line-height: var(--s-calendar-title-line-height);
     }
 
     .s-calendar-week {
@@ -61,8 +66,8 @@ $s-calendar-body-height: $s-calendar-day-height * 4 +
           justify-content: center;
           align-items: center;
           flex: 1;
-          height: $s-calendar-week-item-height;
-          font-size: $s-calendar-week-item-font-size;
+          height: var(--s-calendar-week-item-height);
+          font-size: var(--s-calendar-week-item-font-size);
         }
       }
     }
@@ -75,7 +80,7 @@ $s-calendar-body-height: $s-calendar-day-height * 4 +
   display: flex;
   flex-direction: column;
   flex: none;
-  height: $s-calendar-body-height;
+  height: var(--s-calendar-body-height);
   overflow-x: hidden;
   overflow-y: auto;
 
@@ -91,18 +96,19 @@ $s-calendar-body-height: $s-calendar-day-height * 4 +
   @at-root {
     .s-calendar-month-title {
       display: flex;
-      height: $s-calendar-month-title-height;
+      height: var(--s-calendar-month-title-height);
       justify-content: center;
       align-items: center;
       text-align: center;
-      font-size: $s-calendar-month-title-font-size;
-      font-weight: $s-calendar-month-title-font-weight;
+      font-size: var(--s-calendar-month-title-font-size);
+      font-weight: var(--s-calendar-month-title-font-weight);
+      color: var(--s-calendar-month-title-color);
     }
     .s-calendar-month-body {
       position: relative;
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      grid-row-gap: $s-calendar-month-body-row-gap;
+      grid-row-gap: var(--s-calendar-month-body-row-gap);
       grid-column-gap: 0;
 
       @at-root {
@@ -111,24 +117,24 @@ $s-calendar-body-height: $s-calendar-day-height * 4 +
           z-index: 1;
           display: flex;
           flex-direction: column;
-          height: $s-calendar-day-height;
+          height: var(--s-calendar-day-height);
           justify-content: center;
           align-items: center;
           cursor: pointer;
-          transition: $s-transition-duration-fast;
+          transition: var(--s-transition-duration-fast);
 
           &.s-calendar-day-disabled {
             @include disabled-text;
           }
           &:not(.s-calendar-day-disabled):not(.s-calendar-day-selected):active {
-            border-radius: $s-calendar-day-selected-border-radius;
-            background-color: $s-calendar-day-active-bg;
+            border-radius: var(--s-calendar-day-selected-border-radius);
+            background-color: var(--s-calendar-day-active-bg);
           }
 
           &.s-calendar-day-selected {
-            border-radius: $s-calendar-day-selected-border-radius;
-            color: $s-calendar-day-selected-color;
-            background-color: $s-calendar-day-selected-bg;
+            border-radius: var(--s-calendar-day-selected-border-radius);
+            color: var(--s-calendar-day-selected-color);
+            background-color: var(--s-calendar-day-selected-bg);
 
             &.s-calendar-day-next-selected,
             &.s-calendar-day-start:not(.s-calendar-day-end) {
@@ -142,7 +148,7 @@ $s-calendar-body-height: $s-calendar-day-height * 4 +
             }
           }
           &.s-calendar-day-middle {
-            color: $s-primary;
+            color: var(--s-primary);
             &::after {
               position: absolute;
               top: 0;
@@ -150,7 +156,7 @@ $s-calendar-body-height: $s-calendar-day-height * 4 +
               bottom: 0;
               left: 0;
               content: '';
-              opacity: $s-calendar-day-middle-opacity;
+              opacity: var(--s-calendar-day-middle-opacity);
               background-color: currentColor;
             }
           }
@@ -167,8 +173,9 @@ $s-calendar-body-height: $s-calendar-day-height * 4 +
           justify-content: center;
           align-items: center;
           z-index: 0;
-          font-size: $s-calendar-month-mark-font-size;
-          color: $s-calendar-month-mark-color;
+          font-size: var(--s-calendar-month-mark-font-size);
+          color: var(--s-calendar-month-mark-color);
+          opacity: var(--s-calendar-month-mark-opacity);
           pointer-events: none;
         }
       }

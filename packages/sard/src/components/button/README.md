@@ -49,43 +49,6 @@ import { Button } from 'sard'
 
 ## 主题定制
 
-### SCSS
+### CSS 变量
 
-```scss
-$s-button-height: 36px !default;
-$s-button-padding-y: 0 !default;
-$s-button-padding-x: $s-font-size !default;
-$s-button-border-radius: $s-border-radius !default;
-$s-button-font-size: $s-font-size !default;
-
-$s-button-height-sm: 28px !default;
-$s-button-padding-y-sm: 0 !default;
-$s-button-padding-x-sm: $s-font-size-sm !default;
-$s-button-border-radius-sm: $s-border-radius-sm !default;
-$s-button-font-size-sm: $s-font-size-sm !default;
-
-$s-button-height-lg: 50px !default;
-$s-button-padding-y-lg: 0 !default;
-$s-button-padding-x-lg: $s-font-size-lg !default;
-$s-button-border-radius-lg: $s-border-radius-lg !default;
-$s-button-font-size-lg: $s-font-size-lg !default;
-
-$s-button-line-height: $s-line-height !default;
-$s-button-white-space: nowrap !default;
-$s-button-border-width: 1px !default;
-
-$s-button-alpha-opacity: $s-active-opacity !default;
-
-$s-button-active-bg-shade-amount: 20% !default;
-$s-button-active-bg-tint-amount: 20% !default;
-$s-button-active-bg-more-tint-amount: 90% !default;
-
-$s-button-active-bg: $s-bg-active !default;
-
-$s-button-transition-duration: $s-transition-duration !default;
-
-$s-button-round-border-radius: 1000px !default;
-
-$s-button-loading-opacity: 0.6 !default;
-$s-button-loading-text-margin-left: 0.5rem !default;
-```
+%{variables}

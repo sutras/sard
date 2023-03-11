@@ -106,9 +106,12 @@ export const ActionSheet: ActionSheetFC = (props) => {
         {cancel && (
           <>
             <div className="s-action-sheet-gap"></div>
-            <div className="s-action-sheet-cancel" onClick={handleCancelClick}>
+            <button
+              className="s-action-sheet-cancel"
+              onClick={handleCancelClick}
+            >
               {cancel}
-            </div>
+            </button>
           </>
         )}
       </div>

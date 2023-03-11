@@ -1,39 +1,42 @@
-@use 'sass:math';
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-slider-track-main-axis-size: 100% !default;
-$s-slider-track-cross-axis-size: 2px !default;
-$s-slider-track-bg: $s-gray-300 !default;
-$s-slider-track-piece-transition-duration: $s-transition-duration !default;
-$s-slider-thumb-width: 24px !default;
-$s-slider-thumb-height: 24px !default;
-$s-slider-thumb-bg: $s-white !default;
-$s-slider-thumb-box-shadow: $s-box-shadow-sm !default;
+:root {
+  --s-slider-track-main-axis-size: 100%;
+  --s-slider-track-cross-axis-size: 2px;
+  --s-slider-track-bg: var(--s-secondary-bg);
 
-$s-slider-padding: math.div($s-slider-thumb-height, 2)
-  math.div($s-slider-thumb-width, 2);
+  --s-slider-track-piece-transition-duration: var(--s-duration);
+  --s-slider-track-piece-bg: var(--s-primary);
+
+  --s-slider-thumb-width: 24px;
+  --s-slider-thumb-height: 24px;
+  --s-slider-thumb-bg: var(--s-white);
+  --s-slider-thumb-box-shadow: var(--s-shadow-sm);
+
+  --s-slider-padding: calc(var(--s-slider-thumb-height) / 2)
+    calc(var(--s-slider-thumb-width) / 2);
+}
 // #endvariables
 
 .s-slider {
   position: relative;
   box-sizing: border-box;
-  padding: $s-slider-padding;
+  padding: var(--s-slider-padding);
 }
 .s-slider-track {
   position: relative;
-  width: $s-slider-track-main-axis-size;
-  height: $s-slider-track-cross-axis-size;
-  background-color: $s-slider-track-bg;
+  width: var(--s-slider-track-main-axis-size);
+  height: var(--s-slider-track-cross-axis-size);
+  background-color: var(--s-slider-track-bg);
   cursor: pointer;
 }
 .s-slider-track-piece {
   position: absolute;
   width: auto;
   height: 100%;
-  background-color: $s-primary;
-  transition: all $s-slider-track-piece-transition-duration;
+  background-color: var(--s-slider-track-piece-bg);
+  transition: all var(--s-slider-track-piece-transition-duration);
 
   .s-slider-is-down & {
     transition: none;
@@ -45,11 +48,11 @@ $s-slider-padding: math.div($s-slider-thumb-height, 2)
 
   @at-root {
     .s-slider-thumb {
-      width: $s-slider-thumb-width;
-      height: $s-slider-thumb-height;
+      width: var(--s-slider-thumb-width);
+      height: var(--s-slider-thumb-height);
       border-radius: 50%;
-      background-color: $s-slider-thumb-bg;
-      box-shadow: $s-slider-thumb-box-shadow;
+      background-color: var(--s-slider-thumb-bg);
+      box-shadow: var(--s-slider-thumb-box-shadow);
       user-select: none;
       cursor: grab;
     }
@@ -73,8 +76,8 @@ $s-slider-padding: math.div($s-slider-thumb-height, 2)
   height: 100%;
 
   .s-slider-track {
-    width: $s-slider-track-cross-axis-size;
-    height: $s-slider-track-main-axis-size;
+    width: var(--s-slider-track-cross-axis-size);
+    height: var(--s-slider-track-main-axis-size);
   }
   .s-slider-track-piece {
     width: 100%;

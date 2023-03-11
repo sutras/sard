@@ -1,14 +1,14 @@
-@import '../style/variables.scss';
-
 // #variables
-$s-transition-duration: 300ms !default;
-$s-transition-timing-function: ease-out !default;
+:root {
+  --s-transition-duration: var(--s-duration);
+  --s-transition-timing-function: ease-out;
+}
 // #endvariables
 
 // fade
 .s-transition-fade-enter {
-  animation: s-transition-fade-enter $s-transition-duration
-    $s-transition-timing-function;
+  animation: s-transition-fade-enter var(--s-transition-duration)
+    var(--s-transition-timing-function);
 }
 @keyframes s-transition-fade-enter {
   from {
@@ -20,8 +20,8 @@ $s-transition-timing-function: ease-out !default;
 }
 .s-transition-fade-exiting,
 .s-transition-fade-exited {
-  animation: s-transition-fade-exiting $s-transition-duration
-    $s-transition-timing-function both;
+  animation: s-transition-fade-exiting var(--s-transition-duration)
+    var(--s-transition-timing-function) both;
 }
 @keyframes s-transition-fade-exiting {
   from {
@@ -34,8 +34,8 @@ $s-transition-timing-function: ease-out !default;
 
 // zoom
 .s-transition-zoom-enter {
-  animation: s-transition-zoom-enter $s-transition-duration
-    $s-transition-timing-function;
+  animation: s-transition-zoom-enter var(--s-transition-duration)
+    var(--s-transition-timing-function);
 }
 @keyframes s-transition-zoom-enter {
   from {
@@ -49,8 +49,8 @@ $s-transition-timing-function: ease-out !default;
 }
 .s-transition-zoom-exiting,
 .s-transition-zoom-exited {
-  animation: s-transition-zoom-exiting $s-transition-duration
-    $s-transition-timing-function both;
+  animation: s-transition-zoom-exiting var(--s-transition-duration)
+    var(--s-transition-timing-function) both;
 }
 @keyframes s-transition-zoom-exiting {
   from {
@@ -65,8 +65,8 @@ $s-transition-timing-function: ease-out !default;
 
 // slideTop
 .s-transition-slide-top-enter {
-  animation: s-transition-slide-top-enter $s-transition-duration
-    $s-transition-timing-function;
+  animation: s-transition-slide-top-enter var(--s-transition-duration)
+    var(--s-transition-timing-function);
 }
 @keyframes s-transition-slide-top-enter {
   from {
@@ -79,8 +79,8 @@ $s-transition-timing-function: ease-out !default;
 
 .s-transition-slide-top-exiting,
 .s-transition-slide-top-exited {
-  animation: s-transition-slide-top-exiting $s-transition-duration
-    $s-transition-timing-function both;
+  animation: s-transition-slide-top-exiting var(--s-transition-duration)
+    var(--s-transition-timing-function) both;
 }
 @keyframes s-transition-slide-top-exiting {
   from {
@@ -93,8 +93,8 @@ $s-transition-timing-function: ease-out !default;
 
 // slideRight
 .s-transition-slide-right-enter {
-  animation: s-transition-slide-right-enter $s-transition-duration
-    $s-transition-timing-function;
+  animation: s-transition-slide-right-enter var(--s-transition-duration)
+    var(--s-transition-timing-function);
 }
 @keyframes s-transition-slide-right-enter {
   from {
@@ -107,8 +107,8 @@ $s-transition-timing-function: ease-out !default;
 
 .s-transition-slide-right-exiting,
 .s-transition-slide-right-exited {
-  animation: s-transition-slide-right-exiting $s-transition-duration
-    $s-transition-timing-function both;
+  animation: s-transition-slide-right-exiting var(--s-transition-duration)
+    var(--s-transition-timing-function) both;
 }
 @keyframes s-transition-slide-right-exiting {
   from {
@@ -121,8 +121,8 @@ $s-transition-timing-function: ease-out !default;
 
 // slideBottom
 .s-transition-slide-bottom-enter {
-  animation: s-transition-slide-bottom-enter $s-transition-duration
-    $s-transition-timing-function;
+  animation: s-transition-slide-bottom-enter var(--s-transition-duration)
+    var(--s-transition-timing-function);
 }
 @keyframes s-transition-slide-bottom-enter {
   from {
@@ -135,8 +135,8 @@ $s-transition-timing-function: ease-out !default;
 
 .s-transition-slide-bottom-exiting,
 .s-transition-slide-bottom-exited {
-  animation: s-transition-slide-bottom-exiting $s-transition-duration
-    $s-transition-timing-function both;
+  animation: s-transition-slide-bottom-exiting var(--s-transition-duration)
+    var(--s-transition-timing-function) both;
 }
 @keyframes s-transition-slide-bottom-exiting {
   from {
@@ -149,8 +149,8 @@ $s-transition-timing-function: ease-out !default;
 
 // slideLeft
 .s-transition-slide-left-enter {
-  animation: s-transition-slide-left-enter $s-transition-duration
-    $s-transition-timing-function;
+  animation: s-transition-slide-left-enter var(--s-transition-duration)
+    var(--s-transition-timing-function);
 }
 @keyframes s-transition-slide-left-enter {
   from {
@@ -163,8 +163,8 @@ $s-transition-timing-function: ease-out !default;
 
 .s-transition-slide-left-exiting,
 .s-transition-slide-left-exited {
-  animation: s-transition-slide-left-exiting $s-transition-duration
-    $s-transition-timing-function both;
+  animation: s-transition-slide-left-exiting var(--s-transition-duration)
+    var(--s-transition-timing-function) both;
 }
 @keyframes s-transition-slide-left-exiting {
   from {
@@ -177,8 +177,8 @@ $s-transition-timing-function: ease-out !default;
 
 // collapse
 .s-transition-collapse-entering {
-  animation: s-transition-collapse-entering $s-transition-duration
-    $s-transition-timing-function;
+  animation: s-transition-collapse-entering var(--s-transition-duration)
+    var(--s-transition-timing-function);
 }
 @keyframes s-transition-collapse-entering {
   from {
@@ -188,8 +188,8 @@ $s-transition-timing-function: ease-out !default;
 
 .s-transition-collapse-exiting,
 .s-transition-collapse-exited {
-  animation: s-transition-collapse-exiting $s-transition-duration
-    $s-transition-timing-function both;
+  animation: s-transition-collapse-exiting var(--s-transition-duration)
+    var(--s-transition-timing-function) both;
 }
 @keyframes s-transition-collapse-exiting {
   to {

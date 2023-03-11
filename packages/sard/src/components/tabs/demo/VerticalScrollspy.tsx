@@ -14,8 +14,8 @@ export default function () {
         sticky
         headerStyle={{ top: 55 }}
         type="card"
-        style={{ padding: 10, background: '#eee' }}
-        bodyStyle={{ background: '#fff' }}
+        style={{ padding: 10, background: 'var(--s-secondary-bg)' }}
+        bodyStyle={{ background: 'var(--s-emphasis-bg)' }}
       >
         {Array(7)
           .fill(0)

@@ -49,14 +49,6 @@ import { Accordion } from 'sard'
 
 ## 主题定制
 
-### SCSS
+### CSS 变量
 
-```scss
-$s-accordion-border-color: $s-border-color !default;
-$s-accordion-border-radius: $s-border-radius !default;
-
-$s-accordion-item-header-padding: 10px 15px !default;
-$s-accordion-item-title-font-size: $s-font-size !default;
-$s-accordion-item-arrow-transition-duration: 300ms !default;
-$s-accordion-item-content-padding: 10px 15px 15px !default;
-```
+%{variables}

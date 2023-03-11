@@ -7,7 +7,7 @@ import { Rate } from 'sard'
 export default function () {
   return (
     <>
-      <Rate defaultValue={3} color="rebeccapurple" voidColor="orange" />
+      <Rate defaultValue={3} color="fuchsia" voidColor="orange" />
     </>
   )
 }

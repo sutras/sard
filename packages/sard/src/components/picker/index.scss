@@ -1,33 +1,33 @@
-@use 'sass:math';
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-picker-height: 240px !default;
-$s-picker-item-height: 48px !default;
-$s-picker-item-font-size: $s-font-size !default;
-$s-picker-item-disabled-opacity: $s-disabled-opacity !default;
+:root {
+  --s-picker-height: 240px;
 
-$s-picker-mask-top-bg-image: linear-gradient(
-  to bottom,
-  rgba(255, 255, 255, 0.95),
-  rgba(255, 255, 255, 0.6)
-) !default;
+  --s-picker-item-height: 48px;
+  --s-picker-item-font-size: var(--s-text-base);
 
-$s-picker-mask-bottom-bg-image: linear-gradient(
-  to top,
-  rgba(255, 255, 255, 0.95),
-  rgba(255, 255, 255, 0.6)
-) !default;
+  --s-picker-mask-from-color: rgba(var(--s-emphasis-bg-rgb), 0.95);
+  --s-picker-mask-to-color: rgba(var(--s-emphasis-bg-rgb), 0.6);
+  --s-picker-mask-top-bg-image: linear-gradient(
+    to bottom,
+    var(--s-picker-mask-from-color),
+    var(--s-picker-mask-to-color)
+  );
+  --s-picker-mask-bottom-bg-image: linear-gradient(
+    to top,
+    var(--s-picker-mask-from-color),
+    var(--s-picker-mask-to-color)
+  );
 
-$s-picker-focus-height: 56px !default;
-$s-picker-focus-border-color: rgba(0, 0, 0, 0.1) !default;
-
+  --s-picker-focus-height: 56px;
+  --s-picker-focus-border-color: var(--s-border-color);
+}
 // #endvariables
 
 .s-picker {
   position: relative;
-  height: $s-picker-height;
+  height: var(--s-picker-height);
   overflow: hidden;
   user-select: none;
   -webkit-user-drag: none;
@@ -58,10 +58,10 @@ $s-picker-focus-border-color: rgba(0, 0, 0, 0.1) !default;
 
   @at-root {
     .s-picker-mask-top {
-      background-image: $s-picker-mask-top-bg-image;
+      background-image: var(--s-picker-mask-top-bg-image);
     }
     .s-picker-mask-bottom {
-      background-image: $s-picker-mask-bottom-bg-image;
+      background-image: var(--s-picker-mask-bottom-bg-image);
     }
   }
 }
@@ -70,19 +70,19 @@ $s-picker-focus-border-color: rgba(0, 0, 0, 0.1) !default;
   position: relative;
   display: flex;
   width: 100%;
-  height: $s-picker-focus-height;
+  height: var(--s-picker-focus-height);
   flex: none;
   align-items: center;
   pointer-events: none;
 
-  @include border-vertical($s-picker-focus-border-color) {
+  @include border-vertical(var(--s-picker-focus-border-color)) {
     z-index: 2;
   }
 }
 
 .s-picker-action-area {
   width: 100%;
-  height: $s-picker-item-height;
+  height: var(--s-picker-item-height);
 }
 
 .s-picker-item-group {
@@ -95,16 +95,15 @@ $s-picker-focus-border-color: rgba(0, 0, 0, 0.1) !default;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: $s-picker-item-height;
+  height: var(--s-picker-item-height);
   overflow: hidden;
-  font-size: $s-picker-item-font-size;
+  font-size: var(--s-picker-item-font-size);
   @include ellipsis;
   cursor: grab;
 
   @at-root {
     .s-picker-item-disabled {
-      opacity: $s-picker-item-disabled-opacity;
-      cursor: not-allowed;
+      @include disabled-text;
     }
   }
 }

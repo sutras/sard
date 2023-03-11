@@ -10,13 +10,13 @@ export default function () {
       <Slider
         defaultValue={50}
         pieceColor="orange"
-        trackColor="rebeccapurple"
+        trackColor="fuchsia"
         thumbColor="pink"
       />
       <Slider
         defaultValue={[20, 80]}
         pieceColor="orange"
-        trackColor="rebeccapurple"
+        trackColor="fuchsia"
         thumbColor="pink"
         range
       />

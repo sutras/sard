@@ -1,27 +1,24 @@
 @use 'sass:math';
-@import '../style/functions.scss';
-@import '../style/variables.scss';
 
 // #variables
+:root {
+  --s-loading-icon-size: 1em;
+  --s-loading-icon-min-width: 16px;
+  --s-loading-icon-min-height: 16px;
+  --s-loading-icon-animation-duration: 0.8s;
+  --s-loading-icon-border-width: 2px;
 
-$s-loading-icon-size: 1em;
-$s-loading-icon-min-width: 16px;
-$s-loading-icon-min-height: 16px;
-$s-loading-icon-animation-duration: 0.8s !default;
-$s-loading-icon-border-width: 2px !default;
+  --s-loading-scale-width: 8%;
+  --s-loading-scale-min-width: 1.5px;
+  --s-loading-scale-height: 28%;
+  --s-loading-scale-border-radius: 40%;
 
-$s-loading-scale-number: 12 !default;
-$s-loading-scale-width: 8% !default;
-$s-loading-scale-min-width: 1.5px !default;
-$s-loading-scale-height: 28% !default;
-$s-loading-scale-border-radius: 40% !default;
+  --s-loading-spinner-animation-duration: 2s;
+  --s-loading-spinner-circle-animation-duration: 2s;
 
-$s-loading-spinner-animation-duration: 2s !default;
-$s-loading-spinner-circle-animation-duration: 2s !default;
-
-$s-loading-text-margin-left: 0.5em !default;
-$s-loading-text-vertical-margin-top: 0.5em !default;
-
+  --s-loading-text-margin-left: 0.5em;
+  --s-loading-text-vertical-margin-top: 0.5em;
+}
 // #endvariables
 
 .s-loading {
@@ -39,18 +36,18 @@ $s-loading-text-vertical-margin-top: 0.5em !default;
     .s-loading-icon {
       position: relative;
       box-sizing: border-box;
-      width: $s-loading-icon-size;
-      height: $s-loading-icon-size;
-      min-width: $s-loading-icon-min-width;
-      min-height: $s-loading-icon-min-height;
+      width: var(--s-loading-icon-size);
+      height: var(--s-loading-icon-size);
+      min-width: var(--s-loading-icon-min-width);
+      min-height: var(--s-loading-icon-min-height);
     }
 
     .s-loading-text {
-      margin-left: $s-loading-text-margin-left;
+      margin-left: var(--s-loading-text-margin-left);
 
       .s-loading-vertical & {
         margin-left: 0;
-        margin-top: $s-loading-text-vertical-margin-top;
+        margin-top: var(--s-loading-text-vertical-margin-top);
       }
     }
   }
@@ -89,7 +86,7 @@ $s-loading-four: $s-loading-perimeter;
 }
 
 .s-loading-spinner {
-  animation: s-loading-rotate $s-loading-spinner-animation-duration linear
+  animation: s-loading-rotate var(--s-loading-spinner-animation-duration) linear
     infinite;
 
   svg {
@@ -98,8 +95,8 @@ $s-loading-four: $s-loading-perimeter;
     height: 100%;
 
     circle {
-      animation: s-loading-spinner $s-loading-spinner-circle-animation-duration
-        ease-in-out infinite;
+      animation: s-loading-spinner
+        var(--s-loading-spinner-circle-animation-duration) ease-in-out infinite;
       stroke: currentColor;
       stroke-width: 4;
       stroke-linecap: round;
@@ -108,8 +105,10 @@ $s-loading-four: $s-loading-perimeter;
 }
 
 // # clock
+$s-loading-scale-number: 12;
+
 .s-loading-clock {
-  animation: s-loading-rotate $s-loading-icon-animation-duration
+  animation: s-loading-rotate var(--s-loading-icon-animation-duration)
     steps(#{$s-loading-scale-number}) infinite;
 }
 
@@ -122,11 +121,11 @@ $s-loading-four: $s-loading-perimeter;
 
   &:before {
     display: flex;
-    width: $s-loading-scale-width;
-    min-width: $s-loading-scale-min-width;
-    height: $s-loading-scale-height;
+    width: var(--s-loading-scale-width);
+    min-width: var(--s-loading-scale-min-width);
+    height: var(--s-loading-scale-height);
     margin: 0 auto;
-    border-radius: $s-loading-scale-border-radius;
+    border-radius: var(--s-loading-scale-border-radius);
     content: '';
     background-color: currentColor;
   }
@@ -144,5 +143,6 @@ $s-loading-four: $s-loading-perimeter;
   border: 0.1em solid transparent;
   border-radius: 100%;
   border-top-color: initial;
-  animation: s-loading-rotate $s-loading-icon-animation-duration linear infinite;
+  animation: s-loading-rotate var(--s-loading-icon-animation-duration) linear
+    infinite;
 }

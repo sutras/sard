@@ -1,18 +1,17 @@
-@import '../style/variables.scss';
-
 // #variables
-$s-password-input-border-color: $s-border-color !default;
-$s-password-input-active-border-color: $s-primary !default;
+:root {
+  --s-password-input-border-color: var(--s-border-color);
+  --s-password-input-active-border-color: var(--s-primary);
 
-$s-password-input-height: 48px !default;
-$s-password-input-ciphertext-size: 10px !default;
+  --s-password-input-height: 48px;
+  --s-password-input-ciphertext-size: 10px;
 
-$s-password-input-plaintext-font-size: 20px !default;
+  --s-password-input-plaintext-font-size: 20px;
 
-$s-password-input-cursor-width: 1px !default;
-$s-password-input-cursor-height: 40% !default;
-$s-password-input-cursor-animation-duration: 1s !default;
-
+  --s-password-input-cursor-width: 1px;
+  --s-password-input-cursor-height: 40%;
+  --s-password-input-cursor-animation-duration: 1s;
+}
 // #endvariables
 
 .s-password-input {
@@ -20,7 +19,7 @@ $s-password-input-cursor-animation-duration: 1s !default;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: $s-password-input-height;
+  height: var(--s-password-input-height);
   gap: 10px;
   overflow: hidden;
 
@@ -41,22 +40,22 @@ $s-password-input-cursor-animation-duration: 1s !default;
         }
 
         .s-password-input-plaintext {
-          font-size: $s-password-input-plaintext-font-size;
+          font-size: var(--s-password-input-plaintext-font-size);
         }
 
         .s-password-input-ciphertext {
           display: flex;
-          width: $s-password-input-ciphertext-size;
-          height: $s-password-input-ciphertext-size;
+          width: var(--s-password-input-ciphertext-size);
+          height: var(--s-password-input-ciphertext-size);
           border-radius: 50%;
           background-color: currentColor;
         }
 
         .s-password-input-cursor {
-          width: $s-password-input-cursor-width;
-          height: $s-password-input-cursor-height;
+          width: var(--s-password-input-cursor-width);
+          height: var(--s-password-input-cursor-height);
           background-color: currentColor;
-          animation: $s-password-input-cursor-animation-duration
+          animation: var(--s-password-input-cursor-animation-duration)
             s-password-input-cursor-flicker infinite;
         }
       }
@@ -90,19 +89,19 @@ $s-password-input-cursor-animation-duration: 1s !default;
 
 .s-password-input-border {
   .s-password-input-item {
-    border-color: $s-password-input-border-color;
+    border-color: var(--s-password-input-border-color);
   }
   .s-password-input-item-active {
-    border-color: $s-password-input-active-border-color;
+    border-color: var(--s-password-input-active-border-color);
   }
 }
 
 .s-password-input-underline {
   .s-password-input-item {
-    border-bottom-color: $s-password-input-border-color;
+    border-bottom-color: var(--s-password-input-border-color);
   }
   .s-password-input-item-active {
-    border-bottom-color: $s-password-input-active-border-color;
+    border-bottom-color: var(--s-password-input-active-border-color);
   }
 }
 

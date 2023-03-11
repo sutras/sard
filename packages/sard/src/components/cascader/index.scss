@@ -1,49 +1,44 @@
-@import '../style/variables.scss';
-
 // #variables
-$s-cascader-label-unselected-color: $s-text-weak !default;
+:root {
+  --s-cascader-selected-color: var(--s-primary);
 
-$s-cascader-selected-color: $s-primary !default;
+  --s-cascader-options-height: 320px;
 
-$s-cascader-options-height: 320px !default;
-
-$s-cascader-option-padding-y: 10px !default;
-$s-cascader-option-padding-x: 16px !default;
-$s-cascader-option-font-size: $s-font-size !default;
-$s-cascader-option-active-bg: $s-bg-active !default;
-// #endvariables
-
-.s-cascader-label-unselected {
-  color: $s-cascader-label-unselected-color;
+  --s-cascader-option-padding-y: 10px;
+  --s-cascader-option-padding-x: 16px;
+  --s-cascader-option-font-size: var(--s-text-base);
+  --s-cascader-option-line-height: var(--s-leading-normal);
+  --s-cascader-option-active-bg: var(--s-secondary-bg);
 }
+// #endvariables
 
 .s-cascader-options {
   box-sizing: border-box;
-  height: $s-cascader-options-height;
+  height: var(--s-cascader-options-height);
   overflow-y: auto;
 
   @at-root {
     .s-cascader-option {
       display: flex;
-      font-size: $s-cascader-option-font-size;
-      padding: $s-cascader-option-padding-y $s-cascader-option-padding-x;
+      font-size: var(--s-cascader-option-font-size);
+      line-height: var(--s-cascader-option-line-height);
+      padding: var(--s-cascader-option-padding-y)
+        var(--s-cascader-option-padding-x);
 
       &:not(.s-cascader-option-disabled) {
         cursor: pointer;
 
         &:active {
-          background-color: $s-cascader-option-active-bg;
+          background-color: var(--s-cascader-option-active-bg);
         }
       }
 
       &.s-cascader-option-selected {
-        color: $s-cascader-selected-color;
+        color: var(--s-cascader-selected-color);
         font-weight: bold;
       }
 
       @at-root {
-        // .s-cascader-option-label {
-        // }
         .s-cascader-option-icon {
           display: none;
           margin-left: auto;

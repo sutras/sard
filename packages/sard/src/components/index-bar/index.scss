@@ -1,35 +1,39 @@
-@import '../style/variables.scss';
-
 // #variables
-$s-index-bar-anchor-padding: 5px 16px !default;
-$s-index-bar-anchor-bg: $s-gray-100 !default;
+:root {
+  --s-index-bar-anchor-padding: 5px 16px;
+  --s-index-bar-anchor-bg: var(--s-gray-100);
 
-$s-index-bar-nav-z-index: 1010 !default;
-$s-index-bar-nav-padding: 0 5px !default;
-$s-index-bar-nav-item-font-size: 12px !default;
-$s-index-bar-nav-item-padding: 3px 5px !default;
-$s-index-bar-nav-item-color: $s-dark !default;
-$s-index-bar-nav-item-border-radius: $s-border-radius !default;
-$s-index-bar-nav-item-active-color: $s-white !default;
-$s-index-bar-nav-item-active-bg: $s-primary !default;
+  --s-index-bar-nav-z-index: 1010;
+  --s-index-bar-nav-padding: 0 5px;
+  --s-index-bar-nav-item-font-size: 12px;
+  --s-index-bar-nav-item-padding: 3px 5px;
+  --s-index-bar-nav-item-color: var(--s-body-color);
+  --s-index-bar-nav-item-border-radius: var(--s-rounded);
+  --s-index-bar-nav-item-active-color: var(--s-white);
+  --s-index-bar-nav-item-active-bg: var(--s-primary);
 
-$s-index-bar-hint-width: 50px !default;
-$s-index-bar-hint-height: 50px !default;
-$s-index-bar-hint-right: 40px !default;
-$s-index-bar-hint-border-radius: 100px 100px 0 100px !default;
-$s-index-bar-hint-bg: $s-mask !default;
+  --s-index-bar-hint-width: 50px;
+  --s-index-bar-hint-height: 50px;
+  --s-index-bar-hint-right: 40px;
+  --s-index-bar-hint-border-radius: 100px 100px 0 100px;
+  --s-index-bar-hint-bg: var(--s-mask);
 
-$s-index-bar-hint-text-font-size: 24px !default;
-$s-index-bar-hint-text-line-height: 1 !default;
-$s-index-bar-hint-text-font-weight: bold !default;
-$s-index-bar-hint-text-color: $s-white !default;
+  --s-index-bar-hint-text-font-size: 24px;
+  --s-index-bar-hint-text-line-height: 1;
+  --s-index-bar-hint-text-font-weight: bold;
+  --s-index-bar-hint-text-color: var(--s-white);
+}
+
+[data-s-theme='dark'] {
+  --s-index-bar-anchor-bg: var(--s-gray-700);
+}
 // #endvariables
 
 .s-index-bar-anchor {
   position: sticky;
   z-index: 1;
-  padding: $s-index-bar-anchor-padding;
-  background-color: $s-index-bar-anchor-bg;
+  padding: var(--s-index-bar-anchor-padding);
+  background-color: var(--s-index-bar-anchor-bg);
 }
 .s-index-bar-content {
   position: relative;
@@ -40,41 +44,41 @@ $s-index-bar-hint-text-color: $s-white !default;
   position: fixed;
   right: 0;
   top: 50%;
-  z-index: $s-index-bar-nav-z-index;
+  z-index: var(--s-index-bar-nav-z-index);
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  padding: $s-index-bar-nav-padding;
+  padding: var(--s-index-bar-nav-padding);
   touch-action: pan-x;
 }
 
 .s-index-bar-nav-item {
-  font-size: $s-index-bar-nav-item-font-size;
+  font-size: var(--s-index-bar-nav-item-font-size);
   line-height: 1;
-  padding: $s-index-bar-nav-item-padding;
+  padding: var(--s-index-bar-nav-item-padding);
   text-align: center;
-  color: $s-index-bar-nav-item-color;
-  border-radius: $s-index-bar-nav-item-border-radius;
+  color: var(--s-index-bar-nav-item-color);
+  border-radius: var(--s-index-bar-nav-item-border-radius);
   cursor: pointer;
   user-select: none;
 
   &.s-index-bar-nav-item-active {
-    color: $s-index-bar-nav-item-active-color;
-    background-color: $s-index-bar-nav-item-active-bg;
+    color: var(--s-index-bar-nav-item-active-color);
+    background-color: var(--s-index-bar-nav-item-active-bg);
   }
 }
 
 .s-index-bar-hint {
   position: absolute;
-  width: $s-index-bar-hint-width;
-  height: $s-index-bar-hint-height;
-  right: $s-index-bar-hint-right;
+  width: var(--s-index-bar-hint-width);
+  height: var(--s-index-bar-hint-height);
+  right: var(--s-index-bar-hint-right);
   top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: $s-index-bar-hint-border-radius;
-  background-color: $s-index-bar-hint-bg;
+  border-radius: var(--s-index-bar-hint-border-radius);
+  background-color: var(--s-index-bar-hint-bg);
   transform: translateY(-50%) rotate(-45deg);
   pointer-events: none;
 
@@ -84,9 +88,9 @@ $s-index-bar-hint-text-color: $s-white !default;
 }
 
 .s-index-bar-hint-text {
-  font-size: $s-index-bar-hint-text-font-size;
-  line-height: $s-index-bar-hint-text-line-height;
-  font-weight: $s-index-bar-hint-text-font-weight;
+  font-size: var(--s-index-bar-hint-text-font-size);
+  line-height: var(--s-index-bar-hint-text-line-height);
+  font-weight: var(--s-index-bar-hint-text-font-weight);
   transform: rotate(45deg);
-  color: $s-index-bar-hint-text-color;
+  color: var(--s-index-bar-hint-text-color);
 }

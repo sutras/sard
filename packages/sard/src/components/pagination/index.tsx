@@ -84,7 +84,7 @@ export const Pagination: FC<PaginationProps> = (props) => {
             key={page}
             data-page={page}
             className={classNames('s-pagination-item', {
-              's-pagination-item-active': innerCurrent === page,
+              's-pagination-item-current': innerCurrent === page,
             })}
             onClick={() => handleItemClick(page)}
           >

@@ -1,10 +1,4 @@
-import {
-  CSSProperties,
-  ReactNode,
-  FC,
-  MouseEvent,
-  ButtonHTMLAttributes,
-} from 'react'
+import { CSSProperties, ReactNode, FC, MouseEvent } from 'react'
 import classNames from 'classnames'
 import { Loading, LoadingProps } from '../loading'
 
@@ -53,8 +47,8 @@ export const Button: FC<ButtonProps> = (props) => {
   const buttonClass = classNames(
     's-button',
     's-button-' + theme,
+    's-button-' + type,
     {
-      ['s-button-' + type]: type !== 'default',
       ['s-button-' + size]: size !== 'medium',
       's-button-round': round,
       's-button-block': block,

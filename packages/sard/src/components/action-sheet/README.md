@@ -54,8 +54,6 @@ import { ActionSheet } from 'sard'
 
 ## 主题定制
 
-### SCSS
+### CSS 变量
 
-```scss
-
-```
+%{variables}

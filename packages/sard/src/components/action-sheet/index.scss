@@ -1,72 +1,77 @@
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-action-sheet-border-radius: $s-border-radius-xl !default;
-$s-action-sheet-bg: $s-white !default;
+:root {
+  --s-action-sheet-border-radius: var(--s-rounded-xl);
+  --s-action-sheet-bg: var(--s-emphasis-bg);
 
-$s-action-sheet-header-padding: 14px !default;
-$s-action-sheet-header-border-color: $s-gray-200;
+  --s-action-sheet-header-padding: 14px;
+  --s-action-sheet-header-border-color: var(--s-border-color);
 
-$s-action-sheet-title-font-size: $s-font-size-lg !default;
+  --s-action-sheet-title-font-size: var(--s-text-lg);
 
-$s-action-sheet-description-margin-top: 8px !default;
-$s-action-sheet-description-font-size: $s-font-size !default;
-$s-action-sheet-description-color: $s-muted !default;
+  --s-action-sheet-description-margin-top: 8px;
+  --s-action-sheet-description-font-size: var(--s-text-base);
+  --s-action-sheet-description-color: var(--s-tertiary-color);
 
-$s-action-sheet-item-padding: 14px !default;
-$s-action-sheet-item-border-color: $s-gray-200 !default;
-$s-action-sheet-item-bg: $s-white !default;
-$s-action-sheet-item-active-bg: $s-bg-active !default;
+  --s-action-sheet-item-padding: 14px;
+  --s-action-sheet-item-border-color: var(--s-border-color);
+  --s-action-sheet-item-bg: var(--s-emphasis-bg);
+  --s-action-sheet-item-active-bg: var(--s-active-bg);
 
-$s-action-sheet-gap-bg: $s-bg-gap !default;
-$s-action-sheet-gap-height: 8px !default;
+  --s-action-sheet-gap-bg: var(--s-gray-100);
+  --s-action-sheet-gap-height: 8px;
 
-$s-action-sheet-item-title-font-size: $s-font-size !default;
+  --s-action-sheet-item-title-font-size: var(--s-text-base);
 
-$s-action-sheet-item-label-margin-top: 8px !default;
-$s-action-sheet-item-label-font-size: $s-font-size-sm !default;
-$s-action-sheet-item-label-color: $s-muted !default;
+  --s-action-sheet-item-label-margin-top: 8px;
+  --s-action-sheet-item-label-font-size: var(--s-text-sm);
+  --s-action-sheet-item-label-color: var(--s-tertiary-color);
 
-$s-action-sheet-cancel-font-size: $s-font-size !default;
-$s-action-sheet-cancel-padding: 14px !default;
-$s-action-sheet-cancel-bg: $s-white !default;
-$s-action-sheet-cancel-active-bg: $s-bg-active !default;
+  --s-action-sheet-cancel-font-size: var(--s-text-base);
+  --s-action-sheet-cancel-padding: 14px;
+  --s-action-sheet-cancel-bg: var(--s-emphasis-bg);
+  --s-action-sheet-cancel-active-bg: var(--s-active-bg);
+}
+
+[data-s-theme='dark'] {
+  --s-action-sheet-gap-bg: var(--s-gray-900);
+}
 // #endvariables
 
 .s-action-sheet {
-  border-top-left-radius: $s-action-sheet-border-radius;
-  border-top-right-radius: $s-action-sheet-border-radius;
-  background-color: $s-action-sheet-bg;
+  border-top-left-radius: var(--s-action-sheet-border-radius);
+  border-top-right-radius: var(--s-action-sheet-border-radius);
+  background-color: var(--s-action-sheet-bg);
 }
 
 .s-action-sheet-header {
   position: relative;
-  padding: $s-action-sheet-header-padding;
+  padding: var(--s-action-sheet-header-padding);
 
-  @include border-bottom($s-action-sheet-header-border-color);
+  @include border-bottom(var(--s-action-sheet-header-border-color));
 
   @at-root {
     .s-action-sheet-title {
-      font-size: $s-action-sheet-title-font-size;
+      font-size: var(--s-action-sheet-title-font-size);
       font-weight: bold;
       text-align: center;
     }
     .s-action-sheet-description {
-      font-size: $s-action-sheet-description-font-size;
+      font-size: var(--s-action-sheet-description-font-size);
       text-align: center;
-      color: $s-action-sheet-description-color;
+      color: var(--s-action-sheet-description-color);
 
       .s-action-sheet-title ~ & {
-        margin-top: $s-action-sheet-description-margin-top;
+        margin-top: var(--s-action-sheet-description-margin-top);
       }
     }
   }
 }
 
 .s-action-sheet-gap {
-  height: $s-action-sheet-gap-height;
-  background-color: $s-action-sheet-gap-bg;
+  height: var(--s-action-sheet-gap-height);
+  background-color: var(--s-action-sheet-gap-bg);
 }
 
 .s-action-sheet-item {
@@ -75,35 +80,35 @@ $s-action-sheet-cancel-active-bg: $s-bg-active !default;
   position: relative;
   display: block;
   width: 100%;
-  padding: $s-action-sheet-item-padding;
+  padding: var(--s-action-sheet-item-padding);
   text-align: center;
   cursor: pointer;
   user-select: none;
-  background-color: $s-action-sheet-item-bg;
+  background-color: var(--s-action-sheet-item-bg);
 
   .s-action-sheet-headless &:first-child {
-    border-top-left-radius: $s-action-sheet-border-radius;
-    border-top-right-radius: $s-action-sheet-border-radius;
+    border-top-left-radius: var(--s-action-sheet-border-radius);
+    border-top-right-radius: var(--s-action-sheet-border-radius);
   }
 
   &:not(:first-child) {
-    @include border-top($s-action-sheet-item-border-color);
+    @include border-top(var(--s-action-sheet-item-border-color));
   }
 
   &:not([disabled]):not(.s-action-sheet-item-disabled):not(
       .s-action-sheet-item-loading
     ):active {
-    background-color: $s-action-sheet-item-active-bg;
+    background-color: var(--s-action-sheet-item-active-bg);
   }
 
   @at-root {
     .s-action-sheet-item-title {
-      font-size: $s-action-sheet-item-title-font-size;
+      font-size: var(--s-action-sheet-item-title-font-size);
     }
     .s-action-sheet-item-label {
-      margin-top: $s-action-sheet-item-label-margin-top;
-      font-size: $s-action-sheet-item-label-font-size;
-      color: $s-action-sheet-item-label-color;
+      margin-top: var(--s-action-sheet-item-label-margin-top);
+      font-size: var(--s-action-sheet-item-label-font-size);
+      color: var(--s-action-sheet-item-label-color);
     }
   }
 }
@@ -119,13 +124,17 @@ $s-action-sheet-cancel-active-bg: $s-bg-active !default;
 }
 
 .s-action-sheet-cancel {
-  font-size: $s-action-sheet-cancel-font-size;
-  padding: $s-action-sheet-cancel-padding;
+  @include button-flush;
+
+  display: block;
+  width: 100%;
+  padding: var(--s-action-sheet-cancel-padding);
+  font-size: var(--s-action-sheet-cancel-font-size);
   text-align: center;
   cursor: pointer;
-  background-color: $s-action-sheet-cancel-bg;
+  background-color: var(--s-action-sheet-cancel-bg);
 
   &:active {
-    background-color: $s-action-sheet-cancel-active-bg;
+    background-color: var(--s-action-sheet-cancel-active-bg);
   }
 }

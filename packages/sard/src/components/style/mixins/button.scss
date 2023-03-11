@@ -1,5 +1,3 @@
-@use 'sass:color';
-
 @mixin button-active {
   &:not([disabled]):not(.s-button-disabled):not(.s-button-loading):active {
     @content;
@@ -11,12 +9,12 @@
   $padding-y,
   $padding-x,
   $border-radius,
-  $s-font-size
+  $font-size
 ) {
   height: $height;
   padding: $padding-y $padding-x;
   border-radius: $border-radius;
-  font-size: $s-font-size;
+  font-size: $font-size;
 }
 
 @mixin button-flush {
@@ -24,4 +22,5 @@
   padding: 0;
   border: none;
   background-color: transparent;
+  color: inherit;
 }

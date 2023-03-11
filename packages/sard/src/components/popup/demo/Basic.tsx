@@ -34,7 +34,7 @@ export default function () {
         <div
           style={{
             padding: '20px',
-            background: 'white',
+            background: 'var(--s-emphasis-bg)',
           }}
         >
           Popup

@@ -1,16 +1,21 @@
 import { useEffect, useState } from 'react'
+import sardConfig from 'virtual:sard-config'
 
 const themeKey = 'sardTheme'
 
-const defaultTheme = 'light'
+const defaultTheme = window.matchMedia('(prefers-color-scheme:dark)').matches
+  ? 'dark'
+  : 'light'
 
 const mapThemeIcon = {
   light: 'bi-sun-fill',
   dark: 'bi-moon-stars-fill',
 }
 
-document.documentElement.dataset.docTheme =
-  window.localStorage.getItem(themeKey) || defaultTheme
+const theme = window.localStorage.getItem(themeKey) || defaultTheme
+
+document.documentElement.dataset.docTheme = theme
+document.documentElement.dataset[sardConfig.site.themeDataName] = theme
 
 export interface ThemeProps {}
 
@@ -33,6 +38,7 @@ export default function Theme() {
 
   useEffect(() => {
     document.documentElement.dataset.docTheme = theme
+    document.documentElement.dataset[sardConfig.site.themeDataName] = theme
   }, [theme])
 
   return (

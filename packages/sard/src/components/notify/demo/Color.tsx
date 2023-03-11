@@ -15,7 +15,7 @@ export default function () {
       <Notify
         visible={visible}
         color="orange"
-        background="rebeccapurple"
+        background="fuchsia"
         message="这是一条通知"
         onTimeout={setVisible}
       />

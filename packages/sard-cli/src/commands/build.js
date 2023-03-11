@@ -31,15 +31,11 @@ function mergedBuildLibConfig(options) {
 const formatOptions = [
   {
     minify: false,
-    formats: ['umd'],
+    formats: ['es', 'cjs', 'umd'],
   },
   {
     minify: 'terser',
     formats: ['umd'],
-  },
-  {
-    minify: false,
-    formats: ['es', 'cjs'],
   },
 ]
 

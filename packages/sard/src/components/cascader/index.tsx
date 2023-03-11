@@ -180,9 +180,6 @@ export const Cascader: FC<CascaderProps> = (props) => {
                   ? placeholder
                   : selectedOption[fieldkeys.label]
               }
-              labelClass={classNames('s-cascader-label', {
-                's-cascader-label-unselected': selectedOption === undefined,
-              })}
               key={columnIndex}
             >
               <div className="s-cascader-options">

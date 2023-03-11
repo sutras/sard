@@ -1,31 +1,35 @@
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-popout-border-top-radius: $s-border-radius-xl !default;
-$s-popout-bg: #fff !default;
+:root {
+  --s-popout-border-top-radius: var(--s-rounded-xl);
+  --s-popout-bg: var(--s-emphasis-bg);
 
-$s-popout-close-padding: 16px !default;
-$s-popout-close-font-size: $s-font-size-lg !default;
+  --s-popout-close-padding: 16px;
+  --s-popout-close-font-size: var(--s-text-lg);
+  --s-popout-close-color: var(--s-secondary-color);
 
-$s-popout-header-compact-height: 44px !default;
-$s-popout-header-loose-height: 56px !default;
-$s-popout-header-loose-padding-x: $s-popout-close-padding * 2 +
-  $s-popout-close-font-size !default;
+  --s-popout-header-compact-height: 44px;
+  --s-popout-header-loose-height: 56px;
+  --s-popout-header-loose-padding-x: calc(
+    var(--s-popout-close-padding) * 2 + var(--s-popout-close-font-size)
+  );
 
-$s-popout-title-max-width: 65% !default;
-$s-popout-title-font-size: 16px !default;
+  --s-popout-title-max-width: 65%;
+  --s-popout-title-font-size: 16px;
+  --s-popout-title-color: var(--s-emphasis-color);
 
-$s-popout-footer-gap-y: 16px !default;
-$s-popout-footer-gap-x: 16px !default;
+  --s-popout-footer-gap-y: 16px;
+  --s-popout-footer-gap-x: 16px;
 
-$s-popout-button-gap: 16px !default;
+  --s-popout-button-gap: 16px;
+}
 // #endvariables
 
 .s-popout {
-  border-top-left-radius: $s-popout-border-top-radius;
-  border-top-right-radius: $s-popout-border-top-radius;
-  background-color: #fff;
+  border-top-left-radius: var(--s-popout-border-top-radius);
+  border-top-right-radius: var(--s-popout-border-top-radius);
+  background-color: var(--s-popout-bg);
 
   @at-root {
     .s-popout-header {
@@ -42,8 +46,9 @@ $s-popout-button-gap: 16px !default;
           margin-left: auto;
           margin-right: auto;
           text-align: center;
-          font-size: $s-popout-title-font-size;
+          font-size: var(--s-popout-title-font-size);
           font-weight: bold;
+          color: var(--s-popout-title-color);
           @include ellipsis;
         }
 
@@ -52,11 +57,12 @@ $s-popout-button-gap: 16px !default;
           top: 0;
           right: 0;
           height: 100%;
-          padding: $s-popout-close-padding;
+          padding: var(--s-popout-close-padding);
           border: none;
           border-top-right-radius: inherit;
-          font-size: $s-popout-close-font-size;
+          font-size: var(--s-popout-close-font-size);
           line-height: inherit;
+          color: var(--s-popout-close-color);
           cursor: pointer;
         }
       }
@@ -77,13 +83,13 @@ $s-popout-button-gap: 16px !default;
     .s-popout-footer {
       display: flex;
       align-items: center;
-      padding: $s-popout-footer-gap-y $s-popout-footer-gap-x;
+      padding: var(--s-popout-footer-gap-y) var(--s-popout-footer-gap-x);
 
       .s-popout-button {
         flex: 1 1 0;
 
         &:not(:first-child) {
-          margin-left: $s-popout-button-gap;
+          margin-left: var(--s-popout-button-gap);
         }
       }
     }
@@ -92,14 +98,14 @@ $s-popout-button-gap: 16px !default;
 
 .s-popout-compact {
   .s-popout-header {
-    height: $s-popout-header-compact-height;
+    height: var(--s-popout-header-compact-height);
   }
 }
 
 .s-popout-loose {
   .s-popout-header {
-    height: $s-popout-header-loose-height;
-    padding-left: $s-popout-header-loose-padding-x;
-    padding-right: $s-popout-header-loose-padding-x;
+    height: var(--s-popout-header-loose-height);
+    padding-left: var(--s-popout-header-loose-padding-x);
+    padding-right: var(--s-popout-header-loose-padding-x);
   }
 }

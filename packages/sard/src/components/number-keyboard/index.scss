@@ -1,27 +1,36 @@
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-number-keyboard-bg: $s-gray-300 !default;
+:root {
+  --s-number-keyboard-bg: var(--s-gray-300);
 
-$s-number-keyboard-header-height: 44px !default;
-$s-number-keyboard-title-font-size: 16px !default;
+  --s-number-keyboard-header-height: 44px;
+  --s-number-keyboard-title-font-size: 16px;
 
-$s-number-keyboard-hide-font-size: 20px !default;
+  --s-number-keyboard-hide-font-size: 20px;
 
-$s-number-keyboard-body-padding-x: 5px !default;
-$s-number-keyboard-body-padding-y: 5px !default;
+  --s-number-keyboard-body-padding-x: 5px;
+  --s-number-keyboard-body-padding-y: 5px;
 
-$s-number-keyboard-key-gap: 5px !default;
-$s-number-keyboard-key-height: 48px !default;
-$s-number-keyboard-key-border-radius: $s-border-radius-sm !default;
-$s-number-keyboard-key-font-size: $s-font-size-xl !default;
-$s-number-keyboard-key-bg: $s-white !default;
-$s-number-keyboard-key-active-bg: $s-bg-active !default;
+  --s-number-keyboard-key-gap: 5px;
+  --s-number-keyboard-key-height: 48px;
+  --s-number-keyboard-key-border-radius: var(--s-rounded-sm);
+  --s-number-keyboard-key-font-size: var(--s-text-xl);
+  --s-number-keyboard-key-color: var(--s-body-color);
+  --s-number-keyboard-key-bg: var(--s-white);
+  --s-number-keyboard-key-active-bg: var(--s-gray-200);
+}
+
+[data-s-theme='dark'] {
+  --s-number-keyboard-bg: var(--s-gray-700);
+  --s-number-keyboard-key-color: var(--s-white);
+  --s-number-keyboard-key-bg: var(--s-gray-600);
+  --s-number-keyboard-key-active-bg: var(--s-gray-500);
+}
 // #endvariables
 
 .s-number-keyboard {
-  background-color: $s-number-keyboard-bg;
+  background-color: var(--s-number-keyboard-bg);
   touch-action: none;
 
   @at-root {
@@ -30,7 +39,7 @@ $s-number-keyboard-key-active-bg: $s-bg-active !default;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: $s-number-keyboard-header-height;
+      height: var(--s-number-keyboard-header-height);
 
       @at-root {
         .s-number-keyboard-title {
@@ -38,7 +47,7 @@ $s-number-keyboard-key-active-bg: $s-bg-active !default;
           margin-left: auto;
           margin-right: auto;
           text-align: center;
-          font-size: $s-number-keyboard-title-font-size;
+          font-size: var(--s-number-keyboard-title-font-size);
           @include ellipsis;
         }
 
@@ -50,7 +59,7 @@ $s-number-keyboard-key-active-bg: $s-bg-active !default;
 
           @at-root {
             .s-number-keyboard-hide {
-              font-size: $s-number-keyboard-hide-font-size;
+              font-size: var(--s-number-keyboard-hide-font-size);
             }
           }
         }
@@ -63,25 +72,26 @@ $s-number-keyboard-key-active-bg: $s-bg-active !default;
     .s-number-keyboard-body {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: $s-number-keyboard-key-gap;
-      padding: $s-number-keyboard-body-padding-y
-        $s-number-keyboard-body-padding-x;
+      gap: var(--s-number-keyboard-key-gap);
+      padding: var(--s-number-keyboard-body-padding-y)
+        var(--s-number-keyboard-body-padding-x);
 
       @at-root {
         .s-number-keyboard-key {
           display: flex;
           align-items: center;
           justify-content: center;
-          height: $s-number-keyboard-key-height;
-          border-radius: $s-number-keyboard-key-border-radius;
-          font-size: $s-number-keyboard-key-font-size;
-          background-color: $s-number-keyboard-key-bg;
+          height: var(--s-number-keyboard-key-height);
+          border-radius: var(--s-number-keyboard-key-border-radius);
+          font-size: var(--s-number-keyboard-key-font-size);
+          color: var(--s-number-keyboard-key-color);
+          background-color: var(--s-number-keyboard-key-bg);
           user-select: none;
           cursor: pointer;
           box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.3);
 
           &:active {
-            background-color: $s-number-keyboard-key-active-bg;
+            background-color: var(--s-number-keyboard-key-active-bg);
           }
         }
       }

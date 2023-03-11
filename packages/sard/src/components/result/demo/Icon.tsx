@@ -9,7 +9,7 @@ export default function () {
   return (
     <>
       <Result
-        icon={<Icon name="bi-cup-hot" color="gray"></Icon>}
+        icon={<Icon name="bi-cup-hot" color="var(--s-tertiary-color)"></Icon>}
         title="稍候"
         description="请根据提示进行操作"
       ></Result>

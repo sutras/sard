@@ -11,7 +11,7 @@ export default function () {
         scrollspy
         offset={108}
         sticky
-        headerStyle={{ top: 60, background: '#fff' }}
+        headerStyle={{ top: 60, background: 'var(--s-emphasis-bg)' }}
       >
         {Array(7)
           .fill(0)

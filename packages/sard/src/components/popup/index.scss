@@ -1,8 +1,8 @@
-@import '../style/variables.scss';
-
 // #variables
-$popup-z-index: 1100 !default;
-$popup-mask-bg: $s-mask !default;
+:root {
+  --s-popup-z-index: 1100;
+  --s-popup-mask-bg: var(--s-mask);
+}
 // #endvariables
 
 .s-popup {
@@ -11,7 +11,7 @@ $popup-mask-bg: $s-mask !default;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: $popup-z-index;
+  z-index: var(--s-popup-z-index);
   overflow: hidden;
   pointer-events: none;
   &:not(.s-popup-visible) {
@@ -24,7 +24,7 @@ $popup-mask-bg: $s-mask !default;
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: $popup-mask-bg;
+  background-color: var(--s-popup-mask-bg);
   pointer-events: auto;
   touch-action: none;
 

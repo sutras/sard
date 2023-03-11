@@ -1,19 +1,19 @@
-@import '../style/variables.scss';
-
 // #variables
-$s-image-preview-header-padding-y: 15px !default;
-$s-image-preview-header-padding-x: 20px !default;
-$s-image-preview-header-text-shadow: 1px 1px 3px $s-black !default;
-$s-image-preview-header-color: $s-white !default;
-$s-image-preview-header-opacity: 0.85 !default;
-$s-image-preview-header-transition-duration: 0.3s !default;
+:root {
+  --s-image-preview-header-padding-y: 15px;
+  --s-image-preview-header-padding-x: 20px;
+  --s-image-preview-header-text-shadow: 1px 1px 3px var(--s-black);
+  --s-image-preview-header-color: var(--s-white);
+  --s-image-preview-header-opacity: 0.85;
+  --s-image-preview-header-transition-duration: var(--s-duration);
 
-$s-image-preview-counter-font-size: $s-font-size !default;
+  --s-image-preview-counter-font-size: var(--s-text-base);
 
-$s-image-preview-close-padding: 10px !default;
-$s-image-preview-close-font-size: $s-font-size-xl !default;
+  --s-image-preview-close-padding: 10px;
+  --s-image-preview-close-font-size: var(--s-text-xl);
 
-$s-image-preview-mask-bg: $s-mask-dark !default;
+  --s-image-preview-mask-bg: var(--s-mask-dark);
+}
 // #endvariables
 
 .s-image-preview-popup-content {
@@ -38,23 +38,23 @@ $s-image-preview-mask-bg: $s-mask-dark !default;
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      padding: $s-image-preview-header-padding-y
-        $s-image-preview-header-padding-x;
-      text-shadow: $s-image-preview-header-text-shadow;
-      color: $s-image-preview-header-color;
-      opacity: $s-image-preview-header-opacity;
-      transition: $s-image-preview-header-transition-duration;
+      padding: var(--s-image-preview-header-padding-y)
+        var(--s-image-preview-header-padding-x);
+      text-shadow: var(--s-image-preview-header-text-shadow);
+      color: var(--s-image-preview-header-color);
+      opacity: var(--s-image-preview-header-opacity);
+      transition: var(--s-image-preview-header-transition-duration);
       pointer-events: none;
 
       @at-root {
         .s-image-preview-counter {
-          font-size: $s-image-preview-counter-font-size;
+          font-size: var(--s-image-preview-counter-font-size);
         }
         .s-image-preview-close {
           display: flex;
-          padding: $s-image-preview-close-padding;
-          margin-right: -$s-image-preview-close-padding;
-          font-size: $s-image-preview-close-font-size;
+          padding: var(--s-image-preview-close-padding);
+          margin-right: -var(--s-image-preview-close-padding);
+          font-size: var(--s-image-preview-close-font-size);
           pointer-events: auto;
           cursor: pointer;
 
@@ -114,7 +114,7 @@ $s-image-preview-mask-bg: $s-mask-dark !default;
 }
 
 .s-image-preview-mask {
-  background-color: $s-image-preview-mask-bg;
+  background-color: var(--s-image-preview-mask-bg);
 }
 
 .s-image-preview-header-hidden {

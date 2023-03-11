@@ -9,8 +9,8 @@ export default function () {
     <>
       <Tabs
         type="card"
-        style={{ padding: 10, background: '#eee' }}
-        bodyStyle={{ background: '#fff' }}
+        style={{ padding: 10, background: 'var(--s-secondary-bg)' }}
+        bodyStyle={{ background: 'var(--s-emphasis-bg)' }}
       >
         <TabPane label="标签1">内容1</TabPane>
         <TabPane label="标签2">内容2</TabPane>

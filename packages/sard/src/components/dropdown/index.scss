@@ -1,33 +1,40 @@
-@import '../style/variables.scss';
-
 // #variables
-$s-dropdown-height: 48px !default;
-$s-dropdown-box-shadow: $s-box-shadow-lg !default;
+:root {
+  --s-dropdown-height: 48px;
+  --s-dropdown-bg: var(--s-emphasis-bg);
+  --s-dropdown-box-shadow: var(--s-shadow-lg);
 
-$s-dropdown-item-padding-x: 10px !default;
+  --s-dropdown-item-padding-x: 10px;
+  --s-dropdown-item-active-opacity: var(--s-active-opacity);
 
-$s-dropdown-item-label-color: $s-muted !default;
-$s-dropdown-item-label-margin-right: 10px !default;
+  --s-dropdown-item-label-color: var(--s-tertiary-color);
+  --s-dropdown-item-label-margin-right: 10px;
 
-$s-dropdown-item-icon-margin-left: 5px !default;
-$s-dropdown-item-icon-color: $s-gray-300 !default;
-$s-dropdown-item-icon-font-size: $s-font-size-sm !default;
+  --s-dropdown-item-icon-margin-left: 5px;
+  --s-dropdown-item-icon-color: var(--s-border-color);
+  --s-dropdown-item-icon-font-size: var(--s-text-sm);
 
-$s-dropdown-popup-z-index: 1000 !default;
+  --s-dropdown-item-show-color: var(--s-primary);
 
-$s-dropdown-disabled-color: $s-weak !default;
+  --s-dropdown-popup-z-index: 1000;
+  --s-dropdown-popup-content-bg: var(--s-emphasis-bg);
 
+  --s-dropdown-item-option-active-color: var(--s-primary);
+
+  --s-dropdown-option-icon-font-size: var(--s-text-sm);
+  --s-dropdown-option-icon-color: var(--s-primary);
+}
 // #endvariables
 
 .s-dropdown {
   position: relative;
   display: flex;
-  height: $s-dropdown-height;
-  background: $s-white;
-  box-shadow: $s-dropdown-box-shadow;
+  height: var(--s-dropdown-height);
+  background: var(--s-dropdown-bg);
+  box-shadow: var(--s-dropdown-box-shadow);
 
   &.s-dropdown-show {
-    z-index: $s-dropdown-popup-z-index + 1;
+    z-index: calc(var(--s-dropdown-popup-z-index) + 1);
   }
 
   @at-root {
@@ -36,7 +43,7 @@ $s-dropdown-disabled-color: $s-weak !default;
       align-items: center;
       justify-content: center;
       flex: 1;
-      padding: 0 $s-dropdown-item-padding-x;
+      padding: 0 var(--s-dropdown-item-padding-x);
       user-select: none;
       overflow: hidden;
 
@@ -45,13 +52,13 @@ $s-dropdown-disabled-color: $s-weak !default;
       }
 
       &:not(.s-dropdown-item-disabled):active {
-        opacity: $s-active-opacity;
+        opacity: var(--s-dropdown-item-disabled-opacity);
       }
 
       @at-root {
         .s-dropdown-item-label {
           flex: none;
-          color: $s-dropdown-item-label-color;
+          color: var(--s-dropdown-item-label-color);
           @include ellipsis;
         }
 
@@ -61,19 +68,19 @@ $s-dropdown-disabled-color: $s-weak !default;
           @include ellipsis;
 
           .s-dropdown-item-label ~ & {
-            margin-left: $s-dropdown-item-label-margin-right;
+            margin-left: var(--s-dropdown-item-label-margin-right);
           }
         }
 
         .s-dropdown-item-icon {
-          margin-left: $s-dropdown-item-icon-margin-left;
-          color: $s-dropdown-item-icon-color;
-          font-size: $s-dropdown-item-icon-font-size;
+          margin-left: var(--s-dropdown-item-icon-margin-left);
+          color: var(--s-dropdown-item-icon-color);
+          font-size: var(--s-dropdown-item-icon-font-size);
         }
       }
     }
     .s-dropdown-item-show {
-      color: $s-primary;
+      color: var(--s-dropdown-item-show-color);
 
       .s-dropdown-item-icon {
         color: inherit;
@@ -90,14 +97,14 @@ $s-dropdown-disabled-color: $s-weak !default;
             .s-dropdown-option-icon {
               display: none;
               margin-left: auto;
-              font-size: $s-font-size-sm;
-              color: $s-primary;
+              font-size: var(--s-dropdown-option-icon-font-size);
+              color: var(--s-dropdown-option-icon-color);
             }
           }
         }
 
         .s-dropdown-item-option-active {
-          color: $s-primary;
+          color: var(--s-dropdown-item-option-active-color);
 
           .s-dropdown-option-icon {
             display: block;
@@ -109,7 +116,7 @@ $s-dropdown-disabled-color: $s-weak !default;
 }
 
 .s-dropdown-popup {
-  z-index: $s-dropdown-popup-z-index;
+  z-index: var(--s-dropdown-popup-z-index);
 }
 
 .s-dropdown-popup-content {
@@ -117,13 +124,13 @@ $s-dropdown-disabled-color: $s-weak !default;
   overflow-y: auto;
   overflow-x: hidden;
   touch-action: pan-y;
-  background-color: $s-white;
+  background-color: var(--s-dropdown-popup-content-bg);
 }
 
 .s-dropdown-item-disabled {
   .s-dropdown-item-label,
   .s-dropdown-item-title,
   .s-dropdown-item-value {
-    color: $s-dropdown-disabled-color;
+    @include disabled-text;
   }
 }

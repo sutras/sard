@@ -1,28 +1,29 @@
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-navbar-height: 44px !default;
-$s-navbar-bg: $s-white !default;
-$s-navbar-border-color: $s-border-color !default;
+:root {
+  --s-navbar-height: 44px;
+  --s-navbar-bg: var(--s-emphasis-bg);
+  --s-navbar-border-color: var(--s-border-color);
 
-$s-navbar-title-max-width: 60% !default;
-$s-navbar-title-font-size: $s-font-size-lg !default;
-$s-navbar-title-color: $s-dark !default;
+  --s-navbar-title-max-width: 60%;
+  --s-navbar-title-font-size: var(--s-text-lg);
+  --s-navbar-title-color: var(--s-emphasis-color);
 
-$s-navbar-item-padding-x: 10px !default;
+  --s-navbar-item-padding-x: 10px;
+}
 // #endvariables
 
 .s-navbar {
   position: relative;
   box-sizing: border-box;
   display: flex;
-  height: $s-navbar-height;
+  height: var(--s-navbar-height);
   align-items: center;
   justify-content: center;
-  background-color: $s-navbar-bg;
+  background-color: var(--s-navbar-bg);
 
-  @include border-bottom($s-navbar-border-color);
+  @include border-bottom(var(--s-navbar-border-color));
 
   @at-root {
     .s-navbar-content {
@@ -36,11 +37,11 @@ $s-navbar-item-padding-x: 10px !default;
       @at-root {
         .s-navbar-title {
           width: 100%;
-          max-width: $s-navbar-title-max-width;
-          font-size: $s-navbar-title-font-size;
+          max-width: var(--s-navbar-title-max-width);
+          font-size: var(--s-navbar-title-font-size);
           font-weight: bold;
           text-align: center;
-          color: $s-navbar-title-color;
+          color: var(--s-navbar-title-color);
           @include ellipsis;
         }
       }
@@ -68,7 +69,7 @@ $s-navbar-item-padding-x: 10px !default;
       height: 100%;
       align-items: center;
       justify-content: center;
-      padding: 0 $s-navbar-item-padding-x;
+      padding: 0 var(--s-navbar-item-padding-x);
       user-select: none;
       line-height: 1;
       cursor: pointer;

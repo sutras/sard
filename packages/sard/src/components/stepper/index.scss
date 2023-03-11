@@ -1,25 +1,30 @@
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-stepper-height: 36px !default;
-$s-stepper-bg: $s-gray-200 !default;
+:root {
+  --s-stepper-height: 36px;
+  --s-stepper-bg: var(--s-secondary-bg);
 
-$s-stepper-input-gap: 3px !default;
-$s-stepper-input-width: 50px !default;
-$s-stepper-input-padding-x: 5px !default;
+  --s-stepper-input-gap: 3px;
+  --s-stepper-input-width: 50px;
+  --s-stepper-input-padding-x: 5px;
 
-$s-stepper-button-width: $s-stepper-height !default;
-$s-stepper-button-font-size: 18px !default;
-$s-stepper-button-border-radius: $s-border-radius-sm !default;
-$s-stepper-button-active-bg: $s-gray-300 !default;
+  --s-stepper-button-width: var(--s-stepper-height);
+  --s-stepper-button-font-size: 18px;
+  --s-stepper-button-border-radius: var(--s-rounded-sm);
+  --s-stepper-button-active-bg: var(--s-gray-300);
+}
+
+[data-s-theme='dark'] {
+  --s-stepper-button-active-bg: var(--s-gray-600);
+}
 // #endvariables
 
 .s-stepper {
   display: inline-flex;
   justify-content: center;
   align-items: stretch;
-  height: $s-stepper-height;
+  height: var(--s-stepper-height);
 
   @at-root {
     .s-stepper-button {
@@ -28,47 +33,47 @@ $s-stepper-button-active-bg: $s-gray-300 !default;
       display: flex;
       justify-content: center;
       align-items: center;
-      width: $s-stepper-button-width;
-      font-size: $s-stepper-button-font-size;
+      width: var(--s-stepper-button-width);
+      font-size: var(--s-stepper-button-font-size);
       user-select: none;
 
       &,
       &:disabled {
         color: inherit;
-        background-color: $s-stepper-bg;
+        background-color: var(--s-stepper-bg);
       }
 
-      .s-stepper:not(.s-stepper-readonly) &:not(.s-stepper-button-disabled) {
+      .s-stepper:not(.s-stepper-readonly) &:not([disabled]) {
         cursor: pointer;
 
         &:active {
-          background-color: $s-stepper-button-active-bg;
+          background-color: var(--s-stepper-button-active-bg);
         }
       }
     }
     .s-stepper-decrease {
       flex: none;
-      border-top-left-radius: $s-stepper-button-border-radius;
-      border-bottom-left-radius: $s-stepper-button-border-radius;
+      border-top-left-radius: var(--s-stepper-button-border-radius);
+      border-bottom-left-radius: var(--s-stepper-button-border-radius);
     }
     .s-stepper-increase {
       flex: none;
-      border-top-right-radius: $s-stepper-button-border-radius;
-      border-bottom-right-radius: $s-stepper-button-border-radius;
+      border-top-right-radius: var(--s-stepper-button-border-radius);
+      border-bottom-right-radius: var(--s-stepper-button-border-radius);
     }
     .s-stepper-input {
       box-sizing: border-box;
       flex: 1;
       padding: 0;
-      width: $s-stepper-input-width;
-      margin-left: $s-stepper-input-gap;
-      margin-right: $s-stepper-input-gap;
-      padding-left: $s-stepper-input-padding-x;
-      padding-right: $s-stepper-input-padding-x;
+      width: var(--s-stepper-input-width);
+      margin-left: var(--s-stepper-input-gap);
+      margin-right: var(--s-stepper-input-gap);
+      padding-left: var(--s-stepper-input-padding-x);
+      padding-right: var(--s-stepper-input-padding-x);
       border: 0;
       border-radius: 0;
       text-align: center;
-      background-color: $s-stepper-bg;
+      background-color: var(--s-stepper-bg);
     }
   }
 }

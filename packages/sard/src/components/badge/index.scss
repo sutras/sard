@@ -1,16 +1,16 @@
-@import '../style/variables.scss';
-
 // #variables
-$s-badge-content-padding-x: 4px !default;
-$s-badge-content-padding-y: 2px !default;
-$s-badge-content-font-size: 12px !default;
-$s-badge-content-min-width: calc(
-  $s-badge-content-padding-y * 2 + $s-badge-content-font-size
-) !default;
-$s-badge-content-bg: $s-danger !default;
-$s-badge-content-color: $s-white !default;
-
-$s-badge-content-dot-size: 8px !default;
+:root {
+  --s-badge-content-padding-x: 4px;
+  --s-badge-content-padding-y: 2px;
+  --s-badge-content-min-width: calc(
+    var(--s-badge-content-padding-y) * 2 + var(--s-badge-content-font-size)
+  );
+  --s-badge-content-font-size: 12px;
+  --s-badge-content-bg: var(--s-danger);
+  --s-badge-content-color: var(--s-white);
+  --s-badge-content-box-shadow: 0 0 0 1px var(--s-emphasis-bg);
+  --s-badge-content-dot-size: 8px;
+}
 // #endvariables
 
 .s-badge {
@@ -32,23 +32,23 @@ $s-badge-content-dot-size: 8px !default;
   flex: none;
   justify-content: center;
   align-self: center;
-  min-width: $s-badge-content-min-width;
-  padding: $s-badge-content-padding-y $s-badge-content-padding-x;
-  font-size: $s-badge-content-font-size;
+  min-width: var(--s-badge-content-min-width);
+  padding: var(--s-badge-content-padding-y) var(--s-badge-content-padding-x);
+  font-size: var(--s-badge-content-font-size);
   line-height: 1;
   white-space: nowrap;
   text-align: center;
-  border-radius: 9999px;
-  color: $s-badge-content-color;
-  background-color: $s-badge-content-bg;
-  box-shadow: 0 0 0 1px #fff;
+  border-radius: var(--s-rounded-full);
+  color: var(--s-badge-content-color);
+  background-color: var(--s-badge-content-bg);
+  box-shadow: var(--s-badge-content-box-shadow);
 
   .s-badge-zero-hide & {
     display: none;
   }
   .s-badge-is-dot & {
-    width: $s-badge-content-dot-size;
-    height: $s-badge-content-dot-size;
+    width: var(--s-badge-content-dot-size);
+    height: var(--s-badge-content-dot-size);
     min-width: unset;
     padding: 0;
     border-radius: 50%;

@@ -1,5 +1,3 @@
-@use 'sass:math';
-
 // # 灰度值
 $s-white: #fff !default;
 $s-gray-100: #f8f9fa !default;
@@ -13,15 +11,15 @@ $s-gray-800: #343a40 !default;
 $s-gray-900: #212529 !default;
 $s-black: #000 !default;
 
-// # 其他颜色
-$s-blue: #4694d1 !default;
+// # 颜色
+$s-blue: #0d6efd !default;
 $s-indigo: #6610f2 !default;
 $s-purple: #6f42c1 !default;
 $s-pink: #d63384 !default;
-$s-red: #ff4747 !default;
+$s-red: #dc3545 !default;
 $s-orange: #fd7e14 !default;
-$s-yellow: #ffb66c !default;
-$s-green: #40e23c !default;
+$s-yellow: #ffc107 !default;
+$s-green: #198754 !default;
 $s-teal: #20c997 !default;
 $s-cyan: #0dcaf0 !default;
 
@@ -34,87 +32,13 @@ $s-warning: $s-yellow !default;
 $s-danger: $s-red !default;
 $s-light: $s-gray-100 !default;
 $s-dark: $s-gray-900 !default;
-$s-muted: $s-gray-600 !default;
-$s-weak: $s-gray-500 !default;
 
+// # 主题色列表
 $s-theme-colors: (
-  primary: $s-primary,
-  secondary: $s-secondary,
-  success: $s-success,
-  info: $s-info,
-  warning: $s-warning,
-  danger: $s-danger,
+  primary: var(--s-primary),
+  secondary: var(--s-secondary),
+  success: var(--s-success),
+  info: var(--s-info),
+  warning: var(--s-warning),
+  danger: var(--s-danger),
 ) !default;
-
-// # 文本颜色
-$s-text-body: $s-dark !default;
-$s-text-muted: $s-muted !default;
-$s-text-weak: $s-weak !default;
-
-// # 背景颜色
-$s-bg-body: $s-white !default;
-$s-bg-active: $s-gray-200 !default;
-$s-bg-gap: $s-gray-100 !default;
-
-// # 边框
-$s-border-color: $s-gray-300 !default;
-
-// # 圆角
-$s-border-radius-xs: 2px !default;
-$s-border-radius-sm: 4px !default;
-$s-border-radius: 6px !default;
-$s-border-radius-lg: 10px !default;
-$s-border-radius-xl: 14px !default;
-
-// # 字体
-$s-font-family-sans-serif: system-ui, -apple-system, 'Segoe UI', Roboto,
-  'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif,
-  'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-$s-font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
-  'Liberation Mono', 'Courier New', monospace;
-
-// # 字号
-$s-font-size-xs: 10px !default;
-$s-font-size-sm: 12px !default;
-$s-font-size: 14px !default;
-$s-font-size-lg: 16px !default;
-$s-font-size-xl: 24px !default;
-$s-font-size-xxl: 32px !default;
-
-// # 字重
-$s-font-weight-bold: 700 !default;
-$s-font-weight-normal: 400 !default;
-$s-font-weight-light: 300 !default;
-
-// # 行高
-$s-line-height-xs: 1.1667 !default;
-$s-line-height-sm: 1.3333 !default;
-$s-line-height: 1.5 !default;
-$s-line-height-lg: 2 !default;
-
-// # 阴影
-$s-box-shadow-sm: 0 1px 3px rgb(0 0 0 / 40%);
-$s-box-shadow: 0 2px 6px rgb(0 0 0 / 5%);
-$s-box-shadow-lg: 0 3px 12px rgb(0 0 0 / 8%);
-$s-box-shadow-right: 1px 0 3px rgb(0 0 0 / 5%);
-
-// # 遮罩
-$s-mask: rgba(0, 0, 0, 0.5) !default;
-$s-mask-dark: rgba(0, 0, 0, 0.7) !default;
-
-// # 禁用状态
-$s-disabled-pointer-events: none !default;
-$s-disabled-opacity: 0.6 !default;
-$s-disabled-cursor: default !default;
-$s-disabled-color: $s-gray-400 !default;
-
-// # 按下状态
-$s-active-opacity: 0.5 !default;
-
-// # 加载状态
-$s-loading-pointer-events: none !default;
-$s-loading-cursor: default !default;
-
-// # transition
-$s-transition-duration: 0.3s !default;
-$s-transition-duration-fast: 0.15s !default;

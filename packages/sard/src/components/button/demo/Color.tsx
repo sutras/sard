@@ -8,25 +8,25 @@ export default function () {
   return (
     <>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-        <Button style={{ color: 'rebeccapurple' }}>default</Button>
-        <Button style={{ color: 'rebeccapurple' }} type="pale">
+        <Button style={{ color: 'fuchsia' }}>default</Button>
+        <Button style={{ color: 'fuchsia' }} type="pale">
           pale
         </Button>
-        <Button style={{ color: 'rebeccapurple' }} type="mild">
+        <Button style={{ color: 'fuchsia' }} type="mild">
           mild
         </Button>
-        <Button style={{ color: 'rebeccapurple' }} type="outline">
+        <Button style={{ color: 'fuchsia' }} type="outline">
           outline
         </Button>
-        <Button style={{ color: 'rebeccapurple' }} type="text">
+        <Button style={{ color: 'fuchsia' }} type="text">
           text
         </Button>
-        <Button style={{ color: 'rebeccapurple' }} type="pale-text">
+        <Button style={{ color: 'fuchsia' }} type="pale-text">
           pale-text
         </Button>
         <Button
           style={{
-            backgroundImage: 'linear-gradient(to right, orange, rebeccapurple)',
+            backgroundImage: 'linear-gradient(to right, orange, fuchsia)',
           }}
         >
           primary

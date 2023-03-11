@@ -1,13 +1,12 @@
-@import '../style/variables.scss';
-@import '../style/functions.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-notify-paddding-x: 16px !default;
-$s-notify-paddding-y: 8px !default;
-$s-notify-font-size: $s-font-size !default;
-$s-notify-color: $s-white !default;
-
+:root {
+  --s-notify-paddding-x: 16px;
+  --s-notify-paddding-y: 8px;
+  --s-notify-font-size: var(--s-text-base);
+  --s-notify-color: var(--s-white);
+}
 // #endvariables
 
 .s-notify {
@@ -15,18 +14,18 @@ $s-notify-color: $s-white !default;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: $s-notify-paddding-y $s-notify-paddding-x;
-  font-size: $s-notify-font-size;
+  padding: var(--s-notify-paddding-y) var(--s-notify-paddding-x);
+  font-size: var(--s-notify-font-size);
 }
 
 // 默认类型主题色
 @each $color,
   $value
     in (
-      primary: $s-primary,
-      success: $s-success,
-      warning: $s-warning,
-      error: $s-danger
+      primary: var(--s-primary),
+      success: var(--s-success),
+      warning: var(--s-warning),
+      error: var(--s-danger)
     )
 {
   .s-notify-#{$color} {

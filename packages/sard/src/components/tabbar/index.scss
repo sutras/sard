@@ -1,30 +1,30 @@
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-tabbar-z-index: 1050 !default;
-$s-tabbar-height: 50px !default;
-$s-tabbar-bg: $s-white !default;
-$s-tabbar-color: $s-muted !default;
-$s-tabbar-border-color: $s-border-color !default;
+:root {
+  --s-tabbar-z-index: 1050;
+  --s-tabbar-height: 50px;
+  --s-tabbar-bg: var(--s-emphasis-bg);
+  --s-tabbar-color: var(--s-secondary-color);
+  --s-tabbar-border-color: var(--s-border-color);
 
-$s-tabbar-item-ative-color: $s-primary !default;
-$s-tabbar-item-icon-margin-bottom: 5px !default;
-$s-tabbar-item-icon-font-size: 20px !default;
-$s-tabbar-item-text-font-size: 12px !default;
-$s-tabbar-item-text-line-height: 1 !default;
-
+  --s-tabbar-item-ative-color: var(--s-primary);
+  --s-tabbar-item-icon-margin-bottom: 5px;
+  --s-tabbar-item-icon-font-size: 20px;
+  --s-tabbar-item-text-font-size: 12px;
+  --s-tabbar-item-text-line-height: 1;
+}
 // #endvariables
 
 .s-tabbar {
   position: relative;
   display: flex;
   align-items: stretch;
-  height: $s-tabbar-height;
-  color: $s-tabbar-color;
-  background-color: $s-tabbar-bg;
+  height: var(--s-tabbar-height);
+  color: var(--s-tabbar-color);
+  background-color: var(--s-tabbar-bg);
 
-  @include border-top($s-tabbar-border-color);
+  @include border-top(var(--s-tabbar-border-color));
 }
 
 .s-tabbar-fixed {
@@ -32,7 +32,7 @@ $s-tabbar-item-text-line-height: 1 !default;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: $s-tabbar-z-index;
+  z-index: var(--s-tabbar-z-index);
   width: 100%;
 }
 
@@ -45,17 +45,17 @@ $s-tabbar-item-text-line-height: 1 !default;
   cursor: pointer;
 }
 .s-tabbar-item-active {
-  color: $s-tabbar-item-ative-color;
+  color: var(--s-tabbar-item-ative-color);
 }
 
 .s-tabbar-item-icon {
   position: relative;
   display: flex;
-  margin-bottom: $s-tabbar-item-icon-margin-bottom;
-  font-size: $s-tabbar-item-icon-font-size;
+  margin-bottom: var(--s-tabbar-item-icon-margin-bottom);
+  font-size: var(--s-tabbar-item-icon-font-size);
 }
 
 .s-tabbar-item-text {
-  font-size: $s-tabbar-item-text-font-size;
-  line-height: $s-tabbar-item-text-line-height;
+  font-size: var(--s-tabbar-item-text-font-size);
+  line-height: var(--s-tabbar-item-text-line-height);
 }

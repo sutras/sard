@@ -35,24 +35,21 @@ $doc-primary: #4694d1 !default;
 }
 
 :root {
-  &,
-  &[data-doc-theme='light'] {
-    --doc-body-color: var(--doc-gray-900);
-    --doc-body-bg: #{lighten(desaturate($doc-primary, 30%), 40%)};
-    --doc-secondary-color: var(--doc-gray-700);
-    --doc-secondary-bg: var(--doc-gray-200);
-    --doc-tertiary-color: var(--doc-gray-600);
-    --doc-tertiary-bg: var(--doc-gray-200);
-    --doc-emphasis-color: var(--doc-black);
-    --doc-emphasis-bg: var(--doc-white);
-    --doc-border-color: var(--doc-gray-300);
-  }
+  --doc-body-color: var(--doc-gray-900);
+  --doc-body-bg: #{lighten(desaturate($doc-primary, 30%), 40%)};
+  --doc-secondary-color: var(--doc-gray-700);
+  --doc-secondary-bg: var(--doc-gray-200);
+  --doc-tertiary-color: var(--doc-gray-600);
+  --doc-tertiary-bg: var(--doc-gray-200);
+  --doc-emphasis-color: var(--doc-black);
+  --doc-emphasis-bg: var(--doc-white);
+  --doc-border-color: var(--doc-gray-300);
 }
 
-:root[data-doc-theme='dark'] {
-  --doc-body-color: var(--doc-gray-400);
+[data-doc-theme='dark'] {
+  --doc-body-color: var(--doc-gray-200);
   --doc-body-bg: var(--doc-gray-900);
-  --doc-secondary-color: var(--doc-gray-500);
+  --doc-secondary-color: var(--doc-gray-400);
   --doc-secondary-bg: var(--doc-gray-700);
   --doc-tertiary-color: var(--doc-gray-600);
   --doc-tertiary-bg: var(--doc-gray-900);

@@ -1,9 +1,11 @@
-@import '../style/variables.scss';
-
 // #variables
+:root {
+  --s-collapse-transition-duration: var(--s-duration-slow);
+}
 // #endvariables
+
 .s-collapse {
-  transition: height 500ms;
+  transition: height var(--s-collapse-transition-duration);
 
   &:not(.s-show) {
     display: none;

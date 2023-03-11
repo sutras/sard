@@ -1,22 +1,21 @@
-@import '../style/variables.scss';
-
 // #variables
-$s-progress-bar-height: 4px !default;
-$s-progress-bar-border-radius: $s-border-radius-sm !default;
-$s-progress-bar-bg: $s-gray-300 !default;
+:root {
+  --s-progress-bar-height: 4px;
+  --s-progress-bar-border-radius: var(--s-rounded-sm);
+  --s-progress-bar-bg: var(--s-secondary-bg);
 
-$s-progress-bar-trail-color: $s-white !default;
-$s-progress-bar-trail-bg: $s-primary !default;
-$s-progress-bar-trail-font-size: 12px !default;
-$s-progress-bar-trail-transition-duration: 0.6s !default;
-$s-progress-bar-trail-striped-size: 16px !default;
-
+  --s-progress-bar-trail-color: var(--s-white);
+  --s-progress-bar-trail-bg: var(--s-primary);
+  --s-progress-bar-trail-font-size: 12px;
+  --s-progress-bar-trail-transition-duration: var(--s-duration-slow);
+  --s-progress-bar-trail-striped-size: 16px;
+}
 // #endvariables
 
 .s-progress-bar {
-  height: $s-progress-bar-height;
-  border-radius: $s-progress-bar-border-radius;
-  background-color: $s-progress-bar-bg;
+  height: var(--s-progress-bar-height);
+  border-radius: var(--s-progress-bar-border-radius);
+  background-color: var(--s-progress-bar-bg);
   overflow: hidden;
 }
 .s-progress-bar-trail {
@@ -24,10 +23,10 @@ $s-progress-bar-trail-striped-size: 16px !default;
   align-items: center;
   justify-content: center;
   height: 100%;
-  font-size: $s-progress-bar-trail-font-size;
-  color: $s-progress-bar-trail-color;
-  background-color: $s-progress-bar-trail-bg;
-  transition: width $s-progress-bar-trail-transition-duration ease;
+  font-size: var(--s-progress-bar-trail-font-size);
+  color: var(--s-progress-bar-trail-color);
+  background-color: var(--s-progress-bar-trail-bg);
+  transition: width var(--s-progress-bar-trail-transition-duration) ease;
 
   .s-progress-bar-striped & {
     background-image: linear-gradient(
@@ -40,8 +39,8 @@ $s-progress-bar-trail-striped-size: 16px !default;
       transparent 75%,
       transparent
     );
-    background-size: $s-progress-bar-trail-striped-size
-      $s-progress-bar-trail-striped-size;
+    background-size: var(--s-progress-bar-trail-striped-size)
+      var(--s-progress-bar-trail-striped-size);
   }
 
   .s-progress-bar-animated & {
@@ -51,6 +50,6 @@ $s-progress-bar-trail-striped-size: 16px !default;
 
 @keyframes s-progress-bar-trail-striped {
   0% {
-    background-position-x: $s-progress-bar-trail-striped-size;
+    background-position-x: var(--s-progress-bar-trail-striped-size);
   }
 }

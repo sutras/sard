@@ -1,39 +1,40 @@
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-tab-label-height: 48px !default;
-$s-tab-label-font-size: $s-font-size !default;
-$s-tab-label-color: $s-gray-700 !default;
-$s-tab-label-active-color: $s-dark !default;
+:root {
+  --s-tab-label-height: 48px;
+  --s-tab-label-font-size: var(--s-text-base);
+  --s-tab-label-color: var(--s-secondary-color);
+  --s-tab-label-active-color: var(--s-emphasis-color);
 
-$s-tab-auto-label-padding-x: 15px !default;
+  --s-tab-auto-label-padding-x: 15px;
 
-$s-tab-label-card-label-active-bg: $s-white !default;
+  --s-tab-label-card-active-bg: var(--s-emphasis-bg);
 
-$s-tab-label-line-width: 40px !default;
-$s-tab-label-line-height: 3px !default;
-$s-tab-label-line-bg: $s-primary !default;
+  --s-tab-label-line-width: 40px;
+  --s-tab-label-line-height: 3px;
+  --s-tab-label-line-bg: var(--s-primary);
 
-$s-tab-label-border-border-radius: $s-border-radius-sm !default;
-$s-tab-label-border-border-color: $s-primary !default;
-$s-tab-label-border-label-height: 28px !default;
-$s-tab-label-border-label-active-color: $s-white !default;
+  --s-tab-label-border-border-radius: var(--s-rounded-sm);
+  --s-tab-label-border-border-color: var(--s-primary);
+  --s-tab-label-border-label-height: 28px;
+  --s-tab-label-border-label-active-color: var(--s-white);
 
-$s-tab-label-pill-label-height: 28px !default;
-$s-tab-label-pill-label-border-radius: 9999px !default;
-$s-tab-label-pill-label-active-bg: $s-primary !default;
-$s-tab-label-pill-label-active-color: $s-white !default;
+  --s-tab-label-pill-label-height: 28px;
+  --s-tab-label-pill-label-border-radius: var(--s-rounded-full);
+  --s-tab-label-pill-label-active-bg: var(--s-primary);
+  --s-tab-label-pill-label-active-color: var(--s-white);
 
-$s-tab-vertical-label-height: 40px !default;
-$s-tab-vertical-label-padding-x: 15px !default;
+  --s-tab-vertical-label-height: 40px;
+  --s-tab-vertical-label-padding-x: 15px;
 
-$s-tab-inkbar-width: 40px !default;
-$s-tab-inkbar-height: 3px !default;
-$s-tab-inkbar-bg: $s-primary !default;
+  --s-tab-inkbar-width: 40px;
+  --s-tab-inkbar-height: 3px;
+  --s-tab-inkbar-bg: var(--s-primary);
 
-$s-tab-prepend-gap: 5px !default;
-$s-tab-append-gap: 5px !default;
+  --s-tab-prepend-gap: 5px;
+  --s-tab-append-gap: 5px;
+}
 // #endvariables
 
 .s-tab {
@@ -65,23 +66,23 @@ $s-tab-append-gap: 5px !default;
   position: relative;
   display: flex;
   flex: 1;
-  height: $s-tab-label-height;
+  height: var(--s-tab-label-height);
   justify-content: center;
   align-items: center;
-  font-size: $s-tab-label-font-size;
-  color: $s-tab-label-color;
+  font-size: var(--s-tab-label-font-size);
+  color: var(--s-tab-label-color);
   cursor: pointer;
 
   @at-root {
     // # label-禁用状态
     .s-tab-label-disabled {
-      @include disabled;
+      @include disabled-text;
     }
 
     // # label-活动状态
     .s-tab-label-active {
       font-weight: bold;
-      color: $s-tab-label-active-color;
+      color: var(--s-tab-label-active-color);
     }
   }
 }
@@ -97,9 +98,9 @@ $s-tab-append-gap: 5px !default;
 
   @at-root {
     .s-tab-inkbar {
-      width: $s-tab-inkbar-width;
-      height: $s-tab-inkbar-height;
-      background-color: $s-tab-inkbar-bg;
+      width: var(--s-tab-inkbar-width);
+      height: var(--s-tab-inkbar-height);
+      background-color: var(--s-tab-inkbar-bg);
     }
   }
 }
@@ -108,7 +109,7 @@ $s-tab-append-gap: 5px !default;
 .s-tab-label-card {
   .s-tab-label {
     &.s-tab-label-active {
-      background-color: $s-tab-label-card-label-active-bg;
+      background-color: var(--s-tab-label-card-active-bg);
     }
   }
   .s-tab-label-line {
@@ -117,8 +118,8 @@ $s-tab-append-gap: 5px !default;
     left: auto;
     right: auto;
     width: 100%;
-    height: $s-tab-label-line-height;
-    background-color: $s-tab-label-line-bg;
+    height: var(--s-tab-label-line-height);
+    background-color: var(--s-tab-label-line-bg);
   }
   .s-tab-label:not(.s-tab-label-active) .s-tab-label-line {
     display: none;
@@ -129,11 +130,11 @@ $s-tab-append-gap: 5px !default;
 .s-tab-label-border {
   &.s-tab-label-wrapper {
     border: 1px solid currentColor;
-    border-radius: $s-tab-label-border-border-radius;
-    color: $s-tab-label-border-border-color;
+    border-radius: var(--s-tab-label-border-border-radius);
+    color: var(--s-tab-label-border-border-color);
   }
   .s-tab-label {
-    height: $s-tab-label-border-label-height;
+    height: var(--s-tab-label-border-label-height);
     color: inherit;
     ~ .s-tab-label {
       border-left: 1px solid currentColor;
@@ -141,7 +142,7 @@ $s-tab-append-gap: 5px !default;
     &.s-tab-label-active {
       background-color: currentColor;
       .s-tab-label-text {
-        color: $s-tab-label-border-label-active-color;
+        color: var(--s-tab-label-border-label-active-color);
       }
     }
   }
@@ -150,12 +151,12 @@ $s-tab-append-gap: 5px !default;
 // 胶囊
 .s-tab-label-pill {
   .s-tab-label {
-    height: $s-tab-label-pill-label-height;
-    border-radius: $s-tab-label-pill-label-border-radius;
+    height: var(--s-tab-label-pill-label-height);
+    border-radius: var(--s-tab-label-pill-label-border-radius);
     &.s-tab-label-active {
-      background-color: $s-tab-label-pill-label-active-bg;
+      background-color: var(--s-tab-label-pill-label-active-bg);
       .s-tab-label-text {
-        color: $s-tab-label-pill-label-active-color;
+        color: var(--s-tab-label-pill-label-active-color);
       }
     }
   }
@@ -173,7 +174,7 @@ $s-tab-append-gap: 5px !default;
   }
   .s-tab-label {
     flex: 0;
-    padding: 0 $s-tab-auto-label-padding-x;
+    padding: 0 var(--s-tab-auto-label-padding-x);
     white-space: nowrap;
   }
 }
@@ -187,10 +188,10 @@ $s-tab-append-gap: 5px !default;
   flex: none;
 }
 .s-tab-prepend {
-  padding-right: $s-tab-prepend-gap;
+  padding-right: var(--s-tab-prepend-gap);
 }
 .s-tab-append {
-  padding-left: $s-tab-append-gap;
+  padding-left: var(--s-tab-append-gap);
 }
 
 // body
@@ -230,7 +231,7 @@ $s-tab-append-gap: 5px !default;
   .s-tab-label {
     flex: none;
     padding: 0 15px;
-    height: $s-tab-vertical-label-height;
+    height: var(--s-tab-vertical-label-height);
   }
 
   .s-tab-label-line {
@@ -239,7 +240,7 @@ $s-tab-append-gap: 5px !default;
     top: 50%;
     bottom: auto;
     transform: translateY(-50%);
-    width: $s-tab-label-line-height;
+    width: var(--s-tab-label-line-height);
     height: 100%;
   }
   .s-tab-label-card .s-tab-label-line {
@@ -255,8 +256,8 @@ $s-tab-append-gap: 5px !default;
     transform: translateY(-50%);
 
     .s-tab-inkbar {
-      height: $s-tab-inkbar-width;
-      width: $s-tab-inkbar-height;
+      height: var(--s-tab-inkbar-width);
+      width: var(--s-tab-inkbar-height);
     }
   }
 

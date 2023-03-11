@@ -7,11 +7,7 @@ import { Switch } from 'sard'
 export default function () {
   return (
     <>
-      <Switch
-        checkedColor="orange"
-        uncheckedColor="rebeccapurple"
-        defaultChecked
-      />
+      <Switch checkedColor="orange" uncheckedColor="fuchsia" defaultChecked />
     </>
   )
 }

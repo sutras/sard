@@ -1,41 +1,44 @@
-@import '../style/variables.scss';
 @import '../style/mixins.scss';
 
 // #variables
-$s-accordion-border-color: $s-border-color !default;
-$s-accordion-border-radius: $s-border-radius !default;
+:root {
+  --s-accordion-border-color: var(--s-border-color);
+  --s-accordion-border-radius: var(--s-border-radius);
 
-$s-accordion-item-header-padding: 10px 15px !default;
-$s-accordion-item-title-font-size: $s-font-size !default;
-$s-accordion-item-arrow-transition-duration: 300ms !default;
-$s-accordion-item-content-padding: 10px 15px 15px !default;
+  --s-accordion-item-header-padding: 10px 15px;
+  --s-accordion-item-title-font-size: var(--s-text-base);
+  --s-accordion-item-arrow-transition-duration: var(--s-duration);
+  --s-accordion-item-content-padding: 10px 15px 15px;
+}
 // #endvariables
 
 .s-accordion {
   position: relative;
-  @include border-vertical($s-accordion-border-color);
-  border-radius: $s-accordion-border-radius;
+  @include border-vertical(var(--s-accordion-border-color));
+  border-radius: var(--s-accordion-border-radius);
 }
 
 .s-accordion-item {
   position: relative;
   ~ .s-accordion-item {
-    @include border-top($s-accordion-border-color);
+    @include border-top(var(--s-accordion-border-color));
   }
 }
 
 .s-accordion-item-header {
   display: flex;
-  padding: $s-accordion-item-header-padding;
+  padding: var(--s-accordion-item-header-padding);
   cursor: pointer;
 
   .s-accordion-item-disabled & {
-    @include disabled;
+    @include disabled-text;
   }
 }
 
 .s-accordion-item-title {
-  font-size: $s-accordion-item-title-font-size;
+  display: flex;
+  align-items: center;
+  font-size: var(--s-accordion-item-title-font-size);
 }
 
 .s-accordion-item-icon {
@@ -43,7 +46,7 @@ $s-accordion-item-content-padding: 10px 15px 15px !default;
 }
 
 .s-accordion-item-arrow {
-  transition: transform $s-accordion-item-arrow-transition-duration;
+  transition: transform var(--s-accordion-item-arrow-transition-duration);
 
   .s-accordion-item-active & {
     transform: rotate(-180deg);
@@ -51,5 +54,5 @@ $s-accordion-item-content-padding: 10px 15px 15px !default;
 }
 
 .s-accordion-item-content {
-  padding: $s-accordion-item-content-padding;
+  padding: var(--s-accordion-item-content-padding);
 }
