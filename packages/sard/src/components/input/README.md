@@ -17,7 +17,7 @@ import { Input } from 'sard'
     "./demo/Basic.tsx",
     "./demo/Controlled.tsx",
     "./demo/Style.tsx",
-    "./demo/type.tsx",
+    "./demo/Type.tsx",
     "./demo/Clearable.tsx",
     "./demo/Disabled.tsx",
     "./demo/ReadOnly.tsx",
