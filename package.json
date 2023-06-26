@@ -1,0 +1,27 @@
+{
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.6",
+    "@commitlint/config-conventional": "^17.6.6",
+    "@commitlint/prompt-cli": "^17.6.6",
+    "@typescript-eslint/eslint-plugin": "^5.60.0",
+    "@typescript-eslint/parser": "^5.60.0",
+    "eslint": "^8.43.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "prettier": "2.8.8"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "lint:eslint": "eslint --cache --max-warnings 0  \"**/*.{ts,tsx,js,jsx,vue}\" --fix",
+    "lint:prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,css,scss,less,md,vue,html}\"",
+    "lint:prettier:check": "prettier --check \"**/*.{ts,tsx,js,jsx,css,scss,less,md,vue,html}\"",
+    "commit": "commit"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,cjs,mjs,vue}": "eslint --fix",
+    "*.{ts,tsx,js,jsx,cjs,mjs,css,scss,less,md,vue}": "prettier --write"
+  }
+}
