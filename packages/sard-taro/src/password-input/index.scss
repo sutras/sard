@@ -1,0 +1,124 @@
+// #variables
+:root,
+page {
+  --sar-password-input-border-color: var(--sar-border-color);
+  --sar-password-input-active-border-color: var(--sar-primary);
+
+  --sar-password-input-height: 48px;
+  --sar-password-input-ciphertext-size: 10px;
+
+  --sar-password-input-plaintext-font-size: 20px;
+
+  --sar-password-input-cursor-width: 1px;
+  --sar-password-input-cursor-height: 40%;
+  --sar-password-input-cursor-animation-duration: 1s;
+}
+// #endvariables
+
+.sar-password-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--sar-password-input-height);
+  gap: 10px;
+  overflow: hidden;
+  cursor: text;
+
+  @at-root {
+    .sar-password-input-item {
+      position: relative;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      height: 100%;
+      border: 1px solid transparent;
+
+      @at-root {
+        .sar-password-input-item-active {
+          z-index: 2;
+        }
+
+        .sar-password-input-plaintext {
+          font-size: var(--sar-password-input-plaintext-font-size);
+        }
+
+        .sar-password-input-ciphertext {
+          display: flex;
+          width: var(--sar-password-input-ciphertext-size);
+          height: var(--sar-password-input-ciphertext-size);
+          border-radius: 50%;
+          background-color: currentColor;
+        }
+
+        .sar-password-input-cursor {
+          width: var(--sar-password-input-cursor-width);
+          height: var(--sar-password-input-cursor-height);
+          background-color: currentColor;
+          animation: var(--sar-password-input-cursor-animation-duration)
+            sar-password-input-cursor-flicker infinite;
+        }
+      }
+    }
+
+    .sar-password-input-input {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 200%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      opacity: 0;
+
+      .weui-input {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+.sar-password-input-readonly,
+.sar-password-input-disabled {
+  cursor: default;
+}
+
+@keyframes sar-password-input-cursor-flicker {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.sar-password-input-border {
+  .sar-password-input-item {
+    border-color: var(--sar-password-input-border-color);
+  }
+  .sar-password-input-item-active {
+    border-color: var(--sar-password-input-active-border-color);
+  }
+}
+
+.sar-password-input-underline {
+  .sar-password-input-item {
+    border-bottom-color: var(--sar-password-input-border-color);
+  }
+  .sar-password-input-item-active {
+    border-bottom-color: var(--sar-password-input-active-border-color);
+  }
+}
+
+.sar-password-input-gapless {
+  .sar-password-input-item:not(:first-child) {
+    margin-left: -1px;
+  }
+}

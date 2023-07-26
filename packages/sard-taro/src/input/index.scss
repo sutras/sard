@@ -1,0 +1,170 @@
+@import '../style/mixins.scss';
+
+// #variables
+:root,
+page {
+  --sar-input-padding-y: 6.5px;
+  --sar-input-padding-x: 12px;
+  --sar-input-border-radius: var(--sar-rounded);
+  --sar-input-border-color: var(--sar-border-color);
+  --sar-input-transition-duration: var(--sar-duration);
+
+  --sar-input-focused-border-color: var(--sar-primary);
+
+  --sar-input-control-font-size: var(--sar-text-base);
+  --sar-input-control-line-height: 1.5;
+  --sar-input-control-min-height: calc(
+    1em * var(--sar-input-control-line-height)
+  );
+
+  --sar-input-placeholder-color: var(--sar-deemphasis-color);
+
+  --sar-input-prepend-gap-right: 10px;
+  --sar-input-append-gap-left: 10px;
+
+  --sar-input-clear-margin-right: -0.5em;
+  --sar-input-clear-padding-x: 0.5em;
+  --sar-input-clear-color: var(--sar-quaternary-color);
+
+  --sar-input-count-margin-left: 0.5em;
+  --sar-input-count-font-size: 14px;
+  --sar-input-count-color: var(--sar-tertiary-color);
+}
+// #endvariables
+
+.sar-input {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+  padding: var(--sar-input-padding-y) var(--sar-input-padding-x);
+  border: 1px solid var(--sar-input-border-color);
+  border-radius: var(--sar-input-border-radius);
+  font-family: inherit;
+  font-size: var(--sar-input-control-font-size);
+  line-height: var(--sar-input-control-line-height);
+  transition: var(--sar-input-transition-duration);
+  cursor: text;
+
+  @at-root {
+    .sar-input-prepend {
+      display: flex;
+      align-items: center;
+      flex: none;
+      margin-right: var(--sar-input-prepend-gap-right);
+    }
+    .sar-input-control {
+      display: flex;
+      flex: 1 1 0;
+      align-self: stretch;
+      width: 0;
+      max-width: 100%;
+      min-width: 0;
+      height: auto;
+      min-height: var(--sar-input-control-min-height);
+      margin: 0;
+      padding: 0;
+      border: none;
+      resize: none;
+
+      &,
+      .weui-input,
+      .taro-input,
+      .taro-textarea {
+        resize: none;
+        font: inherit;
+        line-height: inherit;
+        color: inherit;
+        text-align: inherit;
+        text-shadow: inherit;
+        text-indent: inherit;
+        text-decoration: inherit;
+        text-transform: inherit;
+        text-emphasis: inherit;
+        text-rendering: inherit;
+        letter-spacing: inherit;
+        word-spacing: inherit;
+        background-color: transparent;
+
+        &::-webkit-input-placeholder {
+          color: var(--sar-input-placeholder-color);
+        }
+      }
+
+      .weui-input {
+        min-height: 100%;
+      }
+
+      &:focus,
+      &:active {
+        outline: none;
+      }
+    }
+
+    .sar-input-placeholder {
+      color: var(--sar-input-placeholder-color);
+    }
+
+    .sar-input-append {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+      margin-left: var(--sar-input-append-gap-left);
+    }
+    .sar-input-clear {
+      display: flex;
+      flex: none;
+      width: auto;
+      align-self: stretch;
+      justify-content: center;
+      align-items: center;
+      margin-right: var(--sar-input-clear-margin-right);
+      padding: 0 var(--sar-input-clear-padding-x);
+      color: var(--sar-input-clear-color);
+      cursor: pointer;
+      user-select: none;
+    }
+    .sar-input-count {
+      margin-left: var(--sar-input-count-margin-left);
+      font-size: var(--sar-input-count-font-size);
+      color: var(--sar-input-count-color);
+      pointer-events: none;
+    }
+  }
+}
+
+// # 没有边框
+.sar-input-borderless {
+  border: none;
+}
+
+// # 齐平的
+.sar-input-inlaid {
+  padding: 0;
+  border: none;
+}
+
+// # 焦点状态
+.sar-input-focused {
+  border-color: var(--sar-input-focused-border-color);
+}
+
+// # 禁用状态
+.sar-input-disabled {
+  @include disabled;
+}
+
+// # 只读状态
+// .sar-input-readonly { }
+
+// # 字数统计
+.sar-input-is-textarea {
+  position: relative;
+
+  .sar-input-count {
+    position: absolute;
+    top: 100%;
+    right: 0;
+  }
+}

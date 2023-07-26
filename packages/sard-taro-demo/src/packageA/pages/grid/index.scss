@@ -1,0 +1,21 @@
+.page-grid {
+  .sar-row {
+    margin-bottom: 10px;
+  }
+  .grid-align .sar-col:nth-child(1) .grid-box {
+    height: 30px;
+  }
+  .grid-align .sar-col:nth-child(2) .grid-box {
+    height: 60px;
+  }
+  .grid-align .sar-col:nth-child(3) .grid-box {
+    height: 90px;
+  }
+  .grid-box {
+    padding: 10px;
+    background-color: var(--sar-gray-200);
+  }
+  .sar-col:nth-child(2n) .grid-box {
+    background-color: var(--sar-gray-300);
+  }
+}

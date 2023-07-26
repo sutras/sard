@@ -1,0 +1,39 @@
+@import '../style/mixins.scss';
+
+// #variables
+:root,
+page {
+  --sar-notify-z-index: 1110;
+
+  --sar-notify-paddding-x: 16px;
+  --sar-notify-paddding-y: 8px;
+  --sar-notify-font-size: var(--sar-text-base);
+  --sar-notify-color: var(--sar-white);
+}
+// #endvariables
+
+.sar-notify {
+  z-index: var(--sar-notify-z-index);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--sar-notify-paddding-y) var(--sar-notify-paddding-x);
+  font-size: var(--sar-notify-font-size);
+}
+
+// 默认类型主题色
+@each $color,
+  $value
+    in (
+      primary: var(--sar-primary),
+      success: var(--sar-success),
+      warning: var(--sar-warning),
+      error: var(--sar-danger)
+    )
+{
+  .sar-notify-#{$color} {
+    @include notify-theme($value);
+  }
+}

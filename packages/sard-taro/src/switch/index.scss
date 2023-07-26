@@ -1,0 +1,101 @@
+@import '../style/mixins.scss';
+
+// #variables
+:root,
+page {
+  --sar-switch-width: 1.6667em;
+  --sar-switch-height: 1em;
+  --sar-switch-border-width: 0;
+  --sar-switch-border-color: var(--sar-border-color);
+  --sar-switch-font-size: 30px;
+  --sar-switch-transition-duration: var(--sar-duration);
+  --sar-switch-bg: var(--sar-secondary-bg);
+  --sar-switch-checked-bg: var(--sar-primary);
+
+  --sar-switch-is-loading-cursor: var(--sar-loading-cursor);
+  --sar-switch-is-loading-opacity: var(--sar-loading-opacity);
+
+  --sar-switch-thumb-width: var(--sar-switch-height);
+  --sar-switch-thumb-height: var(--sar-switch-height);
+  --sar-switch-thumb-border-width: 2px;
+  --sar-switch-thumb-border-radius: 50%;
+  --sar-switch-thumb-bg: var(--sar-white);
+  --sar-switch-thumb-box-shadow: none;
+  --sar-switch-thumb-transition-duration: var(--sar-duration);
+  --sar-switch-thumb-checked-left: calc(
+    var(--sar-switch-width) - var(--sar-switch-thumb-width)
+  );
+
+  --sar-switch-loading-size: 0.5em;
+  --sar-switch-loading-color: var(--sar-secondary-color);
+}
+// #endvariables
+
+.sar-switch {
+  position: relative;
+  box-sizing: content-box;
+  display: inline-flex;
+  width: var(--sar-switch-width);
+  height: var(--sar-switch-height);
+  border: var(--sar-switch-border-width) solid var(--sar-switch-border-color);
+  border-radius: var(--sar-switch-height);
+  font-size: var(--sar-switch-font-size);
+  background-color: var(--sar-switch-bg);
+  vertical-align: middle;
+  user-select: none;
+  cursor: pointer;
+  transition: background-color var(--sar-switch-transition-duration),
+    border-color var(--sar-switch-transition-duration),
+    opacity var(--sar-switch-transition-duration);
+
+  @at-root {
+    .sar-switch-thumb {
+      position: absolute;
+      left: 0;
+      top: 0;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: var(--sar-switch-thumb-width);
+      height: var(--sar-switch-thumb-height);
+      border: var(--sar-switch-thumb-border-width) solid transparent;
+      border-radius: var(--sar-switch-thumb-border-radius);
+      background-clip: content-box;
+      background-color: var(--sar-switch-thumb-bg);
+      box-shadow: var(--sar-switch-thumb-box-shadow);
+      transition: transform var(--sar-switch-thumb-transition-duration);
+
+      .sar-switch-loading {
+        width: var(--sar-switch-loading-size);
+        height: var(--sar-switch-loading-size);
+        color: var(--sar-switch-loading-color);
+      }
+    }
+  }
+}
+
+// # 开启状态
+.sar-switch-checked {
+  border-color: transparent;
+  background-color: var(--sar-switch-checked-bg);
+  .sar-switch-thumb {
+    transform: translateX(var(--sar-switch-thumb-checked-left));
+  }
+}
+
+// # 禁用状态
+.sar-switch-disabled {
+  @include disabled;
+}
+
+// # 只读状态
+.sar-switch-readonly {
+  cursor: default;
+}
+
+// # 加载状态
+.sar-switch-is-loading {
+  opacity: var(--sar-switch-is-loading-opacity);
+  cursor: var(--sar-switch-is-loading-cursor);
+}

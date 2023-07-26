@@ -1,0 +1,23 @@
+// #variables
+:root,
+page {
+  --sar-collapse-transition-duration: var(--sar-duration-slow);
+}
+// #endvariables
+
+.sar-collapse {
+  position: relative;
+  width: 100%;
+  transition: height var(--sar-collapse-transition-duration);
+
+  &:not(.sar-collapse-show) {
+    position: absolute;
+    z-index: -10;
+    height: 0;
+    visibility: hidden;
+    overflow: hidden;
+  }
+  &.sar-collapse-collapsing {
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,62 @@
+@import '../style/mixins.scss';
+
+// #variables
+:root,
+page {
+  --sar-tabbar-z-index: 1050;
+  --sar-tabbar-height: 50px;
+  --sar-tabbar-bg: var(--sar-emphasis-bg);
+  --sar-tabbar-color: var(--sar-secondary-color);
+  --sar-tabbar-border-color: var(--sar-border-color);
+
+  --sar-tabbar-item-ative-color: var(--sar-primary);
+  --sar-tabbar-item-icon-margin-bottom: 5px;
+  --sar-tabbar-item-icon-font-size: 20px;
+  --sar-tabbar-item-text-font-size: 12px;
+  --sar-tabbar-item-text-line-height: 1;
+}
+// #endvariables
+
+.sar-tabbar {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  height: var(--sar-tabbar-height);
+  color: var(--sar-tabbar-color);
+  background-color: var(--sar-tabbar-bg);
+
+  @include border-top(var(--sar-tabbar-border-color));
+}
+
+.sar-tabbar-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--sar-tabbar-z-index);
+  width: 100%;
+}
+
+.sar-tabbar-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  cursor: pointer;
+}
+.sar-tabbar-item-active {
+  color: var(--sar-tabbar-item-ative-color);
+}
+
+.sar-tabbar-item-icon {
+  position: relative;
+  display: flex;
+  margin-bottom: var(--sar-tabbar-item-icon-margin-bottom);
+  font-size: var(--sar-tabbar-item-icon-font-size);
+}
+
+.sar-tabbar-item-text {
+  font-size: var(--sar-tabbar-item-text-font-size);
+  line-height: var(--sar-tabbar-item-text-line-height);
+}

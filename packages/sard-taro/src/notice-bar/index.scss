@@ -1,0 +1,105 @@
+// #variables
+:root,
+page {
+  --sar-notice-bar-height: 40px;
+  --sar-notice-bar-padding-x: 15px;
+  --sar-notice-bar-padding-y: 10px;
+  --sar-notice-bar-font-size: var(--sar-text-base);
+  --sar-notice-bar-color: var(--sar-orange);
+  --sar-notice-bar-bg: rgba(var(--sar-orange-rgb), 0.1);
+
+  --sar-notice-bar-wrap-line-height: var(--sar-leading-normal);
+
+  --sar-notice-bar-left-icon-gap: 5px;
+  --sar-notice-bar-right-icon-gap: 5px;
+}
+// #endvariables
+
+.sar-notice-bar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  height: var(--sar-notice-bar-height);
+  padding: 0 var(--sar-notice-bar-padding-x);
+  font-size: var(--sar-notice-bar-font-size);
+  color: var(--sar-notice-bar-color);
+  background-color: var(--sar-notice-bar-bg);
+
+  &:not(.sar-notice-bar-show) {
+    display: none;
+  }
+}
+
+.sar-notice-bar-left-icon {
+  display: flex;
+  margin-right: var(--sar-notice-bar-left-icon-gap);
+}
+
+.sar-notice-bar-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+}
+
+.sar-notice-bar-wrapper {
+  display: inline-block;
+  height: 100%;
+  line-height: var(--sar-notice-bar-height);
+  white-space: nowrap;
+}
+
+.sar-notice-bar-right-icon {
+  display: flex;
+  padding-left: var(--sar-notice-bar-right-icon-gap);
+  cursor: pointer;
+}
+
+// # scroll
+.sar-notice-bar-wrapper {
+  .sar-notice-bar-scroll-never & {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sar-notice-bar-scrollable & {
+    animation: sar-notice-bar-scroll linear both running;
+
+    &.sar-notice-bar-infinite {
+      animation: sar-notice-bar-scroll-infinite linear both running infinite;
+    }
+  }
+}
+
+@keyframes sar-notice-bar-scroll {
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes sar-notice-bar-scroll-infinite {
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+// # wrap
+.sar-notice-bar-wrap {
+  height: auto;
+  padding-top: var(--sar-notice-bar-padding-y);
+  padding-bottom: var(--sar-notice-bar-padding-y);
+
+  .sar-notice-bar-wrapper {
+    display: block;
+    white-space: normal;
+    line-height: var(--sar-notice-bar-wrap-line-height);
+  }
+}
+
+// # is-link
+.sar-notice-bar-is-link {
+  cursor: pointer;
+}

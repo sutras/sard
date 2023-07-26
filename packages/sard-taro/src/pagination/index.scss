@@ -1,0 +1,108 @@
+@import '../style/mixins.scss';
+
+// #variables
+:root,
+page {
+  --sar-pagination-border-radius: var(--sar-rounded);
+
+  --sar-pagination-item-height: 40px;
+  --sar-pagination-item-min-width: 40px;
+  --sar-pagination-item-padding-x: 10px;
+  --sar-pagination-item-border-color: var(--sar-border-color);
+  --sar-pagination-item-font-size: var(--sar-text-base);
+  --sar-pagination-item-color: var(--sar-primary);
+  --sar-pagination-item-active-bg: var(--sar-active-bg);
+
+  --sar-pagination-item-current-color: var(--sar-white);
+  --sar-pagination-item-current-border-color: var(--sar-primary);
+  --sar-pagination-item-current-bg: var(--sar-primary);
+
+  --sar-pagination-ratio-height: 40px;
+  --sar-pagination-ratio-font-size: var(--sar-text-base);
+  --sar-pagination-ratio-color: var(--sar-body-color);
+}
+// #endvariables
+
+.sar-pagination {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: var(--sar-pagination-border-radius);
+  user-select: none;
+}
+
+.sar-pagination-item {
+  box-sizing: border-box;
+  display: flex;
+  height: var(--sar-pagination-item-height);
+  min-width: var(--sar-pagination-item-min-width);
+  padding: 0 var(--sar-pagination-item-padding-x);
+  flex: none;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--sar-pagination-item-border-color);
+  font-size: var(--sar-pagination-item-font-size);
+  white-space: nowrap;
+  color: var(--sar-pagination-item-color);
+  cursor: pointer;
+  user-select: none;
+
+  &:not(:first-child) {
+    margin-left: -1px;
+  }
+
+  &:first-child {
+    border-top-left-radius: inherit;
+    border-bottom-left-radius: inherit;
+  }
+
+  &:last-child {
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+  }
+
+  .sar-pagination-simple & {
+    border-radius: inherit;
+  }
+
+  &.sar-pagination-item-current {
+    z-index: 3;
+    color: var(--sar-pagination-item-current-color);
+    border-color: var(--sar-pagination-item-current-border-color);
+    background-color: var(--sar-pagination-item-current-bg);
+  }
+
+  &.sar-pagination-item-disabled {
+    @include disabled;
+  }
+
+  &:not(.sar-pagination-item-disabled):not(.sar-pagination-item-current) {
+    &:active {
+      background-color: var(--sar-pagination-item-active-bg);
+    }
+  }
+}
+
+.sar-pagination-prev,
+.sar-pagination-next {
+  flex: 1 0 auto;
+}
+
+.sar-pagination-ratio {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  height: var(--sar-pagination-ratio-height);
+  font-size: var(--sar-pagination-ratio-font-size);
+  color: var(--sar-pagination-ratio-color);
+}
+
+.sar-pagination-simple {
+  .sar-pagination-prev,
+  .sar-pagination-next {
+    flex: 1;
+    padding: 0;
+  }
+}

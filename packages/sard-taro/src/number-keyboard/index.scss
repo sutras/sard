@@ -1,0 +1,75 @@
+@import '../style/mixins.scss';
+
+// #variables
+:root,
+page {
+  --sar-number-keyboard-z-index: 1120;
+
+  --sar-number-keyboard-bg: var(--sar-gray-200);
+
+  --sar-number-keyboard-body-padding-x: 5px;
+  --sar-number-keyboard-body-padding-y: 5px;
+
+  --sar-number-keyboard-key-gap: 5px;
+  --sar-number-keyboard-key-height: 48px;
+  --sar-number-keyboard-key-border-radius: var(--sar-rounded);
+  --sar-number-keyboard-key-font-size: var(--sar-text-xl);
+  --sar-number-keyboard-key-color: var(--sar-body-color);
+  --sar-number-keyboard-key-bg: var(--sar-white);
+  --sar-number-keyboard-key-active-bg: var(--sar-gray-200);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root,
+  page {
+    --sar-number-keyboard-bg: var(--sar-gray-700);
+    --sar-number-keyboard-key-color: var(--sar-white);
+    --sar-number-keyboard-key-bg: var(--sar-gray-600);
+    --sar-number-keyboard-key-active-bg: var(--sar-gray-500);
+  }
+}
+// #endvariables
+
+.sar-number-keyboard {
+  z-index: var(--sar-number-keyboard-z-index);
+
+  background-color: var(--sar-number-keyboard-bg);
+  touch-action: none;
+
+  @at-root {
+    .sar-number-keyboard-body {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sar-number-keyboard-key-gap);
+      padding: var(--sar-number-keyboard-body-padding-y)
+        var(--sar-number-keyboard-body-padding-x);
+
+      @at-root {
+        .sar-number-keyboard-key {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: var(--sar-number-keyboard-key-height);
+          border-radius: var(--sar-number-keyboard-key-border-radius);
+          font-size: var(--sar-number-keyboard-key-font-size);
+          color: var(--sar-number-keyboard-key-color);
+          background-color: var(--sar-number-keyboard-key-bg);
+          user-select: none;
+          cursor: pointer;
+
+          &:active {
+            background-color: var(--sar-number-keyboard-key-active-bg);
+          }
+        }
+      }
+    }
+  }
+}
+
+.sar-number-keyboard-key-lastnum {
+  grid-area: 4 / 1 / 5 / 3;
+
+  .sar-number-keyboard-has-extra & {
+    grid-area: 4 / 2 / 5 / 3;
+  }
+}

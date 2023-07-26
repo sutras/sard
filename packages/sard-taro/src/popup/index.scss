@@ -1,0 +1,84 @@
+// #variables
+:root,
+page {
+  --sar-popup-z-index: 1100;
+  --sar-popup-mask-z-index: 1100;
+  --sar-popup-mask-bg: var(--sar-mask);
+}
+// #endvariables
+
+.sar-popup-mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--sar-popup-mask-z-index);
+  background-color: var(--sar-popup-mask-bg);
+  touch-action: none;
+
+  &:not(.sar-popup-mask-show) {
+    display: none;
+  }
+
+  &.sar-popup-hiding {
+    pointer-events: none;
+  }
+
+  &.sar-popup-clear-mask {
+    background-color: transparent;
+  }
+}
+
+.sar-popup {
+  position: fixed;
+  z-index: var(--sar-popup-z-index);
+  overflow: hidden;
+
+  &:not(.sar-popup-show) {
+    display: none;
+  }
+
+  &.sar-popup-hiding {
+    pointer-events: none;
+  }
+}
+
+.sar-popup-slide-top {
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 0;
+}
+
+.sar-popup-slide-right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+}
+
+.sar-popup-slide-bottom {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.sar-popup-slide-left {
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: 0;
+}
+
+.sar-popup-fade,
+.sar-popup-zoom {
+  top: 50%;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  margin-right: auto;
+  margin-left: auto;
+  transform: translateY(-50%);
+}

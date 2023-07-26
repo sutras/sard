@@ -1,0 +1,41 @@
+.index-page {
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px 20px;
+  }
+
+  .flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .logo {
+    width: 32px;
+    height: 32px;
+  }
+
+  .title {
+    margin-left: 10px;
+    font-size: 20px;
+  }
+
+  .desc {
+    margin-top: 10px;
+    font-size: 17px;
+    color: var(--sar-tertiary-color);
+  }
+
+  .sar-cell-group {
+    margin-bottom: 20px;
+  }
+}

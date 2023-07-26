@@ -1,0 +1,111 @@
+@import '../style/mixins.scss';
+
+// #variables
+:root,
+page {
+  --sar-slider-track-main-axis-size: 100%;
+  --sar-slider-track-cross-axis-size: 2px;
+  --sar-slider-track-bg: var(--sar-secondary-bg);
+
+  --sar-slider-track-piece-transition-duration: var(--sar-duration);
+  --sar-slider-track-piece-bg: var(--sar-primary);
+
+  --sar-slider-thumb-size: 24px;
+  --sar-slider-thumb-bg: var(--sar-white);
+  --sar-slider-thumb-box-shadow: var(--sar-shadow-sm);
+
+  --sar-slider-padding: calc(var(--sar-slider-thumb-size) / 2 + 3px);
+}
+// #endvariables
+
+.sar-slider {
+  position: relative;
+  box-sizing: border-box;
+  padding: var(--sar-slider-padding);
+  cursor: pointer;
+}
+.sar-slider-track {
+  position: relative;
+  width: var(--sar-slider-track-main-axis-size);
+  height: var(--sar-slider-track-cross-axis-size);
+  background-color: var(--sar-slider-track-bg);
+}
+.sar-slider-track-piece {
+  position: absolute;
+  width: auto;
+  height: 100%;
+  background-color: var(--sar-slider-track-piece-bg);
+  transition: all var(--sar-slider-track-piece-transition-duration);
+
+  .sar-slider-is-down & {
+    transition: none;
+  }
+}
+.sar-slider-thumb-container {
+  position: absolute;
+  touch-action: none;
+
+  @at-root {
+    .sar-slider-thumb {
+      width: var(--sar-slider-thumb-size);
+      height: var(--sar-slider-thumb-size);
+      border-radius: 50%;
+      background-color: var(--sar-slider-thumb-bg);
+      box-shadow: var(--sar-slider-thumb-box-shadow);
+      user-select: none;
+      cursor: grab;
+    }
+  }
+}
+.sar-slider-thumb-start {
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+.sar-slider-thumb-end {
+  top: 50%;
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+// # 垂直
+.sar-slider-vertical {
+  display: inline-flex;
+  width: auto;
+  height: 100%;
+
+  .sar-slider-track {
+    width: var(--sar-slider-track-cross-axis-size);
+    height: var(--sar-slider-track-main-axis-size);
+  }
+  .sar-slider-track-piece {
+    width: 100%;
+    height: auto;
+  }
+  .sar-slider-thumb-start {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .sar-slider-thumb-end {
+    top: auto;
+    bottom: 0;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, 50%);
+  }
+}
+
+// # 禁用状态
+.sar-slider-disabled {
+  @include disabled;
+}
+
+// # 禁用状态
+.sar-slider-readonly,
+.sar-slider-disabled {
+  .sar-slider-track,
+  .sar-slider-thumb {
+    cursor: default;
+  }
+}

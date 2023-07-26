@@ -1,0 +1,86 @@
+// #variables
+:root,
+page {
+  --sar-toast-z-index: 1150;
+
+  --sar-toast-top: 20%;
+  --sar-toast-bottom: 20%;
+
+  --sar-toast-font-size: var(--sar-text-base);
+  --sar-toast-width: calc(var(--sar-toast-font-size) * 9);
+  --sar-toast-not-text-min-height: var(--sar-toast-width);
+  --sar-toast-padding-x: var(--sar-toast-font-size);
+  --sar-toast-padding-y: var(--sar-toast-font-size);
+  --sar-toast-border-radius: var(--sar-rounded-lg);
+  --sar-toast-color: var(--sar-white);
+  --sar-toast-bg: var(--sar-mask-illegible);
+
+  --sar-toast-text-max-width: 70%;
+  --sar-toast-text-padding-y: 10px;
+
+  --sar-toast-icon-margin-bottom: 8px;
+  --sar-toast-icon-font-size: 36px;
+
+  --sar-toast-loading-font-size: 30px;
+
+  --sar-toast-title-font-size: var(--sar-toast-font-size);
+  --sar-toast-title-line-height: var(--sar-leading-normal);
+}
+// #endvariables
+
+.sar-toast {
+  z-index: var(--sar-toast-z-index);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: var(--sar-toast-padding-y) var(--sar-toast-padding-x);
+  border-radius: var(--sar-toast-border-radius);
+  color: var(--sar-toast-color);
+  background-color: var(--sar-toast-bg);
+
+  &:not(.sar-toast-text) {
+    width: var(--sar-toast-width);
+    min-height: var(--sar-toast-not-text-min-height);
+  }
+  &.sar-toast-text {
+    width: fit-content;
+    max-width: var(--sar-toast-text-max-width);
+    padding-top: var(--sar-toast-text-padding-y);
+    padding-bottom: var(--sar-toast-text-padding-y);
+    white-space: normal;
+    word-wrap: break-word;
+  }
+}
+
+.sar-toast-top {
+  top: var(--sar-toast-top);
+}
+
+.sar-toast-bottom {
+  top: auto;
+  bottom: var(--sar-toast-bottom);
+}
+
+.sar-toast-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1em;
+  height: 1em;
+  margin-bottom: var(--sar-toast-icon-margin-bottom);
+  font-size: var(--sar-toast-icon-font-size);
+  text-align: center;
+}
+
+.sar-toast-loading {
+  font-size: var(--sar-toast-loading-font-size);
+}
+
+.sar-toast-title {
+  font-size: var(--sar-toast-title-font-size);
+  line-height: var(--sar-toast-title-line-height);
+  text-align: center;
+}

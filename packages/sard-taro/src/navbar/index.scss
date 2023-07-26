@@ -1,0 +1,106 @@
+@import '../style/mixins.scss';
+
+// #variables
+:root,
+page {
+  --sar-navbar-height: 44px;
+  --sar-navbar-bg: var(--sar-emphasis-bg);
+  --sar-navbar-border-color: var(--sar-border-color);
+
+  --sar-navbar-title-max-width: 60%;
+  --sar-navbar-title-font-size: var(--sar-text-lg);
+  --sar-navbar-title-color: var(--sar-emphasis-color);
+
+  --sar-navbar-item-padding-x: 10px;
+  --sar-navbar-item-font-size: var(--sar-text-base);
+  --sar-navbar-item-color: var(--sar-primary);
+  --sar-navbar-item-active-opacity: var(--sar-active-opacity);
+}
+// #endvariables
+
+.sar-navbar {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  height: var(--sar-navbar-height);
+  align-items: center;
+  justify-content: center;
+  background-color: var(--sar-navbar-bg);
+
+  @include border-bottom(var(--sar-navbar-border-color));
+
+  @at-root {
+    .sar-navbar-content {
+      display: flex;
+      height: 100%;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+
+      @at-root {
+        .sar-navbar-title {
+          width: 100%;
+          max-width: var(--sar-navbar-title-max-width);
+          font-size: var(--sar-navbar-title-font-size);
+          font-weight: bold;
+          text-align: center;
+          color: var(--sar-navbar-title-color);
+          @include ellipsis;
+        }
+      }
+    }
+
+    .sar-navbar-left,
+    .sar-navbar-right {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      flex: none;
+      align-items: center;
+      height: 100%;
+    }
+    .sar-navbar-left {
+      left: 0;
+    }
+    .sar-navbar-right {
+      right: 0;
+    }
+
+    .sar-navbar-item {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      padding: 0 var(--sar-navbar-item-padding-x);
+      font-size: var(--sar-navbar-item-font-size);
+      line-height: 1;
+      color: var(--sar-navbar-item-color);
+      user-select: none;
+      cursor: pointer;
+
+      &:active {
+        opacity: var(--sar-navbar-item-active-opacity);
+      }
+    }
+  }
+}
+
+.sar-navbar-flow {
+  .sar-navbar-left,
+  .sar-navbar-right {
+    position: relative;
+  }
+
+  .sar-navbar-title {
+    max-width: 100%;
+  }
+}
+
+.sar-navbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}

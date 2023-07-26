@@ -1,0 +1,41 @@
+@import '../style/mixins.scss';
+
+// #variables
+:root,
+page {
+  --sar-picker-height: 240px;
+
+  --sar-picker-item-font-size: var(--sar-text-lg);
+  --sar-picker-item-color: var(--sar-body-color);
+
+  --sar-picker-indicator-height: 48px;
+  --sar-picker-indicator-border-color: var(--sar-border-color);
+}
+// #endvariables
+
+.sar-picker {
+  position: relative;
+  height: var(--sar-picker-height);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.sar-picker-item {
+  flex: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--sar-picker-indicator-height);
+  font-size: var(--sar-picker-item-font-size);
+  text-align: center;
+  color: var(--sar-picker-item-color);
+}
+.sar-picker-item-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sar-picker-indicator {
+  height: var(--sar-picker-indicator-height);
+}

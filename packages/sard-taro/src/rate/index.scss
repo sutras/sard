@@ -1,0 +1,55 @@
+// #variables
+:root,
+page {
+  --sar-rate-font-size: 20px;
+
+  --sar-rate-item-margin-left: 10px;
+
+  --sar-rate-star-void-color: var(--sar-quaternary-color);
+  --sar-rate-star-color: var(--sar-warning);
+}
+// #endvariables
+
+.sar-rate {
+  display: inline-flex;
+  flex-direction: row;
+  white-space: nowrap;
+  font-size: var(--sar-rate-font-size);
+  user-select: none;
+  cursor: pointer;
+  touch-action: pan-y;
+
+  @at-root {
+    .sar-rate-item {
+      position: relative;
+
+      ~ .sar-rate-item {
+        margin-left: var(--sar-rate-item-margin-left);
+      }
+
+      @at-root {
+        .sar-rate-star-void {
+          position: relative;
+          color: var(--sar-rate-star-void-color);
+        }
+        .sar-rate-star {
+          position: absolute;
+          top: 0;
+          left: 0;
+          overflow: hidden;
+          color: var(--sar-rate-star-color);
+        }
+      }
+    }
+  }
+}
+
+.sar-rate-readonly {
+  cursor: default;
+  touch-action: auto;
+}
+
+.sar-rate-disabled {
+  touch-action: auto;
+  @include disabled;
+}

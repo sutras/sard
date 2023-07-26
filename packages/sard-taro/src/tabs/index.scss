@@ -1,0 +1,279 @@
+@import '../style/mixins.scss';
+
+// #variables
+:root,
+page {
+  --sar-tabs-label-height: 48px;
+  --sar-tabs-label-font-size: var(--sar-text-base);
+  --sar-tabs-label-color: var(--sar-secondary-color);
+  --sar-tabs-label-active-color: var(--sar-emphasis-color);
+
+  --sar-tabs-auto-label-padding-x: 15px;
+
+  --sar-tabs-label-line-width: 40px;
+  --sar-tabs-label-line-height: 3px;
+  --sar-tabs-label-line-bg: var(--sar-primary);
+
+  --sar-tabs-label-border-border-radius: var(--sar-rounded-sm);
+  --sar-tabs-label-border-border-color: var(--sar-primary);
+  --sar-tabs-label-border-label-height: 28px;
+  --sar-tabs-label-border-label-active-color: var(--sar-white);
+
+  --sar-tabs-label-pill-label-height: 28px;
+  --sar-tabs-label-pill-label-border-radius: var(--sar-rounded-full);
+  --sar-tabs-label-pill-label-active-bg: var(--sar-primary);
+  --sar-tabs-label-pill-label-active-color: var(--sar-white);
+
+  --sar-tabs-vertical-label-height: 40px;
+  --sar-tabs-vertical-label-padding-x: 15px;
+
+  --sar-tabs-inkbar-width: 40px;
+  --sar-tabs-inkbar-height: 3px;
+  --sar-tabs-inkbar-bg: var(--sar-primary);
+
+  --sar-tabs-prepend-gap: 5px;
+  --sar-tabs-append-gap: 5px;
+}
+// #endvariables
+
+.sar-tabs {
+  position: relative;
+}
+
+.sar-tabs-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .sar-tabs-sticky & {
+    position: sticky;
+    top: 0;
+  }
+}
+
+.sar-tabs-label-wrapper {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+  width: 0;
+
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+    color: transparent;
+  }
+}
+
+.sar-tabs-label-content {
+  position: relative;
+  display: inline-flex;
+  min-width: 100%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.sar-tabs-label {
+  position: relative;
+  display: flex;
+  flex: 1;
+  height: var(--sar-tabs-label-height);
+  justify-content: center;
+  align-items: center;
+  font-size: var(--sar-tabs-label-font-size);
+  color: var(--sar-tabs-label-color);
+  cursor: pointer;
+
+  @at-root {
+    // # label-禁用状态
+    .sar-tabs-label-disabled {
+      @include disabled-text;
+    }
+
+    // # label-活动状态
+    .sar-tabs-label-active {
+      font-weight: bold;
+      color: var(--sar-tabs-label-active-color);
+    }
+  }
+}
+
+.sar-tabs-inkbar-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+
+  @at-root {
+    .sar-tabs-inkbar {
+      width: var(--sar-tabs-inkbar-width);
+      height: var(--sar-tabs-inkbar-height);
+      background-color: var(--sar-tabs-inkbar-bg);
+    }
+  }
+}
+
+// 卡片标签
+.sar-tabs-label-card {
+  .sar-tabs-label-line {
+    position: absolute;
+    top: 0;
+    left: auto;
+    right: auto;
+    width: 100%;
+    height: var(--sar-tabs-label-line-height);
+    background-color: var(--sar-tabs-label-line-bg);
+  }
+  .sar-tabs-label:not(.sar-tabs-label-active) .sar-tabs-label-line {
+    display: none;
+  }
+}
+
+// 边框标签
+.sar-tabs-label-border {
+  &.sar-tabs-label-wrapper {
+    border: 1px solid currentColor;
+    border-radius: var(--sar-tabs-label-border-border-radius);
+    color: var(--sar-tabs-label-border-border-color);
+  }
+  .sar-tabs-label {
+    height: var(--sar-tabs-label-border-label-height);
+    color: inherit;
+    ~ .sar-tabs-label {
+      border-left: 1px solid currentColor;
+    }
+    &.sar-tabs-label-active {
+      background-color: currentColor;
+      .sar-tabs-label-text {
+        color: var(--sar-tabs-label-border-label-active-color);
+      }
+    }
+  }
+}
+
+// 胶囊
+.sar-tabs-label-pill {
+  .sar-tabs-label {
+    height: var(--sar-tabs-label-pill-label-height);
+    border-radius: var(--sar-tabs-label-pill-label-border-radius);
+    &.sar-tabs-label-active {
+      background-color: var(--sar-tabs-label-pill-label-active-bg);
+      .sar-tabs-label-text {
+        color: var(--sar-tabs-label-pill-label-active-color);
+      }
+    }
+  }
+}
+
+// 自动滚动
+.sar-tabs-auto {
+  .sar-tabs-label {
+    flex: 0;
+    padding: 0 var(--sar-tabs-auto-label-padding-x);
+    white-space: nowrap;
+  }
+}
+
+// 插槽
+.sar-tabs-prepend,
+.sar-tabs-append {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.sar-tabs-prepend {
+  padding-right: var(--sar-tabs-prepend-gap);
+}
+.sar-tabs-append {
+  padding-left: var(--sar-tabs-append-gap);
+}
+
+// body
+.sar-tabs-body {
+  position: relative;
+}
+.sar-tabs-pane {
+  .sar-tabs:not(.sar-tabs-is-swiper):not(.sar-tabs-scrollspy)
+    &:not(.sar-tabs-pane-active) {
+    display: none;
+  }
+}
+
+// 垂直
+.sar-tabs-vertical {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  .sar-tabs-header {
+    flex: none;
+    flex-direction: column;
+    align-self: flex-start;
+  }
+
+  .sar-tabs-label-wrapper {
+    flex-basis: auto;
+    width: 100%;
+  }
+
+  .sar-tabs-label-content {
+    flex-direction: column;
+  }
+
+  .sar-tabs-label {
+    flex: none;
+    padding: 0 15px;
+    height: var(--sar-tabs-vertical-label-height);
+  }
+
+  .sar-tabs-label-line {
+    right: 0;
+    left: auto;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+    width: var(--sar-tabs-label-line-height);
+    height: 100%;
+  }
+  .sar-tabs-label-card .sar-tabs-label-line {
+    left: 0;
+    right: auto;
+  }
+
+  .sar-tabs-inkbar-wrapper {
+    left: auto;
+    bottom: auto;
+    right: 0;
+    top: 0;
+    transform: translateY(-50%);
+
+    .sar-tabs-inkbar {
+      height: var(--sar-tabs-inkbar-width);
+      width: var(--sar-tabs-inkbar-height);
+    }
+  }
+
+  .sar-tabs-label-border {
+    .sar-tabs-label {
+      ~ .sar-tabs-label {
+        border-left: none;
+        border-top: 1px solid currentColor;
+      }
+    }
+  }
+
+  .sar-tabs-body {
+    flex: 1;
+    align-self: stretch;
+  }
+}
+
+.sar-tabs-swiper {
+  height: auto;
+}

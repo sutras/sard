@@ -1,0 +1,20 @@
+.page-count-down {
+  .time-wrap {
+    display: flex;
+    align-items: center;
+  }
+  .time {
+    padding: 5px;
+    background: orange;
+    border-radius: 4px;
+    color: #000;
+  }
+  .colon {
+    margin: 0 5px;
+  }
+
+  .sar-button {
+    margin-top: 0;
+    margin-right: 10px;
+  }
+}

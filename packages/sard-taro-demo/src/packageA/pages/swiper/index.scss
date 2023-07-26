@@ -1,0 +1,27 @@
+.page-swiper {
+  .demo-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: normal;
+    text-align: center;
+    color: #333;
+    user-select: none;
+  }
+  .demo-item1 {
+    background-color: tomato;
+  }
+  .demo-item2 {
+    background-color: palegreen;
+  }
+  .demo-item3 {
+    background-color: deepskyblue;
+  }
+
+  .sar-button {
+    margin-top: 0;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+}

@@ -1,0 +1,90 @@
+@import '../style/variables.scss';
+
+// #variables
+:root,
+page {
+  --sar-tag-border-radius: var(--sar-rounded-sm);
+  --sar-tag-line-height: var(--sar-leading-none);
+  --sar-tag-color: inherit;
+  --sar-tag-bg: var(--sar-secondary-bg);
+
+  --sar-tag-small-padding: 1px 3px;
+  --sar-tag-small-font-size: var(--sar-text-sm);
+  --sar-tag-medium-padding: 3px 5px;
+  --sar-tag-medium-font-size: var(--sar-text-sm);
+  --sar-tag-large-padding: 4px 8px;
+  --sar-tag-large-font-size: var(--sar-text-base);
+
+  --sar-tag-close-margin-left: 3px;
+}
+// #endvariables
+
+.sar-tag {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: var(--sar-tag-line-height);
+  border-radius: var(--sar-tag-border-radius);
+  border: 1px solid transparent;
+
+  &.sar-tag-plain {
+    border-color: currentColor;
+    background-color: transparent;
+  }
+}
+
+.sar-tag-default {
+  color: var(--sar-tag-color);
+  background-color: var(--sar-tag-bg);
+}
+
+// 默认类型主题色
+@each $theme, $value in $sar-theme-colors {
+  $color: nth($value, 1);
+  $color-rgb: nth($value, 2);
+  $theme-class: '.sar-tag-#{$theme}';
+
+  #{$theme-class} {
+    color: var(--sar-white);
+    background-color: $color;
+
+    // 镂空主题色
+    &.sar-tag-plain {
+      color: $color;
+    }
+  }
+}
+
+// 圆角
+.sar-tag-round {
+  border-radius: var(--sar-rounded-full);
+}
+
+// 标记
+.sar-tag-mark {
+  border-top-right-radius: var(--sar-rounded-full);
+  border-bottom-right-radius: var(--sar-rounded-full);
+}
+
+// 尺寸
+.sar-tag-small {
+  padding: var(--sar-tag-small-padding);
+  font-size: var(--sar-tag-small-font-size);
+}
+.sar-tag-medium {
+  padding: var(--sar-tag-medium-padding);
+  font-size: var(--sar-tag-medium-font-size);
+}
+.sar-tag-large {
+  padding: var(--sar-tag-large-padding);
+  font-size: var(--sar-tag-large-font-size);
+}
+
+// 可关闭的
+.sar-tag-close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: var(--sar-tag-close-margin-left);
+  cursor: pointer;
+}

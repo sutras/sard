@@ -1,0 +1,163 @@
+@import '../style/mixins.scss';
+
+// #variables
+:root,
+page {
+  --sar-dialog-z-index: 1110;
+
+  --sar-dialog-width: 320px;
+  --sar-dialog-max-width: 90%;
+  --sar-dialog-bg: var(--sar-emphasis-bg);
+  --sar-dialog-border-radius: var(--sar-rounded-xl);
+
+  --sar-dialog-header-padding-y: 16px;
+  --sar-dialog-header-padding-x: 16px;
+  --sar-dialog-header-border-color: var(--sar-border-color);
+  --sar-dialog-header-line-height: var(--sar-leading-normal);
+
+  --sar-dialog-title-font-size: var(--sar-text-lg);
+  --sar-dialog-headed-title-font-size: var(--sar-text-base);
+
+  --sar-dialog-close-padding: 16px;
+  --sar-dialog-close-font-size: var(--sar-text-lg);
+
+  --sar-dialog-body-padding-y: 24px;
+  --sar-dialog-body-padding-x: 16px;
+
+  --sar-dialog-message-margin-top: 10px;
+  --sar-dialog-message-font-size: var(--sar-text-base);
+  --sar-dialog-message-color: var(--sar-secondary-color);
+
+  --sar-dialog-footer-border-color: var(--sar-border-color);
+
+  --sar-dialog-round-button-footer-padding-x: 16px;
+  --sar-dialog-round-button-footer-padding-y: 16px;
+  --sar-dialog-round-button-button-gap: 16px;
+}
+// #endvariables
+
+.sar-dialog {
+  z-index: var(--sar-dialog-z-index);
+  display: flex;
+  flex-direction: column;
+  width: var(--sar-dialog-width);
+  max-width: var(--sar-dialog-max-width);
+  background-color: var(--sar-dialog-bg);
+  border-radius: var(--sar-dialog-border-radius);
+
+  @at-root {
+    .sar-dialog-header {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: var(--sar-dialog-header-padding-y);
+      padding-left: var(--sar-dialog-header-padding-x);
+      padding-right: var(--sar-dialog-header-padding-x);
+      line-height: var(--sar-dialog-header-line-height);
+
+      .sar-dialog:not(.sar-dialog-untitled) & {
+        padding-bottom: var(--sar-dialog-header-padding-y);
+        @include border-bottom(var(--sar-dialog-header-border-color));
+      }
+
+      @at-root {
+        .sar-dialog-title {
+          font-size: var(--sar-dialog-title-font-size);
+          font-weight: bold;
+          text-align: center;
+        }
+
+        .sar-dialog-close {
+          height: auto;
+          margin-top: calc(var(--sar-dialog-header-padding-y) * -1);
+          margin-right: calc(var(--sar-dialog-header-padding-x) * -1);
+          margin-bottom: calc(var(--sar-dialog-header-padding-y) * -1);
+          padding: var(--sar-dialog-close-padding);
+          border: none;
+          font-size: var(--sar-dialog-close-font-size);
+          line-height: inherit;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .sar-dialog-body {
+      padding: var(--sar-dialog-body-padding-y) var(--sar-dialog-body-padding-x);
+
+      @at-root {
+        .sar-dialog-message {
+          font-size: var(--sar-dialog-message-font-size);
+          text-align: center;
+          color: var(--sar-dialog-message-color);
+
+          .sar-dialog-title ~ & {
+            margin-top: var(--sar-dialog-message-margin-top);
+          }
+        }
+      }
+    }
+
+    .sar-dialog-footer {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+
+      .sar-dialog:not(.sar-dialog-round-button) & {
+        @include border-top(var(--sar-dialog-footer-border-color));
+      }
+
+      @at-root {
+        .sar-dialog-button {
+          flex-grow: 1;
+          flex-shrink: 1;
+          flex-basis: 0;
+          margin: 0;
+
+          .sar-dialog:not(.sar-dialog-round-button) & {
+            border-radius: 0;
+
+            &:first-child {
+              border-bottom-left-radius: var(--sar-dialog-border-radius);
+            }
+            &:last-child {
+              border-bottom-right-radius: var(--sar-dialog-border-radius);
+            }
+          }
+        }
+
+        .sar-dialog-divider {
+          flex: none;
+          width: 1px;
+          transform: scaleX(0.5);
+          transform-origin: center center;
+          background-color: var(--sar-dialog-footer-border-color);
+        }
+      }
+    }
+  }
+}
+
+.sar-dialog-round-button {
+  .sar-dialog-footer {
+    padding-left: var(--sar-dialog-round-button-footer-padding-x);
+    padding-right: var(--sar-dialog-round-button-footer-padding-x);
+    padding-bottom: var(--sar-dialog-round-button-footer-padding-y);
+  }
+
+  .sar-dialog-button:not(:first-child) {
+    margin-left: var(--sar-dialog-round-button-button-gap);
+  }
+}
+
+.sar-dialog-headed {
+  .sar-dialog-title {
+    font-size: var(--sar-dialog-headed-title-font-size);
+  }
+
+  &.sar-dialog-untitled {
+    .sar-dialog-body {
+      padding-top: 0;
+    }
+  }
+}

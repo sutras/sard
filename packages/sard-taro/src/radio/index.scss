@@ -1,0 +1,71 @@
+@import '../style/mixins.scss';
+
+// #variables
+:root,
+page {
+  --sar-radio-icon-font-size: 1.25em;
+  --sar-radio-icon-color: var(--sar-quaternary-color);
+  --sar-radio-icon-checked-color: var(--sar-primary);
+  --sar-radio-icon-transition-duration: var(--sar-duration);
+
+  --sar-radio-label-margin-left: 0.5em;
+
+  --sar-radio-margin-left: 1em;
+  --sar-radio-margin-top: 1em;
+}
+// #endvariables
+
+.sar-radio {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+
+  @at-root {
+    .sar-radio-icon {
+      font-size: var(--sar-radio-icon-font-size);
+      line-height: 1;
+      color: var(--sar-radio-icon-color);
+      transition: color var(--sar-radio-icon-transition-duration);
+    }
+
+    .sar-radio-label {
+      display: flex;
+      margin-left: var(--sar-radio-label-margin-left);
+      user-select: auto;
+    }
+  }
+}
+
+// # 选中状态
+.sar-radio-checked {
+  .sar-radio-icon {
+    color: var(--sar-radio-icon-checked-color);
+  }
+}
+
+// # 禁用状态
+.sar-radio-disabled {
+  @include disabled;
+}
+
+// # 单选按钮组
+.sar-radio-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+
+  &:not(.sar-radio-group-vertical) .sar-radio ~ .sar-radio {
+    margin-left: var(--sar-radio-margin-left);
+  }
+}
+.sar-radio-group-vertical {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  .sar-radio ~ .sar-radio {
+    margin-top: var(--sar-radio-margin-top);
+  }
+}

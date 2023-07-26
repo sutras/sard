@@ -1,0 +1,154 @@
+@import '../style/mixins.scss';
+
+// #variables
+:root,
+page {
+  --sar-action-sheet-z-index: 1100;
+
+  --sar-action-sheet-border-radius: var(--sar-rounded-xl);
+  --sar-action-sheet-bg: var(--sar-emphasis-bg);
+  --sar-action-sheet-line-height: var(--sar-leading-normal);
+
+  --sar-action-sheet-header-padding: 14px;
+  --sar-action-sheet-header-border-color: var(--sar-border-color);
+
+  --sar-action-sheet-title-font-size: var(--sar-text-lg);
+
+  --sar-action-sheet-description-margin-top: 8px;
+  --sar-action-sheet-description-font-size: var(--sar-text-base);
+  --sar-action-sheet-description-color: var(--sar-tertiary-color);
+
+  --sar-action-sheet-item-padding: 14px;
+  --sar-action-sheet-item-border-color: var(--sar-border-color);
+  --sar-action-sheet-item-bg: var(--sar-emphasis-bg);
+  --sar-action-sheet-item-active-bg: var(--sar-active-bg);
+
+  --sar-action-sheet-gap-bg: var(--sar-gray-100);
+  --sar-action-sheet-gap-height: 8px;
+
+  --sar-action-sheet-item-title-font-size: var(--sar-text-base);
+
+  --sar-action-sheet-item-label-margin-top: 8px;
+  --sar-action-sheet-item-label-font-size: var(--sar-text-sm);
+  --sar-action-sheet-item-label-color: var(--sar-tertiary-color);
+
+  --sar-action-sheet-cancel-font-size: var(--sar-text-base);
+  --sar-action-sheet-cancel-padding: 14px;
+  --sar-action-sheet-cancel-bg: var(--sar-emphasis-bg);
+  --sar-action-sheet-cancel-active-bg: var(--sar-active-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root,
+  page {
+    --sar-action-sheet-gap-bg: var(--sar-gray-900);
+  }
+}
+// #endvariables
+
+.sar-action-sheet {
+  z-index: var(--sar-action-sheet-z-index);
+
+  border-top-left-radius: var(--sar-action-sheet-border-radius);
+  border-top-right-radius: var(--sar-action-sheet-border-radius);
+  background-color: var(--sar-action-sheet-bg);
+  line-height: var(--sar-action-sheet-line-height);
+}
+
+.sar-action-sheet-header {
+  position: relative;
+  padding: var(--sar-action-sheet-header-padding);
+
+  @include border-bottom(var(--sar-action-sheet-header-border-color));
+
+  @at-root {
+    .sar-action-sheet-title {
+      font-size: var(--sar-action-sheet-title-font-size);
+      font-weight: bold;
+      text-align: center;
+    }
+    .sar-action-sheet-description {
+      font-size: var(--sar-action-sheet-description-font-size);
+      text-align: center;
+      color: var(--sar-action-sheet-description-color);
+
+      .sar-action-sheet-title ~ & {
+        margin-top: var(--sar-action-sheet-description-margin-top);
+      }
+    }
+  }
+}
+
+.sar-action-sheet-gap {
+  height: var(--sar-action-sheet-gap-height);
+  background-color: var(--sar-action-sheet-gap-bg);
+}
+
+.sar-action-sheet-item {
+  @include button-flush;
+
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: var(--sar-action-sheet-item-padding);
+  line-height: inherit;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  background-color: var(--sar-action-sheet-item-bg);
+
+  .sar-action-sheet-headless &:first-child {
+    border-top-left-radius: var(--sar-action-sheet-border-radius);
+    border-top-right-radius: var(--sar-action-sheet-border-radius);
+  }
+
+  &:not(:first-child) {
+    @include border-top(var(--sar-action-sheet-item-border-color));
+  }
+
+  &:not([disabled]):not(.sar-action-sheet-item-disabled):not(
+      .sar-action-sheet-item-loading
+    ):active {
+    background-color: var(--sar-action-sheet-item-active-bg);
+    color: inherit;
+  }
+
+  @at-root {
+    .sar-action-sheet-item-title {
+      font-size: var(--sar-action-sheet-item-title-font-size);
+    }
+    .sar-action-sheet-item-label {
+      margin-top: var(--sar-action-sheet-item-label-margin-top);
+      font-size: var(--sar-action-sheet-item-label-font-size);
+      color: var(--sar-action-sheet-item-label-color);
+    }
+  }
+
+  // 禁用
+  &.sar-action-sheet-item-disabled {
+    @include disabled-text;
+  }
+
+  // loading
+  &.sar-action-sheet-item-loading {
+    cursor: default;
+  }
+}
+
+.sar-action-sheet-cancel {
+  @include button-flush;
+
+  display: block;
+  width: 100%;
+  padding: var(--sar-action-sheet-cancel-padding);
+  font-size: var(--sar-action-sheet-cancel-font-size);
+  line-height: inherit;
+  text-align: center;
+  cursor: pointer;
+  background-color: var(--sar-action-sheet-cancel-bg);
+
+  &:not([disabled]):active {
+    background-color: var(--sar-action-sheet-cancel-active-bg);
+    color: inherit;
+  }
+}

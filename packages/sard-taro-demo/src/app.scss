@@ -1,0 +1,21 @@
+@import 'sard-taro/src/style.scss';
+@import './demo-icon.scss';
+
+.taro_page {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.taro_router div.taro_page,
+page {
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: calc(100vh - var(--window-top) - var(--window-bottom));
+  color: var(--sar-body-color);
+  background-color: var(--sar-body-bg);
+}
+
+view {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
