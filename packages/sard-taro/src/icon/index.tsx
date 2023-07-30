@@ -3,6 +3,7 @@ import { ITouchEvent, Image, View } from '@tarojs/components'
 import classNames from 'classnames'
 import { isFileUrl } from '../utils'
 import { BaseProps } from '../base'
+import { useBem } from '../use'
 
 export interface IconProps extends BaseProps {
   name?: string
@@ -23,12 +24,14 @@ export const Icon: FC<IconProps> = (props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('icon')
+
   const isImg = useMemo(() => {
     return isFileUrl(name)
   }, [name])
 
   const iconClass = classNames(
-    'sar-icon',
+    bem.b(),
     {
       [prefix]: prefix && !isImg,
       [prefix ? `${prefix}-${name}` : name]: name && !isImg,
@@ -43,7 +46,7 @@ export const Icon: FC<IconProps> = (props) => {
 
   return (
     <View {...restProps} className={iconClass} style={iconStyle}>
-      {isImg && <Image className="sar-icon-image" src={name} />}
+      {isImg && <Image className={bem.e('image')} src={name} />}
     </View>
   )
 }

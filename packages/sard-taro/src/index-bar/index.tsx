@@ -25,6 +25,7 @@ import {
   useEvent,
   useControllableValue,
   useSelectorId,
+  useBem,
 } from '../use'
 import { matchScrollVisible, minmax, getRectById } from '../utils'
 import { CSSTransition } from '../transition/CSSTransition'
@@ -68,6 +69,8 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
     threshold = 150,
     ...restProps
   } = props
+
+  const [bem] = useBem('index-bar')
 
   const pageScrollTop = useRef(0)
   usePageScroll((res) => {
@@ -202,7 +205,7 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
     scrollTo,
   }))
 
-  const indexBarClass = classNames('sar-index-bar', className)
+  const indexBarClass = classNames(bem.b(), className)
 
   return (
     <View {...restProps} className={indexBarClass}>
@@ -224,7 +227,7 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
       )}
 
       <View
-        className="sar-index-bar-nav"
+        className={bem.e('nav')}
         id={navId}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -237,9 +240,10 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
             const key = item.key ?? index
             return (
               <View
-                className={classNames('sar-index-bar-nav-item', {
-                  'sar-index-bar-nav-item-active': key === innerActiveKey,
-                })}
+                className={classNames(
+                  bem.e('nav-item'),
+                  bem.em('nav-item', 'active', key === innerActiveKey),
+                )}
               >
                 {item.props.title}
               </View>
@@ -253,12 +257,13 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
           onExited={() => setHintVisible(false)}
         >
           <View
-            className={classNames('sar-index-bar-hint', {
-              'sar-index-bar-hint-visible': hintIn || hintVisible,
-            })}
-            style={{ top: hintTop }}
+            className={bem.e('hint')}
+            style={{
+              top: hintTop,
+              display: hintIn || hintVisible ? 'flex' : 'none',
+            }}
           >
-            <View className="sar-index-bar-hint-text">
+            <View className={bem.e('hint-text')}>
               {itemMap.get(innerActiveKey)?.[1]}
             </View>
           </View>

@@ -35,7 +35,11 @@ export default () => {
 
       <Demo title="基础使用" full>
         <Cell.Group card>
-          <Cell isLink title="显示动作面板" onClick={() => setVisible(true)} />
+          <Cell
+            linkable
+            title="显示动作面板"
+            onClick={() => setVisible(true)}
+          />
         </Cell.Group>
 
         <ActionSheet
@@ -49,7 +53,11 @@ export default () => {
 
       <Demo title="手动声明项目组件" full>
         <Cell.Group card>
-          <Cell isLink title="显示动作面板" onClick={() => setVisible6(true)} />
+          <Cell
+            linkable
+            title="显示动作面板"
+            onClick={() => setVisible6(true)}
+          />
         </Cell.Group>
 
         <ActionSheet
@@ -66,7 +74,11 @@ export default () => {
 
       <Demo title="取消按钮" full>
         <Cell.Group card>
-          <Cell isLink title="显示动作面板" onClick={() => setVisible2(true)} />
+          <Cell
+            linkable
+            title="显示动作面板"
+            onClick={() => setVisible2(true)}
+          />
         </Cell.Group>
 
         <ActionSheet
@@ -84,7 +96,11 @@ export default () => {
 
       <Demo title="状态" full>
         <Cell.Group card>
-          <Cell isLink title="显示动作面板" onClick={() => setVisible4(true)} />
+          <Cell
+            linkable
+            title="显示动作面板"
+            onClick={() => setVisible4(true)}
+          />
         </Cell.Group>
 
         <ActionSheet
@@ -102,7 +118,11 @@ export default () => {
 
       <Demo title="标题&描述" full>
         <Cell.Group card>
-          <Cell isLink title="显示动作面板" onClick={() => setVisible5(true)} />
+          <Cell
+            linkable
+            title="显示动作面板"
+            onClick={() => setVisible5(true)}
+          />
         </Cell.Group>
 
         <ActionSheet

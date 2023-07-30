@@ -1,6 +1,6 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { Button, Cell, IndexBar, IndexBarRef } from 'sard-taro'
+import { Cell, IndexBar, IndexBarRef } from 'sard-taro'
 import { useRef } from 'react'
 
 import './index.scss'
@@ -90,9 +90,13 @@ export default () => {
           ))}
         </IndexBar>
 
-        <Button onClick={() => indexBarRef.current?.scrollTo('G')}>
-          scrollTo G
-        </Button>
+        <Cell.Group style={{ marginTop: 50 }}>
+          <Cell
+            title="scrollTo G"
+            linkable
+            onClick={() => indexBarRef.current?.scrollTo('G')}
+          ></Cell>
+        </Cell.Group>
       </Demo>
     </Page>
   )

@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { View } from '@tarojs/components'
 import { Transition } from '../transition/index'
-import { useEvent, useSelectorId } from '../use'
+import { useBem, useEvent, useSelectorId } from '../use'
 import { getRectById } from '../utils'
 import { BaseProps } from '../base'
 
@@ -32,6 +32,8 @@ export const Collapse: FC<CollapseProps> = (props) => {
     onExited,
     ...restProps
   } = props
+
+  const [bem] = useBem('collapse')
 
   const collapseId = useSelectorId()
 
@@ -102,11 +104,9 @@ export const Collapse: FC<CollapseProps> = (props) => {
   })
 
   const collapseClass = classNames(
-    'sar-collapse',
-    {
-      'sar-collapse-show': show,
-      'sar-collapse-collapsing': collapsing,
-    },
+    bem.b(),
+    bem.m('show', show),
+    bem.m('collapsing', collapsing),
     className,
   )
 
@@ -129,7 +129,7 @@ export const Collapse: FC<CollapseProps> = (props) => {
       onExited={handleExited}
     >
       <View className={collapseClass} style={collapseStyle}>
-        <View className="sar-collapse-content" id={collapseId}>
+        <View className={bem.e('content')} id={collapseId}>
           {children}
         </View>
       </View>

@@ -23,12 +23,16 @@ export default () => {
 
       <Demo title="基础使用" full>
         <Cell.Group card>
-          <Cell isLink title="默认键盘" onClick={() => setVisible(true)} />
-          <Cell isLink title="小数点键盘" onClick={() => setVisible2(true)} />
-          <Cell isLink title="身份证键盘" onClick={() => setVisible3(true)} />
-          <Cell isLink title="随机数字键盘" onClick={() => setVisible5(true)} />
+          <Cell linkable title="默认键盘" onClick={() => setVisible(true)} />
+          <Cell linkable title="小数点键盘" onClick={() => setVisible2(true)} />
+          <Cell linkable title="身份证键盘" onClick={() => setVisible3(true)} />
           <Cell
-            isLink
+            linkable
+            title="随机数字键盘"
+            onClick={() => setVisible5(true)}
+          />
+          <Cell
+            linkable
             title="双向绑定"
             value={value6}
             onClick={() => setVisible6(true)}

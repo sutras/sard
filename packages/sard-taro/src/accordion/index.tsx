@@ -1,6 +1,6 @@
 import { ReactElement, Children, cloneElement, FC } from 'react'
 import classNames from 'classnames'
-import { useControllableValue } from '../use'
+import { useControllableValue, useBem } from '../use'
 
 import { AccordionItem, AccordionItemProps } from './Item'
 import { BaseProps } from '../base'
@@ -45,6 +45,8 @@ export const Accordion: AccordionFC = (props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('accordion')
+
   const [innerActiveKey, setInnerActiveKey] = useControllableValue({
     value: activeKey,
     defaultValue: defaultActiveKey,
@@ -66,7 +68,7 @@ export const Accordion: AccordionFC = (props) => {
     onChange?.(key as (string | number) & (string | number)[])
   }
 
-  const accordionClass = classNames('sar-accordion', className)
+  const accordionClass = classNames(bem.b(), className)
 
   return (
     <View {...restProps} className={accordionClass}>
@@ -78,6 +80,7 @@ export const Accordion: AccordionFC = (props) => {
             innerKey,
             activeKey: innerActiveKey,
             duration: item.props.duration ?? duration,
+            later: index > 0,
             onClick: () => handleItemClick(innerKey),
           })
         },

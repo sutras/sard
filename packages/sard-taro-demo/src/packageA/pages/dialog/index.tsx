@@ -13,8 +13,8 @@ export default () => {
     <Page className="page-dialog">
       <Demo title="基础使用" full>
         <Cell.Group card>
-          <Cell isLink title="显示提示框" onClick={() => setVisible(true)} />
-          <Cell isLink title="显示确认框" onClick={() => setVisible2(true)} />
+          <Cell linkable title="显示提示框" onClick={() => setVisible(true)} />
+          <Cell linkable title="显示确认框" onClick={() => setVisible2(true)} />
         </Cell.Group>
 
         <Dialog
@@ -38,7 +38,7 @@ export default () => {
 
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="显示提示框"
             onClick={() => {
               Dialog.alert({
@@ -48,7 +48,7 @@ export default () => {
             }}
           />
           <Cell
-            isLink
+            linkable
             title="显示确定框"
             onClick={() => {
               Dialog.confirm({
@@ -63,7 +63,7 @@ export default () => {
       <Demo title="异步关闭" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="done 回调异步关闭"
             onClick={() => {
               Dialog.confirm({
@@ -82,7 +82,7 @@ export default () => {
             }}
           />
           <Cell
-            isLink
+            linkable
             title="Promise 异步关闭"
             onClick={() => {
               Dialog.confirm({
@@ -108,7 +108,7 @@ export default () => {
       <Demo title="圆角按钮" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="显示提示框"
             onClick={() => {
               Dialog.alert({
@@ -119,7 +119,7 @@ export default () => {
             }}
           />
           <Cell
-            isLink
+            linkable
             title="显示确定框"
             onClick={() => {
               Dialog.confirm({
@@ -135,7 +135,7 @@ export default () => {
       <Demo title="有头部的" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="显示提示框"
             onClick={() => {
               Dialog.alert({
@@ -147,7 +147,7 @@ export default () => {
             }}
           />
           <Cell
-            isLink
+            linkable
             title="显示确定框"
             onClick={() => {
               Dialog.confirm({
@@ -159,7 +159,7 @@ export default () => {
             }}
           />
           <Cell
-            isLink
+            linkable
             title="显示提示框-无标题"
             onClick={() => {
               Dialog.alert({
@@ -170,7 +170,7 @@ export default () => {
             }}
           />
           <Cell
-            isLink
+            linkable
             title="显示确定框-无标题"
             onClick={() => {
               Dialog.confirm({

@@ -1,10 +1,9 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { Button, Slider, Swiper } from 'sard-taro'
+import { Cell, Slider, Swiper } from 'sard-taro'
 
 import './index.scss'
 import { useState } from 'react'
-import { View } from '@tarojs/components'
 
 export default () => {
   const [activeIndex, setActiveIndex] = useState<number>(0)
@@ -26,7 +25,7 @@ export default () => {
 
   return (
     <Page className="page-swiper">
-      <Demo title="基础使用">
+      <Demo title="基础使用" full>
         <Swiper className="demo-swiper" indicatorDots>
           <Swiper.Item className="demo-item demo-item1">item1</Swiper.Item>
           <Swiper.Item className="demo-item demo-item2">item2</Swiper.Item>
@@ -34,9 +33,11 @@ export default () => {
         </Swiper>
       </Demo>
 
-      <Demo title="受控">
-        <Button onClick={handlePrev}>prev</Button>
-        <Button onClick={handleNext}>next</Button>
+      <Demo title="受控" full>
+        <Cell.Group>
+          <Cell title="prev" linkable onClick={handlePrev}></Cell>
+          <Cell title="next" linkable onClick={handleNext}></Cell>
+        </Cell.Group>
         <Swiper
           indicatorDots
           className="demo-swiper"
@@ -49,7 +50,7 @@ export default () => {
         </Swiper>
       </Demo>
 
-      <Demo title="垂直">
+      <Demo title="垂直" full>
         <Swiper className="demo-swiper" indicatorDots vertical>
           <Swiper.Item className="demo-item demo-item1">item1</Swiper.Item>
           <Swiper.Item className="demo-item demo-item2">item2</Swiper.Item>
@@ -57,25 +58,27 @@ export default () => {
         </Swiper>
       </Demo>
 
-      <Demo title="自动播放">
-        <View>
-          <View>duration: {duration}</View>
-          <Slider
-            min={500}
-            max={2000}
-            value={duration}
-            onChange={(value: number) => setDuration(value)}
-          />
-        </View>
-        <View style={{ marginBottom: 5 }}>
-          <View>interval: {interval}</View>
-          <Slider
-            min={2000}
-            max={8000}
-            value={interval}
-            onChange={(value: number) => setInterval$(value)}
-          />
-        </View>
+      <Demo title="自动播放" full>
+        <Cell.Group>
+          <Cell>duration: {duration}</Cell>
+          <Cell>
+            <Slider
+              min={500}
+              max={2000}
+              value={duration}
+              onChange={(value: number) => setDuration(value)}
+            />
+          </Cell>
+          <Cell>interval: {interval}</Cell>
+          <Cell>
+            <Slider
+              min={2000}
+              max={8000}
+              value={interval}
+              onChange={(value: number) => setInterval$(value)}
+            />
+          </Cell>
+        </Cell.Group>
         <Swiper
           className="demo-swiper"
           autoplay
@@ -89,7 +92,7 @@ export default () => {
         </Swiper>
       </Demo>
 
-      <Demo title="循环滑动">
+      <Demo title="循环滑动" full>
         <Swiper className="demo-swiper" indicatorDots circular>
           <Swiper.Item className="demo-item demo-item1">item1</Swiper.Item>
           <Swiper.Item className="demo-item demo-item2">item2</Swiper.Item>

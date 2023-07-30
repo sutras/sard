@@ -1,3 +1,5 @@
+@import '../style/base.scss';
+
 // #variables
 :root,
 page {
@@ -7,78 +9,69 @@ page {
 }
 // #endvariables
 
-.sar-popup-mask {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: var(--sar-popup-mask-z-index);
-  background-color: var(--sar-popup-mask-bg);
-  touch-action: none;
+@include bem(popup) {
+  @include b() {
+    position: fixed;
+    z-index: var(--sar-popup-z-index);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 
-  &:not(.sar-popup-mask-show) {
-    display: none;
+    @include m(slide-top) {
+      top: 0;
+      right: 0;
+      bottom: auto;
+      left: 0;
+    }
+
+    @include m(slide-right) {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: auto;
+    }
+
+    @include m(slide-bottom) {
+      top: auto;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    @include m(slide-left) {
+      top: 0;
+      right: auto;
+      bottom: 0;
+      left: 0;
+    }
+    @include m(fade, zoom) {
+      top: 50%;
+      right: 0;
+      bottom: auto;
+      left: 0;
+      margin-right: auto;
+      margin-left: auto;
+      transform: translateY(-50%);
+    }
   }
 
-  &.sar-popup-hiding {
+  @include e(mask) {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: var(--sar-popup-mask-z-index);
+    display: none;
+    background-color: var(--sar-popup-mask-bg);
+    touch-action: none;
+
+    @include m(transparent) {
+      background-color: transparent;
+    }
+  }
+
+  @include m(hiding) {
     pointer-events: none;
   }
-
-  &.sar-popup-clear-mask {
-    background-color: transparent;
-  }
-}
-
-.sar-popup {
-  position: fixed;
-  z-index: var(--sar-popup-z-index);
-  overflow: hidden;
-
-  &:not(.sar-popup-show) {
-    display: none;
-  }
-
-  &.sar-popup-hiding {
-    pointer-events: none;
-  }
-}
-
-.sar-popup-slide-top {
-  top: 0;
-  right: 0;
-  bottom: auto;
-  left: 0;
-}
-
-.sar-popup-slide-right {
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: auto;
-}
-
-.sar-popup-slide-bottom {
-  top: auto;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-.sar-popup-slide-left {
-  top: 0;
-  right: auto;
-  bottom: 0;
-  left: 0;
-}
-
-.sar-popup-fade,
-.sar-popup-zoom {
-  top: 50%;
-  right: 0;
-  bottom: auto;
-  left: 0;
-  margin-right: auto;
-  margin-left: auto;
-  transform: translateY(-50%);
 }

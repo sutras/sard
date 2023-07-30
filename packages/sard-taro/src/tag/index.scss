@@ -1,4 +1,4 @@
-@import '../style/variables.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -19,72 +19,69 @@ page {
 }
 // #endvariables
 
-.sar-tag {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  line-height: var(--sar-tag-line-height);
-  border-radius: var(--sar-tag-border-radius);
-  border: 1px solid transparent;
-
-  &.sar-tag-plain {
-    border-color: currentColor;
-    background-color: transparent;
+@include bem(tag) {
+  @include b() {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    line-height: var(--sar-tag-line-height);
+    border-radius: var(--sar-tag-border-radius);
+    border: 1px solid transparent;
   }
-}
 
-.sar-tag-default {
-  color: var(--sar-tag-color);
-  background-color: var(--sar-tag-bg);
-}
+  @each $theme, $value in $sar-theme-colors {
+    $color: nth($value, 1);
 
-// 默认类型主题色
-@each $theme, $value in $sar-theme-colors {
-  $color: nth($value, 1);
-  $color-rgb: nth($value, 2);
-  $theme-class: '.sar-tag-#{$theme}';
+    @include m($theme) {
+      color: var(--sar-white);
+      background-color: $color;
+    }
 
-  #{$theme-class} {
-    color: var(--sar-white);
-    background-color: $color;
-
-    // 镂空主题色
-    &.sar-tag-plain {
+    @include m(#{$theme}-plain) {
       color: $color;
+      border-color: currentColor;
+      background-color: transparent;
     }
   }
-}
 
-// 圆角
-.sar-tag-round {
-  border-radius: var(--sar-rounded-full);
-}
+  @include m(default) {
+    color: var(--sar-tag-color);
+    background-color: var(--sar-tag-bg);
+  }
 
-// 标记
-.sar-tag-mark {
-  border-top-right-radius: var(--sar-rounded-full);
-  border-bottom-right-radius: var(--sar-rounded-full);
-}
+  // 圆角
+  @include m(round) {
+    border-radius: var(--sar-rounded-full);
+  }
 
-// 尺寸
-.sar-tag-small {
-  padding: var(--sar-tag-small-padding);
-  font-size: var(--sar-tag-small-font-size);
-}
-.sar-tag-medium {
-  padding: var(--sar-tag-medium-padding);
-  font-size: var(--sar-tag-medium-font-size);
-}
-.sar-tag-large {
-  padding: var(--sar-tag-large-padding);
-  font-size: var(--sar-tag-large-font-size);
-}
+  // 标记
+  @include m(mark) {
+    border-top-right-radius: var(--sar-rounded-full);
+    border-bottom-right-radius: var(--sar-rounded-full);
+  }
 
-// 可关闭的
-.sar-tag-close {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: var(--sar-tag-close-margin-left);
-  cursor: pointer;
+  // 尺寸
+  @include m(small) {
+    padding: var(--sar-tag-small-padding);
+    font-size: var(--sar-tag-small-font-size);
+  }
+
+  @include m(medium) {
+    padding: var(--sar-tag-medium-padding);
+    font-size: var(--sar-tag-medium-font-size);
+  }
+
+  @include m(large) {
+    padding: var(--sar-tag-large-padding);
+    font-size: var(--sar-tag-large-font-size);
+  }
+
+  // 可关闭的
+  @include e(close) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: var(--sar-tag-close-margin-left);
+    cursor: pointer;
+  }
 }

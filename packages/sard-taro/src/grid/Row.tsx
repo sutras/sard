@@ -3,6 +3,7 @@ import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import { splitUnit } from '../utils'
 import { BaseProps } from '../base'
+import { useBem } from '../use'
 
 const mapJustify = {
   start: 'flex-start',
@@ -19,12 +20,13 @@ const mapAlign = {
   stretch: 'stretch',
 }
 
-export interface RowContextValue {
-  gap?: number | string
-  gutter?: [number, string]
-}
+export type RowContextValue = readonly [
+  merged: string | number,
+  value: number,
+  unit: string,
+]
 
-export const RowContext = createContext<RowContextValue>({})
+export const RowContext = createContext<RowContextValue>(null)
 
 export interface RowProps extends BaseProps {
   gap?: number | string
@@ -36,10 +38,15 @@ export const Row: FC<RowProps> = (props) => {
   const { className, style, children, gap, justify, align, ...restProps } =
     props
 
+  const [bem] = useBem('row')
+
   const gutter = useMemo(() => {
     if (gap) {
       const result = splitUnit(gap)
-      return [result[0] / 2, result[1] || 'px'] as [number, string]
+      const value = result[0] / 2
+      const unit = result[1]
+      const merged = unit ? value + unit : value
+      return [merged, value, unit] as const
     }
   }, [gap])
 
@@ -50,26 +57,18 @@ export const Row: FC<RowProps> = (props) => {
     },
     gap
       ? {
-          marginLeft: -gutter[0] + gutter[1],
-          marginRight: -gutter[0] + gutter[1],
+          marginLeft: -gutter[0],
+          marginRight: -gutter[0],
         }
       : null,
     style,
   )
 
-  const rowClass = classNames('sar-row', className)
-
-  const context = useMemo(
-    () => ({
-      gap,
-      gutter,
-    }),
-    [gap],
-  )
+  const rowClass = classNames(bem.b(), className)
 
   return (
     <View {...restProps} className={rowClass} style={rowStyle}>
-      <RowContext.Provider value={context}>{children}</RowContext.Provider>
+      <RowContext.Provider value={gutter}>{children}</RowContext.Provider>
     </View>
   )
 }

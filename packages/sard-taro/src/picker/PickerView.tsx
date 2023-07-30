@@ -7,6 +7,7 @@ import {
   View,
 } from '@tarojs/components'
 import { BaseProps, PrimitiveType } from '../base'
+import { useBem } from '../use'
 
 export interface PickerOptionKeys {
   label?: string
@@ -43,6 +44,8 @@ export const PickerView: FC<PickerViewProps> = (props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('picker')
+
   const finalColumns = useMemo(() => {
     if (!Array.isArray(columns[0])) {
       return [columns]
@@ -61,7 +64,7 @@ export const PickerView: FC<PickerViewProps> = (props) => {
   return (
     <TaroPickerView
       {...restProps}
-      indicatorClass={classNames('sar-picker-indicator', indicatorClass)}
+      indicatorClass={classNames(bem.e('indicator'), indicatorClass)}
       value={value}
       onChange={handleChange}
     >
@@ -71,8 +74,8 @@ export const PickerView: FC<PickerViewProps> = (props) => {
             {column.map((option, optionIndex) => {
               const isObject = option instanceof Object
               return (
-                <View className="sar-picker-item" key={optionIndex}>
-                  <View className="sar-picker-item-text">
+                <View className={bem.e('item')} key={optionIndex}>
+                  <View className={bem.e('item-text')}>
                     {isObject ? option[optionKeys.label] : option}
                   </View>
                 </View>

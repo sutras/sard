@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { NavbarItem } from './Item'
 import { BaseProps } from '../base'
 import { View } from '@tarojs/components'
+import { useBem } from '../use'
 
 export * from './Item'
 
@@ -34,14 +35,9 @@ export const Navbar: NavbarFC = (props) => {
     ...restProps
   } = props
 
-  const navbarClass = classNames(
-    'sar-navbar',
-    {
-      'sar-navbar-flow': flow,
-      'sar-navbar-fixed': fixed,
-    },
-    className,
-  )
+  const [bem] = useBem('navbar')
+
+  const navbarClass = classNames(bem.b(), bem.m('fixed', fixed), className)
 
   const navbarStyle = {
     zIndex: fixed ? zIndex : '',
@@ -50,11 +46,32 @@ export const Navbar: NavbarFC = (props) => {
 
   return (
     <View {...restProps} className={navbarClass} style={navbarStyle}>
-      {left && <View className="sar-navbar-left">{left}</View>}
-      <View className="sar-navbar-content">
-        {children ?? <View className="sar-navbar-title">{title}</View>}
+      {left && (
+        <View
+          className={classNames(bem.e('left'), bem.em('left', 'flow', flow))}
+        >
+          {left}
+        </View>
+      )}
+      <View className={bem.e('content')}>
+        {children ?? (
+          <View
+            className={classNames(
+              bem.e('title'),
+              bem.em('title', 'flow', flow),
+            )}
+          >
+            {title}
+          </View>
+        )}
       </View>
-      {right && <View className="sar-navbar-right">{right}</View>}
+      {right && (
+        <View
+          className={classNames(bem.e('right'), bem.em('right', 'flow', flow))}
+        >
+          {right}
+        </View>
+      )}
     </View>
   )
 }

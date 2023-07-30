@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import Demo from '@/components/demo'
 import Page from '@/components/page'
 import { View } from '@tarojs/components'
-import { CountDown, Button, CountDownRef } from 'sard-taro'
+import { CountDown, CountDownRef, Cell } from 'sard-taro'
 
 import './index.scss'
 
@@ -30,16 +30,16 @@ export default () => {
       <Demo title="自定义样式">
         <CountDown time={1000 * 60 * 60 * 2} interval={93}>
           {(time) => (
-            <View className="time-wrap">
-              <View className="time">
+            <View className="demo-time-wrap">
+              <View className="demo-time">
                 {String(time.hours).padStart(2, '0')}
               </View>
-              <View className="colon">:</View>
-              <View className="time">
+              <View className="demo-colon">:</View>
+              <View className="demo-time">
                 {String(time.minutes).padStart(2, '0')}
               </View>
-              <View className="colon">:</View>
-              <View className="time">
+              <View className="demo-colon">:</View>
+              <View className="demo-time">
                 {String(time.seconds).padStart(2, '0')}
               </View>
             </View>
@@ -47,17 +47,33 @@ export default () => {
         </CountDown>
       </Demo>
 
-      <Demo title="手动控制">
-        <Button onClick={() => ref.current?.start()}>开始</Button>
-        <Button onClick={() => ref.current?.pause()}>暂停</Button>
-        <Button onClick={() => ref.current?.reset()}>重置</Button>
-        <CountDown
-          ref={ref}
-          time={1000 * 10}
-          format="ss:SSS"
-          interval={60}
-          autoStart={false}
-        />
+      <Demo title="手动控制" full>
+        <Cell.Group card>
+          <Cell>
+            <CountDown
+              ref={ref}
+              time={1000 * 10}
+              format="ss:SSS"
+              interval={60}
+              autoStart={false}
+            />
+          </Cell>
+          <Cell
+            title="开始"
+            linkable
+            onClick={() => ref.current?.start()}
+          ></Cell>
+          <Cell
+            title="暂停"
+            linkable
+            onClick={() => ref.current?.pause()}
+          ></Cell>
+          <Cell
+            title="重置"
+            linkable
+            onClick={() => ref.current?.reset()}
+          ></Cell>
+        </Cell.Group>
       </Demo>
     </Page>
   )

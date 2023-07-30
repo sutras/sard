@@ -31,6 +31,95 @@ export default () => {
         </Cell.Group>
       </Demo>
 
+      <Demo title="可点击的" full>
+        <Cell.Group>
+          <Cell linkable title="标题" />
+          <Cell linkable title="标题" value="值" arrowDirection="down" />
+        </Cell.Group>
+      </Demo>
+
+      <Demo title="图标" full>
+        <Cell.Group>
+          <Cell
+            title="下载"
+            linkable
+            icon={
+              <Icon
+                size={20}
+                prefix="demo-icon"
+                name="arrow-down-square-fill"
+                color="#4994EC"
+              />
+            }
+          />
+          <Cell
+            title="订阅"
+            linkable
+            icon={
+              <Icon
+                size={20}
+                prefix="demo-icon"
+                name="rss-fill"
+                color="#E78A3D"
+              />
+            }
+          />
+          <Cell
+            title="视频"
+            linkable
+            icon={
+              <Icon
+                size={20}
+                prefix="demo-icon"
+                name="caret-left-square-fill"
+                color="#C24F4A"
+              />
+            }
+          />
+        </Cell.Group>
+      </Demo>
+
+      <Demo title="内嵌的图标" full>
+        <Cell.Group inset>
+          <Cell
+            title="下载"
+            linkable
+            icon={
+              <Icon
+                size={20}
+                prefix="demo-icon"
+                name="arrow-down-square-fill"
+                color="#4994EC"
+              />
+            }
+          />
+          <Cell
+            title="订阅"
+            linkable
+            icon={
+              <Icon
+                size={20}
+                prefix="demo-icon"
+                name="rss-fill"
+                color="#E78A3D"
+              />
+            }
+          />
+          <Cell
+            title="视频"
+            linkable
+            icon={
+              <Icon
+                size={20}
+                prefix="demo-icon"
+                name="caret-left-square-fill"
+                color="#C24F4A"
+              />
+            }
+          />
+        </Cell.Group>
+      </Demo>
+
       <Demo title="自定义内容" full>
         <Cell.Group>
           <Cell title="无线局域网" value={<Switch defaultChecked></Switch>} />
@@ -67,95 +156,6 @@ export default () => {
             bodyStyle={{ maxWidth: 80 }}
             title="密码"
             footer={<Input inlaid type="password" placeholder="请输入密码" />}
-          />
-        </Cell.Group>
-      </Demo>
-
-      <Demo title="可点击的" full>
-        <Cell.Group>
-          <Cell isLink title="标题" />
-          <Cell isLink title="标题" value="值" arrowDirection="down" />
-        </Cell.Group>
-      </Demo>
-
-      <Demo title="图标" full>
-        <Cell.Group>
-          <Cell
-            title="下载"
-            isLink
-            icon={
-              <Icon
-                size={24}
-                prefix="demo-icon"
-                name="arrow-down-square-fill"
-                color="#4994EC"
-              />
-            }
-          />
-          <Cell
-            title="订阅"
-            isLink
-            icon={
-              <Icon
-                size={24}
-                prefix="demo-icon"
-                name="rss-fill"
-                color="#E78A3D"
-              />
-            }
-          />
-          <Cell
-            title="视频"
-            isLink
-            icon={
-              <Icon
-                size={24}
-                prefix="demo-icon"
-                name="caret-left-square-fill"
-                color="#C24F4A"
-              />
-            }
-          />
-        </Cell.Group>
-      </Demo>
-
-      <Demo title="内嵌的图标" full>
-        <Cell.Group inset>
-          <Cell
-            title="下载"
-            isLink
-            icon={
-              <Icon
-                size={20}
-                prefix="demo-icon"
-                name="arrow-down-square-fill"
-                color="#4994EC"
-              />
-            }
-          />
-          <Cell
-            title="订阅"
-            isLink
-            icon={
-              <Icon
-                size={20}
-                prefix="demo-icon"
-                name="rss-fill"
-                color="#E78A3D"
-              />
-            }
-          />
-          <Cell
-            title="视频"
-            isLink
-            icon={
-              <Icon
-                size={20}
-                prefix="demo-icon"
-                name="caret-left-square-fill"
-                color="#C24F4A"
-              />
-            }
           />
         </Cell.Group>
       </Demo>

@@ -1,3 +1,5 @@
+@import '../style/base.scss';
+
 // #variables
 :root,
 page {
@@ -23,44 +25,48 @@ page {
 }
 // #endvariables
 
-.sar-badge {
-  position: relative;
-  display: inline-flex;
-  vertical-align: middle;
-}
-
-.sar-badge-fixed {
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(50%, -50%);
-}
-
-.sar-badge-content {
-  box-sizing: border-box;
-  display: inline-flex;
-  flex: none;
-  justify-content: center;
-  align-self: center;
-  min-width: var(--sar-badge-content-min-width);
-  padding: var(--sar-badge-content-padding-y) var(--sar-badge-content-padding-x);
-  font-size: var(--sar-badge-content-font-size);
-  line-height: 1;
-  white-space: nowrap;
-  text-align: center;
-  border-radius: var(--sar-rounded-full);
-  color: var(--sar-badge-content-color);
-  background-color: var(--sar-badge-content-bg);
-  box-shadow: var(--sar-badge-content-box-shadow);
-
-  .sar-badge-zero-hide & {
-    display: none;
+@include bem(badge) {
+  @include b() {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
   }
-  .sar-badge-is-dot & {
+
+  @include e(content) {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: none;
+    justify-content: center;
+    align-self: center;
+    min-width: var(--sar-badge-content-min-width);
+    padding: var(--sar-badge-content-padding-y)
+      var(--sar-badge-content-padding-x);
+    font-size: var(--sar-badge-content-font-size);
+    line-height: 1;
+    white-space: nowrap;
+    text-align: center;
+    border-radius: var(--sar-rounded-full);
+    color: var(--sar-badge-content-color);
+    background-color: var(--sar-badge-content-bg);
+    box-shadow: var(--sar-badge-content-box-shadow);
+  }
+
+  @include m(is-dot) {
     width: var(--sar-badge-content-dot-size);
     height: var(--sar-badge-content-dot-size);
     min-width: unset;
     padding: 0;
     border-radius: 50%;
+  }
+
+  @include m(zero-hide) {
+    display: none;
+  }
+
+  @include m(fixed) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
   }
 }

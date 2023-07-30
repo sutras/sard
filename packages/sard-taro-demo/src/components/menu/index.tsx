@@ -250,13 +250,14 @@ export default () => {
             title={group.title}
             card
             footerStyle={{ flex: 'none' }}
+            style={{ marginBottom: 20 }}
           >
             {group.children.map((comp) => {
               return (
                 <Cell
                   key={comp.title}
                   title={comp.title}
-                  isLink
+                  linkable
                   onClick={() => navigateTo(kebabCase(comp.name))}
                 ></Cell>
               )

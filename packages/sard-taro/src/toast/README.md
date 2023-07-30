@@ -29,27 +29,27 @@ export default () => {
   return (
     <Cell.Group card>
       <Cell
-        isLink
+        linkable
         title="文本提示"
         onClick={() => showToast('text', '文本提示')}
       />
       <Cell
-        isLink
+        linkable
         title="成功提示"
         onClick={() => showToast('success', '成功')}
       />
 
       <Cell
-        isLink
+        linkable
         title="失败提示"
         onClick={() => showToast('fail', '失败')}
       />
       <Cell
-        isLink
+        linkable
         title="加载中提示"
         onClick={() => showToast('loading', '加载中')}
       />
-      <Cell isLink title="隐藏提示" onClick={() => setVisible(false)} />
+      <Cell linkable title="隐藏提示" onClick={() => setVisible(false)} />
     </Cell.Group>
 
     <Toast
@@ -118,7 +118,7 @@ Toast.loading('加载中', {
 
 Toast.loading('加载中', {
   mask: true,
-  clearMask: true,
+  transparent: true,
 })
 ```
 

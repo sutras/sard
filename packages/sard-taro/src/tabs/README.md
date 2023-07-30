@@ -226,19 +226,23 @@ export default () => {
 </Tabs>
 ```
 
+### 切换动画
+
+```tsx
+<Tabs animated>
+  <TabsPane label="标签1">内容1</TabsPane>
+  <TabsPane label="标签2">内容2</TabsPane>
+  <TabsPane label="标签3">内容3</TabsPane>
+</Tabs>
+```
+
 ### 滑动切换
 
 ```tsx
 <Tabs swipeable swiperProps={{ style: { height: 100 } }}>
-  <TabsPane label="标签1" style={{ padding: 30 }}>
-    内容1
-  </TabsPane>
-  <TabsPane label="标签2" style={{ padding: 30 }}>
-    内容2
-  </TabsPane>
-  <TabsPane label="标签3" style={{ padding: 30 }}>
-    内容3
-  </TabsPane>
+  <TabsPane label="标签1">内容1</TabsPane>
+  <TabsPane label="标签2">内容2</TabsPane>
+  <TabsPane label="标签3">内容3</TabsPane>
 </Tabs>
 ```
 
@@ -358,8 +362,7 @@ export default () => {
 | sticky              | 是否粘性定位到顶部                       | boolean                                  | false    |
 | prepend             | 标签栏前置插槽                           | React.ReactNode                          | -        |
 | append              | 标签栏后置插槽                           | React.ReactNode                          | -        |
-| swipeable           | 是否可滑动切换面板                       | boolean                                  | false    |
-| swiperProps         | 可滑动切换面板时 `Swiper` 组件的 `props` | swiperProps                              | -        |
+| animated            | 是否开启面板切换动画                     | boolean                                  | false    |
 | scrollspy           | 是否开启滚动监听                         | boolean                                  | false    |
 | duration            | 滚动监听滚动的动画时长                   | number                                   | 300      |
 | threshold           | 滚动监听节流阈值                         | number                                   | 150      |

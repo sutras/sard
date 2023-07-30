@@ -10,8 +10,6 @@ import {
   useState,
   useImperativeHandle,
   ForwardRefExoticComponent,
-  Fragment,
-  ExoticComponent,
   PropsWithoutRef,
   RefAttributes,
   useMemo,
@@ -27,8 +25,8 @@ import {
   useEvent,
   useResize,
   useSelectorId,
+  useBem,
 } from '../use'
-import { Swiper, SwiperItem, SwiperProps } from '../swiper'
 
 import { TabsPane, TabPaneProps } from './Pane'
 import { TabsLabel, TabLabelRef } from './Label'
@@ -77,8 +75,7 @@ export interface TabsProps extends Omit<BaseProps, 'children'> {
   sticky?: boolean
   prepend?: ReactNode
   append?: ReactNode
-  swipeable?: boolean
-  swiperProps?: SwiperProps
+  animated?: boolean
   scrollspy?: boolean
   duration?: number
   threshold?: number
@@ -129,8 +126,7 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     sticky,
     prepend,
     append,
-    swipeable = false,
-    swiperProps,
+    animated,
     scrollspy,
     duration = 300,
     threshold = 150,
@@ -138,6 +134,8 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     vertical = false,
     ...restProps
   } = props
+
+  const [bem] = useBem('tabs')
 
   const pageScrollTop = useRef(0)
   usePageScroll((res) => {
@@ -351,34 +349,6 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     },
   )
 
-  // # swiper
-  const [swiperCurrent, setSwiperCurrent] = useState(0)
-
-  const [resetSwiperCurrent] = useSetTimeout(() => {
-    setSwiperCurrent(labelMap.getIndexByKey(innerActiveKey))
-  }, 50)
-  useEffect(() => {
-    // 确保 SwiperItem 渲染完毕
-    resetSwiperCurrent()
-  }, [innerActiveKey])
-
-  const handleSwiperChange = useEvent((event) => {
-    const index = event.detail.current
-    const key = labelMap.getKeyByIndex(index)
-    setInnerActiveKey(key)
-    onChange?.(key)
-  })
-
-  const [swiperDuration, setSwiperDuration] = useState(0)
-
-  const [resetSwiperDuration] = useSetTimeout(() => {
-    setSwiperDuration(300)
-  }, 150)
-  useEffect(() => {
-    // 初次不显示过渡效果
-    resetSwiperDuration()
-  }, [])
-
   // # public
   const switchTo = useEvent((key: number | string, animated?: boolean) => {
     if (key !== innerActiveKey) {
@@ -388,7 +358,6 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
       }
       onChange?.(key)
     }
-    setSwiperCurrent(labelMap.getIndexByKey(key))
     scrollTo(key, animated)
   })
 
@@ -403,14 +372,11 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
   }))
 
   const tabsClass = classNames(
-    'sar-tabs',
-    {
-      'sar-tabs-auto': Children.count(children) > scrollCount,
-      'sar-tabs-sticky': sticky,
-      'sar-tabs-is-swiper': swipeable,
-      'sar-tabs-scrollspy': scrollspy,
-      'sar-tabs-vertical': vertical,
-    },
+    bem.b(),
+    bem.m('auto', Children.count(children) > scrollCount),
+    bem.m('sticky', sticky),
+    bem.m('scrollspy', scrollspy),
+    bem.m('vertical', vertical),
     className,
   )
 
@@ -419,7 +385,10 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
       type === 'inkbar' && (
         <View
           ref={inkbarWrapperRef}
-          className="sar-tabs-inkbar-wrapper"
+          className={classNames(
+            bem.e('inkbar-wrapper'),
+            bem.em('inkbar-wrapper', 'vertical', vertical),
+          )}
           style={{
             opacity: 0,
             ...inkbarWrapperStyle,
@@ -429,7 +398,10 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
           {inkbar || (
             <>
               <View
-                className="sar-tabs-inkbar"
+                className={classNames(
+                  bem.e('inkbar'),
+                  bem.em('inkbar', 'vertical', vertical),
+                )}
                 style={{ ...inkbarStyle, ...inkbarInnerStyle }}
               ></View>
             </>
@@ -439,22 +411,26 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     )
   }
 
-  const renderPane = (Comp: typeof SwiperItem | ExoticComponent) => {
+  const renderPane = () => {
     return Children.map(
       children,
       (element: ReactElement<TabPaneProps & { ref: unknown }>, index) => {
         const innerKey = element.key ?? index
 
-        return (
-          <Comp>
-            {cloneElement(element, {
-              key: innerKey,
-              innerKey,
-              activeKey: innerActiveKey,
-              _onMounted: (id) => paneMap.set(innerKey, id),
-            })}
-          </Comp>
-        )
+        return cloneElement(element, {
+          key: innerKey,
+          innerKey,
+          activeKey: innerActiveKey,
+          className: classNames(
+            bem.e('pane'),
+            bem.em(
+              'pane',
+              'hide',
+              !animated && !scrollspy && innerKey !== innerActiveKey,
+            ),
+          ),
+          _onMounted: (id) => paneMap.set(innerKey, id),
+        })
       },
     )
   }
@@ -462,10 +438,15 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
   return (
     <View {...restProps} className={tabsClass}>
       <View
-        className={classNames('sar-tabs-header', headerClass)}
+        className={classNames(
+          bem.e('header'),
+          bem.em('header', 'vertical', vertical),
+          bem.em('header', 'sticky', sticky),
+          headerClass,
+        )}
         style={headerStyle}
       >
-        {prepend && <View className="sar-tabs-prepend">{prepend}</View>}
+        {prepend && <View className={bem.e('prepend')}>{prepend}</View>}
         <ScrollView
           scrollX={!vertical}
           scrollY={vertical}
@@ -477,15 +458,20 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
           scrollLeft={scrollLeft}
           scrollTop={scrollTop}
           className={classNames(
-            'sar-tabs-label-wrapper',
-            'sar-tabs-label-' + type,
+            bem.e('label-wrapper'),
+            bem.em('label-wrapper', type),
+            bem.em('label-wrapper', 'vertical', vertical),
             wrapperClass,
           )}
           style={wrapperStyle}
           id={labelWrapperId}
         >
           <View
-            className={classNames('sar-tabs-label-content', contentClass)}
+            className={classNames(
+              bem.e('label-content'),
+              bem.em('label-content', 'vertical', vertical),
+              contentClass,
+            )}
             style={contentStyle}
             id={labelContentId}
           >
@@ -510,14 +496,18 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
                     innerKey={innerKey}
                     activeKey={innerActiveKey}
                     showLine={type === 'card'}
+                    type={type}
                     line={line}
                     lineWidth={lineWidth}
                     lineStyle={lineStyle}
                     lineClass={lineClass}
                     onClick={handleLabelClick}
+                    later={index > 0}
                     ref={(el) => {
                       labelMap.set(innerKey, el)
                     }}
+                    autoScroll={Children.count(children) > scrollCount}
+                    vertical={vertical}
                   >
                     {pane.props.label}
                   </TabsLabel>
@@ -527,25 +517,30 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
             {renderInkbar()}
           </View>
         </ScrollView>
-        {append && <View className="sar-tabs-append">{append}</View>}
+        {append && <View className={bem.e('append')}>{append}</View>}
       </View>
       <View
-        className={classNames('sar-tabs-body', bodyClass)}
+        className={classNames(
+          bem.e('body'),
+          bem.em('body', 'vertical', vertical),
+          bem.em('body', 'animated', animated),
+          bodyClass,
+        )}
         style={bodyStyle}
       >
-        {swipeable ? (
-          <Swiper
-            duration={swiperDuration}
-            {...swiperProps}
-            current={swiperCurrent}
-            className={classNames('sar-tabs-swiper', swiperProps?.className)}
-            onChange={handleSwiperChange}
-          >
-            {renderPane(SwiperItem)}
-          </Swiper>
-        ) : (
-          renderPane(Fragment)
-        )}
+        <View
+          className={classNames(
+            bem.e('wrapper'),
+            bem.em('wrapper', 'animated', animated),
+          )}
+          style={{
+            transform: animated
+              ? `translateX(-${labelMap.getIndexByKey(innerActiveKey) * 100}%)`
+              : '',
+          }}
+        >
+          {renderPane()}
+        </View>
       </View>
     </View>
   )

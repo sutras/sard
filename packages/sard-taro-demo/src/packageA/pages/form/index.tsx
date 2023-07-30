@@ -26,6 +26,7 @@ import { useState } from 'react'
 import { getRegionData } from 'region-data'
 
 import pic1 from '@/static/pic1.jpg'
+import { View } from '@tarojs/components'
 
 const regionData = getRegionData()
 
@@ -408,14 +409,14 @@ export default () => {
             </Popout>
           </Form.Item>
 
-          <div
+          <View
             style={{ display: 'flex', flexWrap: 'wrap', gap: 10, margin: 15 }}
           >
             <Button htmlType="submit">提交</Button>
             <Button htmlType="reset">重置</Button>
             <Button onClick={() => form.setValues(filledData)}>数据填充</Button>
             <Button onClick={handleValidate}>验证</Button>
-          </div>
+          </View>
         </Form>
       </Demo>
     </Page>

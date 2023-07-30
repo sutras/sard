@@ -3,6 +3,7 @@ import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import { isNumber, isVisibleEmpty } from '../utils'
 import { BaseProps } from '../base'
+import { useBem } from '../use'
 
 export interface BadgeProps extends BaseProps {
   value?: number | ReactNode
@@ -28,21 +29,18 @@ export const Badge: NamedExoticComponent<BadgeProps> = memo((props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('badge')
+
   const zeroHide = !isDot && value === 0 && !showZero
 
-  const badgeClass = classNames(
-    'sar-badge',
-    {
-      'sar-badge-fixed': fixed,
-      'sar-badge-is-dot': isDot,
-      'sar-badge-zero-hide': zeroHide,
-    },
-    className,
-  )
+  const badgeClass = classNames(bem.b(), bem.m('fixed', fixed), className)
 
-  const contentClass = classNames('sar-badge-content', {
-    'sar-badge-fixed': !fixed && !isVisibleEmpty(children),
-  })
+  const contentClass = classNames(
+    bem.e('content'),
+    bem.m('fixed', !fixed && !isVisibleEmpty(children)),
+    bem.m('zero-hide', zeroHide),
+    bem.m('is-dot', isDot),
+  )
 
   const contentStyle = {
     backgroundColor: color,

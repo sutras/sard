@@ -103,16 +103,6 @@ export default () => {
 }
 ```
 
-<script type="code">
-  [
-    "./demo/Basic.tsx",
-    "./demo/Item.tsx",
-    "./demo/Content.tsx",
-    "./demo/Flow.tsx",
-    "./demo/Fixed.tsx"
-  ]
-</script>
-
 ## API
 
 ### NavbarProps

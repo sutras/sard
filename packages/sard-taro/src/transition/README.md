@@ -16,13 +16,6 @@ import { Transition, CSSTransition } from 'sard-taro'
 
 ## 代码演示
 
-<script type="code">
-  [
-    "./demo/Transition.tsx",
-    "./demo/CSSTransition.tsx"
-  ]
-</script>
-
 ## API
 
 ### TransitionProps

@@ -8,7 +8,7 @@ import {
   TextareaProps,
 } from '@tarojs/components'
 import classNames from 'classnames'
-import { useControllableValue } from '../use'
+import { useBem, useControllableValue } from '../use'
 import { Icon } from '../icon'
 import { BaseProps } from '../base'
 import { isBoolean, isString } from '../utils'
@@ -51,9 +51,6 @@ interface InputTextareaProps
 
 export type InputProps = InputInputProps | InputTextareaProps
 
-// type TT = 'send' | 'search' | 'go' | 'done' | 'next'| 'return'
-// type IT = 'send' | 'search' | 'go' | 'done' | 'next'
-
 type InputRef = HTMLInputElement | HTMLTextAreaElement
 
 export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
@@ -89,6 +86,8 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('input')
+
   const [innerValue, setInnerValue] = useControllableValue({
     value,
     defaultValue,
@@ -123,11 +122,11 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
   const controlProps = {
     ...restProps,
-    className: 'sar-input-control',
+    className: bem.e('control'),
     autoComplete: 'off',
     value: String(innerValue),
     placeholder,
-    placeholderClass: 'sar-input-placeholder',
+    placeholderClass: bem.e('placeholder'),
     password: type === 'password',
     maxlength: maxLength,
     disabled: disabled || readOnly,
@@ -174,15 +173,13 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   }
 
   const inputClass = classNames(
-    'sar-input',
-    {
-      'sar-input-inlaid': inlaid,
-      'sar-input-borderless': borderless,
-      'sar-input-disabled': disabled,
-      'sar-input-readonly': readOnly,
-      'sar-input-focused': focused || innerFocused,
-      'sar-input-is-textarea': type === 'textarea',
-    },
+    bem.b(),
+    bem.m('inlaid', inlaid),
+    bem.m('borderless', borderless),
+    bem.m('disabled', disabled),
+    bem.m('readonly', readOnly),
+    bem.m('focused', focused || innerFocused),
+    bem.m('is-textarea', type === 'textarea'),
     className,
   )
 
@@ -192,7 +189,7 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       className={inputClass}
       onClick={handleRootClick}
     >
-      {prepend && <View className="sar-input-prepend">{prepend}</View>}
+      {prepend && <View className={bem.e('prepend')}>{prepend}</View>}
 
       {type === 'textarea' ? (
         <Textarea {...textareaProps} ref={inputRefCb} />
@@ -200,18 +197,23 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         <TaroInput {...inputProps} ref={inputRefCb} />
       )}
 
-      {append && <View className="sar-input-append">{append}</View>}
+      {append && <View className={bem.e('append')}>{append}</View>}
 
       {clearable && innerValue && !disabled && !readOnly && (
-        <View className="sar-input-clear" onClick={handleClear}>
+        <View className={bem.e('clear')} onClick={handleClear}>
           {clear || (
-            <Icon name="x-circle-fill" className="sar-input-clear-icon"></Icon>
+            <Icon name="x-circle-fill" className={bem.e('clear-icon')}></Icon>
           )}
         </View>
       )}
 
       {showCount && count && (
-        <View className="sar-input-count">
+        <View
+          className={classNames(
+            bem.e('count'),
+            bem.em('count', 'is-textarea', type === 'textarea'),
+          )}
+        >
           {count(String(innerValue).length, maxLength)}
         </View>
       )}

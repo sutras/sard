@@ -22,8 +22,8 @@ export default () => {
   return (
     <>
       <Cell.Group card>
-        <Cell isLink title="显示提示框" onClick={() => setVisible(true)} />
-        <Cell isLink title="显示确认框" onClick={() => setVisible2(true)} />
+        <Cell linkable title="显示提示框" onClick={() => setVisible(true)} />
+        <Cell linkable title="显示确认框" onClick={() => setVisible2(true)} />
       </Cell.Group>
 
       <Dialog

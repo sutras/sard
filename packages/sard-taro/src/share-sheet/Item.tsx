@@ -1,9 +1,10 @@
 import { FC, ReactNode, useMemo } from 'react'
 import classNames from 'classnames'
-import { Image, Button, View, ITouchEvent } from '@tarojs/components'
+import { Image, View, ITouchEvent } from '@tarojs/components'
 import { Icon, IconProps } from '../icon'
 import { isFileUrl, isString } from '../utils'
 import { BaseProps } from '../base'
+import { useBem } from '../use'
 
 export interface ShareSheetItemProps extends BaseProps {
   name?: ReactNode
@@ -29,6 +30,8 @@ export const ShareSheetItem: FC<ShareSheetItemProps> = (props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('share-sheet')
+
   const isImg = useMemo(() => {
     return isString(icon) && isFileUrl(icon)
   }, [icon])
@@ -40,10 +43,9 @@ export const ShareSheetItem: FC<ShareSheetItemProps> = (props) => {
   }
 
   const shareSheetItemClass = classNames(
-    'sar-share-sheet-item',
-    {
-      'sar-share-sheet-item-disabled': disabled,
-    },
+    bem.e('item'),
+    bem.em('item', 'disabled', disabled),
+    bem.em('item', 'interactive', !disabled),
     className,
   )
 
@@ -53,26 +55,21 @@ export const ShareSheetItem: FC<ShareSheetItemProps> = (props) => {
   }
 
   return (
-    <Button
-      {...restProps}
-      className={shareSheetItemClass}
-      onClick={handleClick}
-      disabled={disabled}
-    >
+    <View {...restProps} className={shareSheetItemClass} onClick={handleClick}>
       {children ?? (
         <>
           {isImg ? (
-            <Image className="sar-share-sheet-img" src={icon as string} />
+            <Image className={bem.e('item-img')} src={icon as string} />
           ) : (
-            <View className="sar-share-sheet-icon" style={iconStyle}>
+            <View className={bem.e('item-icon')} style={iconStyle}>
               <Icon size={24} {...(icon as IconProps)}></Icon>
             </View>
           )}
-          {name && <View className="sar-share-sheet-name">{name}</View>}
-          {label && <View className="sar-share-sheet-label">{label}</View>}
+          {name && <View className={bem.e('item-name')}>{name}</View>}
+          {label && <View className={bem.e('item-label')}>{label}</View>}
         </>
       )}
-    </Button>
+    </View>
   )
 }
 

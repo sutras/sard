@@ -1,6 +1,22 @@
-@mixin button-active {
-  &:not([disabled]):not(.sar-button-disabled):not(.sar-button-loading):active {
+@import '../functions.scss';
+
+@mixin button-set-theme {
+  &,
+  &[disabled],
+  &:not([disabled]):active,
+  &:not([disabled])#{bem(button, '', hover)} {
     @content;
+  }
+}
+
+@mixin button-active {
+  &:not([disabled]):not(#{bem(button, '', loading)}):not(
+      #{bem(button, '', disabled)}
+    ) {
+    &:active,
+    &#{bem(button, '', hover)} {
+      @content;
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-@import '../style/mixins.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -26,73 +26,63 @@ page {
 }
 // #endvariables
 
-.sar-cascader {
-  position: relative;
-
-  .sar-cascader-swiper {
-    height: var(--sar-cascader-options-height);
+@include bem(cascader) {
+  @include b() {
+    position: relative;
   }
-}
 
-.sar-cascader-tabs {
-  z-index: 1;
-}
+  @include e(options) {
+    box-sizing: border-box;
+    height: var(--sar-cascader-options-height);
+    overflow-y: auto;
+  }
 
-.sar-cascader-options {
-  box-sizing: border-box;
-  height: var(--sar-cascader-options-height);
-  overflow-y: auto;
+  @include e(option) {
+    display: flex;
+    font-size: var(--sar-cascader-option-font-size);
+    line-height: var(--sar-cascader-option-line-height);
+    padding: var(--sar-cascader-option-padding-y)
+      var(--sar-cascader-option-padding-x);
 
-  @at-root {
-    .sar-cascader-option {
-      display: flex;
-      font-size: var(--sar-cascader-option-font-size);
-      line-height: var(--sar-cascader-option-line-height);
-      padding: var(--sar-cascader-option-padding-y)
-        var(--sar-cascader-option-padding-x);
-
-      &:not(.sar-cascader-option-disabled) {
-        cursor: pointer;
-
-        &:active {
-          background-color: var(--sar-cascader-option-active-bg);
-        }
-      }
-
-      &.sar-cascader-option-selected {
-        color: var(--sar-cascader-selected-color);
-        font-weight: bold;
-      }
-
-      @at-root {
-        .sar-cascader-option-icon {
-          display: none;
-          margin-left: auto;
-
-          .sar-cascader-option-selected & {
-            display: block;
-          }
-        }
-      }
-    }
-
-    .sar-cascader-option-disabled {
+    @include m(disabled) {
       @include disabled-text;
     }
-  }
-}
 
-.sar-cascader-loading {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  font-size: var(--sar-cascader-loading-font-size);
-  color: var(--sar-cascader-loading-color);
-  background-color: var(--sar-cascader-loading-bg);
+    @include m(interactive) {
+      cursor: pointer;
+
+      &:active {
+        background-color: var(--sar-cascader-option-active-bg);
+      }
+    }
+
+    @include m(selected) {
+      color: var(--sar-cascader-selected-color);
+      font-weight: bold;
+    }
+  }
+
+  @include e(option-icon) {
+    display: none;
+    margin-left: auto;
+
+    @include m(selected) {
+      display: flex;
+    }
+  }
+
+  @include m(loading) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: var(--sar-cascader-loading-font-size);
+    color: var(--sar-cascader-loading-color);
+    background-color: var(--sar-cascader-loading-bg);
+  }
 }

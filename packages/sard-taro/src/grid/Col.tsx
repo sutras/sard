@@ -4,6 +4,7 @@ import classNames from 'classnames'
 
 import { RowContext } from './Row'
 import { BaseProps } from '../base'
+import { useBem } from '../use'
 
 export interface ColProps extends BaseProps {
   span?: number | 'auto' | 'none'
@@ -15,16 +16,16 @@ export const Col: FC<ColProps> = (props) => {
   const { children, className, style, span, offset, order, ...restProps } =
     props
 
+  const [bem] = useBem('col')
+
   const colClass = classNames(
-    'sar-col',
-    {
-      ['sar-col-' + span]: span,
-      ['sar-col-offset-' + offset]: offset,
-    },
+    bem.b(),
+    bem.m(span, span),
+    bem.m(`offset-${offset}`, offset),
     className,
   )
 
-  const context = useContext(RowContext)
+  const gutter = useContext(RowContext)
 
   const colStyle = {
     ...(order !== undefined
@@ -32,10 +33,10 @@ export const Col: FC<ColProps> = (props) => {
           order,
         }
       : null),
-    ...(context.gap
+    ...(gutter
       ? {
-          paddingLeft: context.gap[0] + context.gap[1],
-          paddingRight: context.gap[0] + context.gap[1],
+          paddingLeft: gutter[0],
+          paddingRight: gutter[0],
         }
       : null),
     ...style,

@@ -1,21 +1,15 @@
 .page-grid {
-  .sar-row {
-    margin-bottom: 10px;
+  .demo-row {
+    margin-bottom: 20px;
   }
-  .grid-align .sar-col:nth-child(1) .grid-box {
-    height: 30px;
-  }
-  .grid-align .sar-col:nth-child(2) .grid-box {
-    height: 60px;
-  }
-  .grid-align .sar-col:nth-child(3) .grid-box {
-    height: 90px;
-  }
-  .grid-box {
+
+  .demo-box {
+    box-sizing: border-box;
     padding: 10px;
-    background-color: var(--sar-gray-200);
+    border: 1px solid var(--sar-border-color);
   }
-  .sar-col:nth-child(2n) .grid-box {
-    background-color: var(--sar-gray-300);
+
+  .demo-box-higher {
+    height: 90px;
   }
 }

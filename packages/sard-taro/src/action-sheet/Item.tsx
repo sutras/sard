@@ -1,10 +1,11 @@
 import { FC, ReactNode } from 'react'
 import classNames from 'classnames'
-import { Button, ITouchEvent, View } from '@tarojs/components'
+import { ITouchEvent, View } from '@tarojs/components'
 import { LoadingProps } from '../loading'
 import Loading from '../loading'
 import { BaseProps } from '../base'
 import { isNullish } from '../utils'
+import { useBem } from '../use'
 
 export interface ActionSheetItemProps extends BaseProps {
   title?: ReactNode
@@ -31,6 +32,8 @@ export const ActionSheetItem: FC<ActionSheetItemProps> = (props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('action-sheet')
+
   const handleClick = (event: ITouchEvent) => {
     if (!disabled && !loading) {
       onClick?.(event)
@@ -38,11 +41,10 @@ export const ActionSheetItem: FC<ActionSheetItemProps> = (props) => {
   }
 
   const actionSheetItemClass = classNames(
-    'sar-action-sheet-item',
-    {
-      'sar-action-sheet-item-disabled': disabled,
-      'sar-action-sheet-item-loading': loading,
-    },
+    bem.e('item'),
+    bem.em('item', 'disabled', disabled),
+    bem.em('item', 'loading', loading),
+    bem.em('item', 'interactive', !disabled && !loading),
     className,
   )
 
@@ -52,28 +54,25 @@ export const ActionSheetItem: FC<ActionSheetItemProps> = (props) => {
   }
 
   return (
-    <Button
+    <View
       {...restProps}
       className={actionSheetItemClass}
       style={actionSheetItemStyle}
       onClick={handleClick}
-      disabled={disabled || loading}
     >
       {loading ? (
         <Loading {...loadingProps}></Loading>
       ) : (
         <>
           {(!isNullish(title) || !isNullish(children)) && (
-            <View className="sar-action-sheet-item-title">
-              {title ?? children}
-            </View>
+            <View className={bem.e('item-title')}>{title ?? children}</View>
           )}
           {!isNullish(label) && (
-            <View className="sar-action-sheet-item-label">{label}</View>
+            <View className={bem.e('item-label')}>{label}</View>
           )}
         </>
       )}
-    </Button>
+    </View>
   )
 }
 

@@ -9,7 +9,7 @@ import {
 import classNames from 'classnames'
 import Taro from '@tarojs/taro'
 import { ImageProps, View } from '@tarojs/components'
-import { useControllableValue, useEvent } from '../use'
+import { useBem, useControllableValue, useEvent } from '../use'
 import { getFileName, isImageUrl } from '../utils'
 import { Icon } from '../icon'
 
@@ -88,6 +88,8 @@ export const Upload: UploadFC = forwardRef<UploadRef, UploadProps>(
       mode = 'aspectFill',
       ...restProps
     } = props
+
+    const [bem] = useBem('upload')
 
     const [innerPreviewList, setInnerPreviewList] = useControllableValue({
       value: fileList,
@@ -302,11 +304,9 @@ export const Upload: UploadFC = forwardRef<UploadRef, UploadProps>(
     })
 
     const uploadClass = classNames(
-      'sar-upload',
-      {
-        'sar-upload-disabled': disabled,
-        'sar-upload-readonly': readOnly,
-      },
+      bem.b(),
+      bem.m('disabled', disabled),
+      bem.m('readonly', readOnly),
       className,
     )
 
@@ -316,7 +316,7 @@ export const Upload: UploadFC = forwardRef<UploadRef, UploadProps>(
 
     return (
       <View {...restProps} className={uploadClass}>
-        <View className="sar-upload-wrapper">
+        <View className={bem.e('wrapper')}>
           {innerPreviewList.map((item, index) => {
             return (
               <UploadPreview
@@ -335,7 +335,13 @@ export const Upload: UploadFC = forwardRef<UploadRef, UploadProps>(
             )
           })}
           {!disabled && !readOnly && innerPreviewList.length < maxCount && (
-            <View className="sar-upload-select" onClick={handleSelect}>
+            <View
+              className={classNames(
+                bem.e('select'),
+                bem.em('select', 'interactive', !disabled && !readOnly),
+              )}
+              onClick={handleSelect}
+            >
               {select ?? <Icon name="plus"></Icon>}
             </View>
           )}

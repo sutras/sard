@@ -37,5 +37,10 @@
   "globals": {
     "process": true,
     "module": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }

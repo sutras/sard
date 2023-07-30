@@ -1,4 +1,4 @@
-@import '../style/mixins.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -17,7 +17,6 @@ page {
 
   --sar-calendar-day-height: 56px;
   --sar-calendar-day-font-size: var(--sar-text-base);
-  --sar-calendar-day-active-bg: var(--sar-bg-active);
   --sar-calendar-day-selected-border-radius: var(--sar-rounded);
   --sar-calendar-day-selected-color: var(--sar-white);
   --sar-calendar-day-selected-bg: var(--sar-primary);
@@ -40,175 +39,164 @@ page {
 }
 // #endvariables
 
-.sar-calendar {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
+@include bem(calendar) {
+  @include b() {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
 
-.sar-calendar-header {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  flex: none;
-  box-shadow: var(--sar-calendar-header-box-shadow);
+  @include e(header) {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    box-shadow: var(--sar-calendar-header-box-shadow);
+  }
 
-  @at-root {
-    .sar-calendar-title {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      font-size: var(--sar-calendar-title-font-size);
-      line-height: var(--sar-calendar-title-line-height);
+  @include e(title) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: var(--sar-calendar-title-font-size);
+    line-height: var(--sar-calendar-title-line-height);
+  }
+
+  @include e(week) {
+    display: flex;
+    flex-direction: row;
+  }
+
+  @include e(week-item) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    height: var(--sar-calendar-week-item-height);
+    font-size: var(--sar-calendar-week-item-font-size);
+  }
+
+  @include e(body) {
+    position: relative;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    height: var(--sar-calendar-body-height);
+  }
+
+  @include e(month) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @include e(month-title) {
+    display: flex;
+    height: var(--sar-calendar-month-title-height);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: var(--sar-calendar-month-title-font-size);
+    font-weight: var(--sar-calendar-month-title-font-weight);
+    color: var(--sar-calendar-month-title-color);
+  }
+
+  @include e(month-body) {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-row-gap: var(--sar-calendar-month-body-row-gap);
+    grid-column-gap: 0;
+  }
+
+  @include e(day) {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: var(--sar-calendar-day-height);
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--sar-calendar-day-selected-border-radius);
+    font-size: var(--sar-calendar-day-font-size);
+    cursor: pointer;
+    transition: var(--sar-transition-duration-fast);
+
+    @include m(today) {
+      color: var(--sar-calendar-day-today-color);
     }
 
-    .sar-calendar-week {
-      display: flex;
-      flex-direction: row;
+    @include m(disabled) {
+      @include disabled-text;
+    }
 
-      @at-root {
-        .sar-calendar-week-item {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex: 1;
-          height: var(--sar-calendar-week-item-height);
-          font-size: var(--sar-calendar-week-item-font-size);
-        }
+    @include m(selected) {
+      border-radius: var(--sar-calendar-day-selected-border-radius);
+      color: var(--sar-calendar-day-selected-color);
+      background-color: var(--sar-calendar-day-selected-bg);
+    }
+
+    @include m(prev-selected, only-end) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    @include m(next-selected, only-start) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    @include m(middle) {
+      color: var(--sar-primary);
+
+      &::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        content: '';
+        opacity: var(--sar-calendar-day-middle-opacity);
+        background-color: currentColor;
+        pointer-events: none;
       }
     }
   }
-}
 
-.sar-calendar-body {
-  position: relative;
-  z-index: 0;
-  display: flex;
-  flex-direction: column;
-  flex: none;
-  height: var(--sar-calendar-body-height);
-}
+  @include e(topinfo, bottominfo) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: var(--sar-calendar-info-font-size);
+    line-height: var(--sar-calendar-info-line-height);
+  }
 
-.sar-calendar-month {
-  display: flex;
-  flex-direction: column;
+  @include e(topinfo) {
+    top: var(--sar-calendar-topinfo-top);
+  }
 
-  @at-root {
-    .sar-calendar-month-title {
-      display: flex;
-      height: var(--sar-calendar-month-title-height);
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      font-size: var(--sar-calendar-month-title-font-size);
-      font-weight: var(--sar-calendar-month-title-font-weight);
-      color: var(--sar-calendar-month-title-color);
-    }
-    .sar-calendar-month-body {
-      position: relative;
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      grid-row-gap: var(--sar-calendar-month-body-row-gap);
-      grid-column-gap: 0;
+  @include e(bottominfo) {
+    bottom: var(--sar-calendar-bottominfo-bottom);
+  }
 
-      @at-root {
-        .sar-calendar-day {
-          position: relative;
-          z-index: 1;
-          display: flex;
-          flex-direction: column;
-          height: var(--sar-calendar-day-height);
-          justify-content: center;
-          align-items: center;
-          font-size: var(--sar-calendar-day-font-size);
-          cursor: pointer;
-          transition: var(--sar-transition-duration-fast);
-
-          &.sar-calendar-day-today {
-            color: var(--sar-calendar-day-today-color);
-          }
-
-          &.sar-calendar-day-disabled {
-            @include disabled-text;
-          }
-          &:not(.sar-calendar-day-disabled):not(
-              .sar-calendar-day-selected
-            ):active {
-            border-radius: var(--sar-calendar-day-selected-border-radius);
-            background-color: var(--sar-calendar-day-active-bg);
-          }
-
-          &.sar-calendar-day-selected {
-            border-radius: var(--sar-calendar-day-selected-border-radius);
-            color: var(--sar-calendar-day-selected-color);
-            background-color: var(--sar-calendar-day-selected-bg);
-
-            &.sar-calendar-day-next-selected,
-            &.sar-calendar-day-start:not(.sar-calendar-day-end) {
-              border-top-right-radius: 0;
-              border-bottom-right-radius: 0;
-            }
-            & + .sar-calendar-day-selected,
-            &.sar-calendar-day-end:not(.sar-calendar-day-start) {
-              border-top-left-radius: 0;
-              border-bottom-left-radius: 0;
-            }
-          }
-          &.sar-calendar-day-middle {
-            color: var(--sar-primary);
-            &::after {
-              position: absolute;
-              top: 0;
-              right: 0;
-              bottom: 0;
-              left: 0;
-              content: '';
-              opacity: var(--sar-calendar-day-middle-opacity);
-              background-color: currentColor;
-              pointer-events: none;
-            }
-          }
-
-          @at-root {
-            .sar-calendar-topinfo,
-            .sar-calendar-bottominfo {
-              position: absolute;
-              left: 0;
-              right: 0;
-              text-align: center;
-              font-size: var(--sar-calendar-info-font-size);
-              line-height: var(--sar-calendar-info-line-height);
-            }
-
-            .sar-calendar-topinfo {
-              top: var(--sar-calendar-topinfo-top);
-            }
-
-            .sar-calendar-bottominfo {
-              bottom: var(--sar-calendar-bottominfo-bottom);
-            }
-          }
-        }
-        .sar-calendar-mark {
-          position: absolute;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          z-index: 0;
-          font-size: var(--sar-calendar-mark-font-size);
-          color: var(--sar-calendar-mark-color);
-          opacity: var(--sar-calendar-mark-opacity);
-          pointer-events: none;
-        }
-      }
-    }
+  @include e(mark) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+    font-size: var(--sar-calendar-mark-font-size);
+    color: var(--sar-calendar-mark-color);
+    opacity: var(--sar-calendar-mark-opacity);
+    pointer-events: none;
   }
 }

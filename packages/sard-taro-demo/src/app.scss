@@ -1,4 +1,7 @@
-@import 'sard-taro/src/style.scss';
+// $sar-namespace: 'custom';
+// $sar-modifier-separator: '--';
+
+@import 'sard-taro/src/index.scss';
 @import './demo-icon.scss';
 
 .taro_page {

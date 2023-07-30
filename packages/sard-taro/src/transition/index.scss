@@ -1,3 +1,5 @@
+@import '../style/base.scss';
+
 // #variables
 :root,
 page {
@@ -7,201 +9,201 @@ page {
 }
 // #endvariables
 
-// fade
-.sar-transition-fade-enter,
-.sar-transition-fade-entering {
-  animation: sar-transition-fade-enter var(--sar-transition-duration)
-    var(--sar-transition-ease-in) both;
-}
-@keyframes sar-transition-fade-enter {
-  from {
-    opacity: 0;
+@include bem(transition) {
+  // fade
+  @include m(fade-enter, fade-entering) {
+    animation: #{bem-ns(fade-enter)} var(--sar-transition-duration) var(
+        --sar-transition-ease-in
+      ) both;
   }
-  to {
-    opacity: 1;
+  @keyframes #{bem-ns(fade-enter)} {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
-}
-.sar-transition-fade-exiting,
-.sar-transition-fade-exited {
-  animation: sar-transition-fade-exit var(--sar-transition-duration)
-    var(--sar-transition-ease-out) both;
-}
-@keyframes sar-transition-fade-exit {
-  from {
-    opacity: 1;
+  @include m(fade-exiting, fade-exited) {
+    animation: #{bem-ns(fade-exit)} var(--sar-transition-duration) var(
+        --sar-transition-ease-out
+      ) both;
   }
-  to {
-    opacity: 0;
+  @keyframes #{bem-ns(fade-exit)} {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
   }
-}
 
-// zoom
-.sar-transition-zoom-enter,
-.sar-transition-zoom-entering {
-  animation: sar-transition-zoom-enter var(--sar-transition-duration)
-    var(--sar-transition-ease-in) both;
-}
-@keyframes sar-transition-zoom-enter {
-  from {
-    opacity: 0;
-    transform: translateY(-50%) scale(0.7);
+  // zoom
+  @include m(zoom-enter, zoom-entering) {
+    animation: #{bem-ns(zoom-enter)} var(--sar-transition-duration) var(
+        --sar-transition-ease-in
+      ) both;
   }
-  to {
-    opacity: 1;
-    transform: translateY(-50%) scale(1);
+  @keyframes #{bem-ns(zoom-enter)} {
+    from {
+      opacity: 0;
+      transform: translateY(-50%) scale(0.7);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(-50%) scale(1);
+    }
   }
-}
-.sar-transition-zoom-exiting,
-.sar-transition-zoom-exited {
-  animation: sar-transition-zoom-exit var(--sar-transition-duration)
-    var(--sar-transition-ease-out) both;
-}
-@keyframes sar-transition-zoom-exit {
-  from {
-    opacity: 1;
-    transform: translateY(-50%) scale(1);
+  @include m(zoom-exiting, zoom-exited) {
+    animation: #{bem-ns(zoom-exit)} var(--sar-transition-duration) var(
+        --sar-transition-ease-out
+      ) both;
   }
-  to {
-    opacity: 0;
-    transform: translateY(-50%) scale(0.9);
+  @keyframes #{bem-ns(zoom-exit)} {
+    from {
+      opacity: 1;
+      transform: translateY(-50%) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-50%) scale(0.9);
+    }
   }
-}
 
-// slideTop
-.sar-transition-slide-top-enter,
-.sar-transition-slide-top-entering {
-  animation: sar-transition-slide-top-enter var(--sar-transition-duration)
-    var(--sar-transition-ease-in) both;
-}
-@keyframes sar-transition-slide-top-enter {
-  from {
-    transform: translate3d(0, -100%, 0);
+  // slideTop
+  @include m(slide-top-enter, slide-top-entering) {
+    animation: #{bem-ns(slide-top-enter)} var(--sar-transition-duration) var(
+        --sar-transition-ease-in
+      ) both;
   }
-  to {
-    transform: translate3d(0, 0, 0);
+  @keyframes #{bem-ns(slide-top-enter)} {
+    from {
+      transform: translate3d(0, -100%, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
   }
-}
 
-.sar-transition-slide-top-exiting,
-.sar-transition-slide-top-exited {
-  animation: sar-transition-slide-top-exit var(--sar-transition-duration)
-    var(--sar-transition-ease-out) both;
-}
-@keyframes sar-transition-slide-top-exit {
-  from {
-    transform: translate3d(0, 0, 0);
+  @include m(slide-top-exiting, slide-top-exited) {
+    animation: #{bem-ns(slide-top-exit)} var(--sar-transition-duration) var(
+        --sar-transition-ease-out
+      ) both;
   }
-  to {
-    transform: translate3d(0, -100%, 0);
+  @keyframes #{bem-ns(slide-top-exit)} {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(0, -100%, 0);
+    }
   }
-}
 
-// slideRight
-.sar-transition-slide-right-enter,
-.sar-transition-slide-right-entering {
-  animation: sar-transition-slide-right-enter var(--sar-transition-duration)
-    var(--sar-transition-ease-in) both;
-}
-@keyframes sar-transition-slide-right-enter {
-  from {
-    transform: translate3d(100%, 0, 0);
+  // slideRight
+  @include m(slide-right-enter, slide-right-entering) {
+    animation: #{bem-ns(slide-right-enter)} var(--sar-transition-duration) var(
+        --sar-transition-ease-in
+      ) both;
   }
-  to {
-    transform: translate3d(0, 0, 0);
+  @keyframes #{bem-ns(slide-right-enter)} {
+    from {
+      transform: translate3d(100%, 0, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
   }
-}
 
-.sar-transition-slide-right-exiting,
-.sar-transition-slide-right-exited {
-  animation: sar-transition-slide-right-exit var(--sar-transition-duration)
-    var(--sar-transition-ease-out) both;
-}
-@keyframes sar-transition-slide-right-exit {
-  from {
-    transform: translate3d(0, 0, 0);
+  @include m(slide-right-exiting, slide-right-exited) {
+    animation: #{bem-ns(slide-right-exit)} var(--sar-transition-duration) var(
+        --sar-transition-ease-out
+      ) both;
   }
-  to {
-    transform: translate3d(100%, 0, 0);
+  @keyframes #{bem-ns(slide-right-exit)} {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(100%, 0, 0);
+    }
   }
-}
 
-// slideBottom
-.sar-transition-slide-bottom-enter,
-.sar-transition-slide-bottom-entering {
-  animation: sar-transition-slide-bottom-enter var(--sar-transition-duration)
-    var(--sar-transition-ease-in) both;
-}
-@keyframes sar-transition-slide-bottom-enter {
-  from {
-    transform: translate3d(0, 100%, 0);
+  // slideBottom
+  @include m(slide-bottom-enter, slide-bottom-entering) {
+    animation: #{bem-ns(slide-bottom-enter)} var(--sar-transition-duration) var(
+        --sar-transition-ease-in
+      ) both;
   }
-  to {
-    transform: translate3d(0, 0, 0);
+  @keyframes #{bem-ns(slide-bottom-enter)} {
+    from {
+      transform: translate3d(0, 100%, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
   }
-}
 
-.sar-transition-slide-bottom-exiting,
-.sar-transition-slide-bottom-exited {
-  animation: sar-transition-slide-bottom-exit var(--sar-transition-duration)
-    var(--sar-transition-ease-out) both;
-}
-@keyframes sar-transition-slide-bottom-exit {
-  from {
-    transform: translate3d(0, 0, 0);
+  @include m(slide-bottom-exiting, slide-bottom-exited) {
+    animation: #{bem-ns(slide-bottom-exit)} var(--sar-transition-duration) var(
+        --sar-transition-ease-out
+      ) both;
   }
-  to {
-    transform: translate3d(0, 100%, 0);
+  @keyframes #{bem-ns(slide-bottom-exit)} {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(0, 100%, 0);
+    }
   }
-}
 
-// slideLeft
-.sar-transition-slide-left-enter,
-.sar-transition-slide-left-entering {
-  animation: sar-transition-slide-left-enter var(--sar-transition-duration)
-    var(--sar-transition-ease-in);
-}
-@keyframes sar-transition-slide-left-enter {
-  from {
-    transform: translate3d(-100%, 0, 0);
+  // slideLeft
+  @include m(slide-left-enter, slide-left-entering) {
+    animation: #{bem-ns(slide-left-enter)} var(--sar-transition-duration) var(--sar-transition-ease-in);
   }
-  to {
-    transform: translate3d(0, 0, 0);
+  @keyframes #{bem-ns(slide-left-enter)} {
+    from {
+      transform: translate3d(-100%, 0, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
   }
-}
 
-.sar-transition-slide-left-exiting,
-.sar-transition-slide-left-exited {
-  animation: sar-transition-slide-left-exit var(--sar-transition-duration)
-    var(--sar-transition-ease-out) both;
-}
-@keyframes sar-transition-slide-left-exit {
-  from {
-    transform: translate3d(0, 0, 0);
+  @include m(slide-left-exiting, slide-left-exited) {
+    animation: #{bem-ns(slide-left-exit)} var(--sar-transition-duration) var(
+        --sar-transition-ease-out
+      ) both;
   }
-  to {
-    transform: translate3d(-100%, 0, 0);
+  @keyframes #{bem-ns(slide-left-exit)} {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-100%, 0, 0);
+    }
   }
-}
 
-// collapse
-.sar-transition-collapse-enter,
-.sar-transition-collapse-entering {
-  animation: sar-transition-collapse-enter var(--sar-transition-duration)
-    var(--sar-transition-ease-in) both;
-}
-@keyframes sar-transition-collapse-enter {
-  from {
-    height: 0;
+  // collapse
+  @include m(collapse-enter, collapse-entering) {
+    animation: #{bem-ns(collapse-enter)} var(--sar-transition-duration) var(
+        --sar-transition-ease-in
+      ) both;
   }
-}
+  @keyframes #{bem-ns(collapse-enter)} {
+    from {
+      height: 0;
+    }
+  }
 
-.sar-transition-collapse-exiting,
-.sar-transition-collapse-exited {
-  animation: sar-transition-collapse-exit var(--sar-transition-duration)
-    var(--sar-transition-ease-out) both;
-}
-@keyframes sar-transition-collapse-exit {
-  to {
-    height: 0;
+  @include m(collapse-exiting, collapse-exited) {
+    animation: #{bem-ns(collapse-exit)} var(--sar-transition-duration) var(
+        --sar-transition-ease-out
+      ) both;
+  }
+  @keyframes #{bem-ns(collapse-exit)} {
+    to {
+      height: 0;
+    }
   }
 }

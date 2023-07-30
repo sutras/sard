@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
-import { useControllableValue } from '../use'
+import { useBem, useControllableValue } from '../use'
 import { getPageRange, minmax } from '../utils'
 import useTranslate from '../locale/useTranslate'
 import { BaseProps } from '../base'
@@ -42,6 +42,8 @@ export const Pagination: FC<PaginationProps> = (props) => {
     onChange,
     ...restProps
   } = props
+
+  const [bem] = useBem('pagination')
 
   const innerPageCount = (pageCount ?? Math.ceil(total / pageSize)) || 1
 
@@ -85,9 +87,11 @@ export const Pagination: FC<PaginationProps> = (props) => {
           <View
             key={page}
             data-page={page}
-            className={classNames('sar-pagination-item', {
-              'sar-pagination-item-current': innerCurrent === page,
-            })}
+            className={classNames(
+              bem.e('item'),
+              bem.em('item', 'later'),
+              bem.em('item', 'current', innerCurrent === page),
+            )}
             onClick={() => handleItemClick(page)}
           >
             {ellipsis &&
@@ -104,35 +108,42 @@ export const Pagination: FC<PaginationProps> = (props) => {
 
   const renderSimple = () => {
     return (
-      <View className="sar-pagination-ratio">
+      <View className={bem.e('ratio')}>
         {innerCurrent}/{innerPageCount}
       </View>
     )
   }
 
-  const pageClassName = classNames(
-    'sar-pagination',
-    'sar-pagination-' + type,
-    className,
-  )
+  const pageClassName = classNames(bem.b(), bem.m(type), className)
 
   return (
     <>
       {(!hideOnSinglePage || innerPageCount > 1) && (
         <View {...restProps} className={pageClassName}>
           <View
-            className={classNames('sar-pagination-item sar-pagination-prev', {
-              'sar-pagination-item-disabled': innerCurrent === 1,
-            })}
+            className={classNames(
+              bem.e('item'),
+              bem.em('item', 'disabled', innerCurrent === 1),
+              bem.em('item', 'interactive', innerCurrent !== 1),
+              bem.em('item', 'first'),
+              bem.e('prev'),
+              bem.em('prev', type),
+            )}
             onClick={handlePrevClick}
           >
             {prev ?? t('previous')}
           </View>
           {type === 'simple' ? renderSimple() : renderMulti()}
           <View
-            className={classNames('sar-pagination-item sar-pagination-next', {
-              'sar-pagination-item-disabled': innerCurrent === innerPageCount,
-            })}
+            className={classNames(
+              bem.e('item'),
+              bem.em('item', 'disabled', innerCurrent === innerPageCount),
+              bem.em('item', 'interactive', innerCurrent !== innerPageCount),
+              bem.em('item', 'later'),
+              bem.em('item', 'last'),
+              bem.e('next'),
+              bem.em('next', type),
+            )}
             onClick={handleNextClick}
           >
             {next ?? t('next')}

@@ -7,6 +7,7 @@ import { MeshCommonProps } from './type'
 import { MeshItem, MeshItemProps } from './Item'
 import { pickNullish } from '../utils'
 import { splitUnit } from '../utils'
+import { useBem } from '../use'
 
 export interface Mesh extends BaseProps, MeshCommonProps {
   columns?: number
@@ -37,6 +38,8 @@ export const Mesh: MeshFC = (props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('mesh')
+
   const gutter = useMemo(() => {
     if (gap) {
       const result = splitUnit(gap)
@@ -44,7 +47,7 @@ export const Mesh: MeshFC = (props) => {
     }
   }, [gap])
 
-  const meshClass = classNames('sar-mesh', {}, className)
+  const meshClass = classNames(bem.b(), className)
 
   const meshStyle = {
     ...(gap

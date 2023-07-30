@@ -1,7 +1,7 @@
 import { Children, FC, ReactElement, ReactNode, cloneElement } from 'react'
 import classNames from 'classnames'
-import { Button, ITouchEvent, View } from '@tarojs/components'
-import { useEvent } from '../use'
+import { ITouchEvent, View } from '@tarojs/components'
+import { useBem, useEvent } from '../use'
 import { Popup, PopupProps } from '../popup'
 import { ActionSheetItem, ActionSheetItemProps } from './Item'
 import { BaseProps } from '../base'
@@ -44,6 +44,8 @@ export const ActionSheet: ActionSheetFC = (props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('action-sheet')
+
   const handleItemClick = useEvent(
     (itemProps: ActionSheetItemProps, index: number) => {
       onSelect?.(itemProps, index)
@@ -66,10 +68,8 @@ export const ActionSheet: ActionSheetFC = (props) => {
   })
 
   const actionSheetClass = classNames(
-    'sar-action-sheet',
-    {
-      'sar-action-sheet-headless': !title && !description,
-    },
+    bem.b(),
+    bem.m('headless', isNullish(title) && isNullish(description)),
     className,
   )
 
@@ -82,21 +82,34 @@ export const ActionSheet: ActionSheetFC = (props) => {
       onMaskClick={handleMaskClick}
     >
       {(!isNullish(title) || !isNullish(description)) && (
-        <View className="sar-action-sheet-header">
-          {!isNullish(title) && (
-            <View className="sar-action-sheet-title">{title}</View>
-          )}
+        <View className={bem.e('header')}>
+          {!isNullish(title) && <View className={bem.e('title')}>{title}</View>}
           {!isNullish(description) && (
-            <View className="sar-action-sheet-description">{description}</View>
+            <View
+              className={classNames(
+                bem.e('description'),
+                bem.em('description', 'has-title', !isNullish(title)),
+              )}
+            >
+              {description}
+            </View>
           )}
         </View>
       )}
-      <View className="sar-action-sheet-body">
+      <View className={bem.e('body')}>
         {itemList
           ? itemList.map((itemProps, index) => (
               <ActionSheetItem
                 {...itemProps}
                 key={index}
+                className={classNames(
+                  bem.em(
+                    'item',
+                    'headless-first',
+                    isNullish(title) && isNullish(description) && index === 0,
+                  ),
+                  bem.em('item', 'later', index > 0),
+                )}
                 onClick={(event) => {
                   handleItemClick(itemProps, index)
                   itemProps.onClick?.(event)
@@ -107,6 +120,14 @@ export const ActionSheet: ActionSheetFC = (props) => {
               children,
               (element: ReactElement<ActionSheetItemProps>, index) => {
                 return cloneElement(element, {
+                  className: classNames(
+                    bem.em(
+                      'item',
+                      'headless-first',
+                      isNullish(title) && isNullish(description) && index === 0,
+                    ),
+                    bem.em('item', 'later', index > 0),
+                  ),
                   onClick: (event) => {
                     handleItemClick(element.props, index)
                     element.props.onClick?.(event)
@@ -117,13 +138,10 @@ export const ActionSheet: ActionSheetFC = (props) => {
       </View>
       {!isNullish(cancel) && (
         <>
-          <View className="sar-action-sheet-gap"></View>
-          <Button
-            className="sar-action-sheet-cancel"
-            onClick={handleCancelClick}
-          >
+          <View className={bem.e('gap')}></View>
+          <View className={bem.e('cancel')} onClick={handleCancelClick}>
             {cancel}
-          </Button>
+          </View>
         </>
       )}
     </Popup>

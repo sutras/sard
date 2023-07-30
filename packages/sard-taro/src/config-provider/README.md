@@ -54,17 +54,44 @@ page {
 
 略。
 
+### BEM 风格配置
+
+本 `UI` 库通过 `BEM` 风格编写样式，如果有特定的需要，可以修改为想要的类型，例如：
+
+```tsx
+<ConfigProvider bem={{ namespace: 'custom', modifierSeparator: '--' }}>
+  {children}
+</ConfigProvider>
+```
+
+在全局配置修改后，元素的类名会按照您的修改来生成，另外，还需要修改样式文件类名的定义格式。
+
+这需要你在引入`sard-taro`的样式文件之前定义变量来可以覆盖默认的变量值，例如：
+
+```scss
+$sar-namespace: 'cusotm';
+$sar-modifier-separator: '--';
+
+@import 'sard-taro/dist/index.scss';
+```
+
+完整的`scss`变量可以查看[`style`](./#/components/style) 组件。
+
 ## API
 
 ### ConfigProviderProps
 
-| 属性  | 描述   | 类型        | 默认值  |
-| ----- | ------ | ----------- | ------- |
-| lang  | 语言包 | typeof zhCN | zhCN    |
-| theme | 主题   | string      | 'light' |
+| 属性  | 描述               | 类型        | 默认值  |
+| ----- | ------------------ | ----------- | ------- |
+| lang  | 语言包             | typeof zhCN | \<zhCN> |
+| theme | 主题               | string      | 'light' |
+| bem   | `bem` 风格编写样式 | Bem         | -       |
 
-## 主题定制
+### Bem
 
-### CSS 变量
-
-%{variables}
+| 属性名            | 说明           | 类型   | 默认值 |
+| ----------------- | -------------- | ------ | ------ |
+| namespace         | 命名空间       | string | 'sar'  |
+| blockSeparator    | 块的分隔符     | string | '-'    |
+| elementSeparator  | 元素的分隔符   | string | '\_\_' |
+| modifierSeparator | 装饰器的分隔符 | string | '\_'   |

@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react'
 import classNames from 'classnames'
-import { useControllableValue, useEvent } from '../use'
+import { useBem, useControllableValue, useEvent } from '../use'
 import { getDaysInMonth, getWeekOnFirstDay, toDateNumber } from '../utils'
 import { scrollIntoView, ScrollIntoViewPosition } from '../utils'
 import useTranslate from '../locale/useTranslate'
@@ -115,6 +115,8 @@ export const Calendar = forwardRef<CalendarRef, CalendarProps>((props, ref) => {
     allowSameDay,
     ...restProps
   } = props
+
+  const [bem] = useBem('calendar')
 
   const dateElements = useRef<Record<string, HTMLElement>>({})
 
@@ -243,14 +245,15 @@ export const Calendar = forwardRef<CalendarRef, CalendarProps>((props, ref) => {
   ) => {
     const days = getDaysInMonth(year, month)
     let nextDate: Date | undefined
+    let previousSelected: boolean | undefined
     let nextSelected: boolean | undefined
 
     return (
-      <View key={year * 100 + month} className="sar-calendar-month">
-        <View className="sar-calendar-month-title">
+      <View key={year * 100 + month} className={bem.e('month')}>
+        <View className={bem.e('month-title')}>
           {t('monthTitle', { year, month })}
         </View>
-        <View className="sar-calendar-month-body">
+        <View className={bem.e('month-body')}>
           {Array(days)
             .fill(0)
             .map((_, i) => {
@@ -259,6 +262,8 @@ export const Calendar = forwardRef<CalendarRef, CalendarProps>((props, ref) => {
               const selected =
                 nextSelected ??
                 currentDates.some((d) => toDateNumber(d) === dateDays)
+              const prevSelected = previousSelected
+              previousSelected = selected
 
               if (i < days - 1) {
                 nextDate = new Date(year, month - 1, i + 2)
@@ -326,17 +331,17 @@ export const Calendar = forwardRef<CalendarRef, CalendarProps>((props, ref) => {
                   key={year * 10000 + month * 100 + i}
                   ref={(el) => (dateElements.current[dateDays] = el)}
                   className={classNames(
-                    'sar-calendar-day',
-                    {
-                      'sar-calendar-day-selected': selected,
-                      'sar-calendar-day-next-selected':
-                        selected && nextSelected,
-                      'sar-calendar-day-start': isStart,
-                      'sar-calendar-day-end': isEnd,
-                      'sar-calendar-day-middle': isMiddle,
-                      'sar-calendar-day-disabled': disabled,
-                      'sar-calendar-day-today': todayDays === dateDays,
-                    },
+                    bem.e('day'),
+                    bem.em('day', 'selected', selected),
+                    bem.em('day', 'prev-selected', prevSelected),
+                    bem.em('day', 'next-selected', selected && nextSelected),
+                    bem.em('day', 'start', isStart),
+                    bem.em('day', 'only-start', isStart && !isEnd),
+                    bem.em('day', 'end', isEnd),
+                    bem.em('day', 'only-end', isEnd && !isStart),
+                    bem.em('day', 'middle', isMiddle),
+                    bem.em('day', 'disabled', disabled),
+                    bem.em('day', 'today', todayDays === dateDays),
                     day.className,
                   )}
                   style={{
@@ -352,18 +357,18 @@ export const Calendar = forwardRef<CalendarRef, CalendarProps>((props, ref) => {
                   onClick={() => handleDayClick(date, disabled)}
                 >
                   {day.topInfo && (
-                    <View className="sar-calendar-topinfo">{day.topInfo}</View>
+                    <View className={bem.e('topinfo')}>{day.topInfo}</View>
                   )}
                   {day.text}
                   {day.bottomInfo && (
-                    <View className="sar-calendar-bottominfo">
+                    <View className={bem.e('bottominfo')}>
                       {day.bottomInfo}
                     </View>
                   )}
                 </View>
               )
             })}
-          <View className="sar-calendar-mark">{month}</View>
+          <View className={bem.e('mark')}>{month}</View>
         </View>
       </View>
     )
@@ -388,20 +393,20 @@ export const Calendar = forwardRef<CalendarRef, CalendarProps>((props, ref) => {
   }, [innerValue, startDate, type])
 
   return (
-    <View {...restProps} className={classNames('sar-calendar', className)}>
+    <View {...restProps} className={classNames(bem.b(), className)}>
       {/* <ResizeSpy /> */}
-      <View className="sar-calendar-header">
-        {title && <View className="sar-calendar-title">{title}</View>}
-        <View className="sar-calendar-week">
+      <View className={bem.e('header')}>
+        {title && <View className={bem.e('title')}>{title}</View>}
+        <View className={bem.e('week')}>
           {getWeeks(weekStartsOn).map((item) => (
-            <View key={item} className="sar-calendar-week-item">
-              {t('weeks')[item]}
+            <View key={item} className={bem.e('week-item')}>
+              {t(`weeks.${item}`)}
             </View>
           ))}
         </View>
       </View>
       <ScrollView
-        className="sar-calendar-body"
+        className={bem.e('body')}
         scrollY
         onScrollToUpper={(event) => event.preventDefault()}
         onScrollToLower={(event) => event.preventDefault()}
@@ -410,7 +415,7 @@ export const Calendar = forwardRef<CalendarRef, CalendarProps>((props, ref) => {
           .fill(0)
           .map((_, i) => renderMonth(currentDates, getYearMonthByIndex(i)))}
       </ScrollView>
-      <View className="sar-calendar-footer"></View>
+      <View className={bem.e('footer')}></View>
     </View>
   )
 })

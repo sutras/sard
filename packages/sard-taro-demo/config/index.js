@@ -2,6 +2,10 @@ const path = require('path')
 
 function getOutputRoot() {
   const platform = process.env.TARO_ENV
+
+  if (platform === 'h5') {
+    return path.resolve(process.cwd(), '../sard-taro-docs/docs/mobile')
+  }
   return `dist/${platform}`
 }
 

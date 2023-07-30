@@ -1,4 +1,5 @@
-// # 灰度值
+// # 颜色
+// ## 灰度值
 $sar-white: #fff !default;
 $sar-gray-100: #f8f9fa !default;
 $sar-gray-200: #e9ecef !default;
@@ -11,7 +12,7 @@ $sar-gray-800: #343a40 !default;
 $sar-gray-900: #212529 !default;
 $sar-black: #000 !default;
 
-// # 颜色
+// ## 颜色
 $sar-blue: #0d6efd !default;
 $sar-indigo: #6610f2 !default;
 $sar-purple: #6f42c1 !default;
@@ -23,7 +24,7 @@ $sar-green: #198754 !default;
 $sar-teal: #20c997 !default;
 $sar-cyan: #0dcaf0 !default;
 
-// # 主题色
+// ## 主题色
 $sar-primary: $sar-blue !default;
 $sar-secondary: $sar-gray-600 !default;
 $sar-success: $sar-green !default;
@@ -33,7 +34,7 @@ $sar-danger: $sar-red !default;
 $sar-light: $sar-gray-100 !default;
 $sar-dark: $sar-gray-900 !default;
 
-// # 主题色列表
+// ## 主题色列表
 $sar-theme-colors: (
   primary: (
     var(--sar-primary),
@@ -60,3 +61,15 @@ $sar-theme-colors: (
     var(--sar-danger-rgb),
   ),
 ) !default;
+
+// # bem
+$sar-namespace: 'sar' !default;
+$sar-block-separator: '-' !default;
+$sar-element-separator: '__' !default;
+$sar-modifier-separator: '_' !default;
+
+// # grid
+$sar-col-columns: 12 !default;
+
+// # loading
+$sar-loading-scale-number: 12 !default;

@@ -75,7 +75,7 @@ export default () => {
       <Demo title="普通选择器" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="设置为: 天津市"
             onClick={() => setArrayValue(['天津市'])}
           />
@@ -95,7 +95,7 @@ export default () => {
       <Demo title="对象类型数组" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="设置为: 天津市"
             onClick={() => setObjectArrayValue([120000])}
           />
@@ -116,7 +116,7 @@ export default () => {
       <Demo title="多列" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="设置为: 2003年10月"
             onClick={() => setMultiArrayValue(['2003年', '10月'])}
           />
@@ -136,7 +136,7 @@ export default () => {
       <Demo title="对象类型多列" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="设置为: 2003年10月"
             onClick={() => setObjectMultiArrayValue([2003, 10])}
           />
@@ -156,7 +156,7 @@ export default () => {
       <Demo title="级联选择" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="设置为: 广东省/广州市/天河区"
             onClick={() => setCascaderValue([440000, 440100, 440106])}
           />
@@ -177,7 +177,7 @@ export default () => {
       <Demo title="配合弹出框" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="广东省/广州市/天河区"
             onClick={() => setPopoutCascaderValue([440000, 440100, 440106])}
           />
@@ -185,7 +185,7 @@ export default () => {
             <Popout.Outlet>
               {({ value, triggerArgs: [, options = []], setVisible }) => (
                 <Cell
-                  isLink
+                  linkable
                   title="请选择省市区"
                   value={
                     (value && options.map((option) => option.name).join('/')) ||

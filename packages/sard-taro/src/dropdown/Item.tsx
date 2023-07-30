@@ -11,7 +11,7 @@ import {
 import classNames from 'classnames'
 import Taro from '@tarojs/taro'
 import { ITouchEvent, View } from '@tarojs/components'
-import { useControllableValue, useResize, useSelectorId } from '../use'
+import { useBem, useControllableValue, useResize, useSelectorId } from '../use'
 import { Popup, PopupProps } from '../popup'
 import { DropdownOption } from './Option'
 import { Icon } from '../icon'
@@ -19,7 +19,8 @@ import { Icon } from '../icon'
 import { DropdownOptionProps } from './Option'
 import { useEvent } from '../use'
 import { BaseProps } from '../base'
-import { getRectById, isBoolean } from '../utils'
+import { getRectById, isBoolean, isNullish } from '../utils'
+import Cell from '../cell'
 
 export interface DropdownItemProps extends BaseProps {
   title?: ReactNode
@@ -36,12 +37,14 @@ export interface DropdownItemProps extends BaseProps {
   onVisibleChange?: (visible: boolean) => void
   awayClosable?: boolean
   maskClosable?: boolean
-  icon?: (
+  arrow?: (
     visible: boolean,
     direction: DropdownItemProps['direction'],
   ) => ReactNode
   popupProps?: PopupProps
   onClick?: (event: ITouchEvent) => void
+  separator?: string
+  placeholder?: ReactNode
 }
 
 const mapDirectionPlacement = {
@@ -75,11 +78,15 @@ export const DropdownItem: DropdownItemFC = forwardRef((props, ref) => {
     onVisibleChange,
     awayClosable = true,
     maskClosable = true,
-    icon,
+    arrow,
     popupProps,
     onClick,
+    separator,
+    placeholder,
     ...restProps
   } = props
+
+  const [bem] = useBem('dropdown')
 
   const itemId = useSelectorId()
 
@@ -186,14 +193,109 @@ export const DropdownItem: DropdownItemFC = forwardRef((props, ref) => {
   }))
 
   const itemClass = classNames(
-    'sar-dropdown-item',
-    {
-      'sar-dropdown-item-show': actualVisible,
-      'sar-dropdown-item-disabled': disabled,
-    },
-    `sar-dropdown-item-${direction}`,
+    bem.e('item'),
+    bem.em('item', 'show', actualVisible),
+    bem.em('item', 'disabled', disabled),
+    bem.em('item', 'interactive', !disabled),
     className,
   )
+
+  const renderLabel = () => {
+    return (
+      !isNullish(label) && (
+        <View
+          className={classNames(
+            bem.e('label'),
+            bem.em('label', 'disabled', disabled),
+          )}
+        >
+          {label}
+          {!isNullish(title) || !isNullish(innerValue) ? separator : null}
+        </View>
+      )
+    )
+  }
+
+  const renderTitle = () => {
+    return (
+      !isNullish(title) && (
+        <View
+          className={classNames(
+            bem.e('title'),
+            bem.em('title', 'disabled', disabled),
+            bem.em('title', 'has-label', !!label),
+          )}
+        >
+          {title}
+        </View>
+      )
+    )
+  }
+
+  const renderPlaceholder = () => {
+    return (
+      !isNullish(placeholder) && (
+        <View
+          className={classNames(
+            bem.e('placeholder'),
+            bem.em('placeholder', 'has-label', !!label),
+          )}
+        >
+          {placeholder}
+        </View>
+      )
+    )
+  }
+
+  const renderValue = () => {
+    return !isNullish(innerValue) ? (
+      <View
+        className={classNames(
+          bem.e('value'),
+          bem.em('value', 'disabled', disabled),
+          bem.em('title', 'has-label', !!label),
+        )}
+      >
+        {options.find((option) => option.value === innerValue)?.label}
+      </View>
+    ) : (
+      renderPlaceholder()
+    )
+  }
+
+  const renderArrow = () => {
+    return (
+      <View
+        className={classNames(
+          bem.e('arrow'),
+          bem.em('arrow', direction),
+          bem.em('arrow', 'show', actualVisible),
+        )}
+      >
+        {arrow ? (
+          arrow(actualVisible, direction)
+        ) : (
+          <Icon
+            name={actualVisible ? 'caret-up-fill' : 'caret-down-fill'}
+          ></Icon>
+        )}
+      </View>
+    )
+  }
+
+  const renderAway = () => {
+    return (
+      <View
+        style={{ inset: awayInset }}
+        className={classNames(
+          bem.e('away'),
+          bem.em('away', 'show', actualVisible),
+        )}
+        onClick={handleAwayClick}
+        catchMove
+      ></View>
+    )
+  }
 
   return (
     <>
@@ -203,59 +305,32 @@ export const DropdownItem: DropdownItemFC = forwardRef((props, ref) => {
         id={itemId}
         onClick={handleItemClick}
       >
-        {label && <View className="sar-dropdown-item-label">{label}</View>}
-        {title && <View className="sar-dropdown-item-title">{title}</View>}
-        {innerValue && (
-          <View className="sar-dropdown-item-value">
-            {options.find((option) => option.value === innerValue)?.label}
-          </View>
-        )}
-
-        <View className="sar-dropdown-item-icon">
-          {icon ? (
-            icon(actualVisible, direction)
-          ) : (
-            <Icon
-              name={actualVisible ? 'caret-up-fill' : 'caret-down-fill'}
-            ></Icon>
-          )}
-        </View>
+        {renderLabel()}
+        {renderTitle()}
+        {renderValue()}
+        {renderArrow()}
       </View>
+      {renderAway()}
 
       <View
-        style={{ inset: awayInset }}
-        className={classNames('sar-dropdown-away', {
-          'sar-dropdown-away-show': actualVisible,
-        })}
-        onClick={handleAwayClick}
-        catchMove
-      ></View>
-
-      <View
-        className={classNames('sar-dropdown-popover', {
-          'sar-dropdown-popover-show': popoverVisible,
-        })}
+        className={classNames(
+          bem.e('popover'),
+          bem.em('popover', 'show', popoverVisible),
+        )}
         style={{ inset: popupInset }}
       >
         <Popup
           {...popupProps}
           effect={mapDirectionPlacement[direction]}
           visible={actualVisible}
-          className="sar-dropdown-popup"
-          maskClass="sar-dropdown-mask"
+          className={bem.e('popup')}
+          maskClass={bem.e('mask')}
           onEnter={handleEnter}
           onExited={handleExited}
           onMaskClick={handleMaskClick}
         >
-          {/* <ScrollView
-          scrollY
-          enablePassive=""
-          className="sar-dropdown-scrollview"
-          catchtouchmove
-        >
-        </ScrollView> */}
           {children ?? (
-            <View className="sar-dropdown-options">
+            <Cell.Group className={bem.e('options')} inlaid>
               {options.map((option, index) => {
                 const { value, ...restProps } = option
                 return (
@@ -267,7 +342,7 @@ export const DropdownItem: DropdownItemFC = forwardRef((props, ref) => {
                   ></DropdownOption>
                 )
               })}
-            </View>
+            </Cell.Group>
           )}
         </Popup>
       </View>

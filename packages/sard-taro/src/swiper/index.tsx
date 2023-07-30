@@ -7,6 +7,7 @@ import classNames from 'classnames'
 
 import { SwiperItem } from './Item'
 import { BaseProps } from '../base'
+import { useBem } from '../use'
 
 export * from './Item'
 
@@ -21,7 +22,9 @@ export interface SwiperFC extends FC<SwiperProps> {
 export const Swiper: SwiperFC = (props) => {
   const { className, children, ...restProps } = props
 
-  const swiperClass = classNames('sar-swiper', className)
+  const [bem] = useBem('swiper')
+
+  const swiperClass = classNames(bem.b(), className)
 
   return (
     <TaroSwiper {...restProps} className={swiperClass}>

@@ -9,7 +9,7 @@ import {
 } from 'react'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
-import { useEvent } from '../use'
+import { useBem, useEvent } from '../use'
 import { BaseProps } from '../base'
 
 export interface CountDownRef {
@@ -65,6 +65,8 @@ export const CountDown = forwardRef<CountDownRef, CountDownProps>(
       format = 'HH:mm:ss',
       ...restProps
     } = props
+
+    const [bem] = useBem('count-down')
 
     const [current, setCurrent] = useState(time ?? 0)
     const pausedTime = useRef(0)
@@ -134,7 +136,7 @@ export const CountDown = forwardRef<CountDownRef, CountDownProps>(
         .replace(/S/g, padZero(currentTime.milliseconds, 3).slice(0, 1))
     }
 
-    const countDownClass = classNames('sar-count-down', className)
+    const countDownClass = classNames(bem.b(), className)
 
     return (
       <View {...restProps} className={countDownClass}>

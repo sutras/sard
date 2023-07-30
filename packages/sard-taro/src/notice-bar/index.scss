@@ -1,3 +1,5 @@
+@import '../style/base.scss';
+
 // #variables
 :root,
 page {
@@ -15,91 +17,84 @@ page {
 }
 // #endvariables
 
-.sar-notice-bar {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  height: var(--sar-notice-bar-height);
-  padding: 0 var(--sar-notice-bar-padding-x);
-  font-size: var(--sar-notice-bar-font-size);
-  color: var(--sar-notice-bar-color);
-  background-color: var(--sar-notice-bar-bg);
-
-  &:not(.sar-notice-bar-show) {
-    display: none;
+@include bem(notice-bar) {
+  @include b() {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: var(--sar-notice-bar-height);
+    padding: 0 var(--sar-notice-bar-padding-x);
+    font-size: var(--sar-notice-bar-font-size);
+    color: var(--sar-notice-bar-color);
+    background-color: var(--sar-notice-bar-bg);
   }
-}
 
-.sar-notice-bar-left-icon {
-  display: flex;
-  margin-right: var(--sar-notice-bar-left-icon-gap);
-}
+  @include m(wrap) {
+    height: auto;
+    padding-top: var(--sar-notice-bar-padding-y);
+    padding-bottom: var(--sar-notice-bar-padding-y);
+  }
 
-.sar-notice-bar-content {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  height: 100%;
-  overflow: hidden;
-}
+  @include m(linkable) {
+    cursor: pointer;
+  }
 
-.sar-notice-bar-wrapper {
-  display: inline-block;
-  height: 100%;
-  line-height: var(--sar-notice-bar-height);
-  white-space: nowrap;
-}
+  @include e(left-icon) {
+    display: flex;
+    margin-right: var(--sar-notice-bar-left-icon-gap);
+  }
 
-.sar-notice-bar-right-icon {
-  display: flex;
-  padding-left: var(--sar-notice-bar-right-icon-gap);
-  cursor: pointer;
-}
-
-// # scroll
-.sar-notice-bar-wrapper {
-  .sar-notice-bar-scroll-never & {
-    display: block;
+  @include e(content) {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    height: 100%;
     overflow: hidden;
-    text-overflow: ellipsis;
   }
 
-  .sar-notice-bar-scrollable & {
-    animation: sar-notice-bar-scroll linear both running;
+  @include e(wrapper) {
+    display: inline-block;
+    height: 100%;
+    line-height: var(--sar-notice-bar-height);
+    white-space: nowrap;
 
-    &.sar-notice-bar-infinite {
-      animation: sar-notice-bar-scroll-infinite linear both running infinite;
+    @include m(scroll-never) {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @include m(scrollable) {
+      animation: #{bem-ns(notice-bar-scroll)} linear both running;
+    }
+
+    @include m(infinite) {
+      animation: #{bem-ns(notice-bar-scroll-infinite)} linear both running infinite;
+    }
+
+    @include m(wrap) {
+      display: block;
+      white-space: normal;
+      line-height: var(--sar-notice-bar-wrap-line-height);
     }
   }
+
+  @include e(right-icon) {
+    display: flex;
+    padding-left: var(--sar-notice-bar-right-icon-gap);
+    cursor: pointer;
+  }
 }
 
-@keyframes sar-notice-bar-scroll {
+@keyframes #{bem-ns(notice-bar-scroll)} {
   100% {
     transform: translate3d(-100%, 0, 0);
   }
 }
 
-@keyframes sar-notice-bar-scroll-infinite {
+@keyframes #{bem-ns(notice-bar-scroll-infinite)} {
   100% {
     transform: translate3d(-100%, 0, 0);
   }
-}
-
-// # wrap
-.sar-notice-bar-wrap {
-  height: auto;
-  padding-top: var(--sar-notice-bar-padding-y);
-  padding-bottom: var(--sar-notice-bar-padding-y);
-
-  .sar-notice-bar-wrapper {
-    display: block;
-    white-space: normal;
-    line-height: var(--sar-notice-bar-wrap-line-height);
-  }
-}
-
-// # is-link
-.sar-notice-bar-is-link {
-  cursor: pointer;
 }

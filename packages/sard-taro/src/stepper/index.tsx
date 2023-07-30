@@ -1,7 +1,12 @@
 import { FC, useRef, useState } from 'react'
-import { Button, ITouchEvent, InputProps, View } from '@tarojs/components'
+import { ITouchEvent, InputProps, View } from '@tarojs/components'
 import classNames from 'classnames'
-import { useControllableValue, useEvent, useLayoutUpdateEffect } from '../use'
+import {
+  useBem,
+  useControllableValue,
+  useEvent,
+  useLayoutUpdateEffect,
+} from '../use'
 import { isNullish, minmax } from '../utils'
 import { Icon } from '../icon'
 import { Input } from '../input'
@@ -51,6 +56,8 @@ export const Stepper: FC<StepperProps> = (props) => {
     onFocus,
     ...restProps
   } = props
+
+  const [bem] = useBem('stepper')
 
   const [innerValue, setInnerValue] = useControllableValue({
     value,
@@ -164,11 +171,9 @@ export const Stepper: FC<StepperProps> = (props) => {
   })
 
   const StepperClass = classNames(
-    'sar-stepper',
-    {
-      'sar-stepper-disabled': disabled,
-      'sar-stepper-readonly': readOnly,
-    },
+    bem.b(),
+    bem.m('disabled', disabled),
+    bem.m('readonly', readOnly),
     className,
   )
 
@@ -179,18 +184,20 @@ export const Stepper: FC<StepperProps> = (props) => {
     cls: string,
   ) => {
     return (
-      <Button
-        className={classNames(`sar-stepper-button sar-stepper-${cls}`, {
-          'sar-stepper-button-disabled': reach,
-        })}
+      <View
+        className={classNames(
+          bem.e('button'),
+          bem.e(cls),
+          bem.em('button', 'disabled', disabled || reach),
+          bem.em('button', 'interactive', !reach && !disabled && !readOnly),
+        )}
         onClick={() => handleClick(delta, reach)}
-        disabled={disabled || readOnly || isMin || undefined}
         onTouchStart={() => handleTouchStart(delta)}
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchEnd}
       >
         <Icon name={icon}></Icon>
-      </Button>
+      </View>
     )
   }
 
@@ -199,7 +206,7 @@ export const Stepper: FC<StepperProps> = (props) => {
       {renderButton(-1, 'minus', isMin, 'decrease')}
       <Input
         type={inputType}
-        className="sar-stepper-input"
+        className={bem.e('input')}
         placeholder={placeholder}
         style={{ width: inputWidth }}
         value={String(inputValue ?? '')}

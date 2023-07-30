@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { ITouchEvent, View } from '@tarojs/components'
 import classNames from 'classnames'
-import { useControllableValue } from '../use'
+import { useBem, useControllableValue } from '../use'
 import Loading from '../loading'
 import { BaseProps } from '../base'
 
@@ -41,6 +41,8 @@ export const Switch: FC<SwitchProps> = (props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('switch')
+
   const [innerChecked, setInnerChecked] = useControllableValue({
     value: checked,
     defaultValue: defaultChecked,
@@ -62,13 +64,11 @@ export const Switch: FC<SwitchProps> = (props) => {
   }
 
   const switchClass = classNames(
-    'sar-switch',
-    {
-      'sar-switch-checked': innerChecked,
-      'sar-switch-disabled': disabled,
-      'sar-switch-readonly': readOnly,
-      'sar-switch-is-loading': loading,
-    },
+    bem.b(),
+    bem.m('checked', innerChecked),
+    bem.m('disabled', disabled),
+    bem.m('readonly', readOnly),
+    bem.m('loading', loading),
     className,
   )
 
@@ -85,8 +85,13 @@ export const Switch: FC<SwitchProps> = (props) => {
       style={switchStyle}
       onClick={onSwitchClick}
     >
-      <View className="sar-switch-thumb">
-        {loading && <Loading iconClass="sar-switch-loading" />}
+      <View
+        className={classNames(
+          bem.e('thumb'),
+          bem.em('thumb', 'checked', innerChecked),
+        )}
+      >
+        {loading && <Loading iconClass={bem.e('loading')} />}
       </View>
     </View>
   )

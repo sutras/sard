@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import { SkeletonBlock, SkeletonBlockProps } from './Block'
+import { useBem } from '../use'
 
 export interface SkeletonParagraphProps extends SkeletonBlockProps {
   rows?: number
@@ -10,16 +11,22 @@ export interface SkeletonParagraphProps extends SkeletonBlockProps {
 export const SkeletonParagraph: FC<SkeletonParagraphProps> = (props) => {
   const { className, rows = 3, animated, round, ...restProps } = props
 
-  const skeletonClass = classNames('sar-skeleton-paragraph', className)
+  const [bem] = useBem('skeleton')
+
+  const skeletonClass = classNames(bem.e('paragraph'), className)
 
   return (
     <View {...restProps} className={skeletonClass}>
       {Array(rows)
         .fill(0)
-        .map((_, i) => (
+        .map((_, index) => (
           <SkeletonBlock
-            className="sar-skeleton-row"
-            key={i}
+            className={classNames(
+              bem.e('row'),
+              bem.em('row', 'later', index > 0),
+              bem.em('row', 'last', index === rows - 1),
+            )}
+            key={index}
             animated={animated}
             round={round}
           />

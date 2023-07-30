@@ -1,7 +1,13 @@
 import { useState, useRef, ReactNode, FC } from 'react'
 import classNames from 'classnames'
 import { ITouch, ITouchEvent, View } from '@tarojs/components'
-import { useControllableValue, useEvent, useSelectorId, useBrush } from '../use'
+import {
+  useControllableValue,
+  useEvent,
+  useSelectorId,
+  useBrush,
+  useBem,
+} from '../use'
 import { NodeRect, getRectById, minmax, mround } from '../utils'
 import { BaseProps } from '../base'
 
@@ -66,6 +72,8 @@ export const Slider: FC<SliderProps> = (props) => {
     onChange,
     ...restProps
   } = props
+
+  const [bem] = useBem('slider')
 
   const trackId = useSelectorId()
 
@@ -239,18 +247,22 @@ export const Slider: FC<SliderProps> = (props) => {
   }
 
   const sliderClass = classNames(
-    'sar-slider',
-    {
-      'sar-slider-is-down': isDown,
-      'sar-slider-vertical': vertical,
-      'sar-slider-disabled': disabled,
-      'sar-slider-readonly': readOnly,
-    },
+    bem.b(),
+    bem.m('vertical', vertical),
+    bem.m('disabled', disabled),
+    bem.m('readonly', readOnly),
     className,
   )
 
   const defaultThumb = () => (
-    <View className="sar-slider-thumb" style={thumbStyle}></View>
+    <View
+      className={classNames(
+        bem.e('thumb'),
+        bem.em('thumb', 'readonly', readOnly),
+        bem.em('thumb', 'disabled', disabled),
+      )}
+      style={thumbStyle}
+    ></View>
   )
 
   const renderThumb = (index) => {
@@ -261,8 +273,13 @@ export const Slider: FC<SliderProps> = (props) => {
       <View
         key={index}
         className={classNames(
-          'sar-slider-thumb-container',
-          `sar-slider-thumb-${index === 0 ? 'start' : 'end'}`,
+          bem.e('thumb-container'),
+          bem.e(`thumb-${index === 0 ? 'start' : 'end'}`),
+          bem.em(
+            `thumb-${index === 0 ? 'start' : 'end'}`,
+            'vertical',
+            vertical,
+          ),
         )}
         onClick={(e) => e.stopPropagation()}
         onTouchStart={(event: ITouchEvent) => handleTouchStart(event, index)}
@@ -277,8 +294,22 @@ export const Slider: FC<SliderProps> = (props) => {
 
   return (
     <View {...restProps} className={sliderClass} onClick={handleSliderClick}>
-      <View id={trackId} className="sar-slider-track" style={trackStyle}>
-        <View className="sar-slider-track-piece" style={pieceStyle}>
+      <View
+        id={trackId}
+        className={classNames(
+          bem.e('track'),
+          bem.em('track', 'vertical', vertical),
+        )}
+        style={trackStyle}
+      >
+        <View
+          className={classNames(
+            bem.e('track-piece'),
+            bem.em('track-piece', 'vertical', vertical),
+            bem.em('track-piece', 'is-down', isDown),
+          )}
+          style={pieceStyle}
+        >
           {range ? [renderThumb(0), renderThumb(1)] : renderThumb(1)}
         </View>
       </View>

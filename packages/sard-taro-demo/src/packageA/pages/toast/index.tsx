@@ -22,27 +22,27 @@ export default () => {
       <Demo title="基础使用" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="文本提示"
             onClick={() => showToast('text', '文本提示')}
           />
           <Cell
-            isLink
+            linkable
             title="成功提示"
             onClick={() => showToast('success', '成功')}
           />
 
           <Cell
-            isLink
+            linkable
             title="失败提示"
             onClick={() => showToast('fail', '失败')}
           />
           <Cell
-            isLink
+            linkable
             title="加载中提示"
             onClick={() => showToast('loading', '加载中')}
           />
-          <Cell isLink title="隐藏提示" onClick={() => setVisible(false)} />
+          <Cell linkable title="隐藏提示" onClick={() => setVisible(false)} />
         </Cell.Group>
 
         <Toast
@@ -58,25 +58,29 @@ export default () => {
 
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="文本提示"
             onClick={() => Toast.show('文本提示')}
           />
-          <Cell isLink title="成功提示" onClick={() => Toast.success('成功')} />
-          <Cell isLink title="失败提示" onClick={() => Toast.fail('失败')} />
           <Cell
-            isLink
+            linkable
+            title="成功提示"
+            onClick={() => Toast.success('成功')}
+          />
+          <Cell linkable title="失败提示" onClick={() => Toast.fail('失败')} />
+          <Cell
+            linkable
             title="加载中提示"
             onClick={() => Toast.loading('加载中')}
           />
-          <Cell isLink title="隐藏提示" onClick={() => Toast.hide()} />
+          <Cell linkable title="隐藏提示" onClick={() => Toast.hide()} />
         </Cell.Group>
       </Demo>
 
       <Demo title="自定义图标" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="图标提示框"
             onClick={() => {
               Toast.show('笑一笑', {
@@ -88,7 +92,7 @@ export default () => {
             }}
           />
           <Cell
-            isLink
+            linkable
             title="图片提示框"
             onClick={() => {
               Toast.show('Sard', {
@@ -104,7 +108,7 @@ export default () => {
       <Demo title="自定义位置" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="顶部位置"
             onClick={() => {
               Toast.show('顶部位置', {
@@ -113,7 +117,7 @@ export default () => {
             }}
           />
           <Cell
-            isLink
+            linkable
             title="底部位置"
             onClick={() => {
               Toast.show('底部位置', {
@@ -127,7 +131,7 @@ export default () => {
       <Demo title="加载中的背景" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="显示背景"
             onClick={() => {
               Toast.loading('加载中', {
@@ -141,12 +145,12 @@ export default () => {
           />
 
           <Cell
-            isLink
+            linkable
             title="透明背景"
             onClick={() => {
               Toast.loading('加载中', {
                 mask: true,
-                clearMask: true,
+                transparent: true,
               })
 
               setTimeout(() => {

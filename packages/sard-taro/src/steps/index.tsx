@@ -4,6 +4,7 @@ import classNames from 'classnames'
 
 import { StepsStep, StepsStepProps } from './Step'
 import { BaseProps } from '../base'
+import { useBem } from '../use'
 
 export * from './Step'
 
@@ -39,15 +40,11 @@ export const Steps: StepsFC = (props) => {
     ...restProps
   } = props
 
-  const stepsClass = classNames(
-    'sar-steps',
-    {
-      'sar-steps-vertical': vertical,
-      'sar-steps-center': center,
-      'sar-steps-clickable': clickable,
-    },
-    className,
-  )
+  const [bem] = useBem('steps')
+
+  const stepsClass = classNames(bem.b(), bem.m('vertical', vertical), className)
+
+  const count = Children.count(children)
 
   return (
     <View {...restProps} className={stepsClass}>
@@ -64,6 +61,11 @@ export const Steps: StepsFC = (props) => {
           disabled: item.props.disabled ?? disabled,
           icon: item.props.icon ?? icon,
           _position: index - current,
+          first: index === 0,
+          last: index === count - 1,
+          center,
+          vertical,
+          clickable,
         })
       })}
     </View>

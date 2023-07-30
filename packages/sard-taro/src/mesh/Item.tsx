@@ -5,6 +5,7 @@ import Icon, { IconProps } from '../icon'
 
 import { BaseProps } from '../base'
 import { MeshCommonProps } from './type'
+import { useBem } from '../use'
 
 export interface MeshItemProps extends BaseProps, MeshCommonProps {
   text?: ReactNode
@@ -35,22 +36,25 @@ export const MeshItem: FC<MeshItemProps> = (props) => {
     ...restProps
   } = props
 
-  const meshItemClass = classNames('sar-mesh-item', className)
+  const [bem] = useBem('mesh')
+
+  const meshItemClass = classNames(bem.e('item'), className)
 
   const meshItemStyle = {
     ...style,
   }
 
-  const contentClass = classNames('sar-mesh-item-content', {
-    'sar-item-clickable': clickable,
-    'sar-mesh-border-right': border && !gap && !isRight,
-    'sar-mesh-border-bottom': border && !gap && !isBottom,
-    'sar-mesh-border-surround': border && gap,
-    'sar-mesh-center': center,
-    'sar-mesh-square': square,
-    [`sar-mesh-${direction}`]: !reverse,
-    [`sar-mesh-${direction}-reverse`]: reverse,
-  })
+  const contentClass = classNames(
+    bem.e('item-content'),
+    bem.m('clickable', clickable),
+    bem.m('border-right', border && !gap && !isRight),
+    bem.m('border-bottom', border && !gap && !isBottom),
+    bem.m('border-surround', border && gap),
+    bem.m('center', center),
+    bem.m('square', square),
+    bem.m(direction, !reverse),
+    bem.m(`${direction}-reverse`, reverse),
+  )
 
   return (
     <View
@@ -63,11 +67,25 @@ export const MeshItem: FC<MeshItemProps> = (props) => {
         {children ?? (
           <>
             {iconProps && (
-              <View className="sar-item-icon">
+              <View className={bem.e('item-icon')}>
                 <Icon {...iconProps}></Icon>
               </View>
             )}
-            {text && <View className="sar-item-text">{text}</View>}
+            {text && (
+              <View
+                className={classNames(
+                  bem.e('item-text'),
+                  bem.em('item-text', direction, iconProps && !reverse),
+                  bem.em(
+                    'item-text',
+                    `${direction}-reverse`,
+                    iconProps && reverse,
+                  ),
+                )}
+              >
+                {text}
+              </View>
+            )}
           </>
         )}
       </View>

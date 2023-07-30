@@ -1,6 +1,7 @@
 import { FC, useState } from 'react'
 import classNames from 'classnames'
 import { Transition, TransitionProps } from './index'
+import { useBem } from '../use'
 
 export interface CSSTransitionProps extends TransitionProps {
   effect?:
@@ -30,7 +31,9 @@ export const CSSTransition: FC<CSSTransitionProps> = (props) => {
     ...restProps
   } = props
 
-  const prefix = 'sar-transition-' + effect
+  const [bem] = useBem('transition')
+
+  const prefix = bem.m(effect)
 
   const [clsName, setClsName] = useState('')
 

@@ -8,6 +8,7 @@ export * from './useSelectorId'
 export * from './useStopMovePropagate'
 export * from './useStrike'
 export * from './useBrush'
+export * from './useBem'
 
 export * from './useControllableValue'
 export * from './useEvent'

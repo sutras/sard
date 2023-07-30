@@ -4,6 +4,7 @@ import { View } from '@tarojs/components'
 import { Icon } from '../icon'
 import { Cell } from '../cell'
 import { BaseProps } from '../base'
+import { useBem } from '../use'
 
 export interface DropdownOptionProps extends Omit<BaseProps, 'children'> {
   label?: ReactNode
@@ -15,11 +16,11 @@ export interface DropdownOptionProps extends Omit<BaseProps, 'children'> {
 export const DropdownOption: FC<DropdownOptionProps> = (props) => {
   const { className, label, active, onClick, ...restProps } = props
 
+  const [bem] = useBem('dropdown')
+
   const optionClass = classNames(
-    'sar-dropdown-option',
-    {
-      'sar-dropdown-item-option-active': active,
-    },
+    bem.e('option'),
+    bem.em('option', 'active', active),
     className,
   )
 
@@ -28,9 +29,14 @@ export const DropdownOption: FC<DropdownOptionProps> = (props) => {
       {...restProps}
       className={optionClass}
       title={label}
-      isLink
+      linkable
       arrow={
-        <View className="sar-dropdown-option-icon">
+        <View
+          className={classNames(
+            bem.e('option-icon'),
+            bem.em('option-icon', 'active', active),
+          )}
+        >
           <Icon name="success"></Icon>
         </View>
       }

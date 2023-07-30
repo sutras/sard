@@ -4,19 +4,11 @@
 
 样式。
 
-### 引入
-
-```js
-import { Style } from 'sard-taro'
-```
-
-## 代码演示
-
-## API
-
-### Props
-
 ## 主题定制
+
+### SCSS 变量
+
+%(./variables.scss)
 
 ### CSS 变量
 

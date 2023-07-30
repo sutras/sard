@@ -12,8 +12,8 @@ export default () => {
     <Page className="page-notify">
       <Demo title="基础使用" full>
         <Cell.Group card>
-          <Cell isLink title="显示通知" onClick={() => setVisible(true)} />
-          <Cell isLink title="隐藏通知" onClick={() => setVisible(false)} />
+          <Cell linkable title="显示通知" onClick={() => setVisible(true)} />
+          <Cell linkable title="隐藏通知" onClick={() => setVisible(false)} />
         </Cell.Group>
 
         <Notify
@@ -28,39 +28,39 @@ export default () => {
 
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="显示通知"
             onClick={() => Notify.show('这是一条通知')}
           />
-          <Cell isLink title="隐藏通知" onClick={() => Notify.hide()} />
+          <Cell linkable title="隐藏通知" onClick={() => Notify.hide()} />
         </Cell.Group>
       </Demo>
 
       <Demo title="类型" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="成功通知"
             onClick={() => Notify.success('这是一条通知')}
           />
           <Cell
-            isLink
+            linkable
             title="警告通知"
             onClick={() => Notify.warning('这是一条通知')}
           />
           <Cell
-            isLink
+            linkable
             title="错误通知"
             onClick={() => Notify.error('这是一条通知')}
           />
-          <Cell isLink title="隐藏通知" onClick={() => Notify.hide()} />
+          <Cell linkable title="隐藏通知" onClick={() => Notify.hide()} />
         </Cell.Group>
       </Demo>
 
       <Demo title="自定义颜色" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="显示通知"
             onClick={() =>
               Notify.show('这是一条通知', {
@@ -69,14 +69,14 @@ export default () => {
               })
             }
           />
-          <Cell isLink title="隐藏通知" onClick={() => Notify.hide()} />
+          <Cell linkable title="隐藏通知" onClick={() => Notify.hide()} />
         </Cell.Group>
       </Demo>
 
       <Demo title="自定义时长" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="显示不会消失的通知"
             onClick={() =>
               Notify.show('这是一条通知', {
@@ -84,14 +84,14 @@ export default () => {
               })
             }
           />
-          <Cell isLink title="隐藏通知" onClick={() => Notify.hide()} />
+          <Cell linkable title="隐藏通知" onClick={() => Notify.hide()} />
         </Cell.Group>
       </Demo>
 
       <Demo title="自定义位置" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="在底部显示通知"
             onClick={() =>
               Notify.show('这是一条通知', {
@@ -99,7 +99,7 @@ export default () => {
               })
             }
           />
-          <Cell isLink title="隐藏通知" onClick={() => Notify.hide()} />
+          <Cell linkable title="隐藏通知" onClick={() => Notify.hide()} />
         </Cell.Group>
       </Demo>
     </Page>

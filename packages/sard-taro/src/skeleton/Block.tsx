@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import { BaseProps } from '../base'
+import { useBem } from '../use'
 
 export interface SkeletonBlockProps extends BaseProps {
   animated?: boolean
@@ -11,12 +12,12 @@ export interface SkeletonBlockProps extends BaseProps {
 export const SkeletonBlock: FC<SkeletonBlockProps> = (props) => {
   const { className, animated, round, children, ...restProps } = props
 
+  const [bem] = useBem('skeleton')
+
   const blockClass = classNames(
-    'sar-skeleton-block',
-    {
-      'sar-skeleton-animated': animated,
-      'sar-skeleton-round': round,
-    },
+    bem.e('block'),
+    bem.m('animated', animated),
+    bem.m('round', round),
     className,
   )
 

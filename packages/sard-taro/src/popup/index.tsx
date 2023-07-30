@@ -1,7 +1,7 @@
 import { useState, CSSProperties, FC, forwardRef } from 'react'
 import classNames from 'classnames'
 import { ITouchEvent, View } from '@tarojs/components'
-import { useEvent } from '../use'
+import { useBem, useEvent } from '../use'
 import { CSSTransition } from '../transition/CSSTransition'
 import { BaseProps } from '../base'
 
@@ -17,7 +17,7 @@ export interface PopupProps extends BaseProps {
     | 'fade'
   zIndex?: number
   mask?: boolean
-  clearMask?: boolean
+  transparent?: boolean
   maskClass?: string
   maskStyle?: CSSProperties
   onMaskClick?: (event: ITouchEvent) => void
@@ -42,7 +42,7 @@ export const Popup: FC<PopupProps> = forwardRef<PopupRef, PopupProps>(
       timeout = 300,
       effect = 'zoom',
       mask = true,
-      clearMask,
+      transparent,
       maskClass,
       maskStyle,
       onMaskClick,
@@ -54,6 +54,8 @@ export const Popup: FC<PopupProps> = forwardRef<PopupRef, PopupProps>(
       onExited,
       ...restProps
     } = props
+
+    const [bem] = useBem('popup')
 
     const [popupVisible, setPopupVisible] = useState(visible)
     const [isHiding, setIsHiding] = useState(!visible)
@@ -92,32 +94,28 @@ export const Popup: FC<PopupProps> = forwardRef<PopupRef, PopupProps>(
     })
 
     const popupClass = classNames(
-      'sar-popup',
-      {
-        'sar-popup-show': popupVisible,
-        'sar-popup-hiding': isHiding,
-      },
-      `sar-popup-${effect}`,
+      bem.b(),
+      bem.m('hiding', isHiding),
+      bem.m(effect),
       className,
     )
 
     const popupStyle = {
       zIndex,
+      display: popupVisible ? 'flex' : 'none',
       ...style,
     }
 
     const innerMaskClass = classNames(
-      'sar-popup-mask',
-      {
-        'sar-popup-mask-show': popupVisible,
-        'sar-popup-hiding': isHiding,
-        'sar-popup-clear-mask': clearMask,
-      },
+      bem.e('mask'),
+      bem.m('hiding', isHiding),
+      bem.em('mask', 'transparent', transparent),
       maskClass,
     )
 
     const innerMaskStyle = {
       zIndex,
+      display: popupVisible ? 'flex' : 'none',
       ...maskStyle,
     }
 

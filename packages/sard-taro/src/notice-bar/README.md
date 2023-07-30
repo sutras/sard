@@ -79,7 +79,7 @@ import { NoticeBar } from 'sard-taro'
 ### 可点击的
 
 ```tsx
-<NoticeBar isLink onClick={() => console.log('click')}>
+<NoticeBar linkable onClick={() => console.log('click')}>
   这是一条很长很长很长很长很长很长很长很长很长很长的公告！
 </NoticeBar>
 ```
@@ -137,7 +137,7 @@ import { NoticeBar } from 'sard-taro'
 | wrap           | 是否开启文本换行                         | boolean                      | false  |
 | closable       | 是否显示关闭按钮                         | boolean                      | false  |
 | onClose        | 点击关闭按钮时触发                       | (event: ITouchEvent) => void | -      |
-| isLink         | 是否展示右侧箭头                         | boolean                      | false  |
+| linkable       | 是否展示右侧箭头                         | boolean                      | false  |
 | onClick        | 点击公告栏时触发                         | (event: ITouchEvent) => void | -      |
 | onClick        | 点击公告栏时触发                         | (event: ITouchEvent) => void | -      |
 | visible        | 是否显示公告栏                           | boolean                      | -      |

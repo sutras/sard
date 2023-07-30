@@ -7,8 +7,8 @@ import {
   Children,
 } from 'react'
 import classNames from 'classnames'
-import { View, Button, ITouchEvent } from '@tarojs/components'
-import { useEvent } from '../use'
+import { View, ITouchEvent } from '@tarojs/components'
+import { useBem, useEvent } from '../use'
 import { Popup, PopupProps } from '../popup'
 import { ShareSheetItem, ShareSheetItemProps } from './Item'
 import { ShareSheetRow, ShareSheetRowProps } from './Row'
@@ -55,6 +55,8 @@ export const ShareSheet: ShareSheetFC = ((props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('share-sheet')
+
   const handleItemClick = useEvent((itemProps: ShareSheetItemProps) => {
     onSelect?.(itemProps)
     if (actionClosable) {
@@ -83,13 +85,7 @@ export const ShareSheet: ShareSheetFC = ((props) => {
     }
   }, [itemList])
 
-  const shareSheetClass = classNames(
-    'sar-share-sheet',
-    {
-      'sar-share-sheet-headless': !title && !description,
-    },
-    className,
-  )
+  const shareSheetClass = classNames(bem.b(), className)
 
   return (
     <Popup
@@ -100,21 +96,34 @@ export const ShareSheet: ShareSheetFC = ((props) => {
       onMaskClick={handleMaskClick}
     >
       {(!isNullish(title) || !isNullish(description)) && (
-        <View className="sar-share-sheet-header">
-          {!isNullish(title) && (
-            <View className="sar-share-sheet-title">{title}</View>
-          )}
+        <View className={bem.e('header')}>
+          {!isNullish(title) && <View className={bem.e('title')}>{title}</View>}
           {!isNullish(description) && (
-            <View className="sar-share-sheet-description">{description}</View>
+            <View
+              className={classNames(
+                bem.e('description'),
+                bem.em('description', 'titled', !isNullish(title)),
+              )}
+            >
+              {description}
+            </View>
           )}
         </View>
       )}
-      <View className="sar-share-sheet-body">
+      <View className={bem.e('body')}>
         {rowList
           ? rowList.map((itemList, index) => (
               <ShareSheetRow
                 itemList={itemList}
                 key={index}
+                className={classNames(
+                  bem.em('row', 'later', index > 0),
+                  bem.em(
+                    'row',
+                    'headless-first',
+                    isNullish(title) && isNullish(description) && index === 0,
+                  ),
+                )}
                 onItemClick={(event) => {
                   handleItemClick(event)
                 }}
@@ -122,8 +131,9 @@ export const ShareSheet: ShareSheetFC = ((props) => {
             ))
           : Children.map(
               children,
-              (element: ReactElement<ShareSheetRowProps>) => {
+              (element: ReactElement<ShareSheetRowProps>, index) => {
                 return cloneElement(element, {
+                  className: bem.em('row', 'later', index > 0),
                   onItemClick: (event) => {
                     handleItemClick(event)
                     element.props.onItemClick?.(event)
@@ -134,13 +144,10 @@ export const ShareSheet: ShareSheetFC = ((props) => {
       </View>
       {!isNullish(cancel) && (
         <>
-          <View className="sar-share-sheet-gap"></View>
-          <Button
-            className="sar-share-sheet-cancel"
-            onClick={handleCancelClick}
-          >
+          <View className={bem.e('gap')}></View>
+          <View className={bem.e('cancel')} onClick={handleCancelClick}>
             {cancel}
-          </Button>
+          </View>
         </>
       )}
     </Popup>

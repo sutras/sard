@@ -46,6 +46,13 @@ export default () => {
         </Dropdown>
       </Demo>
 
+      <Demo title="占位符" full>
+        <Dropdown>
+          <Dropdown.Item options={options1} placeholder="排序"></Dropdown.Item>
+          <Dropdown.Item options={options2} defaultValue="2"></Dropdown.Item>
+        </Dropdown>
+      </Demo>
+
       <Demo title="添加 label" full>
         <Dropdown>
           <Dropdown.Item label="排序" options={options1}></Dropdown.Item>
@@ -71,9 +78,9 @@ export default () => {
         </Dropdown>
       </Demo>
 
-      <Demo title="自定义图标" full>
+      <Demo title="自定义箭头" full>
         <Dropdown
-          icon={(visible) => {
+          arrow={(visible) => {
             return <Icon name={visible ? 'up' : 'down'}></Icon>
           }}
         >

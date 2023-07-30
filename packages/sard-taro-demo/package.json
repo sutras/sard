@@ -26,11 +26,7 @@
     "dev:rn": "npm run build:rn -- --watch",
     "dev:qq": "npm run build:qq -- --watch",
     "dev:jd": "npm run build:jd -- --watch",
-    "dev:quickapp": "npm run build:quickapp -- --watch",
-    "dev": "sard dev",
-    "build:site": "sard build:site",
-    "build": "sard build",
-    "preview": "sard preview"
+    "dev:quickapp": "npm run build:quickapp -- --watch"
   },
   "browserslist": [
     "last 3 versions",

@@ -1,3 +1,5 @@
+@import '../style/base.scss';
+
 // #variables
 :root,
 page {
@@ -27,87 +29,77 @@ page {
 }
 // #endvariables
 
-// # animated
-@keyframes sar-skeleton-animated {
+@include bem(skeleton) {
+  @include b() {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  @include e(block) {
+    width: 100%;
+    height: var(--sar-skeleton-block-height);
+    background-color: var(--sar-skeleton-bg);
+    border-radius: var(--sar-skeleton-border-radius);
+  }
+
+  @include e(avatar) {
+    flex: none;
+    width: var(--sar-skeleton-avatar-size);
+    height: var(--sar-skeleton-avatar-size);
+    background-color: var(--sar-skeleton-bg);
+    border-radius: var(--sar-skeleton-border-radius);
+
+    @include m(in-skeleton) {
+      margin-right: var(--sar-skeleton-avatar-margin-right);
+    }
+  }
+
+  @include e(title) {
+    width: var(--sar-skeleton-title-width);
+    height: var(--sar-skeleton-title-height);
+    background-color: var(--sar-skeleton-bg);
+  }
+
+  @include e(row) {
+    @include m(later) {
+      margin-top: var(--sar-skeleton-row-gap);
+    }
+    @include m(last) {
+      width: var(--sar-skeleton-row-last-width);
+    }
+  }
+
+  @include e(content) {
+    flex: 1;
+  }
+
+  @include e(paragraph) {
+    @include m(in-skeleton) {
+      margin-top: var(--sar-skeleton-title-gap);
+    }
+  }
+
+  @include m(round) {
+    border-radius: var(--sar-rounded-full);
+  }
+
+  @include m(animated) {
+    background-image: linear-gradient(
+      90deg,
+      rgb(var(--sar-skeleton-bg-rgb), 0.2) 25%,
+      rgb(var(--sar-skeleton-dark-bg-rgb), 0.6) 40%,
+      rgb(var(--sar-skeleton-bg-rgb), 0.2) 60%
+    );
+    background-size: 400% 100%;
+    animation: #{bem-ns(skeleton-animated)} 1.5s ease infinite;
+  }
+}
+
+@keyframes #{bem-ns(skeleton-animated)} {
   0% {
     background-position: 100% 50%;
   }
   100% {
     background-position: 0 50%;
-  }
-}
-
-.sar-skeleton-animated {
-  background: linear-gradient(
-    90deg,
-    rgb(var(--sar-skeleton-bg-rgb), 0.2) 25%,
-    rgb(var(--sar-skeleton-dark-bg-rgb), 0.6) 40%,
-    rgb(var(--sar-skeleton-bg-rgb), 0.2) 60%
-  );
-  background-size: 400% 100%;
-  animation: sar-skeleton-animated 1.5s ease infinite;
-}
-
-// # block
-.sar-skeleton-block {
-  width: 100%;
-  height: var(--sar-skeleton-block-height);
-  background-color: var(--sar-skeleton-bg);
-  border-radius: var(--sar-skeleton-border-radius);
-}
-
-// # round
-.sar-skeleton-round {
-  border-radius: 9999px;
-}
-
-// # avatar
-.sar-skeleton-avatar {
-  flex: none;
-  width: var(--sar-skeleton-avatar-size);
-  height: var(--sar-skeleton-avatar-size);
-  background-color: var(--sar-skeleton-bg);
-}
-.sar-skeleton-avatar-round {
-  border-radius: 50%;
-}
-.sar-skeleton-avatar-square {
-  border-radius: var(--sar-skeleton-border-radius);
-}
-
-// # title
-.sar-skeleton-title {
-  width: var(--sar-skeleton-title-width);
-  height: var(--sar-skeleton-title-height);
-  background-color: var(--sar-skeleton-bg);
-}
-
-// # paragraph
-.sar-skeleton-row {
-  &:not(:first-child) {
-    margin-top: var(--sar-skeleton-row-gap);
-  }
-  &:last-child {
-    width: var(--sar-skeleton-row-last-width);
-  }
-}
-
-// # skeleton
-.sar-skeleton {
-  display: flex;
-  flex-wrap: nowrap;
-
-  @at-root {
-    .sar-skeleton-content {
-      flex: 1;
-    }
-  }
-
-  .sar-skeleton-avatar {
-    margin-right: var(--sar-skeleton-avatar-margin-right);
-  }
-
-  .sar-skeleton-title ~ .sar-skeleton-paragraph {
-    margin-top: var(--sar-skeleton-title-gap);
   }
 }

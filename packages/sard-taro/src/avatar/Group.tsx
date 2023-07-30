@@ -4,6 +4,7 @@ import classNames from 'classnames'
 
 import { Avatar, AvatarProps } from './index'
 import { BaseProps } from '../base'
+import { useBem } from '../use'
 
 export interface AvatarGroupProps extends BaseProps {
   gap?: string | number
@@ -21,7 +22,9 @@ export const AvatarGroup: FC<AvatarGroupProps> = (props) => {
     ...restProps
   } = props
 
-  const groupClass = classNames('sar-avatar-group', className)
+  const [bem] = useBem('avatar-group')
+
+  const groupClass = classNames(bem.b(), className)
 
   const count = Children.count(children)
 
@@ -31,6 +34,10 @@ export const AvatarGroup: FC<AvatarGroupProps> = (props) => {
         return index > maxCount - 1
           ? null
           : cloneElement(item, {
+              className: classNames(
+                bem.bem('avatar', '', 'in-group'),
+                bem.bem('avatar', '', 'later', index > 0),
+              ),
               style: {
                 marginLeft: index === 0 ? 0 : gap,
                 zIndex: direction === 'left' ? count - index : undefined,
@@ -38,7 +45,15 @@ export const AvatarGroup: FC<AvatarGroupProps> = (props) => {
             })
       })}
       {count > maxCount && (
-        <Avatar className="sar-avatar-rest">+{count - maxCount}</Avatar>
+        <Avatar
+          className={bem.bem('avatar', 'rest')}
+          style={{
+            marginLeft: gap,
+            zIndex: direction === 'left' ? 0 : undefined,
+          }}
+        >
+          +{count - maxCount}
+        </Avatar>
       )}
     </View>
   )

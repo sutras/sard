@@ -1,71 +1,71 @@
-@import '../style/mixins.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
 page {
-  --sar-checkbox-icon-font-size: 1.25em;
+  --sar-checkbox-icon-font-size: 20px;
   --sar-checkbox-icon-color: var(--sar-quaternary-color);
   --sar-checkbox-icon-checked-color: var(--sar-primary);
   --sar-checkbox-icon-transition-duration: var(--sar-duration);
 
-  --sar-checkbox-label-margin-left: 0.5em;
+  --sar-checkbox-label-margin-left: 8px;
 
-  --sar-checkbox-margin-left: 1em;
-  --sar-checkbox-margin-top: 1em;
+  --sar-checkbox-margin-left: 20px;
+  --sar-checkbox-margin-top: 10px;
 }
 // #endvariables
 
-.sar-checkbox {
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  user-select: none;
-  cursor: pointer;
+@include bem(checkbox) {
+  @include b() {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+  }
 
-  @at-root {
-    .sar-checkbox-icon {
-      font-size: var(--sar-checkbox-icon-font-size);
-      line-height: 1;
-      color: var(--sar-checkbox-icon-color);
-      transition: color var(--sar-checkbox-icon-transition-duration);
-    }
-    .sar-checkbox-label {
-      display: flex;
-      margin-left: var(--sar-checkbox-label-margin-left);
-      user-select: auto;
+  @include e(icon) {
+    font-size: var(--sar-checkbox-icon-font-size);
+    line-height: 1;
+    color: var(--sar-checkbox-icon-color);
+    transition: color var(--sar-checkbox-icon-transition-duration);
+
+    @include m(checked) {
+      color: var(--sar-checkbox-icon-checked-color);
     }
   }
-}
 
-// # 选中状态
-.sar-checkbox-checked {
-  .sar-checkbox-icon {
-    color: var(--sar-checkbox-icon-checked-color);
+  @include e(label) {
+    display: flex;
+    margin-left: var(--sar-checkbox-label-margin-left);
+    user-select: auto;
   }
-}
 
-// # 禁用状态
-.sar-checkbox-disabled {
-  @include disabled;
-}
+  @include m(disabled) {
+    @include disabled;
+  }
 
-// # 复选框组
-.sar-checkbox-group {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: left;
-  align-items: center;
-
-  &:not(.sar-checkbox-group-vertical) .sar-checkbox ~ .sar-checkbox {
+  @include m(later) {
     margin-left: var(--sar-checkbox-margin-left);
   }
-}
-.sar-checkbox-group-vertical {
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  .sar-checkbox ~ .sar-checkbox {
+
+  @include m(vertical-later) {
     margin-top: var(--sar-checkbox-margin-top);
+  }
+}
+
+@include bem(checkbox-group) {
+  @include b() {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+  }
+
+  @include m(vertical) {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 }

@@ -2,7 +2,7 @@ import { ReactElement, Children, cloneElement, FC } from 'react'
 import { ITouchEvent, View } from '@tarojs/components'
 import classNames from 'classnames'
 import { pickNullish } from '../utils'
-import { useControllableValue } from '../use'
+import { useBem, useControllableValue } from '../use'
 
 import { TabbarItem, TabbarItemProps } from './Item'
 import { BaseProps } from '../base'
@@ -39,6 +39,8 @@ export const Tabbar: TabbarFC = (props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('tabbar')
+
   const [innerActiveKey, setInnerActiveKey] = useControllableValue({
     value: activeKey,
     defaultValue: defaultActiveKey,
@@ -54,13 +56,7 @@ export const Tabbar: TabbarFC = (props) => {
     element.props?.onClick?.(event)
   }
 
-  const tabbarClass = classNames(
-    'sar-tabbar',
-    {
-      'sar-tabbar-fixed': fixed,
-    },
-    className,
-  )
+  const tabbarClass = classNames(bem.b(), bem.m('fixed', fixed), className)
 
   const tabbarStyle = {
     zIndex: fixed ? zIndex : '',

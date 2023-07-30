@@ -1,6 +1,6 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { TabsPane, Tabs, Button, Icon, Badge } from 'sard-taro'
+import { TabsPane, Tabs, Button, Icon, Badge, Swiper } from 'sard-taro'
 import { useState } from 'react'
 import { Text, View } from '@tarojs/components'
 
@@ -9,29 +9,49 @@ import './index.scss'
 export default () => {
   const [activeKey, setActiveKey] = useState<number | string>(1)
 
+  const [swipeActiveKey, setSwipeActiveKey] = useState<number | string>(0)
+
   return (
     <Page className="page-tabs">
       <Demo title="基础使用">
         <Tabs>
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2">内容2</TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
         </Tabs>
       </Demo>
 
       <Demo title="胶囊标签">
         <Tabs type="pill">
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2">内容2</TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
         </Tabs>
       </Demo>
 
       <Demo title="边框标签">
         <Tabs type="border">
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2">内容2</TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
         </Tabs>
       </Demo>
 
@@ -40,29 +60,53 @@ export default () => {
           type="card"
           inactiveLabelStyle={{ background: 'var(--sar-secondary-bg)' }}
         >
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2">内容2</TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
         </Tabs>
       </Demo>
 
       <Demo title="垂直">
         <Tabs vertical>
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2">内容2</TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
         </Tabs>
 
         <Tabs vertical type="pill">
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2">内容2</TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
         </Tabs>
 
         <Tabs vertical type="border">
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2">内容2</TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
         </Tabs>
 
         <Tabs
@@ -70,9 +114,15 @@ export default () => {
           type="card"
           inactiveLabelStyle={{ background: 'var(--sar-secondary-bg)' }}
         >
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2">内容2</TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
         </Tabs>
       </Demo>
 
@@ -82,24 +132,48 @@ export default () => {
           activeLabelStyle={{ fontWeight: 'bold', color: 'orange' }}
           inkbarStyle={{ background: 'orange' }}
         >
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2">内容2</TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
         </Tabs>
 
         <Tabs type="border" wrapperStyle={{ color: 'orange' }}>
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2">内容2</TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
         </Tabs>
 
         <Tabs type="pill" line activeLabelStyle={{ backgroundColor: 'orange' }}>
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2">内容2</TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
-          <TabsPane label="标签4">内容4</TabsPane>
-          <TabsPane label="标签5">内容5</TabsPane>
-          <TabsPane label="标签6">内容6</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
+          <TabsPane label="标签4">
+            <View className="demo-pane">内容4</View>
+          </TabsPane>
+          <TabsPane label="标签5">
+            <View className="demo-pane">内容5</View>
+          </TabsPane>
+          <TabsPane label="标签6">
+            <View className="demo-pane">内容6</View>
+          </TabsPane>
         </Tabs>
 
         <Tabs
@@ -107,15 +181,23 @@ export default () => {
           inactiveLabelStyle={{ background: 'var(--sar-secondary-bg)' }}
           lineWidth="15px"
         >
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2">内容2</TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
         </Tabs>
       </Demo>
 
       <Demo title="自定义标签">
         <Tabs>
-          <TabsPane label="标签1">内容1</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
           <TabsPane
             label={(active) => (
               <View>
@@ -127,32 +209,38 @@ export default () => {
               </View>
             )}
           >
-            内容2
+            <View className="demo-pane">内容2</View>
           </TabsPane>
-          <TabsPane label={<Badge value={2}>标签3</Badge>}>内容3</TabsPane>
+          <TabsPane label={<Badge value={2}>标签3</Badge>}>
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
         </Tabs>
       </Demo>
 
       <Demo title="禁用标签">
         <Tabs>
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2" disabled>
-            内容2
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
           </TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
+          <TabsPane label="标签2" disabled>
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
         </Tabs>
       </Demo>
 
       <Demo title="名称匹配">
         <Tabs>
           <TabsPane key="key1" label="标签1">
-            内容1
+            <View className="demo-pane">内容1</View>
           </TabsPane>
           <TabsPane key="key2" label="标签2">
-            内容2
+            <View className="demo-pane">内容2</View>
           </TabsPane>
           <TabsPane key="key3" label="标签3">
-            内容3
+            <View className="demo-pane">内容3</View>
           </TabsPane>
         </Tabs>
       </Demo>
@@ -161,21 +249,41 @@ export default () => {
         <Button onClick={() => setActiveKey(2)}>切换到标签3</Button>
 
         <Tabs activeKey={activeKey} onChange={setActiveKey}>
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2">内容2</TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
         </Tabs>
       </Demo>
 
       <Demo title="可滚动的标签栏">
         <Tabs>
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2">内容2</TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
-          <TabsPane label="标签4">内容4</TabsPane>
-          <TabsPane label="标签5">内容5</TabsPane>
-          <TabsPane label="标签6">内容6</TabsPane>
-          <TabsPane label="标签7">内容7</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
+          <TabsPane label="标签4">
+            <View className="demo-pane">内容4</View>
+          </TabsPane>
+          <TabsPane label="标签5">
+            <View className="demo-pane">内容5</View>
+          </TabsPane>
+          <TabsPane label="标签6">
+            <View className="demo-pane">内容6</View>
+          </TabsPane>
+          <TabsPane label="标签7">
+            <View className="demo-pane">内容7</View>
+          </TabsPane>
         </Tabs>
       </Demo>
 
@@ -184,28 +292,68 @@ export default () => {
           prepend={<View style={{ fontWeight: 'bold' }}>推荐</View>}
           append={<Icon size={20} prefix="demo-icon" name="list-task"></Icon>}
         >
-          <TabsPane label="标签1">内容1</TabsPane>
-          <TabsPane label="标签2">内容2</TabsPane>
-          <TabsPane label="标签3">内容3</TabsPane>
-          <TabsPane label="标签4">内容4</TabsPane>
-          <TabsPane label="标签5">内容5</TabsPane>
-          <TabsPane label="标签6">内容6</TabsPane>
-          <TabsPane label="标签7">内容7</TabsPane>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
+          <TabsPane label="标签4">
+            <View className="demo-pane">内容4</View>
+          </TabsPane>
+          <TabsPane label="标签5">
+            <View className="demo-pane">内容5</View>
+          </TabsPane>
+          <TabsPane label="标签6">
+            <View className="demo-pane">内容6</View>
+          </TabsPane>
+          <TabsPane label="标签7">
+            <View className="demo-pane">内容7</View>
+          </TabsPane>
+        </Tabs>
+      </Demo>
+
+      <Demo title="切换动画">
+        <Tabs animated>
+          <TabsPane label="标签1">
+            <View className="demo-pane">内容1</View>
+          </TabsPane>
+          <TabsPane label="标签2">
+            <View className="demo-pane">内容2</View>
+          </TabsPane>
+          <TabsPane label="标签3">
+            <View className="demo-pane">内容3</View>
+          </TabsPane>
         </Tabs>
       </Demo>
 
       <Demo title="滑动切换">
-        <Tabs swipeable swiperProps={{ style: { height: 100 } }}>
-          <TabsPane label="标签1" style={{ padding: 30 }}>
-            内容1
-          </TabsPane>
-          <TabsPane label="标签2" style={{ padding: 30 }}>
-            内容2
-          </TabsPane>
-          <TabsPane label="标签3" style={{ padding: 30 }}>
-            内容3
-          </TabsPane>
+        <Tabs activeKey={swipeActiveKey} onChange={setSwipeActiveKey}>
+          <TabsPane label="标签1" />
+          <TabsPane label="标签2" />
+          <TabsPane label="标签3" />
         </Tabs>
+
+        <Swiper
+          duration={300}
+          current={Number(swipeActiveKey)}
+          onChange={(event) => {
+            setSwipeActiveKey(event.detail.current)
+          }}
+        >
+          <Swiper.Item>
+            <View className="demo-pane">内容1</View>
+          </Swiper.Item>
+          <Swiper.Item>
+            <View className="demo-pane">内容2</View>
+          </Swiper.Item>
+          <Swiper.Item>
+            <View className="demo-pane">内容3</View>
+          </Swiper.Item>
+        </Swiper>
       </Demo>
 
       <Demo title="粘性定位">

@@ -58,7 +58,7 @@ export default () => {
       <Demo title="受控" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="设置值为：50"
             onClick={() => setValue3(50)}
           ></Cell>
@@ -69,7 +69,7 @@ export default () => {
 
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="设置值为：[20, 80]"
             onClick={() => setRangeValue3([20, 80])}
           ></Cell>

@@ -1,7 +1,7 @@
 import { CSSProperties, forwardRef, ReactNode, useEffect } from 'react'
 import classNames from 'classnames'
 import { View } from '@tarojs/components'
-import { useSelectorId } from '../use'
+import { useBem, useSelectorId } from '../use'
 import { BaseProps } from '../base'
 
 export interface IndexBarItemProps extends BaseProps {
@@ -25,23 +25,25 @@ export const IndexBarItem = forwardRef<HTMLElement, IndexBarItemProps>(
       ...restProps
     } = props
 
+    const [bem] = useBem('index-bar-item')
+
     const selectorId = useSelectorId()
 
     useEffect(() => {
       _onMounted?.(selectorId)
     }, [])
 
-    const itemClass = classNames('sar-index-bar-item', className)
+    const itemClass = classNames(bem.b(), className)
 
     return (
       <View {...restProps} ref={ref} className={itemClass} id={selectorId}>
         <View
-          className={classNames('sar-index-bar-anchor', anchorClass)}
+          className={classNames(bem.e('anchor'), anchorClass)}
           style={{ ...anchorStyle, top: offset }}
         >
           {title}
         </View>
-        <View className="sar-index-bar-content">{children}</View>
+        <View className={bem.e('content')}>{children}</View>
       </View>
     )
   },

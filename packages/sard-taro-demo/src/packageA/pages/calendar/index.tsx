@@ -70,7 +70,7 @@ export default () => {
             <Popout.Outlet>
               {({ value, setVisible }) => (
                 <Cell
-                  isLink
+                  linkable
                   title="选择日期"
                   value={value?.toLocaleDateString() || ''}
                   onClick={() => setVisible(true)}
@@ -86,7 +86,7 @@ export default () => {
             <Popout.Outlet>
               {({ value, setVisible }) => (
                 <Cell
-                  isLink
+                  linkable
                   title="选择多个日期"
                   value={
                     value
@@ -106,7 +106,7 @@ export default () => {
             <Popout.Outlet>
               {({ value, setVisible }) => (
                 <Cell
-                  isLink
+                  linkable
                   title="选择范围"
                   value={
                     value
@@ -130,7 +130,7 @@ export default () => {
             <Popout.Outlet>
               {({ value, setVisible }) => (
                 <Cell
-                  isLink
+                  linkable
                   title="选择日期"
                   value={value?.toLocaleDateString() || ''}
                   onClick={() => setVisible(true)}
@@ -153,7 +153,7 @@ export default () => {
             <Popout.Outlet>
               {({ value, setVisible }) => (
                 <Cell
-                  isLink
+                  linkable
                   title="选择多个日期"
                   value={
                     value
@@ -177,7 +177,7 @@ export default () => {
             <Popout.Outlet>
               {({ value, setVisible }) => (
                 <Cell
-                  isLink
+                  linkable
                   title="选择范围"
                   value={
                     value
@@ -207,7 +207,7 @@ export default () => {
             <Popout.Outlet>
               {({ value, setVisible }) => (
                 <Cell
-                  isLink
+                  linkable
                   title="选择日期"
                   value={value?.toLocaleDateString() || ''}
                   onClick={() => setVisible(true)}
@@ -234,7 +234,7 @@ export default () => {
             <Popout.Outlet>
               {({ value, setVisible }) => (
                 <Cell
-                  isLink
+                  linkable
                   title="选择范围"
                   value={
                     value?.map((date) => date.toLocaleDateString()).join('-') ||
@@ -257,7 +257,7 @@ export default () => {
             <Popout.Outlet>
               {({ value, setVisible }) => (
                 <Cell
-                  isLink
+                  linkable
                   title="选择日期"
                   value={value?.toLocaleDateString() || ''}
                   onClick={() => setVisible(true)}
@@ -277,7 +277,7 @@ export default () => {
             <Popout.Outlet>
               {({ value, setVisible }) => (
                 <Cell
-                  isLink
+                  linkable
                   title="选择范围"
                   value={
                     value?.map((date) => date.toLocaleDateString()).join('-') ||

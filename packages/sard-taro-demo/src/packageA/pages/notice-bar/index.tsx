@@ -60,7 +60,7 @@ export default () => {
       </Demo>
 
       <Demo title="可点击的">
-        <NoticeBar isLink onClick={() => console.log('click')}>
+        <NoticeBar linkable onClick={() => console.log('click')}>
           这是一条很长很长很长很长很长很长很长很长很长很长的公告！
         </NoticeBar>
       </Demo>

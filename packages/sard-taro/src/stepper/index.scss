@@ -1,4 +1,4 @@
-@import '../style/mixins.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -24,67 +24,67 @@ page {
 }
 // #endvariables
 
-.sar-stepper {
-  display: inline-flex;
-  justify-content: center;
-  align-items: stretch;
-  height: var(--sar-stepper-height);
+@include bem(stepper) {
+  @include b() {
+    display: inline-flex;
+    justify-content: center;
+    align-items: stretch;
+    height: var(--sar-stepper-height);
+  }
 
-  @at-root {
-    .sar-stepper-button {
-      @include button-flush;
+  @include e(button) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--sar-stepper-button-width);
+    font-size: var(--sar-stepper-button-font-size);
+    user-select: none;
+    color: inherit;
+    background-color: var(--sar-stepper-bg);
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: var(--sar-stepper-button-width);
-      font-size: var(--sar-stepper-button-font-size);
-      user-select: none;
+    @include m(interactive) {
+      cursor: pointer;
 
-      &,
-      &[disabled],
-      &.sar-stepper-button-disabled {
-        color: inherit;
-        background-color: var(--sar-stepper-bg);
-      }
-
-      .sar-stepper:not(.sar-stepper-readonly)
-        &:not(.sar-stepper-button-disabled):not([disabled]) {
-        cursor: pointer;
-
-        &:active {
-          background-color: var(--sar-stepper-button-active-bg);
-        }
+      &:active {
+        background-color: var(--sar-stepper-button-active-bg);
       }
     }
-    .sar-stepper-decrease {
-      flex: none;
-      border-top-left-radius: var(--sar-stepper-button-border-radius);
-      border-bottom-left-radius: var(--sar-stepper-button-border-radius);
-    }
-    .sar-stepper-increase {
-      flex: none;
-      border-top-right-radius: var(--sar-stepper-button-border-radius);
-      border-bottom-right-radius: var(--sar-stepper-button-border-radius);
-    }
-    .sar-stepper-input {
-      box-sizing: border-box;
-      flex: 1;
-      padding: 0;
-      width: var(--sar-stepper-input-width);
-      margin-left: var(--sar-stepper-input-gap);
-      margin-right: var(--sar-stepper-input-gap);
-      padding-left: var(--sar-stepper-input-padding-x);
-      padding-right: var(--sar-stepper-input-padding-x);
-      border: 0;
-      border-radius: 0;
-      text-align: center;
-      background-color: var(--sar-stepper-bg);
+
+    @include m(disabled) {
+      @include disabled;
     }
   }
-}
 
-.sar-stepper-disabled .sar-stepper-button,
-.sar-stepper-button-disabled {
-  @include disabled;
+  @include e(decrease) {
+    flex: none;
+    border-top-left-radius: var(--sar-stepper-button-border-radius);
+    border-bottom-left-radius: var(--sar-stepper-button-border-radius);
+  }
+
+  @include e(increase) {
+    flex: none;
+    border-top-right-radius: var(--sar-stepper-button-border-radius);
+    border-bottom-right-radius: var(--sar-stepper-button-border-radius);
+  }
+
+  @include e(input) {
+    box-sizing: border-box;
+    flex: 1;
+    padding: 0;
+    width: var(--sar-stepper-input-width);
+    margin-left: var(--sar-stepper-input-gap);
+    margin-right: var(--sar-stepper-input-gap);
+    padding-left: var(--sar-stepper-input-padding-x);
+    padding-right: var(--sar-stepper-input-padding-x);
+    border: 0;
+    border-radius: 0;
+    text-align: center;
+    background-color: var(--sar-stepper-bg);
+  }
+
+  @include e(increase) {
+    flex: none;
+    border-top-right-radius: var(--sar-stepper-button-border-radius);
+    border-bottom-right-radius: var(--sar-stepper-button-border-radius);
+  }
 }

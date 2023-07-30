@@ -1,4 +1,5 @@
 @use 'sass:math';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -22,113 +23,113 @@ page {
 }
 // #endvariables
 
-.sar-loading {
-  display: inline-flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  vertical-align: middle;
+@include bem(loading) {
+  @include b() {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+  }
 
-  &.sar-loading-vertical {
+  @include m(vertical) {
     flex-direction: column;
   }
 
-  @at-root {
-    .sar-loading-icon {
-      position: relative;
+  @include e(icon) {
+    position: relative;
+    box-sizing: border-box;
+    width: var(--sar-loading-icon-width);
+    height: var(--sar-loading-icon-height);
+    color: var(--sar-loading-icon-color);
+  }
+
+  @include e(text) {
+    margin-left: var(--sar-loading-text-margin-left);
+    font-size: var(--sar-loading-text-font-size);
+    color: var(--sar-loading-text-color);
+
+    @include m(vertical) {
+      margin-left: 0;
+      margin-top: var(--sar-loading-text-vertical-margin-top);
+    }
+  }
+
+  @include e(circular-item) {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: #{bem-ns(loading-rotate)} var(
+        --sar-loading-circular-item-animation-duration
+      ) cubic-bezier(0.5, 0, 0.5, 1) infinite;
+
+    &::after {
+      content: '';
       box-sizing: border-box;
-      width: var(--sar-loading-icon-width);
-      height: var(--sar-loading-icon-height);
-      color: var(--sar-loading-icon-color);
+      display: flex;
+      width: 200%;
+      height: 200%;
+      border-style: solid;
+      border-width: var(--sar-loading-circular-item-border-width);
+      border-color: currentColor transparent transparent transparent;
+      border-radius: 50%;
+      transform: scale(0.5);
+      transform-origin: 0 0;
     }
 
-    .sar-loading-text {
-      margin-left: var(--sar-loading-text-margin-left);
-      font-size: var(--sar-loading-text-font-size);
-      color: var(--sar-loading-text-color);
+    @include m(1) {
+      animation-delay: -0.45s;
+    }
 
-      .sar-loading-vertical & {
-        margin-left: 0;
-        margin-top: var(--sar-loading-text-vertical-margin-top);
+    @include m(2) {
+      animation-delay: -0.3s;
+    }
+
+    @include m(3) {
+      animation-delay: -0.15s;
+    }
+  }
+
+  @include e(clock) {
+    animation: #{bem-ns(loading-rotate)} var(
+        --sar-loading-clock-animation-duration
+      ) steps(#{$sar-loading-scale-number}) infinite;
+  }
+
+  @include e(scale) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    &:before {
+      display: flex;
+      width: var(--sar-loading-scale-width);
+      height: var(--sar-loading-scale-height);
+      margin: 0 auto;
+      border-radius: var(--sar-loading-scale-border-radius);
+      background-color: currentColor;
+      content: '';
+    }
+
+    @for $i from 1 through $sar-loading-scale-number {
+      @include m($i) {
+        opacity: tofixed(
+          1 - math.div(1, $sar-loading-scale-number) * ($i - 1),
+          6
+        );
+        transform: rotate(#{math.div(360, $sar-loading-scale-number) * $i}deg);
       }
     }
   }
 }
 
-@keyframes sar-loading-rotate {
+@keyframes #{bem-ns(loading-rotate)} {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(1turn);
-  }
-}
-
-// # circular
-.sar-loading-circular-item {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  animation: sar-loading-rotate
-    var(--sar-loading-circular-item-animation-duration)
-    cubic-bezier(0.5, 0, 0.5, 1) infinite;
-
-  &::after {
-    content: '';
-    box-sizing: border-box;
-    display: flex;
-    width: 200%;
-    height: 200%;
-    border-style: solid;
-    border-width: var(--sar-loading-circular-item-border-width);
-    border-color: currentColor transparent transparent transparent;
-    border-radius: 50%;
-    transform: scale(0.5);
-    transform-origin: 0 0;
-  }
-
-  &:nth-child(1) {
-    animation-delay: -0.45s;
-  }
-
-  &:nth-child(2) {
-    animation-delay: -0.3s;
-  }
-
-  &:nth-child(3) {
-    animation-delay: -0.15s;
-  }
-}
-
-// # clock
-$sar-loading-scale-number: 12;
-
-.sar-loading-clock {
-  animation: sar-loading-rotate var(--sar-loading-clock-animation-duration)
-    steps(#{$sar-loading-scale-number}) infinite;
-}
-
-.sar-loading-scale {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  &:before {
-    display: flex;
-    width: var(--sar-loading-scale-width);
-    height: var(--sar-loading-scale-height);
-    margin: 0 auto;
-    border-radius: var(--sar-loading-scale-border-radius);
-    background-color: currentColor;
-    content: '';
-  }
-}
-
-@for $i from 1 through $sar-loading-scale-number {
-  .sar-loading-scale:nth-child(#{$i}) {
-    opacity: tofixed(1 - math.div(1, $sar-loading-scale-number) * ($i - 1), 6);
-    transform: rotate(#{math.div(360, $sar-loading-scale-number) * $i}deg);
   }
 }

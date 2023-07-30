@@ -12,7 +12,7 @@ import classNames from 'classnames'
 import { Popup, PopupProps } from '../popup'
 import { Button, ButtonProps } from '../button'
 import { Icon } from '../icon'
-import { useEvent } from '../use'
+import { useBem, useEvent } from '../use'
 import useTranslate from '../locale/useTranslate'
 import { BaseProps } from '../base'
 
@@ -111,6 +111,8 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
       ...restProps
     } = props
 
+    const [bem] = useBem('dialog')
+
     const [loading, setLoading] = useState({
       cancel: false,
       confirm: false,
@@ -174,18 +176,19 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
 
     useImperativeHandle(ref, () => ({}))
 
-    const dialogClass = classNames(
-      'sar-dialog',
-      {
-        'sar-dialog-headed': headed,
-        'sar-dialog-untitled': !title,
-        'sar-dialog-round-button': buttonType === 'round',
-      },
-      className,
-    )
+    const dialogClass = classNames(bem.b(), bem.m('headed', headed), className)
 
     const renderTitle = () => {
-      return <View className="sar-dialog-title">{title}</View>
+      return (
+        <View
+          className={classNames(
+            bem.e('title'),
+            bem.em('title', 'headed', headed),
+          )}
+        >
+          {title}
+        </View>
+      )
     }
 
     return (
@@ -197,11 +200,16 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
         className={dialogClass}
       >
         {headed && (
-          <View className="sar-dialog-header">
+          <View
+            className={classNames(
+              bem.e('header'),
+              bem.em('header', 'titled', !!title),
+            )}
+          >
             {header || renderTitle()}
 
             <Button
-              className="sar-dialog-close"
+              className={bem.e('close')}
               type="pale-text"
               theme="secondary"
               size="large"
@@ -211,21 +219,51 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
             </Button>
           </View>
         )}
-        <View className="sar-dialog-body">
+        <View
+          className={classNames(
+            bem.e('body'),
+            bem.em('body', 'untitled', !title),
+          )}
+        >
           {children ?? (
             <>
               {!headed && title && renderTitle()}
-              {message && <View className="sar-dialog-message">{message}</View>}
+              {message && (
+                <View
+                  className={classNames(
+                    bem.e('message'),
+                    bem.em('message', 'headless-titled', !headed && !!title),
+                  )}
+                >
+                  {message}
+                </View>
+              )}
             </>
           )}
         </View>
-        <View className="sar-dialog-footer">
+        <View
+          className={classNames(
+            bem.e('footer'),
+            bem.em('footer', 'text-button', buttonType === 'text'),
+            bem.em('footer', 'round-button', buttonType === 'round'),
+          )}
+        >
           {footer || (
             <>
               {showCancel && (
                 <Button
                   {...buttonProps[buttonType].cancel}
-                  className="sar-dialog-button sar-dialog-cancel"
+                  className={classNames(
+                    bem.e('button'),
+                    bem.e('cancel'),
+                    bem.em('button', 'text', buttonType === 'text'),
+                    bem.em('button', 'text-first', buttonType === 'text'),
+                    bem.em(
+                      'button',
+                      'text-last',
+                      buttonType === 'text' && !showConfirm,
+                    ),
+                  )}
                   {...cancelProps}
                   block
                   loading={loading.cancel}
@@ -235,12 +273,27 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
                 </Button>
               )}
               {showCancel && buttonType === 'text' && (
-                <View className="sar-dialog-divider"></View>
+                <View className={bem.e('divider')}></View>
               )}
               {showConfirm && (
                 <Button
                   {...buttonProps[buttonType].confirm}
-                  className="sar-dialog-button sar-dialog-confirm"
+                  className={classNames(
+                    bem.e('button'),
+                    bem.e('confirm'),
+                    bem.em('button', 'text', buttonType === 'text'),
+                    bem.em('button', 'text-last', buttonType === 'text'),
+                    bem.em(
+                      'button',
+                      'text-first',
+                      buttonType === 'text' && !showCancel,
+                    ),
+                    bem.em(
+                      'button',
+                      'round-later',
+                      showCancel && buttonType === 'round',
+                    ),
+                  )}
                   {...confirmProps}
                   block
                   loading={loading.confirm}

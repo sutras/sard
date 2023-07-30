@@ -11,7 +11,7 @@ import { Popup, PopupProps } from '../popup'
 import { Button, ButtonProps } from '../button'
 import { Icon } from '../icon'
 import { isEmptyValue } from '../utils'
-import { useEvent, useControllableValue } from '../use'
+import { useEvent, useControllableValue, useBem } from '../use'
 import useTranslate from '../locale/useTranslate'
 import { AnyFunction, AnyType, BaseProps } from '../base'
 
@@ -78,6 +78,8 @@ export const Popout: PopoutFC = (props) => {
     onEnter,
     ...restProps
   } = props
+
+  const [bem] = useBem('popout')
 
   const [innerVisible, setInnerVisible] = useControllableValue({
     value: visible,
@@ -186,10 +188,14 @@ export const Popout: PopoutFC = (props) => {
     type: ButtonProps['type'],
     theme: ButtonProps['theme'],
     round: boolean,
+    placement: string,
   ) => {
     return (
       <Button
-        className="sar-popout-cancel sar-popout-button"
+        className={classNames(
+          bem.e(`${placement}-cancel`),
+          bem.e(`${placement}-button`),
+        )}
         type={type}
         theme={theme}
         round={round}
@@ -201,10 +207,17 @@ export const Popout: PopoutFC = (props) => {
     )
   }
 
-  const renderConfirmButton = (type: ButtonProps['type'], round: boolean) => {
+  const renderConfirmButton = (
+    type: ButtonProps['type'],
+    round: boolean,
+    placement: string,
+  ) => {
     return (
       <Button
-        className="sar-popout-confirm sar-popout-button"
+        className={classNames(
+          bem.e(`${placement}-confirm`),
+          bem.e(`${placement}-button`),
+        )}
         type={type}
         theme="primary"
         round={round}
@@ -217,6 +230,43 @@ export const Popout: PopoutFC = (props) => {
     )
   }
 
+  const renderHeader = () => {
+    return (
+      <View className={classNames(bem.e('header'), bem.em('header', type))}>
+        {type === 'compact' &&
+          renderCancelButton('pale-text', 'secondary', false, 'header')}
+
+        {title && <View className={bem.e('title')}>{title}</View>}
+
+        {type === 'compact' &&
+          renderConfirmButton('pale-text', false, 'header')}
+
+        {type === 'loose' && showClose && (
+          <Button
+            className={bem.e('close')}
+            type="pale-text"
+            theme="secondary"
+            size="large"
+            onClick={handleCancel}
+          >
+            <Icon name="close"></Icon>
+          </Button>
+        )}
+      </View>
+    )
+  }
+
+  const renderFooter = () => {
+    return (
+      type === 'loose' && (
+        <View className={bem.e('footer')}>
+          {showCancel && renderCancelButton('pale', 'primary', true, 'footer')}
+          {showConfirm && renderConfirmButton('default', true, 'footer')}
+        </View>
+      )
+    )
+  }
+
   return (
     <>
       <PopoutContext.Provider value={context}>
@@ -225,34 +275,13 @@ export const Popout: PopoutFC = (props) => {
           {...restProps}
           effect="slide-bottom"
           visible={innerVisible}
-          className={classNames('sar-popout', 'sar-popout-' + type, className)}
+          className={classNames(bem.b(), className)}
           onMaskClick={handleMaskClick}
           onEnter={handleEnter}
         >
-          <View className="sar-popout-header">
-            {type === 'compact' &&
-              renderCancelButton('pale-text', 'secondary', false)}
-            {title && <View className="sar-popout-title">{title}</View>}
-            {type === 'compact' && renderConfirmButton('pale-text', false)}
-            {type === 'loose' && showClose && (
-              <Button
-                className="sar-popout-close"
-                type="pale-text"
-                theme="secondary"
-                size="large"
-                onClick={handleCancel}
-              >
-                <Icon name="close"></Icon>
-              </Button>
-            )}
-          </View>
-          <View className="sar-popout-body">{children}</View>
-          {type === 'loose' && (
-            <View className="sar-popout-footer">
-              {showCancel && renderCancelButton('pale', 'primary', true)}
-              {showConfirm && renderConfirmButton('default', true)}
-            </View>
-          )}
+          {renderHeader()}
+          <View className={bem.e('body')}>{children}</View>
+          {renderFooter()}
         </Popup>
       </PopoutContext.Provider>
     </>

@@ -1,3 +1,5 @@
+@import '../style/base.scss';
+
 // #variables
 :root,
 page {
@@ -20,50 +22,56 @@ page {
 }
 // #endvariables
 
-.sar-result {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+@include bem(result) {
+  @include b() {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
 
-  @at-root {
-    .sar-result-icon {
-      display: flex;
-      font-size: var(--sar-result-icon-font-size);
-      line-height: 1;
-      text-align: center;
+  @include e(icon) {
+    display: flex;
+    font-size: var(--sar-result-icon-font-size);
+    line-height: 1;
+    text-align: center;
+
+    @include m(success) {
+      color: var(--sar-result-success-color);
     }
-    .sar-result-title {
-      margin-top: var(--sar-result-title-margin-top);
-      font-size: var(--sar-result-title-font-size);
-      text-align: center;
+
+    @include m(info) {
+      color: var(--sar-result-info-color);
     }
-    .sar-result-description {
-      margin-top: var(--sar-result-description-margin-top);
-      font-size: var(--sar-result-description-font-size);
-      color: var(--sar-result-description-color);
-      text-align: center;
+
+    @include m(warning) {
+      color: var(--sar-result-warning-color);
     }
-    .sar-result-extra {
-      margin-top: var(--sar-result-extra-margin-top);
+
+    @include m(error) {
+      color: var(--sar-result-error-color);
+    }
+
+    @include m(question) {
+      color: var(--sar-result-question-color);
     }
   }
-}
 
-// 状态类型
-.sar-result-success .sar-result-icon {
-  color: var(--sar-result-success-color);
-}
-.sar-result-info .sar-result-icon {
-  color: var(--sar-result-info-color);
-}
-.sar-result-warning .sar-result-icon {
-  color: var(--sar-result-warning-color);
-}
-.sar-result-error .sar-result-icon {
-  color: var(--sar-result-error-color);
-}
-.sar-result-question .sar-result-icon {
-  color: var(--sar-result-question-color);
+  @include e(title) {
+    margin-top: var(--sar-result-title-margin-top);
+    font-size: var(--sar-result-title-font-size);
+    text-align: center;
+  }
+
+  @include e(description) {
+    margin-top: var(--sar-result-description-margin-top);
+    font-size: var(--sar-result-description-font-size);
+    color: var(--sar-result-description-color);
+    text-align: center;
+  }
+
+  @include e(extra) {
+    margin-top: var(--sar-result-extra-margin-top);
+  }
 }

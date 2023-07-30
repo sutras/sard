@@ -1,4 +1,4 @@
-@import '../style/mixins.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -19,49 +19,54 @@ page {
 }
 // #endvariables
 
-.sar-accordion {
-  position: relative;
-  @include border-vertical(var(--sar-accordion-border-color));
-  border-radius: var(--sar-accordion-border-radius);
+@include bem(accordion) {
+  @include b() {
+    position: relative;
+    @include border-vertical(var(--sar-accordion-border-color));
+    border-radius: var(--sar-accordion-border-radius);
+  }
 }
 
-.sar-accordion-item {
-  position: relative;
-  ~ .sar-accordion-item {
+@include bem(accordion-item) {
+  @include b() {
+    position: relative;
+  }
+
+  @include m(later) {
     @include border-top(var(--sar-accordion-border-color));
   }
-}
 
-.sar-accordion-item-header {
-  display: flex;
-  padding: var(--sar-accordion-item-header-padding);
-  cursor: pointer;
+  @include e(header) {
+    display: flex;
+    padding: var(--sar-accordion-item-header-padding);
+    cursor: pointer;
 
-  .sar-accordion-item-disabled & {
-    @include disabled-text;
+    @include m(disabled) {
+      @include disabled-text;
+    }
   }
-}
 
-.sar-accordion-item-title {
-  display: flex;
-  align-items: center;
-  font-size: var(--sar-accordion-item-title-font-size);
-}
-
-.sar-accordion-item-icon {
-  margin-left: auto;
-  font-size: var(--sar-accordion-item-icon-font-size);
-  color: var(--sar-accordion-item-icon-color);
-}
-
-.sar-accordion-item-arrow {
-  transition: transform var(--sar-accordion-item-arrow-transition-duration);
-
-  .sar-accordion-item-active & {
-    transform: rotate(-180deg);
+  @include e(title) {
+    display: flex;
+    align-items: center;
+    font-size: var(--sar-accordion-item-title-font-size);
   }
-}
 
-.sar-accordion-item-content {
-  padding: var(--sar-accordion-item-content-padding);
+  @include e(icon) {
+    margin-left: auto;
+    font-size: var(--sar-accordion-item-icon-font-size);
+    color: var(--sar-accordion-item-icon-color);
+  }
+
+  @include e(arrow) {
+    transition: transform var(--sar-accordion-item-arrow-transition-duration);
+
+    @include m(active) {
+      transform: rotate(-180deg);
+    }
+  }
+
+  @include e(content) {
+    padding: var(--sar-accordion-item-content-padding);
+  }
 }

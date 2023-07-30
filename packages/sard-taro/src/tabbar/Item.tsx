@@ -4,6 +4,7 @@ import { Icon, IconProps } from '../icon'
 import { Badge, BadgeProps } from '../badge'
 import { BaseProps } from '../base'
 import { ITouchEvent, View } from '@tarojs/components'
+import { useBem } from '../use'
 
 export interface TabbarItemProps extends BaseProps {
   activeKey?: number | string
@@ -30,19 +31,15 @@ export const TabbarItem = memo((props: TabbarItemProps) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('tabbar-item')
+
   const handleClick = (event: ITouchEvent) => {
     onClick?.(event)
   }
 
   const active = innerKey === activeKey
 
-  const tabbarClass = classNames(
-    'sar-tabbar-item',
-    {
-      'sar-tabbar-item-active': active,
-    },
-    className,
-  )
+  const tabbarClass = classNames(bem.b(), bem.m('active', active), className)
 
   const tabbarItemStyle = {
     color: active ? activeColor : color,
@@ -56,11 +53,11 @@ export const TabbarItem = memo((props: TabbarItemProps) => {
       style={tabbarItemStyle}
       onClick={handleClick}
     >
-      <View className="sar-tabbar-item-icon">
+      <View className={bem.e('icon')}>
         {typeof icon === 'function' ? icon(active) : <Icon {...icon}></Icon>}
         {badge && <Badge {...badge} fixed></Badge>}
       </View>
-      <View className="sar-tabbar-item-text">{children}</View>
+      <View className={bem.e('text')}>{children}</View>
     </View>
   )
 })

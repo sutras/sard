@@ -7,7 +7,7 @@ import {
   InputProps,
   View,
 } from '@tarojs/components'
-import { useControllableValue } from '../use'
+import { useBem, useControllableValue } from '../use'
 import { BaseProps } from '../base'
 
 export interface PasswordInputProps extends Omit<BaseProps, 'children'> {
@@ -50,6 +50,8 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('password-input')
+
   const [innerValue, setInnerValue] = useControllableValue({
     value,
     defaultValue,
@@ -90,13 +92,9 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
   }
 
   const passwordInputClass = classNames(
-    'sar-password-input',
-    `sar-password-input-${type}`,
-    {
-      'sar-password-input-gapless': gap === 0,
-      'sar-password-input-readonly': readOnly,
-      'sar-password-input-disabled': disabled,
-    },
+    bem.b(),
+    bem.m('readonly', readOnly),
+    bem.m('disabled', disabled),
     className,
   )
 
@@ -115,26 +113,29 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
       {Array(length)
         .fill(0)
         .map((_, i) => {
+          const active =
+            innerFocused &&
+            (i === innerValue.length ||
+              (i === innerValue.length - 1 && i === length - 1))
           return (
             <View
               key={i}
-              className={classNames('sar-password-input-item', {
-                'sar-password-input-item-active':
-                  innerFocused &&
-                  (i === innerValue.length ||
-                    (i === innerValue.length - 1 && i === length - 1)),
-              })}
+              className={classNames(
+                bem.e('item'),
+                bem.em('item', type),
+                bem.em('item', `${type}-active`, active),
+                bem.em('item', 'active', active),
+                bem.em('item', 'lapped', gap === 0 && i !== 0),
+              )}
             >
               {i < innerValue.length &&
                 (plainText ? (
-                  <View className="sar-password-input-plaintext">
-                    {innerValue[i]}
-                  </View>
+                  <View className={bem.e('plaintext')}>{innerValue[i]}</View>
                 ) : (
-                  <View className="sar-password-input-ciphertext"></View>
+                  <View className={bem.e('ciphertext')}></View>
                 ))}
               {innerFocused && i === innerValue.length && (
-                <View className="sar-password-input-cursor"></View>
+                <View className={bem.e('cursor')}></View>
               )}
             </View>
           )
@@ -142,7 +143,7 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
 
       {!custom && (
         <Input
-          className="sar-password-input-input"
+          className={bem.e('input')}
           disabled={disabled || readOnly}
           value={innerValue}
           type={inputType}

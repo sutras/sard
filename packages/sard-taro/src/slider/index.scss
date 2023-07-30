@@ -1,4 +1,4 @@
-@import '../style/mixins.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -18,94 +18,99 @@ page {
 }
 // #endvariables
 
-.sar-slider {
-  position: relative;
-  box-sizing: border-box;
-  padding: var(--sar-slider-padding);
-  cursor: pointer;
-}
-.sar-slider-track {
-  position: relative;
-  width: var(--sar-slider-track-main-axis-size);
-  height: var(--sar-slider-track-cross-axis-size);
-  background-color: var(--sar-slider-track-bg);
-}
-.sar-slider-track-piece {
-  position: absolute;
-  width: auto;
-  height: 100%;
-  background-color: var(--sar-slider-track-piece-bg);
-  transition: all var(--sar-slider-track-piece-transition-duration);
-
-  .sar-slider-is-down & {
-    transition: none;
+@include bem(slider) {
+  @include b() {
+    position: relative;
+    box-sizing: border-box;
+    padding: var(--sar-slider-padding);
+    cursor: pointer;
   }
-}
-.sar-slider-thumb-container {
-  position: absolute;
-  touch-action: none;
 
-  @at-root {
-    .sar-slider-thumb {
-      width: var(--sar-slider-thumb-size);
-      height: var(--sar-slider-thumb-size);
-      border-radius: 50%;
-      background-color: var(--sar-slider-thumb-bg);
-      box-shadow: var(--sar-slider-thumb-box-shadow);
-      user-select: none;
-      cursor: grab;
+  @include m(vertical) {
+    display: inline-flex;
+    width: auto;
+    height: 100%;
+  }
+
+  @include e(track) {
+    position: relative;
+    width: var(--sar-slider-track-main-axis-size);
+    height: var(--sar-slider-track-cross-axis-size);
+    background-color: var(--sar-slider-track-bg);
+
+    @include m(vertical) {
+      width: var(--sar-slider-track-cross-axis-size);
+      height: var(--sar-slider-track-main-axis-size);
     }
   }
-}
-.sar-slider-thumb-start {
-  top: 50%;
-  left: 0;
-  transform: translate(-50%, -50%);
-}
-.sar-slider-thumb-end {
-  top: 50%;
-  right: 0;
-  transform: translate(50%, -50%);
-}
 
-// # 垂直
-.sar-slider-vertical {
-  display: inline-flex;
-  width: auto;
-  height: 100%;
+  @include e(track-piece) {
+    position: absolute;
+    width: auto;
+    height: 100%;
+    background-color: var(--sar-slider-track-piece-bg);
+    transition: all var(--sar-slider-track-piece-transition-duration);
 
-  .sar-slider-track {
-    width: var(--sar-slider-track-cross-axis-size);
-    height: var(--sar-slider-track-main-axis-size);
+    @include m(is-down) {
+      transition: none;
+    }
+
+    @include m(vertical) {
+      width: 100%;
+      height: auto;
+    }
   }
-  .sar-slider-track-piece {
-    width: 100%;
-    height: auto;
+
+  @include e(thumb-container) {
+    position: absolute;
+    touch-action: none;
   }
-  .sar-slider-thumb-start {
-    top: 0;
-    left: 50%;
+
+  @include e(thumb) {
+    width: var(--sar-slider-thumb-size);
+    height: var(--sar-slider-thumb-size);
+    border-radius: 50%;
+    background-color: var(--sar-slider-thumb-bg);
+    box-shadow: var(--sar-slider-thumb-box-shadow);
+    user-select: none;
+    cursor: grab;
+
+    @include m(readonly, disabled) {
+      cursor: default;
+    }
+  }
+
+  @include e(thumb-start) {
+    top: 50%;
+    left: 0;
     transform: translate(-50%, -50%);
-  }
-  .sar-slider-thumb-end {
-    top: auto;
-    bottom: 0;
-    left: 50%;
-    right: auto;
-    transform: translate(-50%, 50%);
-  }
-}
 
-// # 禁用状态
-.sar-slider-disabled {
-  @include disabled;
-}
+    @include m(vertical) {
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 
-// # 禁用状态
-.sar-slider-readonly,
-.sar-slider-disabled {
-  .sar-slider-track,
-  .sar-slider-thumb {
+  @include e(thumb-end) {
+    top: 50%;
+    right: 0;
+    transform: translate(50%, -50%);
+
+    @include m(vertical) {
+      top: auto;
+      bottom: 0;
+      left: 50%;
+      right: auto;
+      transform: translate(-50%, 50%);
+    }
+  }
+
+  @include m(disabled) {
+    @include disabled;
+  }
+
+  @include m(readonly) {
     cursor: default;
   }
 }

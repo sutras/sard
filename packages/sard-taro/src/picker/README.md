@@ -26,7 +26,7 @@ const handleChange = (value, selectedOptions, selectedIndex) => {
 ```tsx
 <Cell.Group card>
   <Cell
-    isLink
+    linkable
     title="设置为: 天津市"
     onClick={() => setArrayValue(['天津市'])}
   />
@@ -69,7 +69,7 @@ const objectArray = [
 ```tsx
 <Cell.Group card>
   <Cell
-    isLink
+    linkable
     title="设置为: 天津市"
     onClick={() => setObjectArrayValue([120000])}
   />
@@ -103,7 +103,7 @@ const multiArray = [
 ```tsx
 <Cell.Group card>
   <Cell
-    isLink
+    linkable
     title="设置为: 2003年10月"
     onClick={() => setMultiArrayValue(['2003年', '10月'])}
   />
@@ -142,7 +142,7 @@ const objectMultiArray = [
 ```tsx
 <Cell.Group card>
   <Cell
-    isLink
+    linkable
     title="设置为: 2003年10月"
     onClick={() => setObjectMultiArrayValue([2003, 10])}
   />
@@ -174,7 +174,7 @@ const [cascaderValue, setCascaderValue] = useState<number[]>()
 ```tsx
 <Cell.Group card>
   <Cell
-    isLink
+    linkable
     title="设置为: 广东省/广州市/天河区"
     onClick={() => setCascaderValue([440000, 440100, 440106])}
   />
@@ -197,7 +197,7 @@ const [cascaderValue, setCascaderValue] = useState<number[]>()
 ```tsx
 <Cell.Group card>
   <Cell
-    isLink
+    linkable
     title="广东省/广州市/天河区"
     onClick={() => setPopoutCascaderValue([440000, 440100, 440106])}
   />
@@ -205,7 +205,7 @@ const [cascaderValue, setCascaderValue] = useState<number[]>()
     <Popout.Outlet>
       {({ value, triggerArgs: [, options = []], setVisible }) => (
         <Cell
-          isLink
+          linkable
           title="请选择省市区"
           value={
             (value && options.map((option) => option.name).join('/')) || ''

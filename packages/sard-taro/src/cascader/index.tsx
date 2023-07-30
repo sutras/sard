@@ -4,7 +4,7 @@ import { View } from '@tarojs/components'
 import { Tabs, TabsProps } from '../tabs'
 import Icon from '../icon'
 import useTranslate from '../locale/useTranslate'
-import { useControllableValue } from '../use'
+import { useBem, useControllableValue } from '../use'
 import { AnyType, BaseProps } from '../base'
 
 export interface CascaderFieldNames {
@@ -75,6 +75,8 @@ export const Cascader: CascaderFC = (props) => {
     onOuterValueChange,
     ...restProps
   } = props
+
+  const [bem] = useBem('cascader')
 
   const fieldkeys = useMemo(
     () => Object.assign({}, defaultFieldNames, fieldNames),
@@ -234,19 +236,26 @@ export const Cascader: CascaderFC = (props) => {
 
     return (
       <View
-        className={classNames('sar-cascader-option', {
-          'sar-cascader-option-selected': selected,
-          'sar-cascader-option-disabled': option[fieldkeys.disabled],
-        })}
+        className={classNames(
+          bem.e('option'),
+          bem.em('option', 'selected', selected),
+          bem.em('option', 'disabled', option[fieldkeys.disabled]),
+          bem.em('option', 'interactive', !option[fieldkeys.disabled]),
+        )}
         onClick={() => handleOptionClick(option, tabIndex)}
         key={value}
       >
-        <View className="sar-cascader-option-label">
+        <View className={bem.e('option-label')}>
           {labelRender
             ? labelRender(option, selected)
             : option[fieldkeys.label]}
         </View>
-        <View className="sar-cascader-option-icon">
+        <View
+          className={classNames(
+            bem.e('option-icon'),
+            bem.em('option-icon', 'selected', selected),
+          )}
+        >
           <Icon name="success"></Icon>
         </View>
       </View>
@@ -259,7 +268,7 @@ export const Cascader: CascaderFC = (props) => {
     tabIndex: number,
   ) => {
     return (
-      <View className="sar-cascader-options">
+      <View className={bem.e('options')}>
         {options.map((option) => {
           return renderOption(option, selected, tabIndex)
         })}
@@ -284,13 +293,12 @@ export const Cascader: CascaderFC = (props) => {
 
   return (
     <Tabs
+      animated
       {...restProps}
-      swipeable
       scrollCount={0}
       activeKey={String(tabsActiveKey)}
       onChange={handleTabsChange}
-      className={classNames('sar-cascader', className)}
-      swiperProps={{ className: 'sar-cascader-swiper' }}
+      className={classNames(bem.b(), className)}
     >
       {tabs.map(renderPane)}
     </Tabs>

@@ -1,11 +1,14 @@
 import { CSSProperties, FC, ReactNode, useContext } from 'react'
 import { ITouchEvent, View } from '@tarojs/components'
 import classNames from 'classnames'
-import { CellGroup, CellGroupContext } from './Group'
+import { CellGroup } from './Group'
 import Icon from '../icon'
 
 import { BaseProps } from '../base'
-import { isNullish } from '../utils'
+import { isNullish, pickContextNullish } from '../utils'
+import { useBem } from '../use'
+import { OrderContext } from './OrderContext'
+import { CellContext } from './CellContext'
 
 export * from './Group'
 
@@ -14,7 +17,7 @@ export interface CellProps extends BaseProps {
   label?: ReactNode
   value?: ReactNode
   footer?: ReactNode
-  isLink?: boolean
+  linkable?: boolean
   arrowDirection?: 'up' | 'right' | 'down'
   arrow?: ReactNode
   icon?: ReactNode
@@ -38,7 +41,7 @@ export const Cell: CellFC = (props) => {
     label,
     value,
     footer,
-    isLink = false,
+    linkable = false,
     arrowDirection = 'right',
     arrow,
     icon,
@@ -50,67 +53,72 @@ export const Cell: CellFC = (props) => {
     ...restProps
   } = props
 
-  const context = useContext(CellGroupContext)
+  const [bem] = useBem('cell')
+
+  const { index, count } = useContext(OrderContext)
+  const cellContext = useContext(CellContext)
+  const contextProps = pickContextNullish(
+    {
+      inset,
+      bodyStyle,
+      bodyClass,
+      footerStyle,
+      footerClass,
+    },
+    cellContext,
+  )
 
   const cellClass = classNames(
-    'sar-cell',
-    {
-      'sar-cell-is-link': isLink,
-      'sar-cell-inset': inset,
-    },
+    bem.b(),
+    bem.m('first', index === 0),
+    bem.m('last', index === count - 1),
+    bem.m('linkable', linkable),
     className,
   )
 
   return (
     <View {...restProps} className={cellClass}>
       {!isNullish(icon) && (
-        <View className="sar-cell-header">
-          <View className="sar-cell-icon">{icon}</View>
+        <View
+          className={classNames(
+            bem.e('header'),
+            bem.em('header', 'inset-later', contextProps.inset && index > 0),
+          )}
+        >
+          <View className={bem.e('icon')}>{icon}</View>
         </View>
       )}
       <View
-        className={classNames('sar-cell-content', {
-          'sar-cell-content-custom': children,
-        })}
+        className={classNames(
+          bem.e('content'),
+          bem.em('content', 'custom', !!children),
+          bem.em('content', 'later', index > 0),
+        )}
       >
         {children ?? (
           <>
             <View
-              className={classNames(
-                'sar-cell-body',
-                context.bodyClass,
-                bodyClass,
-              )}
-              style={{
-                ...context.bodyStyle,
-                ...bodyStyle,
-              }}
+              className={classNames(bem.e('body'), contextProps.bodyClass)}
+              style={contextProps.bodyStyle}
             >
               {!isNullish(title) && (
-                <View className="sar-cell-title">{title}</View>
+                <View className={classNames(bem.e('title'))}>{title}</View>
               )}
               {!isNullish(label) && (
-                <View className="sar-cell-label">{label}</View>
+                <View className={bem.e('label')}>{label}</View>
               )}
             </View>
             <View
-              className={classNames(
-                'sar-cell-footer',
-                context.footerClass,
-                footerClass,
-              )}
-              style={{
-                ...context.footerStyle,
-                ...footerStyle,
-              }}
+              className={classNames(bem.e('footer'), contextProps.footerClass)}
+              style={contextProps.footerStyle}
             >
               {footer || (
                 <>
                   {!isNullish(value) && (
-                    <View className="sar-cell-value">{value}</View>
+                    <View className={bem.e('value')}>{value}</View>
                   )}
-                  {isLink && (
-                    <View className="sar-cell-arrow">
+                  {linkable && (
+                    <View className={bem.e('arrow')}>
                       {arrow ?? <Icon name={arrowDirection}></Icon>}
                     </View>
                   )}

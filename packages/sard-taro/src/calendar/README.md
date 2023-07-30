@@ -31,7 +31,7 @@ const handleChange = (date: Date) => {
   <Popout.Outlet>
     {({ value, setVisible }) => (
       <Cell
-        isLink
+        linkable
         title="选择日期"
         value={value?.toLocaleDateString() || ''}
         onClick={() => setVisible(true)}

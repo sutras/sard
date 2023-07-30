@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { View } from '@tarojs/components'
 import { Popup, PopupProps } from '../popup'
 import { Icon } from '../icon'
-import { useControllableValue } from '../use'
+import { useBem, useControllableValue } from '../use'
 import { shuffle } from '../utils'
 import { BaseProps } from '../base'
 
@@ -30,10 +30,12 @@ export const NumberKeyboard: FC<NumberKeyboardProps> = (props) => {
     random,
     every,
     mask = true,
-    clearMask = true,
+    transparent = true,
     onMaskClick,
     ...restProps
   } = props
+
+  const [bem] = useBem('number-keyboard')
 
   const [innerVisible, setInnerVisible] = useControllableValue({
     defaultValue: defaultVisible,
@@ -72,45 +74,58 @@ export const NumberKeyboard: FC<NumberKeyboardProps> = (props) => {
     }
   }, [visible])
 
+  const keys: (string | number)[] = [...numArray]
+
+  if (extraKey) {
+    keys.push('extra')
+  }
+  keys.push('backspace')
+
   return (
     <Popup
       {...restProps}
       visible={innerVisible}
       effect="slide-bottom"
       mask={mask}
-      clearMask={clearMask}
+      transparent={transparent}
       onMaskClick={handleMaskClick}
-      className={classNames(
-        'sar-number-keyboard',
-        {
-          'sar-number-keyboard-has-extra': extraKey !== undefined,
-        },
-        className,
-      )}
+      className={classNames(bem.b(), className)}
     >
-      <View className="sar-number-keyboard-body">
-        {numArray.map((n, i) => (
-          <View
-            key={n}
-            className={classNames('sar-number-keyboard-key', {
-              'sar-number-keyboard-key-lastnum': i === 9,
-            })}
-            onClick={() => handleKeyClick(String(n))}
-          >
-            {n}
-          </View>
-        ))}
-        {extraKey && (
-          <View
-            className="sar-number-keyboard-key"
-            onClick={() => handleKeyClick(extraKey)}
-          >
-            {extraKey}
-          </View>
-        )}
-        <View className="sar-number-keyboard-key" onClick={handleDelete}>
-          <Icon name="backspace"></Icon>
-        </View>
+      <View className={bem.e('body')}>
+        {keys.map((n, i) => {
+          return (
+            <View
+              key={n}
+              className={classNames(
+                bem.e(n),
+                bem.e('key-wrapper'),
+                bem.em('key-wrapper', 'lastnum', i === 9),
+              )}
+            >
+              <View
+                className={classNames(bem.e('key'))}
+                onClick={() => {
+                  switch (n) {
+                    case 'backspace':
+                      handleDelete()
+                      break
+                    default:
+                      handleKeyClick(String(n))
+                      break
+                  }
+                }}
+              >
+                {n === 'extra' ? (
+                  extraKey
+                ) : n === 'backspace' ? (
+                  <Icon name="backspace"></Icon>
+                ) : (
+                  n
+                )}
+              </View>
+            </View>
+          )
+        })}
       </View>
     </Popup>
   )

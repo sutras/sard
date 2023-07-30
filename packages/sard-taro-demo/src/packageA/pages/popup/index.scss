@@ -1,13 +1,7 @@
 .page-popup {
-  .sar-popup-zoom,
-  .sar-popup-fade {
-    width: 300px;
-    height: 150px;
-  }
-
-  .sar-popup {
+  .demo-popup {
     box-sizing: border-box;
     padding: 20px;
-    background: var(--sar-emphasis-bg);
+    background: #fff;
   }
 }

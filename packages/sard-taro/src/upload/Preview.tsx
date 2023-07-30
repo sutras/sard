@@ -1,18 +1,11 @@
 import { FC, ReactNode, useState } from 'react'
 import classNames from 'classnames'
-import {
-  Button,
-  ITouchEvent,
-  Image,
-  ImageProps,
-  Video,
-  View,
-} from '@tarojs/components'
+import { ITouchEvent, Image, ImageProps, Video, View } from '@tarojs/components'
 import { Icon } from '../icon'
 import { Loading } from '../loading'
 import { BaseProps } from '../base'
 import { isVideoUrl, isImageUrl } from '../utils'
-import { useSelectorId } from '../use'
+import { useBem, useSelectorId } from '../use'
 import Taro from '@tarojs/taro'
 
 export type UploadStatus = 'uploading' | 'failed' | 'done'
@@ -79,6 +72,8 @@ export const UploadPreview: FC<UploadPreviewProps> = (props) => {
     mode,
     ...restProps
   } = props
+
+  const [bem] = useBem('upload')
 
   const handleRemove = (event: ITouchEvent) => {
     if (!removable || disabled || readOnly) return
@@ -149,14 +144,14 @@ export const UploadPreview: FC<UploadPreviewProps> = (props) => {
     }
   }
 
-  const previewClass = classNames('sar-upload-preview', className)
+  const previewClass = classNames(bem.e('preview'), className)
 
   return (
     <View {...restProps} className={previewClass}>
       {file?.type === 'image' || (url && isImageUrl(url)) ? (
         <Image
           mode={mode}
-          className="sar-upload-image"
+          className={bem.e('image')}
           src={url || file?.path}
           onClick={() => onImageClick?.(index)}
         />
@@ -164,7 +159,7 @@ export const UploadPreview: FC<UploadPreviewProps> = (props) => {
         <>
           <Video
             id={videoId}
-            className="sar-upload-video"
+            className={bem.e('video')}
             // todo: 退出全屏时需要等下一次渲染才能隐藏播放控件，使后者会有一闪而过的缺陷
             controls={fullScreen}
             showCenterPlayBtn={false}
@@ -174,38 +169,36 @@ export const UploadPreview: FC<UploadPreviewProps> = (props) => {
             onFullscreenChange={handleFullscreenChange}
           ></Video>
           {!fullScreen && (
-            <View className="sar-upload-video-play">
+            <View className={bem.e('video-play')}>
               <Icon name="play" size={40}></Icon>
             </View>
           )}
         </>
       ) : (
-        <View className="sar-upload-file">
-          <Icon className="sar-upload-file-icon" name="file"></Icon>
-          <View className="sar-upload-file-name">{name}</View>
+        <View className={bem.e('file')}>
+          <Icon className={bem.e('file-icon')} name="file"></Icon>
+          <View className={bem.e('file-name')}>{name}</View>
         </View>
       )}
       {(status === 'uploading' || status === 'failed') && (
-        <View className="sar-upload-status">
-          <View className="sar-upload-status-icon">
-            {status === 'uploading' && (
-              <Loading iconClass="sar-upload-loading" />
-            )}
+        <View className={bem.e('status')}>
+          <View className={bem.e('status-icon')}>
+            {status === 'uploading' && <Loading iconClass={bem.e('loading')} />}
             {status === 'failed' && <Icon name="x-circle"></Icon>}
           </View>
           {message && (
-            <View className="sar-upload-status-message">{message}</View>
+            <View className={bem.e('status-message')}>{message}</View>
           )}
         </View>
       )}
       {removable && !disabled && !readOnly && status !== 'uploading' && (
-        <Button className="sar-upload-remove" onClick={handleRemove}>
+        <View className={bem.e('remove')} onClick={handleRemove}>
           {remove ?? (
-            <View className="sar-upload-close">
+            <View className={bem.e('close')}>
               <Icon name="close"></Icon>
             </View>
           )}
-        </Button>
+        </View>
       )}
     </View>
   )

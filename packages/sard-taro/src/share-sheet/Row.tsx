@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { View } from '@tarojs/components'
 import { BaseProps } from '../base'
 import { ShareSheetItem, ShareSheetItemProps } from './Item'
+import { useBem } from '../use'
 
 export interface ShareSheetRowProps extends BaseProps {
   itemList?: ShareSheetItemProps[]
@@ -12,7 +13,9 @@ export interface ShareSheetRowProps extends BaseProps {
 export const ShareSheetRow: FC<ShareSheetRowProps> = (props) => {
   const { className, children, itemList, onItemClick, ...restProps } = props
 
-  const rowclass = classNames('sar-share-sheet-row', className)
+  const [bem] = useBem('share-sheet')
+
+  const rowclass = classNames(bem.e('row'), className)
 
   return (
     <View {...restProps} className={rowclass}>

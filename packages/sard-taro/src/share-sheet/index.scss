@@ -1,4 +1,4 @@
-@import '../style/mixins.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -56,151 +56,137 @@ page {
 }
 // #endvariables
 
-.sar-share-sheet {
-  z-index: var(--sar-share-sheet-z-index);
+@include bem(share-sheet) {
+  @include b() {
+    z-index: var(--sar-share-sheet-z-index);
 
-  border-top-left-radius: var(--sar-share-sheet-border-radius);
-  border-top-right-radius: var(--sar-share-sheet-border-radius);
-  background-color: var(--sar-share-sheet-bg);
-  touch-action: pan-x;
+    border-top-left-radius: var(--sar-share-sheet-border-radius);
+    border-top-right-radius: var(--sar-share-sheet-border-radius);
+    background-color: var(--sar-share-sheet-bg);
+    touch-action: pan-x;
+  }
 
-  @at-root {
-    .sar-share-sheet-header {
-      position: relative;
-      padding: var(--sar-share-sheet-header-padding);
+  @include e(header) {
+    position: relative;
+    padding: var(--sar-share-sheet-header-padding);
 
-      @include border-bottom(var(--sar-share-sheet-header-border-color));
+    @include border-bottom(var(--sar-share-sheet-header-border-color));
+  }
 
-      @at-root {
-        .sar-share-sheet-title {
-          font-size: var(--sar-share-sheet-title-font-size);
-          font-weight: bold;
-          text-align: center;
-        }
-        .sar-share-sheet-description {
-          font-size: var(--sar-share-sheet-description-font-size);
-          text-align: center;
-          color: var(--sar-share-sheet-description-color);
+  @include e(title) {
+    font-size: var(--sar-share-sheet-title-font-size);
+    font-weight: bold;
+    text-align: center;
+  }
 
-          .sar-share-sheet-title ~ & {
-            margin-top: var(--sar-share-sheet-description-margin-top);
-          }
-        }
-      }
-    }
+  @include e(description) {
+    font-size: var(--sar-share-sheet-description-font-size);
+    text-align: center;
+    color: var(--sar-share-sheet-description-color);
 
-    .sar-share-sheet-body {
-      @at-root {
-        .sar-share-sheet-row {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: nowrap;
-          padding: var(--sar-share-sheet-row-padding-y)
-            var(--sar-share-sheet-row-padding-x);
-          overflow-x: auto;
-          overflow-y: hidden;
-          touch-action: pan-x;
-
-          &::-webkit-scrollbar {
-            height: 0;
-          }
-          &:not(:first-child) {
-            @include border-top(var(--sar-share-sheet-row-border-color));
-          }
-          .sar-share-sheet.sar-share-sheet-headless &:first-child {
-            border-top-left-radius: var(--sar-share-sheet-border-radius);
-            border-top-right-radius: var(--sar-share-sheet-border-radius);
-          }
-
-          @at-root {
-            .sar-share-sheet-item {
-              @include button-flush;
-
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              flex-grow: 0;
-              flex-shrink: 0;
-              width: auto;
-              line-height: inherit;
-              cursor: pointer;
-              user-select: none;
-
-              &:not(.sar-share-sheet-item-disabled):not([disabled]):active {
-                background-color: transparent;
-                opacity: var(--sar-share-sheet-item-active-opacity);
-                color: inherit;
-              }
-
-              &::after {
-                display: none;
-              }
-
-              @at-root {
-                .sar-share-sheet-icon {
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  width: var(--sar-share-sheet-icon-size);
-                  height: var(--sar-share-sheet-icon-size);
-                  margin: 0 var(--sar-share-sheet-icon-margin-x);
-                  border-radius: 100%;
-                  font-size: var(--sar-share-sheet-icon-font-size);
-                  color: var(--sar-share-sheet-icon-color);
-                  background-color: var(--sar-share-sheet-icon-bg);
-                }
-                .sar-share-sheet-img {
-                  display: flex;
-                  width: var(--sar-share-sheet-icon-size);
-                  height: var(--sar-share-sheet-icon-size);
-                  margin: 0 var(--sar-share-sheet-icon-margin-x);
-                  object-fit: contain;
-                }
-                .sar-share-sheet-name {
-                  margin-top: var(--sar-share-sheet-name-margin-top);
-                  padding: 0 var(--sar-share-sheet-name-padding-x);
-                  font-size: var(--sar-share-sheet-name-font-size);
-                  color: var(--sar-share-sheet-name-color);
-                }
-                .sar-share-sheet-label {
-                  margin-top: var(--sar-share-sheet-label-margin-top);
-                  padding: 0 var(--sar-share-sheet-label-padding-x);
-                  font-size: var(--sar-share-sheet-label-font-size);
-                  color: var(--sar-share-sheet-label-color);
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    .sar-share-sheet-gap {
-      height: var(--sar-share-sheet-gap-height);
-      background-color: var(--sar-share-sheet-gap-bg);
-    }
-
-    .sar-share-sheet-cancel {
-      @include button-flush;
-
-      display: block;
-      width: 100%;
-      padding: var(--sar-share-sheet-cancel-padding);
-      font-size: var(--sar-share-sheet-cancel-font-size);
-      line-height: inherit;
-      text-align: center;
-      cursor: pointer;
-      background-color: var(--sar-share-sheet-cancel-bg);
-
-      &:not([disabled]):active {
-        background-color: var(--sar-share-sheet-cancel-active-bg);
-        color: inherit;
-      }
+    @include m(titled) {
+      margin-top: var(--sar-share-sheet-description-margin-top);
     }
   }
-}
 
-// 禁用
-.sar-share-sheet-item-disabled {
-  @include disabled;
+  @include e(row) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: var(--sar-share-sheet-row-padding-y)
+      var(--sar-share-sheet-row-padding-x);
+    overflow-x: auto;
+    overflow-y: hidden;
+    touch-action: pan-x;
+
+    &::-webkit-scrollbar {
+      height: 0;
+    }
+
+    @include m(later) {
+      @include border-top(var(--sar-share-sheet-row-border-color));
+    }
+
+    @include m(headless-first) {
+      border-top-left-radius: var(--sar-share-sheet-border-radius);
+      border-top-right-radius: var(--sar-share-sheet-border-radius);
+    }
+  }
+
+  @include e(item) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 0;
+    flex-shrink: 0;
+    line-height: inherit;
+    cursor: pointer;
+
+    @include m(interactive) {
+      &:active {
+        background-color: transparent;
+        opacity: var(--sar-share-sheet-item-active-opacity);
+      }
+    }
+
+    @include m(disabled) {
+      @include disabled;
+    }
+  }
+
+  @include e(item-icon) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--sar-share-sheet-icon-size);
+    height: var(--sar-share-sheet-icon-size);
+    margin: 0 var(--sar-share-sheet-icon-margin-x);
+    border-radius: 100%;
+    font-size: var(--sar-share-sheet-icon-font-size);
+    color: var(--sar-share-sheet-icon-color);
+    background-color: var(--sar-share-sheet-icon-bg);
+  }
+
+  @include e(item-img) {
+    display: flex;
+    width: var(--sar-share-sheet-icon-size);
+    height: var(--sar-share-sheet-icon-size);
+    margin: 0 var(--sar-share-sheet-icon-margin-x);
+    object-fit: contain;
+  }
+
+  @include e(item-name) {
+    margin-top: var(--sar-share-sheet-name-margin-top);
+    padding: 0 var(--sar-share-sheet-name-padding-x);
+    font-size: var(--sar-share-sheet-name-font-size);
+    color: var(--sar-share-sheet-name-color);
+  }
+
+  @include e(item-label) {
+    margin-top: var(--sar-share-sheet-label-margin-top);
+    padding: 0 var(--sar-share-sheet-label-padding-x);
+    font-size: var(--sar-share-sheet-label-font-size);
+    color: var(--sar-share-sheet-label-color);
+  }
+
+  @include e(gap) {
+    height: var(--sar-share-sheet-gap-height);
+    background-color: var(--sar-share-sheet-gap-bg);
+  }
+
+  @include e(cancel) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--sar-share-sheet-cancel-padding);
+    font-size: var(--sar-share-sheet-cancel-font-size);
+    line-height: inherit;
+    cursor: pointer;
+    background-color: var(--sar-share-sheet-cancel-bg);
+
+    &:active {
+      background-color: var(--sar-share-sheet-cancel-active-bg);
+    }
+  }
 }

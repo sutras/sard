@@ -1,4 +1,4 @@
-@import '../style/mixins.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -36,244 +36,242 @@ page {
 }
 // #endvariables
 
-.sar-tabs {
-  position: relative;
-}
-
-.sar-tabs-header {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  .sar-tabs-sticky & {
-    position: sticky;
-    top: 0;
+@include bem(tabs) {
+  @include b() {
+    position: relative;
   }
-}
 
-.sar-tabs-label-wrapper {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 0;
-  width: 0;
-
-  &::-webkit-scrollbar {
-    display: none;
-    width: 0;
-    height: 0;
-    color: transparent;
+  @include m(vertical) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
   }
-}
 
-.sar-tabs-label-content {
-  position: relative;
-  display: inline-flex;
-  min-width: 100%;
-  flex-direction: row;
-  flex-wrap: nowrap;
-}
+  @include e(header) {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
-.sar-tabs-label {
-  position: relative;
-  display: flex;
-  flex: 1;
-  height: var(--sar-tabs-label-height);
-  justify-content: center;
-  align-items: center;
-  font-size: var(--sar-tabs-label-font-size);
-  color: var(--sar-tabs-label-color);
-  cursor: pointer;
-
-  @at-root {
-    // # label-禁用状态
-    .sar-tabs-label-disabled {
-      @include disabled-text;
+    @include m(vertical) {
+      flex: none;
+      flex-direction: column;
+      align-self: flex-start;
     }
 
-    // # label-活动状态
-    .sar-tabs-label-active {
+    @include m(sticky) {
+      position: sticky;
+      top: 0;
+    }
+  }
+
+  @include e(label-wrapper) {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    width: 0;
+
+    &::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+      color: transparent;
+    }
+
+    @include m(border) {
+      border: 1px solid currentColor;
+      border-radius: var(--sar-tabs-label-border-border-radius);
+      color: var(--sar-tabs-label-border-border-color);
+    }
+
+    @include m(vertical) {
+      flex-basis: auto;
+      width: 100%;
+    }
+  }
+
+  @include e(label-content) {
+    position: relative;
+    display: inline-flex;
+    min-width: 100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    @include m(vertical) {
+      flex-direction: column;
+    }
+  }
+
+  @include e(label) {
+    position: relative;
+    display: flex;
+    flex: 1;
+    height: var(--sar-tabs-label-height);
+    justify-content: center;
+    align-items: center;
+    font-size: var(--sar-tabs-label-font-size);
+    color: var(--sar-tabs-label-color);
+    cursor: pointer;
+
+    @include m(border) {
+      height: var(--sar-tabs-label-border-label-height);
+      color: inherit;
+    }
+
+    @include m(active) {
       font-weight: bold;
       color: var(--sar-tabs-label-active-color);
     }
-  }
-}
 
-.sar-tabs-inkbar-wrapper {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  transform: translateX(-50%);
-  text-align: center;
-  pointer-events: none;
-
-  @at-root {
-    .sar-tabs-inkbar {
-      width: var(--sar-tabs-inkbar-width);
-      height: var(--sar-tabs-inkbar-height);
-      background-color: var(--sar-tabs-inkbar-bg);
+    @include m(border-active) {
+      color: currentColor;
+      background-color: currentColor;
     }
-  }
-}
 
-// 卡片标签
-.sar-tabs-label-card {
-  .sar-tabs-label-line {
-    position: absolute;
-    top: 0;
-    left: auto;
-    right: auto;
-    width: 100%;
-    height: var(--sar-tabs-label-line-height);
-    background-color: var(--sar-tabs-label-line-bg);
-  }
-  .sar-tabs-label:not(.sar-tabs-label-active) .sar-tabs-label-line {
-    display: none;
-  }
-}
-
-// 边框标签
-.sar-tabs-label-border {
-  &.sar-tabs-label-wrapper {
-    border: 1px solid currentColor;
-    border-radius: var(--sar-tabs-label-border-border-radius);
-    color: var(--sar-tabs-label-border-border-color);
-  }
-  .sar-tabs-label {
-    height: var(--sar-tabs-label-border-label-height);
-    color: inherit;
-    ~ .sar-tabs-label {
+    @include m(border-later) {
       border-left: 1px solid currentColor;
     }
-    &.sar-tabs-label-active {
-      background-color: currentColor;
-      .sar-tabs-label-text {
-        color: var(--sar-tabs-label-border-label-active-color);
-      }
-    }
-  }
-}
 
-// 胶囊
-.sar-tabs-label-pill {
-  .sar-tabs-label {
-    height: var(--sar-tabs-label-pill-label-height);
-    border-radius: var(--sar-tabs-label-pill-label-border-radius);
-    &.sar-tabs-label-active {
+    @include m(pill) {
+      height: var(--sar-tabs-label-pill-label-height);
+      border-radius: var(--sar-tabs-label-pill-label-border-radius);
+    }
+
+    @include m(pill-active) {
       background-color: var(--sar-tabs-label-pill-label-active-bg);
-      .sar-tabs-label-text {
-        color: var(--sar-tabs-label-pill-label-active-color);
-      }
+    }
+
+    @include m(auto) {
+      flex: 0;
+      padding: 0 var(--sar-tabs-auto-label-padding-x);
+      white-space: nowrap;
+    }
+
+    @include m(vertical) {
+      flex: none;
+      padding: 0 15px;
+      height: var(--sar-tabs-vertical-label-height);
+    }
+
+    @include m(vertical-border-later) {
+      border-left: none;
+      border-top: 1px solid currentColor;
+    }
+
+    @include m(disabled) {
+      @include disabled-text;
     }
   }
-}
 
-// 自动滚动
-.sar-tabs-auto {
-  .sar-tabs-label {
-    flex: 0;
-    padding: 0 var(--sar-tabs-auto-label-padding-x);
-    white-space: nowrap;
-  }
-}
+  @include e(label-line) {
+    @include m(card) {
+      position: absolute;
+      top: 0;
+      left: auto;
+      right: auto;
+      width: 100%;
+      height: var(--sar-tabs-label-line-height);
+      background-color: var(--sar-tabs-label-line-bg);
+    }
 
-// 插槽
-.sar-tabs-prepend,
-.sar-tabs-append {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-}
-.sar-tabs-prepend {
-  padding-right: var(--sar-tabs-prepend-gap);
-}
-.sar-tabs-append {
-  padding-left: var(--sar-tabs-append-gap);
-}
+    @include m(vertical) {
+      right: 0;
+      left: auto;
+      top: 50%;
+      bottom: auto;
+      transform: translateY(-50%);
+      width: var(--sar-tabs-label-line-height);
+      height: 100%;
+    }
 
-// body
-.sar-tabs-body {
-  position: relative;
-}
-.sar-tabs-pane {
-  .sar-tabs:not(.sar-tabs-is-swiper):not(.sar-tabs-scrollspy)
-    &:not(.sar-tabs-pane-active) {
-    display: none;
-  }
-}
-
-// 垂直
-.sar-tabs-vertical {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-
-  .sar-tabs-header {
-    flex: none;
-    flex-direction: column;
-    align-self: flex-start;
+    @include m(vertical-card) {
+      left: 0;
+      right: auto;
+    }
   }
 
-  .sar-tabs-label-wrapper {
-    flex-basis: auto;
-    width: 100%;
+  @include e(label-text) {
+    @include m(border-active) {
+      color: var(--sar-tabs-label-border-label-active-color);
+    }
+
+    @include m(pill-active) {
+      color: var(--sar-tabs-label-pill-label-active-color);
+    }
   }
 
-  .sar-tabs-label-content {
-    flex-direction: column;
-  }
-
-  .sar-tabs-label {
-    flex: none;
-    padding: 0 15px;
-    height: var(--sar-tabs-vertical-label-height);
-  }
-
-  .sar-tabs-label-line {
-    right: 0;
-    left: auto;
-    top: 50%;
-    bottom: auto;
-    transform: translateY(-50%);
-    width: var(--sar-tabs-label-line-height);
-    height: 100%;
-  }
-  .sar-tabs-label-card .sar-tabs-label-line {
+  @include e(inkbar-wrapper) {
+    position: absolute;
+    bottom: 0;
     left: 0;
-    right: auto;
+    display: flex;
+    transform: translateX(-50%);
+    text-align: center;
+    pointer-events: none;
+
+    @include m(vertical) {
+      left: auto;
+      bottom: auto;
+      right: 0;
+      top: 0;
+      transform: translateY(-50%);
+    }
   }
 
-  .sar-tabs-inkbar-wrapper {
-    left: auto;
-    bottom: auto;
-    right: 0;
-    top: 0;
-    transform: translateY(-50%);
+  @include e(inkbar) {
+    width: var(--sar-tabs-inkbar-width);
+    height: var(--sar-tabs-inkbar-height);
+    background-color: var(--sar-tabs-inkbar-bg);
 
-    .sar-tabs-inkbar {
+    @include m(vertical) {
       height: var(--sar-tabs-inkbar-width);
       width: var(--sar-tabs-inkbar-height);
     }
   }
 
-  .sar-tabs-label-border {
-    .sar-tabs-label {
-      ~ .sar-tabs-label {
-        border-left: none;
-        border-top: 1px solid currentColor;
-      }
+  @include e(prepend, append) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+
+  @include e(prepend) {
+    padding-right: var(--sar-tabs-prepend-gap);
+  }
+
+  @include e(append) {
+    padding-left: var(--sar-tabs-append-gap);
+  }
+
+  @include e(body) {
+    position: relative;
+
+    @include m(vertical) {
+      flex: 1;
+      align-self: stretch;
+    }
+
+    @include m(animated) {
+      overflow: hidden;
     }
   }
 
-  .sar-tabs-body {
-    flex: 1;
-    align-self: stretch;
+  @include e(wrapper) {
+    @include m(animated) {
+      display: flex;
+      flex-wrap: nowrap;
+      transition: transform 0.3s;
+    }
   }
-}
 
-.sar-tabs-swiper {
-  height: auto;
+  @include e(pane) {
+    width: 100%;
+    flex: none;
+
+    @include m(hide) {
+      display: none;
+    }
+  }
 }

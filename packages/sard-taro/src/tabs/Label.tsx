@@ -7,7 +7,7 @@ import {
 import classNames from 'classnames'
 import { View } from '@tarojs/components'
 import { BaseProps } from '../base'
-import { useSelectorId } from '../use'
+import { useBem, useSelectorId } from '../use'
 import { getRectById } from '../utils'
 
 export interface TabLabelProps extends Omit<BaseProps, 'children'> {
@@ -25,6 +25,10 @@ export interface TabLabelProps extends Omit<BaseProps, 'children'> {
   lineWidth?: string
   lineStyle?: CSSProperties
   lineClass?: string
+  type?: 'inkbar' | 'card' | 'pill' | 'border'
+  later?: boolean
+  autoScroll?: boolean
+  vertical?: boolean
 }
 
 export interface TabLabelRef {
@@ -50,8 +54,14 @@ export const TabsLabel = forwardRef<TabLabelRef, TabLabelProps>(
       lineWidth,
       lineStyle,
       lineClass,
+      type,
+      later,
+      autoScroll,
+      vertical,
       ...restProps
     } = props
+
+    const [bem] = useBem('tabs')
 
     const selectorId = useSelectorId()
 
@@ -64,10 +74,21 @@ export const TabsLabel = forwardRef<TabLabelRef, TabLabelProps>(
     }
 
     const labelClass = classNames(
-      'sar-tabs-label',
+      bem.e('label'),
+      bem.em('label', type),
+      bem.em('label', 'active', active),
+      bem.em('label', 'border-active', type === 'border' && active),
+      bem.em('label', 'disabled', disabled),
+      bem.em('label', 'border-later', type === 'border' && later),
+      bem.em('label', 'pill-active', type === 'pill' && active),
+      bem.em('label', 'auto', autoScroll),
+      bem.em('label', 'vertical', vertical),
+      bem.em(
+        'label',
+        'vertical-border-later',
+        vertical && type === 'border' && later,
+      ),
       {
-        'sar-tabs-label-active': active,
-        'sar-tabs-label-disabled': disabled,
         [activeClass]: activeClass && active,
         [inactiveClass]: inactiveClass && !active,
       },
@@ -98,11 +119,31 @@ export const TabsLabel = forwardRef<TabLabelRef, TabLabelProps>(
         {showLine &&
           (line ?? (
             <View
-              className={classNames('sar-tabs-label-line', lineClass)}
-              style={{ width: lineWidth, ...lineStyle }}
+              className={classNames(
+                bem.e('label-line'),
+                bem.em('label-line', type),
+                bem.em('label-line', 'vertical', vertical),
+                bem.em(
+                  'label-line',
+                  'vertical-card',
+                  vertical && type === 'card',
+                ),
+                lineClass,
+              )}
+              style={{
+                width: lineWidth,
+                display: type === 'card' && !active ? 'none' : 'flex',
+                ...lineStyle,
+              }}
             ></View>
           ))}
-        <View className="sar-tabs-label-text">
+        <View
+          className={classNames(
+            bem.e('label-text'),
+            bem.em('label-text', 'border-active', type === 'border' && active),
+            bem.em('label-text', 'pill-active', type === 'pill' && active),
+          )}
+        >
           {typeof children === 'function' ? children(active) : children}
         </View>
       </View>

@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import { BaseProps } from '../base'
+import { useBem } from '../use'
 
 export interface ProgressBarProps extends BaseProps {
   percent?: number
@@ -26,20 +27,21 @@ export const ProgressBar: FC<ProgressBarProps> = (props) => {
     ...restProps
   } = props
 
-  const progressClass = classNames(
-    'sar-progress-bar',
-    {
-      'sar-progress-bar-striped': striped,
-      'sar-progress-bar-animated': animated,
-    },
-    className,
-  )
+  const [bem] = useBem('progress-bar')
+
+  const progressClass = classNames(bem.b(), className)
   const progressStyle = {
     backgroundColor: trackColor,
     height: thickness,
     ...style,
   }
-  const trailClass = classNames('sar-progress-bar-trail')
+  const trailClass = classNames(
+    classNames(
+      bem.e('trail'),
+      bem.em('trail', 'striped', striped),
+      bem.em('trail', 'animated', animated),
+    ),
+  )
   const trailStyle = {
     width: `${percent}%`,
     backgroundColor: color,

@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { Icon } from '../icon'
 import { BaseProps } from '../base'
 import { isNullish } from '../utils'
+import { useBem } from '../use'
 
 export interface ResultProps extends BaseProps {
   status?: 'success' | 'info' | 'warning' | 'error' | 'question'
@@ -31,23 +32,21 @@ export const Result: FC<ResultProps> = (props) => {
     ...restProps
   } = props
 
-  const resultClass = classNames(
-    'sar-result',
-    `sar-result-${status}`,
-    className,
-  )
+  const [bem] = useBem('result')
+
+  const resultClass = classNames(bem.b(), className)
 
   return (
     <View {...restProps} className={resultClass}>
-      <View className="sar-result-icon">
+      <View className={classNames(bem.e('icon'), bem.em('icon', status))}>
         {icon ?? <Icon name={mapStatusIcon[status]}></Icon>}
       </View>
-      {!isNullish(title) && <View className="sar-result-title">{title}</View>}
+      {!isNullish(title) && <View className={bem.e('title')}>{title}</View>}
       {!isNullish(description) && (
-        <View className="sar-result-description">{description}</View>
+        <View className={bem.e('description')}>{description}</View>
       )}
       {!isNullish(children) && (
-        <View className="sar-result-extra">{children}</View>
+        <View className={bem.e('extra')}>{children}</View>
       )}
     </View>
   )

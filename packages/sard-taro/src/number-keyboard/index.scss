@@ -1,4 +1,4 @@
-@import '../style/mixins.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -30,46 +30,56 @@ page {
 }
 // #endvariables
 
-.sar-number-keyboard {
-  z-index: var(--sar-number-keyboard-z-index);
+@include bem(number-keyboard) {
+  @include b() {
+    z-index: var(--sar-number-keyboard-z-index);
 
-  background-color: var(--sar-number-keyboard-bg);
-  touch-action: none;
+    background-color: var(--sar-number-keyboard-bg);
+    touch-action: none;
+  }
 
-  @at-root {
-    .sar-number-keyboard-body {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--sar-number-keyboard-key-gap);
-      padding: var(--sar-number-keyboard-body-padding-y)
-        var(--sar-number-keyboard-body-padding-x);
+  @include e(body) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: var(--sar-number-keyboard-body-padding-y)
+      var(--sar-number-keyboard-body-padding-x);
+    margin: calc(var(--sar-number-keyboard-key-gap) / 2 * -1);
+  }
 
-      @at-root {
-        .sar-number-keyboard-key {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          height: var(--sar-number-keyboard-key-height);
-          border-radius: var(--sar-number-keyboard-key-border-radius);
-          font-size: var(--sar-number-keyboard-key-font-size);
-          color: var(--sar-number-keyboard-key-color);
-          background-color: var(--sar-number-keyboard-key-bg);
-          user-select: none;
-          cursor: pointer;
+  @include e(key-wrapper) {
+    box-sizing: border-box;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 33.3333%;
+    width: 33.3333%;
+    padding: calc(var(--sar-number-keyboard-key-gap) / 2);
 
-          &:active {
-            background-color: var(--sar-number-keyboard-key-active-bg);
-          }
-        }
-      }
+    @include m(lastnum) {
+      order: 1;
     }
   }
-}
 
-.sar-number-keyboard-key-lastnum {
-  grid-area: 4 / 1 / 5 / 3;
+  @include e(backspace) {
+    max-width: 33.3333%;
+    order: 2;
+  }
 
-  .sar-number-keyboard-has-extra & {
-    grid-area: 4 / 2 / 5 / 3;
+  @include e(key) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: var(--sar-number-keyboard-key-height);
+    border-radius: var(--sar-number-keyboard-key-border-radius);
+    font-size: var(--sar-number-keyboard-key-font-size);
+    color: var(--sar-number-keyboard-key-color);
+    background-color: var(--sar-number-keyboard-key-bg);
+    user-select: none;
+    cursor: pointer;
+
+    &:active {
+      background-color: var(--sar-number-keyboard-key-active-bg);
+    }
   }
 }

@@ -1,4 +1,4 @@
-@import '../style/mixins.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -13,29 +13,33 @@ page {
 }
 // #endvariables
 
-.sar-picker {
-  position: relative;
-  height: var(--sar-picker-height);
-  overflow: hidden;
-  user-select: none;
-  -webkit-user-drag: none;
-}
+@include bem(picker) {
+  @include b() {
+    position: relative;
+    height: var(--sar-picker-height);
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
 
-.sar-picker-item {
-  flex: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: var(--sar-picker-indicator-height);
-  font-size: var(--sar-picker-item-font-size);
-  text-align: center;
-  color: var(--sar-picker-item-color);
-}
-.sar-picker-item-text {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.sar-picker-indicator {
-  height: var(--sar-picker-indicator-height);
+  @include e(item) {
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--sar-picker-indicator-height);
+    font-size: var(--sar-picker-item-font-size);
+    text-align: center;
+    color: var(--sar-picker-item-color);
+  }
+
+  @include e(item-text) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @include e(indicator) {
+    height: var(--sar-picker-indicator-height) !important;
+  }
 }

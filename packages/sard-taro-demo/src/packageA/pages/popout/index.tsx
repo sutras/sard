@@ -31,7 +31,7 @@ export default () => {
     <Page className="page-popout">
       <Demo title="基础使用" full>
         <Cell.Group card>
-          <Cell isLink title="显示弹出框" onClick={() => setVisible(true)} />
+          <Cell linkable title="显示弹出框" onClick={() => setVisible(true)} />
         </Cell.Group>
 
         <Popout
@@ -49,7 +49,7 @@ export default () => {
 
       <Demo title="紧凑类型" full>
         <Cell.Group card>
-          <Cell isLink title="显示弹出框" onClick={() => setVisible2(true)} />
+          <Cell linkable title="显示弹出框" onClick={() => setVisible2(true)} />
         </Cell.Group>
         <Popout
           visible={visible2}
@@ -68,7 +68,7 @@ export default () => {
       <Demo title="结合日期组件" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="请选择日期"
             value={value}
             onClick={() => setVisible3(true)}
@@ -91,7 +91,7 @@ export default () => {
             {({ value, setVisible }) => (
               <Cell.Group card>
                 <Cell
-                  isLink
+                  linkable
                   title="请选择日期"
                   value={value?.toLocaleDateString() || ''}
                   onClick={() => setVisible(true)}
@@ -111,7 +111,7 @@ export default () => {
             {({ value, setVisible }) => (
               <Cell.Group card>
                 <Cell
-                  isLink
+                  linkable
                   title="请选择日期"
                   value={value?.toLocaleDateString() || ''}
                   onClick={() => setVisible(true)}
@@ -131,7 +131,7 @@ export default () => {
             {({ value, setVisible }) => (
               <Cell.Group card>
                 <Cell
-                  isLink
+                  linkable
                   title="请选择日期"
                   value={value?.toLocaleDateString() || ''}
                   onClick={() => setVisible(true)}
@@ -154,7 +154,7 @@ export default () => {
                   onClick={() => setVisible(true)}
                   value={value?.toLocaleDateString()}
                   title="日历"
-                  isLink
+                  linkable
                 />
               )}
             </Popout.Outlet>
@@ -170,7 +170,7 @@ export default () => {
                   onClick={() => setVisible(true)}
                   value={options.map((option) => option.name).join('/')}
                   title="级联选择"
-                  isLink
+                  linkable
                 />
               )}
             </Popout.Outlet>
@@ -189,7 +189,7 @@ export default () => {
                   onClick={() => setVisible(true)}
                   value={value?.toLocaleString()}
                   title="日期时间"
-                  isLink
+                  linkable
                 />
               )}
             </Popout.Outlet>

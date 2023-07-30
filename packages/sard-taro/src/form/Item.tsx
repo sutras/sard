@@ -13,7 +13,7 @@ import classNames from 'classnames'
 
 import FormContext from './FormContext'
 import { FieldValidateStatus, HOOK_KEY } from './FormStore'
-import { useEvent } from '../use'
+import { useBem, useEvent } from '../use'
 import { Rule } from './Validator'
 import { mergeProps, toArray, scrollIntoView } from '../utils'
 import { AnyFunction, AnyType, BaseProps } from '../base'
@@ -74,6 +74,8 @@ export const FormItem: FC<FormItemProps> = (props) => {
     isListField,
     ...restProps
   } = props
+
+  const [bem] = useBem('form-item')
 
   void isListField
 
@@ -290,34 +292,40 @@ export const FormItem: FC<FormItemProps> = (props) => {
     <View
       {...restProps}
       className={classNames(
-        'sar-form-item',
-        {
-          [`sar-form-item-${mergedLyaout}`]: mergedLyaout,
-          [`sar-form-item-is-${mergedValidateStatus}`]: mergedValidateStatus,
-          'sar-form-item-hidden': hidden,
-        },
+        bem.b(),
+        bem.m(mergedLyaout, mergedLyaout),
+        bem.m(mergedValidateStatus, mergedValidateStatus),
+        bem.m('hidden', hidden),
         className,
       )}
       ref={scrollRef}
     >
       <View
-        className={classNames('sar-form-item-label', {
-          [`sar-form-item-label-${mergedLabelAlign}`]: mergedLabelAlign,
-        })}
+        className={classNames(
+          bem.e('label'),
+          bem.em('label', mergedLabelAlign, mergedLabelAlign),
+          bem.em('label', mergedLyaout, mergedLyaout),
+        )}
         style={{
           width: mergedLabelWidth,
         }}
       >
         {label}
       </View>
-      <View className="sar-form-item-content">
-        <View className="sar-form-item-control">{renderElement()}</View>
+      <View className={bem.e('content')}>
+        <View className={bem.e('control')}>{renderElement()}</View>
         {mergedFeedback.map((item, i) => (
-          <View key={i} className="sar-form-item-feedback">
+          <View
+            key={i}
+            className={classNames(
+              bem.e('feedback'),
+              bem.em('feedback', mergedValidateStatus, mergedValidateStatus),
+            )}
+          >
             {item}
           </View>
         ))}
-        {extra && <View className="sar-form-item-extra">{extra}</View>}
+        {extra && <View className={bem.e('extra')}>{extra}</View>}
       </View>
     </View>
   )

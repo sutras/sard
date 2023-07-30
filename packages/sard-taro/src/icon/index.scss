@@ -1,22 +1,26 @@
+@import '../style/base.scss';
 @import './sari-icons.scss';
 
 // #variables
 // #endvariables
 
-.sar-icon {
-  position: relative;
-  display: inline-flex;
-  vertical-align: middle;
-  font-size: inherit;
-  font-style: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-.sar-icon-image {
-  display: inline-flex;
-  width: 1em;
-  height: 1em;
-  object-fit: contain;
-  font-size: inherit;
+@include bem(icon) {
+  @include b() {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+    font-size: inherit;
+    font-style: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @include e(image) {
+    display: inline-flex;
+    width: 1em;
+    height: 1em;
+    object-fit: contain;
+    font-size: inherit;
+  }
 }

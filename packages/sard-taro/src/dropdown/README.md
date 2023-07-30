@@ -54,6 +54,15 @@ export default () => {
 }
 ```
 
+### 占位符
+
+```tsx
+<Dropdown>
+  <Dropdown.Item options={options1} placeholder="排序"></Dropdown.Item>
+  <Dropdown.Item options={options2} defaultValue="2"></Dropdown.Item>
+</Dropdown>
+```
+
 ### 添加 label
 
 ```tsx
@@ -85,11 +94,11 @@ export default () => {
 </Dropdown>
 ```
 
-### 自定义图标
+### 自定义箭头
 
 ```tsx
 <Dropdown
-  icon={(visible) => {
+  arrow={(visible) => {
     return <Icon name={visible ? 'up' : 'down'}></Icon>
   }}
 >
@@ -133,7 +142,7 @@ export default () => {
 | disabled     | 是否禁用                     | boolean                                                    | false  |
 | awayClosable | 是否在点击外部区域后自动隐藏 | boolean                                                    | true   |
 | maskClosable | 是否在点击遮罩后自动隐藏     | boolean                                                    | true   |
-| icon         | 自定义图标                   | (visible: boolean, direction: 'up' \| 'down') => ReactNode | -      |
+| arrow        | 自定义箭头                   | (visible: boolean, direction: 'up' \| 'down') => ReactNode | -      |
 
 ### DropdownItemProps
 
@@ -141,6 +150,7 @@ export default () => {
 | --------------- | ------------------------------ | ------------------------------- | ------ |
 | title           | 标题，用于自定义菜单项         | React.ReactNode                 | -      |
 | label           | 标签说明                       | React.ReactNode                 | -      |
+| separator       | 标签后面分隔符                 | React.ReactNode                 | -      |
 | options         | 菜单选项                       | DropdownOptionProps[]           | []     |
 | direction       | 菜单弹出方向                   | 'down' \| 'up'                  | 'down' |
 | disabled        | 是否禁用                       | boolean                         | false  |
@@ -153,9 +163,10 @@ export default () => {
 | onVisibleChange | 弹出框开始显示或完全隐藏时触发 | (visible: boolean) => void      | -      |
 | awayClosable    | 是否在点击外部区域后自动隐藏   | boolean                         | true   |
 | maskClosable    | 是否在点击遮罩后自动隐藏       | boolean                         | true   |
-| icon            | 自定义图标                     | (visible: boolean) => ReactNode | -      |
+| arrow           | 自定义箭头                     | (visible: boolean) => ReactNode | -      |
 | onClick         | 点击菜单项时触发               | (event: ITouchEvent) => void    | -      |
 | popupProps      | `Popup` 组件的 `props`         | PopupProps                      | -      |
+| placeholder     | 占位符                         | React.ReactNode                 | -      |
 
 ### DropdownOptionProps
 

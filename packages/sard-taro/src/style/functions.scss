@@ -1,5 +1,6 @@
 @use 'sass:color';
 @use 'sass:math';
+@import './variables.scss';
 
 // scss原生并没有提供字符串的替换函数，需自己编写函数来实现这个功能
 @function str-replace($string, $search, $replace) {
@@ -31,4 +32,22 @@
 // 以便将此变量和一个透明度组成一个rgba从而实现自定义一个颜色的透明度。
 @function extractRGB($color) {
   @return '#{color.red($color)},#{color.green($color)},#{color.blue($color)}';
+}
+
+@function bem($block, $element: '', $modifier: '') {
+  $selector: '.' + $sar-namespace + $sar-block-separator + $block;
+
+  @if $element != '' {
+    $selector: $selector + $sar-element-separator + $element;
+  }
+
+  @if $modifier != '' {
+    $selector: $selector + $sar-modifier-separator + $modifier;
+  }
+
+  @return $selector;
+}
+
+@function bem-ns($str) {
+  @return $sar-namespace + '-' + $str;
 }

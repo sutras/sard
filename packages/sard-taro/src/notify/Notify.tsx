@@ -9,7 +9,7 @@ import {
 } from 'react'
 import classNames from 'classnames'
 import { Popup, PopupProps } from '../popup'
-import { useSetTimeout } from '../use'
+import { useBem, useSetTimeout } from '../use'
 
 export interface NotifyProps extends Omit<PopupProps, 'children'> {
   type?: 'primary' | 'success' | 'warning' | 'error'
@@ -55,6 +55,8 @@ export const Notify: NotifyFC = forwardRef((props, ref) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('notify')
+
   const [reset, clear] = useSetTimeout(
     () => {
       onTimeout?.(false)
@@ -77,7 +79,7 @@ export const Notify: NotifyFC = forwardRef((props, ref) => {
     clear,
   }))
 
-  const notifyClass = classNames('sar-notify', 'sar-notify-' + type, className)
+  const notifyClass = classNames(bem.b(), bem.m(type), className)
   const notifyStyle = {
     color,
     background,

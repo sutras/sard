@@ -20,8 +20,8 @@ export default () => {
 
   return (
     <Cell.Group card>
-      <Cell isLink title="显示通知" onClick={() => setVisible(true)} />
-      <Cell isLink title="隐藏通知" onClick={() => setVisible(false)} />
+      <Cell linkable title="显示通知" onClick={() => setVisible(true)} />
+      <Cell linkable title="隐藏通知" onClick={() => setVisible(false)} />
     </Cell.Group>
 
     <Notify

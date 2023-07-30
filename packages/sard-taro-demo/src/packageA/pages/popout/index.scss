@@ -1,2 +1,7 @@
-// .page-popout {
-// }
+.page-popout {
+  .demo-popup {
+    box-sizing: border-box;
+    padding: 20px;
+    background: var(--sar-emphasis-bg);
+  }
+}

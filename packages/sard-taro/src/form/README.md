@@ -12,13 +12,6 @@ import { Form } from 'sard-taro'
 
 ## 代码演示
 
-<script type="code">
-  [
-    "./demo/Basic.tsx",
-    "./demo/Status.tsx"
-  ]
-</script>
-
 ## API
 
 ### FormProps

@@ -10,7 +10,7 @@ import genHash from '../utils/genHash.js'
 const renderStrategies = {
   markdown(code) {
     const html = code
-      .replace(/[`$]/g, '\\$1')
+      .replace(/[`$]/g, '\\$')
       .replace(/\f/g, '')
       .replace(/(?=<h[23])/g, '\f')
       .split('\f')
@@ -49,13 +49,16 @@ const renderStrategies = {
   },
 }
 
-function getVariables(text) {
-  const result =
-    /(?<=#variables)[\s\S]*?(?=\/\/\s*#endvariables)/.exec(text)?.[0] || ''
-  return result
+function makeTextToCode(text, lang) {
+  return text
     .replace(/^\s*|\s*$/g, '')
-    .replace(/^/, '```scss\n')
+    .replace(/^/, `\`\`\`${lang}\n`)
     .replace(/$/, '\n```')
+}
+
+function getVariables(text) {
+  text = /(?<=#variables)[\s\S]*?(?=\/\/\s*#endvariables)/.exec(text)?.[0] || ''
+  return makeTextToCode(text, 'scss')
 }
 
 function extractCssVariables(id) {
@@ -63,6 +66,17 @@ function extractCssVariables(id) {
 
   if (existsSync(file)) {
     return getVariables(readFileSync(file, 'utf-8'))
+  } else {
+    return ''
+  }
+}
+
+function readSpecialFile(id, relativePath) {
+  const file = path.resolve(path.dirname(id), relativePath)
+
+  if (existsSync(file)) {
+    const text = readFileSync(file, 'utf-8')
+    return makeTextToCode(text, 'scss')
   } else {
     return ''
   }
@@ -83,9 +97,13 @@ function transform(code, id, md) {
     return html_block(tokens, idx, options, env, self)
   }
 
-  code = code.replace('%{variables}', () => {
-    return extractCssVariables(id)
-  })
+  code = code
+    .replace(/^%\{variables\}/m, () => {
+      return extractCssVariables(id)
+    })
+    .replace(/^%\(([^)]+)\)/m, (_, p1) => {
+      return readSpecialFile(id, p1)
+    })
 
   let html = md.render(code)
 

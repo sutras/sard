@@ -5,6 +5,7 @@ import { Icon, IconProps } from '../icon'
 
 import { AvatarGroup } from './Group'
 import { BaseProps } from '../base'
+import { useBem } from '../use'
 
 export * from './Group'
 
@@ -35,7 +36,9 @@ export const Avatar: AvatarFC = (props) => {
     ...restProps
   } = props
 
-  const avatarClass = classNames('sar-avatar', 'sar-avatar-' + shape, className)
+  const [bem] = useBem('avatar')
+
+  const avatarClass = classNames(bem.b(), bem.m(shape), className)
 
   const avatarStyle = {
     width: size,
@@ -48,7 +51,7 @@ export const Avatar: AvatarFC = (props) => {
     <View {...restProps} className={avatarClass} style={avatarStyle}>
       {children ??
         (src ? (
-          <Image src={src} className="sar-avatar-image" />
+          <Image src={src} className={bem.e('image')} />
         ) : (
           <Icon name="person" {...iconProps}></Icon>
         ))}

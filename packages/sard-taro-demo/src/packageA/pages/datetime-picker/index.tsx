@@ -45,7 +45,7 @@ export default () => {
       <Demo title="受控" full>
         <Cell.Group card>
           <Cell
-            isLink
+            linkable
             title="设置为当前时间"
             value={value.toLocaleString()}
             onClick={() => setValue(new Date())}
@@ -57,14 +57,14 @@ export default () => {
       </Demo>
 
       <Demo title="类型" full>
-        <Cell.Group card>
+        <Cell.Group card style={{ marginBottom: 20 }}>
           <Cell title="年月日" />
           <Cell>
             <DatetimePicker type="yMd" />
           </Cell>
         </Cell.Group>
 
-        <Cell.Group card>
+        <Cell.Group card style={{ marginBottom: 20 }}>
           <Cell title="时分秒" />
           <Cell>
             <DatetimePicker type="hms" />
@@ -80,7 +80,7 @@ export default () => {
       </Demo>
 
       <Demo title="最大最小值" full>
-        <Cell.Group card>
+        <Cell.Group card style={{ marginBottom: 20 }}>
           <Cell title="年月日" value="2021-04-13, 2023-07-08" />
           <Cell>
             <DatetimePicker
@@ -91,7 +91,7 @@ export default () => {
           </Cell>
         </Cell.Group>
 
-        <Cell.Group card>
+        <Cell.Group card style={{ marginBottom: 20 }}>
           <Cell title="时分秒" value="09:00:00, 18:30:00" />
           <Cell>
             <DatetimePicker

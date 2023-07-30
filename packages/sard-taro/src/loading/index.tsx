@@ -1,8 +1,9 @@
-import { CSSProperties, FC, ReactNode } from 'react'
+import { CSSProperties, FC, ReactNode, useMemo } from 'react'
 import classNames from 'classnames'
 import { View } from '@tarojs/components'
 import { BaseProps } from '../base'
 import { isNullish } from '../utils'
+import { useBem } from '../use'
 
 export interface LoadingProps extends BaseProps {
   type?: 'clock' | 'circular'
@@ -15,14 +16,6 @@ export interface LoadingProps extends BaseProps {
   iconStyle?: CSSProperties
   iconClass?: string
 }
-
-const clockIcon = Array(12)
-  .fill(0)
-  .map((_, i) => <View key={i} className="sar-loading-scale"></View>)
-
-const circularIcon = Array(3)
-  .fill(0)
-  .map((_, i) => <View key={i} className="sar-loading-circular-item"></View>)
 
 export const Loading: FC<LoadingProps> = (props) => {
   const {
@@ -40,19 +33,40 @@ export const Loading: FC<LoadingProps> = (props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('loading')
+
+  const clockIcon = useMemo(() => {
+    return Array(12)
+      .fill(0)
+      .map((_, i) => (
+        <View
+          key={i}
+          className={classNames(bem.e('scale'), bem.em('scale', i + 1))}
+        ></View>
+      ))
+  }, [bem])
+
+  const circularIcon = useMemo(() => {
+    return Array(3)
+      .fill(0)
+      .map((_, i) => (
+        <View
+          key={i}
+          className={classNames(
+            bem.e('circular-item'),
+            bem.em('circular-item', i + 1),
+          )}
+        ></View>
+      ))
+  }, [bem])
+
   const loadingClass = classNames(
-    'sar-loading',
-    {
-      'sar-loading-vertical': vertical,
-    },
+    bem.b(),
+    bem.m('vertical', vertical),
     className,
   )
 
-  const innerIconClass = classNames(
-    'sar-loading-icon',
-    'sar-loading-' + type,
-    iconClass,
-  )
+  const innerIconClass = classNames(bem.e('icon'), bem.e(type), iconClass)
   const innerIconStyle = {
     color,
     width: size,
@@ -77,7 +91,10 @@ export const Loading: FC<LoadingProps> = (props) => {
     return (
       (!isNullish(children) || !isNullish(text)) && (
         <View
-          className="sar-loading-text"
+          className={classNames(
+            bem.e('text'),
+            bem.em('text', 'vertical', vertical),
+          )}
           style={{ color: textColor, fontSize: textSize }}
         >
           {children ?? text}

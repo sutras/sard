@@ -5,6 +5,7 @@ import { Icon, IconProps } from '../icon'
 import useTranslate from '../locale/useTranslate'
 import { BaseProps } from '../base'
 import { isNullish } from '../utils'
+import { useBem } from '../use'
 
 export interface EmptyProps extends BaseProps {
   icon?: ReactNode
@@ -24,18 +25,20 @@ export const Empty: FC<EmptyProps> = (props) => {
     ...restProps
   } = props
 
-  const emptyClass = classNames('sar-empty', className)
+  const [bem] = useBem('empty')
+
+  const emptyClass = classNames(bem.b(), className)
 
   return (
     <View {...restProps} className={emptyClass}>
-      <View className="sar-empty-icon">
+      <View className={bem.e('icon')}>
         {icon ?? <Icon name="empty" {...iconProps}></Icon>}
       </View>
       {!isNullish(description) && (
-        <View className="sar-empty-description">{description}</View>
+        <View className={bem.e('description')}>{description}</View>
       )}
       {!isNullish(children) && (
-        <View className="sar-empty-extra">{children}</View>
+        <View className={bem.e('extra')}>{children}</View>
       )}
     </View>
   )

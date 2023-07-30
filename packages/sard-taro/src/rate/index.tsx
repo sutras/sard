@@ -1,7 +1,13 @@
 import { ReactNode, useRef, FC, useEffect } from 'react'
 import classNames from 'classnames'
 import { ITouch, ITouchEvent, View } from '@tarojs/components'
-import { useControllableValue, useEvent, useSelectorId, useBrush } from '../use'
+import {
+  useControllableValue,
+  useEvent,
+  useSelectorId,
+  useBrush,
+  useBem,
+} from '../use'
 import { Icon } from '../icon'
 import { BaseProps } from '../base'
 import { getRectById } from '../utils'
@@ -44,6 +50,8 @@ export const Rate: FC<RateProps> = (props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('rate')
+
   const [innerValue, setInnerValue] = useControllableValue({
     value,
     defaultValue,
@@ -71,7 +79,7 @@ export const Rate: FC<RateProps> = (props) => {
     itemStars.current.forEach((el, i) => {
       const diff = i + 1 - tempValue.current
       el.style.width =
-        (diff <= 0 ? 1 : diff > 1 ? 0 : tempValue.current % 1) + 'em'
+        (diff <= 0 ? 1 : diff > 1 ? 0 : tempValue.current % 1) * 100 + '%'
     })
   }
 
@@ -171,11 +179,9 @@ export const Rate: FC<RateProps> = (props) => {
   }, [innerValue, itemStars.current])
 
   const rateClass = classNames(
-    'sar-rate',
-    {
-      'sar-rate-disabled': disabled,
-      'sar-rate-readonly': readOnly,
-    },
+    bem.b(),
+    bem.m('disabled', disabled),
+    bem.m('readonly', readOnly),
     className,
   )
 
@@ -203,7 +209,10 @@ export const Rate: FC<RateProps> = (props) => {
 
           return (
             <View
-              className="sar-rate-item"
+              className={classNames(
+                bem.e('item'),
+                bem.em('item', 'later', index > 0),
+              )}
               id={id}
               key={itemValue}
               style={{
@@ -211,11 +220,11 @@ export const Rate: FC<RateProps> = (props) => {
               }}
               onClick={(event) => handleClick(event, index)}
             >
-              <View className="sar-rate-star-void" style={{ color: voidColor }}>
+              <View className={bem.e('star-void')} style={{ color: voidColor }}>
                 {voidIcon ?? <Icon name="star"></Icon>}
               </View>
               <View
-                className="sar-rate-star"
+                className={bem.e('star')}
                 style={{
                   color: color,
                 }}

@@ -1,3 +1,5 @@
+@import '../style/base.scss';
+
 // #variables
 :root,
 page {
@@ -7,51 +9,49 @@ page {
 }
 // #endvariables
 
-.s-progress-circle {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: var(--sar-progress-circle-size);
-  height: var(--sar-progress-circle-size);
+@include bem(progress-circle) {
+  @include b() {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--sar-progress-circle-size);
+    height: var(--sar-progress-circle-size);
+  }
 
-  @at-root {
-    .s-progress-circle-track {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      background-color: var(--sar-progress-circle-track-color);
+  @include e(track) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-color: var(--sar-progress-circle-track-color);
+  }
 
-      @at-root {
-        .s-progress-circle-trail {
-          width: 100%;
-          height: 100%;
-          color: var(--sar-progress-circle-trail-color);
+  @include e(trail) {
+    width: 100%;
+    height: 100%;
+    color: var(--sar-progress-circle-trail-color);
+  }
 
-          @at-root {
-            .s-progress-circle-cap {
-              position: absolute;
-              top: 0;
-              left: 50%;
-              background-color: currentColor;
-              border-radius: 50%;
+  @include e(cap) {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    background-color: currentColor;
+    border-radius: 50%;
 
-              .s-progress-circle-percent-zero & {
-                display: none;
-              }
-            }
-            .s-progress-circle-cap-start {
-              transform: translate(-50%, 0);
-            }
-            .s-progress-circle-cap-end {
-              transform: translate(-50%, -50%);
-            }
-          }
-        }
-      }
+    @include m(percent-zero) {
+      display: none;
     }
+  }
+
+  @include e(cap-start) {
+    transform: translate(-50%, 0);
+  }
+
+  @include e(cap-end) {
+    transform: translate(-50%, -50%);
   }
 }

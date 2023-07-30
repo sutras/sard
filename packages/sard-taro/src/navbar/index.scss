@@ -1,4 +1,4 @@
-@import '../style/mixins.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -18,89 +18,85 @@ page {
 }
 // #endvariables
 
-.sar-navbar {
-  position: relative;
-  box-sizing: border-box;
-  display: flex;
-  height: var(--sar-navbar-height);
-  align-items: center;
-  justify-content: center;
-  background-color: var(--sar-navbar-bg);
-
-  @include border-bottom(var(--sar-navbar-border-color));
-
-  @at-root {
-    .sar-navbar-content {
-      display: flex;
-      height: 100%;
-      flex: 1;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-
-      @at-root {
-        .sar-navbar-title {
-          width: 100%;
-          max-width: var(--sar-navbar-title-max-width);
-          font-size: var(--sar-navbar-title-font-size);
-          font-weight: bold;
-          text-align: center;
-          color: var(--sar-navbar-title-color);
-          @include ellipsis;
-        }
-      }
-    }
-
-    .sar-navbar-left,
-    .sar-navbar-right {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      display: flex;
-      flex: none;
-      align-items: center;
-      height: 100%;
-    }
-    .sar-navbar-left {
-      left: 0;
-    }
-    .sar-navbar-right {
-      right: 0;
-    }
-
-    .sar-navbar-item {
-      display: flex;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
-      padding: 0 var(--sar-navbar-item-padding-x);
-      font-size: var(--sar-navbar-item-font-size);
-      line-height: 1;
-      color: var(--sar-navbar-item-color);
-      user-select: none;
-      cursor: pointer;
-
-      &:active {
-        opacity: var(--sar-navbar-item-active-opacity);
-      }
-    }
-  }
-}
-
-.sar-navbar-flow {
-  .sar-navbar-left,
-  .sar-navbar-right {
+@include bem(navbar) {
+  @include b() {
     position: relative;
+    box-sizing: border-box;
+    display: flex;
+    height: var(--sar-navbar-height);
+    align-items: center;
+    justify-content: center;
+    background-color: var(--sar-navbar-bg);
+
+    @include border-bottom(var(--sar-navbar-border-color));
   }
 
-  .sar-navbar-title {
-    max-width: 100%;
+  @include e(content) {
+    display: flex;
+    height: 100%;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
   }
-}
 
-.sar-navbar-fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  @include e(title) {
+    width: 100%;
+    max-width: var(--sar-navbar-title-max-width);
+    font-size: var(--sar-navbar-title-font-size);
+    font-weight: bold;
+    text-align: center;
+    color: var(--sar-navbar-title-color);
+    @include ellipsis;
+
+    @include m(flow) {
+      max-width: 100%;
+    }
+  }
+
+  @include e(left, right) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex: none;
+    align-items: center;
+    height: 100%;
+
+    @include m(flow) {
+      position: relative;
+    }
+  }
+
+  @include e(left) {
+    left: 0;
+  }
+
+  @include e(right) {
+    right: 0;
+  }
+
+  @include e(item) {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--sar-navbar-item-padding-x);
+    font-size: var(--sar-navbar-item-font-size);
+    line-height: 1;
+    color: var(--sar-navbar-item-color);
+    user-select: none;
+    cursor: pointer;
+
+    &:active {
+      opacity: var(--sar-navbar-item-active-opacity);
+    }
+  }
+
+  @include m(fixed) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
 }

@@ -12,7 +12,7 @@ import classNames from 'classnames'
 import { Loading, LoadingProps } from '../loading'
 import { Popup, PopupProps } from '../popup'
 import { Icon, IconProps } from '../icon'
-import { useSetTimeout } from '../use'
+import { useBem, useSetTimeout } from '../use'
 import { BaseProps } from '../base'
 
 export interface ToastProps extends BaseProps, PopupProps {
@@ -54,6 +54,8 @@ export const Toast: ToastFC = forwardRef((props, ref) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('toast')
+
   const [reset, clear] = useSetTimeout(
     () => {
       onTimeout?.(false)
@@ -80,12 +82,13 @@ export const Toast: ToastFC = forwardRef((props, ref) => {
     clear,
   }))
 
+  const isText = type === 'text' && !icon && !iconProps
+
   const toastClass = classNames(
-    'sar-toast',
-    {
-      'sar-toast-text': type === 'text' && !icon && !iconProps,
-      [`sar-toast-${placement}`]: placement,
-    },
+    bem.b(),
+    bem.m('is-text', isText),
+    bem.m('not-text', !isText),
+    bem.m(placement, placement),
     className,
   )
 
@@ -98,21 +101,21 @@ export const Toast: ToastFC = forwardRef((props, ref) => {
       className={toastClass}
     >
       {(type !== 'text' || icon || iconProps) && (
-        <View className="sar-toast-icon">
+        <View className={bem.e('icon')}>
           {icon ||
             (type === 'loading' ? (
               <Loading
-                className="sar-toast-loading"
+                className={bem.e('loading')}
                 color="inherit"
                 size={32}
                 {...loadingProps}
               ></Loading>
             ) : (
-              <Icon name={type} size="1em" {...iconProps}></Icon>
+              <Icon name={type} {...iconProps}></Icon>
             ))}
         </View>
       )}
-      <View className="sar-toast-title">{title}</View>
+      <View className={bem.e('title')}>{title}</View>
     </Popup>
   )
 })

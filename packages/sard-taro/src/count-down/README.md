@@ -57,29 +57,23 @@ import { CountDownRef } from 'sard-taro'
 export default () => {
   const ref = useRef<CountDownRef>(null)
   return (
-    <Button onClick={() => ref.current?.start()}>开始</Button>
-    <Button onClick={() => ref.current?.pause()}>暂停</Button>
-    <Button onClick={() => ref.current?.reset()}>重置</Button>
-    <CountDown
-      ref={ref}
-      time={1000 * 10}
-      format="ss:SSS"
-      interval={60}
-      autoStart={false}
-    />
+    <Cell.Group card>
+      <Cell>
+        <CountDown
+          ref={ref}
+          time={1000 * 10}
+          format="ss:SSS"
+          interval={60}
+          autoStart={false}
+        />
+      </Cell>
+      <Cell title="开始" linkable onClick={() => ref.current?.start()}></Cell>
+      <Cell title="暂停" linkable onClick={() => ref.current?.pause()}></Cell>
+      <Cell title="重置" linkable onClick={() => ref.current?.reset()}></Cell>
+    </Cell.Group>
   )
 }
 ```
-
-<script type="code">
-  [
-    "./demo/Basic.tsx",
-    "./demo/Format.tsx",
-    "./demo/Milliseconds.tsx",
-    "./demo/Style.tsx",
-    "./demo/Imperative.tsx"
-  ]
-</script>
 
 ## API
 

@@ -8,7 +8,7 @@ import {
 import classNames from 'classnames'
 import { View } from '@tarojs/components'
 import { BaseProps } from '../base'
-import { useSelectorId } from '../use'
+import { useBem, useSelectorId } from '../use'
 
 export interface TabPaneProps extends BaseProps {
   label?: ReactNode | ((active: boolean) => ReactNode)
@@ -37,6 +37,8 @@ export const TabsPane = forwardRef<Component, TabPaneProps>((props, ref) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('tabs')
+
   void label, labelStyle, labelClass
 
   const selectorId = useSelectorId()
@@ -47,13 +49,7 @@ export const TabsPane = forwardRef<Component, TabPaneProps>((props, ref) => {
 
   const active = innerKey === activeKey
 
-  const tabPaneClass = classNames(
-    'sar-tabs-pane',
-    {
-      'sar-tabs-pane-active': active,
-    },
-    className,
-  )
+  const tabPaneClass = classNames(bem.em('pane', 'active', active), className)
 
   return (
     <View {...restProps} className={tabPaneClass} id={selectorId} ref={ref}>

@@ -85,7 +85,7 @@ export default () => {
             <Popout.Outlet>
               {({ value, triggerArgs: [, options = []], setVisible }) => (
                 <Cell
-                  isLink
+                  linkable
                   title="请选择省市区"
                   value={
                     (value && options.map((option) => option.name).join('/')) ||

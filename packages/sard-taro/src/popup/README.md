@@ -30,12 +30,12 @@ export default () => {
 
   return (
     <Cell.Group card>
-      <Cell isLink title="顶部划出" onClick={() => show('slide-top')} />
-      <Cell isLink title="右边划出" onClick={() => show('slide-right')} />
-      <Cell isLink title="底部划出" onClick={() => show('slide-bottom')} />
-      <Cell isLink title="左边划出" onClick={() => show('slide-left')} />
-      <Cell isLink title="缩放" onClick={() => show('zoom')} />
-      <Cell isLink title="淡入淡出" onClick={() => show('fade')} />
+      <Cell linkable title="顶部划出" onClick={() => show('slide-top')} />
+      <Cell linkable title="右边划出" onClick={() => show('slide-right')} />
+      <Cell linkable title="底部划出" onClick={() => show('slide-bottom')} />
+      <Cell linkable title="左边划出" onClick={() => show('slide-left')} />
+      <Cell linkable title="缩放" onClick={() => show('zoom')} />
+      <Cell linkable title="淡入淡出" onClick={() => show('fade')} />
     </Cell.Group>
 
     <Popup
@@ -60,7 +60,7 @@ export default () => {
 | effect      | 显隐效果             | 'slide-top' \| 'slide-right' \| 'slide-bottom' \| 'slide-left' \| 'zoom' \| 'fade' | 'zoom' |
 | zIndex      | 弹出层的层级         | number                                                                             | -      |
 | mask        | 是否显示遮罩         | boolean                                                                            | true   |
-| clearMask   | 透明遮罩             | boolean                                                                            | false  |
+| transparent | 透明遮罩             | boolean                                                                            | false  |
 | maskClass   | 遮罩类名             | string                                                                             | -      |
 | maskStyle   | 遮罩样式             | string                                                                             | -      |
 | onMaskClick | 点击遮罩时触发       | (event: ITouchEvent) => void                                                       | -      |

@@ -4,9 +4,11 @@ import { Loading, LoadingProps } from '../loading'
 import {
   type ButtonProps as TaroButtonProps,
   Button as TaroButton,
+  View,
 } from '@tarojs/components'
 import { AnyType, BaseProps } from '../base'
 import { isNullish } from '../utils'
+import { useBem } from '../use'
 
 type TaroButtonPropsBase = Omit<
   TaroButtonProps,
@@ -43,24 +45,24 @@ export const Button: FC<ButtonProps> = (props) => {
     size = 'medium',
     round = false,
     block = false,
-    disabled = false,
-    loading = false,
+    disabled,
+    loading,
     loadingText,
     loadingProps,
     ...restProps
   } = props
 
+  const [bem] = useBem('button')
+
   const buttonClass = classNames(
-    'sar-button',
-    'sar-button-' + theme,
-    'sar-button-' + type,
-    {
-      ['sar-button-' + size]: size !== 'medium',
-      'sar-button-round': round,
-      'sar-button-block': block,
-      'sar-button-disabled': disabled,
-      'sar-button-loading': loading,
-    },
+    bem.b(),
+    bem.m(type),
+    bem.m(`${type}-${theme}`),
+    bem.m(size, size !== 'medium'),
+    bem.m('round', round),
+    bem.m('block', block),
+    bem.m('disabled', disabled),
+    bem.m('loading', loading),
     className,
   )
 
@@ -68,20 +70,20 @@ export const Button: FC<ButtonProps> = (props) => {
     <TaroButton
       {...restProps}
       className={buttonClass}
-      disabled={disabled || loading}
-      hoverClass="sar-button-hover"
+      disabled={disabled || loading || undefined}
+      hoverClass={bem.m('hover')}
     >
       {loading ? (
         <>
           <Loading
             {...loadingProps}
             iconClass={classNames(
-              'sar-button-loading-icon',
+              bem.e('loading-icon'),
               loadingProps?.iconClass,
             )}
           ></Loading>
           {!isNullish(loadingText) && (
-            <span className="sar-button-loading-text">{loadingText}</span>
+            <View className={bem.e('loading-text')}>{loadingText}</View>
           )}
         </>
       ) : (

@@ -10,6 +10,7 @@ import { Icon } from '../icon'
 import { isNullish, pickNullish } from '../utils'
 import { CheckContext, useCheck, useCheckGroup } from './useCheck'
 import { ITouchEvent, View } from '@tarojs/components'
+import useBem from './useBem'
 
 type IconType = 'square' | 'circle' | 'record'
 
@@ -58,6 +59,8 @@ export const useInternalCheck = <T extends 'single' | 'multiple'>(
     ...restProps
   } = props
 
+  const [bem] = useBem(checkClass)
+
   const [isChecked, toggle] = useCheck(
     checkType,
     {
@@ -82,11 +85,9 @@ export const useInternalCheck = <T extends 'single' | 'multiple'>(
   }
 
   const checkboxClass = classNames(
-    `sar-${checkClass}`,
-    {
-      [`sar-${checkClass}-checked`]: isChecked,
-      [`sar-${checkClass}-disabled`]: disabled,
-    },
+    bem.b(),
+    bem.m('checked', isChecked),
+    bem.m('disabled', disabled),
     className,
   )
 
@@ -96,7 +97,13 @@ export const useInternalCheck = <T extends 'single' | 'multiple'>(
       className={checkboxClass}
       onClick={handleCheckboxClick}
     >
-      <View className={`sar-${checkClass}-icon`} style={iconStyle}>
+      <View
+        className={classNames(
+          bem.e('icon'),
+          bem.em('icon', 'checked', isChecked),
+        )}
+        style={iconStyle}
+      >
         {icon ? (
           icon(isChecked)
         ) : (
@@ -104,7 +111,7 @@ export const useInternalCheck = <T extends 'single' | 'multiple'>(
         )}
       </View>
       {!isNullish(children) && (
-        <View className={`sar-${checkClass}-label`}>{children}</View>
+        <View className={bem.e('label')}>{children}</View>
       )}
     </View>
   )
@@ -148,6 +155,9 @@ export const useInternalCheckGroup = <T extends 'single' | 'multiple'>(
     ...restProps
   } = props
 
+  const [bem] = useBem(checkClass)
+  const [gBem] = useBem(`${checkClass}-group`)
+
   const context = useCheckGroup({
     value,
     defaultValue,
@@ -159,31 +169,40 @@ export const useInternalCheckGroup = <T extends 'single' | 'multiple'>(
   })
 
   const checkboxGroupClass = classNames(
-    `sar-${checkClass}-group`,
-    {
-      [`sar-${checkClass}-group-vertical`]: vertical,
-    },
+    gBem.b(),
+    gBem.m('vertical', vertical),
     className,
   )
 
   return (
     <View {...restProps} className={checkboxGroupClass}>
       <CheckContext.Provider value={context}>
-        {Children.map(children, (element: ReactElement<InternalCheckProps>) => {
-          return cloneElement(element, {
-            ...element.props,
-            ...pickNullish(
-              {
-                disabled,
-                size,
-                type,
-                icon,
-                checkedColor,
-              },
-              element.props,
-            ),
-          })
-        })}
+        {Children.map(
+          children,
+          (element: ReactElement<InternalCheckProps>, index: number) => {
+            return cloneElement(element, {
+              ...element.props,
+              className: classNames(
+                bem.m(index === 0 ? 'first' : 'later', !vertical),
+                bem.m(
+                  index === 0 ? 'vertical-first' : 'vertical-later',
+                  vertical,
+                ),
+                element.props.className,
+              ),
+              ...pickNullish(
+                {
+                  disabled,
+                  size,
+                  type,
+                  icon,
+                  checkedColor,
+                },
+                element.props,
+              ),
+            })
+          },
+        )}
       </CheckContext.Provider>
     </View>
   )

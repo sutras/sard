@@ -1,4 +1,4 @@
-@import '../style/mixins.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -16,116 +16,124 @@ page {
 }
 // #endvariables
 
-.sar-mesh {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+@include bem(mesh) {
+  @include b() {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 
-  @at-root {
-    .sar-mesh-item {
-      position: relative;
-      box-sizing: border-box;
-      flex-grow: 0;
-      flex-shrink: 0;
-      flex-basis: 0;
-      width: 0;
+  @include e(item) {
+    position: relative;
+    box-sizing: border-box;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 0;
+    width: 0;
+  }
 
-      @at-root {
-        .sar-mesh-item-content {
-          position: relative;
-          box-sizing: border-box;
-          display: flex;
-          height: 100%;
-          padding-top: var(--sar-mesh-item-padding-y);
-          padding-right: var(--sar-mesh-item-padding-x);
-          padding-bottom: var(--sar-mesh-item-padding-y);
-          padding-left: var(--sar-mesh-item-padding-x);
-          background-color: var(--sar-mesh-bg);
+  @include e(item-content) {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    height: 100%;
+    padding-top: var(--sar-mesh-item-padding-y);
+    padding-right: var(--sar-mesh-item-padding-x);
+    padding-bottom: var(--sar-mesh-item-padding-y);
+    padding-left: var(--sar-mesh-item-padding-x);
+    background-color: var(--sar-mesh-bg);
 
-          &::after {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            width: 200%;
-            height: 200%;
-            transform-origin: 0 0;
-            transform: scale(0.5);
-            border: 0 solid var(--sar-mesh-border-color);
-            content: '';
-            pointer-events: none;
-          }
-
-          @at-root {
-            .sar-item-icon {
-              display: flex;
-              font-size: var(--sar-item-icon-font-size);
-            }
-
-            .sar-item-text {
-              font-size: var(--sar-item-text-font-size);
-              line-height: var(--sar-item-text-line-height);
-            }
-          }
-        }
-      }
-    }
-
-    .sar-mesh-border-right::after {
-      border-right-width: 1px;
-    }
-    .sar-mesh-border-bottom::after {
-      border-bottom-width: 1px;
-    }
-    .sar-mesh-border-surround::after {
-      border-width: 1px;
-    }
-
-    .sar-mesh-vertical {
-      flex-direction: column;
-
-      .sar-item-icon ~ .sar-item-text {
-        margin-top: var(--sar-item-text-gap);
-      }
-    }
-
-    .sar-mesh-vertical-reverse {
-      flex-direction: column-reverse;
-
-      .sar-item-icon ~ .sar-item-text {
-        margin-bottom: var(--sar-item-text-gap);
-      }
-    }
-
-    .sar-mesh-horizontal {
-      flex-direction: row;
-
-      .sar-item-icon ~ .sar-item-text {
-        margin-left: var(--sar-item-text-gap);
-      }
-    }
-
-    .sar-mesh-horizontal-reverse {
-      flex-direction: row-reverse;
-
-      .sar-item-icon ~ .sar-item-text {
-        margin-right: var(--sar-item-text-gap);
-      }
-    }
-
-    .sar-mesh-center {
-      justify-content: center;
-      align-items: center;
-    }
-
-    .sar-mesh-square {
+    &::after {
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
+      z-index: 1;
+      width: 200%;
+      height: 200%;
+      transform-origin: 0 0;
+      transform: scale(0.5);
+      border: 0 solid var(--sar-mesh-border-color);
+      content: '';
+      pointer-events: none;
+    }
+  }
+
+  @include e(item-icon) {
+    display: flex;
+    font-size: var(--sar-item-icon-font-size);
+  }
+
+  @include e(item-text) {
+    font-size: var(--sar-item-text-font-size);
+    line-height: var(--sar-item-text-line-height);
+
+    @include m(vertical) {
+      margin-top: var(--sar-item-text-gap);
     }
 
-    .sar-item-clickable:active {
+    @include m(vertical-reverse) {
+      margin-bottom: var(--sar-item-text-gap);
+    }
+
+    @include m(horizontal) {
+      margin-left: var(--sar-item-text-gap);
+    }
+
+    @include m(horizontal-reverse) {
+      margin-right: var(--sar-item-text-gap);
+    }
+  }
+
+  @include m(border-right) {
+    &::after {
+      border-right-width: 1px;
+    }
+  }
+
+  @include m(border-bottom) {
+    &::after {
+      border-bottom-width: 1px;
+    }
+  }
+
+  @include m(border-surround) {
+    &::after {
+      border-width: 1px;
+    }
+  }
+
+  @include m(vertical) {
+    flex-direction: column;
+  }
+
+  @include m(vertical-reverse) {
+    flex-direction: column-reverse;
+  }
+
+  @include m(horizontal) {
+    flex-direction: row;
+  }
+
+  @include m(horizontal-reverse) {
+    flex-direction: row-reverse;
+  }
+
+  @include m(center) {
+    justify-content: center;
+    align-items: center;
+  }
+
+  @include m(square) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  @include m(clickable) {
+    cursor: pointer;
+
+    &:active {
       background-color: var(--sar-mesh-active-bg);
     }
   }

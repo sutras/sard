@@ -14,7 +14,7 @@ import { View } from '@tarojs/components'
 import { DropdownItem, DropdownItemProps } from './Item'
 import { DropdownOption } from './Option'
 import { pickNullish } from '../utils'
-import { useEvent } from '../use'
+import { useBem, useEvent } from '../use'
 import { BaseProps } from '../base'
 
 export * from './Item'
@@ -26,7 +26,7 @@ export interface DropdownProps extends Omit<BaseProps, 'children'> {
   disabled?: boolean
   awayClosable?: boolean
   maskClosable?: boolean
-  icon?: (visible: boolean) => ReactNode
+  arrow?: (visible: boolean) => ReactNode
 }
 
 export interface DropdownFC extends FC<DropdownProps> {
@@ -42,9 +42,11 @@ export const Dropdown: DropdownFC = (props) => {
     disabled,
     awayClosable,
     maskClosable,
-    icon,
+    arrow,
     ...restProps
   } = props
+
+  const [bem] = useBem('dropdown')
 
   const [visibleList, setVisibleList] = useState<boolean[]>([])
 
@@ -72,17 +74,13 @@ export const Dropdown: DropdownFC = (props) => {
     })
   }
 
-  const dropdownClass = classNames(
-    'sar-dropdown',
-    {
-      'sar-dropdown-show': show,
-    },
-    className,
-  )
+  const dropdownClass = classNames(bem.b(), bem.m('show', show), className)
 
   return (
     <View {...restProps} className={dropdownClass}>
-      <View className="sar-dropdown-shadow"></View>
+      <View
+        className={classNames(bem.e('shadow'), bem.em('shadow', 'show', show))}
+      ></View>
       {Children.toArray(children).map(
         (
           element: ReactElement<DropdownItemProps & { ref: (el) => void }>,
@@ -104,7 +102,7 @@ export const Dropdown: DropdownFC = (props) => {
                 disabled,
                 awayClosable,
                 maskClosable,
-                icon,
+                arrow,
               },
               element.props,
             ),

@@ -3,6 +3,7 @@ import { View } from '@tarojs/components'
 import classNames from 'classnames'
 
 import { BaseProps } from '../base'
+import { useBem } from '../use'
 
 export interface ProgressCircleProps extends BaseProps {
   percent?: number
@@ -25,17 +26,13 @@ export const ProgressCircle: FC<ProgressCircleProps> = (props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('progress-circle')
+
   const radius = 50 - thickness / 2
   const angle = (percent / 100) * 360
   const radian = (angle / 180) * Math.PI
 
-  const progressClass = classNames(
-    's-progress-circle',
-    {
-      's-progress-circle-percent-zero': percent <= 0,
-    },
-    className,
-  )
+  const progressClass = classNames(bem.b(), className)
   const progressStyle = {
     width: size,
     height: size,
@@ -72,14 +69,22 @@ export const ProgressCircle: FC<ProgressCircleProps> = (props) => {
 
   return (
     <View {...restProps} className={progressClass} style={progressStyle}>
-      <View className="s-progress-circle-track" style={trackStyle}>
-        <View className="s-progress-circle-trail" style={trailStyle}>
+      <View className={bem.e('track')} style={trackStyle}>
+        <View className={bem.e('trail')} style={trailStyle}>
           <View
-            className="s-progress-circle-cap s-progress-circle-cap-start"
+            className={classNames(
+              bem.e('cap'),
+              bem.e('cap-start'),
+              bem.em('cap', 'percent-zero', percent <= 0),
+            )}
             style={capStartStyle}
           ></View>
           <View
-            className="s-progress-circle-cap s-progress-circle-cap-end"
+            className={classNames(
+              bem.e('cap'),
+              bem.e('cap-end'),
+              bem.em('cap', 'percent-zero', percent <= 0),
+            )}
             style={capEndStyle}
           ></View>
         </View>

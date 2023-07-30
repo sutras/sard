@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import classNames from 'classnames'
 import { SkeletonBlock, SkeletonBlockProps } from './Block'
+import { useBem } from '../use'
 
 export interface SkeletonAvatarProps extends SkeletonBlockProps {
   size?: number | string
@@ -9,7 +10,9 @@ export interface SkeletonAvatarProps extends SkeletonBlockProps {
 export const SkeletonAvatar: FC<SkeletonAvatarProps> = (props) => {
   const { className, size, style, round, ...restProps } = props
 
-  const avatarClass = classNames('sar-skeleton-avatar', className)
+  const [bem] = useBem('skeleton')
+
+  const avatarClass = classNames(bem.e('avatar'), className)
 
   const avatarStyle = {
     ...style,

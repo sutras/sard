@@ -56,7 +56,7 @@ const [value, setValue] = useState('')
 
 ```tsx
 <Cell
-  isLink
+  linkable
   title="双向绑定"
   value={value}
   onClick={() => setVisible(true)}

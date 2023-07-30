@@ -6,6 +6,7 @@ import { SkeletonAvatar } from './Avatar'
 import { SkeletonTitle } from './Title'
 import { SkeletonParagraph } from './Paragraph'
 import { BaseProps } from '../base'
+import { useBem } from '../use'
 
 export * from './Block'
 export * from './Avatar'
@@ -45,7 +46,9 @@ export const Skeleton: SkeletonFC = (props) => {
     ...restProps
   } = props
 
-  const skeletonClass = classNames('sar-skeleton', className)
+  const [bem] = useBem('skeleton')
+
+  const skeletonClass = classNames(bem.b(), className)
 
   return (
     <>
@@ -56,11 +59,17 @@ export const Skeleton: SkeletonFC = (props) => {
               size={avatarSize}
               animated={animated}
               round={avatarRound}
+              className={bem.em('avatar', 'in-skeleton')}
             />
           )}
-          <View className="sar-skeleton-content">
+          <View className={bem.e('content')}>
             {title && <SkeletonTitle animated={animated} round={round} />}
-            <SkeletonParagraph rows={rows} animated={animated} round={round} />
+            <SkeletonParagraph
+              rows={rows}
+              animated={animated}
+              round={round}
+              className={bem.em('paragraph', 'in-skeleton')}
+            />
           </View>
         </View>
       ) : (

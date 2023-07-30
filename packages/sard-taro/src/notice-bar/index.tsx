@@ -5,6 +5,7 @@ import { BaseProps } from '../base'
 import Icon, { IconProps } from '../icon'
 import { getRectById } from '../utils'
 import {
+  useBem,
   useControllableValue,
   useEvent,
   useResize,
@@ -24,7 +25,7 @@ export interface NoticeBarProps extends BaseProps {
   wrap?: boolean
   closable?: boolean
   onClose?: (event: ITouchEvent) => void
-  isLink?: boolean
+  linkable?: boolean
   onClick?: (event: ITouchEvent) => void
   visible?: boolean
   defaultVisible?: boolean
@@ -49,13 +50,15 @@ export const NoticeBar: FC<NoticeBarProps> = (props) => {
     wrap,
     closable,
     onClose,
-    isLink,
+    linkable,
     visible,
     defaultVisible,
     onVisible,
     threshold = 150,
     ...restProps
   } = props
+
+  const [bem] = useBem('notice-bar')
 
   const contentId = useSelectorId()
   const wrapperId = useSelectorId()
@@ -138,26 +141,27 @@ export const NoticeBar: FC<NoticeBarProps> = (props) => {
   }, [scrollable])
 
   const noticeBarClass = classNames(
-    'sar-notice-bar',
-    {
-      'sar-notice-bar-wrap': wrap,
-      'sar-notice-bar-scrollable': shouldScroll,
-      'sar-notice-bar-show': innerVisible,
-      'sar-notice-bar-is-link': isLink,
-    },
-    `sar-notice-bar-scroll-${scrollType}`,
+    bem.b(),
+    bem.m('linkable', linkable),
+    bem.m(`scroll-${scrollType}`),
+    bem.m('wrap', wrap),
     className,
   )
 
   const noticeBarStyle = {
     color,
+    display: innerVisible ? 'flex' : 'none',
     background,
     ...style,
   }
 
-  const wrapperClass = classNames('sar-notice-bar-wrapper', {
-    'sar-notice-bar-infinite': !firstLap,
-  })
+  const wrapperClass = classNames(
+    bem.e('wrapper'),
+    bem.em('wrapper', 'wrap', wrap),
+    bem.em('wrapper', 'infinite', !firstLap),
+    bem.em('wrapper', 'scroll-never', scrollable === false),
+    bem.em('wrapper', 'scrollable', shouldScroll),
+  )
 
   const wrapperStyle = {
     transform: `translateX(${firstLap ? 0 : wrapperData.contentWidth}px)`,
@@ -167,12 +171,12 @@ export const NoticeBar: FC<NoticeBarProps> = (props) => {
 
   return (
     <View {...restProps} className={noticeBarClass} style={noticeBarStyle}>
-      <View className="sar-notice-bar-left-icon">
+      <View className={bem.e('left-icon')}>
         {leftIcon ?? (
           <Icon name="volume-up" size={20} {...leftIconProps}></Icon>
         )}
       </View>
-      <View className="sar-notice-bar-content" id={contentId}>
+      <View className={bem.e('content')} id={contentId}>
         <View
           id={wrapperId}
           className={wrapperClass}
@@ -182,14 +186,11 @@ export const NoticeBar: FC<NoticeBarProps> = (props) => {
           {children}
         </View>
       </View>
-      {(closable || isLink) && (
-        <View
-          className="sar-notice-bar-right-icon"
-          onClick={handleRightIconClick}
-        >
+      {(closable || linkable) && (
+        <View className={bem.e('right-icon')} onClick={handleRightIconClick}>
           {rightIcon ?? (
             <Icon
-              name={closable ? 'close' : isLink ? 'right' : ''}
+              name={closable ? 'close' : linkable ? 'right' : ''}
               size={16}
               {...rightIconProps}
             ></Icon>

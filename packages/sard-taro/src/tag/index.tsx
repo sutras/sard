@@ -3,6 +3,7 @@ import { View, ITouchEvent } from '@tarojs/components'
 import classNames from 'classnames'
 import { Icon } from '../icon'
 import { BaseProps } from '../base'
+import { useBem } from '../use'
 
 export interface TagProps extends BaseProps {
   theme?:
@@ -36,15 +37,15 @@ export const Tag: FC<TagProps> = (props) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('tag')
+
   const tagClass = classNames(
-    'sar-tag',
-    `sar-tag-${theme}`,
-    `sar-tag-${size}`,
-    {
-      'sar-tag-plain': plain,
-      'sar-tag-round': round,
-      'sar-tag-mark': mark,
-    },
+    bem.b(),
+    bem.m(theme),
+    bem.m(`${theme}-plain`, plain),
+    bem.m(size),
+    bem.m('round', round),
+    bem.m('mark', mark),
     className,
   )
 
@@ -52,7 +53,7 @@ export const Tag: FC<TagProps> = (props) => {
     <View {...restProps} className={tagClass}>
       {children}
       {closable && (
-        <Icon className="sar-tag-close" name="close" onClick={onClose}></Icon>
+        <Icon className={bem.e('close')} name="close" onClick={onClose}></Icon>
       )}
     </View>
   )

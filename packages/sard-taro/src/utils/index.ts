@@ -528,16 +528,24 @@ export function treeToMap(
 }
 
 // 如果 first 指定属性为 null 或 undefined， 则从 second 中提取
-export function pickNullish(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  parentProps: Record<string, any>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  subProps: Record<string, any>,
+export function pickNullish<T extends string>(
+  parentProps: Record<T, AnyType>,
+  subProps: Record<string, AnyType>,
 ) {
   return Object.keys(parentProps).reduce((result, prop) => {
     result[prop] = subProps[prop] ?? parentProps[prop]
     return result
-  }, {})
+  }, {} as Record<T, AnyType>)
+}
+
+export function pickContextNullish<T extends string>(
+  props: Record<T, AnyType>,
+  contextProps: Record<string, AnyType>,
+) {
+  return Object.keys(props).reduce((result, prop) => {
+    result[prop] = props[prop] ?? contextProps[prop]
+    return result
+  }, {} as Record<T, AnyType>)
 }
 
 /**

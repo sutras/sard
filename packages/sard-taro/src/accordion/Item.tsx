@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { ITouchEvent, View } from '@tarojs/components'
 import { Icon } from '../icon'
 import { Collapse } from '../collapse'
+import { useBem } from '../use'
 
 export interface AccordionItemProps {
   className?: string
@@ -15,6 +16,7 @@ export interface AccordionItemProps {
   disabled?: boolean
   duration?: number
   onClick?: (event: ITouchEvent) => void
+  later?: boolean
 }
 
 export const AccordionItem: FC<AccordionItemProps> = (props) => {
@@ -28,8 +30,11 @@ export const AccordionItem: FC<AccordionItemProps> = (props) => {
     disabled,
     duration = 300,
     onClick,
+    later,
     ...restProps
   } = props
+
+  const [bem] = useBem('accordion-item')
 
   const handleClick = (event: ITouchEvent) => {
     if (!disabled) {
@@ -41,25 +46,27 @@ export const AccordionItem: FC<AccordionItemProps> = (props) => {
     ? activeKey.includes(innerKey)
     : innerKey === activeKey
 
-  const itemClass = classNames(
-    'sar-accordion-item',
-    {
-      'sar-accordion-item-active': active,
-      'sar-accordion-item-disabled': disabled,
-    },
-    className,
-  )
+  const itemClass = classNames(bem.b(), bem.m('later', later), className)
 
   return (
     <View {...restProps} className={itemClass}>
-      <View className="sar-accordion-item-header" onClick={handleClick}>
-        <View className="sar-accordion-item-title">{title}</View>
-        <View className="sar-accordion-item-icon">
+      <View
+        className={classNames(
+          bem.e('header'),
+          bem.em('header', 'disabled', disabled),
+        )}
+        onClick={handleClick}
+      >
+        <View className={bem.e('title')}>{title}</View>
+        <View className={bem.e('icon')}>
           {typeof icon === 'function'
             ? icon(active)
             : icon ?? (
                 <Icon
-                  className="sar-accordion-item-arrow"
+                  className={classNames(
+                    bem.e('arrow'),
+                    bem.em('arrow', 'active', active),
+                  )}
                   prefix="sari"
                   name="down"
                 ></Icon>
@@ -69,9 +76,9 @@ export const AccordionItem: FC<AccordionItemProps> = (props) => {
       <Collapse
         duration={duration}
         visible={active}
-        className="sar-accordion-item-wrapper"
+        className={bem.e('wrapper')}
       >
-        <View className="sar-accordion-item-content">{children}</View>
+        <View className={bem.e('content')}>{children}</View>
       </Collapse>
     </View>
   )

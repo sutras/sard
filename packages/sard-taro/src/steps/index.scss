@@ -1,3 +1,5 @@
+@import '../style/base.scss';
+
 // #variables
 :root,
 page {
@@ -30,205 +32,211 @@ page {
 }
 // #endvariables
 
-.sar-steps {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-}
-
-.sar-steps-step {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  font-size: var(--sar-steps-step-font-size);
-
-  &:last-child {
-    flex: none;
-    white-space: nowrap;
-  }
-
-  &.sar-steps-disabled {
-    @include disabled;
-  }
-
-  @at-root {
-    .sar-steps-header {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding-top: var(--sar-steps-header-gap-y);
-      padding-bottom: var(--sar-steps-header-gap-y);
-
-      @at-root {
-        .sar-steps-line {
-          height: var(--sar-steps-line-thickness);
-          width: 0;
-          flex-grow: 1;
-          flex-shrink: 1;
-          flex-basis: 0;
-          margin-left: var(--sar-steps-line-gap);
-          margin-right: var(--sar-steps-line-gap);
-          background-color: var(--sar-steps-line-color);
-
-          .sar-steps-step:last-child & {
-            display: none;
-          }
-        }
-        .sar-steps-line-before {
-          display: none;
-        }
-        .sar-steps-step:first-child .sar-steps-line-before {
-          visibility: hidden;
-        }
-        .sar-steps-step:last-child .sar-steps-line-after {
-          visibility: hidden;
-        }
-        .sar-steps-icon {
-          font-size: var(--sar-steps-icon-font-size);
-          line-height: 1;
-        }
-      }
-    }
-  }
-}
-
-// # 状态
-.sar-steps-finish {
-  color: var(--sar-steps-text-finish-color);
-  .sar-steps-icon {
-    color: var(--sar-steps-icon-finish-color);
-  }
-}
-
-.sar-steps-process {
-  color: var(--sar-steps-text-process-color);
-  .sar-steps-icon {
-    color: var(--sar-steps-icon-process-color);
-  }
-}
-
-.sar-steps-wait {
-  color: var(--sar-steps-text-wait-color);
-  .sar-steps-icon {
-    color: var(--sar-steps-icon-wait-color);
-  }
-}
-
-.sar-steps-error {
-  color: var(--sar-steps-text-error-color);
-  .sar-steps-icon {
-    color: var(--sar-steps-icon-error-color);
-  }
-}
-
-.sar-steps-position-behind .sar-steps-line,
-.sar-steps-position-self .sar-steps-line-before {
-  background-color: var(--sar-steps-line-active-color);
-}
-
-// # 垂直步骤条
-.sar-steps-vertical {
-  flex-direction: column;
-  align-items: stretch;
-
-  .sar-steps-step {
-    flex-direction: row;
-  }
-
-  .sar-steps-header {
-    position: relative;
-    top: calc(
-      var(--sar-steps-header-vertical-top) + var(--sar-steps-body-padding-y) / 2
-    );
-    flex: none;
-    flex-direction: column;
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-left: var(--sar-steps-header-gap-x);
-    padding-right: var(--sar-steps-header-gap-x);
-  }
-  .sar-steps-line {
-    width: var(--sar-steps-line-thickness);
-    height: 0;
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: var(--sar-steps-line-gap);
-    margin-bottom: var(--sar-steps-line-gap);
-  }
-
-  .sar-steps-body {
-    flex: 1;
-    padding-top: calc(var(--sar-steps-body-padding-y) / 2);
-    padding-bottom: calc(var(--sar-steps-body-padding-y) / 2);
-  }
-  .sar-steps-step:last-child {
-    white-space: unset;
-  }
-}
-
-// # 居中
-.sar-steps-center {
-  .sar-steps-step {
-    justify-content: center;
-    text-align: center;
-
-    &:last-child {
-      flex: 1;
-      white-space: unset;
-
-      .sar-steps-line {
-        display: flex;
-      }
-    }
-  }
-
-  .sar-steps-line-before {
+@include bem(steps) {
+  @include b() {
     display: flex;
-    margin-left: 0;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
   }
 
-  .sar-steps-line-after {
-    margin-right: 0;
+  @include m(vertical) {
+    flex-direction: column;
+    align-items: stretch;
   }
-}
 
-// # 垂直居中
-.sar-steps-vertical.sar-steps-center {
-  .sar-steps-step {
-    justify-content: center;
-    align-items: center;
-    text-align: left;
+  @include m(finish) {
+    color: var(--sar-steps-text-finish-color);
+  }
 
-    &:last-child {
+  @include m(process) {
+    color: var(--sar-steps-text-process-color);
+  }
+
+  @include m(wait) {
+    color: var(--sar-steps-text-wait-color);
+  }
+
+  @include m(error) {
+    color: var(--sar-steps-text-error-color);
+  }
+
+  @include e(step) {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    font-size: var(--sar-steps-step-font-size);
+
+    @include m(last) {
+      flex: none;
+      white-space: nowrap;
+    }
+
+    @include m(center) {
+      justify-content: center;
+      text-align: center;
+    }
+
+    @include m(center-last) {
       flex: 1;
       white-space: unset;
+    }
 
-      .sar-steps-line {
-        display: flex;
+    @include m(vertical) {
+      flex-direction: row;
+    }
+
+    @include m(vertical-center) {
+      justify-content: center;
+      align-items: center;
+      text-align: left;
+    }
+
+    @include m(vertical-center-last) {
+      flex: 1;
+      white-space: unset;
+    }
+
+    @include m(interactive) {
+      cursor: pointer;
+      &:active {
+        background-color: var(--sar-steps-step-active-bg);
       }
     }
-  }
-  .sar-steps-header {
-    top: 0;
-    align-self: stretch;
+
+    @include m(disabled) {
+      @include disabled;
+    }
   }
 
-  .sar-steps-line-before {
-    margin-top: 0;
+  @include e(header) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: var(--sar-steps-header-gap-y);
+    padding-bottom: var(--sar-steps-header-gap-y);
+
+    @include m(vertical) {
+      position: relative;
+      top: calc(
+        var(--sar-steps-header-vertical-top) + var(--sar-steps-body-padding-y) /
+          2
+      );
+      flex: none;
+      flex-direction: column;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: var(--sar-steps-header-gap-x);
+      padding-right: var(--sar-steps-header-gap-x);
+    }
+
+    @include m(vertical-center) {
+      top: 0;
+      align-self: stretch;
+    }
   }
 
-  .sar-steps-line-after {
-    margin-bottom: 0;
-  }
-}
+  @include e(line) {
+    height: var(--sar-steps-line-thickness);
+    width: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    margin-left: var(--sar-steps-line-gap);
+    margin-right: var(--sar-steps-line-gap);
+    background-color: var(--sar-steps-line-color);
 
-// # 可点击的
-.sar-steps-clickable {
-  .sar-steps-step:not(.sar-steps-disabled) {
-    cursor: pointer;
-    &:active {
-      background-color: var(--sar-steps-step-active-bg);
+    @include m(behind) {
+      background-color: var(--sar-steps-line-active-color);
+    }
+
+    @include m(last) {
+      display: none;
+    }
+
+    @include m(center-last) {
+      display: flex;
+    }
+
+    @include m(vertical) {
+      width: var(--sar-steps-line-thickness);
+      height: 0;
+      margin-left: 0;
+      margin-right: 0;
+      margin-top: var(--sar-steps-line-gap);
+      margin-bottom: var(--sar-steps-line-gap);
+    }
+
+    @include m(vertical-last) {
+      white-space: unset;
+    }
+
+    @include m(vertical-center-last) {
+      display: flex;
+    }
+  }
+
+  @include e(line-before) {
+    display: none;
+
+    @include m(self) {
+      background-color: var(--sar-steps-line-active-color);
+    }
+
+    @include m(first) {
+      visibility: hidden;
+    }
+
+    @include m(center) {
+      display: flex;
+      margin-left: 0;
+    }
+
+    @include m(vertical-center) {
+      margin-top: 0;
+    }
+  }
+
+  @include e(line-after) {
+    @include m(last) {
+      visibility: hidden;
+    }
+
+    @include m(center) {
+      margin-right: 0;
+    }
+
+    @include m(vertical-center) {
+      margin-bottom: 0;
+    }
+  }
+
+  @include e(icon) {
+    font-size: var(--sar-steps-icon-font-size);
+    line-height: 1;
+
+    @include m(finish) {
+      color: var(--sar-steps-icon-finish-color);
+    }
+
+    @include m(process) {
+      color: var(--sar-steps-icon-process-color);
+    }
+
+    @include m(wait) {
+      color: var(--sar-steps-icon-wait-color);
+    }
+
+    @include m(error) {
+      color: var(--sar-steps-icon-error-color);
+    }
+  }
+
+  @include e(body) {
+    @include m(vertical) {
+      flex: 1;
+      padding-top: calc(var(--sar-steps-body-padding-y) / 2);
+      padding-bottom: calc(var(--sar-steps-body-padding-y) / 2);
     }
   }
 }

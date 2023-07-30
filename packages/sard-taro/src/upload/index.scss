@@ -1,4 +1,4 @@
-@import '../style/mixins.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -52,181 +52,178 @@ page {
 }
 // #endvariables
 
-.sar-upload {
-  display: block;
-
-  @at-root {
-    .sar-upload-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--sar-upload-preview-gap);
-    }
-  }
-}
-
-.sar-upload-preview {
-  position: relative;
-  width: var(--sar-upload-preview-width);
-  height: var(--sar-upload-preview-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-radius: var(--sar-upload-preview-border-radius);
-  background-color: var(--sar-upload-preview-bg);
-  cursor: pointer;
-
-  @at-root {
-    .sar-upload-image {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .sar-upload-video {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .sar-upload-video-play {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      pointer-events: none;
-      background-color: var(--sar-upload-video-play-bg);
-      color: var(--sar-upload-video-play-color);
-    }
-
-    .sar-upload-file {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: var(--sar-upload-file-color);
-
-      @at-root {
-        .sar-upload-file-icon {
-          font-size: var(--sar-upload-file-icon-font-size);
-        }
-        .sar-upload-file-name {
-          box-sizing: border-box;
-          max-width: 100%;
-          padding: 0 var(--sar-upload-file-name-padding-x);
-          margin-top: var(--sar-upload-file-name-margin-top);
-          font-size: var(--sar-upload-file-name-font-size);
-          @include ellipsis;
-        }
-      }
-    }
-
-    .sar-upload-status {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: var(--sar-upload-status-color);
-      background-color: var(--sar-upload-status-bg);
-
-      @at-root {
-        .sar-upload-status-icon {
-          display: flex;
-          font-size: var(--sar-upload-status-icon-font-size);
-        }
-        .sar-upload-status-message {
-          box-sizing: border-box;
-          max-width: 100%;
-          padding: 0 var(--sar-upload-status-message-padding-x);
-          margin-top: var(--sar-upload-status-message-margin-top);
-          font-size: var(--sar-upload-status-message-font-size);
-          @include ellipsis;
-        }
-      }
-
-      .sar-upload-loading {
-        width: var(--sar-upload-loading-size);
-        height: var(--sar-upload-loading-size);
-        color: inherit;
-      }
-    }
-
-    .sar-upload-remove {
-      position: absolute;
-      top: 0;
-      right: 0;
-      z-index: 20;
-      width: auto;
-      cursor: pointer;
-
-      @include button-flush;
-
-      @at-root {
-        .sar-upload-close {
-          margin-right: var(--sar-upload-close-right);
-          margin-top: var(--sar-upload-close-top);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: var(--sar-upload-close-width);
-          height: var(--sar-upload-close-height);
-          font-size: var(--sar-upload-close-font-size);
-          border-radius: 50%;
-          color: var(--sar-upload-close-color);
-          background-color: var(--sar-upload-close-bg);
-        }
-      }
-    }
-  }
-}
-
-.sar-upload-select {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: var(--sar-upload-select-width);
-  height: var(--sar-upload-select-height);
-  font-size: var(--sar-upload-select-font-size);
-  color: var(--sar-upload-select-color);
-  border-radius: var(--sar-upload-select-border-radius);
-  background-color: var(--sar-upload-select-bg);
-  cursor: pointer;
-
-  .sar-upload:not(.sar-upload-disabled) &:active {
-    background-color: var(--sar-upload-select-active-bg);
+@include bem(upload) {
+  @include b() {
+    display: flex;
   }
 
-  .sar-upload-disabled & {
-    @include disabled;
+  @include e(wrapper) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sar-upload-preview-gap);
   }
 
-  @at-root {
-    .sar-upload-input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 2;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      opacity: 0;
-      cursor: pointer;
+  @include e(preview) {
+    position: relative;
+    width: var(--sar-upload-preview-width);
+    height: var(--sar-upload-preview-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: var(--sar-upload-preview-border-radius);
+    background-color: var(--sar-upload-preview-bg);
+    cursor: pointer;
+  }
+
+  @include e(image) {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @include e(video) {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  @include e(video-play) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    background-color: var(--sar-upload-video-play-bg);
+    color: var(--sar-upload-video-play-color);
+  }
+
+  @include e(file) {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--sar-upload-file-color);
+  }
+
+  @include e(file-icon) {
+    font-size: var(--sar-upload-file-icon-font-size);
+  }
+
+  @include e(file-name) {
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: 0 var(--sar-upload-file-name-padding-x);
+    margin-top: var(--sar-upload-file-name-margin-top);
+    font-size: var(--sar-upload-file-name-font-size);
+    @include ellipsis;
+  }
+
+  @include e(status) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--sar-upload-status-color);
+    background-color: var(--sar-upload-status-bg);
+  }
+
+  @include e(status-icon) {
+    display: flex;
+    font-size: var(--sar-upload-status-icon-font-size);
+  }
+
+  @include e(status-message) {
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: 0 var(--sar-upload-status-message-padding-x);
+    margin-top: var(--sar-upload-status-message-margin-top);
+    font-size: var(--sar-upload-status-message-font-size);
+    @include ellipsis;
+  }
+
+  @include e(status-message) {
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: 0 var(--sar-upload-status-message-padding-x);
+    margin-top: var(--sar-upload-status-message-margin-top);
+    font-size: var(--sar-upload-status-message-font-size);
+    @include ellipsis;
+  }
+
+  @include e(loading) {
+    width: var(--sar-upload-loading-size);
+    height: var(--sar-upload-loading-size);
+    color: inherit;
+  }
+
+  @include e(remove) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 20;
+    width: auto;
+    cursor: pointer;
+  }
+
+  @include e(close) {
+    margin-right: var(--sar-upload-close-right);
+    margin-top: var(--sar-upload-close-top);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--sar-upload-close-width);
+    height: var(--sar-upload-close-height);
+    font-size: var(--sar-upload-close-font-size);
+    border-radius: 50%;
+    color: var(--sar-upload-close-color);
+    background-color: var(--sar-upload-close-bg);
+  }
+
+  @include e(select) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: var(--sar-upload-select-width);
+    height: var(--sar-upload-select-height);
+    font-size: var(--sar-upload-select-font-size);
+    color: var(--sar-upload-select-color);
+    border-radius: var(--sar-upload-select-border-radius);
+    background-color: var(--sar-upload-select-bg);
+    cursor: pointer;
+
+    @include m(interactive) {
+      &:active {
+        background-color: var(--sar-upload-select-active-bg);
+      }
     }
+  }
+
+  @include e(input) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    opacity: 0;
+    cursor: pointer;
   }
 }

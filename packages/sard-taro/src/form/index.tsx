@@ -19,6 +19,7 @@ import { ValidateMessages } from './Validator'
 import useTranslate from '../locale/useTranslate'
 import { extend } from '../utils'
 import { AnyType, BaseProps } from '../base'
+import { useBem } from '../use'
 
 export * from './Item'
 export * from './List'
@@ -70,6 +71,8 @@ export const Form: FormFC = forwardRef<FormRef, FormProps>((props, ref) => {
     readOnly = false,
     ...restProps
   } = props
+
+  const [bem] = useBem('form')
 
   void name, validateTrigger, validateFirst
 
@@ -138,13 +141,7 @@ export const Form: FormFC = forwardRef<FormRef, FormProps>((props, ref) => {
     <FormContext.Provider value={context}>
       <form
         {...restProps}
-        className={classNames(
-          'sar-form',
-          {
-            [`sar-form-${layout}`]: layout,
-          },
-          className,
-        )}
+        className={classNames(bem.b(), bem.m('layout', layout), className)}
         onSubmit={handleSubmit}
         onReset={handleReset}
       >

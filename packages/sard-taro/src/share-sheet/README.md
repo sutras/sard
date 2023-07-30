@@ -63,7 +63,7 @@ export default () => {
 
   return (
     <Cell.Group card>
-      <Cell isLink title="显示分享面板" onClick={() => setVisible(true)} />
+      <Cell linkable title="显示分享面板" onClick={() => setVisible(true)} />
     </Cell.Group>
 
     <ShareSheet

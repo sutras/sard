@@ -16,7 +16,7 @@ import { Popout } from 'sard-taro'
 
 ```tsx
 <Cell.Group card>
-  <Cell isLink title="显示弹出框" onClick={() => setVisible(true)} />
+  <Cell linkable title="显示弹出框" onClick={() => setVisible(true)} />
 </Cell.Group>
 
 <Popout
@@ -38,7 +38,7 @@ import { Popout } from 'sard-taro'
 
 ```tsx
 <Cell.Group card>
-  <Cell isLink title="显示弹出框" onClick={() => setVisible(true)} />
+  <Cell linkable title="显示弹出框" onClick={() => setVisible(true)} />
 </Cell.Group>
 
 <Popout
@@ -62,7 +62,7 @@ import { Popout } from 'sard-taro'
 ```tsx
 <Cell.Group card>
   <Cell
-    isLink
+    linkable
     title="请选择日期"
     value={value}
     onClick={() => setVisible3(true)}
@@ -92,7 +92,7 @@ import { Popout } from 'sard-taro'
     {({ value, setVisible }) => (
       <Cell.Group card>
         <Cell
-          isLink
+          linkable
           title="请选择日期"
           value={value?.toLocaleDateString() || ''}
           onClick={() => setVisible(true)}
@@ -120,7 +120,7 @@ const [value, setValue] = useState(new Date())
     {({ value, setVisible }) => (
       <Cell.Group card>
         <Cell
-          isLink
+          linkable
           title="请选择日期"
           value={value?.toLocaleDateString() || ''}
           onClick={() => setVisible(true)}
@@ -144,7 +144,7 @@ const [value, setValue] = useState(new Date())
     {({ value, setVisible }) => (
       <Cell.Group card>
         <Cell
-          isLink
+          linkable
           title="请选择日期"
           value={value?.toLocaleDateString() || ''}
           onClick={() => setVisible(true)}
@@ -169,7 +169,7 @@ const [value, setValue] = useState(new Date())
           onClick={() => setVisible(true)}
           value={value?.toLocaleDateString()}
           title="日历"
-          isLink
+          linkable
         />
       )}
     </Popout.Outlet>
@@ -185,7 +185,7 @@ const [value, setValue] = useState(new Date())
           onClick={() => setVisible(true)}
           value={options.map((option) => option.name).join('/')}
           title="级联选择"
-          isLink
+          linkable
         />
       )}
     </Popout.Outlet>
@@ -204,7 +204,7 @@ const [value, setValue] = useState(new Date())
           onClick={() => setVisible(true)}
           value={value?.toLocaleString()}
           title="日期时间"
-          isLink
+          linkable
         />
       )}
     </Popout.Outlet>

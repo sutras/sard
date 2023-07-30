@@ -16,8 +16,8 @@ export default () => {
   return (
     <Page className="page-collapse">
       <Demo title="基础使用" full>
-        <Cell.Group card>
-          <Cell isLink title="toggle" onClick={handleClick}></Cell>
+        <Cell.Group card style={{ marginBottom: 20 }}>
+          <Cell linkable title="toggle" onClick={handleClick}></Cell>
         </Cell.Group>
 
         <Collapse visible={visible}>

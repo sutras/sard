@@ -1,4 +1,4 @@
-@import '../style/mixins.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -17,46 +17,51 @@ page {
 }
 // #endvariables
 
-.sar-tabbar {
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  height: var(--sar-tabbar-height);
-  color: var(--sar-tabbar-color);
-  background-color: var(--sar-tabbar-bg);
+@include bem(tabbar) {
+  @include b() {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    height: var(--sar-tabbar-height);
+    color: var(--sar-tabbar-color);
+    background-color: var(--sar-tabbar-bg);
 
-  @include border-top(var(--sar-tabbar-border-color));
+    @include border-top(var(--sar-tabbar-border-color));
+  }
+
+  @include m(fixed) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--sar-tabbar-z-index);
+    width: 100%;
+  }
 }
 
-.sar-tabbar-fixed {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: var(--sar-tabbar-z-index);
-  width: 100%;
-}
+@include bem(tabbar-item) {
+  @include b() {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    cursor: pointer;
+  }
 
-.sar-tabbar-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-  cursor: pointer;
-}
-.sar-tabbar-item-active {
-  color: var(--sar-tabbar-item-ative-color);
-}
+  @include m(active) {
+    color: var(--sar-tabbar-item-ative-color);
+  }
 
-.sar-tabbar-item-icon {
-  position: relative;
-  display: flex;
-  margin-bottom: var(--sar-tabbar-item-icon-margin-bottom);
-  font-size: var(--sar-tabbar-item-icon-font-size);
-}
+  @include e(icon) {
+    position: relative;
+    display: flex;
+    margin-bottom: var(--sar-tabbar-item-icon-margin-bottom);
+    font-size: var(--sar-tabbar-item-icon-font-size);
+  }
 
-.sar-tabbar-item-text {
-  font-size: var(--sar-tabbar-item-text-font-size);
-  line-height: var(--sar-tabbar-item-text-line-height);
+  @include e(text) {
+    font-size: var(--sar-tabbar-item-text-font-size);
+    line-height: var(--sar-tabbar-item-text-line-height);
+  }
 }

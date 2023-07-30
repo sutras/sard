@@ -1,3 +1,5 @@
+@import '../style/base.scss';
+
 // #variables
 :root,
 page {
@@ -10,46 +12,48 @@ page {
 }
 // #endvariables
 
-.sar-rate {
-  display: inline-flex;
-  flex-direction: row;
-  white-space: nowrap;
-  font-size: var(--sar-rate-font-size);
-  user-select: none;
-  cursor: pointer;
-  touch-action: pan-y;
+@include bem(rate) {
+  @include b() {
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+    font-size: var(--sar-rate-font-size);
+    user-select: none;
+    cursor: pointer;
+    touch-action: pan-y;
+  }
 
-  @at-root {
-    .sar-rate-item {
-      position: relative;
+  @include e(item) {
+    position: relative;
+    display: flex;
 
-      ~ .sar-rate-item {
-        margin-left: var(--sar-rate-item-margin-left);
-      }
-
-      @at-root {
-        .sar-rate-star-void {
-          position: relative;
-          color: var(--sar-rate-star-void-color);
-        }
-        .sar-rate-star {
-          position: absolute;
-          top: 0;
-          left: 0;
-          overflow: hidden;
-          color: var(--sar-rate-star-color);
-        }
-      }
+    @include m(later) {
+      margin-left: var(--sar-rate-item-margin-left);
     }
   }
-}
 
-.sar-rate-readonly {
-  cursor: default;
-  touch-action: auto;
-}
+  @include e(star-void) {
+    position: relative;
+    display: flex;
+    color: var(--sar-rate-star-void-color);
+  }
 
-.sar-rate-disabled {
-  touch-action: auto;
-  @include disabled;
+  @include e(star) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    overflow: hidden;
+    color: var(--sar-rate-star-color);
+  }
+
+  @include m(readonly) {
+    cursor: default;
+    touch-action: auto;
+  }
+
+  @include m(disabled) {
+    touch-action: auto;
+    @include disabled;
+  }
 }

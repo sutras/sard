@@ -177,7 +177,11 @@ export default () => {
 
       <Demo title="基础使用" full>
         <Cell.Group card>
-          <Cell isLink title="显示分享面板" onClick={() => setVisible(true)} />
+          <Cell
+            linkable
+            title="显示分享面板"
+            onClick={() => setVisible(true)}
+          />
         </Cell.Group>
 
         <ShareSheet
@@ -192,7 +196,11 @@ export default () => {
 
       <Demo title="多行" full>
         <Cell.Group card>
-          <Cell isLink title="显示分享面板" onClick={() => setVisible2(true)} />
+          <Cell
+            linkable
+            title="显示分享面板"
+            onClick={() => setVisible2(true)}
+          />
         </Cell.Group>
 
         <ShareSheet
@@ -208,7 +216,11 @@ export default () => {
 
       <Demo title="描述" full>
         <Cell.Group card>
-          <Cell isLink title="显示分享面板" onClick={() => setVisible3(true)} />
+          <Cell
+            linkable
+            title="显示分享面板"
+            onClick={() => setVisible3(true)}
+          />
         </Cell.Group>
 
         <ShareSheet
@@ -225,7 +237,11 @@ export default () => {
 
       <Demo title="图片类型图标" full>
         <Cell.Group card>
-          <Cell isLink title="显示分享面板" onClick={() => setVisible4(true)} />
+          <Cell
+            linkable
+            title="显示分享面板"
+            onClick={() => setVisible4(true)}
+          />
         </Cell.Group>
 
         <ShareSheet
@@ -240,7 +256,11 @@ export default () => {
 
       <Demo title="禁用" full>
         <Cell.Group card>
-          <Cell isLink title="显示分享面板" onClick={() => setVisible5(true)} />
+          <Cell
+            linkable
+            title="显示分享面板"
+            onClick={() => setVisible5(true)}
+          />
         </Cell.Group>
 
         <ShareSheet
@@ -255,7 +275,11 @@ export default () => {
 
       <Demo title="手动声明项目组件" full>
         <Cell.Group card>
-          <Cell isLink title="显示分享面板" onClick={() => setVisible6(true)} />
+          <Cell
+            linkable
+            title="显示分享面板"
+            onClick={() => setVisible6(true)}
+          />
         </Cell.Group>
 
         <ShareSheet

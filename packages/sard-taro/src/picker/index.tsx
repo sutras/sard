@@ -14,7 +14,7 @@ import {
   PickerView,
   PickerViewProps,
 } from './PickerView'
-import { useControllableValue, useEvent } from '../use'
+import { useBem, useControllableValue, useEvent } from '../use'
 import { arrayEqual, nestedToMulti } from '../utils'
 import useUpdateEffect from '../use/useUpdateEffect'
 import { AnyType } from '../base'
@@ -186,6 +186,8 @@ export const Picker = forwardRef<PickerRef, PickerProps>((props, ref) => {
     ...restProps
   } = props
 
+  const [bem] = useBem('picker')
+
   const fieldKeys = Object.assign({}, defaultOptionKeys, optionKeys)
 
   const [innerValue, setInnerValue] = useControllableValue({
@@ -290,7 +292,7 @@ export const Picker = forwardRef<PickerRef, PickerProps>((props, ref) => {
   return (
     <PickerView
       {...restProps}
-      className={classNames('sar-picker', className)}
+      className={classNames(bem.b(), className)}
       optionKeys={fieldKeys}
       columns={finalColumns}
       value={columnIndexes}

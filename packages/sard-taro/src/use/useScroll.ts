@@ -2,10 +2,11 @@ import { useMemo } from 'react'
 import { usePageScroll } from '@tarojs/taro'
 import { throttle, DebounceOptions } from '../utils'
 import { useEvent } from './useEvent'
+import { AnyFunction } from '../base'
 
 export function useScroll(
-  callback: (...args: unknown[]) => unknown,
-  wait: unknown,
+  callback: AnyFunction,
+  wait: number,
   options?: DebounceOptions,
 ) {
   const cb = useEvent(callback)

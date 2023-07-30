@@ -1,4 +1,4 @@
-@import '../style/mixins.scss';
+@import '../style/base.scss';
 
 // #variables
 :root,
@@ -26,75 +26,74 @@ page {
 }
 // #endvariables
 
-.sar-form-item {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  padding: var(--sar-form-item-padding-y) var(--sar-form-item-padding-x);
-  font-size: var(--sar-form-item-font-size);
-  line-height: var(--sar-form-item-line-height);
+@include bem(form-item) {
+  @include b() {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding: var(--sar-form-item-padding-y) var(--sar-form-item-padding-x);
+    font-size: var(--sar-form-item-font-size);
+    line-height: var(--sar-form-item-line-height);
 
-  @include border-bottom(var(--sar-form-item-border-color)) {
-    left: var(--sar-form-item-padding-x);
-    right: var(--sar-form-item-padding-x);
+    @include border-bottom(var(--sar-form-item-border-color)) {
+      left: var(--sar-form-item-padding-x);
+      right: var(--sar-form-item-padding-x);
+    }
   }
 
-  @at-root {
-    .sar-form-item-label {
-      flex: none;
-      width: var(--sar-form-item-label-width);
-      margin-right: var(--sar-form-item-label-margin-right);
-      word-wrap: break-word;
-    }
+  @include e(label) {
+    flex: none;
+    width: var(--sar-form-item-label-width);
+    margin-right: var(--sar-form-item-label-margin-right);
+    word-wrap: break-word;
 
-    .sar-form-item-label-left {
+    @include m(left) {
       text-align: left;
     }
 
-    .sar-form-item-label-right {
+    @include m(right) {
       text-align: right;
     }
 
-    .sar-form-item-content {
-      flex: 1;
-
-      @at-root {
-        .sar-form-item-feedback {
-          margin-top: var(--sar-form-item-feedback-margin-top);
-          font-size: var(--sar-form-item-feedback-font-size);
-          color: var(--sar-form-item-feedback-color);
-
-          .sar-form-item-is-failed & {
-            color: var(--sar-form-item-feedback-failed-color);
-          }
-          .sar-form-item-is-passed & {
-            color: var(--sar-form-item-feedback-passed-color);
-          }
-          .sar-form-item-is-unvalidated & {
-            color: var(--sar-form-item-feedback-unvalidated-color);
-          }
-        }
-
-        .sar-form-item-extra {
-          margin-top: var(--sar-form-item-extra-margin-top);
-          font-size: var(--sar-form-item-extra-font-size);
-          color: var(--sar-form-item-extra-color);
-        }
-      }
+    @include m(vertical) {
+      margin-right: 0;
+      margin-bottom: var(--sar-form-item-label-margin-bottom);
     }
   }
-}
 
-.sar-form-vertical .sar-form-item:not(.sar-form-item-horizontal),
-.sar-form-item-vertical {
-  flex-direction: column;
-
-  .sar-form-item-label {
-    margin-right: 0;
-    margin-bottom: var(--sar-form-item-label-margin-bottom);
+  @include e(content) {
+    flex: 1;
   }
-}
 
-.sar-form-item-hidden {
-  display: none;
+  @include e(feedback) {
+    margin-top: var(--sar-form-item-feedback-margin-top);
+    font-size: var(--sar-form-item-feedback-font-size);
+    color: var(--sar-form-item-feedback-color);
+
+    @include m(failed) {
+      color: var(--sar-form-item-feedback-failed-color);
+    }
+
+    @include m(passed) {
+      color: var(--sar-form-item-feedback-passed-color);
+    }
+
+    @include m(unvalidated) {
+      color: var(--sar-form-item-feedback-unvalidated-color);
+    }
+  }
+
+  @include e(extra) {
+    margin-top: var(--sar-form-item-extra-margin-top);
+    font-size: var(--sar-form-item-extra-font-size);
+    color: var(--sar-form-item-extra-color);
+  }
+
+  @include m(vertical) {
+    flex-direction: column;
+  }
+
+  @include m(hidden) {
+    display: none;
+  }
 }

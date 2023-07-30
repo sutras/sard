@@ -1,9 +1,21 @@
-import { CSSProperties, FC, ReactNode, createContext, useMemo } from 'react'
+import {
+  CSSProperties,
+  Children,
+  FC,
+  ReactElement,
+  ReactNode,
+  cloneElement,
+  useMemo,
+} from 'react'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 
 import { BaseProps } from '../base'
 import { isNullish } from '../utils'
+import { CellProps } from './index'
+import { useBem } from '../use'
+import { CellContext } from './CellContext'
+import { OrderContext } from './OrderContext'
 
 export interface CellGroupProps extends BaseProps {
   title?: ReactNode
@@ -16,14 +28,6 @@ export interface CellGroupProps extends BaseProps {
   footerStyle?: CSSProperties
   footerClass?: string
 }
-
-export interface CellGroupContextValue {
-  bodyStyle?: CSSProperties
-  bodyClass?: string
-  footerStyle?: CSSProperties
-  footerClass?: string
-}
-export const CellGroupContext = createContext<CellGroupContextValue>({})
 
 export const CellGroup: FC<CellGroupProps> = (props) => {
   const {
@@ -41,40 +45,54 @@ export const CellGroup: FC<CellGroupProps> = (props) => {
     ...restProps
   } = props
 
-  const cellGroupClass = classNames(
-    'sar-cell-group',
-    {
-      'sar-cell-group-inlaid': inlaid,
-      'sar-cell-group-card': card,
-      'sar-cell-group-inset': inset,
-    },
-    className,
-  )
+  const [bem] = useBem('cell-group')
 
-  const context = useMemo(() => {
+  const cellContextValue = useMemo(() => {
     return {
+      inset,
       bodyStyle,
       bodyClass,
       footerStyle,
       footerClass,
     }
-  }, [bodyStyle, bodyClass, footerStyle, footerClass])
+  }, [inset, bodyStyle, bodyClass, footerStyle, footerClass])
+
+  const cellGroupClass = classNames(
+    bem.b(),
+    bem.m('inlaid', inlaid),
+    bem.m('card', card),
+    className,
+  )
+
+  const count = Children.count(children)
 
   return (
     <View {...restProps} className={cellGroupClass}>
       {!isNullish(title) && (
-        <View className="sar-cell-group-header">
-          <View className="sar-cell-group-title">{title}</View>
+        <View className={bem.e('header')}>
+          <View className={bem.e('title')}>{title}</View>
         </View>
       )}
-      <View className="sar-cell-group-body">
-        <CellGroupContext.Provider value={context}>
-          {children}
-        </CellGroupContext.Provider>
+      <View
+        className={classNames(
+          bem.e('body'),
+          bem.em('body', 'card', card),
+          bem.em('body', 'inlaid', inlaid),
+        )}
+      >
+        <CellContext.Provider value={cellContextValue}>
+          {Children.map(children, (element: ReactElement<CellProps>, index) => {
+            return (
+              <OrderContext.Provider value={{ index, count }}>
+                {cloneElement(element)}
+              </OrderContext.Provider>
+            )
+          })}
+        </CellContext.Provider>
       </View>
       {!isNullish(label) && (
-        <View className="sar-cell-group-footer">
-          <View className="sar-cell-group-label">{label}</View>
+        <View className={bem.e('footer')}>
+          <View className={bem.e('label')}>{label}</View>
         </View>
       )}
     </View>
