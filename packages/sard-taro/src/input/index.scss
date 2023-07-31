@@ -3,6 +3,7 @@
 // #variables
 :root,
 page {
+  --sar-input-min-height: 36px;
   --sar-input-padding-y: 6.5px;
   --sar-input-padding-x: 12px;
   --sar-input-border-radius: var(--sar-rounded);
@@ -38,6 +39,7 @@ page {
     display: flex;
     align-items: center;
     flex: 1 1 0;
+    min-height: var(--sar-input-min-height);
     padding: var(--sar-input-padding-y) var(--sar-input-padding-x);
     border: 1px solid var(--sar-input-border-color);
     border-radius: var(--sar-input-border-radius);
@@ -127,6 +129,10 @@ page {
     color: var(--sar-input-clear-color);
     cursor: pointer;
     user-select: none;
+
+    @include m(hide) {
+      display: none;
+    }
   }
 
   @include e(count) {
@@ -147,6 +153,7 @@ page {
   }
 
   @include m(inlaid) {
+    min-height: auto;
     padding: 0;
     border: none;
   }

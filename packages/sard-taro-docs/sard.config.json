@@ -148,6 +148,11 @@
                 "filePath": "../sard-taro/src/rate"
               },
               {
+                "title": "Search 搜索",
+                "path": "search",
+                "filePath": "../sard-taro/src/search"
+              },
+              {
                 "title": "Slider 滑动器选择器",
                 "path": "slider",
                 "filePath": "../sard-taro/src/slider"

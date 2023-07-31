@@ -15,7 +15,7 @@ import { Input } from 'sard-taro'
 ### 非受控组件
 
 ```tsx
-<Input defaultValue="基础使用" />
+<Input placeholder="请输入" defaultValue="基础使用" />
 ```
 
 ### 受控组件
@@ -25,7 +25,7 @@ export default () => {
   const [value, setValue] = useState('受控组件')
 
   return (
-    <Input value={value} onChange={setValue} />
+    <Input placeholder="请输入" value={value} onChange={setValue} />
     <View>{value}</View>
   )
 }
@@ -35,12 +35,14 @@ export default () => {
 
 ```tsx
 <Input
+  placeholder="请输入"
   style={{
     color: 'orange',
     borderColor: 'orange',
-    textAlign: 'right',
+    textAlign: 'center',
+    borderRadius: '9999px',
+    background: 'rgba(0,0,0,.05)',
   }}
-  placeholder="自定义样式"
 />
 ```
 
@@ -53,12 +55,24 @@ export default () => {
 <Input placeholder="带小数点数字" type="digit" />
 <Input placeholder="密码" type="password" />
 <Input placeholder="文本域" type="textarea" style={{ height: 100 }} />
+
 ```
 
 ### 可清除的
 
 ```tsx
 <Input defaultValue="可清除的" placeholder="可清除的" clearable />
+```
+
+### 聚焦时显示清除按钮
+
+```tsx
+<Input
+  defaultValue="可清除的"
+  placeholder="可清除的"
+  clearable
+  showClearOnlyFocus
+/>
 ```
 
 ### 禁用
@@ -77,11 +91,11 @@ export default () => {
 
 ```tsx
 <Input
-  placeholder="自定义样式"
+  placeholder="请输入"
   prepend={<Icon name="search" color="var(--sar-tertiary-color)" />}
 />
 <Input
-  placeholder="自定义样式"
+  placeholder="请输入"
   append={
     <Button size="small" onClick={(event) => event.stopPropagation()}>
       发送验证码

@@ -12,22 +12,24 @@ export default () => {
   return (
     <Page className="page-input">
       <Demo title="基础使用">
-        <Input defaultValue="基础使用" />
+        <Input placeholder="请输入" defaultValue="基础使用" />
       </Demo>
 
       <Demo title="受控组件">
-        <Input value={value} onChange={setValue} />
+        <Input placeholder="请输入" value={value} onChange={setValue} />
         <View>{value}</View>
       </Demo>
 
       <Demo title="自定义样式">
         <Input
+          placeholder="请输入"
           style={{
             color: 'orange',
             borderColor: 'orange',
             textAlign: 'center',
+            borderRadius: '9999px',
+            background: 'rgba(0,0,0,.05)',
           }}
-          placeholder="自定义样式"
         />
       </Demo>
 
@@ -44,6 +46,15 @@ export default () => {
         <Input defaultValue="可清除的" placeholder="可清除的" clearable />
       </Demo>
 
+      <Demo title="聚焦时显示清除按钮">
+        <Input
+          defaultValue="可清除的"
+          placeholder="可清除的"
+          clearable
+          showClearOnlyFocus
+        />
+      </Demo>
+
       <Demo title="禁用">
         <Input placeholder="禁用的" disabled />
       </Demo>
@@ -54,11 +65,11 @@ export default () => {
 
       <Demo title="插槽">
         <Input
-          placeholder="自定义样式"
+          placeholder="请输入"
           prepend={<Icon name="search" color="var(--sar-tertiary-color)" />}
         />
         <Input
-          placeholder="自定义样式"
+          placeholder="请输入"
           append={
             <Button size="small" onClick={(event) => event.stopPropagation()}>
               发送验证码

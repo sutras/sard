@@ -92,6 +92,10 @@ const menus = [
         name: 'Rate',
       },
       {
+        title: 'Search 搜索',
+        name: 'Search',
+      },
+      {
         title: 'Slider 滑动器选择器',
         name: 'Slider',
       },

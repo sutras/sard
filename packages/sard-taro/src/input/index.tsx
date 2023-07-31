@@ -16,6 +16,7 @@ import { isBoolean, isString } from '../utils'
 interface InputBaseProps extends BaseProps {
   value?: string
   defaultValue?: string
+  onChange?: (value: string) => void
   placeholder?: string
   disabled?: boolean
   readOnly?: boolean
@@ -28,9 +29,9 @@ interface InputBaseProps extends BaseProps {
   prepend?: ReactNode
   append?: ReactNode
   clearable?: boolean
+  showClearOnlyFocus?: boolean
   clear?: ReactNode
   onClear?: (value: '') => void
-  onChange?: (value: string) => void
   onClick?: (event: ITouchEvent) => void
   focused?: boolean
 }
@@ -59,6 +60,7 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     className,
     value,
     defaultValue,
+    onChange,
     type = 'text',
     placeholder = '',
     disabled,
@@ -73,9 +75,9 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     prepend,
     append,
     clearable,
+    showClearOnlyFocus,
     clear,
     onClear,
-    onChange,
     onFocus,
     onBlur,
     onClick,
@@ -112,6 +114,12 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
     setInnerValue('')
     onClear?.('')
+  }
+
+  const handleClearTouchStart = (event: ITouchEvent) => {
+    if (showClearOnlyFocus) {
+      handleClear(event)
+    }
   }
 
   const handleChange = (event) => {
@@ -165,9 +173,9 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   }
 
   const handleRootClick = (event: ITouchEvent) => {
-    // if (event.currentTarget === event.target) {
-    // }
-    inputRef.current?.focus()
+    if (event.currentTarget === event.target) {
+      inputRef.current?.focus()
+    }
 
     onClick?.(event)
   }
@@ -197,15 +205,27 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         <TaroInput {...inputProps} ref={inputRefCb} />
       )}
 
-      {append && <View className={bem.e('append')}>{append}</View>}
-
       {clearable && innerValue && !disabled && !readOnly && (
-        <View className={bem.e('clear')} onClick={handleClear}>
+        <View
+          className={classNames(
+            bem.e('clear'),
+            bem.em('clear', 'focused', focused || innerFocused),
+            bem.em(
+              'clear',
+              'hide',
+              showClearOnlyFocus && !(focused || innerFocused),
+            ),
+          )}
+          onClick={handleClear}
+          onTouchStart={handleClearTouchStart}
+        >
           {clear || (
             <Icon name="x-circle-fill" className={bem.e('clear-icon')}></Icon>
           )}
         </View>
       )}
+
+      {append && <View className={bem.e('append')}>{append}</View>}
 
       {showCount && count && (
         <View

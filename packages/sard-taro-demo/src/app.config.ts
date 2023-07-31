@@ -42,6 +42,7 @@ export default defineAppConfig({
         'pages/radio/index',
         'pages/rate/index',
         'pages/result/index',
+        'pages/search/index',
         'pages/share-sheet/index',
         'pages/skeleton/index',
         'pages/slider/index',

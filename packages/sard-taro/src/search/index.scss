@@ -1,0 +1,39 @@
+@import '../style/base.scss';
+
+// #variables
+:root,
+page {
+  --sar-search-padding-x: 12px;
+  --sar-search-padding-y: 10px;
+  --sar-search-bg: var(--sar-emphasis-bg);
+
+  --sar-search-input-bg: var(--sar-gray-100);
+  --sar-search-icon-color: var(--sar-gray-500);
+}
+// #endvariables
+
+@include bem(search) {
+  @include b() {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: var(--sar-search-padding-y) var(--sar-search-padding-x);
+    background-color: var(--sar-search-bg);
+  }
+
+  @include m(show-action) {
+    padding-right: 0;
+  }
+
+  @include e(input) {
+    background-color: var(--sar-search-input-bg);
+
+    @include m(round) {
+      border-radius: var(--sar-rounded-full);
+    }
+  }
+
+  @include e(icon) {
+    color: var(--sar-search-icon-color);
+  }
+}
