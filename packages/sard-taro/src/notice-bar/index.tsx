@@ -73,12 +73,8 @@ export const NoticeBar: FC<NoticeBarProps> = (props) => {
     if (scrollable === false) {
       return setShouldScroll(false)
     }
-    const contentRes = await getRectById(contentId, {
-      size: true,
-    })
-    const wrapperRes = await getRectById(wrapperId, {
-      size: true,
-    })
+    const contentRes = await getRectById(contentId)
+    const wrapperRes = await getRectById(wrapperId)
 
     const contentWidth = contentRes.width
     const wrapperWidth = wrapperRes.width
@@ -140,37 +136,23 @@ export const NoticeBar: FC<NoticeBarProps> = (props) => {
       : 'auto'
   }, [scrollable])
 
-  const noticeBarClass = classNames(
-    bem.b(),
-    bem.m('linkable', linkable),
-    bem.m(`scroll-${scrollType}`),
-    bem.m('wrap', wrap),
-    className,
-  )
-
-  const noticeBarStyle = {
-    color,
-    display: innerVisible ? 'flex' : 'none',
-    background,
-    ...style,
-  }
-
-  const wrapperClass = classNames(
-    bem.e('wrapper'),
-    bem.em('wrapper', 'wrap', wrap),
-    bem.em('wrapper', 'infinite', !firstLap),
-    bem.em('wrapper', 'scroll-never', scrollable === false),
-    bem.em('wrapper', 'scrollable', shouldScroll),
-  )
-
-  const wrapperStyle = {
-    transform: `translateX(${firstLap ? 0 : wrapperData.contentWidth}px)`,
-    animationDelay: `${firstLap ? delay : 0}s`,
-    animationDuration: `${firstLap ? wrapperData.first : wrapperData.later}s`,
-  }
-
   return (
-    <View {...restProps} className={noticeBarClass} style={noticeBarStyle}>
+    <View
+      {...restProps}
+      className={classNames(
+        bem.b(),
+        bem.m('linkable', linkable),
+        bem.m(`scroll-${scrollType}`),
+        bem.m('wrap', wrap),
+        className,
+      )}
+      style={{
+        color,
+        display: innerVisible ? 'flex' : 'none',
+        background,
+        ...style,
+      }}
+    >
       <View className={bem.e('left-icon')}>
         {leftIcon ?? (
           <Icon name="volume-up" size={20} {...leftIconProps}></Icon>
@@ -179,8 +161,22 @@ export const NoticeBar: FC<NoticeBarProps> = (props) => {
       <View className={bem.e('content')} id={contentId}>
         <View
           id={wrapperId}
-          className={wrapperClass}
-          style={wrapperStyle}
+          className={classNames(
+            bem.e('wrapper'),
+            bem.em('wrapper', 'wrap', wrap),
+            bem.em('wrapper', 'infinite', !firstLap),
+            bem.em('wrapper', 'scroll-never', scrollable === false),
+            bem.em('wrapper', 'scrollable', shouldScroll),
+          )}
+          style={{
+            transform: `translateX(${
+              firstLap ? 0 : wrapperData.contentWidth
+            }px)`,
+            animationDelay: `${firstLap ? delay : 0}s`,
+            animationDuration: `${
+              firstLap ? wrapperData.first : wrapperData.later
+            }s`,
+          }}
           onAnimationEnd={handleAnimationEnd}
         >
           {children}

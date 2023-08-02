@@ -84,21 +84,19 @@ export const Toast: ToastFC = forwardRef((props, ref) => {
 
   const isText = type === 'text' && !icon && !iconProps
 
-  const toastClass = classNames(
-    bem.b(),
-    bem.m('is-text', isText),
-    bem.m('not-text', !isText),
-    bem.m(placement, placement),
-    className,
-  )
-
   return (
     <Popup
       {...restProps}
       visible={visible}
       mask={mask}
       effect="fade"
-      className={toastClass}
+      className={classNames(
+        bem.b(),
+        bem.m('is-text', isText),
+        bem.m('not-text', !isText),
+        bem.m(placement, placement),
+        className,
+      )}
     >
       {(type !== 'text' || icon || iconProps) && (
         <View className={bem.e('icon')}>

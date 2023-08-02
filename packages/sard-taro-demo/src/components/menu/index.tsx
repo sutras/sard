@@ -18,14 +18,6 @@ const menus = [
         name: 'Icon',
       },
       {
-        title: 'Popout 弹出框',
-        name: 'Popout',
-      },
-      {
-        title: 'Popup 弹出层',
-        name: 'Popup',
-      },
-      {
         title: 'Style 样式',
         name: 'Style',
       },
@@ -149,6 +141,18 @@ const menus = [
         name: 'NoticeBar',
       },
       {
+        title: 'Popout 弹出框',
+        name: 'Popout',
+      },
+      {
+        title: 'Popover 气泡弹出框',
+        name: 'Popover',
+      },
+      {
+        title: 'Popup 弹出层',
+        name: 'Popup',
+      },
+      {
         title: 'ProgressBar 条形进度条',
         name: 'ProgressBar',
       },
@@ -169,6 +173,10 @@ const menus = [
   {
     title: '导航组件',
     children: [
+      {
+        title: 'Dropdown 下拉菜单',
+        name: 'Dropdown',
+      },
       {
         title: 'IndexBar 索引栏',
         name: 'IndexBar',
@@ -205,10 +213,6 @@ const menus = [
       {
         title: 'Dialog 对话框',
         name: 'Dialog',
-      },
-      {
-        title: 'Dropdown 下拉菜单',
-        name: 'Dropdown',
       },
       {
         title: 'Loading 加载',

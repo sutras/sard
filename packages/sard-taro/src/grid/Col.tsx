@@ -18,32 +18,32 @@ export const Col: FC<ColProps> = (props) => {
 
   const [bem] = useBem('col')
 
-  const colClass = classNames(
-    bem.b(),
-    bem.m(span, span),
-    bem.m(`offset-${offset}`, offset),
-    className,
-  )
-
   const gutter = useContext(RowContext)
 
-  const colStyle = {
-    ...(order !== undefined
-      ? {
-          order,
-        }
-      : null),
-    ...(gutter
-      ? {
-          paddingLeft: gutter[0],
-          paddingRight: gutter[0],
-        }
-      : null),
-    ...style,
-  }
-
   return (
-    <View {...restProps} className={colClass} style={colStyle}>
+    <View
+      {...restProps}
+      className={classNames(
+        bem.b(),
+        bem.m(span, span),
+        bem.m(`offset-${offset}`, offset),
+        className,
+      )}
+      style={{
+        ...(order !== undefined
+          ? {
+              order,
+            }
+          : null),
+        ...(gutter
+          ? {
+              paddingLeft: gutter[0],
+              paddingRight: gutter[0],
+            }
+          : null),
+        ...style,
+      }}
+    >
       {children}
     </View>
   )

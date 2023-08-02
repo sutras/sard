@@ -39,18 +39,14 @@ export const TabbarItem = memo((props: TabbarItemProps) => {
 
   const active = innerKey === activeKey
 
-  const tabbarClass = classNames(bem.b(), bem.m('active', active), className)
-
-  const tabbarItemStyle = {
-    color: active ? activeColor : color,
-    ...style,
-  }
-
   return (
     <View
       {...restProps}
-      className={tabbarClass}
-      style={tabbarItemStyle}
+      className={classNames(bem.b(), bem.m('active', active), className)}
+      style={{
+        color: active ? activeColor : color,
+        ...style,
+      }}
       onClick={handleClick}
     >
       <View className={bem.e('icon')}>

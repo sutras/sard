@@ -170,13 +170,6 @@ export const Stepper: FC<StepperProps> = (props) => {
     }
   })
 
-  const StepperClass = classNames(
-    bem.b(),
-    bem.m('disabled', disabled),
-    bem.m('readonly', readOnly),
-    className,
-  )
-
   const renderButton = (
     delta: number,
     icon: string,
@@ -202,7 +195,15 @@ export const Stepper: FC<StepperProps> = (props) => {
   }
 
   return (
-    <View {...restProps} className={StepperClass}>
+    <View
+      {...restProps}
+      className={classNames(
+        bem.b(),
+        bem.m('disabled', disabled),
+        bem.m('readonly', readOnly),
+        className,
+      )}
+    >
       {renderButton(-1, 'minus', isMin, 'decrease')}
       <Input
         type={inputType}

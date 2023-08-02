@@ -13,14 +13,15 @@ export interface CSSTransitionProps extends TransitionProps {
     | 'zoom'
     | 'collapse'
 
-  name?: string
+  customEffect?: string
 }
 
 export const CSSTransition: FC<CSSTransitionProps> = (props) => {
   const {
     className,
-    effect = 'fade',
-    name,
+    style,
+    effect,
+    customEffect,
     timeout = 300,
     onEnter,
     onEntering,
@@ -38,7 +39,11 @@ export const CSSTransition: FC<CSSTransitionProps> = (props) => {
   const [clsName, setClsName] = useState('')
 
   const addClass = (...stages: string[]) => {
-    setClsName(stages.map((stage) => (name || prefix) + '-' + stage).join(' '))
+    if (effect || customEffect) {
+      setClsName(
+        stages.map((stage) => (customEffect || prefix) + '-' + stage).join(' '),
+      )
+    }
   }
 
   const handleEnter = () => {
@@ -74,6 +79,7 @@ export const CSSTransition: FC<CSSTransitionProps> = (props) => {
   return (
     <Transition
       {...restProps}
+      style={{ animationDuration: `${timeout}ms`, ...style }}
       timeout={timeout}
       className={classNames(clsName, className)}
       onEnter={handleEnter}

@@ -24,12 +24,10 @@ export const AvatarGroup: FC<AvatarGroupProps> = (props) => {
 
   const [bem] = useBem('avatar-group')
 
-  const groupClass = classNames(bem.b(), className)
-
   const count = Children.count(children)
 
   return (
-    <View {...restProps} className={groupClass}>
+    <View {...restProps} className={classNames(bem.b(), className)}>
       {Children.map(children, (item: ReactElement<AvatarProps>, index) => {
         return index > maxCount - 1
           ? null

@@ -54,22 +54,20 @@ export const Button: FC<ButtonProps> = (props) => {
 
   const [bem] = useBem('button')
 
-  const buttonClass = classNames(
-    bem.b(),
-    bem.m(type),
-    bem.m(`${type}-${theme}`),
-    bem.m(size, size !== 'medium'),
-    bem.m('round', round),
-    bem.m('block', block),
-    bem.m('disabled', disabled),
-    bem.m('loading', loading),
-    className,
-  )
-
   return (
     <TaroButton
       {...restProps}
-      className={buttonClass}
+      className={classNames(
+        bem.b(),
+        bem.m(type),
+        bem.m(`${type}-${theme}`),
+        bem.m(size, size !== 'medium'),
+        bem.m('round', round),
+        bem.m('block', block),
+        bem.m('disabled', disabled),
+        bem.m('loading', loading),
+        className,
+      )}
       disabled={disabled || loading || undefined}
       hoverClass={bem.m('hover')}
     >

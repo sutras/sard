@@ -33,10 +33,13 @@ export const IndexBarItem = forwardRef<HTMLElement, IndexBarItemProps>(
       _onMounted?.(selectorId)
     }, [])
 
-    const itemClass = classNames(bem.b(), className)
-
     return (
-      <View {...restProps} ref={ref} className={itemClass} id={selectorId}>
+      <View
+        {...restProps}
+        ref={ref}
+        className={classNames(bem.b(), className)}
+        id={selectorId}
+      >
         <View
           className={classNames(bem.e('anchor'), anchorClass)}
           style={{ ...anchorStyle, top: offset }}

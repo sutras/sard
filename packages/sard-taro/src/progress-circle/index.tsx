@@ -32,13 +32,6 @@ export const ProgressCircle: FC<ProgressCircleProps> = (props) => {
   const angle = (percent / 100) * 360
   const radian = (angle / 180) * Math.PI
 
-  const progressClass = classNames(bem.b(), className)
-  const progressStyle = {
-    width: size,
-    height: size,
-    ...style,
-  }
-
   const mask =
     `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3e` +
     `%3ccircle stroke='black' fill='none' stroke-width='${thickness}' cx='50' cy='50' r='${radius}' /%3e%3c/svg%3e")`
@@ -68,7 +61,15 @@ export const ProgressCircle: FC<ProgressCircleProps> = (props) => {
   }
 
   return (
-    <View {...restProps} className={progressClass} style={progressStyle}>
+    <View
+      {...restProps}
+      className={classNames(bem.b(), className)}
+      style={{
+        width: size,
+        height: size,
+        ...style,
+      }}
+    >
       <View className={bem.e('track')} style={trackStyle}>
         <View className={bem.e('trail')} style={trailStyle}>
           <View

@@ -12,15 +12,15 @@ export const SkeletonTitle: FC<SkeletonTitleProps> = (props) => {
 
   const [bem] = useBem('skeleton')
 
-  const titleClass = classNames(bem.e('title'), className)
-
-  const titleStyle = {
-    ...style,
-    width,
-  }
-
   return (
-    <SkeletonBlock {...restProps} className={titleClass} style={titleStyle} />
+    <SkeletonBlock
+      {...restProps}
+      className={classNames(bem.e('title'), className)}
+      style={{
+        ...style,
+        width,
+      }}
+    />
   )
 }
 

@@ -61,22 +61,6 @@ export const StepsStep: FC<StepsStepProps> = (props) => {
     }
   }
 
-  const stepClass = classNames(
-    bem.e('step'),
-    bem.em('step', 'last', last),
-    bem.m(status),
-    bem.m(`position-${position}`),
-    bem.em('step', 'center', center),
-    bem.em('step', 'center-last', center && last),
-    bem.em('step', 'vertical', vertical),
-    bem.em('step', 'vertical-last', vertical && last),
-    bem.em('step', 'vertical-center', vertical && center),
-    bem.em('step', 'vertical-center-last', vertical && center && last),
-    bem.em('step', 'interactive', clickable && !disabled),
-    bem.em('step', 'disabled', disabled),
-    className,
-  )
-
   const lineStyle = {
     backgroundColor: lineColor,
   }
@@ -91,7 +75,25 @@ export const StepsStep: FC<StepsStepProps> = (props) => {
   )
 
   return (
-    <View {...restProps} className={stepClass} onClick={handleClick}>
+    <View
+      {...restProps}
+      className={classNames(
+        bem.e('step'),
+        bem.em('step', 'last', last),
+        bem.m(status),
+        bem.m(`position-${position}`),
+        bem.em('step', 'center', center),
+        bem.em('step', 'center-last', center && last),
+        bem.em('step', 'vertical', vertical),
+        bem.em('step', 'vertical-last', vertical && last),
+        bem.em('step', 'vertical-center', vertical && center),
+        bem.em('step', 'vertical-center-last', vertical && center && last),
+        bem.em('step', 'interactive', clickable && !disabled),
+        bem.em('step', 'disabled', disabled),
+        className,
+      )}
+      onClick={handleClick}
+    >
       <View
         className={classNames(
           bem.e('header'),

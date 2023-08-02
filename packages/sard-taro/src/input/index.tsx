@@ -180,21 +180,19 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     onClick?.(event)
   }
 
-  const inputClass = classNames(
-    bem.b(),
-    bem.m('inlaid', inlaid),
-    bem.m('borderless', borderless),
-    bem.m('disabled', disabled),
-    bem.m('readonly', readOnly),
-    bem.m('focused', focused || innerFocused),
-    bem.m('is-textarea', type === 'textarea'),
-    className,
-  )
-
   return (
     <View
       style={{ ...style, minHeight: null, maxHeight: null }}
-      className={inputClass}
+      className={classNames(
+        bem.b(),
+        bem.m('inlaid', inlaid),
+        bem.m('borderless', borderless),
+        bem.m('disabled', disabled),
+        bem.m('readonly', readOnly),
+        bem.m('focused', focused || innerFocused),
+        bem.m('is-textarea', type === 'textarea'),
+        className,
+      )}
       onClick={handleRootClick}
     >
       {prepend && <View className={bem.e('prepend')}>{prepend}</View>}

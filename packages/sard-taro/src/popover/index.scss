@@ -1,0 +1,78 @@
+@import '../style/base.scss';
+
+// #variables
+:root,
+page {
+  --sar-popover-bg: var(--sar-emphasis-bg);
+  --sar-popover-box-shadow: var(--sar-shadow-lg);
+  --sar-popover-min-width: 120px;
+  --sar-popover-border-radius: var(--sar-rounded);
+  --sar-popover-duration: 150ms;
+
+  --sar-popover-dark-bg: var(--sar-gray-800);
+  --sar-popover-dark-color: var(--sar-white);
+
+  --sar-popover-arrow-size: 10px;
+}
+// #endvariables
+
+@include bem(popover) {
+  @include b() {
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    overflow: visible;
+    border-radius: var(--sar-popover-border-radius);
+    background-color: var(--sar-popover-bg);
+    box-shadow: var(--sar-popover-box-shadow);
+  }
+
+  @include m(light) {
+    background-color: var(--sar-popover-bg);
+  }
+
+  @include m(dark) {
+    color: var(--sar-popover-dark-color);
+    background-color: var(--sar-popover-dark-bg);
+  }
+
+  @include e(content) {
+    position: relative;
+    z-index: 1;
+    min-width: var(--sar-popover-min-width);
+    border-radius: inherit;
+  }
+
+  @include e(arrow) {
+    position: absolute;
+    width: var(--sar-popover-arrow-size);
+    height: var(--sar-popover-arrow-size);
+    background-color: inherit;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  // fade
+  @include m(fade-enter, fade-entering) {
+    animation: #{bem-ns(fade-enter)} var(--sar-popover-duration) ease-in both;
+  }
+  @keyframes #{bem-ns(fade-enter)} {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @include m(fade-exiting, fade-exited) {
+    animation: #{bem-ns(fade-exit)} var(--sar-popover-duration) ease-out both;
+  }
+  @keyframes #{bem-ns(fade-exit)} {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+}

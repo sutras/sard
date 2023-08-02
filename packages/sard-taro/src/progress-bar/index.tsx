@@ -29,27 +29,27 @@ export const ProgressBar: FC<ProgressBarProps> = (props) => {
 
   const [bem] = useBem('progress-bar')
 
-  const progressClass = classNames(bem.b(), className)
-  const progressStyle = {
-    backgroundColor: trackColor,
-    height: thickness,
-    ...style,
-  }
-  const trailClass = classNames(
-    classNames(
-      bem.e('trail'),
-      bem.em('trail', 'striped', striped),
-      bem.em('trail', 'animated', animated),
-    ),
-  )
-  const trailStyle = {
-    width: `${percent}%`,
-    backgroundColor: color,
-  }
-
   return (
-    <View {...restProps} className={progressClass} style={progressStyle}>
-      <View className={trailClass} style={trailStyle}>
+    <View
+      {...restProps}
+      className={classNames(bem.b(), className)}
+      style={{
+        backgroundColor: trackColor,
+        height: thickness,
+        ...style,
+      }}
+    >
+      <View
+        className={classNames(
+          bem.e('trail'),
+          bem.em('trail', 'striped', striped),
+          bem.em('trail', 'animated', animated),
+        )}
+        style={{
+          width: `${percent}%`,
+          backgroundColor: color,
+        }}
+      >
         {children}
       </View>
     </View>

@@ -79,21 +79,18 @@ export const Notify: NotifyFC = forwardRef((props, ref) => {
     clear,
   }))
 
-  const notifyClass = classNames(bem.b(), bem.m(type), className)
-  const notifyStyle = {
-    color,
-    background,
-    ...style,
-  }
-
   return (
     <Popup
       {...restProps}
       mask={mask}
       visible={visible}
       effect={mapPlacementEffect[placement]}
-      className={notifyClass}
-      style={notifyStyle}
+      className={classNames(bem.b(), bem.m(type), className)}
+      style={{
+        color,
+        background,
+        ...style,
+      }}
     >
       {message}
     </Popup>

@@ -68,10 +68,8 @@ export const Accordion: AccordionFC = (props) => {
     onChange?.(key as (string | number) & (string | number)[])
   }
 
-  const accordionClass = classNames(bem.b(), className)
-
   return (
-    <View {...restProps} className={accordionClass}>
+    <View {...restProps} className={classNames(bem.b(), className)}>
       {Children.map(
         children,
         (item: ReactElement<AccordionItemProps>, index: number) => {

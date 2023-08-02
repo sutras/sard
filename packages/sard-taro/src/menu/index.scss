@@ -1,0 +1,119 @@
+@import '../style/base.scss';
+
+// #variables
+:root,
+page {
+  --sar-menu-item-height: 44px;
+  --sar-menu-item-padding-x: 15px;
+  --sar-menu-item-font-size: var(--sar-text-base);
+  --sar-menu-item-active-bg: var(--sar-active-bg);
+  --sar-menu-item-border-color: var(--sar-border-color);
+
+  --sar-menu-item-dark-active-bg: var(--sar-gray-900);
+  --sar-menu-item-dark-border-color: var(--sar-dark-border-color);
+
+  --sar-menu-item-horizontal-height: 34px;
+
+  --sar-menu-item-icon-margin-right: 10px;
+}
+// #endvariables
+
+@include bem(menu) {
+  @include b() {
+    display: flex;
+    border-radius: inherit;
+
+    @include m(vertical) {
+      flex-direction: column;
+    }
+
+    @include m(horizontal) {
+      flex-direction: row;
+    }
+  }
+
+  @include e(item) {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--sar-menu-item-height);
+    padding-left: var(--sar-menu-item-padding-x);
+    padding-right: var(--sar-menu-item-padding-x);
+    font-size: var(--sar-menu-item-font-size);
+    cursor: pointer;
+
+    @include m(vertical-first) {
+      border-top-left-radius: inherit;
+      border-top-right-radius: inherit;
+    }
+
+    @include m(vertical-last) {
+      border-bottom-left-radius: inherit;
+      border-bottom-right-radius: inherit;
+    }
+
+    @include m(horizontal-first) {
+      border-top-left-radius: inherit;
+      border-bottom-left-radius: inherit;
+    }
+
+    @include m(horizontal-last) {
+      border-top-right-radius: inherit;
+      border-bottom-right-radius: inherit;
+    }
+
+    @include m(disabled) {
+      @include disabled-text;
+    }
+
+    @include m(light-interactive) {
+      &:active {
+        background-color: var(--sar-menu-item-active-bg);
+      }
+    }
+
+    @include m(dark-interactive) {
+      &:active {
+        background-color: var(--sar-menu-item-dark-active-bg);
+      }
+    }
+
+    @include m(horizontal) {
+      height: var(--sar-menu-item-horizontal-height);
+    }
+
+    @include m(light-horizontal-later) {
+      @include border-left(var(--sar-menu-item-border-color));
+    }
+
+    @include m(dark-horizontal-later) {
+      @include border-left(var(--sar-menu-item-dark-border-color));
+    }
+  }
+
+  @include e(item-icon) {
+    margin-right: var(--sar-menu-item-icon-margin-right);
+  }
+
+  @include e(item-text) {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex: 1;
+
+    @include m(light-vertical-later) {
+      @include border-top(var(--sar-menu-item-border-color));
+    }
+
+    @include m(dark-vertical-later) {
+      @include border-top(var(--sar-menu-item-dark-border-color));
+    }
+
+    @include m(has-icon) {
+      justify-content: flex-start;
+    }
+  }
+}

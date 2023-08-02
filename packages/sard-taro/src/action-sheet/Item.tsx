@@ -40,24 +40,20 @@ export const ActionSheetItem: FC<ActionSheetItemProps> = (props) => {
     }
   }
 
-  const actionSheetItemClass = classNames(
-    bem.e('item'),
-    bem.em('item', 'disabled', disabled),
-    bem.em('item', 'loading', loading),
-    bem.em('item', 'interactive', !disabled && !loading),
-    className,
-  )
-
-  const actionSheetItemStyle = {
-    color,
-    ...style,
-  }
-
   return (
     <View
       {...restProps}
-      className={actionSheetItemClass}
-      style={actionSheetItemStyle}
+      className={classNames(
+        bem.e('item'),
+        bem.em('item', 'disabled', disabled),
+        bem.em('item', 'loading', loading),
+        bem.em('item', 'interactive', !disabled && !loading),
+        className,
+      )}
+      style={{
+        color,
+        ...style,
+      }}
       onClick={handleClick}
     >
       {loading ? (

@@ -18,16 +18,14 @@ export const DropdownOption: FC<DropdownOptionProps> = (props) => {
 
   const [bem] = useBem('dropdown')
 
-  const optionClass = classNames(
-    bem.e('option'),
-    bem.em('option', 'active', active),
-    className,
-  )
-
   return (
     <Cell
       {...restProps}
-      className={optionClass}
+      className={classNames(
+        bem.e('option'),
+        bem.em('option', 'active', active),
+        className,
+      )}
       title={label}
       linkable
       arrow={

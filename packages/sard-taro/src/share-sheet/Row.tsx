@@ -15,10 +15,8 @@ export const ShareSheetRow: FC<ShareSheetRowProps> = (props) => {
 
   const [bem] = useBem('share-sheet')
 
-  const rowclass = classNames(bem.e('row'), className)
-
   return (
-    <View {...restProps} className={rowclass}>
+    <View {...restProps} className={classNames(bem.e('row'), className)}>
       {itemList
         ? itemList.map((itemProps, index) => (
             <ShareSheetItem

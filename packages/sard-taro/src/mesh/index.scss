@@ -34,6 +34,14 @@ page {
 
   @include e(item-content) {
     position: relative;
+
+    @include m(square) {
+      padding-top: 100%;
+    }
+  }
+
+  @include e(item-wrapper) {
+    position: relative;
     box-sizing: border-box;
     display: flex;
     height: 100%;
@@ -55,6 +63,13 @@ page {
       border: 0 solid var(--sar-mesh-border-color);
       content: '';
       pointer-events: none;
+    }
+
+    @include m(square) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
     }
   }
 
@@ -121,13 +136,6 @@ page {
   @include m(center) {
     justify-content: center;
     align-items: center;
-  }
-
-  @include m(square) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
   }
 
   @include m(clickable) {

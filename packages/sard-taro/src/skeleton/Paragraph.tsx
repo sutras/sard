@@ -13,10 +13,8 @@ export const SkeletonParagraph: FC<SkeletonParagraphProps> = (props) => {
 
   const [bem] = useBem('skeleton')
 
-  const skeletonClass = classNames(bem.e('paragraph'), className)
-
   return (
-    <View {...restProps} className={skeletonClass}>
+    <View {...restProps} className={classNames(bem.e('paragraph'), className)}>
       {Array(rows)
         .fill(0)
         .map((_, index) => (

@@ -47,20 +47,20 @@ export const Mesh: MeshFC = (props) => {
     }
   }, [gap])
 
-  const meshClass = classNames(bem.b(), className)
-
-  const meshStyle = {
-    ...(gap
-      ? {
-          marginLeft: -gutter[0] + gutter[1],
-          marginRight: -gutter[0] + gutter[1],
-        }
-      : null),
-    ...style,
-  }
-
   return (
-    <View {...restProps} className={meshClass} style={meshStyle}>
+    <View
+      {...restProps}
+      className={classNames(bem.b(), className)}
+      style={{
+        ...(gap
+          ? {
+              marginLeft: -gutter[0] + gutter[1],
+              marginRight: -gutter[0] + gutter[1],
+            }
+          : null),
+        ...style,
+      }}
+    >
       {Children.map(children, (item: ReactElement<MeshItemProps>, index) => {
         const total = Children.count(children)
 
@@ -82,7 +82,6 @@ export const Mesh: MeshFC = (props) => {
           ),
           style: {
             flexBasis: (1 / columns) * 100 + '%',
-            paddingTop: square ? (1 / columns) * 100 + '%' : '',
             ...(gap
               ? {
                   paddingRight: gutter[0] + gutter[1],
@@ -90,6 +89,7 @@ export const Mesh: MeshFC = (props) => {
                 }
               : null),
             marginBottom: gap && !isBottom ? gap : '',
+            ...item.props.style,
           },
           isRight,
           isBottom,

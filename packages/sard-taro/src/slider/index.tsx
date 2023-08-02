@@ -95,10 +95,7 @@ export const Slider: FC<SliderProps> = (props) => {
       touch = event.touches[0]
     }
 
-    const res = await getRectById(trackId, {
-      size: true,
-      rect: true,
-    })
+    const res = await getRectById(trackId)
 
     const size = vertical ? res.height : res.width
     const tapCoord = vertical ? touch.clientY : touch.clientX
@@ -141,10 +138,7 @@ export const Slider: FC<SliderProps> = (props) => {
 
       brush.start(event)
 
-      downFields.current = await getRectById(trackId, {
-        size: true,
-        rect: true,
-      })
+      downFields.current = await getRectById(trackId)
 
       const value = Array.isArray(innerValue) ? innerValue[index] : innerValue
 
@@ -228,32 +222,6 @@ export const Slider: FC<SliderProps> = (props) => {
   const startPercent = startRatio * 100 + '%'
   const endPercent = (endRatio - startRatio) * 100 + '%'
 
-  const pieceStyle = {
-    [vertical ? 'top' : 'left']: startPercent,
-    [vertical ? 'height' : 'width']: endPercent,
-    backgroundColor: pieceColor,
-  }
-
-  const trackStyle = {
-    width: vertical ? trackSize : '',
-    height: !vertical ? trackSize : '',
-    backgroundColor: trackColor,
-  }
-
-  const thumbStyle = {
-    width: thumbSize,
-    height: thumbSize,
-    backgroundColor: thumbColor,
-  }
-
-  const sliderClass = classNames(
-    bem.b(),
-    bem.m('vertical', vertical),
-    bem.m('disabled', disabled),
-    bem.m('readonly', readOnly),
-    className,
-  )
-
   const defaultThumb = () => (
     <View
       className={classNames(
@@ -261,7 +229,11 @@ export const Slider: FC<SliderProps> = (props) => {
         bem.em('thumb', 'readonly', readOnly),
         bem.em('thumb', 'disabled', disabled),
       )}
-      style={thumbStyle}
+      style={{
+        width: thumbSize,
+        height: thumbSize,
+        backgroundColor: thumbColor,
+      }}
     ></View>
   )
 
@@ -293,14 +265,28 @@ export const Slider: FC<SliderProps> = (props) => {
   }
 
   return (
-    <View {...restProps} className={sliderClass} onClick={handleSliderClick}>
+    <View
+      {...restProps}
+      className={classNames(
+        bem.b(),
+        bem.m('vertical', vertical),
+        bem.m('disabled', disabled),
+        bem.m('readonly', readOnly),
+        className,
+      )}
+      onClick={handleSliderClick}
+    >
       <View
         id={trackId}
         className={classNames(
           bem.e('track'),
           bem.em('track', 'vertical', vertical),
         )}
-        style={trackStyle}
+        style={{
+          width: vertical ? trackSize : '',
+          height: !vertical ? trackSize : '',
+          backgroundColor: trackColor,
+        }}
       >
         <View
           className={classNames(
@@ -308,7 +294,11 @@ export const Slider: FC<SliderProps> = (props) => {
             bem.em('track-piece', 'vertical', vertical),
             bem.em('track-piece', 'is-down', isDown),
           )}
-          style={pieceStyle}
+          style={{
+            [vertical ? 'top' : 'left']: startPercent,
+            [vertical ? 'height' : 'width']: endPercent,
+            backgroundColor: pieceColor,
+          }}
         >
           {range ? [renderThumb(0), renderThumb(1)] : renderThumb(1)}
         </View>

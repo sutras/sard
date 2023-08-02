@@ -38,17 +38,17 @@ export const Avatar: AvatarFC = (props) => {
 
   const [bem] = useBem('avatar')
 
-  const avatarClass = classNames(bem.b(), bem.m(shape), className)
-
-  const avatarStyle = {
-    width: size,
-    height: size,
-    fontSize: iconSize,
-    ...style,
-  }
-
   return (
-    <View {...restProps} className={avatarClass} style={avatarStyle}>
+    <View
+      {...restProps}
+      className={classNames(bem.b(), bem.m(shape), className)}
+      style={{
+        width: size,
+        height: size,
+        fontSize: iconSize,
+        ...style,
+      }}
+    >
       {children ??
         (src ? (
           <Image src={src} className={bem.e('image')} />

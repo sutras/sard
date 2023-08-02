@@ -30,22 +30,23 @@ export const Icon: FC<IconProps> = (props) => {
     return isFileUrl(name)
   }, [name])
 
-  const iconClass = classNames(
-    bem.b(),
-    {
-      [prefix]: prefix && !isImg,
-      [prefix ? `${prefix}-${name}` : name]: name && !isImg,
-    },
-    className,
-  )
-  const iconStyle = {
-    fontSize: size,
-    color: color,
-    ...style,
-  }
-
   return (
-    <View {...restProps} className={iconClass} style={iconStyle}>
+    <View
+      {...restProps}
+      className={classNames(
+        bem.b(),
+        {
+          [prefix]: prefix && !isImg,
+          [prefix ? `${prefix}-${name}` : name]: name && !isImg,
+        },
+        className,
+      )}
+      style={{
+        fontSize: size,
+        color: color,
+        ...style,
+      }}
+    >
       {isImg && <Image className={bem.e('image')} src={name} />}
     </View>
   )

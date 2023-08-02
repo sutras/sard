@@ -60,24 +60,18 @@ export const Loading: FC<LoadingProps> = (props) => {
       ))
   }, [bem])
 
-  const loadingClass = classNames(
-    bem.b(),
-    bem.m('vertical', vertical),
-    className,
-  )
-
-  const innerIconClass = classNames(bem.e('icon'), bem.e(type), iconClass)
-  const innerIconStyle = {
-    color,
-    width: size,
-    height: size,
-    fontSize: size,
-    ...iconStyle,
-  }
-
   const renderIcon = () => {
     return (
-      <View className={innerIconClass} style={innerIconStyle}>
+      <View
+        className={classNames(bem.e('icon'), bem.e(type), iconClass)}
+        style={{
+          color,
+          width: size,
+          height: size,
+          fontSize: size,
+          ...iconStyle,
+        }}
+      >
         {type === 'circular'
           ? circularIcon
           : type === 'clock'
@@ -104,7 +98,10 @@ export const Loading: FC<LoadingProps> = (props) => {
   }
 
   return (
-    <View {...restProps} className={loadingClass}>
+    <View
+      {...restProps}
+      className={classNames(bem.b(), bem.m('vertical', vertical), className)}
+    >
       {renderIcon()}
       {renderText()}
     </View>

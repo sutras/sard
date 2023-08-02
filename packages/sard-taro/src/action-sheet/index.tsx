@@ -67,18 +67,16 @@ export const ActionSheet: ActionSheetFC = (props) => {
     onClose?.(false)
   })
 
-  const actionSheetClass = classNames(
-    bem.b(),
-    bem.m('headless', isNullish(title) && isNullish(description)),
-    className,
-  )
-
   return (
     <Popup
       {...restProps}
       visible={visible}
       effect="slide-bottom"
-      className={actionSheetClass}
+      className={classNames(
+        bem.b(),
+        bem.m('headless', isNullish(title) && isNullish(description)),
+        className,
+      )}
       onMaskClick={handleMaskClick}
     >
       {(!isNullish(title) || !isNullish(description)) && (

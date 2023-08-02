@@ -57,7 +57,7 @@ export default () => {
 | ----------- | -------------------- | ---------------------------------------------------------------------------------- | ------ |
 | visible     | 是否可见             | boolean                                                                            | false  |
 | timeout     | 动画时长，单位 ms    | number                                                                             | 300    |
-| effect      | 显隐效果             | 'slide-top' \| 'slide-right' \| 'slide-bottom' \| 'slide-left' \| 'zoom' \| 'fade' | 'zoom' |
+| effect      | 显隐效果             | 'slide-top' \| 'slide-right' \| 'slide-bottom' \| 'slide-left' \| 'zoom' \| 'fade' | -      |
 | zIndex      | 弹出层的层级         | number                                                                             | -      |
 | mask        | 是否显示遮罩         | boolean                                                                            | true   |
 | transparent | 透明遮罩             | boolean                                                                            | false  |

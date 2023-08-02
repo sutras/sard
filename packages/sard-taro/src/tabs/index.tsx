@@ -184,13 +184,9 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     const labelEl = labelMap.get(innerActiveKey)
 
     async function getFieldsData() {
-      const wrapperRes = await getRectById(labelWrapperId, {
-        size: true,
-      })
+      const wrapperRes = await getRectById(labelWrapperId)
 
-      const contentRes = await getRectById(labelContentId, {
-        rect: true,
-      })
+      const contentRes = await getRectById(labelContentId)
 
       const labelRes = await labelEl.getFields()
 
@@ -278,17 +274,6 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     resetKeyLabelStyle()
   }, [innerActiveKey])
 
-  const inkbarWrapperRef = useRef<HTMLElement>()
-  useEffect(() => {
-    if (
-      type === 'inkbar' &&
-      initialActiveKey !== innerActiveKey &&
-      inkbarWrapperRef.current
-    ) {
-      inkbarWrapperRef.current.style.transitionDuration = '0.3s'
-    }
-  }, [innerActiveKey])
-
   const popoutContext = useContext(PopoutContext)
   const visible = popoutContext?.visible
 
@@ -320,7 +305,7 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
       reset()
       lockScroll.current = true
 
-      getRectById(id, { rect: true }).then((res) => {
+      getRectById(id).then((res) => {
         Taro.pageScrollTo({
           scrollTop: pageScrollTop.current + res.top + offset,
           duration: animated ? duration : 0,
@@ -371,26 +356,30 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     setLabelStyle,
   }))
 
-  const tabsClass = classNames(
-    bem.b(),
-    bem.m('auto', Children.count(children) > scrollCount),
-    bem.m('sticky', sticky),
-    bem.m('scrollspy', scrollspy),
-    bem.m('vertical', vertical),
-    className,
-  )
+  // 避免初次渲染滑动效果
+  const [laterAnimated, setLaterAnimated] = useState(false)
+
+  const [resetLaterAnimated] = useSetTimeout(() => {
+    setLaterAnimated(true)
+  }, 200)
+
+  useEffect(() => {
+    if (animated) {
+      resetLaterAnimated()
+    }
+  }, [animated])
 
   const renderInkbar = () => {
     return (
       type === 'inkbar' && (
         <View
-          ref={inkbarWrapperRef}
           className={classNames(
             bem.e('inkbar-wrapper'),
             bem.em('inkbar-wrapper', 'vertical', vertical),
           )}
           style={{
             opacity: 0,
+            transitionDuration: !laterAnimated ? '0s' : '',
             ...inkbarWrapperStyle,
             ...inkbarWrapperInnerStyle,
           }}
@@ -436,7 +425,17 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
   }
 
   return (
-    <View {...restProps} className={tabsClass}>
+    <View
+      {...restProps}
+      className={classNames(
+        bem.b(),
+        bem.m('auto', Children.count(children) > scrollCount),
+        bem.m('sticky', sticky),
+        bem.m('scrollspy', scrollspy),
+        bem.m('vertical', vertical),
+        className,
+      )}
+    >
       <View
         className={classNames(
           bem.e('header'),
@@ -537,6 +536,7 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
             transform: animated
               ? `translateX(-${labelMap.getIndexByKey(innerActiveKey) * 100}%)`
               : '',
+            transitionDuration: !laterAnimated ? '0s' : '',
           }}
         >
           {renderPane()}

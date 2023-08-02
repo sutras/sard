@@ -37,15 +37,15 @@ export const Navbar: NavbarFC = (props) => {
 
   const [bem] = useBem('navbar')
 
-  const navbarClass = classNames(bem.b(), bem.m('fixed', fixed), className)
-
-  const navbarStyle = {
-    zIndex: fixed ? zIndex : '',
-    ...style,
-  }
-
   return (
-    <View {...restProps} className={navbarClass} style={navbarStyle}>
+    <View
+      {...restProps}
+      className={classNames(bem.b(), bem.m('fixed', fixed), className)}
+      style={{
+        zIndex: fixed ? zIndex : '',
+        ...style,
+      }}
+    >
       {left && (
         <View
           className={classNames(bem.e('left'), bem.em('left', 'flow', flow))}

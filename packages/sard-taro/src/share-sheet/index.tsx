@@ -85,14 +85,12 @@ export const ShareSheet: ShareSheetFC = ((props) => {
     }
   }, [itemList])
 
-  const shareSheetClass = classNames(bem.b(), className)
-
   return (
     <Popup
       {...restProps}
       visible={visible}
       effect="slide-bottom"
-      className={shareSheetClass}
+      className={classNames(bem.b(), className)}
       onMaskClick={handleMaskClick}
     >
       {(!isNullish(title) || !isNullish(description)) && (

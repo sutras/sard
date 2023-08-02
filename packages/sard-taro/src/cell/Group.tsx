@@ -57,17 +57,18 @@ export const CellGroup: FC<CellGroupProps> = (props) => {
     }
   }, [inset, bodyStyle, bodyClass, footerStyle, footerClass])
 
-  const cellGroupClass = classNames(
-    bem.b(),
-    bem.m('inlaid', inlaid),
-    bem.m('card', card),
-    className,
-  )
-
   const count = Children.count(children)
 
   return (
-    <View {...restProps} className={cellGroupClass}>
+    <View
+      {...restProps}
+      className={classNames(
+        bem.b(),
+        bem.m('inlaid', inlaid),
+        bem.m('card', card),
+        className,
+      )}
+    >
       {!isNullish(title) && (
         <View className={bem.e('header')}>
           <View className={bem.e('title')}>{title}</View>

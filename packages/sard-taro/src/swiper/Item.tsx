@@ -18,10 +18,8 @@ export const SwiperItem: SwiperItemFC = (props) => {
 
   const [bem] = useBem('swiper-item')
 
-  const itemClass = classNames(bem.b(), className)
-
   return (
-    <TaroSwiperItem {...restProps} className={itemClass}>
+    <TaroSwiperItem {...restProps} className={classNames(bem.b(), className)}>
       {children}
     </TaroSwiperItem>
   )

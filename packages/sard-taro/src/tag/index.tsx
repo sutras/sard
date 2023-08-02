@@ -39,18 +39,19 @@ export const Tag: FC<TagProps> = (props) => {
 
   const [bem] = useBem('tag')
 
-  const tagClass = classNames(
-    bem.b(),
-    bem.m(theme),
-    bem.m(`${theme}-plain`, plain),
-    bem.m(size),
-    bem.m('round', round),
-    bem.m('mark', mark),
-    className,
-  )
-
   return (
-    <View {...restProps} className={tagClass}>
+    <View
+      {...restProps}
+      className={classNames(
+        bem.b(),
+        bem.m(theme),
+        bem.m(`${theme}-plain`, plain),
+        bem.m(size),
+        bem.m('round', round),
+        bem.m('mark', mark),
+        className,
+      )}
+    >
       {children}
       {closable && (
         <Icon className={bem.e('close')} name="close" onClick={onClose}></Icon>

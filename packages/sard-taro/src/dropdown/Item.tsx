@@ -138,9 +138,7 @@ export const DropdownItem: DropdownItemFC = forwardRef((props, ref) => {
 
   const setPosition = useEvent(() => {
     if (innerVisible) {
-      getRectById(itemId, {
-        rect: true,
-      }).then((res) => {
+      getRectById(itemId).then((res) => {
         const info = Taro.getSystemInfoSync()
         const topInset = `0 0 ${info.windowHeight - res.top}px`
         const bottomInset = `${res.bottom}px 0 0`
@@ -191,14 +189,6 @@ export const DropdownItem: DropdownItemFC = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     toggle,
   }))
-
-  const itemClass = classNames(
-    bem.e('item'),
-    bem.em('item', 'show', actualVisible),
-    bem.em('item', 'disabled', disabled),
-    bem.em('item', 'interactive', !disabled),
-    className,
-  )
 
   const renderLabel = () => {
     return (
@@ -301,7 +291,13 @@ export const DropdownItem: DropdownItemFC = forwardRef((props, ref) => {
     <>
       <View
         {...restProps}
-        className={itemClass}
+        className={classNames(
+          bem.e('item'),
+          bem.em('item', 'show', actualVisible),
+          bem.em('item', 'disabled', disabled),
+          bem.em('item', 'interactive', !disabled),
+          className,
+        )}
         id={itemId}
         onClick={handleItemClick}
       >

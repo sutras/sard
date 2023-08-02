@@ -56,16 +56,6 @@
                 "filePath": "../sard-taro/src/locale"
               },
               {
-                "title": "Popout 弹出框",
-                "path": "popout",
-                "filePath": "../sard-taro/src/popout"
-              },
-              {
-                "title": "Popup 弹出层",
-                "path": "popup",
-                "filePath": "../sard-taro/src/popup"
-              },
-              {
                 "title": "style 样式",
                 "path": "style",
                 "filePath": "../sard-taro/src/style"
@@ -219,6 +209,21 @@
                 "filePath": "../sard-taro/src/notice-bar"
               },
               {
+                "title": "Popout 弹出框",
+                "path": "popout",
+                "filePath": "../sard-taro/src/popout"
+              },
+              {
+                "title": "Popover 气泡弹出框",
+                "path": "Popover",
+                "filePath": "../sard-taro/src/popover"
+              },
+              {
+                "title": "Popup 弹出层",
+                "path": "popup",
+                "filePath": "../sard-taro/src/popup"
+              },
+              {
                 "title": "ProgressBar 条形进度条",
                 "path": "progress-bar",
                 "filePath": "../sard-taro/src/progress-bar"
@@ -244,6 +249,11 @@
             "type": "group",
             "title": "导航组件",
             "items": [
+              {
+                "title": "Dropdown 下拉菜单",
+                "path": "dropdown",
+                "filePath": "../sard-taro/src/dropdown"
+              },
               {
                 "title": "IndexBar 索引栏",
                 "path": "index-bar",
@@ -289,11 +299,6 @@
                 "title": "Dialog 对话框",
                 "path": "dialog",
                 "filePath": "../sard-taro/src/dialog"
-              },
-              {
-                "title": "Dropdown 下拉菜单",
-                "path": "dropdown",
-                "filePath": "../sard-taro/src/dropdown"
               },
               {
                 "title": "Loading 加载",

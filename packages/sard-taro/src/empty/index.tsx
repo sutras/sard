@@ -27,10 +27,8 @@ export const Empty: FC<EmptyProps> = (props) => {
 
   const [bem] = useBem('empty')
 
-  const emptyClass = classNames(bem.b(), className)
-
   return (
-    <View {...restProps} className={emptyClass}>
+    <View {...restProps} className={classNames(bem.b(), className)}>
       <View className={bem.e('icon')}>
         {icon ?? <Icon name="empty" {...iconProps}></Icon>}
       </View>

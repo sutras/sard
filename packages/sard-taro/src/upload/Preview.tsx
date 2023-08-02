@@ -144,10 +144,8 @@ export const UploadPreview: FC<UploadPreviewProps> = (props) => {
     }
   }
 
-  const previewClass = classNames(bem.e('preview'), className)
-
   return (
-    <View {...restProps} className={previewClass}>
+    <View {...restProps} className={classNames(bem.e('preview'), className)}>
       {file?.type === 'image' || (url && isImageUrl(url)) ? (
         <Image
           mode={mode}

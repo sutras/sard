@@ -114,12 +114,13 @@ export const Pagination: FC<PaginationProps> = (props) => {
     )
   }
 
-  const pageClassName = classNames(bem.b(), bem.m(type), className)
-
   return (
     <>
       {(!hideOnSinglePage || innerPageCount > 1) && (
-        <View {...restProps} className={pageClassName}>
+        <View
+          {...restProps}
+          className={classNames(bem.b(), bem.m(type), className)}
+        >
           <View
             className={classNames(
               bem.e('item'),

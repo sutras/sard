@@ -74,10 +74,11 @@ export const Dropdown: DropdownFC = (props) => {
     })
   }
 
-  const dropdownClass = classNames(bem.b(), bem.m('show', show), className)
-
   return (
-    <View {...restProps} className={dropdownClass}>
+    <View
+      {...restProps}
+      className={classNames(bem.b(), bem.m('show', show), className)}
+    >
       <View
         className={classNames(bem.e('shadow'), bem.em('shadow', 'show', show))}
       ></View>

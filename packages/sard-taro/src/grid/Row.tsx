@@ -50,24 +50,22 @@ export const Row: FC<RowProps> = (props) => {
     }
   }, [gap])
 
-  const rowStyle = Object.assign(
-    {
-      justifyContent: justify && mapJustify[justify],
-      alignItems: align && mapAlign[align],
-    },
-    gap
-      ? {
-          marginLeft: -gutter[0],
-          marginRight: -gutter[0],
-        }
-      : null,
-    style,
-  )
-
-  const rowClass = classNames(bem.b(), className)
-
   return (
-    <View {...restProps} className={rowClass} style={rowStyle}>
+    <View
+      {...restProps}
+      className={classNames(bem.b(), className)}
+      style={{
+        justifyContent: justify && mapJustify[justify],
+        alignItems: align && mapAlign[align],
+        ...(gap
+          ? {
+              marginLeft: -gutter[0],
+              marginRight: -gutter[0],
+            }
+          : null),
+        ...style,
+      }}
+    >
       <RowContext.Provider value={gutter}>{children}</RowContext.Provider>
     </View>
   )

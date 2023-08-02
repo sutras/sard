@@ -73,37 +73,9 @@ export const TabsLabel = forwardRef<TabLabelRef, TabLabelProps>(
       }
     }
 
-    const labelClass = classNames(
-      bem.e('label'),
-      bem.em('label', type),
-      bem.em('label', 'active', active),
-      bem.em('label', 'border-active', type === 'border' && active),
-      bem.em('label', 'disabled', disabled),
-      bem.em('label', 'border-later', type === 'border' && later),
-      bem.em('label', 'pill-active', type === 'pill' && active),
-      bem.em('label', 'auto', autoScroll),
-      bem.em('label', 'vertical', vertical),
-      bem.em(
-        'label',
-        'vertical-border-later',
-        vertical && type === 'border' && later,
-      ),
-      {
-        [activeClass]: activeClass && active,
-        [inactiveClass]: inactiveClass && !active,
-      },
-      className,
-    )
-
-    const labelStyle = {
-      ...style,
-      ...(active ? activeStyle : null),
-      ...(!active ? inactiveStyle : null),
-    }
-
     useImperativeHandle(ref, () => ({
       getFields() {
-        return getRectById(selectorId, { size: true, rect: true })
+        return getRectById(selectorId)
       },
     }))
 
@@ -111,8 +83,32 @@ export const TabsLabel = forwardRef<TabLabelRef, TabLabelProps>(
       <View
         {...restProps}
         ref={ref}
-        className={labelClass}
-        style={labelStyle}
+        className={classNames(
+          bem.e('label'),
+          bem.em('label', type),
+          bem.em('label', 'active', active),
+          bem.em('label', 'border-active', type === 'border' && active),
+          bem.em('label', 'disabled', disabled),
+          bem.em('label', 'border-later', type === 'border' && later),
+          bem.em('label', 'pill-active', type === 'pill' && active),
+          bem.em('label', 'auto', autoScroll),
+          bem.em('label', 'vertical', vertical),
+          bem.em(
+            'label',
+            'vertical-border-later',
+            vertical && type === 'border' && later,
+          ),
+          {
+            [activeClass]: activeClass && active,
+            [inactiveClass]: inactiveClass && !active,
+          },
+          className,
+        )}
+        style={{
+          ...style,
+          ...(active ? activeStyle : null),
+          ...(!active ? inactiveStyle : null),
+        }}
         onClick={handleClick}
         id={selectorId}
       >

@@ -48,12 +48,10 @@ export const Skeleton: SkeletonFC = (props) => {
 
   const [bem] = useBem('skeleton')
 
-  const skeletonClass = classNames(bem.b(), className)
-
   return (
     <>
       {loading ? (
-        <View {...restProps} className={skeletonClass}>
+        <View {...restProps} className={classNames(bem.b(), className)}>
           {avatar && (
             <SkeletonAvatar
               size={avatarSize}

@@ -34,10 +34,8 @@ export const Result: FC<ResultProps> = (props) => {
 
   const [bem] = useBem('result')
 
-  const resultClass = classNames(bem.b(), className)
-
   return (
-    <View {...restProps} className={resultClass}>
+    <View {...restProps} className={classNames(bem.b(), className)}>
       <View className={classNames(bem.e('icon'), bem.em('icon', status))}>
         {icon ?? <Icon name={mapStatusIcon[status]}></Icon>}
       </View>

@@ -50,9 +50,7 @@ export const Collapse: FC<CollapseProps> = (props) => {
   }, [])
 
   const handleEnter = useEvent(() => {
-    getRectById(collapseId, {
-      size: true,
-    }).then((res) => {
+    getRectById(collapseId).then((res) => {
       setHeight(0)
       setShow(true)
       setCollapsing(true)
@@ -77,9 +75,7 @@ export const Collapse: FC<CollapseProps> = (props) => {
   })
 
   const handleExit = useEvent(() => {
-    getRectById(collapseId, {
-      size: true,
-    }).then((res) => {
+    getRectById(collapseId).then((res) => {
       setHeight(res.height)
       setCollapsing(true)
 
@@ -103,19 +99,6 @@ export const Collapse: FC<CollapseProps> = (props) => {
     onExited?.()
   })
 
-  const collapseClass = classNames(
-    bem.b(),
-    bem.m('show', show),
-    bem.m('collapsing', collapsing),
-    className,
-  )
-
-  const collapseStyle = {
-    ...style,
-    height,
-    transitionDuration: duration + 'ms',
-  }
-
   return (
     <Transition
       {...restProps}
@@ -128,7 +111,19 @@ export const Collapse: FC<CollapseProps> = (props) => {
       onExiting={handleExiting}
       onExited={handleExited}
     >
-      <View className={collapseClass} style={collapseStyle}>
+      <View
+        className={classNames(
+          bem.b(),
+          bem.m('show', show),
+          bem.m('collapsing', collapsing),
+          className,
+        )}
+        style={{
+          ...style,
+          height,
+          transitionDuration: duration + 'ms',
+        }}
+      >
         <View className={bem.e('content')} id={collapseId}>
           {children}
         </View>

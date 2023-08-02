@@ -19,10 +19,8 @@ export const MeshItem: FC<MeshItemProps> = (props) => {
   const {
     children,
     className,
-    style,
     text,
     iconProps,
-    onClick,
     isRight,
     isBottom,
 
@@ -38,56 +36,52 @@ export const MeshItem: FC<MeshItemProps> = (props) => {
 
   const [bem] = useBem('mesh')
 
-  const meshItemClass = classNames(bem.e('item'), className)
-
-  const meshItemStyle = {
-    ...style,
-  }
-
-  const contentClass = classNames(
-    bem.e('item-content'),
-    bem.m('clickable', clickable),
-    bem.m('border-right', border && !gap && !isRight),
-    bem.m('border-bottom', border && !gap && !isBottom),
-    bem.m('border-surround', border && gap),
-    bem.m('center', center),
-    bem.m('square', square),
-    bem.m(direction, !reverse),
-    bem.m(`${direction}-reverse`, reverse),
-  )
-
   return (
-    <View
-      {...restProps}
-      className={meshItemClass}
-      style={meshItemStyle}
-      onClick={onClick}
-    >
-      <View className={contentClass}>
-        {children ?? (
-          <>
-            {iconProps && (
-              <View className={bem.e('item-icon')}>
-                <Icon {...iconProps}></Icon>
-              </View>
-            )}
-            {text && (
-              <View
-                className={classNames(
-                  bem.e('item-text'),
-                  bem.em('item-text', direction, iconProps && !reverse),
-                  bem.em(
-                    'item-text',
-                    `${direction}-reverse`,
-                    iconProps && reverse,
-                  ),
-                )}
-              >
-                {text}
-              </View>
-            )}
-          </>
+    <View {...restProps} className={classNames(bem.e('item'), className)}>
+      <View
+        className={classNames(
+          bem.e('item-content'),
+          bem.em('item-content', 'square', square),
         )}
+      >
+        <View
+          className={classNames(
+            bem.e('item-wrapper'),
+            bem.m('clickable', clickable),
+            bem.m('border-right', border && !gap && !isRight),
+            bem.m('border-bottom', border && !gap && !isBottom),
+            bem.m('border-surround', border && gap),
+            bem.m('center', center),
+            bem.em('item-wrapper', 'square', square),
+            bem.m(direction, !reverse),
+            bem.m(`${direction}-reverse`, reverse),
+          )}
+        >
+          {children ?? (
+            <>
+              {iconProps && (
+                <View className={bem.e('item-icon')}>
+                  <Icon {...iconProps}></Icon>
+                </View>
+              )}
+              {text && (
+                <View
+                  className={classNames(
+                    bem.e('item-text'),
+                    bem.em('item-text', direction, iconProps && !reverse),
+                    bem.em(
+                      'item-text',
+                      `${direction}-reverse`,
+                      iconProps && reverse,
+                    ),
+                  )}
+                >
+                  {text}
+                </View>
+              )}
+            </>
+          )}
+        </View>
       </View>
     </View>
   )

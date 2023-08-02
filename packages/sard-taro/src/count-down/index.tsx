@@ -136,10 +136,8 @@ export const CountDown = forwardRef<CountDownRef, CountDownProps>(
         .replace(/S/g, padZero(currentTime.milliseconds, 3).slice(0, 1))
     }
 
-    const countDownClass = classNames(bem.b(), className)
-
     return (
-      <View {...restProps} className={countDownClass}>
+      <View {...restProps} className={classNames(bem.b(), className)}>
         {children ? children(currentTime) : formatTime()}
       </View>
     )

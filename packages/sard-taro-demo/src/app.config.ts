@@ -36,6 +36,7 @@ export default defineAppConfig({
         'pages/password-input/index',
         'pages/picker/index',
         'pages/popout/index',
+        'pages/popover/index',
         'pages/popup/index',
         'pages/progress-bar/index',
         'pages/progress-circle/index',

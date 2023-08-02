@@ -68,16 +68,17 @@ export const Cell: CellFC = (props) => {
     cellContext,
   )
 
-  const cellClass = classNames(
-    bem.b(),
-    bem.m('first', index === 0),
-    bem.m('last', index === count - 1),
-    bem.m('linkable', linkable),
-    className,
-  )
-
   return (
-    <View {...restProps} className={cellClass}>
+    <View
+      {...restProps}
+      className={classNames(
+        bem.b(),
+        bem.m('first', index === 0),
+        bem.m('last', index === count - 1),
+        bem.m('linkable', linkable),
+        className,
+      )}
+    >
       {!isNullish(icon) && (
         <View
           className={classNames(

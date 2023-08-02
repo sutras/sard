@@ -15,6 +15,7 @@ export interface PopupProps extends BaseProps {
     | 'slide-left'
     | 'zoom'
     | 'fade'
+  customEffect?: string
   zIndex?: number
   mask?: boolean
   transparent?: boolean
@@ -39,8 +40,9 @@ export const Popup: FC<PopupProps> = forwardRef<PopupRef, PopupProps>(
       children,
       visible = false,
       zIndex,
+      customEffect,
       timeout = 300,
-      effect = 'zoom',
+      effect,
       mask = true,
       transparent,
       maskClass,
@@ -93,39 +95,22 @@ export const Popup: FC<PopupProps> = forwardRef<PopupRef, PopupProps>(
       onExited?.()
     })
 
-    const popupClass = classNames(
-      bem.b(),
-      bem.m('hiding', isHiding),
-      bem.m(effect),
-      className,
-    )
-
-    const popupStyle = {
-      zIndex,
-      display: popupVisible ? 'flex' : 'none',
-      ...style,
-    }
-
-    const innerMaskClass = classNames(
-      bem.e('mask'),
-      bem.m('hiding', isHiding),
-      bem.em('mask', 'transparent', transparent),
-      maskClass,
-    )
-
-    const innerMaskStyle = {
-      zIndex,
-      display: popupVisible ? 'flex' : 'none',
-      ...maskStyle,
-    }
-
     return (
       <>
         <CSSTransition in={visible} timeout={timeout} effect="fade">
           {mask ? (
             <View
-              className={innerMaskClass}
-              style={innerMaskStyle}
+              className={classNames(
+                bem.e('mask'),
+                bem.m('hiding', isHiding),
+                bem.em('mask', 'transparent', transparent),
+                maskClass,
+              )}
+              style={{
+                zIndex,
+                display: popupVisible ? 'flex' : 'none',
+                ...maskStyle,
+              }}
               onClick={handleMaskClick}
               catchMove
             ></View>
@@ -134,6 +119,7 @@ export const Popup: FC<PopupProps> = forwardRef<PopupRef, PopupProps>(
 
         <CSSTransition
           in={visible}
+          customEffect={customEffect}
           timeout={timeout}
           effect={effect}
           onEnter={handleEnter}
@@ -145,8 +131,17 @@ export const Popup: FC<PopupProps> = forwardRef<PopupRef, PopupProps>(
         >
           <View
             {...restProps}
-            className={popupClass}
-            style={popupStyle}
+            className={classNames(
+              bem.b(),
+              bem.m('hiding', isHiding),
+              bem.m(effect, effect),
+              className,
+            )}
+            style={{
+              zIndex,
+              display: popupVisible ? 'flex' : 'none',
+              ...style,
+            }}
             ref={ref}
           >
             {children}

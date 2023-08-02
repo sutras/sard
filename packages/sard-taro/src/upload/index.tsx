@@ -303,19 +303,20 @@ export const Upload: UploadFC = forwardRef<UploadRef, UploadProps>(
       })
     })
 
-    const uploadClass = classNames(
-      bem.b(),
-      bem.m('disabled', disabled),
-      bem.m('readonly', readOnly),
-      className,
-    )
-
     useImperativeHandle(ref, () => ({
       select: handleSelect,
     }))
 
     return (
-      <View {...restProps} className={uploadClass}>
+      <View
+        {...restProps}
+        className={classNames(
+          bem.b(),
+          bem.m('disabled', disabled),
+          bem.m('readonly', readOnly),
+          className,
+        )}
+      >
         <View className={bem.e('wrapper')}>
           {innerPreviewList.map((item, index) => {
             return (

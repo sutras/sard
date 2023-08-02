@@ -49,10 +49,13 @@ export const TabsPane = forwardRef<Component, TabPaneProps>((props, ref) => {
 
   const active = innerKey === activeKey
 
-  const tabPaneClass = classNames(bem.em('pane', 'active', active), className)
-
   return (
-    <View {...restProps} className={tabPaneClass} id={selectorId} ref={ref}>
+    <View
+      {...restProps}
+      className={classNames(bem.em('pane', 'active', active), className)}
+      id={selectorId}
+      ref={ref}
+    >
       {children}
     </View>
   )

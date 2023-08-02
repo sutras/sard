@@ -12,20 +12,16 @@ export const SkeletonAvatar: FC<SkeletonAvatarProps> = (props) => {
 
   const [bem] = useBem('skeleton')
 
-  const avatarClass = classNames(bem.e('avatar'), className)
-
-  const avatarStyle = {
-    ...style,
-    width: size,
-    height: size,
-  }
-
   return (
     <SkeletonBlock
       {...restProps}
       round={round}
-      className={avatarClass}
-      style={avatarStyle}
+      className={classNames(bem.e('avatar'), className)}
+      style={{
+        ...style,
+        width: size,
+        height: size,
+      }}
     />
   )
 }

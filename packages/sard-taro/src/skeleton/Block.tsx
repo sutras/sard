@@ -14,15 +14,16 @@ export const SkeletonBlock: FC<SkeletonBlockProps> = (props) => {
 
   const [bem] = useBem('skeleton')
 
-  const blockClass = classNames(
-    bem.e('block'),
-    bem.m('animated', animated),
-    bem.m('round', round),
-    className,
-  )
-
   return (
-    <View {...restProps} className={blockClass}>
+    <View
+      {...restProps}
+      className={classNames(
+        bem.e('block'),
+        bem.m('animated', animated),
+        bem.m('round', round),
+        className,
+      )}
+    >
       {children}
     </View>
   )

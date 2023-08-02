@@ -94,10 +94,7 @@ export const Rate: FC<RateProps> = (props) => {
     }
 
     if (allowHalf) {
-      getRectById(`${rateItemId}_${index}`, {
-        rect: true,
-        size: true,
-      }).then((res) => {
+      getRectById(`${rateItemId}_${index}`).then((res) => {
         let touch = event as unknown as ITouch
         if (event.touches) {
           touch = event.touches[0]
@@ -121,17 +118,13 @@ export const Rate: FC<RateProps> = (props) => {
 
     brush.start(event)
 
-    getRectById(rateId, {
-      rect: true,
-    }).then((res) => {
+    getRectById(rateId).then((res) => {
       rateStartLeft.current = res.left
     })
 
     itemsBoundary.current = []
     for (let i = 0; i < count; i++) {
-      getRectById(`${rateItemId}_${i}`, {
-        rect: true,
-      }).then((res) => {
+      getRectById(`${rateItemId}_${i}`).then((res) => {
         itemsBoundary.current[i] = [res.left, res.right]
       })
     }
@@ -178,24 +171,20 @@ export const Rate: FC<RateProps> = (props) => {
     setValueByCurrent(innerValue)
   }, [innerValue, itemStars.current])
 
-  const rateClass = classNames(
-    bem.b(),
-    bem.m('disabled', disabled),
-    bem.m('readonly', readOnly),
-    className,
-  )
-
-  const rateStyle = {
-    fontSize: size,
-    ...style,
-  }
-
   return (
     <View
       {...restProps}
       id={rateId}
-      className={rateClass}
-      style={rateStyle}
+      className={classNames(
+        bem.b(),
+        bem.m('disabled', disabled),
+        bem.m('readonly', readOnly),
+        className,
+      )}
+      style={{
+        fontSize: size,
+        ...style,
+      }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}

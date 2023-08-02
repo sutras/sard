@@ -35,22 +35,21 @@ export const Badge: NamedExoticComponent<BadgeProps> = memo((props) => {
 
   const badgeClass = classNames(bem.b(), bem.m('fixed', fixed), className)
 
-  const contentClass = classNames(
-    bem.e('content'),
-    bem.m('fixed', !fixed && !isVisibleEmpty(children)),
-    bem.m('zero-hide', zeroHide),
-    bem.m('is-dot', isDot),
-  )
-
-  const contentStyle = {
-    backgroundColor: color,
-    color: textColor,
-  }
-
   return (
     <View {...restProps} className={badgeClass}>
       {children}
-      <View className={contentClass} style={contentStyle}>
+      <View
+        className={classNames(
+          bem.e('content'),
+          bem.m('fixed', !fixed && !isVisibleEmpty(children)),
+          bem.m('zero-hide', zeroHide),
+          bem.m('is-dot', isDot),
+        )}
+        style={{
+          backgroundColor: color,
+          color: textColor,
+        }}
+      >
         {isDot ? '' : isNumber(value) && value > max ? `${max}+` : value}
       </View>
     </View>

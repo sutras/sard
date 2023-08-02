@@ -46,10 +46,11 @@ export const AccordionItem: FC<AccordionItemProps> = (props) => {
     ? activeKey.includes(innerKey)
     : innerKey === activeKey
 
-  const itemClass = classNames(bem.b(), bem.m('later', later), className)
-
   return (
-    <View {...restProps} className={itemClass}>
+    <View
+      {...restProps}
+      className={classNames(bem.b(), bem.m('later', later), className)}
+    >
       <View
         className={classNames(
           bem.e('header'),

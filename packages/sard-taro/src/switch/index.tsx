@@ -63,26 +63,22 @@ export const Switch: FC<SwitchProps> = (props) => {
     onClick?.(event)
   }
 
-  const switchClass = classNames(
-    bem.b(),
-    bem.m('checked', innerChecked),
-    bem.m('disabled', disabled),
-    bem.m('readonly', readOnly),
-    bem.m('loading', loading),
-    className,
-  )
-
-  const switchStyle = {
-    backgroundColor: innerChecked ? checkedColor : uncheckedColor,
-    fontSize: size,
-    ...style,
-  }
-
   return (
     <View
       {...restProps}
-      className={switchClass}
-      style={switchStyle}
+      className={classNames(
+        bem.b(),
+        bem.m('checked', innerChecked),
+        bem.m('disabled', disabled),
+        bem.m('readonly', readOnly),
+        bem.m('loading', loading),
+        className,
+      )}
+      style={{
+        backgroundColor: innerChecked ? checkedColor : uncheckedColor,
+        fontSize: size,
+        ...style,
+      }}
       onClick={onSwitchClick}
     >
       <View

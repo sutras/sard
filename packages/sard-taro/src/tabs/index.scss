@@ -209,6 +209,7 @@ page {
     transform: translateX(-50%);
     text-align: center;
     pointer-events: none;
+    transition: left 0.3s, top 0.3s;
 
     @include m(vertical) {
       left: auto;

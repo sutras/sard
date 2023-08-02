@@ -71,19 +71,19 @@ export const Search: FC<SearchProps> = (props) => {
     onCancel?.()
   }
 
-  const searchClass = classNames(
-    bem.b(),
-    bem.m('show-action', !isNullish(cancel) || !isNullish(search)),
-    className,
-  )
-
-  const searchStyle = {
-    background,
-    ...style,
-  }
-
   return (
-    <View {...restProps} className={searchClass} style={searchStyle}>
+    <View
+      {...restProps}
+      className={classNames(
+        bem.b(),
+        bem.m('show-action', !isNullish(cancel) || !isNullish(search)),
+        className,
+      )}
+      style={{
+        background,
+        ...style,
+      }}
+    >
       {prepend}
       <Input
         value={innerValue}

@@ -56,15 +56,15 @@ export const Tabbar: TabbarFC = (props) => {
     element.props?.onClick?.(event)
   }
 
-  const tabbarClass = classNames(bem.b(), bem.m('fixed', fixed), className)
-
-  const tabbarStyle = {
-    zIndex: fixed ? zIndex : '',
-    ...style,
-  }
-
   return (
-    <View {...restProps} className={tabbarClass} style={tabbarStyle}>
+    <View
+      {...restProps}
+      className={classNames(bem.b(), bem.m('fixed', fixed), className)}
+      style={{
+        zIndex: fixed ? zIndex : '',
+        ...style,
+      }}
+    >
       {Children.map(
         children,
         (element: ReactElement<TabbarItemProps>, index) => {

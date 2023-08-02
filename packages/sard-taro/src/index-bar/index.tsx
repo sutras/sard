@@ -103,7 +103,7 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
       reset()
       lockScroll.current = true
 
-      getRectById(id, { rect: true }).then((res) => {
+      getRectById(id).then((res) => {
         Taro.pageScrollTo({
           scrollTop: pageScrollTop.current + res.top + offset,
           duration: 0,
@@ -181,10 +181,7 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
 
     itemCount.current = Children.count(children)
 
-    const res = await getRectById(navId, {
-      size: true,
-      rect: true,
-    })
+    const res = await getRectById(navId)
 
     downNavHeight.current = res.height || 0
     downNavTop.current = res.top
@@ -205,10 +202,8 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
     scrollTo,
   }))
 
-  const indexBarClass = classNames(bem.b(), className)
-
   return (
-    <View {...restProps} className={indexBarClass}>
+    <View {...restProps} className={classNames(bem.b(), className)}>
       {Children.map(
         children,
         (item: ReactElement<IndexBarItemProps>, index: number) => {

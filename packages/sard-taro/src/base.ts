@@ -6,6 +6,7 @@ export interface BaseProps {
     [varName: string]: string | number | null | undefined
   }
   children?: ReactNode
+  id?: string
 }
 
 export type PrimitiveType =

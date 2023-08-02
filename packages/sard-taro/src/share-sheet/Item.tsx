@@ -42,26 +42,29 @@ export const ShareSheetItem: FC<ShareSheetItemProps> = (props) => {
     }
   }
 
-  const shareSheetItemClass = classNames(
-    bem.e('item'),
-    bem.em('item', 'disabled', disabled),
-    bem.em('item', 'interactive', !disabled),
-    className,
-  )
-
-  const iconStyle = {
-    color,
-    backgroundColor: background,
-  }
-
   return (
-    <View {...restProps} className={shareSheetItemClass} onClick={handleClick}>
+    <View
+      {...restProps}
+      className={classNames(
+        bem.e('item'),
+        bem.em('item', 'disabled', disabled),
+        bem.em('item', 'interactive', !disabled),
+        className,
+      )}
+      onClick={handleClick}
+    >
       {children ?? (
         <>
           {isImg ? (
             <Image className={bem.e('item-img')} src={icon as string} />
           ) : (
-            <View className={bem.e('item-icon')} style={iconStyle}>
+            <View
+              className={bem.e('item-icon')}
+              style={{
+                color,
+                backgroundColor: background,
+              }}
+            >
               <Icon size={24} {...(icon as IconProps)}></Icon>
             </View>
           )}

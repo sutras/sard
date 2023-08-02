@@ -176,8 +176,6 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
 
     useImperativeHandle(ref, () => ({}))
 
-    const dialogClass = classNames(bem.b(), bem.m('headed', headed), className)
-
     const renderTitle = () => {
       return (
         <View
@@ -197,7 +195,7 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
         effect="zoom"
         mask
         onMaskClick={handleMaskClick}
-        className={dialogClass}
+        className={classNames(bem.b(), bem.m('headed', headed), className)}
       >
         {headed && (
           <View

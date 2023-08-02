@@ -208,16 +208,29 @@ export function scrollIntoView(
   }
 }
 
-export type NodeRect = Record<string, number>
+export type NodeRect = {
+  width: number
+  height: number
+  top: number
+  right: number
+  bottom: number
+  left: number
+}
 
 // NodesRef.fields 的异步封装
-export function getRectById(id: string, fields: Record<string, boolean>) {
-  return new Promise<Record<string, number>>((resolve) => {
+export function getRectById(id: string) {
+  return new Promise<NodeRect>((resolve) => {
     Taro.createSelectorQuery()
       .select(`#${id}`)
-      .fields(fields, (res) => {
-        resolve(res)
-      })
+      .fields(
+        {
+          rect: true,
+          size: true,
+        },
+        (res: NodeRect) => {
+          resolve(res)
+        },
+      )
       .exec()
   })
 }
@@ -241,9 +254,7 @@ export async function matchScrollVisible(
   for (let i = 0, l = ids.length; i < l; i++) {
     const id = ids[i]
 
-    const res = await getRectById(id, {
-      rect: true,
-    })
+    const res = await getRectById(id)
     if (res) {
       if (i === 0) {
         if (res.top > offset) {

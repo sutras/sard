@@ -91,24 +91,20 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
     setInnerFocused(false)
   }
 
-  const passwordInputClass = classNames(
-    bem.b(),
-    bem.m('readonly', readOnly),
-    bem.m('disabled', disabled),
-    className,
-  )
-
-  const passwordInputStyle = {
-    ...style,
-    gap,
-  }
-
   return (
     <View
       {...restProps}
-      className={passwordInputClass}
+      className={classNames(
+        bem.b(),
+        bem.m('readonly', readOnly),
+        bem.m('disabled', disabled),
+        className,
+      )}
       onClick={handleClick}
-      style={passwordInputStyle}
+      style={{
+        ...style,
+        gap,
+      }}
     >
       {Array(length)
         .fill(0)

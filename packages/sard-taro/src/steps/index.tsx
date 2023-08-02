@@ -42,12 +42,13 @@ export const Steps: StepsFC = (props) => {
 
   const [bem] = useBem('steps')
 
-  const stepsClass = classNames(bem.b(), bem.m('vertical', vertical), className)
-
   const count = Children.count(children)
 
   return (
-    <View {...restProps} className={stepsClass}>
+    <View
+      {...restProps}
+      className={classNames(bem.b(), bem.m('vertical', vertical), className)}
+    >
       {Children.map(children, (item: ReactElement<StepsStepProps>, index) => {
         return cloneElement(item, {
           status:

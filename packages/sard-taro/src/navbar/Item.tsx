@@ -13,10 +13,8 @@ export const NavbarItem: FC<NavbarItemProps> = (props) => {
 
   const [bem] = useBem('navbar')
 
-  const itemClass = classNames(bem.e('item'), className)
-
   return (
-    <View {...restProps} className={itemClass}>
+    <View {...restProps} className={classNames(bem.e('item'), className)}>
       {children}
     </View>
   )
