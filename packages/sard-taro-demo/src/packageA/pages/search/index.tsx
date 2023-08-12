@@ -1,94 +1,51 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { Icon, Search, Toast } from 'sard-taro'
+import { Toast } from 'sard-taro'
 
-import './index.scss'
+import Basic from './demo/Basic'
+import SearchButton from './demo/SearchButton'
+import CancelButton from './demo/CancelButton'
+import Shape from './demo/Shape'
+import Align from './demo/Align'
+import Background from './demo/Background'
+import DisabledReadOnly from './demo/DisabledReadOnly'
+import Slot from './demo/Slot'
 
 export default () => {
   return (
     <Page className="page-search">
-      <Toast />
+      <Toast.Agent />
 
       <Demo title="基础使用" full>
-        <Search placeholder="请输入关键词" />
+        <Basic />
       </Demo>
 
       <Demo title="搜索按钮" full>
-        <Search
-          placeholder="请输入关键词"
-          search="搜索"
-          onSearch={Toast.show}
-        />
+        <SearchButton />
       </Demo>
 
       <Demo title="取消按钮" full>
-        <Search
-          placeholder="请输入关键词"
-          cancel="取消"
-          onCancel={() => Toast.show('取消')}
-        />
+        <CancelButton />
       </Demo>
 
       <Demo title="形状" full>
-        <Search placeholder="请输入关键词" shape="round" />
+        <Shape />
       </Demo>
 
       <Demo title="对齐" full>
-        <Search placeholder="请输入关键词" align="center" />
+        <Align />
       </Demo>
 
       <Demo title="背景色" full>
-        <Search
-          placeholder="请输入关键词"
-          background="var(--sar-danger)"
-          inputBackground="#fff"
-          shape="round"
-        />
+        <Background />
       </Demo>
 
-      <Demo title="禁用" full>
-        <Search placeholder="请输入关键词" disabled />
-      </Demo>
-
-      <Demo title="只读" full>
-        <Search placeholder="请输入关键词" readOnly />
+      <Demo title="只读和禁用" full>
+        <DisabledReadOnly />
       </Demo>
 
       <Demo title="插槽" full>
-        <Search
-          placeholder="请输入关键词"
-          shape="round"
-          prepend={
-            <Icon
-              prefix="demo-icon"
-              name="upc-scan"
-              style={{ marginLeft: 5, marginRight: 17 }}
-            />
-          }
-          inputPrepend={
-            <Icon
-              name="caret-down-fill"
-              color="var(--sar-gray-700)"
-              size={14}
-            />
-          }
-          inputAppend={<Icon prefix="demo-icon" name="camera" size={20} />}
-        />
-
-        <Search
-          style={{ marginTop: 20 }}
-          placeholder="请输入关键词"
-          shape="round"
-          prepend={<Icon name="left" size={18} style={{ marginRight: 12 }} />}
-          append={
-            <Icon
-              prefix="demo-icon"
-              name="list-task"
-              size={20}
-              style={{ marginLeft: 10 }}
-            />
-          }
-        />
+        <Slot />
       </Demo>
     </Page>
   )

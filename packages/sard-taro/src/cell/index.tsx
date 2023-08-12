@@ -56,6 +56,7 @@ export const Cell: CellFC = (props) => {
   const [bem] = useBem('cell')
 
   const { index, count } = useContext(OrderContext)
+
   const cellContext = useContext(CellContext)
   const contextProps = pickContextNullish(
     {

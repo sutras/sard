@@ -14,110 +14,43 @@ import { NoticeBar } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<NoticeBar>这是一条公告！</NoticeBar>
-
-<NoticeBar>
-  这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-</NoticeBar>
-```
+%(${DEMO_PATH}/notice-bar/demo/Basic.tsx)
 
 ### 强制滚动
 
-```tsx
-<NoticeBar scrollable>这是一条公告！</NoticeBar>
-
-<NoticeBar scrollable>
-  这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-</NoticeBar>
-```
+%(${DEMO_PATH}/notice-bar/demo/Scrollable.tsx)
 
 ### 强制不滚动
 
-```tsx
-<NoticeBar scrollable={false}>这是一条公告！</NoticeBar>
-
-<NoticeBar scrollable={false}>
-  这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-</NoticeBar>
-```
+%(${DEMO_PATH}/notice-bar/demo/UnScrollable.tsx)
 
 ### 多行展示
 
-```tsx
-<NoticeBar wrap>
-  这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-</NoticeBar>
-```
+%(${DEMO_PATH}/notice-bar/demo/Wrap.tsx)
 
 ### 自定义左边图标
 
-```tsx
-<NoticeBar
-  leftIconProps={{ prefix: 'demo-icon', name: 'bell', size: 16 }}
->
-  这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-</NoticeBar>
-
-<NoticeBar leftIcon="">
-  这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-</NoticeBar>
-
-<NoticeBar leftIcon="消息">
-  这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-</NoticeBar>
-```
+%(${DEMO_PATH}/notice-bar/demo/LeftIcon.tsx)
 
 ### 可关闭的
 
-```tsx
-<NoticeBar closable onClose={() => console.log('close')}>
-  这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-</NoticeBar>
-```
+%(${DEMO_PATH}/notice-bar/demo/Closable.tsx)
 
 ### 可点击的
 
-```tsx
-<NoticeBar linkable onClick={() => console.log('click')}>
-  这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-</NoticeBar>
-```
+%(${DEMO_PATH}/notice-bar/demo/Linkable.tsx)
 
 ### 自定义右边图标
 
-```tsx
-<NoticeBar
-  closable
-  onClose={() => console.log('close')}
-  rightIconProps={{ name: 'x-circle-fill' }}
->
-  这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-</NoticeBar>
-```
+%(${DEMO_PATH}/notice-bar/demo/RightIcon.tsx)
 
 ### 自定义样式
 
-```tsx
-<NoticeBar
-  color="var(--sar-primary)"
-  background="rgba(var(--sar-primary-rgb), 0.1)"
->
-  这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-</NoticeBar>
-```
+%(${DEMO_PATH}/notice-bar/demo/Style.tsx)
 
 ### 垂直滚动
 
-```tsx
-<NoticeBar scrollable={false}>
-  <Swiper autoplay vertical interval={1500} circular style={{ height: '100%' }}>
-    <Swiper.Item>1. 这是一条公告！</Swiper.Item>
-    <Swiper.Item>2. 这是一条公告！</Swiper.Item>
-    <Swiper.Item>3. 这是一条公告！</Swiper.Item>
-  </Swiper>
-</NoticeBar>
-```
+%(${DEMO_PATH}/notice-bar/demo/Vertical.tsx)
 
 ## API
 
@@ -127,6 +60,7 @@ import { NoticeBar } from 'sard-taro'
 | -------------- | ---------------------------------------- | ---------------------------- | ------ |
 | color          | 自定义颜色                               | string                       | -      |
 | background     | 自定义背景色                             | string                       | -      |
+| hideLeftIcon   | 隐藏左边图标                             | boolean                      | false  |
 | leftIcon       | 自定义左边图标                           | React.ReactNode              | -      |
 | leftIconProps  | 自定义左边图标的 `Props`                 | IconProps                    | -      |
 | rightIcon      | 自定义右边图标                           | React.ReactNode              | -      |
@@ -148,4 +82,4 @@ import { NoticeBar } from 'sard-taro'
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

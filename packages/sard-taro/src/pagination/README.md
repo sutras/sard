@@ -14,52 +14,23 @@ import { Pagination } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Pagination total={100} pageSize={10} />
-```
+%(${DEMO_PATH}/pagination/demo/Basic.tsx)
 
 ### 受控的
 
-```tsx
-export default () => {
-  const [current, setCurrent] = useState(1)
-
-  return (
-    <Pagination
-      total={100}
-      pageSize={10}
-      current={current}
-      onChange={setCurrent}
-    />
-  )
-}
-```
+%(${DEMO_PATH}/pagination/demo/Controllable.tsx)
 
 ### 显示省略号
 
-```tsx
-<Pagination total={100} pageSize={10} ellipsis />
-```
+%(${DEMO_PATH}/pagination/demo/Ellipsis.tsx)
 
 ### 简单分页
 
-```tsx
-<Pagination total={43} pageSize={10} type="simple" />
-```
+%(${DEMO_PATH}/pagination/demo/Simple.tsx)
 
 ### 自定义
 
-```tsx
-<Pagination
-  total={100}
-  pageSize={10}
-  prev={<Icon name="left"></Icon>}
-  next={<Icon name="right"></Icon>}
-  page={(page) =>
-    page === 2 ? <Icon prefix="demo-icon" name="emoji-smile"></Icon> : page
-  }
-/>
-```
+%(${DEMO_PATH}/pagination/demo/Custom.tsx)
 
 ## API
 
@@ -85,4 +56,4 @@ export default () => {
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

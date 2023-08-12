@@ -15,6 +15,7 @@ import {
 export interface NoticeBarProps extends BaseProps {
   color?: string
   background?: string
+  hideLeftIcon?: boolean
   leftIcon?: ReactNode
   leftIconProps?: IconProps
   rightIcon?: ReactNode
@@ -40,6 +41,7 @@ export const NoticeBar: FC<NoticeBarProps> = (props) => {
     children,
     color,
     background,
+    hideLeftIcon,
     leftIcon,
     leftIconProps,
     rightIcon,
@@ -153,11 +155,13 @@ export const NoticeBar: FC<NoticeBarProps> = (props) => {
         ...style,
       }}
     >
-      <View className={bem.e('left-icon')}>
-        {leftIcon ?? (
-          <Icon name="volume-up" size={20} {...leftIconProps}></Icon>
-        )}
-      </View>
+      {!hideLeftIcon && (
+        <View className={bem.e('left-icon')}>
+          {leftIcon ?? (
+            <Icon name="volume-up" size={20} {...leftIconProps}></Icon>
+          )}
+        </View>
+      )}
       <View className={bem.e('content')} id={contentId}>
         <View
           id={wrapperId}

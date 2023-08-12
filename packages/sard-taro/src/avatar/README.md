@@ -14,119 +14,51 @@ import { Avatar } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Avatar />
-```
+%(${DEMO_PATH}/avatar/demo/Basic.tsx)
 
 ### 形状
 
-```tsx
-<Avatar shape="square" />
-```
+%(${DEMO_PATH}/avatar/demo/Shape.tsx)
 
 ### 图标大小
 
-```tsx
-<Avatar iconSize={24} />
-```
+%(${DEMO_PATH}/avatar/demo/IconSize.tsx)
 
 ### 头像尺寸
 
-```tsx
-<Avatar size={48} />
-```
+%(${DEMO_PATH}/avatar/demo/Size.tsx)
 
 ### 图片类型
 
-```tsx
-import pic1 from '@/static/pic1.jpg'
-export default () => {
-  return <Avatar src={pic1} />
-}
-```
+%(${DEMO_PATH}/avatar/demo/Picture.tsx)
 
 ### 自定义内容
 
-```tsx
-<Avatar>
-  <Icon name="question"></Icon>
-</Avatar>
-
-<Avatar>字</Avatar>
-```
+%(${DEMO_PATH}/avatar/demo/Children.tsx)
 
 ### 自定义样式
 
-```tsx
-<Avatar style={{ background: 'orange', color: 'white' }} />
-```
+%(${DEMO_PATH}/avatar/demo/Style.tsx)
 
 ### 额外内容
 
-```tsx
-<View>
-  <Avatar
-    shape="square"
-    extra={<Badge fixed value={5}></Badge>}
-  ></Avatar>
-</View>
-
-<View style={{ marginTop: 20 }}>
-  <Avatar
-    extra={
-      <Badge
-        fixed
-        value={5}
-        style={{ top: '14.6447%', right: '14.6447%' }}
-      ></Badge>
-    }
-  ></Avatar>
-</View>
-```
+%(${DEMO_PATH}/avatar/demo/Extra.tsx)
 
 ### 头像组
 
-```tsx
-<Avatar.Group>
-  <Avatar>头</Avatar>
-  <Avatar>像</Avatar>
-  <Avatar>组</Avatar>
-</Avatar.Group>
-```
+%(${DEMO_PATH}/avatar/demo/Group.tsx)
 
 ### 间距
 
-```tsx
-<Avatar.Group gap={-30}>
-  <Avatar>头</Avatar>
-  <Avatar>像</Avatar>
-  <Avatar>组</Avatar>
-</Avatar.Group>
-```
+%(${DEMO_PATH}/avatar/demo/Gap.tsx)
 
 ### 方向
 
-```tsx
-<Avatar.Group direction="left">
-  <Avatar>头</Avatar>
-  <Avatar>像</Avatar>
-  <Avatar>组</Avatar>
-</Avatar.Group>
-```
+%(${DEMO_PATH}/avatar/demo/Direction.tsx)
 
 ### 最大头像个数
 
-```tsx
-<Avatar.Group maxCount={4}>
-  <Avatar>头</Avatar>
-  <Avatar>像</Avatar>
-  <Avatar>组</Avatar>
-  <Avatar>R</Avatar>
-  <Avatar>E</Avatar>
-  <Avatar>S</Avatar>
-  <Avatar>T</Avatar>
-</Avatar.Group>
-```
+%(${DEMO_PATH}/avatar/demo/MaxCount.tsx)
 
 ## API
 
@@ -153,4 +85,4 @@ export default () => {
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

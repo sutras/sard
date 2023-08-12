@@ -17,7 +17,7 @@ export interface TabPaneProps extends BaseProps {
   innerKey?: number | string
   activeKey?: number | string
   disabled?: boolean
-  _onMounted?: (id: string) => void
+  onMounted?: (id: string) => void
 }
 
 export type TabsPane = React.ForwardRefExoticComponent<
@@ -33,7 +33,7 @@ export const TabsPane = forwardRef<Component, TabPaneProps>((props, ref) => {
     labelClass,
     innerKey,
     activeKey,
-    _onMounted,
+    onMounted,
     ...restProps
   } = props
 
@@ -44,7 +44,7 @@ export const TabsPane = forwardRef<Component, TabPaneProps>((props, ref) => {
   const selectorId = useSelectorId()
 
   useEffect(() => {
-    _onMounted(selectorId)
+    onMounted(selectorId)
   }, [])
 
   const active = innerKey === activeKey

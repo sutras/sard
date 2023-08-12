@@ -1,0 +1,50 @@
+@import '../style/base.scss';
+
+// #variables
+:root,
+page {
+  --sar-space-gap-small: 8px;
+  --sar-space-gap-medium: 16px;
+  --sar-space-gap-large: 24px;
+}
+// #endvariables
+
+@include bem(space) {
+  @include b() {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    @include m(vertical) {
+      flex-direction: column;
+    }
+
+    @include m(wrap) {
+      flex-wrap: wrap;
+    }
+
+    @include m(start) {
+      align-items: flex-start;
+    }
+
+    @include m(center) {
+      align-items: center;
+    }
+
+    @include m(end) {
+      align-items: flex-end;
+    }
+
+    @include m(small) {
+      gap: var(--sar-space-gap-small);
+    }
+
+    @include m(medium) {
+      gap: var(--sar-space-gap-medium);
+    }
+
+    @include m(large) {
+      gap: var(--sar-space-gap-large);
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { Badge, BadgeProps } from '../badge'
 import { BaseProps } from '../base'
 import { ITouchEvent, View } from '@tarojs/components'
 import { useBem } from '../use'
+import { isFunction } from '../utils'
 
 export interface TabbarItemProps extends BaseProps {
   activeKey?: number | string
@@ -50,7 +51,7 @@ export const TabbarItem = memo((props: TabbarItemProps) => {
       onClick={handleClick}
     >
       <View className={bem.e('icon')}>
-        {typeof icon === 'function' ? icon(active) : <Icon {...icon}></Icon>}
+        {isFunction(icon) ? icon(active) : <Icon {...icon}></Icon>}
         {badge && <Badge {...badge} fixed></Badge>}
       </View>
       <View className={bem.e('text')}>{children}</View>

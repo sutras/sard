@@ -3,17 +3,21 @@
 // #variables
 :root,
 page {
-  --sar-tag-border-radius: var(--sar-rounded-sm);
   --sar-tag-line-height: var(--sar-leading-none);
   --sar-tag-color: inherit;
   --sar-tag-bg: var(--sar-secondary-bg);
 
   --sar-tag-small-padding: 1px 3px;
   --sar-tag-small-font-size: var(--sar-text-sm);
+  --sar-tag-small-border-radius: var(--sar-rounded-xs);
+
   --sar-tag-medium-padding: 3px 5px;
   --sar-tag-medium-font-size: var(--sar-text-sm);
+  --sar-tag-medium-border-radius: var(--sar-rounded-sm);
+
   --sar-tag-large-padding: 4px 8px;
   --sar-tag-large-font-size: var(--sar-text-base);
+  --sar-tag-large-border-radius: var(--sar-rounded-sm);
 
   --sar-tag-close-margin-left: 3px;
 }
@@ -25,7 +29,6 @@ page {
     justify-content: center;
     align-items: center;
     line-height: var(--sar-tag-line-height);
-    border-radius: var(--sar-tag-border-radius);
     border: 1px solid transparent;
   }
 
@@ -64,16 +67,19 @@ page {
   @include m(small) {
     padding: var(--sar-tag-small-padding);
     font-size: var(--sar-tag-small-font-size);
+    border-radius: var(--sar-tag-small-border-radius);
   }
 
   @include m(medium) {
     padding: var(--sar-tag-medium-padding);
     font-size: var(--sar-tag-medium-font-size);
+    border-radius: var(--sar-tag-medium-border-radius);
   }
 
   @include m(large) {
     padding: var(--sar-tag-large-padding);
     font-size: var(--sar-tag-large-font-size);
+    border-radius: var(--sar-tag-large-border-radius);
   }
 
   // 可关闭的

@@ -1,33 +1,33 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { Button, Empty } from 'sard-taro'
 
-import './index.scss'
-import empty from '@/static/empty.svg'
+import Basic from './demo/Basic'
+import Description from './demo/Description'
+import Size from './demo/Size'
+import Picture from './demo/Picture'
+import Extra from './demo/Extra'
 
 export default () => {
   return (
     <Page className="page-template">
       <Demo title="基础使用">
-        <Empty />
+        <Basic />
       </Demo>
 
       <Demo title="自定义描述信息">
-        <Empty description="自定义描述内容" />
+        <Description />
       </Demo>
 
       <Demo title="自定义图标大小">
-        <Empty iconProps={{ size: 32 }} />
+        <Size />
       </Demo>
 
       <Demo title="图片类型图标">
-        <Empty iconProps={{ name: empty }} />
+        <Picture />
       </Demo>
 
       <Demo title="额外内容">
-        <Empty>
-          <Button>重新请求</Button>
-        </Empty>
+        <Extra />
       </Demo>
     </Page>
   )

@@ -14,86 +14,29 @@ import { DatetimePicker } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<DatetimePicker />
-```
+%(${DEMO_PATH}/datetime-picker/demo/Basic.tsx)
 
 ### 受控
 
-```tsx
-const [value, setValue] = useState(new Date())
-```
-
-```tsx
-<DatetimePicker value={value} onChange={setValue} type="yMd" />
-```
+%(${DEMO_PATH}/datetime-picker/demo/Controllable.tsx)
 
 ### 类型
 
 可以使用 'yMdhms'（年月日时分秒）进行任意组合。
 
-```tsx
-<DatetimePicker type="yMd" />
-<DatetimePicker type="hms" />
-<DatetimePicker type="dhm" />
-```
+%(${DEMO_PATH}/datetime-picker/demo/Type.tsx)
 
 ### 最大最小值
 
-```tsx
-<DatetimePicker
-  type="yMd"
-  min={new Date(2021, 4, 13)}
-  max={new Date(2023, 6, 8)}
-/>
-
-<DatetimePicker
-  type="hms"
-  min={new Date(0, 0, 1, 9, 0, 0)}
-  max={new Date(0, 0, 1, 18, 30, 0)}
-/>
-
-<DatetimePicker
-  type="dhm"
-  min={new Date(0, 0, 1, 9, 45)}
-  max={new Date(0, 0, 6, 12, 12)}
-/>
-```
+%(${DEMO_PATH}/datetime-picker/demo/MinMax.tsx)
 
 ### 过滤器
 
-```tsx
-const filter = (letter: DatetimeLetter, value: number) => {
-  if (letter === 'm') {
-    return value % 15 === 0
-  }
-  return true
-}
-```
-
-```tsx
-<DatetimePicker type="hm" filter={filter} />
-```
+%(${DEMO_PATH}/datetime-picker/demo/Filter.tsx)
 
 ### 格式化
 
-```tsx
-const formatter = (letter: DatetimeLetter, option: DatetimeColumnOption) => {
-  if (letter === 'y') {
-    return option.zerofill + '年'
-  }
-  if (letter === 'M') {
-    return option.zerofill + '月'
-  }
-  if (letter === 'd') {
-    return `${option.zerofill}日`
-  }
-}
-```
-
-```tsx
-<DatetimePicker type="yMd" formatter={formatter} />
-```
+%(${DEMO_PATH}/datetime-picker/demo/Formatter.tsx)
 
 ## API
 
@@ -130,4 +73,4 @@ type DatetimeLetter = 'y' | 'M' | 'd' | 'h' | 'm' | 's'
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

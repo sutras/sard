@@ -11,7 +11,7 @@ import classNames from 'classnames'
 import { useBem, useControllableValue } from '../use'
 import { Icon } from '../icon'
 import { BaseProps } from '../base'
-import { isBoolean, isString } from '../utils'
+import { isBoolean, isFunction, isNullish, isString } from '../utils'
 
 interface InputBaseProps extends BaseProps {
   value?: string
@@ -56,7 +56,7 @@ type InputRef = HTMLInputElement | HTMLTextAreaElement
 
 export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const {
-    style,
+    style: { height, minHeight, maxHeight, ...restStyle } = {},
     className,
     value,
     defaultValue,
@@ -130,7 +130,10 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
   const controlProps = {
     ...restProps,
-    className: bem.e('control'),
+    className: classNames(
+      bem.e('control'),
+      bem.em('control', 'is-textarea', type === 'textarea'),
+    ),
     autoComplete: 'off',
     value: String(innerValue),
     placeholder,
@@ -145,8 +148,9 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     onClick,
     cursorSpacing,
     style: {
-      maxHeight: style?.maxHeight,
-      minHeight: style?.minHeight,
+      height,
+      minHeight,
+      maxHeight,
     },
   }
 
@@ -164,7 +168,7 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   }
 
   const inputRefCb = (el) => {
-    if (typeof ref === 'function') {
+    if (isFunction(ref)) {
       ref(el)
     } else if (ref) {
       ref.current = el
@@ -182,7 +186,10 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
   return (
     <View
-      style={{ ...style, minHeight: null, maxHeight: null }}
+      style={{
+        ...restStyle,
+        minHeight: isNullish(minHeight) ? '' : 'initial',
+      }}
       className={classNames(
         bem.b(),
         bem.m('inlaid', inlaid),

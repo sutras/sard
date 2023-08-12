@@ -1,158 +1,52 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { Avatar, Mesh } from 'sard-taro'
-
-import './index.scss'
+import Basic from './demo/Basic'
+import Border from './demo/Border'
+import Columns from './demo/Columns'
+import Square from './demo/Square'
+import Gap from './demo/Gap'
+import Horizontal from './demo/Horizontal'
+import Reverse from './demo/Reverse'
+import Clickable from './demo/Clickable'
+import Custom from './demo/Custom'
 
 export default () => {
   return (
     <Page className="page-mesh">
-      <Demo title="基础使用" full>
-        <Mesh>
-          {Array(8)
-            .fill(0)
-            .map((_, index) => (
-              <Mesh.Item
-                key={index}
-                text="文字"
-                iconProps={{ name: 'image' }}
-              ></Mesh.Item>
-            ))}
-        </Mesh>
+      <Demo title="基础使用">
+        <Basic />
       </Demo>
 
-      <Demo title="隐藏边框" full>
-        <Mesh border={false}>
-          {Array(8)
-            .fill(0)
-            .map((_, index) => (
-              <Mesh.Item
-                key={index}
-                text="文字"
-                iconProps={{ name: 'image' }}
-              ></Mesh.Item>
-            ))}
-        </Mesh>
+      <Demo title="隐藏边框">
+        <Border />
       </Demo>
 
-      <Demo title="自定义列数" full>
-        <Mesh columns={3}>
-          {Array(9)
-            .fill(0)
-            .map((_, index) => (
-              <Mesh.Item
-                key={index}
-                text="文字"
-                iconProps={{ name: 'image' }}
-              ></Mesh.Item>
-            ))}
-        </Mesh>
+      <Demo title="自定义列数">
+        <Columns />
       </Demo>
 
-      <Demo title="正方形格子" full>
-        <Mesh columns={3} square>
-          {Array(6)
-            .fill(0)
-            .map((_, index) => (
-              <Mesh.Item
-                key={index}
-                text="文字"
-                iconProps={{ name: 'image' }}
-              ></Mesh.Item>
-            ))}
-        </Mesh>
+      <Demo title="正方形格子">
+        <Square />
       </Demo>
 
       <Demo title="格子间距">
-        <Mesh columns={4} gap="10px">
-          {Array(8)
-            .fill(0)
-            .map((_, index) => (
-              <Mesh.Item
-                key={index}
-                text="文字"
-                iconProps={{ name: 'image' }}
-              ></Mesh.Item>
-            ))}
-        </Mesh>
-
-        <Mesh columns={3} square gap="10px" style={{ marginTop: 20 }}>
-          {Array(6)
-            .fill(0)
-            .map((_, index) => (
-              <Mesh.Item
-                key={index}
-                text="文字"
-                iconProps={{ name: 'image' }}
-              ></Mesh.Item>
-            ))}
-        </Mesh>
+        <Gap />
       </Demo>
 
-      <Demo title="内容横排" full>
-        <Mesh direction="horizontal">
-          {Array(8)
-            .fill(0)
-            .map((_, index) => (
-              <Mesh.Item
-                key={index}
-                text="文字"
-                iconProps={{ name: 'image' }}
-              ></Mesh.Item>
-            ))}
-        </Mesh>
+      <Demo title="内容横排">
+        <Horizontal />
       </Demo>
 
-      <Demo title="内容翻转" full>
-        <Mesh direction="horizontal" reverse>
-          {Array(8)
-            .fill(0)
-            .map((_, index) => (
-              <Mesh.Item
-                key={index}
-                text="文字"
-                iconProps={{ name: 'image' }}
-              ></Mesh.Item>
-            ))}
-        </Mesh>
-
-        <Mesh direction="vertical" reverse>
-          {Array(8)
-            .fill(0)
-            .map((_, index) => (
-              <Mesh.Item
-                key={index}
-                text="文字"
-                iconProps={{ name: 'image' }}
-              ></Mesh.Item>
-            ))}
-        </Mesh>
+      <Demo title="内容翻转">
+        <Reverse />
       </Demo>
 
-      <Demo title="可点击的" full>
-        <Mesh clickable>
-          {Array(8)
-            .fill(0)
-            .map((_, index) => (
-              <Mesh.Item
-                key={index}
-                text="文字"
-                iconProps={{ name: 'image' }}
-              ></Mesh.Item>
-            ))}
-        </Mesh>
+      <Demo title="可点击的">
+        <Clickable />
       </Demo>
 
-      <Demo title="自定义内容" full>
-        <Mesh>
-          {Array(8)
-            .fill(0)
-            .map((_, index) => (
-              <Mesh.Item key={index}>
-                <Avatar>{index}</Avatar>
-              </Mesh.Item>
-            ))}
-        </Mesh>
+      <Demo title="自定义内容">
+        <Custom />
       </Demo>
     </Page>
   )

@@ -6,6 +6,7 @@ import { StepsStatus } from './index'
 import { Icon } from '../icon'
 import { BaseProps } from '../base'
 import { useBem } from '../use'
+import { isFunction } from '../utils'
 
 export interface StepsStepProps extends Omit<BaseProps, 'children'> {
   children?: ReactNode | ((status: StepsStatus) => ReactNode)
@@ -113,7 +114,7 @@ export const StepsStep: FC<StepsStepProps> = (props) => {
           style={lineStyle}
         ></View>
         <View className={classNames(bem.e('icon'), bem.em('icon', status))}>
-          {typeof icon === 'function'
+          {isFunction(icon)
             ? icon(status)
             : icon ?? <Icon name={mapStatusIcon[status]}></Icon>}
         </View>
@@ -134,7 +135,7 @@ export const StepsStep: FC<StepsStepProps> = (props) => {
           bem.em('body', 'vertical', vertical),
         )}
       >
-        {typeof children === 'function' ? children(status) : children}
+        {isFunction(children) ? children(status) : children}
       </View>
     </View>
   )

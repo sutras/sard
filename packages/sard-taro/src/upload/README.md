@@ -14,133 +14,39 @@ import { Upload } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Upload />
-```
+%(${DEMO_PATH}/upload/demo/Basic.tsx)
 
 ### 上传视频
 
-```tsx
-<Upload accept="video" />
-```
+%(${DEMO_PATH}/upload/demo/Video.tsx)
 
 ### 限定上传数量
 
-```tsx
-<Upload maxCount={3} />
-```
+%(${DEMO_PATH}/upload/demo/MaxCount.tsx)
 
 ### 多选
 
-```tsx
-<Upload multiple maxCount={6} />
-```
+%(${DEMO_PATH}/upload/demo/Multiple.tsx)
 
 ### 上传前置处理
 
-```tsx
-<Upload
-  beforeRead={(file) => {
-    console.log(file)
-    if (file.path) {
-      Toast.show('这里可以阻止文件选择')
-      return false
-    }
-    return true
-  }}
-/>
-```
+%(${DEMO_PATH}/upload/demo/BeforeRead.tsx)
 
 ### 限定上传大小
 
-```tsx
-<Upload
-  maxSize={12 * 1024}
-  overSize={() => {
-    Toast.show('文件大小不能超过12KB')
-  }}
-/>
-```
+%(${DEMO_PATH}/upload/demo/Size.tsx)
 
 ### 上传状态
 
-```tsx
-import pic1 from '@/static/pic1.jpg'
-import pic2 from '@/static/pic2.jpg'
-import pic3 from '@/static/pic3.jpg'
-
-export default () => {
-  const [list, setList] = useState<UploadFileItem[]>(() => [
-    {
-      url: pic1,
-    },
-    {
-      url: pic2,
-      status: 'uploading',
-      message: '正在上传',
-    },
-    {
-      url: pic3,
-      status: 'failed',
-      message: '上传失败',
-    },
-  ])
-
-  const handleAfterRead = (fileItem: UploadFileItem) => {
-    fileItem.status = 'uploading'
-    fileItem.message = '正在上传'
-    setList((list) => [...list])
-
-    setTimeout(() => {
-      fileItem.status = 'done'
-      setList((list) => [...list])
-    }, 1500)
-  }
-
-  return (
-    <Upload fileList={list} onChange={setList} afterRead={handleAfterRead} />
-  )
-}
-```
+%(${DEMO_PATH}/upload/demo/Status.tsx)
 
 ### 禁用
 
-```tsx
-<Upload
-  fileList={[
-    {
-      url: pic1,
-    },
-  ]}
-  disabled
-/>
-```
-
-### 只读
-
-```tsx
-<Upload
-  fileList={[
-    {
-      url: pic1,
-    },
-  ]}
-  readOnly
-/>
-```
+%(${DEMO_PATH}/upload/demo/DisabledReadOnly.tsx)
 
 ### 自定义选区样式
 
-```tsx
-<Upload
-  select={
-    <>
-      <Icon style={{ fontSize: 20 }} prefix="demo-icon" name="camera"></Icon>
-      <View style={{ fontSize: 12, marginTop: 5 }}>上传图片</View>
-    </>
-  }
-/>
-```
+%(${DEMO_PATH}/upload/demo/CustomSelect.tsx)
 
 ## API
 
@@ -218,4 +124,4 @@ type UploadStatus = 'pending' | 'uploading' | 'failed' | 'done'
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

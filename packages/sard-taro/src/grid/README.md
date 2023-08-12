@@ -14,150 +14,27 @@ import { Row, Col } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Row>
-  <Col>
-    <View className="grid-box">span</View>
-  </Col>
-  <Col>
-    <View className="grid-box">span</View>
-  </Col>
-</Row>
-
-<Row>
-  <Col span={4}>
-    <View className="grid-box">span-4</View>
-  </Col>
-  <Col span={8}>
-    <View className="grid-box">span-8</View>
-  </Col>
-</Row>
-
-<Row>
-  <Col span={3}>
-    <View className="grid-box">span-3</View>
-  </Col>
-  <Col>
-    <View className="grid-box">span</View>
-  </Col>
-  <Col span="auto">
-    <View className="grid-box">auto</View>
-  </Col>
-</Row>
-```
+%(${DEMO_PATH}/grid/demo/Basic.tsx)
 
 ### 列偏移
 
-```tsx
-<Row>
-  <Col>
-    <View className="grid-box">span</View>
-  </Col>
-  <Col offset={3}>
-    <View className="grid-box">offset-3</View>
-  </Col>
-</Row>
-```
+%(${DEMO_PATH}/grid/demo/Offset.tsx)
 
 ### 水平对齐
 
-```tsx
-<Row justify="start">
-  <Col span={3}>
-    <View className="grid-box">span-3</View>
-  </Col>
-  <Col span={3}>
-    <View className="grid-box">span-3</View>
-  </Col>
-</Row>
-
-<Row justify="center">
-  <Col span={3}>
-    <View className="grid-box">span-3</View>
-  </Col>
-  <Col span={3}>
-    <View className="grid-box">span-3</View>
-  </Col>
-</Row>
-
-<Row justify="end">
-  <Col span={3}>
-    <View className="grid-box">span-3</View>
-  </Col>
-  <Col span={3}>
-    <View className="grid-box">span-3</View>
-  </Col>
-</Row>
-```
+%(${DEMO_PATH}/grid/demo/Justify.tsx)
 
 ### 垂直对齐
 
-```tsx
-<Row align="start">
-  <Col>
-    <View className="grid-box">span-3</View>
-  </Col>
-  <Col>
-    <View className="grid-box">span-3</View>
-  </Col>
-</Row>
-
-<Row align="center">
-  <Col>
-    <View className="grid-box">span-3</View>
-  </Col>
-  <Col>
-    <View className="grid-box">span-3</View>
-  </Col>
-</Row>
-
-<Row align="end">
-  <Col>
-    <View className="grid-box">span-3</View>
-  </Col>
-  <Col>
-    <View className="grid-box">span-3</View>
-  </Col>
-</Row>
-```
+%(${DEMO_PATH}/grid/demo/Align.tsx)
 
 ### 列间距
 
-```tsx
-<Row gap={30}>
-  <Col>
-    <View className="grid-box">span-3</View>
-  </Col>
-  <Col>
-    <View className="grid-box">span-3</View>
-  </Col>
-</Row>
-```
+%(${DEMO_PATH}/grid/demo/Gap.tsx)
 
 ### 列顺序
 
-```tsx
-<Row>
-  <Col>
-    <View className="grid-box">col1</View>
-  </Col>
-  <Col order={-1}>
-    <View className="grid-box">col2 order:-1</View>
-  </Col>
-</Row>
-
-<Row>
-  <Col order={2}>
-    <View className="grid-box">col1 order:2</View>
-  </Col>
-  <Col order={1}>
-    <View className="grid-box">col2 order:1</View>
-  </Col>
-  <Col>
-    <View className="grid-box">col3</View>
-  </Col>
-</Row>
-```
+%(${DEMO_PATH}/grid/demo/Order.tsx)
 
 ## API
 
@@ -176,9 +53,3 @@ import { Row, Col } from 'sard-taro'
 | span   | 列元素宽度     | number \| 'auto' \| 'none' | -      |
 | offset | 列元素偏移距离 | number                     | -      |
 | order  | 列元素顺序     | number                     | -      |
-
-## 主题定制
-
-### CSS 变量
-
-%{variables}

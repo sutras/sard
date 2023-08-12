@@ -37,6 +37,7 @@ const config = {
     '@/utils': path.resolve(__dirname, '..', 'src/utils'),
   },
   mini: {
+    baseLevel: 18,
     postcss: {
       pxtransform: {
         enable: false,

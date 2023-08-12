@@ -14,105 +14,23 @@ import { ActionSheet } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-export default () => {
-  const [visible, setVisible] = useState(false)
-
-  const handleSelect = (item: ActionSheetItemProps, index: number) => {
-    console.log(item, index)
-  }
-
-  const itemList = [
-    {
-      title: '动作1',
-    },
-    {
-      title: '动作2',
-    },
-    {
-      title: '动作3',
-    },
-  ]
-
-  return (
-    <Cell.Group card>
-      <Cell linkable title="显示动作面板" onClick={() => setVisible(true)} />
-    </Cell.Group>
-
-    <ActionSheet
-      visible={visible}
-      itemList={itemList}
-      actionClosable
-      onSelect={handleSelect}
-      onClose={setVisible}
-    />
-  )
-}
-```
+%(${DEMO_PATH}/action-sheet/demo/Basic.tsx)
 
 ### 手动声明项目组件
 
-```tsx
-<ActionSheet
-  visible={visible}
-  actionClosable
-  onSelect={handleSelect}
-  onClose={setVisible}
->
-  <ActionSheet.Item title="动作1" />
-  <ActionSheet.Item title="动作2" label="这是一个描述" />
-  <ActionSheet.Item title="动作3" />
-</ActionSheet>
-```
+%(${DEMO_PATH}/action-sheet/demo/Manual.tsx)
 
 ### 取消按钮
 
-```tsx
-<ActionSheet
-  visible={visible}
-  cancel="取消"
-  actionClosable
-  onSelect={handleSelect}
-  onClose={setVisible}
->
-  <ActionSheet.Item title="动作1" />
-  <ActionSheet.Item title="动作2" />
-  <ActionSheet.Item title="动作3" />
-</ActionSheet>
-```
+%(${DEMO_PATH}/action-sheet/demo/Cancel.tsx)
 
 ### 状态
 
-```tsx
-<ActionSheet
-  visible={visible}
-  cancel="取消"
-  actionClosable
-  onSelect={handleSelect}
-  onClose={setVisible}
->
-  <ActionSheet.Item title="动作1" color="red" />
-  <ActionSheet.Item title="动作2" disabled />
-  <ActionSheet.Item title="动作3" loading />
-</ActionSheet>
-```
+%(${DEMO_PATH}/action-sheet/demo/Status.tsx)
 
 ### 标题&描述
 
-```tsx
-<ActionSheet
-  title="这是标题"
-  description="这是描述"
-  visible={visible}
-  actionClosable
-  onSelect={handleSelect}
-  onClose={setVisible}
->
-  <ActionSheet.Item title="动作1" />
-  <ActionSheet.Item title="动作2" />
-  <ActionSheet.Item title="动作3" />
-</ActionSheet>
-```
+%(${DEMO_PATH}/action-sheet/demo/TitleDesc.tsx)
 
 ## API
 
@@ -147,4 +65,4 @@ export default () => {
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

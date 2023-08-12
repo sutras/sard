@@ -14,123 +14,31 @@ import { Dropdown } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-export default () => {
-  const options1 = [
-    {
-      label: '距离优先',
-      value: '1',
-    },
-    {
-      label: '速度优先',
-      value: '2',
-    },
-    {
-      label: '评分优先',
-      value: '3',
-    },
-  ]
-  const options2 = [
-    {
-      label: '30分钟内',
-      value: '1',
-    },
-    {
-      label: '40分钟内',
-      value: '2',
-    },
-    {
-      label: '50分钟内',
-      value: '3',
-    },
-  ]
-
-  return (
-    <Dropdown>
-      <Dropdown.Item options={options1} defaultValue="1"></Dropdown.Item>
-      <Dropdown.Item options={options2} defaultValue="2"></Dropdown.Item>
-    </Dropdown>
-  )
-}
-```
+%(${DEMO_PATH}/dropdown/demo/Basic.tsx)
 
 ### 占位符
 
-```tsx
-<Dropdown>
-  <Dropdown.Item options={options1} placeholder="排序"></Dropdown.Item>
-  <Dropdown.Item options={options2} defaultValue="2"></Dropdown.Item>
-</Dropdown>
-```
+%(${DEMO_PATH}/dropdown/demo/Placeholder.tsx)
 
 ### 添加 label
 
-```tsx
-<Dropdown>
-  <Dropdown.Item label="排序" options={options1}></Dropdown.Item>
-  <Dropdown.Item
-    label="速度"
-    options={options2}
-    defaultValue="2"
-  ></Dropdown.Item>
-</Dropdown>
-```
+%(${DEMO_PATH}/dropdown/demo/Label.tsx)
 
 ### 向上展开
 
-```tsx
-<Dropdown direction="up">
-  <Dropdown.Item options={options1} defaultValue="1"></Dropdown.Item>
-  <Dropdown.Item options={options2} defaultValue="2"></Dropdown.Item>
-</Dropdown>
-```
+%(${DEMO_PATH}/dropdown/demo/Direction.tsx)
 
 ### 禁用
 
-```tsx
-<Dropdown disabled>
-  <Dropdown.Item options={options1} defaultValue="1"></Dropdown.Item>
-  <Dropdown.Item options={options2} defaultValue="2"></Dropdown.Item>
-</Dropdown>
-```
+%(${DEMO_PATH}/dropdown/demo/Disabled.tsx)
 
 ### 自定义箭头
 
-```tsx
-<Dropdown
-  arrow={(visible) => {
-    return <Icon name={visible ? 'up' : 'down'}></Icon>
-  }}
->
-  <Dropdown.Item options={options1} defaultValue="1"></Dropdown.Item>
-  <Dropdown.Item options={options2} defaultValue="2"></Dropdown.Item>
-</Dropdown>
-```
+%(${DEMO_PATH}/dropdown/demo/Arrow.tsx)
 
 ### 自定义内容
 
-```tsx
-export default () => {
-  const [visible, setVisible] = useState(false)
-
-  return (
-    <Dropdown>
-      <Dropdown.Item options={options1} defaultValue="1"></Dropdown.Item>
-      <Dropdown.Item title="筛选" visible={visible} onVisible={setVisible}>
-        <Cell.Group inlaid>
-          <Cell title="包邮" value={<Switch></Switch>}></Cell>
-          <Cell title="团购" value={<Switch></Switch>}></Cell>
-          <Cell>
-            <Button block onClick={() => setVisible(false)}>
-              确认
-            </Button>
-          </Cell>
-        </Cell.Group>
-      </Dropdown.Item>
-    </Dropdown>
-  )
-}
-```
+%(${DEMO_PATH}/dropdown/demo/Content.tsx)
 
 ## API
 
@@ -179,4 +87,4 @@ export default () => {
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

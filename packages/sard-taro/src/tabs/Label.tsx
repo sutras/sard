@@ -8,7 +8,7 @@ import classNames from 'classnames'
 import { View } from '@tarojs/components'
 import { BaseProps } from '../base'
 import { useBem, useSelectorId } from '../use'
-import { getRectById } from '../utils'
+import { getRectById, isFunction } from '../utils'
 
 export interface TabLabelProps extends Omit<BaseProps, 'children'> {
   activeStyle?: CSSProperties
@@ -20,15 +20,14 @@ export interface TabLabelProps extends Omit<BaseProps, 'children'> {
   activeKey?: number | string
   onClick?: (innerKey: number | string) => void
   disabled?: boolean
-  showLine?: boolean
   line?: ReactNode
-  lineWidth?: string
   lineStyle?: CSSProperties
   lineClass?: string
-  type?: 'inkbar' | 'card' | 'pill' | 'border'
-  later?: boolean
+  type?: 'line' | 'pill' | 'border'
   autoScroll?: boolean
-  vertical?: boolean
+  direction?: 'horizontal' | 'vertical'
+  index?: number
+  count?: number
 }
 
 export interface TabLabelRef {
@@ -49,15 +48,14 @@ export const TabsLabel = forwardRef<TabLabelRef, TabLabelProps>(
       activeKey,
       onClick,
       disabled,
-      showLine,
       line,
-      lineWidth,
       lineStyle,
       lineClass,
       type,
-      later,
       autoScroll,
-      vertical,
+      direction,
+      index,
+      count,
       ...restProps
     } = props
 
@@ -87,16 +85,25 @@ export const TabsLabel = forwardRef<TabLabelRef, TabLabelProps>(
           bem.e('label'),
           bem.em('label', type),
           bem.em('label', 'active', active),
-          bem.em('label', 'border-active', type === 'border' && active),
+          bem.em('label', `${type}-active`, active),
           bem.em('label', 'disabled', disabled),
-          bem.em('label', 'border-later', type === 'border' && later),
           bem.em('label', 'pill-active', type === 'pill' && active),
           bem.em('label', 'auto', autoScroll),
-          bem.em('label', 'vertical', vertical),
+          bem.em('label', direction),
           bem.em(
             'label',
-            'vertical-border-later',
-            vertical && type === 'border' && later,
+            `${direction}-border-first`,
+            type === 'border' && index === 0,
+          ),
+          bem.em(
+            'label',
+            `${direction}-border-later`,
+            type === 'border' && index > 0,
+          ),
+          bem.em(
+            'label',
+            `${direction}-border-last`,
+            type === 'border' && index === count - 1,
           ),
           {
             [activeClass]: activeClass && active,
@@ -112,36 +119,26 @@ export const TabsLabel = forwardRef<TabLabelRef, TabLabelProps>(
         onClick={handleClick}
         id={selectorId}
       >
-        {showLine &&
+        <View
+          className={classNames(
+            bem.e('label-text'),
+            bem.em('label-text', `${type}-active`, active),
+          )}
+        >
+          {isFunction(children) ? children(active) : children}
+        </View>
+        {type === 'line' &&
           (line ?? (
             <View
               className={classNames(
                 bem.e('label-line'),
-                bem.em('label-line', type),
-                bem.em('label-line', 'vertical', vertical),
-                bem.em(
-                  'label-line',
-                  'vertical-card',
-                  vertical && type === 'card',
-                ),
+                bem.em('label-line', direction),
+                bem.em('label-line', `${direction}-active`, active),
                 lineClass,
               )}
-              style={{
-                width: lineWidth,
-                display: type === 'card' && !active ? 'none' : 'flex',
-                ...lineStyle,
-              }}
+              style={lineStyle}
             ></View>
           ))}
-        <View
-          className={classNames(
-            bem.e('label-text'),
-            bem.em('label-text', 'border-active', type === 'border' && active),
-            bem.em('label-text', 'pill-active', type === 'pill' && active),
-          )}
-        >
-          {typeof children === 'function' ? children(active) : children}
-        </View>
       </View>
     )
   },

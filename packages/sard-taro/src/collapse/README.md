@@ -14,33 +14,7 @@ import { Collapse } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-export default () => {
-  const [visible, setVisible] = useState(true)
-
-  const handleClick = () => {
-    setVisible(!visible)
-  }
-
-  return (
-    <Button onClick={handleClick}>toggle</Button>
-
-    <Collapse visible={visible}>
-      <View
-        style={{ backgroundColor: 'var(--sar-secondary-bg)', padding: 10 }}
-      >
-        <View>collapse</View>
-        <View>collapse</View>
-        <View>collapse</View>
-        <View>collapse</View>
-        <View>collapse</View>
-        <View>collapse</View>
-        <View>collapse</View>
-      </View>
-    </Collapse>
-  )
-}
-```
+%(${DEMO_PATH}/collapse/demo/Basic.tsx)
 
 ## API
 
@@ -61,4 +35,4 @@ export default () => {
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

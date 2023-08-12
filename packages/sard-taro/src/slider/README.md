@@ -14,127 +14,43 @@ import { Slider } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Slider defaultValue={50} />
-```
+%(${DEMO_PATH}/slider/demo/Basic.tsx)
 
 ### 范围选择
 
-```tsx
-<Slider defaultValue={[0, 50]} range />
-```
+%(${DEMO_PATH}/slider/demo/Range.tsx)
 
 ### 受控
 
-```tsx
-export default () => {
-  const [value, setValue] = useState(50)
-
-  return <Slider value={value} onChange={setValue} />
-}
-```
-
-```tsx
-<Slider range value={value} onChange={handleChange} />
-```
+%(${DEMO_PATH}/slider/demo/Controllable.tsx)
 
 ### 最大最小值
 
-```tsx
-<Slider defaultValue={0} min={-50} max={50} />
-
-<Slider range defaultValue={[0, 30]} min={-50} max={50} />
-```
+%(${DEMO_PATH}/slider/demo/MinMax.tsx)
 
 ### 步长
 
-```tsx
-<Slider defaultValue={50} step={10} />
-
-<Slider range defaultValue={[20, 80]} step={12.3} />
-```
+%(${DEMO_PATH}/slider/demo/Step.tsx)
 
 ### 自定义颜色
 
-```tsx
-<Slider
-  defaultValue={50}
-  pieceColor="orange"
-  trackColor="fuchsia"
-  thumbColor="pink"
-/>
-
-<Slider
-  range
-  defaultValue={[20, 80]}
-  pieceColor="orange"
-  trackColor="fuchsia"
-  thumbColor="pink"
-/>
-```
+%(${DEMO_PATH}/slider/demo/Color.tsx)
 
 ### 自定义尺寸
 
-```tsx
-<Slider defaultValue={50} thumbSize="15px" trackSize="5px" />
-<Slider range defaultValue={[20, 80]} thumbSize="15px" trackSize="5px" />
-```
+%(${DEMO_PATH}/slider/demo/Size.tsx)
 
 ### 垂直
 
-```tsx
-<View style={{ height: 200 }}>
-  <Slider defaultValue={50} vertical />
-  <Slider range defaultValue={[20, 80]} vertical />
-</View>
-```
+%(${DEMO_PATH}/slider/demo/Vertical.tsx)
 
-### 禁用
+### 只读和禁用
 
-```tsx
-<Slider defaultValue={50} disabled />
-```
-
-### 只读
-
-```tsx
-<Slider defaultValue={50} readOnly />
-```
+%(${DEMO_PATH}/slider/demo/DisabledReadOnly.tsx)
 
 ### 自定义按钮插槽
 
-```tsx
-const buttonStyle = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '30px',
-  height: '20px',
-  borderRadius: '4px',
-  color: '#fff',
-}
-const startStyle = {
-  ...buttonStyle,
-  backgroundColor: 'orange',
-}
-const endStyle = {
-  ...buttonStyle,
-  backgroundColor: 'fuchsia',
-}
-
-const startButton = (value) => <View style={startStyle}>{value}</View>
-const endButton = (value) => <View style={endStyle}>{value}</View>
-```
-
-```tsx
-<Slider defaultValue={50} thumb={endButton} />
-<Slider
-  range
-  defaultValue={[20, 80]}
-  startThumb={startButton}
-  endThumb={endButton}
-/>
-```
+%(${DEMO_PATH}/slider/demo/Slot.tsx)
 
 ## API
 
@@ -165,4 +81,4 @@ const endButton = (value) => <View style={endStyle}>{value}</View>
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

@@ -1,11 +1,17 @@
+import { AnyType } from '../base'
+
+type PlainObject = Record<string, AnyType>
+
 // 判断是否为纯对象
-export function isPlainObject(target: unknown): target is object {
+export function isPlainObject(target: unknown): target is PlainObject {
   return Object.prototype.toString.call(target) === '[object Object]'
 }
 
 // 判断是否为函数
 // eslint-disable-next-line @typescript-eslint/ban-types
-export function isFunction(target: unknown): target is Function {
+export function isFunction(
+  target: unknown,
+): target is (...args: AnyType[]) => AnyType {
   return typeof target === 'function'
 }
 
@@ -24,12 +30,13 @@ export function isBoolean(target: unknown): target is boolean {
   return typeof target === 'boolean'
 }
 
-type IsNullish<T, U> = T extends null | undefined ? never : U
+// 判断是否为undefined
+export function isUndefined(target: unknown): target is number {
+  return target === undefined
+}
 
 // 判断是否为null或者undefined
-export function isNullish(
-  target: unknown,
-): target is IsNullish<typeof target, null | undefined> {
+export function isNullish(target: unknown): target is null | undefined {
   return target === null || target === undefined
 }
 
@@ -46,7 +53,7 @@ export function isVisibleEmpty(target: unknown) {
 // 判断一个值是否为空
 export function isEmptyValue(value: unknown, whitespace = true) {
   return (
-    isNullish(null) ||
+    isNullish(value) ||
     value === '' ||
     (isString(value) && !whitespace && value.trim() === '') ||
     (Array.isArray(value) && value.length === 0)

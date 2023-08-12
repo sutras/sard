@@ -14,94 +14,27 @@ import { Navbar } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Navbar title="标题" />
-```
+%(${DEMO_PATH}/navbar/demo/Basic.tsx)
 
 ### 导航项
 
 可以在 `left/right` 插槽中放置导航项。
 
-```tsx
-<Navbar
-  title="标题"
-  left={
-    <Navbar.Item onClick={() => console.log('返回')}>
-      <Icon name="left" size={16}></Icon>
-      <View>返回</View>
-    </Navbar.Item>
-  }
-  right={
-    <Navbar.Item onClick={() => console.log('查看信息')}>
-      <Icon name="list-task" size={20}></Icon>
-    </Navbar.Item>
-  }
-/>
-```
+%(${DEMO_PATH}/navbar/demo/Item.tsx)
 
 ### 流动导航
 
 默认标题居中， `left/right` 绝对定位于左右两侧；可以使用 `flow` 使其变为流动布局。
 
-```tsx
-<Navbar
-  flow
-  left={
-    <Navbar.Item>
-      <Icon prefix="demo-icon" name="list-task" size={18}></Icon>
-    </Navbar.Item>
-  }
-  title={<View style={{ textAlign: 'left' }}>发现</View>}
-  right={
-    <>
-      <Navbar.Item>
-        <Icon prefix="demo-icon" name="share" size={16}></Icon>
-      </Navbar.Item>
-      <Navbar.Item>
-        <Icon prefix="demo-icon" name="star" size={18}></Icon>
-      </Navbar.Item>
-      <Navbar.Item>
-        <Icon prefix="demo-icon" name="heart" size={16}></Icon>
-      </Navbar.Item>
-    </>
-  }
-></Navbar>
-```
+%(${DEMO_PATH}/navbar/demo/Flow.tsx)
 
 ### 自定义 content
 
-```tsx
-<Navbar
-  flow
-  left={
-    <Navbar.Item>
-      <View style={{ marginRight: 2 }}>城市</View>
-      <Icon name="down" size={16}></Icon>
-    </Navbar.Item>
-  }
-  right={<Navbar.Item>搜索</Navbar.Item>}
->
-  <Input placeholder="请输入关键词" />
-</Navbar>
-```
+%(${DEMO_PATH}/navbar/demo/Content.tsx)
 
 ### 固定在顶部
 
-```tsx
-export default () => {
-  const [fixed, setFixed] = useState(false)
-
-  return (
-    <>
-      <Checkbox onChange={setFixed} style={{ margin: 20 }}>
-        固定定位
-      </Checkbox>
-
-      <Navbar title="顶部的标题" fixed={fixed} zIndex="1000" />
-    </>
-  )
-}
-```
+%(${DEMO_PATH}/navbar/demo/Fixed.tsx)
 
 ## API
 
@@ -127,4 +60,4 @@ export default () => {
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

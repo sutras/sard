@@ -11,10 +11,8 @@ import { useBem } from '../use'
 
 export interface Mesh extends BaseProps, MeshCommonProps {
   columns?: number
-  border?: boolean
-  center?: boolean
-  direction?: 'horizontal' | 'vertical'
-  square?: boolean
+  outline?: boolean
+  outlineVertical?: boolean
 }
 
 export interface MeshFC extends FC<Mesh> {
@@ -27,11 +25,13 @@ export const Mesh: MeshFC = (props) => {
     className,
     style,
     columns = 4,
+    outline = false,
+    outlineVertical = false,
 
     gap,
     square,
-    border,
-    center,
+    border = true,
+    center = true,
     clickable,
     direction,
     reverse,
@@ -47,10 +47,20 @@ export const Mesh: MeshFC = (props) => {
     }
   }, [gap])
 
+  const canShowOutline = border && (!gutter || gutter[0] <= 0)
+
   return (
     <View
       {...restProps}
-      className={classNames(bem.b(), className)}
+      className={classNames(
+        bem.b(),
+        bem.m('outline', canShowOutline && outline),
+        bem.m(
+          'outline-vertical',
+          canShowOutline && outlineVertical && !outline,
+        ),
+        className,
+      )}
       style={{
         ...(gap
           ? {

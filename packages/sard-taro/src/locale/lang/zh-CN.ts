@@ -28,7 +28,7 @@ export default {
   form: {
     defaultValidateMessages: {
       default: '字段验证错误${label}',
-      required: '请输入${label}',
+      required: '${label}是必需的',
       enum: '${label}必须是其中一个[${enum}]',
       whitespace: '${label}不能为空字符',
       date: {

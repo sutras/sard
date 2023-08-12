@@ -6,6 +6,7 @@ import Icon from '../icon'
 import useTranslate from '../locale/useTranslate'
 import { useBem, useControllableValue } from '../use'
 import { AnyType, BaseProps } from '../base'
+import { isFunction } from '../utils'
 
 export interface CascaderFieldNames {
   label?: string
@@ -282,11 +283,9 @@ export const Cascader: CascaderFC = (props) => {
 
     return (
       <Tabs.Pane label={tabLabel} key={tabIndex}>
-        {typeof optionTop === 'function' ? optionTop(tabIndex) : optionTop}
+        {isFunction(optionTop) ? optionTop(tabIndex) : optionTop}
         {renderOptions(options, selected, tabIndex)}
-        {typeof optionBottom === 'function'
-          ? optionBottom(tabIndex)
-          : optionBottom}
+        {isFunction(optionBottom) ? optionBottom(tabIndex) : optionBottom}
       </Tabs.Pane>
     )
   }

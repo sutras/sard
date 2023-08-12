@@ -1,8 +1,5 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import {} from 'sard-taro'
-
-import './index.scss'
 
 export default () => {
   return (

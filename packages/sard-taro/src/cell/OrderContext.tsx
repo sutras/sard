@@ -5,4 +5,7 @@ interface OrderContextValue {
   count: number
 }
 
-export const OrderContext = createContext<OrderContextValue>(null)
+export const OrderContext = createContext<OrderContextValue>({
+  index: 0,
+  count: 0,
+})

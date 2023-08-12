@@ -14,36 +14,7 @@ import { Dialog } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-export default () => {
-  const [visible, setVisible] = useState(false)
-  const [visible2, setVisible2] = useState(false)
-
-  return (
-    <>
-      <Cell.Group card>
-        <Cell linkable title="显示提示框" onClick={() => setVisible(true)} />
-        <Cell linkable title="显示确认框" onClick={() => setVisible2(true)} />
-      </Cell.Group>
-
-      <Dialog
-        visible={visible}
-        title="提示"
-        message="此功能暂时无法使用"
-        onVisible={setVisible}
-      ></Dialog>
-
-      <Dialog
-        visible={visible2}
-        title="提示"
-        message="此功能暂时无法使用"
-        onVisible={setVisible2}
-        showCancel
-      ></Dialog>
-    </>
-  )
-}
-```
+%(${DEMO_PATH}/dialog/demo/Basic.tsx)
 
 ### 命令式
 
@@ -55,103 +26,23 @@ export default () => {
 
 然后就可以调用`Dialog`下的方法进行展示了。（这些方法可以传递可选的和对应的代理组件一样的`id`，这样可以同时展示多个。）
 
-```tsx
-Dialog.alert({
-  title: '提示',
-  message: '此功能暂时无法使用',
-})
-
-Dialog.confirm({
-  title: '提示',
-  message: '确定删除？',
-})
-```
+%(${DEMO_PATH}/dialog/demo/Imperative.tsx)
 
 ### 异步关闭
 
 当传递`beforeClose`属性时，会在点击按钮时显示加载状态，可以根据`type`判断点击的按钮类型，在满足条件时调用`done`关闭对话框。
 
-```tsx
-Dialog.confirm({
-  title: '提示',
-  message: '确定删除？',
-  beforeClose: (done, type) => {
-    if (type === 'confirm') {
-      setTimeout(() => {
-        done()
-      }, 1000)
-    } else {
-      done()
-    }
-  },
-})
-```
-
 或者在`beforeClose`里面返回`fulfilled`状态的`Promise`后也可以关闭对话框。
 
-```tsx
-Dialog.confirm({
-  title: '提示',
-  message: '确定删除？',
-  beforeClose: (_, type) => {
-    return new Promise<void>((resolve) => {
-      if (type === 'confirm') {
-        setTimeout(() => {
-          resolve()
-        }, 1000)
-      } else {
-        resolve()
-      }
-    })
-  },
-})
-```
+%(${DEMO_PATH}/dialog/demo/AsyncClose.tsx)
 
 ### 圆角按钮
 
-```tsx
-Dialog.alert({
-  title: '提示',
-  message: '此功能暂时无法使用',
-  buttonType: 'round',
-})
-
-Dialog.confirm({
-  title: '提示',
-  message: '确定删除？',
-  buttonType: 'round',
-})
-```
+%(${DEMO_PATH}/dialog/demo/Round.tsx)
 
 ### 有头部的
 
-```tsx
-Dialog.alert({
-  title: '提示',
-  message: '此功能暂时无法使用',
-  buttonType: 'round',
-  headed: true,
-})
-
-Dialog.confirm({
-  title: '提示',
-  message: '确定删除？',
-  buttonType: 'round',
-  headed: true,
-})
-
-Dialog.alert({
-  message: '此功能暂时无法使用',
-  buttonType: 'round',
-  headed: true,
-})
-
-Dialog.confirm({
-  message: '确定删除？',
-  buttonType: 'round',
-  headed: true,
-})
-```
+%(${DEMO_PATH}/dialog/demo/Headed.tsx)
 
 ## API
 
@@ -206,4 +97,4 @@ Dialog.confirm({
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

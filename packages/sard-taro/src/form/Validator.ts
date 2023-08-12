@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import {
   chainSelect,
   isBoolean,
@@ -8,6 +7,7 @@ import {
   isString,
 } from '../utils'
 import { AnyType } from '../base'
+import { ReactNode } from 'react'
 
 export interface ValidateMessages {
   default?: string
@@ -74,7 +74,10 @@ export type ValidatorType =
   | 'email'
 
 export interface Rule {
-  validator?: (value: AnyType, rule: Rule) => Promise<void> | boolean | string
+  validator?: (
+    value: AnyType,
+    rule: Rule,
+  ) => Promise<AnyType> | boolean | string
   pattern?: RegExp
   message?: string | (() => string)
   trigger?: string | string[]
@@ -95,12 +98,12 @@ export interface Regulation {
 export interface ValidateOptions {
   validateFirst?: boolean
   value?: AnyType
+  name?: string | number | (string | number)[]
   label?: ReactNode
-  name?: string | number
 }
 
 function getMessage(message: Rule['message']) {
-  return typeof message === 'function' ? message() : message
+  return isFunction(message) ? message() : message
 }
 
 function handleRange(len: number, type: string, rule: Rule) {
@@ -187,7 +190,10 @@ const typeStrategies = {
     return isString(value) && /^#(?:[0-9A-F]{6}|[0-9A-F]{3})$/i.test(value)
   },
   email(value: AnyType) {
-    return isString(value) && /email/.test(value)
+    return (
+      isString(value) &&
+      /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,})$/.test(value)
+    )
   },
 }
 
@@ -232,7 +238,7 @@ export class Validator {
       // empty
       const isEmpty = isEmptyValue(value, rule.whitespace)
 
-      if (isEmpty) {
+      if (isEmpty && !rule.validator) {
         if (rule.required) {
           handleReject(
             getMessage(rule.message) ||
@@ -346,30 +352,24 @@ export class Validator {
   }
 
   replaceSymbol(string: string, rule: Rule, options: ValidateOptions = {}) {
+    const label = isString(options.label) ? options.label : String(options.name)
+
     const matches = {
       '${min}': rule.min,
       '${max}': rule.max,
       '${len}': rule.len,
       '${enum}': rule.enum,
-      '${label}': options.label,
-      '${name}': options.name,
+      '${label}': label,
       '${value}': options.value,
       '${type}': rule.type,
       '${pattern}': rule.pattern?.toString(),
     }
 
-    const regexp = /\$\{(?:min|max|len|enum|label|name|value|type|pattern)\}/g
-
-    return string.replace(regexp, (m) => {
+    const regexp = /\$\{(?:min|max|len|enum|label|value|type|pattern)\}/g
+    return String(string).replace(regexp, (m) => {
       return matches[m] ?? ''
     })
   }
 }
 
 export default Validator
-
-// const validator = new Validator({
-//   name: {
-//     required: true,
-//   },
-// })

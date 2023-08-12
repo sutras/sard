@@ -3,7 +3,6 @@
 // #variables
 :root,
 page {
-  --sar-input-min-height: 36px;
   --sar-input-padding-y: 6.5px;
   --sar-input-padding-x: 12px;
   --sar-input-border-radius: var(--sar-rounded);
@@ -14,9 +13,8 @@ page {
 
   --sar-input-control-font-size: var(--sar-text-base);
   --sar-input-control-line-height: 1.5;
-  --sar-input-control-min-height: calc(
-    1em * var(--sar-input-control-line-height)
-  );
+  --sar-input-control-min-height: 21px;
+  --sar-input-control-textarea-min-height: 42px;
 
   --sar-input-placeholder-color: var(--sar-deemphasis-color);
 
@@ -39,7 +37,6 @@ page {
     display: flex;
     align-items: center;
     flex: 1 1 0;
-    min-height: var(--sar-input-min-height);
     padding: var(--sar-input-padding-y) var(--sar-input-padding-x);
     border: 1px solid var(--sar-input-border-color);
     border-radius: var(--sar-input-border-radius);
@@ -48,6 +45,28 @@ page {
     line-height: var(--sar-input-control-line-height);
     transition: var(--sar-input-transition-duration);
     cursor: text;
+
+    @include m(borderless) {
+      border: none;
+    }
+
+    @include m(inlaid) {
+      min-height: auto;
+      padding: 0;
+      border: none;
+    }
+
+    @include m(focused) {
+      border-color: var(--sar-input-focused-border-color);
+    }
+
+    @include m(disabled) {
+      @include disabled;
+    }
+
+    @include m(is-textarea) {
+      position: relative;
+    }
   }
 
   @include e(prepend) {
@@ -103,6 +122,10 @@ page {
     &:active {
       outline: none;
     }
+
+    @include m(is-textarea) {
+      min-height: var(--sar-input-control-textarea-min-height);
+    }
   }
 
   @include e(placeholder) {
@@ -146,27 +169,5 @@ page {
       top: 100%;
       right: 0;
     }
-  }
-
-  @include m(borderless) {
-    border: none;
-  }
-
-  @include m(inlaid) {
-    min-height: auto;
-    padding: 0;
-    border: none;
-  }
-
-  @include m(focused) {
-    border-color: var(--sar-input-focused-border-color);
-  }
-
-  @include m(disabled) {
-    @include disabled;
-  }
-
-  @include m(is-textarea) {
-    position: relative;
   }
 }

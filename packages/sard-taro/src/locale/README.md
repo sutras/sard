@@ -14,62 +14,7 @@
 
 后续的语言修改除了借助 `ConfigProvider` 组件，还可以通过 `LocaleContext` 提供的 `setLang` 函数进行修改。
 
-```tsx
-import {
-  Calendar,
-  Cell,
-  Empty,
-  LocaleContext,
-  Pagination,
-  Radio,
-} from 'sard-taro'
-import zhCN from 'sard-taro/src/locale/lang/zh-CN'
-import enUS from 'sard-taro/src/locale/lang/en-US'
-
-const langMap = {
-  zhCN,
-  enUS,
-}
-```
-
-```tsx
-export default () => {
-  const { setLang } = useContext(LocaleContext)
-
-  const handleChange = (value) => {
-    setLang(langMap[value])
-  }
-
-  return (
-    <Page className="page-locale">
-      <Demo title="基础使用" full>
-        <Cell.Group card>
-          <Cell
-            title="切换中英文"
-            footer={
-              <View>
-                <Radio.Group defaultValue="zhCN" onChange={handleChange}>
-                  <Radio value="zhCN">中文</Radio>
-                  <Radio value="enUS">英文</Radio>
-                </Radio.Group>
-              </View>
-            }
-          ></Cell>
-          <Cell>
-            <Calendar />
-          </Cell>
-          <Cell>
-            <Empty />
-          </Cell>
-          <Cell>
-            <Pagination total={30} type="simple" />
-          </Cell>
-        </Cell.Group>
-      </Demo>
-    </Page>
-  )
-}
-```
+%(${DEMO_PATH}/locale/demo/Dynamic.tsx)
 
 ## API
 

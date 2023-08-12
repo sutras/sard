@@ -1,53 +1,66 @@
 import {
-  FormEvent,
   forwardRef,
   ForwardRefExoticComponent,
   PropsWithoutRef,
   RefAttributes,
   useImperativeHandle,
-  useRef,
   useMemo,
+  useEffect,
 } from 'react'
 import classNames from 'classnames'
+import { Form as TaroForm } from '@tarojs/components'
 
-import { FormItem } from './Item'
+import { FormField } from './Field'
 import { FormList } from './List'
-import { FormInstance, FormStoreCallbacks, HOOK_KEY } from './FormStore'
-import FormContext from './FormContext'
+import { FormMap } from './Map'
+import { FormErrorList } from './ErrorList'
+import { FormStore, FormStoreCallbacks, HOOK_KEY } from './createFormStore'
+import FieldContext from './FieldContext'
 import useForm from './useForm'
+import useWatch from './useWatch'
 import { ValidateMessages } from './Validator'
 import useTranslate from '../locale/useTranslate'
-import { extend } from '../utils'
+import { deepMerge } from '../utils'
 import { AnyType, BaseProps } from '../base'
 import { useBem } from '../use'
+import StoreContext from './store/Context'
+import { useNode } from './useNode'
+import { NodeContext } from './NodeContext'
 
-export * from './Item'
+export * from './Field'
 export * from './List'
+export * from './ErrorList'
+
+export type { FormStore }
 
 export interface FormProps extends FormStoreCallbacks, BaseProps {
   initialValues?: Record<string, AnyType>
-  form?: FormInstance
+  form?: FormStore
   layout?: 'horizontal' | 'vertical'
   labelWidth?: number | string
   labelAlign?: 'left' | 'right'
+  starPosition?: 'left' | 'right'
+  disabled?: boolean
+  readOnly?: boolean
   name?: string
   scrollToFirstError?: boolean
   validateMessages?: ValidateMessages
   validateTrigger?: string | string[]
   validateFirst?: boolean
-  disabled?: boolean
-  readOnly?: boolean
 }
 
-export type FormRef = FormInstance
+export type FormRef = FormStore
 
 export interface FormFC
   extends ForwardRefExoticComponent<
     PropsWithoutRef<FormProps> & RefAttributes<FormRef>
   > {
-  Item: typeof FormItem
+  Field: typeof FormField
+  Map: typeof FormMap
   List: typeof FormList
+  ErrorList: typeof FormErrorList
   useForm: typeof useForm
+  useWatch: typeof useWatch
 }
 
 export const Form: FormFC = forwardRef<FormRef, FormProps>((props, ref) => {
@@ -61,125 +74,123 @@ export const Form: FormFC = forwardRef<FormRef, FormProps>((props, ref) => {
     form,
     layout = 'horizontal',
     labelWidth,
-    labelAlign,
+    labelAlign = 'left',
+    starPosition = 'left',
+    disabled = false,
+    readOnly = false,
     name,
     scrollToFirstError,
     validateMessages,
     validateTrigger,
     validateFirst = false,
-    disabled = false,
-    readOnly = false,
     ...restProps
   } = props
 
   const [bem] = useBem('form')
 
-  void name, validateTrigger, validateFirst
+  void validateTrigger, validateFirst
 
-  const [formInstance] = useForm(form)
+  const [formStore] = useForm(form)
 
-  const { scrollTo } = formInstance
-  const { setInitialValues, setCallbacks, setValidateMessages } =
-    formInstance.getInternalHooks(HOOK_KEY)
+  const { scrollToField } = formStore
+  const {
+    store,
+    relateFormNode,
+    setInitialValues,
+    setCallbacks,
+    setValidateMessages,
+  } = formStore.getInternalHooks(HOOK_KEY)
+
+  const [node] = useNode({
+    store,
+    formStore,
+    type: 'form',
+    name,
+  })
+
+  relateFormNode(node)
 
   setCallbacks({
     onSuccess,
     onFail: (errors) => {
       if (scrollToFirstError) {
-        scrollTo(errors[0].name)
+        scrollToField(errors.errorFields[0].name)
       }
       onFail?.(errors)
     },
     onReset,
   })
 
-  const [, s] = useTranslate('form.defaultValidateMessages')
+  const [, select] = useTranslate('form.defaultValidateMessages')
 
   const defaultValidateMessages = useMemo(() => {
-    return extend({}, s())
-  }, [s()])
+    return deepMerge({}, select())
+  }, [select()])
 
   useMemo(() => {
-    setValidateMessages(extend(defaultValidateMessages, validateMessages))
+    setValidateMessages(deepMerge(defaultValidateMessages, validateMessages))
   }, [validateMessages])
 
   // 初始化
-  const initialized = useRef(false)
-  setInitialValues(initialValues, !initialized.current)
-  if (!initialized.current) {
-    initialized.current = true
+  setInitialValues(initialValues, true)
+
+  useEffect(() => {
+    setInitialValues(initialValues, false)
+  }, [])
+
+  const handleSubmit = () => {
+    formStore.submit()
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    event.stopPropagation()
-
-    formInstance.submit()
+  const handleReset = () => {
+    formStore.reset()
   }
 
-  const handleReset = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    event.stopPropagation()
+  useImperativeHandle(ref, () => formStore, [formStore])
 
-    formInstance.reset()
-  }
-
-  useImperativeHandle(ref, () => formInstance)
-
-  const context = useMemo(() => {
+  const fieldContext = useMemo(() => {
     return {
-      formInstance,
+      formStore,
       layout,
       labelWidth,
       labelAlign,
+      starPosition,
       disabled,
       readOnly,
     }
-  }, [formInstance, layout, labelWidth, labelAlign, disabled, readOnly])
+  }, [
+    formStore,
+    layout,
+    labelWidth,
+    labelAlign,
+    starPosition,
+    disabled,
+    readOnly,
+  ])
 
   return (
-    <FormContext.Provider value={context}>
-      <form
-        {...restProps}
-        className={classNames(bem.b(), bem.m('layout', layout), className)}
-        onSubmit={handleSubmit}
-        onReset={handleReset}
-      >
-        {children}
-      </form>
-    </FormContext.Provider>
+    <StoreContext.Provider value={store}>
+      <NodeContext.Provider value={node}>
+        <FieldContext.Provider value={fieldContext}>
+          <TaroForm
+            {...restProps}
+            className={classNames(bem.b(), bem.m('layout', layout), className)}
+            onSubmit={handleSubmit}
+            onReset={handleReset}
+          >
+            {children}
+          </TaroForm>
+        </FieldContext.Provider>
+      </NodeContext.Provider>
+    </StoreContext.Provider>
   )
 }) as FormFC
 
-Form.Item = FormItem
+Form.Field = FormField
+Form.Map = FormMap
 Form.List = FormList
+Form.ErrorList = FormErrorList
 Form.useForm = useForm
+Form.useWatch = useWatch
 
 export default Form
-
-/* 
-
-1. 基础样式、布局
-2. 表单域类型
-3. 表单验证
-4. 重置表单
-5. 表单提交
-6. 填充表单
-7. 滚动到指定表单域
-8. 表单域接口（自定义表单域/注册表单域）
-9. 禁用表单
-10. 表单hook
-11. 表单联动
-12. 表单方法调用
-13. 字段监听
-14. 表单列表（动态增减表单项、动态增减嵌套字段）
-15. 嵌套结构与校验信息
-16. 嵌套多个子元素的表单项
-17. 自定义表单控件
-18. 表单数据存储于上层组件
-19. 多表单联动（Form.Provider）
-20. 自行处理表单数据
-21. 自定义校验
-22. 动态表单校验规则
-
-*/

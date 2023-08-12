@@ -3,48 +3,57 @@
 // #variables
 :root,
 page {
-  --sar-form-item-padding-x: 15px;
-  --sar-form-item-padding-y: 10px;
-  --sar-form-item-border-color: var(--sar-border-color);
-  --sar-form-item-font-size: var(--sar-text-base);
-  --sar-form-item-line-height: var(--sar-leading-relaxed);
+  --sar-form-field-padding-x: 15px;
+  --sar-form-field-padding-y: 10px;
+  --sar-form-field-border-color: var(--sar-border-color);
+  --sar-form-field-font-size: var(--sar-text-base);
+  --sar-form-field-line-height: var(--sar-leading-relaxed);
 
-  --sar-form-item-label-width: 6.2em;
-  --sar-form-item-label-margin-right: 12px;
-  --sar-form-item-label-margin-bottom: 4px;
+  --sar-form-field-label-width: 88px;
+  --sar-form-field-label-margin-right: 12px;
+  --sar-form-field-label-margin-bottom: 4px;
 
-  --sar-form-item-feedback-margin-top: 3px;
-  --sar-form-item-feedback-font-size: var(--sar-text-sm);
-  --sar-form-item-feedback-color: var(--sar-tertiary-color);
-  --sar-form-item-feedback-failed-color: var(--sar-danger);
-  --sar-form-item-feedback-passed-color: var(--sar-tertiary-color);
-  --sar-form-item-feedback-unvalidated-color: var(--sar-tertiary-color);
+  --sar-form-field-star-color: var(--sar-danger);
+  --sar-form-field-star-gap: 4px;
 
-  --sar-form-item-extra-margin-top: 3px;
-  --sar-form-item-extra-font-size: var(--sar-text-sm);
-  --sar-form-item-extra-color: var(--sar-tertiary-color);
+  --sar-form-field-feedback-margin-top: 5px;
+  --sar-form-field-feedback-font-size: var(--sar-text-sm);
+  --sar-form-field-feedback-line-height: var(--sar-leading-tight);
+  --sar-form-field-feedback-color: var(--sar-tertiary-color);
+  --sar-form-field-feedback-failed-color: var(--sar-danger);
+  --sar-form-field-feedback-passed-color: var(--sar-tertiary-color);
+  --sar-form-field-feedback-unvalidated-color: var(--sar-tertiary-color);
+
+  --sar-form-field-extra-margin-top: 3px;
+  --sar-form-field-extra-font-size: var(--sar-text-sm);
+  --sar-form-field-extra-color: var(--sar-tertiary-color);
 }
 // #endvariables
 
-@include bem(form-item) {
+@include bem(form-field) {
   @include b() {
     position: relative;
     display: flex;
     flex-direction: row;
-    padding: var(--sar-form-item-padding-y) var(--sar-form-item-padding-x);
-    font-size: var(--sar-form-item-font-size);
-    line-height: var(--sar-form-item-line-height);
+    padding: var(--sar-form-field-padding-y) var(--sar-form-field-padding-x);
+    font-size: var(--sar-form-field-font-size);
+    line-height: var(--sar-form-field-line-height);
 
-    @include border-bottom(var(--sar-form-item-border-color)) {
-      left: var(--sar-form-item-padding-x);
-      right: var(--sar-form-item-padding-x);
+    @include m(underline) {
+      @include border-bottom(var(--sar-form-field-border-color)) {
+        left: var(--sar-form-field-padding-x);
+        right: var(--sar-form-field-padding-x);
+      }
+    }
+
+    @include m(inlaid) {
+      padding: 0;
     }
   }
 
   @include e(label) {
+    display: flex;
     flex: none;
-    width: var(--sar-form-item-label-width);
-    margin-right: var(--sar-form-item-label-margin-right);
     word-wrap: break-word;
 
     @include m(left) {
@@ -55,38 +64,67 @@ page {
       text-align: right;
     }
 
+    @include m(horizontal) {
+      width: var(--sar-form-field-label-width);
+      margin-right: var(--sar-form-field-label-margin-right);
+    }
+
     @include m(vertical) {
       margin-right: 0;
-      margin-bottom: var(--sar-form-item-label-margin-bottom);
+      margin-bottom: var(--sar-form-field-label-margin-bottom);
     }
   }
 
+  @include e(star) {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    color: var(--sar-form-field-star-color);
+
+    @include m(left) {
+      order: 0;
+      margin-right: var(--sar-form-field-star-gap);
+    }
+    @include m(right) {
+      order: 1;
+      margin-left: var(--sar-form-field-star-gap);
+    }
+  }
+
+  @include e(label-text) {
+    order: 0;
+  }
+
   @include e(content) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     flex: 1;
   }
 
   @include e(feedback) {
-    margin-top: var(--sar-form-item-feedback-margin-top);
-    font-size: var(--sar-form-item-feedback-font-size);
-    color: var(--sar-form-item-feedback-color);
+    margin-top: var(--sar-form-field-feedback-margin-top);
+    font-size: var(--sar-form-field-feedback-font-size);
+    line-height: var(--sar-form-field-feedback-line-height);
+    color: var(--sar-form-field-feedback-color);
 
     @include m(failed) {
-      color: var(--sar-form-item-feedback-failed-color);
+      color: var(--sar-form-field-feedback-failed-color);
     }
 
     @include m(passed) {
-      color: var(--sar-form-item-feedback-passed-color);
+      color: var(--sar-form-field-feedback-passed-color);
     }
 
     @include m(unvalidated) {
-      color: var(--sar-form-item-feedback-unvalidated-color);
+      color: var(--sar-form-field-feedback-unvalidated-color);
     }
   }
 
   @include e(extra) {
-    margin-top: var(--sar-form-item-extra-margin-top);
-    font-size: var(--sar-form-item-extra-font-size);
-    color: var(--sar-form-item-extra-color);
+    margin-top: var(--sar-form-field-extra-margin-top);
+    font-size: var(--sar-form-field-extra-font-size);
+    color: var(--sar-form-field-extra-color);
   }
 
   @include m(vertical) {

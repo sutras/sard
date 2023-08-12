@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { isFunction } from '../utils'
 
 export const ENTERING = 'entering'
 export const ENTERED = 'entered'
@@ -224,7 +225,7 @@ export const Transition: FC<TransitionProps> = (props) => {
     return null
   }
 
-  if (typeof children === 'function') {
+  if (isFunction(children)) {
     return children(status, restProps)
   }
 

@@ -191,7 +191,7 @@ export function spreadEach(
       direction = -direction
     }
 
-    if (typeof callback === 'function') {
+    if (isFunction(callback)) {
       if (callback(array[spreadIndex], spreadIndex, i)) {
         return spreadIndex
       }
@@ -222,11 +222,11 @@ export function deepClone(target: AnyType): AnyType {
 }
 
 /**
- * @description: 深拷贝其他对象到第一个对象
+ * @description: 深度合并其他对象到第一个对象
  * @param {AnyType[]} args
  * @return {AnyType} 第一个对象
  */
-export function extend(...args: AnyType[]) {
+export function deepMerge(...args: AnyType[]) {
   const target = args[0],
     l = args.length
 
@@ -251,19 +251,15 @@ export function extend(...args: AnyType[]) {
         }
 
         // 深复制
-        if (
-          copy &&
-          (isPlainObject(copy) || (copyIsArray = Array.isArray(copy)))
-        ) {
+        if (isPlainObject(copy) || (copyIsArray = Array.isArray(copy))) {
           if (copyIsArray) {
             copyIsArray = false
-            clone = src && Array.isArray(src) ? src : []
+            clone = Array.isArray(src) ? src : []
           } else {
             clone = isPlainObject(src) ? src : {}
           }
 
-          // 只克隆对象，不移动
-          target[name] = extend(clone, copy)
+          target[name] = deepMerge(clone, copy)
 
           // 不添加未定义的值
         } else if (copy !== undefined) {
@@ -274,16 +270,6 @@ export function extend(...args: AnyType[]) {
   }
 
   return target
-}
-
-/**
- * @description: 判断两数组是否相等，浅比较
- * @param {AnyType[]} arr1
- * @param {AnyType[]} arr2
- * @return {boolean}
- */
-export function arrayEqual(arr1: AnyType[], arr2: AnyType[]) {
-  return arr1.length === arr1.length && arr1.every((el, i) => el === arr2[i])
 }
 
 export interface DebounceOptions {
@@ -309,8 +295,7 @@ export function debounce(
   let trailing = true
 
   // Bypass `requestAnimationFrame` by explicitly setting `wait=0`.
-  const useRAF =
-    !wait && wait !== 0 && typeof requestAnimationFrame === 'function'
+  const useRAF = !wait && wait !== 0 && isFunction(requestAnimationFrame)
 
   if (typeof func !== 'function') {
     throw new TypeError('Expected a function')
@@ -702,9 +687,11 @@ export function mergeProps(...args: AnyType[]) {
 
         if (isFunction(src)) {
           if (isFunction(copy)) {
+            const srcRef = src
+            const copyRef = copy
             target[name] = (...args) => {
-              src(...args)
-              copy(...args)
+              srcRef(...args)
+              copyRef(...args)
             }
           }
         } else if (name === 'className') {
@@ -721,14 +708,8 @@ export function mergeProps(...args: AnyType[]) {
   return target
 }
 
-/**
- * @description: 链式获取对象值
- * @param {object} object
- * @param {string} chain
- * @return {*}
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function chainSelect(object: any, chain?: string) {
+// 链式获取对象值（字符串方式）
+export function chainSelect(object, chain?: string) {
   let target = object
 
   if (chain) {
@@ -744,13 +725,14 @@ export function chainSelect(object: any, chain?: string) {
   return target
 }
 
-/**
- * @description: 移动数组中的元素
- * @param array 要移动的数组
- * @param fromIndex 从哪个下标开始
- * @param toIndex 从哪个下标结束
- * @return 移动后的新数组
- */
+// 深度获取对象的值
+export function getObjectValueInDepth(object, keys: (string | number)[]) {
+  return keys.reduce((object, key) => {
+    return object?.[key]
+  }, object)
+}
+
+// 重新排列数组元素的顺序
 export function arrayMove(
   array: AnyType[],
   fromIndex: number,
@@ -766,23 +748,25 @@ export function arrayMove(
     return array
   }
 
-  const fromValue = array[fromIndex]
+  const element = array.splice(fromIndex, 1)[0]
+  array.splice(toIndex, 0, element)
+  return array
+}
 
-  if (fromIndex > toIndex) {
-    return [
-      ...array.slice(0, fromIndex),
-      ...array.slice(fromIndex + 1, toIndex + 1),
-      fromValue,
-      ...array.slice(toIndex + 1),
-    ]
-  } else {
-    return [
-      ...array.slice(0, toIndex),
-      fromValue,
-      ...array.slice(toIndex, fromIndex),
-      ...array.slice(fromIndex + 1),
-    ]
+// 删除数组中指定下标的元素，此函数会修改数组使其保存相同的引用
+export function arrayRemoveAtIndexes(arr: AnyType[], indexes: number[]) {
+  indexes = indexes.sort((a, b) => b - a)
+  for (const index of indexes) {
+    if (index > -1 && index < arr.length) {
+      arr.splice(index, 1)
+    }
   }
+  return arr
+}
+
+// 判断两数组的每个元素是否相等
+export function arrayEqual(arr1: AnyType[], arr2: AnyType[]) {
+  return arr1.length === arr2.length && arr1.every((el, i) => el === arr2[i])
 }
 
 // 将嵌套数据结构转换为多维数组

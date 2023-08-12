@@ -28,7 +28,7 @@ export default {
   form: {
     defaultValidateMessages: {
       default: 'Field validation error for ${label}',
-      required: 'Please enter ${label}',
+      required: '${label} is required',
       enum: '${label} must be one of [${enum}]',
       whitespace: '${label} cannot be a blank character',
       date: {

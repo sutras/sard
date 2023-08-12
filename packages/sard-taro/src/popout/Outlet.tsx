@@ -1,6 +1,7 @@
 import { useContext, FC, useEffect, ReactNode, useMemo } from 'react'
 
 import { PopoutContext, PopoutContexValue } from './PopoutContext'
+import { isFunction } from '../utils'
 
 type PopoutOutletCallbackParams = Pick<
   PopoutContexValue,
@@ -27,7 +28,7 @@ export const PopoutOutlet: FC<PopoutOutletProps> = (props) => {
 
   useEffect(() => {
     popoutContext.setOutlet(
-      typeof children === 'function' ? children(callbackParams) : null,
+      isFunction(children) ? children(callbackParams) : null,
     )
   }, [popoutContext])
 

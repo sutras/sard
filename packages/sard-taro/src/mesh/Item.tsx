@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { CSSProperties, FC, ReactNode } from 'react'
 import { ITouchEvent, View } from '@tarojs/components'
 import classNames from 'classnames'
 import Icon, { IconProps } from '../icon'
@@ -13,21 +13,25 @@ export interface MeshItemProps extends BaseProps, MeshCommonProps {
   onClick?: (event: ITouchEvent) => void
   isRight?: boolean
   isBottom?: boolean
+  wrapperStyle?: CSSProperties
+  wrapperClass?: string
 }
 
 export const MeshItem: FC<MeshItemProps> = (props) => {
   const {
     children,
     className,
+    wrapperStyle,
+    wrapperClass,
     text,
     iconProps,
     isRight,
     isBottom,
 
     gap = 0,
-    border = true,
+    border,
     square,
-    center = true,
+    center,
     clickable,
     direction = 'vertical',
     reverse,
@@ -55,7 +59,9 @@ export const MeshItem: FC<MeshItemProps> = (props) => {
             bem.em('item-wrapper', 'square', square),
             bem.m(direction, !reverse),
             bem.m(`${direction}-reverse`, reverse),
+            wrapperClass,
           )}
+          style={wrapperStyle}
         >
           {children ?? (
             <>

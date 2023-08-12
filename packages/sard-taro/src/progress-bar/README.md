@@ -14,41 +14,23 @@ import { ProgressBar } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<ProgressBar percent={50} />
-```
+%(${DEMO_PATH}/progress-bar/demo/Basic.tsx)
 
 ### 粗细
 
-```tsx
-<ProgressBar percent={50} thickness="20px" />
-```
+%(${DEMO_PATH}/progress-bar/demo/Thickness.tsx)
 
 ### 颜色
 
-```tsx
-<ProgressBar percent={50} trackColor="fuchsia" color="orange" />
-```
+%(${DEMO_PATH}/progress-bar/demo/Color.tsx)
 
 ### 条纹进度条
 
-```tsx
-<ProgressBar
-  percent={50}
-  striped
-  thickness="10px"
-  style={{ marginBottom: 10 }}
-/>
-<ProgressBar percent={50} striped thickness="10px" animated />
-```
+%(${DEMO_PATH}/progress-bar/demo/Striped.tsx)
 
 ### 插槽
 
-```tsx
-<ProgressBar percent={50} thickness="16px">
-  50%
-</ProgressBar>
-```
+%(${DEMO_PATH}/progress-bar/demo/Slot.tsx)
 
 ## API
 
@@ -68,4 +50,4 @@ import { ProgressBar } from 'sard-taro'
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

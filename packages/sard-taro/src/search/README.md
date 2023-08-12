@@ -14,96 +14,35 @@ import { Search } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Search placeholder="请输入关键词" />
-```
+%(${DEMO_PATH}/search/demo/Basic.tsx)
 
 ### 搜索按钮
 
-```tsx
-<Search placeholder="请输入关键词" search="搜索" onSearch={Toast.show} />
-```
+%(${DEMO_PATH}/search/demo/SearchButton.tsx)
 
 ### 取消按钮
 
-```tsx
-<Search
-  placeholder="请输入关键词"
-  cancel="取消"
-  onCancel={() => Toast.show('取消')}
-/>
-```
+%(${DEMO_PATH}/search/demo/CancelButton.tsx)
 
 ### 形状
 
-```tsx
-<Search placeholder="请输入关键词" shape="round" />
-```
+%(${DEMO_PATH}/search/demo/Shape.tsx)
 
 ### 对齐
 
-```tsx
-<Search placeholder="请输入关键词" align="center" />
-```
+%(${DEMO_PATH}/search/demo/Align.tsx)
 
 ### 背景色
 
-```tsx
-<Search
-  placeholder="请输入关键词"
-  background="var(--sar-danger)"
-  inputBackground="#fff"
-  shape="round"
-/>
-```
+%(${DEMO_PATH}/search/demo/Background.tsx)
 
-### 禁用
+### 只读和禁用
 
-```tsx
-<Search placeholder="请输入关键词" disabled />
-```
-
-### 只读
-
-```tsx
-<Search placeholder="请输入关键词" readOnly />
-```
+%(${DEMO_PATH}/search/demo/DisabledReadOnly.tsx)
 
 ### 插槽
 
-```tsx
-<Search
-  placeholder="请输入关键词"
-  shape="round"
-  prepend={
-    <Icon
-      prefix="demo-icon"
-      name="upc-scan"
-      style={{ marginLeft: 5, marginRight: 17 }}
-    />
-  }
-  inputPrepend={
-    <Icon name="caret-down-fill" color="var(--sar-gray-700)" size={14} />
-  }
-  inputAppend={<Icon prefix="demo-icon" name="camera" size={20} />}
-/>
-```
-
-```tsx
-<Search
-  placeholder="请输入关键词"
-  shape="round"
-  prepend={<Icon name="left" size={18} style={{ marginRight: 12 }} />}
-  append={
-    <Icon
-      prefix="demo-icon"
-      name="list-task"
-      size={20}
-      style={{ marginLeft: 10 }}
-    />
-  }
-/>
-```
+%(${DEMO_PATH}/search/demo/Slot.tsx)
 
 ## API
 
@@ -113,4 +52,4 @@ import { Search } from 'sard-taro'
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

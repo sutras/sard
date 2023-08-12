@@ -11,10 +11,11 @@ import { isNullish, pickNullish } from '../utils'
 import { CheckContext, useCheck, useCheckGroup } from './useCheck'
 import { ITouchEvent, View } from '@tarojs/components'
 import useBem from './useBem'
+import { AnyType } from '../base'
 
 type IconType = 'square' | 'circle' | 'record'
 
-type ValueType = number | string | boolean
+type ValueType = AnyType
 
 export interface InternalCheckProps {
   className?: string

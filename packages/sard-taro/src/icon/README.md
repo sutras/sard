@@ -14,33 +14,21 @@ import { Icon } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Icon name="search" />
-```
+%(${DEMO_PATH}/icon/demo/Basic.tsx)
 
 ### 尺寸
 
-```tsx
-<Icon name="search" size="20px" />
-```
+%(${DEMO_PATH}/icon/demo/Size.tsx)
 
 ### 颜色
 
-```tsx
-<Icon name="search" color="orange" />
-```
+%(${DEMO_PATH}/icon/demo/Color.tsx)
 
 ### 图片类型图标
 
 名称里面带有`/`字符会被当作图片处理。
 
-```tsx
-import pic1 from '@/static/pic1.jpg'
-
-export default () => {
-  return <Icon name={pic1} />
-}
-```
+%(${DEMO_PATH}/icon/demo/Picture.tsx)
 
 ### 自定义图标
 
@@ -71,6 +59,8 @@ export default () => {
 
 ### 内置图标
 
+组件库内置了一些内部组件使用到的图标，数量不多，开发项目时通常要引入自定义的图标库。
+
 ## API
 
 ### IconProps
@@ -81,9 +71,3 @@ export default () => {
 | prefix | 类名前缀，会作为独立类名，并拼接上 `name` 形成另一个类名 | string           | 'sari' |
 | size   | 图标大小                                                 | string \| number | -      |
 | color  | 图标颜色                                                 | string           | -      |
-
-## 主题定制
-
-### CSS 变量
-
-%{variables}

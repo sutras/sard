@@ -14,66 +14,23 @@ import { CountDown } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<CountDown time={1000 * 60 * 60 * 2} />
-```
+%(${DEMO_PATH}/count-down/demo/Basic.tsx)
 
 ### 自定义格式
 
-```tsx
-<CountDown time={1000 * 60 * 60 * 2} format="HH 时 mm 分 ss 秒" />
-```
+%(${DEMO_PATH}/count-down/demo/Format.tsx)
 
 ### 毫秒级别的渲染
 
-```tsx
-<CountDown
-  time={1000 * 60 * 60 * 2}
-  format="HH 时 mm 分 ss 秒 SSS 毫秒"
-  interval={93}
-/>
-```
+%(${DEMO_PATH}/count-down/demo/Interval.tsx)
 
 ### 自定义样式
 
-```tsx
-<CountDown time={1000 * 60 * 60 * 2} interval={93}>
-  {(time) => (
-    <View className="time-wrap">
-      <View className="time">{String(time.hours).padStart(2, '0')}</View>
-      <View className="colon">:</View>
-      <View className="time">{String(time.minutes).padStart(2, '0')}</View>
-      <View className="colon">:</View>
-      <View className="time">{String(time.seconds).padStart(2, '0')}</View>
-    </View>
-  )}
-</CountDown>
-```
+%(${DEMO_PATH}/count-down/demo/Style.tsx)
 
 ### 手动控制
 
-```tsx
-import { CountDownRef } from 'sard-taro'
-export default () => {
-  const ref = useRef<CountDownRef>(null)
-  return (
-    <Cell.Group card>
-      <Cell>
-        <CountDown
-          ref={ref}
-          time={1000 * 10}
-          format="ss:SSS"
-          interval={60}
-          autoStart={false}
-        />
-      </Cell>
-      <Cell title="开始" linkable onClick={() => ref.current?.start()}></Cell>
-      <Cell title="暂停" linkable onClick={() => ref.current?.pause()}></Cell>
-      <Cell title="重置" linkable onClick={() => ref.current?.reset()}></Cell>
-    </Cell.Group>
-  )
-}
-```
+%(${DEMO_PATH}/count-down/demo/Control.tsx)
 
 ## API
 
@@ -112,4 +69,4 @@ export default () => {
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

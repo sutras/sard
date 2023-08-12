@@ -14,75 +14,37 @@ import { Checkbox } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Checkbox>复选框</Checkbox>
-```
+%(${DEMO_PATH}/checkbox/demo/Basic.tsx)
 
 ### 受控
 
-```tsx
-const [checked, setChecked] = useState(false)
-```
-
-```tsx
-<Checkbox checked={checked} onChange={setChecked}>
-  {checked ? '已选中' : '未选中'}
-</Checkbox>
-```
+%(${DEMO_PATH}/checkbox/demo/Controllable.tsx)
 
 ### 禁用
 
-```tsx
-<Checkbox disabled checked>复选框</Checkbox>
-<Checkbox disabled>复选框</Checkbox>
-```
+%(${DEMO_PATH}/checkbox/demo/Disabled.tsx)
 
 ### 复选框组
 
 复选框组用于收集选中状态的复选框值。
 
-```tsx
-const [value, setValue] = useState(['apple'])
-```
-
-```tsx
-<Checkbox.Group value={value} onChange={setValue}>
-  <Checkbox value="apple">苹果</Checkbox>
-  <Checkbox value="banana">香蕉</Checkbox>
-</Checkbox.Group>
-```
+%(${DEMO_PATH}/checkbox/demo/Group.tsx)
 
 ### 图标大小
 
-```tsx
-<Checkbox size="24px">复选框</Checkbox>
-```
+%(${DEMO_PATH}/checkbox/demo/Size.tsx)
 
 ### 自定义颜色
 
-```tsx
-<Checkbox checkedColor="orange" defaultChecked>
-  复选框
-</Checkbox>
-```
+%(${DEMO_PATH}/checkbox/demo/Color.tsx)
 
 ### 图标类型
 
-```tsx
-<Checkbox type="circle">复选框</Checkbox>
-```
+%(${DEMO_PATH}/checkbox/demo/Type.tsx)
 
 ### 自定义图标
 
-```tsx
-<Checkbox
-  icon={(checked) => (
-    <Icon prefix="demo-icon" name={checked ? 'heart-fill' : 'heart'} />
-  )}
->
-  复选框
-</Checkbox>
-```
+%(${DEMO_PATH}/checkbox/demo/Icon.tsx)
 
 ## API
 
@@ -120,4 +82,4 @@ const [value, setValue] = useState(['apple'])
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

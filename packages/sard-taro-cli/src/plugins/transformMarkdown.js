@@ -56,30 +56,47 @@ function makeTextToCode(text, lang) {
     .replace(/$/, '\n```')
 }
 
-function getVariables(text) {
-  text = /(?<=#variables)[\s\S]*?(?=\/\/\s*#endvariables)/.exec(text)?.[0] || ''
-  return makeTextToCode(text, 'scss')
+function extractHashContent(text, hash) {
+  const regexp = new RegExp(
+    `(?<=^\\s*//\\s*#${hash}\\s*\n)[\\s\\S]*?(?=^\\s*//\\s*#end${hash}\\s*)`,
+    'm',
+  )
+  return regexp.exec(text)?.[0] || ''
 }
 
-function extractCssVariables(id) {
-  const file = path.resolve(path.dirname(id), 'index.scss')
-
-  if (existsSync(file)) {
-    return getVariables(readFileSync(file, 'utf-8'))
-  } else {
-    return ''
+function replaceDefaultPath(string) {
+  const defaultPaths = {
+    DEMO_PATH: '../../../sard-taro-demo/src/packageA/pages/',
   }
+
+  const regexp = new RegExp(`\\$\\{(${Object.keys(defaultPaths).join('|')})\\}`)
+
+  return String(string).replace(regexp, (m, p1) => {
+    return defaultPaths[p1]
+  })
 }
 
-function readSpecialFile(id, relativePath) {
+function readSpecialFile(id, relativePath, hash) {
+  relativePath = replaceDefaultPath(relativePath)
+
   const file = path.resolve(path.dirname(id), relativePath)
 
   if (existsSync(file)) {
-    const text = readFileSync(file, 'utf-8')
-    return makeTextToCode(text, 'scss')
+    let text = readFileSync(file, 'utf-8')
+    if (hash) {
+      text = extractHashContent(text, hash)
+    }
+    const extname = path.extname(file).replace(/^\./, '')
+    return makeTextToCode(text, extname)
   } else {
     return ''
   }
+}
+
+function replaceSpecialFile(id, code) {
+  return code.replace(/^%\(([^)]+?)(?:#([\w]+))?\)\s*$/gm, (_, path, hash) => {
+    return readSpecialFile(id, path, hash)
+  })
 }
 
 function transform(code, id, md) {
@@ -97,13 +114,7 @@ function transform(code, id, md) {
     return html_block(tokens, idx, options, env, self)
   }
 
-  code = code
-    .replace(/^%\{variables\}/m, () => {
-      return extractCssVariables(id)
-    })
-    .replace(/^%\(([^)]+)\)/m, (_, p1) => {
-      return readSpecialFile(id, p1)
-    })
+  code = replaceSpecialFile(id, code)
 
   let html = md.render(code)
 

@@ -14,45 +14,23 @@ import { Loading } from 'sard-taro'
 
 ### 加载类型
 
-```tsx
-<Loading />
-<Loading type="clock" />
-```
+%(${DEMO_PATH}/loading/demo/Type.tsx)
 
 ### 加载尺寸
 
-```tsx
-<Loading size="24px" />
-<Loading size="24px" type="clock" />
-```
+%(${DEMO_PATH}/loading/demo/Size.tsx)
 
 ### 加载文案
 
-```tsx
-<Loading>加载中...</Loading>
-```
+%(${DEMO_PATH}/loading/demo/Text.tsx)
 
 ### 垂直排布
 
-```tsx
-<Loading vertical>加载中...</Loading>
-```
+%(${DEMO_PATH}/loading/demo/Vertical.tsx)
 
 ### 自定义颜色
 
-```tsx
-<Loading
-  color="var(--sar-primary)"
-  textColor="var(--sar-primary)"
-  text="加载中"
-/>
-<Loading
-  color="var(--sar-primary)"
-  textColor="var(--sar-primary)"
-  text="加载中"
-  type="clock"
-/>
-```
+%(${DEMO_PATH}/loading/demo/Color.tsx)
 
 ## API
 
@@ -74,4 +52,4 @@ import { Loading } from 'sard-taro'
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

@@ -4,6 +4,7 @@ import { ITouchEvent, View } from '@tarojs/components'
 import { Icon } from '../icon'
 import { Collapse } from '../collapse'
 import { useBem } from '../use'
+import { isFunction } from '../utils'
 
 export interface AccordionItemProps {
   className?: string
@@ -60,7 +61,7 @@ export const AccordionItem: FC<AccordionItemProps> = (props) => {
       >
         <View className={bem.e('title')}>{title}</View>
         <View className={bem.e('icon')}>
-          {typeof icon === 'function'
+          {isFunction(icon)
             ? icon(active)
             : icon ?? (
                 <Icon

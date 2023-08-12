@@ -14,75 +14,35 @@ import { Rate } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Rate defaultValue={3} />
-```
+%(${DEMO_PATH}/rate/demo/Basic.tsx)
 
 ### 半星
 
-```tsx
-<Rate defaultValue={2.5} allowHalf />
-```
+%(${DEMO_PATH}/rate/demo/AllowHalf.tsx)
 
 ### 自定义图标
 
-```tsx
-<Rate
-  defaultValue={2.5}
-  allowHalf
-  icon={<Icon prefix="demo-icon" name="heart-fill"></Icon>}
-  voidIcon={<Icon prefix="demo-icon" name="heart"></Icon>}
-/>
-```
-
-```tsx
-<Rate defaultValue={2.5} allowHalf icon="好" voidIcon="好" />
-```
+%(${DEMO_PATH}/rate/demo/CustomIcon.tsx)
 
 ### 自定义颜色
 
-```tsx
-<Rate defaultValue={3} color="fuchsia" voidColor="orange" />
-```
+%(${DEMO_PATH}/rate/demo/Color.tsx)
 
 ### 自定义尺寸和间距
 
-```tsx
-<Rate defaultValue={3} size={30} />
-```
-
-```tsx
-<Rate defaultValue={3} size={30} spacing={20} />
-```
+%(${DEMO_PATH}/rate/demo/Size.tsx)
 
 ### 自定义数量
 
-```tsx
-const [count, setCount] = useState(3)
-```
-
-```tsx
-<Slider min={1} max={9} value={count} onChange={setCount}></Slider>
-<Rate count={count} defaultValue={1.5} allowHalf />
-```
+%(${DEMO_PATH}/rate/demo/Count.tsx)
 
 ### 允许清空
 
-```tsx
-<Rate defaultValue={3} allowClear />
-```
+%(${DEMO_PATH}/rate/demo/AllowClear.tsx)
 
-### 只读
+### 只读和禁用
 
-```tsx
-<Rate defaultValue={3} readOnly />
-```
-
-### 禁用
-
-```tsx
-<Rate defaultValue={3} disabled />
-```
+%(${DEMO_PATH}/rate/demo/DisableReadOnly.tsx)
 
 ## API
 
@@ -109,4 +69,4 @@ const [count, setCount] = useState(3)
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

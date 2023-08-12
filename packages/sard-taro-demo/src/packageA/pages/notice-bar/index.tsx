@@ -1,103 +1,58 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { NoticeBar, Swiper } from 'sard-taro'
 
-import './index.scss'
+import Basic from './demo/Basic'
+import Scrollable from './demo/Scrollable'
+import UnScrollable from './demo/UnScrollable'
+import Wrap from './demo/Wrap'
+import LeftIcon from './demo/LeftIcon'
+import Closable from './demo/Closable'
+import Linkable from './demo/Linkable'
+import RightIcon from './demo/RightIcon'
+import Style from './demo/Style'
+import Vertical from './demo/Vertical'
 
 export default () => {
   return (
     <Page className="page-notice-bar">
       <Demo title="基础使用">
-        <NoticeBar>这是一条公告！</NoticeBar>
-
-        <NoticeBar>
-          这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-        </NoticeBar>
+        <Basic />
       </Demo>
 
       <Demo title="强制滚动">
-        <NoticeBar scrollable>这是一条公告！</NoticeBar>
-
-        <NoticeBar scrollable>
-          这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-        </NoticeBar>
+        <Scrollable />
       </Demo>
 
       <Demo title="强制不滚动">
-        <NoticeBar scrollable={false}>这是一条公告！</NoticeBar>
-
-        <NoticeBar scrollable={false}>
-          这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-        </NoticeBar>
+        <UnScrollable />
       </Demo>
 
       <Demo title="多行展示">
-        <NoticeBar wrap>
-          这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-        </NoticeBar>
+        <Wrap />
       </Demo>
 
       <Demo title="自定义左边图标">
-        <NoticeBar
-          leftIconProps={{ prefix: 'demo-icon', name: 'bell', size: 16 }}
-        >
-          这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-        </NoticeBar>
-
-        <NoticeBar leftIcon="">
-          这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-        </NoticeBar>
-
-        <NoticeBar leftIcon="消息">
-          这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-        </NoticeBar>
+        <LeftIcon />
       </Demo>
 
       <Demo title="可关闭的">
-        <NoticeBar closable onClose={() => console.log('close')}>
-          这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-        </NoticeBar>
+        <Closable />
       </Demo>
 
       <Demo title="可点击的">
-        <NoticeBar linkable onClick={() => console.log('click')}>
-          这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-        </NoticeBar>
+        <Linkable />
       </Demo>
 
       <Demo title="自定义右边图标">
-        <NoticeBar
-          closable
-          onClose={() => console.log('close')}
-          rightIconProps={{ name: 'x-circle-fill' }}
-        >
-          这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-        </NoticeBar>
+        <RightIcon />
       </Demo>
 
       <Demo title="自定义样式">
-        <NoticeBar
-          color="var(--sar-primary)"
-          background="rgba(var(--sar-primary-rgb), 0.1)"
-        >
-          这是一条很长很长很长很长很长很长很长很长很长很长的公告！
-        </NoticeBar>
+        <Style />
       </Demo>
 
       <Demo title="垂直滚动">
-        <NoticeBar scrollable={false}>
-          <Swiper
-            autoplay
-            vertical
-            interval={1500}
-            circular
-            style={{ height: '100%' }}
-          >
-            <Swiper.Item>1. 这是一条公告！</Swiper.Item>
-            <Swiper.Item>2. 这是一条公告！</Swiper.Item>
-            <Swiper.Item>3. 这是一条公告！</Swiper.Item>
-          </Swiper>
-        </NoticeBar>
+        <Vertical />
       </Demo>
     </Page>
   )

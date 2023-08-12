@@ -14,24 +14,7 @@ import { Notify } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-export default () => {
-  const [visible, setVisible] = useState(false)
-
-  return (
-    <Cell.Group card>
-      <Cell linkable title="显示通知" onClick={() => setVisible(true)} />
-      <Cell linkable title="隐藏通知" onClick={() => setVisible(false)} />
-    </Cell.Group>
-
-    <Notify
-      visible={visible}
-      message="这是一条通知"
-      onTimeout={setVisible}
-    />
-  )
-}
-```
+%(${DEMO_PATH}/notify/demo/Basic.tsx)
 
 ### 命令式
 
@@ -43,44 +26,23 @@ export default () => {
 
 然后就可以调用`Notify`下的方法进行展示了。（这些方法可以传递可选的和对应的代理组件一样的`id`，这样可以同时展示多个。）
 
-```tsx
-Notify.show('这是一条通知')
-
-Notify.hide()
-```
+%(${DEMO_PATH}/notify/demo/Imperative.tsx)
 
 ### 类型
 
-```tsx
-Notify.success('这是一条通知')
-Notify.warning('这是一条通知')
-Notify.error('这是一条通知')
-```
+%(${DEMO_PATH}/notify/demo/Type.tsx)
 
 ### 自定义颜色
 
-```tsx
-Notify.show('这是一条通知', {
-  color: 'black',
-  background: 'fuchsia',
-})
-```
+%(${DEMO_PATH}/notify/demo/Color.tsx)
 
 ### 自定义时长
 
-```tsx
-Notify.show('这是一条通知', {
-  duration: 0,
-})
-```
+%(${DEMO_PATH}/notify/demo/Duration.tsx)
 
 ### 自定义位置
 
-```tsx
-Notify.show('这是一条通知', {
-  placement: 'bottom',
-})
-```
+%(${DEMO_PATH}/notify/demo/Placement.tsx)
 
 ## API
 
@@ -138,4 +100,4 @@ export interface NotifyShow {
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

@@ -47,20 +47,12 @@ export interface TabsProps extends Omit<BaseProps, 'children'> {
   activeKey?: number | string
   onChange?: (key: number | string) => void
   onLabelClick?: (key: number | string) => void
-  inkbarWrapperStyle?: CSSProperties
-  inkbarWidth?: 'auto' | string
-  inkbarStyle?: CSSProperties
-  inkbar?: ReactNode
   scrollCount?: number
-  type?: 'inkbar' | 'card' | 'pill' | 'border'
+  type?: 'line' | 'pill' | 'border'
   headerClass?: string
   headerStyle?: CSSProperties
   bodyClass?: string
   bodyStyle?: CSSProperties
-  wrapperClass?: string
-  wrapperStyle?: CSSProperties
-  contentClass?: string
-  contentStyle?: CSSProperties
   labelStyle?: CSSProperties
   labelClass?: string
   activeLabelStyle?: CSSProperties
@@ -68,11 +60,9 @@ export interface TabsProps extends Omit<BaseProps, 'children'> {
   inactiveLabelStyle?: CSSProperties
   inactiveLabelClass?: string
   line?: ReactNode
-  lineWidth?: string
   lineStyle?: CSSProperties
   lineClass?: string
   scrollWithAnimation?: boolean
-  sticky?: boolean
   prepend?: ReactNode
   append?: ReactNode
   animated?: boolean
@@ -80,7 +70,7 @@ export interface TabsProps extends Omit<BaseProps, 'children'> {
   duration?: number
   threshold?: number
   offset?: number
-  vertical?: boolean
+  direction?: 'horizontal' | 'vertical'
 }
 
 export interface TabsFC
@@ -98,20 +88,12 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     activeKey,
     onChange,
     onLabelClick,
-    inkbarWrapperStyle,
-    inkbarWidth = '40px',
-    inkbarStyle,
-    inkbar,
     scrollCount = 5,
-    type = 'inkbar',
+    type = 'line',
     headerClass,
     headerStyle,
     bodyClass,
     bodyStyle,
-    wrapperClass,
-    wrapperStyle,
-    contentClass,
-    contentStyle,
     labelStyle,
     labelClass,
     activeLabelStyle,
@@ -119,11 +101,9 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     inactiveLabelStyle,
     inactiveLabelClass,
     line,
-    lineWidth,
     lineStyle,
     lineClass,
     scrollWithAnimation = true,
-    sticky,
     prepend,
     append,
     animated,
@@ -131,7 +111,7 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     duration = 300,
     threshold = 150,
     offset = 0,
-    vertical = false,
+    direction = 'horizontal',
     ...restProps
   } = props
 
@@ -168,8 +148,6 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
   const [scrollTop, setScrollTop] = useState(0)
   const labelWrapperId = useSelectorId()
   const labelContentId = useSelectorId()
-  const [inkbarInnerStyle, setInkbarInnerStyle] = useState(null)
-  const [inkbarWrapperInnerStyle, setInkbarWrapperInnerStyle] = useState(null)
 
   const setLabelStyle = () => {
     let wrapperWidth = 0
@@ -207,37 +185,28 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
     }
 
     function setStyle() {
-      const wrapperSize = vertical ? wrapperHeight : wrapperWidth
-      const labelSize = vertical ? labelHeight : labelWidth
-      const labelOffset = vertical
+      const isVertical = direction === 'vertical'
+      const wrapperSize = isVertical ? wrapperHeight : wrapperWidth
+      const labelSize = isVertical ? labelHeight : labelWidth
+      const labelOffset = isVertical
         ? labelTop - contentTop
         : labelLeft - contentLeft
       const nextScroll = labelOffset - (wrapperSize / 2 - labelSize / 2)
 
-      if (vertical) {
+      if (isVertical) {
         setScrollTop(nextScroll)
       } else {
         setScrollLeft(nextScroll)
       }
-
-      if (type === 'inkbar') {
-        setInkbarWrapperInnerStyle({
-          opacity: 1,
-          [vertical ? 'top' : 'left']: labelOffset + labelSize / 2,
-        })
-        setInkbarInnerStyle({
-          [vertical ? 'height' : 'width']:
-            inkbarWidth === 'auto' ? labelSize : inkbarWidth,
-        })
-      }
     }
 
-    if (labelEl && (type === 'inkbar' || type === 'pill' || type === 'card')) {
+    if (labelEl) {
       getFieldsData()
         .then(() => {
           setStyle()
         })
-        .catch(() => {
+        .catch((err) => {
+          console.error(err)
           void 0
         })
     }
@@ -357,7 +326,7 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
   }))
 
   // 避免初次渲染滑动效果
-  const [laterAnimated, setLaterAnimated] = useState(false)
+  const [laterAnimated, setLaterAnimated] = useState(!animated)
 
   const [resetLaterAnimated] = useSetTimeout(() => {
     setLaterAnimated(true)
@@ -368,37 +337,6 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
       resetLaterAnimated()
     }
   }, [animated])
-
-  const renderInkbar = () => {
-    return (
-      type === 'inkbar' && (
-        <View
-          className={classNames(
-            bem.e('inkbar-wrapper'),
-            bem.em('inkbar-wrapper', 'vertical', vertical),
-          )}
-          style={{
-            opacity: 0,
-            transitionDuration: !laterAnimated ? '0s' : '',
-            ...inkbarWrapperStyle,
-            ...inkbarWrapperInnerStyle,
-          }}
-        >
-          {inkbar || (
-            <>
-              <View
-                className={classNames(
-                  bem.e('inkbar'),
-                  bem.em('inkbar', 'vertical', vertical),
-                )}
-                style={{ ...inkbarStyle, ...inkbarInnerStyle }}
-              ></View>
-            </>
-          )}
-        </View>
-      )
-    )
-  }
 
   const renderPane = () => {
     return Children.map(
@@ -418,37 +356,37 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
               !animated && !scrollspy && innerKey !== innerActiveKey,
             ),
           ),
-          _onMounted: (id) => paneMap.set(innerKey, id),
+          onMounted: (id) => paneMap.set(innerKey, id),
         })
       },
     )
   }
+
+  const count = Children.count(children)
 
   return (
     <View
       {...restProps}
       className={classNames(
         bem.b(),
-        bem.m('auto', Children.count(children) > scrollCount),
-        bem.m('sticky', sticky),
+        bem.m('auto', count > scrollCount),
         bem.m('scrollspy', scrollspy),
-        bem.m('vertical', vertical),
+        bem.m(direction),
         className,
       )}
     >
       <View
         className={classNames(
           bem.e('header'),
-          bem.em('header', 'vertical', vertical),
-          bem.em('header', 'sticky', sticky),
+          bem.em('header', direction),
           headerClass,
         )}
         style={headerStyle}
       >
         {prepend && <View className={bem.e('prepend')}>{prepend}</View>}
         <ScrollView
-          scrollX={!vertical}
-          scrollY={vertical}
+          scrollX={!(direction === 'vertical')}
+          scrollY={direction === 'vertical'}
           scrollWithAnimation={scrollWithAnimation}
           scrollIntoViewAlignment="center"
           enablePassive="true"
@@ -457,21 +395,16 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
           scrollLeft={scrollLeft}
           scrollTop={scrollTop}
           className={classNames(
-            bem.e('label-wrapper'),
-            bem.em('label-wrapper', type),
-            bem.em('label-wrapper', 'vertical', vertical),
-            wrapperClass,
+            bem.e('container'),
+            bem.em('container', direction),
           )}
-          style={wrapperStyle}
           id={labelWrapperId}
         >
           <View
             className={classNames(
-              bem.e('label-content'),
-              bem.em('label-content', 'vertical', vertical),
-              contentClass,
+              bem.e('wrapper'),
+              bem.em('wrapper', direction),
             )}
-            style={contentStyle}
             id={labelContentId}
           >
             {Children.map(
@@ -494,26 +427,24 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
                     key={innerKey}
                     innerKey={innerKey}
                     activeKey={innerActiveKey}
-                    showLine={type === 'card'}
                     type={type}
                     line={line}
-                    lineWidth={lineWidth}
                     lineStyle={lineStyle}
                     lineClass={lineClass}
                     onClick={handleLabelClick}
-                    later={index > 0}
+                    index={index}
+                    count={count}
                     ref={(el) => {
                       labelMap.set(innerKey, el)
                     }}
-                    autoScroll={Children.count(children) > scrollCount}
-                    vertical={vertical}
+                    autoScroll={count > scrollCount}
+                    direction={direction}
                   >
                     {pane.props.label}
                   </TabsLabel>
                 )
               },
             )}
-            {renderInkbar()}
           </View>
         </ScrollView>
         {append && <View className={bem.e('append')}>{append}</View>}
@@ -521,7 +452,7 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
       <View
         className={classNames(
           bem.e('body'),
-          bem.em('body', 'vertical', vertical),
+          bem.em('body', direction),
           bem.em('body', 'animated', animated),
           bodyClass,
         )}
@@ -529,8 +460,8 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
       >
         <View
           className={classNames(
-            bem.e('wrapper'),
-            bem.em('wrapper', 'animated', animated),
+            bem.e('body-wrapper'),
+            bem.em('body-wrapper', 'animated', animated),
           )}
           style={{
             transform: animated

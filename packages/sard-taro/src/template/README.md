@@ -20,4 +20,4 @@ import { Template } from 'sard-taro'
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

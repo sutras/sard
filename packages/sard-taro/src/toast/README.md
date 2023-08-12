@@ -14,53 +14,7 @@ import { Toast } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-export default () => {
-  const [visible, setVisible] = useState(false)
-  const [type, setType] = useState<ToastProps['type']>('text')
-  const [title, setTitle] = useState<ToastProps['title']>('')
-
-  const showToast = (type: ToastProps['type'], title: ToastProps['title']) => {
-    setType(type)
-    setTitle(title)
-    setVisible(true)
-  }
-
-  return (
-    <Cell.Group card>
-      <Cell
-        linkable
-        title="文本提示"
-        onClick={() => showToast('text', '文本提示')}
-      />
-      <Cell
-        linkable
-        title="成功提示"
-        onClick={() => showToast('success', '成功')}
-      />
-
-      <Cell
-        linkable
-        title="失败提示"
-        onClick={() => showToast('fail', '失败')}
-      />
-      <Cell
-        linkable
-        title="加载中提示"
-        onClick={() => showToast('loading', '加载中')}
-      />
-      <Cell linkable title="隐藏提示" onClick={() => setVisible(false)} />
-    </Cell.Group>
-
-    <Toast
-      visible={visible}
-      type={type}
-      title={title}
-      onTimeout={setVisible}
-    ></Toast>
-  )
-}
-```
+%(${DEMO_PATH}/toast/demo/Basic.tsx)
 
 ### 命令式
 
@@ -72,55 +26,19 @@ export default () => {
 
 然后就可以调用`Toast`下的方法进行展示了。（这些方法可以传递可选的和对应的代理组件一样的`id`，这样可以同时展示多个。）
 
-```tsx
-Toast.show('文本提示')
-Toast.success('成功')
-Toast.fail('失败')
-Toast.loading('加载中')
-Toast.hide()
-```
+%(${DEMO_PATH}/toast/demo/Imperative.tsx)
 
 ### 自定义图标
 
-```tsx
-Toast.show('笑一笑', {
-  iconProps: {
-    prefix: 'demo-icon',
-    name: 'emoji-smile',
-  },
-})
-
-Toast.show('Sard', {
-  iconProps: {
-    name: pic1,
-  },
-})
-```
+%(${DEMO_PATH}/toast/demo/Icon.tsx)
 
 ### 自定义位置
 
-```tsx
-Toast.show('顶部位置', {
-  placement: 'top',
-})
-
-Toast.show('底部位置', {
-  placement: 'bottom',
-})
-```
+%(${DEMO_PATH}/toast/demo/Placement.tsx)
 
 ### 加载中的背景
 
-```tsx
-Toast.loading('加载中', {
-  mask: true,
-})
-
-Toast.loading('加载中', {
-  mask: true,
-  transparent: true,
-})
-```
+%(${DEMO_PATH}/toast/demo/Mask.tsx)
 
 ## API
 
@@ -178,4 +96,4 @@ export interface ToastShow {
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

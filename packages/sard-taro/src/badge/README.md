@@ -14,93 +14,41 @@ import { Badge } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Badge value={5}>
-  <Button>消息</Button>
-</Badge>
-```
+%(${DEMO_PATH}/badge/demo/Basic.tsx)
 
 ### 最大值
 
 默认超过 99 的值会显示 99+，可以通过 max 设置最大显示数值
 
-```tsx
-<Badge value={5}>
-  <Badge value={100}>
-    <Button>消息</Button>
-  </Badge>
-  <Badge value={100} max={200} style={{ marginLeft: '20px' }}>
-    <Button>消息</Button>
-  </Badge>
-</Badge>
-```
+%(${DEMO_PATH}/badge/demo/Max.tsx)
 
 ### 值为 0 时不隐藏
 
 值为 0 时，会隐藏，可通过 showZero 让其值为 0 时依然显示。
 
-```tsx
-<Badge value={5}>
-  <Badge value={0}>
-    <Button>消息</Button>
-  </Badge>
-  <Badge value={0} showZero style={{ marginLeft: '20px' }}>
-    <Button>消息</Button>
-  </Badge>
-</Badge>
-```
+%(${DEMO_PATH}/badge/demo/ShowZero.tsx)
 
 ### 圆点显示
 
-```tsx
-<Badge isDot>
-  <Button>消息</Button>
-</Badge>
-```
+%(${DEMO_PATH}/badge/demo/Dot.tsx)
 
 ### 自定义颜色
 
-```tsx
-<Badge value={5} color="orange">
-  <Button>消息</Button>
-</Badge>
-<Badge isDot color="orange" style={{ marginLeft: '20px' }}>
-  <Button>消息</Button>
-</Badge>
-<Badge
-  value={5}
-  color="#eee"
-  textColor="#222"
-  style={{ marginLeft: '20px' }}
->
-  <Button>消息</Button>
-</Badge>
-```
+%(${DEMO_PATH}/badge/demo/Color.tsx)
 
 ### 独立展示
 
-```tsx
-<Badge value={10}></Badge>
-<Badge isDot style={{ marginLeft: '10px' }}></Badge>
-```
+%(${DEMO_PATH}/badge/demo/OnlyBadge.tsx)
 
 ### 自定义内容
 
-```tsx
-<Badge value={<Icon name="question"></Icon>}>
-  <Button>消息</Button>
-</Badge>
-```
+%(${DEMO_PATH}/badge/demo/Custom.tsx)
 
 ### 不包裹组件
 
 通常使用徽标包裹组件， 如果要在结构固定的组件里添加徽标，不好将其包裹，可以给组件加个相对定位，让组件包裹徽标，并添加 `fixed` 属性。
 
-```tsx
-<Button style={{ position: 'relative' }}>
-  消息 <Badge fixed value={5}></Badge>
-</Button>
-```
+%(${DEMO_PATH}/badge/demo/UnWrap.tsx)
 
 ## API
 
@@ -120,4 +68,4 @@ import { Badge } from 'sard-taro'
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

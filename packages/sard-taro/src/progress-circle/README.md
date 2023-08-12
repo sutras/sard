@@ -14,49 +14,21 @@ import { ProgressCircle } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-export default () => {
-  const [percent, setPercent] = useState(50)
-
-  return (
-    <Stepper
-      value={percent}
-      max={100}
-      min={0}
-      onChange={setPercent}
-      style={{ marginBottom: 10 }}
-    ></Stepper>
-
-    <ProgressCircle percent={percent}>{percent}%</ProgressCircle>
-  )
-}
-```
+%(${DEMO_PATH}/progress-circle/demo/Basic.tsx)
 
 ### 粗细
 
 相对于当前圆环尺寸的百分比。
 
-```tsx
-<ProgressCircle percent={50} thickness={10}>
-  50%
-</ProgressCircle>
-```
+%(${DEMO_PATH}/progress-circle/demo/Thickness.tsx)
 
 ### 颜色
 
-```tsx
-<ProgressCircle percent={50} trackColor="fuchsia" color="orange">
-  50%
-</ProgressCircle>
-```
+%(${DEMO_PATH}/progress-circle/demo/Color.tsx)
 
 ### 尺寸
 
-```tsx
-<ProgressCircle percent={50} size="150px">
-  50%
-</ProgressCircle>
-```
+%(${DEMO_PATH}/progress-circle/demo/Size.tsx)
 
 ## API
 
@@ -75,4 +47,4 @@ export default () => {
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

@@ -14,80 +14,35 @@ import { Tag } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Tag>标签</Tag>
-```
+%(${DEMO_PATH}/tag/demo/Basic.tsx)
 
 ### 主题色
 
-```tsx
-<Tag theme="primary">primary</Tag>
-<Tag theme="secondary">secondary</Tag>
-<Tag theme="success">success</Tag>
-<Tag theme="info">info</Tag>
-<Tag theme="warning">warning</Tag>
-<Tag theme="danger">danger</Tag>
-```
+%(${DEMO_PATH}/tag/demo/Theme.tsx)
 
 ### 镂空
 
-```tsx
-<Tag plain theme="primary">
-  primary
-</Tag>
-<Tag plain theme="secondary">
-  secondary
-</Tag>
-<Tag plain theme="success">
-  success
-</Tag>
-<Tag plain theme="info">
-  info
-</Tag>
-<Tag plain theme="warning">
-  warning
-</Tag>
-<Tag plain theme="danger">
-  danger
-</Tag>
-```
+%(${DEMO_PATH}/tag/demo/Plain.tsx)
 
 ### 圆角
 
-```tsx
-<Tag round>标签</Tag>
-```
+%(${DEMO_PATH}/tag/demo/Round.tsx)
 
 ### 标记样式（半圆角）
 
-```tsx
-<Tag mark>标签</Tag>
-```
+%(${DEMO_PATH}/tag/demo/Mark.tsx)
 
 ### 尺寸
 
-```tsx
-<Tag size="small">标签</Tag>
-<Tag>标签</Tag>
-<Tag size="large">标签</Tag>
-```
+%(${DEMO_PATH}/tag/demo/Size.tsx)
 
 ### 自定义样式
 
-```tsx
-<Tag style={{ background: '#ffeed0', color: 'orange' }}>标签</Tag>
-<Tag plain style={{ color: 'orange' }}>
-  标签
-</Tag>
-```
+%(${DEMO_PATH}/tag/demo/Style.tsx)
 
 ### 可关闭的
 
-```tsx
-<Tag closable onClose={() => console.log('close')}>
-  标签
-</Tag>
-```
+%(${DEMO_PATH}/tag/demo/Closable.tsx)
 
 ## API
 
@@ -108,4 +63,4 @@ import { Tag } from 'sard-taro'
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

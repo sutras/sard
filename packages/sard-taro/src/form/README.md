@@ -12,6 +12,13 @@ import { Form } from 'sard-taro'
 
 ## 代码演示
 
+### Ant Demo
+
+####
+
+%(${DEMO_PATH}/form/ant-demo/Demo1.tsx)
+%(./index.scss#variables)
+
 ## API
 
 ### FormProps
@@ -197,4 +204,4 @@ type ScrollIntoViewPosition = 'start' | 'center' | 'end' | 'nearest'
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

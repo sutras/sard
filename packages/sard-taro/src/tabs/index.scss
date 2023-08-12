@@ -6,30 +6,27 @@ page {
   --sar-tabs-label-height: 48px;
   --sar-tabs-label-font-size: var(--sar-text-base);
   --sar-tabs-label-color: var(--sar-secondary-color);
-  --sar-tabs-label-active-color: var(--sar-emphasis-color);
 
   --sar-tabs-auto-label-padding-x: 15px;
 
-  --sar-tabs-label-line-width: 40px;
-  --sar-tabs-label-line-height: 3px;
+  --sar-tabs-label-line-length: 40px;
+  --sar-tabs-label-line-thickness: 3px;
   --sar-tabs-label-line-bg: var(--sar-primary);
+  --sar-tabs-label-line-active-color: var(--sar-emphasis-color);
 
+  --sar-tabs-label-border-color: var(--sar-primary);
+  --sar-tabs-label-border-height: 30px;
   --sar-tabs-label-border-border-radius: var(--sar-rounded-sm);
   --sar-tabs-label-border-border-color: var(--sar-primary);
-  --sar-tabs-label-border-label-height: 28px;
-  --sar-tabs-label-border-label-active-color: var(--sar-white);
+  --sar-tabs-label-border-active-color: var(--sar-white);
+  --sar-tabs-label-border-active-bg: var(--sar-primary);
 
-  --sar-tabs-label-pill-label-height: 28px;
-  --sar-tabs-label-pill-label-border-radius: var(--sar-rounded-full);
-  --sar-tabs-label-pill-label-active-bg: var(--sar-primary);
-  --sar-tabs-label-pill-label-active-color: var(--sar-white);
+  --sar-tabs-label-pill-height: 30px;
+  --sar-tabs-label-pill-border-radius: var(--sar-rounded-full);
+  --sar-tabs-label-pill-active-bg: var(--sar-primary);
+  --sar-tabs-label-pill-active-color: var(--sar-white);
 
   --sar-tabs-vertical-label-height: 40px;
-  --sar-tabs-vertical-label-padding-x: 15px;
-
-  --sar-tabs-inkbar-width: 40px;
-  --sar-tabs-inkbar-height: 3px;
-  --sar-tabs-inkbar-bg: var(--sar-primary);
 
   --sar-tabs-prepend-gap: 5px;
   --sar-tabs-append-gap: 5px;
@@ -39,38 +36,35 @@ page {
 @include bem(tabs) {
   @include b() {
     position: relative;
-  }
 
-  @include m(vertical) {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    @include m(horizontal) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @include m(vertical) {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
   }
 
   @include e(header) {
     position: relative;
     z-index: 1;
     display: flex;
-    flex-direction: row;
-    align-items: center;
 
-    @include m(vertical) {
-      flex: none;
-      flex-direction: column;
-      align-self: flex-start;
+    @include m(horizontal) {
+      flex-direction: row;
     }
 
-    @include m(sticky) {
-      position: sticky;
-      top: 0;
+    @include m(vertical) {
+      flex-direction: column;
     }
   }
 
-  @include e(label-wrapper) {
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 0;
-    width: 0;
+  @include e(container) {
+    flex: 1;
 
     &::-webkit-scrollbar {
       display: none;
@@ -79,24 +73,24 @@ page {
       color: transparent;
     }
 
-    @include m(border) {
-      border: 1px solid currentColor;
-      border-radius: var(--sar-tabs-label-border-border-radius);
-      color: var(--sar-tabs-label-border-border-color);
+    @include m(horizontal) {
+      width: 0;
     }
 
     @include m(vertical) {
-      flex-basis: auto;
-      width: 100%;
+      height: 0;
     }
   }
 
-  @include e(label-content) {
+  @include e(wrapper) {
     position: relative;
-    display: inline-flex;
+    display: flex;
     min-width: 100%;
-    flex-direction: row;
-    flex-wrap: nowrap;
+
+    @include m(horizontal) {
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
 
     @include m(vertical) {
       flex-direction: column;
@@ -105,6 +99,7 @@ page {
 
   @include e(label) {
     position: relative;
+    box-sizing: border-box;
     display: flex;
     flex: 1;
     height: var(--sar-tabs-label-height);
@@ -114,32 +109,60 @@ page {
     color: var(--sar-tabs-label-color);
     cursor: pointer;
 
-    @include m(border) {
-      height: var(--sar-tabs-label-border-label-height);
-      color: inherit;
-    }
-
-    @include m(active) {
+    @include m(line-active) {
       font-weight: bold;
-      color: var(--sar-tabs-label-active-color);
-    }
-
-    @include m(border-active) {
-      color: currentColor;
-      background-color: currentColor;
-    }
-
-    @include m(border-later) {
-      border-left: 1px solid currentColor;
+      color: var(--sar-tabs-label-line-active-color);
     }
 
     @include m(pill) {
-      height: var(--sar-tabs-label-pill-label-height);
-      border-radius: var(--sar-tabs-label-pill-label-border-radius);
+      height: var(--sar-tabs-label-pill-height);
+      border-radius: var(--sar-tabs-label-pill-border-radius);
     }
 
     @include m(pill-active) {
-      background-color: var(--sar-tabs-label-pill-label-active-bg);
+      font-weight: bold;
+      color: var(--sar-tabs-label-pill-active-color);
+      background-color: var(--sar-tabs-label-pill-active-bg);
+    }
+
+    @include m(border) {
+      color: var(--sar-tabs-label-border-color);
+      height: var(--sar-tabs-label-border-height);
+      border: 1px solid var(--sar-tabs-label-border-border-color);
+    }
+
+    @include m(horizontal-border-first) {
+      border-top-left-radius: var(--sar-tabs-label-border-border-radius);
+      border-bottom-left-radius: var(--sar-tabs-label-border-border-radius);
+    }
+
+    @include m(horizontal-border-last) {
+      border-top-right-radius: var(--sar-tabs-label-border-border-radius);
+      border-bottom-right-radius: var(--sar-tabs-label-border-border-radius);
+    }
+
+    @include m(horizontal-border-later) {
+      border-left: none;
+    }
+
+    @include m(vertical-border-first) {
+      border-top-left-radius: var(--sar-tabs-label-border-border-radius);
+      border-top-right-radius: var(--sar-tabs-label-border-border-radius);
+    }
+
+    @include m(vertical-border-last) {
+      border-bottom-left-radius: var(--sar-tabs-label-border-border-radius);
+      border-bottom-right-radius: var(--sar-tabs-label-border-border-radius);
+    }
+
+    @include m(vertical-border-later) {
+      border-top: none;
+    }
+
+    @include m(border-active) {
+      font-weight: bold;
+      color: var(--sar-tabs-label-border-active-color);
+      background-color: var(--sar-tabs-label-border-active-bg);
     }
 
     @include m(auto) {
@@ -154,80 +177,43 @@ page {
       height: var(--sar-tabs-vertical-label-height);
     }
 
-    @include m(vertical-border-later) {
-      border-left: none;
-      border-top: 1px solid currentColor;
-    }
-
     @include m(disabled) {
       @include disabled-text;
     }
   }
 
   @include e(label-line) {
-    @include m(card) {
-      position: absolute;
-      top: 0;
-      left: auto;
-      right: auto;
-      width: 100%;
-      height: var(--sar-tabs-label-line-height);
-      background-color: var(--sar-tabs-label-line-bg);
-    }
-
-    @include m(vertical) {
-      right: 0;
-      left: auto;
-      top: 50%;
-      bottom: auto;
-      transform: translateY(-50%);
-      width: var(--sar-tabs-label-line-height);
-      height: 100%;
-    }
-
-    @include m(vertical-card) {
-      left: 0;
-      right: auto;
-    }
-  }
-
-  @include e(label-text) {
-    @include m(border-active) {
-      color: var(--sar-tabs-label-border-label-active-color);
-    }
-
-    @include m(pill-active) {
-      color: var(--sar-tabs-label-pill-label-active-color);
-    }
-  }
-
-  @include e(inkbar-wrapper) {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    transform: translateX(-50%);
-    text-align: center;
-    pointer-events: none;
-    transition: left 0.3s, top 0.3s;
+    max-width: 100%;
+    max-height: 100%;
+    background-color: var(--sar-tabs-label-line-bg);
 
-    @include m(vertical) {
+    @include m(horizontal) {
+      top: auto;
+      right: auto;
       left: auto;
-      bottom: auto;
-      right: 0;
-      top: 0;
-      transform: translateY(-50%);
+      bottom: 0;
+      width: 0;
+      height: var(--sar-tabs-label-line-thickness);
     }
-  }
 
-  @include e(inkbar) {
-    width: var(--sar-tabs-inkbar-width);
-    height: var(--sar-tabs-inkbar-height);
-    background-color: var(--sar-tabs-inkbar-bg);
+    @include m(horizontal-active) {
+      width: var(--sar-tabs-label-line-length);
+      transition: width 0.3s ease-out;
+    }
 
     @include m(vertical) {
-      height: var(--sar-tabs-inkbar-width);
-      width: var(--sar-tabs-inkbar-height);
+      top: auto;
+      right: 0;
+      bottom: auto;
+      left: auto;
+      width: var(--sar-tabs-label-line-thickness);
+      height: 0;
+    }
+
+    @include m(vertical-active) {
+      height: var(--sar-tabs-label-line-length);
+      transition: height 0.3s ease-out;
     }
   }
 
@@ -259,7 +245,7 @@ page {
     }
   }
 
-  @include e(wrapper) {
+  @include e(body-wrapper) {
     @include m(animated) {
       display: flex;
       flex-wrap: nowrap;

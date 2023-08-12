@@ -12,4 +12,4 @@
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

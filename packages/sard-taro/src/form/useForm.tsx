@@ -1,15 +1,14 @@
 import { useRef } from 'react'
-import FormStore, { FormInstance } from './FormStore'
+import createFormStore, { FormStore } from './createFormStore'
 
-export function useForm(form?: FormInstance) {
-  const formRef = useRef<FormInstance>()
+export function useForm(form?: FormStore) {
+  const formRef = useRef<FormStore>()
 
   if (!formRef.current) {
     if (form) {
       formRef.current = form
     } else {
-      const formStore = new FormStore()
-      formRef.current = formStore.getForm()
+      formRef.current = createFormStore()
     }
   }
 

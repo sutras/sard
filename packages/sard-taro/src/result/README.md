@@ -14,49 +14,15 @@ import { Result } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Result
-  status="success"
-  title="成功"
-  description="请根据提示进行操作"
-/>
-<Result status="info" title="信息" description="请根据提示进行操作" />
-<Result
-  status="warning"
-  title="警告"
-  description="请根据提示进行操作"
-/>
-<Result status="error" title="错误" description="请根据提示进行操作" />
-<Result
-  status="question"
-  title="疑惑"
-  description="请根据提示进行操作"
-/>
-```
+%(${DEMO_PATH}/result/demo/Basic.tsx)
 
 ### 额外内容
 
-```tsx
-<Result status="success" title="成功" description="请根据提示进行操作">
-  <Button>返回首页</Button>
-</Result>
-```
+%(${DEMO_PATH}/result/demo/Extra.tsx)
 
 ### 自定义图标
 
-```tsx
-<Result
-  icon={
-    <Icon
-      prefix="demo-icon"
-      name="emoji-smile"
-      color="var(--sar-tertiary-color)"
-    ></Icon>
-  }
-  title="笑一笑"
-  description="请根据提示进行操作"
-></Result>
-```
+%(${DEMO_PATH}/result/demo/Icon.tsx)
 
 ## API
 
@@ -74,4 +40,4 @@ import { Result } from 'sard-taro'
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

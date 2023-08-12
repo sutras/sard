@@ -14,128 +14,23 @@ import { Tabbar } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Tabbar defaultActiveKey={0} fixed={false}>
-  <Tabbar.Item icon={{ prefix: 'demo-icon', name: 'house-door-fill' }}>
-    首页
-  </Tabbar.Item>
-  <Tabbar.Item icon={{ prefix: 'demo-icon', name: 'cart-fill' }}>
-    购物车
-  </Tabbar.Item>
-  <Tabbar.Item icon={{ prefix: 'demo-icon', name: 'chat-dots-fill' }}>
-    消息
-  </Tabbar.Item>
-  <Tabbar.Item icon={{ prefix: 'demo-icon', name: 'person-fill' }}>
-    我的
-  </Tabbar.Item>
-</Tabbar>
-```
+%(${DEMO_PATH}/tabbar/demo/Basic.tsx)
 
 ### 自定义图标
 
-```tsx
-<Tabbar defaultActiveKey={0} fixed={false}>
-  <Tabbar.Item
-    icon={(active) => (
-      <Icon
-        prefix="demo-icon"
-        name={active ? 'house-door-fill' : 'house-door'}
-      />
-    )}
-  >
-    首页
-  </Tabbar.Item>
-  <Tabbar.Item
-    icon={(active) => (
-      <Icon prefix="demo-icon" name={active ? 'cart-fill' : 'cart'} />
-    )}
-  >
-    购物车
-  </Tabbar.Item>
-  <Tabbar.Item
-    icon={(active) => (
-      <Icon prefix="demo-icon" name={active ? 'chat-dots-fill' : 'chat-dots'} />
-    )}
-  >
-    消息
-  </Tabbar.Item>
-  <Tabbar.Item
-    icon={(active) => (
-      <Icon prefix="demo-icon" name={active ? 'person-fill' : 'person'} />
-    )}
-  >
-    我的
-  </Tabbar.Item>
-</Tabbar>
-```
+%(${DEMO_PATH}/tabbar/demo/Icon.tsx)
 
 ### 自定义颜色
 
-```tsx
-<Tabbar
-  defaultActiveKey={0}
-  fixed={false}
-  color="var(--sar-tertiary-color)"
-  activeColor="#D33832"
->
-  <Tabbar.Item icon={{ prefix: 'demo-icon', name: 'house-door-fill' }}>
-    首页
-  </Tabbar.Item>
-  <Tabbar.Item icon={{ prefix: 'demo-icon', name: 'cart-fill' }}>
-    购物车
-  </Tabbar.Item>
-  <Tabbar.Item icon={{ prefix: 'demo-icon', name: 'chat-dots-fill' }}>
-    消息
-  </Tabbar.Item>
-  <Tabbar.Item icon={{ prefix: 'demo-icon', name: 'person-fill' }}>
-    我的
-  </Tabbar.Item>
-</Tabbar>
-```
+%(${DEMO_PATH}/tabbar/demo/Color.tsx)
 
 ### 固定定位
 
-```tsx
-<Tabbar defaultActiveKey={0} fixed={fixed}>
-  <Tabbar.Item icon={{ prefix: 'demo-icon', name: 'house-door-fill' }}>
-    首页
-  </Tabbar.Item>
-  <Tabbar.Item icon={{ prefix: 'demo-icon', name: 'cart-fill' }}>
-    购物车
-  </Tabbar.Item>
-  <Tabbar.Item icon={{ prefix: 'demo-icon', name: 'chat-dots-fill' }}>
-    消息
-  </Tabbar.Item>
-  <Tabbar.Item icon={{ prefix: 'demo-icon', name: 'person-fill' }}>
-    我的
-  </Tabbar.Item>
-</Tabbar>
-```
+%(${DEMO_PATH}/tabbar/demo/Fixed.tsx)
 
 ### 徽标
 
-```tsx
-<Tabbar defaultActiveKey={0} fixed={false}>
-  <Tabbar.Item icon={{ prefix: 'demo-icon', name: 'house-door-fill' }}>
-    首页
-  </Tabbar.Item>
-  <Tabbar.Item icon={{ prefix: 'demo-icon', name: 'cart-fill' }}>
-    购物车
-  </Tabbar.Item>
-  <Tabbar.Item
-    icon={{ prefix: 'demo-icon', name: 'chat-dots-fill' }}
-    badge={{ value: 5 }}
-  >
-    消息
-  </Tabbar.Item>
-  <Tabbar.Item
-    icon={{ prefix: 'demo-icon', name: 'person-fill' }}
-    badge={{ isDot: true, color: 'orange' }}
-  >
-    我的
-  </Tabbar.Item>
-</Tabbar>
-```
+%(${DEMO_PATH}/tabbar/demo/Badge.tsx)
 
 ## API
 
@@ -165,4 +60,4 @@ import { Tabbar } from 'sard-taro'
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

@@ -10,7 +10,7 @@ import classNames from 'classnames'
 import Taro from '@tarojs/taro'
 import { ImageProps, View } from '@tarojs/components'
 import { useBem, useControllableValue, useEvent } from '../use'
-import { getFileName, isImageUrl } from '../utils'
+import { getFileName, isFunction, isImageUrl } from '../utils'
 import { Icon } from '../icon'
 
 import { UploadPreview, UploadFileItem, UploadFile } from './Preview'
@@ -156,7 +156,7 @@ export const Upload: UploadFC = forwardRef<UploadRef, UploadProps>(
 
       fileList.forEach((item) => {
         const file = item.file
-        const isFunc = typeof maxSize === 'function'
+        const isFunc = isFunction(maxSize)
         if ((isFunc && maxSize(file)) || (!isFunc && file.size > maxSize)) {
           invalid.push(item)
         } else {

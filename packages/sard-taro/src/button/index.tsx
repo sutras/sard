@@ -49,10 +49,19 @@ export const Button: FC<ButtonProps> = (props) => {
     loading,
     loadingText,
     loadingProps,
+    onClick,
     ...restProps
   } = props
 
   const [bem] = useBem('button')
+
+  const handleClick = (event) => {
+    if (disabled || loading) {
+      return
+    }
+
+    onClick?.(event)
+  }
 
   return (
     <TaroButton
@@ -70,6 +79,7 @@ export const Button: FC<ButtonProps> = (props) => {
       )}
       disabled={disabled || loading || undefined}
       hoverClass={bem.m('hover')}
+      onClick={handleClick}
     >
       {loading ? (
         <>

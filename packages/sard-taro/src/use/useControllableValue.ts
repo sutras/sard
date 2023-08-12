@@ -6,7 +6,7 @@ import { useRef, useMemo, SetStateAction } from 'react'
 import useForceRender from './useForceRender'
 import useEvent from './useEvent'
 import useLayoutUpdateEffect from './useLayoutUpdateEffect'
-import { isNullish } from '../utils'
+import { isFunction, isNullish } from '../utils'
 import { AnyType } from '../base'
 
 export interface UseControllableValueOptions<T> {
@@ -18,7 +18,7 @@ export interface UseControllableValueOptions<T> {
 }
 
 function getMayFnValue(value) {
-  return typeof value === 'function' ? value() : value
+  return isFunction(value) ? value() : value
 }
 
 const hasValue = <T>(value: T) => {
@@ -58,8 +58,7 @@ export function useControllableValue<T>(
   // change（同步）
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setState = useEvent((v: SetStateAction<T>, ...args: any[]) => {
-    const nextState =
-      typeof v === 'function' ? (v as (s: T) => T)(stateRef.current) : v
+    const nextState = isFunction(v) ? (v as (s: T) => T)(stateRef.current) : v
 
     if (nextState === stateRef.current) {
       return

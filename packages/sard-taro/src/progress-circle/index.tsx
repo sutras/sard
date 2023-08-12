@@ -9,7 +9,7 @@ export interface ProgressCircleProps extends BaseProps {
   percent?: number
   color?: string
   trackColor?: string
-  size?: string
+  size?: string | number
   thickness?: number
 }
 
@@ -21,7 +21,7 @@ export const ProgressCircle: FC<ProgressCircleProps> = (props) => {
     percent = 0,
     color,
     trackColor,
-    size = '100px',
+    size = 100,
     thickness = 4,
     ...restProps
   } = props

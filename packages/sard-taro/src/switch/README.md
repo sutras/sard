@@ -14,79 +14,31 @@ import { Switch } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Switch defaultChecked />
-```
+%(${DEMO_PATH}/switch/demo/Basic.tsx)
 
 ### 自定义尺寸
 
-```tsx
-<Switch size="20px" defaultChecked />
-```
+%(${DEMO_PATH}/switch/demo/Size.tsx)
 
 ### 自定义颜色
 
-```tsx
-<Switch checkedColor="orange" uncheckedColor="fuchsia" defaultChecked />
-```
+%(${DEMO_PATH}/switch/demo/Color.tsx)
 
 ### 不同状态的值
 
-```tsx
-export default () => {
-  const [checked, setChecked] = useState(true)
-  const [value, setValue] = useState('on')
+%(${DEMO_PATH}/switch/demo/Value.tsx)
 
-  return (
-    <Switch
-      checked={checked}
-      onChange={(checked, value) => (setChecked(checked), setValue(value))}
-      checkedValue="on"
-      uncheckedValue="off"
-    />
-    <View>{value}</View>
-  )
-}
-```
+### 只读和禁用
 
-### 禁用状态
-
-```tsx
-<Switch disabled />
-<Switch defaultChecked disabled />
-```
-
-### 禁用状态
-
-```tsx
-<Switch readOnly />
-<Switch defaultChecked readOnly />
-```
+%(${DEMO_PATH}/switch/demo/DisabledReadOnly.tsx)
 
 ### 加载状态
 
-```tsx
-<Switch loading />
-<Switch defaultChecked loading />
-```
+%(${DEMO_PATH}/switch/demo/Loading.tsx)
 
 ### 异步控制
 
-```tsx
-export default () => {
-  const [checked, setChecked] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const handleChange = (checked: boolean) => {
-    setLoading(true)
-    setTimeout(() => {
-      setChecked(checked)
-      setLoading(false)
-    }, 500)
-  }
-
-  return <Switch checked={checked} loading={loading} onChange={handleChange} />
-}
-```
+%(${DEMO_PATH}/switch/demo/Async.tsx)
 
 ## API
 
@@ -111,4 +63,4 @@ export default () => {
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

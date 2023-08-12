@@ -14,89 +14,33 @@ import { Accordion } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Accordion>
-  <Accordion.Item title="标题1">内容1</Accordion.Item>
-  <Accordion.Item title="标题2">内容2</Accordion.Item>
-  <Accordion.Item title="标题3">内容3</Accordion.Item>
-</Accordion>
-```
+%(${DEMO_PATH}/accordion/demo/Basic.tsx)
 
 ### 默认展开
 
 使用 defaultActiveKey 指定默认展开的 Item，AccordionItem 可以指定一个 name 属性，默认为 DOM 中子节点位置下标。
 
-```tsx
-<Accordion defaultActiveKey={1}>
-  <Accordion.Item title="标题1">内容1</Accordion.Item>
-  <Accordion.Item title="标题2">内容2</Accordion.Item>
-  <Accordion.Item title="标题3">内容3</Accordion.Item>
-</Accordion>
-```
+%(${DEMO_PATH}/accordion/demo/Expand.tsx)
 
 ### 展开多个
 
-```tsx
-<Accordion multiple defaultActiveKey={[0, 1]}>
-  <Accordion.Item title="标题1">内容1</Accordion.Item>
-  <Accordion.Item title="标题2">内容2</Accordion.Item>
-  <Accordion.Item title="标题3">内容3</Accordion.Item>
-</Accordion>
-```
+%(${DEMO_PATH}/accordion/demo/MultipleExpand.tsx)
 
 ### 受控
 
-```tsx
-<Accordion activeKey={activeKey} onChange={handleChange}>
-  <Accordion.Item title="标题1">内容1</Accordion.Item>
-  <Accordion.Item title="标题2">内容2</Accordion.Item>
-  <Accordion.Item title="标题3">内容3</Accordion.Item>
-</Accordion>
-```
+%(${DEMO_PATH}/accordion/demo/Controllable.tsx)
 
 ### 禁用
 
-```tsx
-<Accordion>
-  <Accordion.Item title="标题1">内容1</Accordion.Item>
-  <Accordion.Item disabled title="标题2">
-    内容2
-  </Accordion.Item>
-  <Accordion.Item title="标题3">内容3</Accordion.Item>
-</Accordion>
-```
+%(${DEMO_PATH}/accordion/demo/Disabled.tsx)
 
 ### 插槽
 
-```tsx
-<Accordion>
-  <Accordion.Item
-    title={
-      <>
-        <Icon name="bi-cup-hot"></Icon>
-        <Text>标题1</Text>
-      </>
-    }
-    icon={(active) => (
-      <Icon name={active ? 'caret-up-fill' : 'caret-down-fill'}></Icon>
-    )}
-  >
-    内容1
-  </Accordion.Item>
-  <Accordion.Item title="标题2">内容2</Accordion.Item>
-  <Accordion.Item title="标题3">内容3</Accordion.Item>
-</Accordion>
-```
+%(${DEMO_PATH}/accordion/demo/Slot.tsx)
 
 ### 折叠时间
 
-```tsx
-<Accordion duration={0}>
-  <Accordion.Item title="标题1">内容1</Accordion.Item>
-  <Accordion.Item title="标题2">内容2</Accordion.Item>
-  <Accordion.Item title="标题3">内容3</Accordion.Item>
-</Accordion>
-```
+%(${DEMO_PATH}/accordion/demo/Duration.tsx)
 
 ## API
 
@@ -125,4 +69,4 @@ import { Accordion } from 'sard-taro'
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

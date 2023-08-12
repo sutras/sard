@@ -14,39 +14,23 @@ import { Empty } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Empty />
-```
+%(${DEMO_PATH}/empty/demo/Basic.tsx)
 
 ### 自定义描述信息
 
-```tsx
-<Empty description="自定义描述内容" />
-```
+%(${DEMO_PATH}/empty/demo/Description.tsx)
 
 ### 自定义图标大小
 
-```tsx
-<Empty iconProps={{ size: 32 }} />
-```
+%(${DEMO_PATH}/empty/demo/Size.tsx)
 
 ### 图片类型图标
 
-```tsx
-import empty from '@/static/empty.svg'
-
-export default () => {
-  return <Empty iconProps={{ name: empty }} />
-}
-```
+%(${DEMO_PATH}/empty/demo/Picture.tsx)
 
 ### 额外内容
 
-```tsx
-<Empty>
-  <Button>重新请求</Button>
-</Empty>
-```
+%(${DEMO_PATH}/empty/demo/Extra.tsx)
 
 ## API
 
@@ -63,4 +47,4 @@ export default () => {
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

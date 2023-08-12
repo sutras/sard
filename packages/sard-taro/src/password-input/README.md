@@ -14,55 +14,23 @@ import { PasswordInput } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-const [value, setValue] = useState('')
-```
-
-```tsx
-<PasswordInput value={value} onChange={setValue} />
-```
-
-### 使用自定义键盘
-
-```tsx
-const [value, setValue] = useState('')
-const [visible, setVisible] = useState(false)
-```
-
-```tsx
-<PasswordInput
-  custom
-  focused={visible}
-  value={value}
-  onChange={setValue}
-  onClick={() => setVisible(true)}
-/>
-
-<NumberKeyboard
-  onInput={(key) => setValue((value) => value + key)}
-  onDelete={() => setValue((value) => value.slice(0, -1))}
-  visible={visible}
-  onVisible={setVisible}
-/>
-```
+%(${DEMO_PATH}/password-input/demo/Basic.tsx)
 
 ### 下划线类型
 
-```tsx
-<PasswordInput type="underline" />
-```
+%(${DEMO_PATH}/password-input/demo/Underline.tsx)
 
 ### 间距
 
-```tsx
-<PasswordInput gap={0} />
-```
+%(${DEMO_PATH}/password-input/demo/Gap.tsx)
 
 ### 明文显示
 
-```tsx
-<PasswordInput plainText />
-```
+%(${DEMO_PATH}/password-input/demo/PlainText.tsx)
+
+### 使用自定义键盘
+
+%(${DEMO_PATH}/password-input/demo/WithNumberKeyboard.tsx)
 
 ## API
 
@@ -90,4 +58,4 @@ const [visible, setVisible] = useState(false)
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

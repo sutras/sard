@@ -14,49 +14,27 @@ import { Stepper } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Stepper placeholder="数量" />
-```
+%(${DEMO_PATH}/stepper/demo/Basic.tsx)
 
 ### 受控
 
-```tsx
-export default () => {
-  const [count, setCount] = useState<number | string>()
-
-  return <Stepper placeholder="数量" value={count} onChange={setCount} />
-}
-```
+%(${DEMO_PATH}/stepper/demo/Controllable.tsx)
 
 ### 最大最小值
 
-```tsx
-<Stepper placeholder="数量" min={0} max={5} />
-```
+%(${DEMO_PATH}/stepper/demo/MinMax.tsx)
 
 ### 步长
 
-```tsx
-<Stepper placeholder="数量" step={5} />
-```
+%(${DEMO_PATH}/stepper/demo/Step.tsx)
 
 ### 精度
 
-```tsx
-<Stepper placeholder="数量" precision={2} />
-```
+%(${DEMO_PATH}/stepper/demo/Precision.tsx)
 
-### 禁用
+### 只读和禁用
 
-```tsx
-<Stepper placeholder="数量" defaultValue={5} disabled />
-```
-
-### 只读
-
-```tsx
-<Stepper placeholder="数量" defaultValue={5} readOnly />
-```
+%(${DEMO_PATH}/stepper/demo/DisabledReadOnly.tsx)
 
 ## API
 
@@ -87,4 +65,4 @@ export default () => {
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

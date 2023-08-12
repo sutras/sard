@@ -14,89 +14,35 @@ import { Radio } from 'sard-taro'
 
 ### 基础使用
 
-```tsx
-<Radio.Group defaultValue="option1">
-  <Radio value="option1">选项1</Radio>
-  <Radio value="option2">选项2</Radio>
-</Radio.Group>
-```
+%(${DEMO_PATH}/radio/demo/Basic.tsx)
 
 ### 受控
 
-```tsx
-const [value, setValue] = useState('option1')
-```
-
-```tsx
-<Radio.Group value={value} onChange={setValue}>
-  <Radio value="option1">选项1</Radio>
-  <Radio value="option2">选项2</Radio>
-</Radio.Group>
-```
+%(${DEMO_PATH}/radio/demo/Controllable.tsx)
 
 ### 禁用状态
 
-```tsx
-<Radio.Group defaultValue="option1" disabled>
-  <Radio value="option1">选项1</Radio>
-  <Radio value="option2">选项2</Radio>
-</Radio.Group>
-```
+%(${DEMO_PATH}/radio/demo/Disabled.tsx)
 
 ### 垂直
 
-```tsx
-<Radio.Group defaultValue="option1" vertical>
-  <Radio value="option1">选项1</Radio>
-  <Radio value="option2">选项2</Radio>
-</Radio.Group>
-```
+%(${DEMO_PATH}/radio/demo/Vertical.tsx)
 
 ### 图标大小
 
-```tsx
-<Radio.Group defaultValue="option1" size="2em">
-  <Radio value="option1">选项1</Radio>
-  <Radio value="option2">选项2</Radio>
-</Radio.Group>
-```
+%(${DEMO_PATH}/radio/demo/Size.tsx)
 
 ### 颜色
 
-```tsx
-<Radio.Group defaultValue="option1" checkedColor="orange">
-  <Radio value="option1">选项1</Radio>
-  <Radio value="option2">选项2</Radio>
-</Radio.Group>
-```
+%(${DEMO_PATH}/radio/demo/Color.tsx)
 
 ### 图标类型
 
-```tsx
-<Radio.Group defaultValue="option1" type="circle">
-  <Radio value="option1">选项1</Radio>
-  <Radio value="option2">选项2</Radio>
-</Radio.Group>
-
-<Radio.Group defaultValue="option1" type="square">
-  <Radio value="option1">选项1</Radio>
-  <Radio value="option2">选项2</Radio>
-</Radio.Group>
-```
+%(${DEMO_PATH}/radio/demo/Type.tsx)
 
 ### 自定义图标
 
-```tsx
-<Radio.Group
-  defaultValue="option1"
-  icon={(checked) => (
-    <Icon prefix="demo-icon" name={checked ? 'heart-fill' : 'heart'} />
-  )}
->
-  <Radio value="option1">选项1</Radio>
-  <Radio value="option2">选项2</Radio>
-</Radio.Group>
-```
+%(${DEMO_PATH}/radio/demo/CustomIcon.tsx)
 
 ## API
 
@@ -134,4 +80,4 @@ const [value, setValue] = useState('option1')
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)

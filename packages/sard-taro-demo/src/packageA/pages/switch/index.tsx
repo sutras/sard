@@ -1,66 +1,43 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { Switch } from 'sard-taro'
-import { View } from '@tarojs/components'
-import { useState } from 'react'
 
-import './index.scss'
+import Basic from './demo/Basic'
+import Size from './demo/Size'
+import Color from './demo/Color'
+import Value from './demo/Value'
+import DisabledReadOnly from './demo/DisabledReadOnly'
+import Loading from './demo/Loading'
+import Async from './demo/Async'
 
 export default () => {
-  const [checked, setChecked] = useState(true)
-  const [value, setValue] = useState('on')
-
-  const [checked2, setChecked2] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const handleChange = (checked: boolean) => {
-    setLoading(true)
-    setTimeout(() => {
-      setChecked2(checked)
-      setLoading(false)
-    }, 500)
-  }
-
   return (
     <Page className="page-switch">
       <Demo title="基础使用">
-        <Switch defaultChecked />
+        <Basic />
       </Demo>
 
       <Demo title="自定义尺寸">
-        <Switch size="20px" defaultChecked />
+        <Size />
       </Demo>
 
       <Demo title="自定义颜色">
-        <Switch checkedColor="orange" uncheckedColor="fuchsia" defaultChecked />
+        <Color />
       </Demo>
 
       <Demo title="不同状态的值">
-        <Switch
-          checked={checked}
-          onChange={(checked, value) => (setChecked(checked), setValue(value))}
-          checkedValue="on"
-          uncheckedValue="off"
-        />
-        <View>{value}</View>
+        <Value />
       </Demo>
 
-      <Demo title="禁用状态">
-        <Switch disabled />
-        <Switch defaultChecked disabled />
-      </Demo>
-
-      <Demo title="只读状态">
-        <Switch readOnly />
-        <Switch defaultChecked readOnly />
+      <Demo title="只读和禁用">
+        <DisabledReadOnly />
       </Demo>
 
       <Demo title="加载状态">
-        <Switch loading />
-        <Switch defaultChecked loading />
+        <Loading />
       </Demo>
 
       <Demo title="异步控制">
-        <Switch checked={checked2} loading={loading} onChange={handleChange} />
+        <Async />
       </Demo>
     </Page>
   )

@@ -215,7 +215,7 @@
               },
               {
                 "title": "Popover 气泡弹出框",
-                "path": "Popover",
+                "path": "popover",
                 "filePath": "../sard-taro/src/popover"
               },
               {

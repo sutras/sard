@@ -14,148 +14,57 @@ import { Input } from 'sard-taro'
 
 ### 非受控组件
 
-```tsx
-<Input placeholder="请输入" defaultValue="基础使用" />
-```
+%(${DEMO_PATH}/input/demo/Basic.tsx)
 
 ### 受控组件
 
-```tsx
-export default () => {
-  const [value, setValue] = useState('受控组件')
-
-  return (
-    <Input placeholder="请输入" value={value} onChange={setValue} />
-    <View>{value}</View>
-  )
-}
-```
+%(${DEMO_PATH}/input/demo/Controllable.tsx)
 
 ### 自定义样式
 
-```tsx
-<Input
-  placeholder="请输入"
-  style={{
-    color: 'orange',
-    borderColor: 'orange',
-    textAlign: 'center',
-    borderRadius: '9999px',
-    background: 'rgba(0,0,0,.05)',
-  }}
-/>
-```
+%(${DEMO_PATH}/input/demo/Style.tsx)
 
 ### 类型
 
-```tsx
-<Input placeholder="文本" type="text" />
-<Input placeholder="数字" type="number" />
-<Input placeholder="身份证" type="idcard" />
-<Input placeholder="带小数点数字" type="digit" />
-<Input placeholder="密码" type="password" />
-<Input placeholder="文本域" type="textarea" style={{ height: 100 }} />
-
-```
+%(${DEMO_PATH}/input/demo/Type.tsx)
 
 ### 可清除的
 
-```tsx
-<Input defaultValue="可清除的" placeholder="可清除的" clearable />
-```
+%(${DEMO_PATH}/input/demo/Clearable.tsx)
 
 ### 聚焦时显示清除按钮
 
-```tsx
-<Input
-  defaultValue="可清除的"
-  placeholder="可清除的"
-  clearable
-  showClearOnlyFocus
-/>
-```
+%(${DEMO_PATH}/input/demo/ShowClearOnlyFocus.tsx)
 
 ### 禁用
 
-```tsx
-<Input placeholder="禁用的" disabled />
-```
+%(${DEMO_PATH}/input/demo/Disabled.tsx)
 
 ### 只读
 
-```tsx
-<Input placeholder="只读的" readOnly />
-```
+%(${DEMO_PATH}/input/demo/ReadOnly.tsx)
 
 ### 插槽
 
-```tsx
-<Input
-  placeholder="请输入"
-  prepend={<Icon name="search" color="var(--sar-tertiary-color)" />}
-/>
-<Input
-  placeholder="请输入"
-  append={
-    <Button size="small" onClick={(event) => event.stopPropagation()}>
-      发送验证码
-    </Button>
-  }
-  style={{ marginTop: 10 }}
-  clearable
-/>
-```
+%(${DEMO_PATH}/input/demo/Slot.tsx)
 
 ### 去除边框
 
-```tsx
-<Input borderless placeholder="去除边框" />
-```
+%(${DEMO_PATH}/input/demo/Borderless.tsx)
 
 ### 嵌入的
 
 `inlaid` 用于清除边框和内边距，以便可以嵌入到其他组件内
 
-```tsx
-<Cell.Group card bodyStyle={{ maxWidth: 80 }}>
-  <Cell title="用户名" footer={<Input inlaid placeholder="嵌入的" />}></Cell>
-  <Cell
-    title="密码"
-    footer={<Input inlaid type="password" placeholder="嵌入的" />}
-  ></Cell>
-</Cell.Group>
-```
+%(${DEMO_PATH}/input/demo/Inlaid.tsx)
 
 ### 自动高度
 
-```tsx
-<Input type="textarea" autoHeight placeholder="autoHeight" />
-<Input
-  type="textarea"
-  autoHeight
-  style={{ maxHeight: 100 }}
-  placeholder="{ maxHeight: 100 }"
-/>
-<Input
-  type="textarea"
-  autoHeight
-  style={{ minHeight: 100, maxHeight: 200 }}
-  placeholder="{ minHeight: 100, maxHeight: 200 }"
-/>
-```
+%(${DEMO_PATH}/input/demo/AutoHeight.tsx)
 
 ### 字数提示
 
-```tsx
-<Input showCount maxLength={20} clearable />
-<Input
-  type="textarea"
-  showCount
-  maxLength={100}
-  style={{ height: 80 }}
-  clearable
-/>
-```
+%(${DEMO_PATH}/input/demo/ShowCount.tsx)
 
 ## API
 
@@ -190,4 +99,8 @@ export default () => {
 
 ### CSS 变量
 
-%{variables}
+%(./index.scss#variables)
+
+```
+
+```

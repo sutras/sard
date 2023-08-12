@@ -8,4 +8,4 @@ export interface CellContextValue {
   footerClass?: string
 }
 
-export const CellContext = createContext<CellContextValue>(null)
+export const CellContext = createContext<CellContextValue>({})

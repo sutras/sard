@@ -139,7 +139,11 @@ export const Popup: FC<PopupProps> = forwardRef<PopupRef, PopupProps>(
             )}
             style={{
               zIndex,
-              display: popupVisible ? 'flex' : 'none',
+              // display: popupVisible ? 'flex' : 'none',
+              // tips: 不通过display控制显隐可以解决picker在web滑动的问题。
+              opacity: popupVisible ? 1 : 0,
+              visibility: popupVisible ? 'visible' : 'hidden',
+              pointerEvents: popupVisible ? 'auto' : 'none',
               ...style,
             }}
             ref={ref}
