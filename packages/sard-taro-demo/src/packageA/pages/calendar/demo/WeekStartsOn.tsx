@@ -1,23 +1,16 @@
-import { Calendar, Cell, Popout } from 'sard-taro'
+import { Calendar, Cell, PopoutInput } from 'sard-taro'
 
 export default () => {
   return (
-    <Cell.Group card bodyStyle={{ flex: 'none' }}>
-      <Popout title="请选择日期">
-        <Popout.Outlet>
-          {({ value, setVisible }) => (
-            <Cell
-              linkable
-              title="选择日期"
-              value={value?.toLocaleDateString() || ''}
-              onClick={() => setVisible(true)}
-            />
-          )}
-        </Popout.Outlet>
-        <Popout.Target>
+    <Cell.Group card>
+      <Cell>
+        <PopoutInput
+          title="请选择日期"
+          inputProps={{ placeholder: '请选择日期' }}
+        >
           <Calendar weekStartsOn={1} />
-        </Popout.Target>
-      </Popout>
+        </PopoutInput>
+      </Cell>
     </Cell.Group>
   )
 }

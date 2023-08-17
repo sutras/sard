@@ -5,9 +5,10 @@ import {
   isFunction,
   isNumber,
   isString,
+  toArray,
 } from '../utils'
-import { AnyType } from '../base'
 import { ReactNode } from 'react'
+import { FormStore } from './createFormStore'
 
 export interface ValidateMessages {
   default?: string
@@ -73,15 +74,12 @@ export type ValidatorType =
   | 'hex'
   | 'email'
 
-export interface Rule {
-  validator?: (
-    value: AnyType,
-    rule: Rule,
-  ) => Promise<AnyType> | boolean | string
+export interface RuleConfig {
+  validator?: (value: any, rule: Rule) => Promise<any> | boolean | string
   pattern?: RegExp
   message?: string | (() => string)
   trigger?: string | string[]
-  transform?: (value: AnyType) => AnyType
+  transform?: (value: any) => any
   type?: ValidatorType
   enum?: string
   len?: number
@@ -91,22 +89,33 @@ export interface Rule {
   whitespace?: boolean
 }
 
+export type Rule = RuleConfig | ((form: FormStore) => RuleConfig)
+
 export interface Regulation {
   [name: string]: Rule | Rule[]
 }
 
 export interface ValidateOptions {
   validateFirst?: boolean
-  value?: AnyType
+  value?: any
   name?: string | number | (string | number)[]
   label?: ReactNode
+  form?: FormStore
+  triggerName?: string | string[]
 }
 
-function getMessage(message: Rule['message']) {
+export function getRuleConfig(rule: Rule, form: FormStore) {
+  if (isFunction(rule)) {
+    return rule(form)
+  }
+  return rule
+}
+
+function getMessage(message: RuleConfig['message']) {
   return isFunction(message) ? message() : message
 }
 
-function handleRange(len: number, type: string, rule: Rule) {
+function handleRange(len: number, type: string, rule: RuleConfig) {
   if (isNumber(rule.len)) {
     return len !== rule.len ? `${type}.len` : true
   } else if (isNumber(rule.min) && typeof isNumber(rule.max)) {
@@ -121,41 +130,41 @@ function handleRange(len: number, type: string, rule: Rule) {
 }
 
 const typeStrategies = {
-  string(value: AnyType, rule: Rule) {
+  string(value: any, rule: RuleConfig) {
     if (isString(value)) {
       return handleRange(value.length, 'string', rule)
     } else {
       return false
     }
   },
-  number(value: AnyType, rule: Rule) {
+  number(value: any, rule: RuleConfig) {
     if (isNumber(value)) {
       return handleRange(value, 'number', rule)
     } else {
       return false
     }
   },
-  integer(value: AnyType, rule: Rule) {
+  integer(value: any, rule: RuleConfig) {
     if (Number.isInteger(value)) {
       return handleRange(value as number, 'number', rule)
     } else {
       return false
     }
   },
-  float(value: AnyType, rule: Rule) {
+  float(value: any, rule: RuleConfig) {
     if (Number.isFinite(value) && (value as number) % 1 !== 0) {
       return handleRange(value as number, 'number', rule)
     } else {
       return false
     }
   },
-  boolean(value: AnyType) {
+  boolean(value: any) {
     return isBoolean(value)
   },
-  function(value: AnyType) {
+  function(value: any) {
     return isFunction(value)
   },
-  regexp(value: AnyType) {
+  regexp(value: any) {
     if (isString(value)) {
       try {
         new RegExp(value)
@@ -167,29 +176,29 @@ const typeStrategies = {
       return value instanceof RegExp
     }
   },
-  array(value: AnyType, rule: Rule) {
+  array(value: any, rule: RuleConfig) {
     if (Array.isArray(value)) {
       return handleRange(value.length, 'number', rule)
     } else {
       return false
     }
   },
-  object(value: AnyType) {
+  object(value: any) {
     return value && typeof value === 'object' && !Array.isArray(value)
   },
-  enum(value: AnyType, enums: AnyType[]) {
+  enum(value: any, enums: any[]) {
     return enums.includes(value) ? true : 'enum'
   },
-  date(value: AnyType) {
+  date(value: any) {
     return value instanceof Date
   },
-  url(value: AnyType) {
+  url(value: any) {
     return isString(value) && /url/.test(value)
   },
-  hex(value: AnyType) {
+  hex(value: any) {
     return isString(value) && /^#(?:[0-9A-F]{6}|[0-9A-F]{3})$/i.test(value)
   },
-  email(value: AnyType) {
+  email(value: any) {
     return (
       isString(value) &&
       /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,})$/.test(value)
@@ -210,7 +219,7 @@ export class Validator {
     this.validateMessages = validateMessages
   }
 
-  validateInternal(type: string, value: AnyType, rule: Rule) {
+  validateInternal(type: string, value: any, rule: Rule) {
     return new Promise<void>((resolve, reject) => {
       const result = typeStrategies[type]?.(value, rule)
       if (result === true) {
@@ -226,9 +235,9 @@ export class Validator {
     })
   }
 
-  validateRule(value: AnyType, rule: Rule) {
+  validateRule(value: any, rule: RuleConfig) {
     return new Promise<void>((resolve, reject) => {
-      const handleReject = (error: AnyType) => {
+      const handleReject = (error: any) => {
         reject({
           error,
           rule,
@@ -309,13 +318,26 @@ export class Validator {
   }
 
   validate(rules: Rule[], options: ValidateOptions = {}) {
-    const { validateFirst, value } = options
+    const { validateFirst, value, form, triggerName } = options
+
+    let filteredRules = rules
+
+    if (triggerName) {
+      filteredRules = rules.filter(Boolean).filter((rule) => {
+        const ruleConfig = getRuleConfig(rule, form)
+        const { trigger } = ruleConfig
+        if (!trigger) {
+          return true
+        }
+        return toArray(trigger).includes(triggerName)
+      })
+    }
 
     return new Promise<void>((resolve, reject) => {
       if (validateFirst) {
         Promise.all(
-          rules.map((rule) => {
-            return this.validateRule(value, rule)
+          filteredRules.map((rule) => {
+            return this.validateRule(value, getRuleConfig(rule, form))
           }),
         )
           .then(() => {
@@ -326,8 +348,8 @@ export class Validator {
           })
       } else {
         Promise.allSettled(
-          rules.map((rule) => {
-            return this.validateRule(value, rule)
+          filteredRules.map((rule) => {
+            return this.validateRule(value, getRuleConfig(rule, form))
           }),
         ).then((values) => {
           const rejected = values.filter(({ status }) => {
@@ -351,7 +373,11 @@ export class Validator {
     })
   }
 
-  replaceSymbol(string: string, rule: Rule, options: ValidateOptions = {}) {
+  replaceSymbol(
+    string: string,
+    rule: RuleConfig,
+    options: ValidateOptions = {},
+  ) {
     const label = isString(options.label) ? options.label : String(options.name)
 
     const matches = {

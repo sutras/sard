@@ -3,17 +3,18 @@
 // #variables
 :root,
 page {
-  --sar-input-padding-y: 6.5px;
+  --sar-input-padding-y: 5px;
   --sar-input-padding-x: 12px;
   --sar-input-border-radius: var(--sar-rounded);
   --sar-input-border-color: var(--sar-border-color);
   --sar-input-transition-duration: var(--sar-duration);
+  --sar-input-count-occupy-height: 20px;
 
   --sar-input-focused-border-color: var(--sar-primary);
 
   --sar-input-control-font-size: var(--sar-text-base);
   --sar-input-control-line-height: 1.5;
-  --sar-input-control-min-height: 21px;
+  --sar-input-control-min-height: 24px;
   --sar-input-control-textarea-min-height: 42px;
 
   --sar-input-placeholder-color: var(--sar-deemphasis-color);
@@ -67,6 +68,10 @@ page {
     @include m(is-textarea) {
       position: relative;
     }
+
+    @include m(is-textarea-count) {
+      margin-bottom: var(--sar-input-count-occupy-height);
+    }
   }
 
   @include e(prepend) {
@@ -76,8 +81,13 @@ page {
     margin-right: var(--sar-input-prepend-gap-right);
   }
 
-  @include e(control) {
+  // 兼容H5文本域文本溢出问题
+  taro-textarea-core {
     display: flex;
+    flex-direction: row;
+  }
+
+  @include e(control) {
     flex: 1 1 0;
     align-self: stretch;
     width: 0;
@@ -88,7 +98,6 @@ page {
     margin: 0;
     padding: 0;
     border: none;
-    resize: none;
 
     &,
     .weui-input,

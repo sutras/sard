@@ -16,5 +16,3 @@ export function useScroll(
 
   usePageScroll(handler)
 }
-
-export default useScroll

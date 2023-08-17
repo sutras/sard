@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Cell, Picker, Toast } from 'sard-taro'
+import { Cell, Picker, PopoutInput } from 'sard-taro'
 
 export default () => {
-  const objectMultiArray = [
+  const columns = [
     Array(10)
       .fill(0)
       .map((_, index) => ({
@@ -17,30 +17,25 @@ export default () => {
       })),
   ]
 
-  const [objectMultiArrayValue, setObjectMultiArrayValue] =
-    useState<(string | number)[]>()
-
-  const handleChange = (value, selectedOptions, selectedIndex) => {
-    console.log('change: ', value, selectedOptions, selectedIndex)
-    Toast.show(JSON.stringify(value))
-  }
+  const [value, setValue] = useState<number[]>()
 
   return (
     <Cell.Group card>
       <Cell
         linkable
         title="设置为: 2003年10月"
-        onClick={() => setObjectMultiArrayValue([2003, 10])}
+        onClick={() => setValue([2003, 10])}
       />
+      <Cell linkable title="清空" onClick={() => setValue(undefined)} />
       <Cell>
-        <Picker
-          value={objectMultiArrayValue}
-          columns={objectMultiArray}
-          onChange={(value, ...restArgs) => {
-            setObjectMultiArrayValue(value)
-            handleChange(value, ...restArgs)
-          }}
-        />
+        <PopoutInput
+          title="请选择"
+          inputProps={{ placeholder: '请选择' }}
+          value={value}
+          onChange={setValue}
+        >
+          <Picker columns={columns} />
+        </PopoutInput>
       </Cell>
     </Cell.Group>
   )

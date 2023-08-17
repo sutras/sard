@@ -9,7 +9,6 @@ import {
 
 import { createRoot } from 'react-dom/client'
 import { PopupProps } from '../popup'
-import { AnyType } from '../base'
 
 export type AgentProps<
   ComponentProps extends {
@@ -81,7 +80,7 @@ export function useAgent<
       agentProps.onVisible?.(visible)
     },
     ref: componentRef,
-  } as AnyType)
+  } as any)
 }
 
 export function mountComponent() {
@@ -108,7 +107,7 @@ export function mountAgent<ComponentProps, ComponentRef>(
   id: string,
   agent: (
     agentProps: AgentProps<ComponentProps>,
-  ) => React.CElement<AnyType, React.Component<AnyType, AnyType, AnyType>>,
+  ) => React.CElement<any, React.Component<any, any, any>>,
   mapIdAgent: MapIdAgent<ComponentProps, ComponentRef>,
   props: ComponentProps,
 ) {

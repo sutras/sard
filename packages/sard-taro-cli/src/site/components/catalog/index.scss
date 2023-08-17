@@ -34,6 +34,10 @@ $indent-gap: 15px !default;
       ~ [data-level='3'] {
         padding-left: 15px;
       }
+      ~ [data-level='4'] {
+        font-size: 12px;
+        padding-left: 30px;
+      }
     }
   }
 

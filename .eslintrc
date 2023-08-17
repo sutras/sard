@@ -32,7 +32,8 @@
     "react/react-in-jsx-scope": "off",
     "react/display-name": "off",
     "react/prop-types": "off",
-    "@typescript-eslint/no-this-alias": "off"
+    "@typescript-eslint/no-this-alias": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   },
   "globals": {
     "process": true,

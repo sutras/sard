@@ -45,5 +45,3 @@ export function useAutoplay(
 
   return [autoPlay, stop] as [() => void, () => void]
 }
-
-export default useAutoplay

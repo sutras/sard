@@ -20,7 +20,6 @@ export type PickerOption =
       label?: ReactNode
       value?: string | number
       children?: PickerOption[]
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       [key: PropertyKey]: any
     }
   | PrimitiveType

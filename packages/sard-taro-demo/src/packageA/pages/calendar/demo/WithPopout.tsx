@@ -1,60 +1,27 @@
-import { Calendar, Cell, Popout } from 'sard-taro'
+import { useState } from 'react'
+import { Calendar, Cell, PopoutInput } from 'sard-taro'
 
 export default () => {
+  const [value, setValue] = useState<Date>()
+
   return (
-    <Cell.Group card bodyStyle={{ flex: 'none' }}>
-      <Popout title="请选择日期">
-        <Popout.Outlet>
-          {({ value, setVisible }) => (
-            <Cell
-              linkable
-              title="选择日期"
-              value={value?.toLocaleDateString() || ''}
-              onClick={() => setVisible(true)}
-            ></Cell>
-          )}
-        </Popout.Outlet>
-        <Popout.Target>
+    <Cell.Group card>
+      <Cell
+        linkable
+        title="设置为当前日期"
+        onClick={() => setValue(new Date())}
+      />
+      <Cell linkable title="清空" onClick={() => setValue(undefined)} />
+      <Cell>
+        <PopoutInput
+          title="请选择"
+          inputProps={{ placeholder: '请选择' }}
+          value={value}
+          onChange={setValue}
+        >
           <Calendar />
-        </Popout.Target>
-      </Popout>
-
-      <Popout title="请选择日期">
-        <Popout.Outlet>
-          {({ value, setVisible }) => (
-            <Cell
-              linkable
-              title="选择多个日期"
-              value={
-                value?.map((date) => date.toLocaleDateString()).join(', ') || ''
-              }
-              onClick={() => setVisible(true)}
-            ></Cell>
-          )}
-        </Popout.Outlet>
-        <Popout.Target>
-          <Calendar type="multiple" />
-        </Popout.Target>
-      </Popout>
-
-      <Popout title="请选择日期">
-        <Popout.Outlet>
-          {({ value, setVisible }) => (
-            <Cell
-              linkable
-              title="选择范围"
-              value={
-                value?.map((date) => date.toLocaleDateString()).join(' - ') ||
-                ''
-              }
-              onClick={() => setVisible(true)}
-            ></Cell>
-          )}
-        </Popout.Outlet>
-        <Popout.Target>
-          <Calendar type="range" />
-        </Popout.Target>
-      </Popout>
+        </PopoutInput>
+      </Cell>
     </Cell.Group>
   )
 }

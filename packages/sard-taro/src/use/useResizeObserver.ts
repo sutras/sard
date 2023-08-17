@@ -3,7 +3,7 @@
  */
 
 import { useMemo, useRef, createElement, memo } from 'react'
-import useEvent from './useEvent'
+import { useEvent } from './useEvent'
 
 export function useResizeObserver(callback: (...args: unknown[]) => unknown) {
   const resizeObserver = useRef<ResizeObserver>()
@@ -49,5 +49,3 @@ export function useResizeObserver(callback: (...args: unknown[]) => unknown) {
 
   return [ResizeSpy] as const
 }
-
-export default useResizeObserver

@@ -5,11 +5,9 @@ export default () => {
     <Input
       placeholder="请输入"
       style={{
-        color: 'orange',
-        borderColor: 'orange',
-        textAlign: 'center',
-        borderRadius: '9999px',
-        background: 'rgba(0,0,0,.05)',
+        borderRadius: 9999,
+        borderColor: 'var(--sar-pink)',
+        backgroundColor: '#fff',
       }}
     />
   )

@@ -3,6 +3,7 @@ import {
   DatetimeColumnOption,
   DatetimeLetter,
   DatetimePicker,
+  PopoutInput,
 } from 'sard-taro'
 
 const formatter = (letter: DatetimeLetter, option: DatetimeColumnOption) => {
@@ -21,7 +22,9 @@ export default () => {
   return (
     <Cell.Group card>
       <Cell>
-        <DatetimePicker type="yMd" formatter={formatter} />
+        <PopoutInput title="请选择" inputProps={{ placeholder: '请选择' }}>
+          <DatetimePicker type="yMd" formatter={formatter} />
+        </PopoutInput>
       </Cell>
     </Cell.Group>
   )

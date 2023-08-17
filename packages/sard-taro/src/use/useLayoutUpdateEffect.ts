@@ -23,5 +23,3 @@ export const useLayoutUpdateEffect: typeof useLayoutEffect = (
     }
   }, [])
 }
-
-export default useLayoutUpdateEffect

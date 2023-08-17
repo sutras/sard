@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useTopRoute } from '../../use/useRoute'
 
 function getDom(context: Element) {
-  return [...context.querySelectorAll('h1, h2, h3')]
+  return [...context.querySelectorAll('h1, h2, h3, h4')]
     .map((heading) => {
       return `<li data-level="${heading.nodeName.slice(
         1,

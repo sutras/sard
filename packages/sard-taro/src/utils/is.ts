@@ -1,6 +1,4 @@
-import { AnyType } from '../base'
-
-type PlainObject = Record<string, AnyType>
+type PlainObject = Record<string, any>
 
 // 判断是否为纯对象
 export function isPlainObject(target: unknown): target is PlainObject {
@@ -9,9 +7,7 @@ export function isPlainObject(target: unknown): target is PlainObject {
 
 // 判断是否为函数
 // eslint-disable-next-line @typescript-eslint/ban-types
-export function isFunction(
-  target: unknown,
-): target is (...args: AnyType[]) => AnyType {
+export function isFunction(target: unknown): target is (...args: any[]) => any {
   return typeof target === 'function'
 }
 

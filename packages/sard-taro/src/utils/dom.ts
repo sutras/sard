@@ -119,10 +119,12 @@ export interface ScrollIntoViewOptions {
   rightOffset?: number
 }
 
+// todo
 export function scrollIntoView(
   elem: HTMLElement,
   options: ScrollIntoViewOptions,
 ) {
+  return
   const {
     block,
     inline,

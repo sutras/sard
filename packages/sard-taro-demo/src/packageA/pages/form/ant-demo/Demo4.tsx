@@ -6,11 +6,10 @@ import {
   Col,
   DatetimePicker,
   Form,
-  Icon,
   Input,
   PasswordInput,
   Picker,
-  Popout,
+  PopoutInput,
   Radio,
   Rate,
   Row,
@@ -51,11 +50,11 @@ function App() {
     gender: 'male',
     age: 18,
     idNumber: '000000000000000000',
-    nativePlace: [440000, 440100, 440111],
+    nativePlace: 440111,
     address: '广东省广州市xxx xxx xxx 16号',
-    birthday: new Date(2000, 0, 1),
+    birthday: new Date(2000, 7, 12),
     married: true,
-    education: ['e2'],
+    education: '初中',
     avatar: [
       {
         url: pic1,
@@ -80,7 +79,7 @@ function App() {
       })
   }
 
-  const [disabled, setDisabled] = useState(true)
+  const [disabled, setDisabled] = useState(false)
 
   return (
     <Form
@@ -91,6 +90,7 @@ function App() {
       scrollToFirstError
       disabled={disabled}
       starPosition="left"
+      labelWidth={100}
     >
       <View style={{ padding: 10 }}>
         <Switch checked={disabled} onChange={setDisabled} /> 禁用
@@ -144,8 +144,8 @@ function App() {
         label="验证码"
         name="captcha"
         layout="vertical"
+        underline={false}
         style={{
-          paddingBottom: 0,
           '--sar-form-item-border-color': 'transparent',
           '--sar-password-input-height': '40px',
         }}
@@ -184,67 +184,34 @@ function App() {
       </Form.Field>
 
       <Form.Field label="籍贯" name="nativePlace" rules={[{ required: true }]}>
-        <Popout title="请选择省市区" fast showConfirm={false}>
-          <Popout.Outlet>
-            {({ triggerArgs: [, options = []], setVisible, setValue }) => (
-              <Input
-                readOnly
-                disabled={disabled}
-                inlaid
-                placeholder="请选择省市区"
-                append={<Icon color="#ccc" name="bi-caret-right-fill"></Icon>}
-                value={options.map((option) => option.name).join('/')}
-                clearable
-                onClear={() => setValue()}
-                onClick={() => setVisible(true)}
-              />
-            )}
-          </Popout.Outlet>
-          <Popout.Target>
-            <Cascader
-              options={regionData}
-              fieldNames={{ label: 'name', value: 'code' }}
-            />
-          </Popout.Target>
-        </Popout>
+        <PopoutInput
+          title="请选择省市区"
+          fast
+          showConfirm={false}
+          inputProps={{ placeholder: '请选择' }}
+        >
+          <Cascader
+            options={regionData}
+            fieldNames={{ label: 'name', value: 'code' }}
+          />
+        </PopoutInput>
       </Form.Field>
 
       <Form.Field label="现住址" name="address" rules={[{ required: true }]}>
-        <Input
-          inlaid
-          clearable
-          type="textarea"
-          placeholder="请输入现住址"
-          autoHeight
-          style={{ minHeight: 100, maxHeight: 200 }}
-        />
+        <Input inlaid clearable type="textarea" placeholder="请输入现住址" />
       </Form.Field>
 
       <Form.Field label="出生日期" name="birthday" rules={[{ required: true }]}>
-        <Popout title="请选择出生日期">
-          <Popout.Outlet>
-            {({ value, setVisible, setValue }) => (
-              <Input
-                readOnly
-                disabled={disabled}
-                inlaid
-                placeholder="请选择出生日期"
-                append={<Icon color="#ccc" name="bi-caret-right-fill"></Icon>}
-                value={value?.toLocaleDateString() || ''}
-                clearable
-                onClear={() => setValue()}
-                onClick={() => setVisible(true)}
-              />
-            )}
-          </Popout.Outlet>
-          <Popout.Target>
-            <DatetimePicker
-              type="yMd"
-              min={new Date(1900, 0, 1)}
-              max={new Date()}
-            />
-          </Popout.Target>
-        </Popout>
+        <PopoutInput
+          title="请选择出生日期"
+          inputProps={{ placeholder: '请选择' }}
+        >
+          <DatetimePicker
+            type="yMd"
+            min={new Date(1900, 0, 1)}
+            max={new Date()}
+          />
+        </PopoutInput>
       </Form.Field>
 
       <Form.Field
@@ -258,60 +225,11 @@ function App() {
       </Form.Field>
 
       <Form.Field label="学历" name="education" rules={[{ required: true }]}>
-        <Popout title="请选择学历">
-          <Popout.Outlet>
-            {({
-              value,
-              triggerArgs: [, options = []],
-              setVisible,
-              setValue,
-            }) => (
-              <Input
-                readOnly
-                disabled={disabled}
-                inlaid
-                placeholder="请选择学历"
-                append={<Icon color="#ccc" name="bi-caret-right-fill"></Icon>}
-                value={(value?.length && options[0]?.label) || ''}
-                clearable
-                onClear={() => setValue()}
-                onClick={() => setVisible(true)}
-              />
-            )}
-          </Popout.Outlet>
-          <Popout.Target>
-            <Picker
-              columns={[
-                [
-                  {
-                    label: '小学',
-                    value: 'e1',
-                  },
-                  {
-                    label: '初中',
-                    value: 'e2',
-                  },
-                  {
-                    label: '高中',
-                    value: 'e3',
-                  },
-                  {
-                    label: '专科',
-                    value: 'e4',
-                  },
-                  {
-                    label: '本科',
-                    value: 'e5',
-                  },
-                  {
-                    label: '研究生',
-                    value: 'e6',
-                  },
-                ],
-              ]}
-            ></Picker>
-          </Popout.Target>
-        </Popout>
+        <PopoutInput title="请选择学历" inputProps={{ placeholder: '请选择' }}>
+          <Picker
+            columns={['小学', '初中', '高中', '专科', '本科', '研究生']}
+          ></Picker>
+        </PopoutInput>
       </Form.Field>
 
       <Form.Field
@@ -349,26 +267,9 @@ function App() {
         name="travelDate"
         rules={[{ required: true }]}
       >
-        <Popout title="请选择日期">
-          <Popout.Outlet>
-            {({ value, setVisible, setValue }) => (
-              <Input
-                readOnly
-                disabled={disabled}
-                inlaid
-                placeholder="请选择日期"
-                append={<Icon color="#ccc" name="bi-caret-right-fill"></Icon>}
-                value={value?.toLocaleDateString() || ''}
-                clearable
-                onClear={() => setValue()}
-                onClick={() => setVisible(true)}
-              />
-            )}
-          </Popout.Outlet>
-          <Popout.Target>
-            <Calendar />
-          </Popout.Target>
-        </Popout>
+        <PopoutInput title="请选择日期" inputProps={{ placeholder: '请选择' }}>
+          <Calendar />
+        </PopoutInput>
       </Form.Field>
 
       <Form.Field underline={false}>

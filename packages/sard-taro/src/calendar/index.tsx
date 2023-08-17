@@ -1,7 +1,11 @@
 import {
   CSSProperties,
   forwardRef,
+  ForwardRefExoticComponent,
+  PropsWithoutRef,
   ReactNode,
+  RefAttributes,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useRef,
@@ -9,7 +13,12 @@ import {
 } from 'react'
 import classNames from 'classnames'
 import { useBem, useControllableValue, useEvent } from '../use'
-import { getDaysInMonth, getWeekOnFirstDay, toDateNumber } from '../utils'
+import {
+  formatDate,
+  getDaysInMonth,
+  getWeekOnFirstDay,
+  toDateNumber,
+} from '../utils'
 import { scrollIntoView, ScrollIntoViewPosition } from '../utils'
 import useTranslate from '../locale/useTranslate'
 
@@ -26,6 +35,8 @@ export interface CalendarDay {
   style?: CSSProperties
 }
 
+export type CalendarType = 'single' | 'multiple' | 'range'
+
 interface CalendarBaseProps extends Omit<BaseProps, 'children'> {
   min?: Date
   max?: Date
@@ -36,6 +47,8 @@ interface CalendarBaseProps extends Omit<BaseProps, 'children'> {
   weekStartsOn?: number
   formatter?: (day: CalendarDay) => void
   allowSameDay?: boolean
+  onOutletChange?: (outletValue: any, isManual: boolean) => void
+  outletFormatter?: (type: CalendarType, value: Date | Date[]) => string
 }
 
 export interface CalendarSingleProps extends CalendarBaseProps {
@@ -95,6 +108,35 @@ export interface CalendarRef {
   ) => void
 }
 
+const formatTemplate = 'YYYY-MM-DD'
+
+function defaultOutletFormatter(type: CalendarType, value: Date | Date[]) {
+  switch (type) {
+    case 'single':
+      if (value instanceof Date) {
+        return formatDate(value, formatTemplate)
+      }
+      break
+    case 'range':
+      if (Array.isArray(value)) {
+        return value.map((date) => formatDate(date, formatTemplate)).join(' - ')
+      }
+      break
+    case 'multiple':
+      if (Array.isArray(value)) {
+        return value.map((date) => formatDate(date, formatTemplate)).join(', ')
+      }
+  }
+  return ''
+}
+
+export interface CalendarFC
+  extends ForwardRefExoticComponent<
+    PropsWithoutRef<CalendarProps> & RefAttributes<CalendarRef>
+  > {
+  hasOutletChange: boolean
+}
+
 export const Calendar = forwardRef<CalendarRef, CalendarProps>((props, ref) => {
   const [t] = useTranslate('calendar')
 
@@ -108,6 +150,8 @@ export const Calendar = forwardRef<CalendarRef, CalendarProps>((props, ref) => {
     value,
     defaultValue,
     onChange,
+    onOutletChange,
+    outletFormatter = defaultOutletFormatter,
     maxDays = Number.MAX_SAFE_INTEGER,
     overMaxDays,
     weekStartsOn = 0,
@@ -148,6 +192,15 @@ export const Calendar = forwardRef<CalendarRef, CalendarProps>((props, ref) => {
     trigger: onChange,
     initialValue: () => (type === 'single' ? null : []),
   })
+
+  const isManual = useRef(false)
+
+  useEffect(() => {
+    if (onOutletChange) {
+      onOutletChange(outletFormatter(type, innerValue), isManual.current)
+      isManual.current = false
+    }
+  }, [innerValue])
 
   const [startDate, setStartDate] = useState<Date>(() => {
     return type === 'range' &&
@@ -213,6 +266,8 @@ export const Calendar = forwardRef<CalendarRef, CalendarProps>((props, ref) => {
     }
 
     setInnerValue(val)
+
+    isManual.current = true
   }
 
   const scrollToDate = useEvent(
@@ -406,6 +461,7 @@ export const Calendar = forwardRef<CalendarRef, CalendarProps>((props, ref) => {
         </View>
       </View>
       <ScrollView
+        enableFlex
         className={bem.e('body')}
         scrollY
         onScrollToUpper={(event) => event.preventDefault()}
@@ -418,6 +474,8 @@ export const Calendar = forwardRef<CalendarRef, CalendarProps>((props, ref) => {
       <View className={bem.e('footer')}></View>
     </View>
   )
-})
+}) as CalendarFC
+
+Calendar.hasOutletChange = true
 
 export default Calendar

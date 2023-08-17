@@ -1,4 +1,13 @@
-import { useState, ReactNode, useRef, forwardRef } from 'react'
+import {
+  useState,
+  ReactNode,
+  useRef,
+  forwardRef,
+  ComponentType,
+  ForwardRefExoticComponent,
+  PropsWithoutRef,
+  RefAttributes,
+} from 'react'
 import {
   ITouchEvent,
   View,
@@ -38,23 +47,29 @@ interface InputBaseProps extends BaseProps {
 
 interface InputInputProps
   extends InputBaseProps,
-    Omit<TaroInputProps, 'style' | 'type'> {
+    Omit<TaroInputProps, 'style' | 'type' | 'ref'> {
   type?: TaroInputProps['type'] | 'password'
   confirmType?: TaroInputProps['confirmType']
 }
 
 interface InputTextareaProps
   extends InputBaseProps,
-    Omit<TextareaProps, 'style'> {
+    Omit<TextareaProps, 'style' | 'ref'> {
   type: 'textarea'
   confirmType?: TextareaProps['confirmType']
 }
 
 export type InputProps = InputInputProps | InputTextareaProps
 
-type InputRef = HTMLInputElement | HTMLTextAreaElement
+export type InputRef =
+  | ComponentType<TaroInputProps>
+  | ComponentType<TextareaProps>
 
-export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
+export type InputFC = ForwardRefExoticComponent<
+  PropsWithoutRef<InputProps> & RefAttributes<InputRef>
+>
+
+export const Input: InputFC = forwardRef((props, ref) => {
   const {
     style: { height, minHeight, maxHeight, ...restStyle } = {},
     className,
@@ -126,7 +141,7 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     setInnerValue(event.detail.value)
   }
 
-  const inputRef = useRef<HTMLInputElement & HTMLTextAreaElement>()
+  const inputRef = useRef<InputRef>()
 
   const controlProps = {
     ...restProps,
@@ -177,10 +192,6 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   }
 
   const handleRootClick = (event: ITouchEvent) => {
-    if (event.currentTarget === event.target) {
-      inputRef.current?.focus()
-    }
-
     onClick?.(event)
   }
 
@@ -198,6 +209,7 @@ export const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         bem.m('readonly', readOnly),
         bem.m('focused', focused || innerFocused),
         bem.m('is-textarea', type === 'textarea'),
+        bem.m('is-textarea-count', type === 'textarea' && showCount && !!count),
         className,
       )}
       onClick={handleRootClick}

@@ -4,6 +4,7 @@ import { Toast } from 'sard-taro'
 
 import Basic from './demo/Basic'
 import WithPopout from './demo/WithPopout'
+import Type from './demo/Type'
 import MinMax from './demo/MinMax'
 import MaxDays from './demo/MaxDays'
 import DisabledDate from './demo/DisabledDate'
@@ -22,6 +23,10 @@ export default () => {
 
       <Demo title="配合弹出框使用" full>
         <WithPopout />
+      </Demo>
+
+      <Demo title="类型" full>
+        <Type />
       </Demo>
 
       <Demo title="自定义日期范围" full>

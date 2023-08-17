@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
+import Taro from '@tarojs/taro'
 import { throttle, DebounceOptions } from '../utils'
 import { useEvent } from './useEvent'
-import Taro from '@tarojs/taro'
 
 export function useResize(
   func: (...args: unknown[]) => unknown,
-  wait: unknown,
+  wait: number,
   options?: DebounceOptions,
 ) {
   const fn = useEvent(func)
@@ -19,5 +19,3 @@ export function useResize(
     }
   }, [])
 }
-
-export default useResize

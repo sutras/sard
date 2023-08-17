@@ -4,7 +4,7 @@
 
 import { useEffect, useRef } from 'react'
 import { useEvent } from './useEvent'
-import useUpdateEffect from './useUpdateEffect'
+import { useUpdateEffect } from './useUpdateEffect'
 
 export function useSetTimeout(
   callback: (...args: unknown[]) => unknown,
@@ -36,5 +36,3 @@ export function useSetTimeout(
 
   return [reset, clear] as const
 }
-
-export default useSetTimeout

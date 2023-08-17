@@ -1,26 +1,34 @@
-import { Cell, DatetimePicker, Space } from 'sard-taro'
+import { Cell, DatetimePicker, PopoutInput, Space } from 'sard-taro'
 
 export default () => {
   return (
     <Space vertical gap="large">
       <Cell.Group card>
-        <Cell title="年月日" />
         <Cell>
-          <DatetimePicker type="yMd" />
+          <PopoutInput title="日期" inputProps={{ placeholder: '日期' }}>
+            <DatetimePicker type="yMd" />
+          </PopoutInput>
         </Cell>
-      </Cell.Group>
 
-      <Cell.Group card>
-        <Cell title="时分秒" />
         <Cell>
-          <DatetimePicker type="hms" />
+          <PopoutInput title="月份" inputProps={{ placeholder: '月份' }}>
+            <DatetimePicker type="yM" />
+          </PopoutInput>
         </Cell>
-      </Cell.Group>
 
-      <Cell.Group card>
-        <Cell title="日时分" />
         <Cell>
-          <DatetimePicker type="dhm" />
+          <PopoutInput title="时间" inputProps={{ placeholder: '时间' }}>
+            <DatetimePicker type="yMd" />
+          </PopoutInput>
+        </Cell>
+
+        <Cell>
+          <PopoutInput
+            title="日期时间"
+            inputProps={{ placeholder: '日期时间' }}
+          >
+            <DatetimePicker type="yMdhm" />
+          </PopoutInput>
         </Cell>
       </Cell.Group>
     </Space>

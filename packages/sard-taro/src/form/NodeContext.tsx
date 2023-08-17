@@ -1,15 +1,28 @@
-import { ReactNode, createContext } from 'react'
+import { createContext, useContext } from 'react'
 import { FormNode } from './useNode'
 
 export const NodeContext = createContext<FormNode>(null)
 
-export interface NodeProviderProps {
-  children?: ReactNode
-  node: FormNode
+export interface DescendantContextValue {
+  validateTrigger?: string | string[]
+  validateFirst?: boolean
 }
+export const DescendantContext = createContext<DescendantContextValue>(null)
 
-export const NodeProvider = (props: NodeProviderProps) => {
-  const { children, node } = props
+export function useDescendant(options: DescendantContextValue) {
+  const { validateFirst, validateTrigger } = options
+  const descendantInfo = useContext(DescendantContext)
 
-  return <NodeContext.Provider value={node}>{children}</NodeContext.Provider>
+  const {
+    validateTrigger: formValidateTrigger,
+    validateFirst: formValidateFirst,
+  } = descendantInfo
+
+  const mergedValidateFirst = validateFirst || formValidateFirst
+  const mergedValidateTrigger = validateTrigger || formValidateTrigger
+
+  return {
+    mergedValidateFirst,
+    mergedValidateTrigger,
+  }
 }

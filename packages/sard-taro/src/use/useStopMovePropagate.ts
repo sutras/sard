@@ -33,5 +33,3 @@ export function useStopMovePropagate<T>(
 
   return { on, off } as const
 }
-
-export default useStopMovePropagate

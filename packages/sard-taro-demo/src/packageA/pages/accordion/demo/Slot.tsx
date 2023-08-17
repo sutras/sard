@@ -12,7 +12,7 @@ export default () => {
           </>
         }
         icon={(active) => (
-          <Icon name={active ? 'caret-up-fill' : 'caret-down-fill'}></Icon>
+          <Icon name={active ? 'caret-up' : 'caret-down'}></Icon>
         )}
       >
         内容1

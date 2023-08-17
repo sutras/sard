@@ -1,13 +1,12 @@
 import { Mesh } from 'sard-taro'
 
 const inbuiltIcons = [
+  'volume-up',
   'play',
-  'caret-down-fill',
-  'caret-left-fill',
-  'caret-right-fill',
-  'caret-up-fill',
-  'keyboard-hide',
   'caret-down',
+  'caret-left',
+  'caret-right',
+  'caret-up',
   'backspace',
   'record-circle',
   'file',

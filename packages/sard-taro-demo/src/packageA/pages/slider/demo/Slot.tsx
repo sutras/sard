@@ -7,20 +7,14 @@ export default () => {
     justifyContent: 'center',
     alignItems: 'center',
     width: '30px',
-    height: '20px',
+    height: '24px',
     borderRadius: '4px',
     color: '#fff',
+    backgroundColor: 'var(--sar-pink)',
   }
-  const startStyle = {
-    ...buttonStyle,
-    backgroundColor: 'orange',
-  }
-  const endStyle = {
-    ...buttonStyle,
-    backgroundColor: 'fuchsia',
-  }
-  const startButton = (value) => <View style={startStyle}>{value}</View>
-  const endButton = (value) => <View style={endStyle}>{value}</View>
+
+  const startButton = (value) => <View style={buttonStyle}>{value}</View>
+  const endButton = (value) => <View style={buttonStyle}>{value}</View>
 
   return (
     <Space vertical>

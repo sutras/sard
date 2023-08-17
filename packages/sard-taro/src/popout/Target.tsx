@@ -5,18 +5,21 @@ import {
   useEffect,
   isValidElement,
   ReactNode,
+  useState,
 } from 'react'
 
 import PopoutContext from './PopoutContext'
+import { isEmptyValue } from '../utils'
 
 export type PopputTargeMembers = {
   alwaysHasValue?: boolean
-  canListenOuterValueChange?: boolean
+  hasOutletChange?: boolean
 }
 export interface PopoutTargetProps {
   children: ReactNode
   valuePropName?: string
   trigger?: string
+  onOutletChange?: (outletValue: any, isManual: boolean) => void
 }
 
 export const PopoutTarget: FC<PopoutTargetProps> = (props) => {
@@ -24,40 +27,60 @@ export const PopoutTarget: FC<PopoutTargetProps> = (props) => {
 
   const popoutContext = useContext(PopoutContext)
 
+  const {
+    value: popoutValue,
+    setConfirmDisabled,
+    setTarget,
+    setOutletValue,
+    temporaryOutletValue,
+    onChange,
+    alwaysHasValue,
+    targetRef,
+  } = popoutContext
+
+  const [value, setValue] = useState<any>(popoutValue)
+
+  // tips: 不在onChange回调操作，通过监听value变化，可以统一处理onChange和上层组件值的变化
   useEffect(() => {
-    popoutContext.setTarget(true)
+    setConfirmDisabled(isEmptyValue(value))
+    onChange(value)
+  }, [value])
+
+  useEffect(() => {
+    if (popoutValue !== value) {
+      setValue(popoutValue)
+    }
+  }, [popoutValue])
+
+  useEffect(() => {
+    setTarget(true)
 
     return () => {
-      popoutContext.setTarget(false)
+      setTarget(false)
     }
   }, [])
 
-  useEffect(() => {
-    popoutContext.setAlwaysHasValue(
-      isValidElement(children) &&
-        (children.type as PopputTargeMembers).alwaysHasValue,
-    )
-  }, [children])
-
   if (isValidElement(children)) {
-    const sourceType = children.type as PopputTargeMembers
-
     const props = {
-      [valuePropName]: popoutContext.bridgeValue,
-      [trigger]: (...args) => {
-        popoutContext.handleChange(args)
-        children.props[trigger]?.(...args)
+      [valuePropName]: value,
+      [trigger]: (value, ...restArgs) => {
+        setValue(value)
+        children.props[trigger]?.(value, ...restArgs)
       },
     }
 
-    if (sourceType.canListenOuterValueChange) {
-      props.onOuterValueChange = (...args) => {
-        popoutContext.setTriggerArgs(args)
-      }
+    if ((children.type as PopputTargeMembers)?.alwaysHasValue) {
+      props.ref = targetRef
+      alwaysHasValue.current = true
     }
 
-    if (sourceType.alwaysHasValue) {
-      props.ref = popoutContext.targetElementRef
+    if ((children.type as PopputTargeMembers)?.hasOutletChange) {
+      props.onOutletChange = (value, isManual: boolean) => {
+        temporaryOutletValue.current = value
+        if (!isManual) {
+          setOutletValue(value)
+        }
+      }
     }
 
     return cloneElement(children, props)

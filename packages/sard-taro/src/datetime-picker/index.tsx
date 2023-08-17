@@ -8,11 +8,12 @@ import {
   RefAttributes,
   PropsWithoutRef,
   ReactNode,
+  useEffect,
 } from 'react'
 import { Picker, PickerRef } from '../picker'
 import { useEvent, useControllableValue, useLayoutUpdateEffect } from '../use'
-import { getDaysInMonth, minmax } from '../utils'
-import { AnyType, BaseProps } from '../base'
+import { formatDate, getDaysInMonth, minmax } from '../utils'
+import { BaseProps } from '../base'
 
 export type DatetimeLetter = 'y' | 'M' | 'd' | 'h' | 'm' | 's'
 
@@ -20,11 +21,11 @@ export interface DatetimeColumnOption {
   value: number
   label?: ReactNode
   zerofill?: string
-  [key: PropertyKey]: AnyType
+  [key: PropertyKey]: any
 }
 
 export type DatetimePickerRef = {
-  getTriggerArgsForcibly: () => readonly [value: Date]
+  getTriggerArgsForcibly: () => readonly [value: any, outletValue: string]
 }
 
 export type DateEvery = [number, number, number, number, number, number]
@@ -172,6 +173,8 @@ export interface DatetimePickerProps extends BaseProps {
     index: number,
   ) => ReactNode
   onChange?: (value: Date) => void
+  onOutletChange?: (outletValue: any, isManual: boolean) => void
+  outletFormatter?: (type: string, date?: Date) => string
 }
 
 export interface DatetimePickerFC
@@ -179,6 +182,46 @@ export interface DatetimePickerFC
     PropsWithoutRef<DatetimePickerProps> & RefAttributes<DatetimePickerRef>
   > {
   alwaysHasValue: boolean
+  hasOutletChange: boolean
+}
+
+const mapLetterFullname = {
+  y: 'YYYY',
+  M: 'MM',
+  d: 'DD',
+  h: 'HH',
+  m: 'mm',
+  s: 'ss',
+}
+
+function defaultOutletFormatter(type: string, date?: Date) {
+  if (!date) {
+    return ''
+  }
+  const letters = type.split('')
+  const dateLetter = []
+  const timeLetter = []
+  'yMd'.split('').forEach((letter) => {
+    if (letters.includes(letter)) {
+      dateLetter.push(letter)
+    }
+  })
+  'hms'.split('').forEach((letter) => {
+    if (letters.includes(letter)) {
+      timeLetter.push(letter)
+    }
+  })
+  const dateTemplate = dateLetter
+    .map((letter) => mapLetterFullname[letter])
+    .join('-')
+  const timeTemplate = timeLetter
+    .map((letter) => mapLetterFullname[letter])
+    .join(':')
+
+  return formatDate(
+    date,
+    [dateTemplate, timeTemplate].filter(Boolean).join(' '),
+  )
 }
 
 export const DatetimePicker = forwardRef<
@@ -194,13 +237,14 @@ export const DatetimePicker = forwardRef<
     filter,
     formatter,
     onChange,
+    onOutletChange,
+    outletFormatter = defaultOutletFormatter,
     ...restProps
   } = props
 
-  const innerType = useMemo<DatetimeLetter[]>(
-    () => type.split('') as DatetimeLetter[],
-    [type],
-  )
+  const innerType = useMemo<DatetimeLetter[]>(() => {
+    return type.split('') as DatetimeLetter[]
+  }, [type])
 
   const minDate = useMemo(() => min || getMinDate(), [min])
 
@@ -224,6 +268,16 @@ export const DatetimePicker = forwardRef<
         : value
     },
   })
+
+  const isManual = useRef(false)
+
+  useEffect(() => {
+    if (onOutletChange) {
+      const outletValue = value ? outletFormatter(type, innerValue) : ''
+      onOutletChange(outletValue, isManual.current)
+      isManual.current = false
+    }
+  }, [value, innerValue])
 
   const pickerValue = useMemo(() => {
     return innerType.map((letter) => {
@@ -319,8 +373,8 @@ export const DatetimePicker = forwardRef<
 
   const handleChange = useEvent((value: number[]) => {
     const nextDate = getDateByPickerValue(value)
-
     setInnerValue(nextDate)
+    isManual.current = true
   })
 
   useLayoutUpdateEffect(() => {
@@ -332,7 +386,9 @@ export const DatetimePicker = forwardRef<
   const getTriggerArgsForcibly = useEvent(() => {
     const [value] = pickerRef.current.getTriggerArgsForcibly()
 
-    return [getDateByPickerValue(value as number[])] as const
+    const date = getDateByPickerValue(value as number[])
+
+    return [date, outletFormatter(type, date)] as const
   })
 
   useImperativeHandle(ref, () => ({
@@ -351,5 +407,6 @@ export const DatetimePicker = forwardRef<
 }) as DatetimePickerFC
 
 DatetimePicker.alwaysHasValue = true
+DatetimePicker.hasOutletChange = true
 
 export default DatetimePicker

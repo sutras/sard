@@ -1,38 +1,29 @@
 import { useState } from 'react'
-import { Cell, Picker, Popout } from 'sard-taro'
-import { getRegionData } from 'region-data'
-
-const regionData = getRegionData()
+import { Cell, Picker, PopoutInput } from 'sard-taro'
 
 export default () => {
-  const [popoutCascaderValue, setPopoutCascaderValue] = useState<number[]>()
+  const columns = ['北京市', '天津市', '河北省', '山东省']
+
+  const [value, setValue] = useState<string>()
 
   return (
     <Cell.Group card>
       <Cell
         linkable
-        title="设置为: 广东省/广州市/天河区"
-        onClick={() => setPopoutCascaderValue([440000, 440100, 440106])}
+        title="设置为: 天津市"
+        onClick={() => setValue('天津市')}
       />
-      <Popout title="请选择省市区">
-        <Popout.Outlet>
-          {({ triggerArgs: [, options = []], setVisible }) => (
-            <Cell
-              linkable
-              title="请选择省市区"
-              value={options.map((option) => option.name).join('/')}
-              onClick={() => setVisible(true)}
-            />
-          )}
-        </Popout.Outlet>
-        <Popout.Target>
-          <Picker
-            value={popoutCascaderValue}
-            columns={regionData}
-            optionKeys={{ label: 'name', value: 'code' }}
-          />
-        </Popout.Target>
-      </Popout>
+      <Cell linkable title="清空" onClick={() => setValue(undefined)} />
+      <Cell>
+        <PopoutInput
+          title="请选择"
+          inputProps={{ placeholder: '请选择' }}
+          value={value}
+          onChange={setValue}
+        >
+          <Picker columns={columns} />
+        </PopoutInput>
+      </Cell>
     </Cell.Group>
   )
 }

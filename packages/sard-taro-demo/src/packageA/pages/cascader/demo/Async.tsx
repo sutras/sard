@@ -1,4 +1,4 @@
-import { Cascader, Cell, Popout, Toast } from 'sard-taro'
+import { Cascader, Cell, PopoutInput, Toast } from 'sard-taro'
 import { useState } from 'react'
 
 export default () => {
@@ -36,22 +36,12 @@ export default () => {
   }
 
   return (
-    <Cell.Group card bodyStyle={{ flex: 'none' }}>
-      <Popout title="请选择">
-        <Popout.Outlet>
-          {({ triggerArgs: [, options = []], setVisible }) => (
-            <Cell
-              title="请选择"
-              value={options.map((option) => option.label).join('/')}
-              onClick={() => setVisible(true)}
-              linkable
-            />
-          )}
-        </Popout.Outlet>
-        <Popout.Target>
+    <Cell.Group card>
+      <Cell>
+        <PopoutInput title="请选择" inputProps={{ placeholder: '请选择' }}>
           <Cascader options={options} onSelect={handleSelect} />
-        </Popout.Target>
-      </Popout>
+        </PopoutInput>
+      </Cell>
     </Cell.Group>
   )
 }

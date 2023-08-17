@@ -14,35 +14,36 @@ import { FormField } from './Field'
 import { FormList } from './List'
 import { FormMap } from './Map'
 import { FormErrorList } from './ErrorList'
-import { FormStore, FormStoreCallbacks, HOOK_KEY } from './createFormStore'
+import { FormStore, FormCallbacks, HOOK_KEY } from './createFormStore'
 import FieldContext from './FieldContext'
-import useForm from './useForm'
+import { useForm } from './useForm'
 import useWatch from './useWatch'
 import { ValidateMessages } from './Validator'
 import useTranslate from '../locale/useTranslate'
 import { deepMerge } from '../utils'
-import { AnyType, BaseProps } from '../base'
+import { BaseProps } from '../base'
 import { useBem } from '../use'
 import StoreContext from './store/Context'
 import { useNode } from './useNode'
-import { NodeContext } from './NodeContext'
+import { DescendantContext, NodeContext } from './NodeContext'
+import { ValidateStatus } from './type'
 
 export * from './Field'
 export * from './List'
 export * from './ErrorList'
 
-export type { FormStore }
+export type { FormStore, ValidateStatus }
 
-export interface FormProps extends FormStoreCallbacks, BaseProps {
-  initialValues?: Record<string, AnyType>
+export interface FormProps extends FormCallbacks, BaseProps {
+  initialValues?: Record<string, any>
   form?: FormStore
   layout?: 'horizontal' | 'vertical'
   labelWidth?: number | string
-  labelAlign?: 'left' | 'right'
+  labelAlign?: 'start' | 'center' | 'end'
+  labelValign?: 'start' | 'center' | 'end'
   starPosition?: 'left' | 'right'
   disabled?: boolean
   readOnly?: boolean
-  name?: string
   scrollToFirstError?: boolean
   validateMessages?: ValidateMessages
   validateTrigger?: string | string[]
@@ -74,21 +75,19 @@ export const Form: FormFC = forwardRef<FormRef, FormProps>((props, ref) => {
     form,
     layout = 'horizontal',
     labelWidth,
-    labelAlign = 'left',
+    labelAlign = 'start',
+    labelValign = 'start',
     starPosition = 'left',
     disabled = false,
     readOnly = false,
-    name,
     scrollToFirstError,
     validateMessages,
-    validateTrigger,
-    validateFirst = false,
+    validateFirst = true,
+    validateTrigger = 'onChange',
     ...restProps
   } = props
 
   const [bem] = useBem('form')
-
-  void validateTrigger, validateFirst
 
   const [formStore] = useForm(form)
 
@@ -105,22 +104,24 @@ export const Form: FormFC = forwardRef<FormRef, FormProps>((props, ref) => {
     store,
     formStore,
     type: 'form',
-    name,
   })
 
   relateFormNode(node)
 
-  setCallbacks({
-    onSuccess,
-    onFail: (errors) => {
-      if (scrollToFirstError) {
-        scrollToField(errors.errorFields[0].name)
-      }
-      onFail?.(errors)
-    },
-    onReset,
-  })
+  useMemo(() => {
+    setCallbacks({
+      onSuccess,
+      onFail: (errors) => {
+        if (scrollToFirstError) {
+          scrollToField(errors.errorFields[0].name)
+        }
+        onFail?.(errors)
+      },
+      onReset,
+    })
+  }, [onSuccess, onFail, onReset])
 
+  // 验证信息
   const [, select] = useTranslate('form.defaultValidateMessages')
 
   const defaultValidateMessages = useMemo(() => {
@@ -154,6 +155,7 @@ export const Form: FormFC = forwardRef<FormRef, FormProps>((props, ref) => {
       layout,
       labelWidth,
       labelAlign,
+      labelValign,
       starPosition,
       disabled,
       readOnly,
@@ -168,18 +170,28 @@ export const Form: FormFC = forwardRef<FormRef, FormProps>((props, ref) => {
     readOnly,
   ])
 
+  const validateInfo = useMemo(() => {
+    return { validateTrigger, validateFirst }
+  }, [validateTrigger, validateFirst])
+
   return (
     <StoreContext.Provider value={store}>
       <NodeContext.Provider value={node}>
         <FieldContext.Provider value={fieldContext}>
-          <TaroForm
-            {...restProps}
-            className={classNames(bem.b(), bem.m('layout', layout), className)}
-            onSubmit={handleSubmit}
-            onReset={handleReset}
-          >
-            {children}
-          </TaroForm>
+          <DescendantContext.Provider value={validateInfo}>
+            <TaroForm
+              {...restProps}
+              className={classNames(
+                bem.b(),
+                bem.m('layout', layout),
+                className,
+              )}
+              onSubmit={handleSubmit}
+              onReset={handleReset}
+            >
+              {children}
+            </TaroForm>
+          </DescendantContext.Provider>
         </FieldContext.Provider>
       </NodeContext.Provider>
     </StoreContext.Provider>

@@ -8,8 +8,7 @@ export default () => {
         title="显示通知"
         onClick={() =>
           Notify.show('这是一条通知', {
-            color: 'black',
-            background: 'fuchsia',
+            background: 'var(--sar-pink)',
           })
         }
       />

@@ -1,28 +1,28 @@
-import { FC, ReactNode, useRef, useState, useMemo, useEffect } from 'react'
+import { FC, ReactNode, useRef, useState, useMemo } from 'react'
 import classNames from 'classnames'
 import { ITouchEvent, View } from '@tarojs/components'
 import PopoutTarget from './Target'
 import PopoutOutlet from './Outlet'
-import PopoutContext, {
-  PopoutContexValue,
-  TargetElementRefVal,
-} from './PopoutContext'
+import { PopoutContext, PopoutContexValue } from './PopoutContext'
 import { Popup, PopupProps } from '../popup'
 import { Button, ButtonProps } from '../button'
 import { Icon } from '../icon'
-import { isEmptyValue } from '../utils'
+import { isFunction, isNullish, noop } from '../utils'
 import { useEvent, useControllableValue, useBem } from '../use'
 import useTranslate from '../locale/useTranslate'
-import { AnyFunction, AnyType, BaseProps } from '../base'
+import { BaseProps } from '../base'
 
 export * from './Target'
 export * from './Outlet'
 
+const CLOSE = 'close'
+const CANCEL = 'cancel'
+const CONFIRM = 'confirm'
+
+export type PopoutCloseType = 'close' | 'cancel' | 'confirm'
+
 export interface PopoutProps extends BaseProps, PopupProps {
   title?: ReactNode
-  visible?: boolean
-  defaultVisible?: boolean
-  onVisible?: (visible: boolean) => void
   showCancel?: boolean
   cancelText?: ReactNode
   cancelProps?: ButtonProps
@@ -32,12 +32,16 @@ export interface PopoutProps extends BaseProps, PopupProps {
   showClose?: boolean
   type?: 'compact' | 'loose'
   fast?: boolean
-  onClose?: (visible: false) => void
-  onCancel?: (visible: false) => void
-  onConfirm?: (visible: false) => void
-  value?: AnyType
-  defaultValue?: AnyType
-  onChange?: (value: AnyType) => void
+  visible?: boolean
+  defaultVisible?: boolean
+  onVisible?: (visible: boolean) => void
+  maskClosable?: boolean
+  onClose?: () => void | Promise<unknown>
+  onCancel?: () => void | Promise<unknown>
+  onConfirm?: () => void | Promise<unknown>
+  value?: any
+  defaultValue?: any
+  onChange?: (value: any) => void
   disabled?: boolean
   readOnly?: boolean
 }
@@ -54,9 +58,6 @@ export const Popout: PopoutFC = (props) => {
     className,
     title,
     children,
-    visible,
-    defaultVisible,
-    onVisible,
     showCancel = false,
     cancelText = t('cancel'),
     cancelProps,
@@ -66,6 +67,10 @@ export const Popout: PopoutFC = (props) => {
     showClose = true,
     type = 'loose',
     fast = false,
+    visible,
+    defaultVisible,
+    onVisible,
+    maskClosable = true,
     onClose,
     onCancel,
     onConfirm,
@@ -75,7 +80,6 @@ export const Popout: PopoutFC = (props) => {
     disabled,
     readOnly,
     onMaskClick,
-    onEnter,
     ...restProps
   } = props
 
@@ -94,94 +98,113 @@ export const Popout: PopoutFC = (props) => {
     trigger: onChange,
   })
 
-  const [bridgeValue, setBridgeValue] = useState<AnyType>()
-  const [triggerArgs, setTriggerArgs] = useState([])
+  const [outletValue, setOutletValue] = useState<any>()
   const [outlet, setOutlet] = useState(null)
-  const tempTriggerArgs = useRef<AnyType[]>([])
   const [target, setTarget] = useState(false)
-  const [alwaysHasValue, setAlwaysHasValue] = useState(false)
-  const targetElementRef = useRef<TargetElementRefVal>(null)
+  const temporaryOutletValue = useRef<any>()
+  const temporaryValue = useRef<any>()
+  const alwaysHasValue = useRef(false)
+  const targetRef = useRef<{
+    getTriggerArgsForcibly: () => readonly [value: any, outletValue: string]
+  }>()
 
-  const confirmDisabled = useMemo(() => {
-    if (!target) {
-      return false
+  const [confirmDisabled, setConfirmDisabled] = useState(true)
+
+  const mergedConfirmDisabled =
+    !alwaysHasValue.current && confirmDisabled && target
+
+  const [loading, setLoading] = useState({
+    cancel: false,
+    confirm: false,
+  })
+
+  const perhapsClose = (
+    type: PopoutCloseType,
+    callback?: () => void | Promise<unknown>,
+  ) => {
+    function toggleLoading(play: boolean) {
+      setLoading((loading) => ({
+        ...loading,
+        [type]: play,
+      }))
     }
-    return isEmptyValue(bridgeValue) && !alwaysHasValue
-  }, [target, bridgeValue])
 
-  const setVisible = (show: boolean) => {
-    setInnerVisible(show)
+    if (isFunction(callback)) {
+      const result = callback()
+      if (result instanceof Promise) {
+        toggleLoading(true)
+
+        return result
+          .then(() => {
+            setInnerVisible(false)
+          })
+          .catch(noop)
+          .finally(() => {
+            toggleLoading(false)
+          })
+      }
+    }
+
+    setInnerVisible(false)
   }
 
-  const handleChange = useEvent((args: AnyType[], forceConfirm: boolean) => {
-    tempTriggerArgs.current = args
+  const handleMaskClick = useEvent((event: ITouchEvent) => {
+    onMaskClick?.(event)
 
-    setBridgeValue(args[0])
-
-    if (forceConfirm || fast) {
-      handleConfirm(forceConfirm)
+    if (maskClosable) {
+      perhapsClose(CLOSE, onClose)
     }
   })
 
-  useEffect(() => {
-    setBridgeValue(innerValue)
-  }, [innerValue])
-
-  const handleMaskClick = useEvent((event: ITouchEvent) => {
-    setVisible(false)
-    onClose?.(false)
-    onMaskClick?.(event)
+  const handleClose = useEvent(() => {
+    perhapsClose(CLOSE, onClose)
   })
 
   const handleCancel = useEvent(() => {
-    setVisible(false)
-    onCancel?.(false)
-    onClose?.(false)
+    perhapsClose(CANCEL, onCancel)
   })
 
-  const handleConfirm = useEvent((forceConfirm?: boolean) => {
-    if (alwaysHasValue && !forceConfirm) {
-      const args = targetElementRef.current?.getTriggerArgsForcibly?.()
-      handleChange(args, true)
-    } else {
-      setTriggerArgs(tempTriggerArgs.current.slice())
-      setInnerValue(tempTriggerArgs.current[0])
-      setVisible(false)
-      onConfirm?.(false)
-      onClose?.(false)
+  const handleConfirm = useEvent(() => {
+    if (
+      isNullish(temporaryValue.current) &&
+      alwaysHasValue &&
+      targetRef.current
+    ) {
+      const [value, popoutValue] = targetRef.current.getTriggerArgsForcibly()
+      temporaryValue.current = value
+      temporaryOutletValue.current = popoutValue
     }
+
+    setInnerValue(temporaryValue.current)
+    setOutletValue(temporaryOutletValue.current)
+    perhapsClose(CONFIRM, onConfirm)
   })
 
-  const enter = useRef<AnyFunction>()
-  const handleEnter = useEvent(() => {
-    enter.current?.()
-    onEnter?.()
+  const handleChange = useEvent((value: any) => {
+    temporaryValue.current = value
+
+    if (fast) {
+      handleConfirm()
+    }
   })
 
   const context = useMemo<PopoutContexValue>(
     () => ({
       visible: innerVisible,
+      setVisible: disabled || readOnly ? noop : setInnerVisible,
       value: innerValue,
-      bridgeValue,
-      triggerArgs,
-      setValue: (value) => {
-        setBridgeValue(value)
-        setInnerValue(value)
-      },
-      handleChange,
+      setValue: setInnerValue,
+      onChange: handleChange,
+      setConfirmDisabled,
       setOutlet,
       setTarget,
-      setTriggerArgs,
-      setVisible:
-        disabled || readOnly
-          ? () => {
-              void 0
-            }
-          : setInnerVisible,
-      setAlwaysHasValue,
-      targetElementRef,
+      outletValue,
+      setOutletValue,
+      temporaryOutletValue,
+      alwaysHasValue,
+      targetRef,
     }),
-    [innerVisible, innerValue, bridgeValue, triggerArgs, disabled, readOnly],
+    [innerVisible, innerValue, outletValue, disabled, readOnly],
   )
 
   const renderCancelButton = (
@@ -199,6 +222,7 @@ export const Popout: PopoutFC = (props) => {
         type={type}
         theme={theme}
         round={round}
+        loading={loading.cancel}
         {...cancelProps}
         onClick={handleCancel}
       >
@@ -221,9 +245,10 @@ export const Popout: PopoutFC = (props) => {
         type={type}
         theme="primary"
         round={round}
-        disabled={confirmDisabled}
-        onClick={() => handleConfirm(true)}
+        disabled={mergedConfirmDisabled}
+        loading={loading.confirm}
         {...confirmProps}
+        onClick={handleConfirm}
       >
         {confirmText}
       </Button>
@@ -233,13 +258,19 @@ export const Popout: PopoutFC = (props) => {
   const renderHeader = () => {
     return (
       <View className={classNames(bem.e('header'), bem.em('header', type))}>
-        {type === 'compact' &&
-          renderCancelButton('pale-text', 'secondary', false, 'header')}
+        {type === 'compact' && (
+          <View className={bem.e('button-wrap')}>
+            {renderCancelButton('pale-text', 'secondary', false, 'header')}
+          </View>
+        )}
 
         {title && <View className={bem.e('title')}>{title}</View>}
 
-        {type === 'compact' &&
-          renderConfirmButton('pale-text', false, 'header')}
+        {type === 'compact' && (
+          <View className={bem.e('button-wrap')}>
+            {renderConfirmButton('pale-text', false, 'header')}
+          </View>
+        )}
 
         {type === 'loose' && showClose && (
           <Button
@@ -247,7 +278,7 @@ export const Popout: PopoutFC = (props) => {
             type="pale-text"
             theme="secondary"
             size="large"
-            onClick={handleCancel}
+            onClick={handleClose}
           >
             <Icon name="close"></Icon>
           </Button>
@@ -277,10 +308,9 @@ export const Popout: PopoutFC = (props) => {
           visible={innerVisible}
           className={classNames(bem.b(), className)}
           onMaskClick={handleMaskClick}
-          onEnter={handleEnter}
         >
           {renderHeader()}
-          <View className={bem.e('body')}>{children}</View>
+          {children}
           {renderFooter()}
         </Popup>
       </PopoutContext.Provider>

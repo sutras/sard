@@ -1,12 +1,12 @@
-import { FC, ReactNode, useEffect, useMemo, useState } from 'react'
+import { FC, ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { View } from '@tarojs/components'
 import { Tabs, TabsProps } from '../tabs'
 import Icon from '../icon'
 import useTranslate from '../locale/useTranslate'
 import { useBem, useControllableValue } from '../use'
-import { AnyType, BaseProps } from '../base'
-import { isFunction } from '../utils'
+import { BaseProps } from '../base'
+import { isFunction, isNullish } from '../utils'
 
 export interface CascaderFieldNames {
   label?: string
@@ -20,7 +20,7 @@ export interface CascaderOption {
   value?: string | number
   disabled?: boolean
   children?: CascaderOption[]
-  [key: PropertyKey]: AnyType
+  [key: PropertyKey]: any
 }
 
 export interface CascaderTab {
@@ -35,27 +35,31 @@ const defaultFieldNames: CascaderFieldNames = {
   children: 'children',
 }
 
-export interface CascaderProps
+export interface CascaderProps<T = CascaderOption>
   extends Omit<BaseProps, 'children'>,
     Omit<TabsProps, 'children' | 'onChange'> {
   value?: string | number
   defaultValue?: string | number
-  options?: CascaderOption[]
+  options?: T[]
   fieldNames?: CascaderFieldNames
   placeholder?: string
-  onChange?: (value: string | number, selectedOptions: CascaderOption[]) => void
-  onSelect?: (option: CascaderOption, tabIndex: number) => void
-  labelRender?: (option: CascaderOption, selected: boolean) => ReactNode
+  onChange?: (value: string | number, selectedOptions: T[]) => void
+  onSelect?: (option: T, tabIndex: number) => void
+  labelRender?: (option: T, selected: boolean) => ReactNode
   optionTop?: ReactNode | ((tabIndex: number) => ReactNode)
   optionBottom?: ReactNode | ((tabIndex: number) => ReactNode)
-  onOuterValueChange?: (
-    value: string | number,
-    selectedOptions: CascaderOption[],
-  ) => void
+  onOutletChange?: (outletValue: any, isManual: boolean) => void
+  outletFormatter?: (value: string[]) => string
 }
 
+function defaultOutletFormatter(value: string[]) {
+  return value.join('/')
+}
+
+const defaultOptions = []
+
 export interface CascaderFC extends FC<CascaderProps> {
-  canListenOuterValueChange: boolean
+  hasOutletChange: boolean
 }
 
 export const Cascader: CascaderFC = (props) => {
@@ -65,7 +69,7 @@ export const Cascader: CascaderFC = (props) => {
     className,
     value,
     defaultValue,
-    options = [],
+    options = defaultOptions,
     fieldNames = {},
     placeholder = t('pleaseSelect'),
     onChange,
@@ -73,7 +77,8 @@ export const Cascader: CascaderFC = (props) => {
     labelRender,
     optionTop,
     optionBottom,
-    onOuterValueChange,
+    onOutletChange,
+    outletFormatter = defaultOutletFormatter,
     ...restProps
   } = props
 
@@ -90,19 +95,13 @@ export const Cascader: CascaderFC = (props) => {
     trigger: onChange,
   })
 
-  const [tempValue, setTempValue] = useState(innerValue)
+  const tempValue = useRef(innerValue)
 
   const [tabsActiveKey, setTabsActiveKey] = useState(0)
 
   const handleTabsChange = (index: number) => {
     setTabsActiveKey(index)
   }
-
-  useEffect(() => {
-    if (value !== undefined) {
-      onOuterValueChange?.(value, getSelectedOptionsByValue(options, value))
-    }
-  }, [value])
 
   const getSelectedOptionsByValue = (
     options: CascaderOption[],
@@ -130,7 +129,7 @@ export const Cascader: CascaderFC = (props) => {
   const updateTabs = () => {
     let nextTabs: CascaderTab[]
 
-    if (tempValue === undefined) {
+    if (tempValue.current === undefined) {
       nextTabs = [
         {
           options,
@@ -138,7 +137,10 @@ export const Cascader: CascaderFC = (props) => {
         },
       ]
     } else {
-      const selectedOptions = getSelectedOptionsByValue(options, tempValue)
+      const selectedOptions = getSelectedOptionsByValue(
+        options,
+        tempValue.current,
+      )
 
       if (selectedOptions) {
         let nextOptions = options
@@ -169,6 +171,10 @@ export const Cascader: CascaderFC = (props) => {
     }
   }
 
+  const isLastOption = (option: CascaderOption) => {
+    return !Array.isArray(option[fieldkeys.children])
+  }
+
   const handleOptionClick = (option: CascaderOption, tabIndex: number) => {
     if (option.disabled) {
       return
@@ -184,7 +190,7 @@ export const Cascader: CascaderFC = (props) => {
       nextTabs = nextTabs.slice(0, tabIndex + 1)
     }
 
-    if (Array.isArray(option[fieldkeys.children])) {
+    if (!isLastOption(option)) {
       const nextTab = {
         options: option[fieldkeys.children],
         selected: null,
@@ -200,18 +206,15 @@ export const Cascader: CascaderFC = (props) => {
         option[fieldkeys.value],
         nextTabs.map((tab) => tab.selected),
       )
+      isManual.current = true
     }
 
-    setTempValue(option[fieldkeys.value])
+    tempValue.current = option[fieldkeys.value]
 
     setTabs(nextTabs)
 
     onSelect?.(option, tabIndex)
   }
-
-  useEffect(() => {
-    updateTabs()
-  }, [])
 
   useEffect(() => {
     updateTabs()
@@ -223,7 +226,7 @@ export const Cascader: CascaderFC = (props) => {
         return
       }
     }
-    setTempValue(value)
+    tempValue.current = value
     updateTabs()
   }, [value])
 
@@ -290,11 +293,30 @@ export const Cascader: CascaderFC = (props) => {
     )
   }
 
+  const isManual = useRef(false)
+
+  useEffect(() => {
+    if (onOutletChange) {
+      if (isNullish(innerValue)) {
+        onOutletChange('', false)
+      } else {
+        const lastSelected = tabs[tabs.length - 1]?.selected
+        if (lastSelected && isLastOption(lastSelected)) {
+          onOutletChange(
+            outletFormatter(tabs.map((tab) => tab.selected?.[fieldkeys.label])),
+            isManual.current,
+          )
+          isManual.current = false
+        }
+      }
+    }
+  }, [tabs, innerValue])
+
   return (
     <Tabs
       animated
-      {...restProps}
       scrollCount={0}
+      {...restProps}
       activeKey={String(tabsActiveKey)}
       onChange={handleTabsChange}
       className={classNames(bem.b(), className)}
@@ -304,6 +326,6 @@ export const Cascader: CascaderFC = (props) => {
   )
 }
 
-Cascader.canListenOuterValueChange = true
+Cascader.hasOutletChange = true
 
 export default Cascader

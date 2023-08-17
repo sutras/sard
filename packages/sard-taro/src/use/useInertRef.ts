@@ -15,5 +15,3 @@ export function useInertRef<T>(callback: () => T) {
   }
   return ref as React.MutableRefObject<T>
 }
-
-export default useInertRef

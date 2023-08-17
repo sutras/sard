@@ -7,7 +7,7 @@ import Compact from './demo/Compact'
 import WithCalendar from './demo/WithCalendar'
 import Controllable from './demo/Controllable'
 import Fast from './demo/Fast'
-import WithCell from './demo/WithCell'
+import WithForm from './demo/WithForm'
 
 export default () => {
   return (
@@ -34,8 +34,8 @@ export default () => {
         <Fast />
       </Demo>
 
-      <Demo title="结合 Cell 组件使用" full>
-        <WithCell />
+      <Demo title="结合其他表单组件" full>
+        <WithForm />
       </Demo>
     </Page>
   )

@@ -3,10 +3,10 @@ import { Button, Badge, Space } from 'sard-taro'
 export default () => {
   return (
     <Space>
-      <Badge value={5} color="orange">
+      <Badge value={5} color="var(--sar-pink)">
         <Button>消息</Button>
       </Badge>
-      <Badge isDot color="orange" style={{ marginLeft: '20px' }}>
+      <Badge isDot color="var(--sar-pink)" style={{ marginLeft: '20px' }}>
         <Button>消息</Button>
       </Badge>
       <Badge

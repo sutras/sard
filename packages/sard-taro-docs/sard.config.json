@@ -128,6 +128,11 @@
                 "filePath": "../sard-taro/src/picker"
               },
               {
+                "title": "PopoutInput 弹出式输入框",
+                "path": "popout-input",
+                "filePath": "../sard-taro/src/popout-input"
+              },
+              {
                 "title": "Radio 单选按钮",
                 "path": "radio",
                 "filePath": "../sard-taro/src/radio"

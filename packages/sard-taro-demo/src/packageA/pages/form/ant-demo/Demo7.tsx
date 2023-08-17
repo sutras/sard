@@ -13,12 +13,7 @@ function App() {
   const [form] = Form.useForm()
 
   return (
-    <Form
-      name="form_item_path"
-      form={form}
-      onSuccess={handleSuccess}
-      onFail={handleFail}
-    >
+    <Form form={form} onSuccess={handleSuccess} onFail={handleFail}>
       <Form.Map name="user">
         <Form.Map name="name">
           <Form.Field

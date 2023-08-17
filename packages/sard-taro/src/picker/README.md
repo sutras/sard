@@ -77,9 +77,3 @@ interface PickerOptionKeys {
 ### CSS 变量
 
 %(./index.scss#variables)
-
-## 原生 picker-view 缺点
-
-- 隐藏状态下无法让其滚动到指定位置
-- H5 和 RN 没有 immediateChange 属性
-- 无法让其立即停止并滚动到指定位置

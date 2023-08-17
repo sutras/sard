@@ -7,7 +7,7 @@ import Color from './demo/Color'
 import Picture from './demo/Picture'
 import Inbuilt from './demo/Inbuilt'
 
-// function matchIconName(str: string) {
+// function matchIconName(str) {
 //   return JSON.stringify(str.match(/(?<=\.sari-)[a-z\-]+/g))
 // }
 

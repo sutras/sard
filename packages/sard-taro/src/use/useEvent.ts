@@ -18,5 +18,3 @@ export function useEvent<
     [],
   )
 }
-
-export default useEvent

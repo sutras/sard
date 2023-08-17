@@ -1,14 +1,28 @@
 @import './components/style/index.scss';
 
+.doc-code-wrapper:not(:last-child) {
+  margin-bottom: 30px;
+}
+
+pre[class*='language-'] {
+  max-height: 580px;
+  margin: 0;
+  overflow: auto;
+}
+
 code[class*='language-'],
 pre[class*='language-'] {
   color: var(--doc-white);
 }
 
-pre[class*='language-'] {
-  margin: 0;
-}
+// code[class*='language-'],
+// pre[class*='language-'] {
+//   border-radius: inherit;
+//   background-color: var(--doc-white);
+// }
 
-.doc-code-wrapper:not(:last-child) {
-  margin-bottom: 15px;
-}
+// .doc-code-wrapper {
+//   border-radius: 8px;
+//   box-shadow: 0px 0.8px 2px rgba(0, 0, 0, 0.032),
+//     0px 2.7px 6.7px rgba(0, 0, 0, 0.048), 0px 12px 30px rgba(0, 0, 0, 0.08);
+// }

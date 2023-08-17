@@ -14,5 +14,3 @@ export function useForm(form?: FormStore) {
 
   return [formRef.current] as const
 }
-
-export default useForm

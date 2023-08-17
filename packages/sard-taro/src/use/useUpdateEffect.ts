@@ -20,5 +20,3 @@ export const useUpdateEffect: typeof useEffect = (callback, deps) => {
     }
   }, [])
 }
-
-export default useUpdateEffect

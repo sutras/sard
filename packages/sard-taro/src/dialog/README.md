@@ -30,10 +30,6 @@ import { Dialog } from 'sard-taro'
 
 ### 异步关闭
 
-当传递`beforeClose`属性时，会在点击按钮时显示加载状态，可以根据`type`判断点击的按钮类型，在满足条件时调用`done`关闭对话框。
-
-或者在`beforeClose`里面返回`fulfilled`状态的`Promise`后也可以关闭对话框。
-
 %(${DEMO_PATH}/dialog/demo/AsyncClose.tsx)
 
 ### 圆角按钮
@@ -48,26 +44,26 @@ import { Dialog } from 'sard-taro'
 
 ### DialogProps
 
-| 属性         | 描述                                                                                                                     | 类型                                                                      | 默认值 |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- | ------ |
-| title        | 标题                                                                                                                     | React.ReactNode                                                           | -      |
-| message      | 文本内容                                                                                                                 | React.ReactNode                                                           | -      |
-| header       | 自定义头部                                                                                                               | React.ReactNode                                                           | -      |
-| footer       | 自定义底部（按钮部分）                                                                                                   | React.ReactNode                                                           | -      |
-| headed       | 是否显示带头部类型                                                                                                       | boolean                                                                   | false  |
-| buttonType   | 按钮类型                                                                                                                 | 'round' \| 'text'                                                         | 'text' |
-| showCancel   | 是否显示取消按钮                                                                                                         | boolean                                                                   | false  |
-| cancelText   | 取消按钮文案                                                                                                             | React.ReactNode                                                           | '取消' |
-| cancelProps  | 取消按钮组件的 `props`                                                                                                   | ButtonProps                                                               | -      |
-| showConfirm  | 是否显示确定按钮                                                                                                         | boolean                                                                   | true   |
-| cancelText   | 确定按钮文案                                                                                                             | React.ReactNode                                                           | '确定' |
-| confirmProps | 确定按钮组件的 `props`                                                                                                   | ButtonProps                                                               | -      |
-| maskClosable | 点击遮罩是否关闭                                                                                                         | boolean                                                                   | false  |
-| onCancel     | 点击取消按钮时触发（点击遮罩或关闭按钮时也会触发）                                                                       | () => void                                                                | -      |
-| onConfirm    | 点击确认按钮时触发                                                                                                       | () => void                                                                | -      |
-| beforeClose  | 关闭前的回调，调用 `done` 后或者返回 `fulfilled` 状态的 `Promise`后才会关闭；`type` 表示是点击确定按钮还是取消按钮关闭的 | (done: () => void, type: 'cancel' \| 'confirm') => Promise\<void> \| void | -      |
-| visible      | 是否可见                                                                                                                 | boolean                                                                   | false  |
-| onVisible    | 显隐时触发                                                                                                               | (visible: boolean) => void                                                | -      |
+| 属性         | 描述                                                                                                                   | 类型                           | 默认值 |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ------ |
+| title        | 标题                                                                                                                   | React.ReactNode                | -      |
+| message      | 文本内容                                                                                                               | React.ReactNode                | -      |
+| header       | 自定义头部                                                                                                             | React.ReactNode                | -      |
+| footer       | 自定义底部（按钮部分）                                                                                                 | React.ReactNode                | -      |
+| headed       | 是否显示带头部类型                                                                                                     | boolean                        | false  |
+| buttonType   | 按钮类型                                                                                                               | 'round' \| 'text'              | 'text' |
+| showCancel   | 是否显示取消按钮                                                                                                       | boolean                        | false  |
+| cancelText   | 取消按钮文案                                                                                                           | React.ReactNode                | '取消' |
+| cancelProps  | 取消按钮组件的 `props`                                                                                                 | ButtonProps                    | -      |
+| showConfirm  | 是否显示确定按钮                                                                                                       | boolean                        | true   |
+| cancelText   | 确定按钮文案                                                                                                           | React.ReactNode                | '确定' |
+| confirmProps | 确定按钮组件的 `props`                                                                                                 | ButtonProps                    | -      |
+| maskClosable | 点击遮罩是否关闭                                                                                                       | boolean                        | false  |
+| onConfirm    | 点击确认按钮时触发，如果返回`Promise`对象则会在`fulfilled`状态时关闭，期间会显示加载状态                               | () => void \| Promise<unknown> | -      |
+| onCancel     | 点击取消按钮时触发，如果返回`Promise`对象则会在`fulfilled`状态时关闭，期间会显示加载状态                               | () => void \| Promise<unknown> | -      |
+| onClose      | 点击关闭按钮或遮罩（如果允许点击遮罩关闭）时触发，如果返回`Promise`对象则会在`fulfilled`状态时关闭，期间会显示加载状态 | () => void \| Promise<unknown> | -      |
+| visible      | 是否可见                                                                                                               | boolean                        | false  |
+| onVisible    | 显隐时触发                                                                                                             | (visible: boolean) => void     | -      |
 
 ### Dialog 类方法
 

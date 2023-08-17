@@ -95,64 +95,68 @@ export const Popup: FC<PopupProps> = forwardRef<PopupRef, PopupProps>(
       onExited?.()
     })
 
-    return (
-      <>
-        <CSSTransition in={visible} timeout={timeout} effect="fade">
-          {mask ? (
+    const renderPopup = () => {
+      return (
+        <>
+          <CSSTransition in={visible} timeout={timeout} effect="fade">
+            {mask ? (
+              <View
+                className={classNames(
+                  bem.e('mask'),
+                  bem.m('hiding', isHiding),
+                  bem.em('mask', 'transparent', transparent),
+                  maskClass,
+                )}
+                style={{
+                  zIndex,
+                  display: popupVisible ? 'flex' : 'none',
+                  ...maskStyle,
+                }}
+                onClick={handleMaskClick}
+                catchMove
+              ></View>
+            ) : null}
+          </CSSTransition>
+
+          <CSSTransition
+            in={visible}
+            customEffect={customEffect}
+            timeout={timeout}
+            effect={effect}
+            onEnter={handleEnter}
+            onEntering={handleEntering}
+            onEntered={handleEntered}
+            onExit={handleExit}
+            onExiting={handleExiting}
+            onExited={handleExited}
+          >
             <View
+              {...restProps}
               className={classNames(
-                bem.e('mask'),
+                bem.b(),
                 bem.m('hiding', isHiding),
-                bem.em('mask', 'transparent', transparent),
-                maskClass,
+                bem.m(effect, effect),
+                className,
               )}
               style={{
                 zIndex,
-                display: popupVisible ? 'flex' : 'none',
-                ...maskStyle,
+                // display: popupVisible ? 'flex' : 'none',
+                // tips: 不通过display控制显隐可以解决picker在web滑动的问题。
+                opacity: popupVisible ? 1 : 0,
+                visibility: popupVisible ? 'visible' : 'hidden',
+                pointerEvents: popupVisible ? 'auto' : 'none',
+                ...style,
               }}
-              onClick={handleMaskClick}
-              catchMove
-            ></View>
-          ) : null}
-        </CSSTransition>
+              ref={ref}
+            >
+              {children}
+            </View>
+          </CSSTransition>
+        </>
+      )
+    }
 
-        <CSSTransition
-          in={visible}
-          customEffect={customEffect}
-          timeout={timeout}
-          effect={effect}
-          onEnter={handleEnter}
-          onEntering={handleEntering}
-          onEntered={handleEntered}
-          onExit={handleExit}
-          onExiting={handleExiting}
-          onExited={handleExited}
-        >
-          <View
-            {...restProps}
-            className={classNames(
-              bem.b(),
-              bem.m('hiding', isHiding),
-              bem.m(effect, effect),
-              className,
-            )}
-            style={{
-              zIndex,
-              // display: popupVisible ? 'flex' : 'none',
-              // tips: 不通过display控制显隐可以解决picker在web滑动的问题。
-              opacity: popupVisible ? 1 : 0,
-              visibility: popupVisible ? 'visible' : 'hidden',
-              pointerEvents: popupVisible ? 'auto' : 'none',
-              ...style,
-            }}
-            ref={ref}
-          >
-            {children}
-          </View>
-        </CSSTransition>
-      </>
-    )
+    return renderPopup()
   },
 )
 

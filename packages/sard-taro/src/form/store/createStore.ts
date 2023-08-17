@@ -1,8 +1,4 @@
-import { AnyType } from '../../base'
-
-export type Store<S = Record<string, AnyType>> = ReturnType<
-  typeof createStore<S>
->
+export type Store<S = Record<string, any>> = ReturnType<typeof createStore<S>>
 
 export default function createStore<S>(reducer, preloadedState) {
   let currentState = preloadedState

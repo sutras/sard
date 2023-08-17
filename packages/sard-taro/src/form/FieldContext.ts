@@ -5,7 +5,8 @@ export interface FieldContextValue {
   formStore?: FormStore
   layout?: 'horizontal' | 'vertical'
   labelWidth?: number | string
-  labelAlign?: 'left' | 'right'
+  labelAlign?: 'start' | 'center' | 'end'
+  labelValign?: 'start' | 'center' | 'end'
   starPosition?: 'left' | 'right'
   disabled?: boolean
   readOnly?: boolean
@@ -13,7 +14,8 @@ export interface FieldContextValue {
 
 const FieldContext = createContext<FieldContextValue>({
   layout: 'horizontal',
-  labelAlign: 'left',
+  labelAlign: 'start',
+  labelValign: 'start',
   starPosition: 'left',
 })
 

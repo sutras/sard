@@ -6,7 +6,7 @@ import {
   Button as TaroButton,
   View,
 } from '@tarojs/components'
-import { AnyType, BaseProps } from '../base'
+import { BaseProps } from '../base'
 import { isNullish } from '../utils'
 import { useBem } from '../use'
 
@@ -33,7 +33,7 @@ export interface ButtonProps extends TaroButtonPropsBase, BaseProps {
   loading?: boolean
   loadingText?: ReactNode
   loadingProps?: LoadingProps
-  [key: PropertyKey]: AnyType
+  [key: PropertyKey]: any
 }
 
 export const Button: FC<ButtonProps> = (props) => {

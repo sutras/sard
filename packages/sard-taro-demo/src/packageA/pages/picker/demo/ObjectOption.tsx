@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Cell, Picker, Toast } from 'sard-taro'
+import { Cell, Picker, PopoutInput } from 'sard-taro'
 
 export default () => {
-  const objectArray = [
+  const columns = [
     {
       code: 110000,
       name: '北京市',
@@ -21,31 +21,24 @@ export default () => {
     },
   ]
 
-  const [objectArrayValue, setObjectArrayValue] =
-    useState<(string | number)[]>()
-
-  const handleChange = (value, selectedOptions, selectedIndex) => {
-    console.log('change: ', value, selectedOptions, selectedIndex)
-    Toast.show(JSON.stringify(value))
-  }
+  const [value, setValue] = useState<number>()
 
   return (
     <Cell.Group card>
-      <Cell
-        linkable
-        title="设置为: 天津市"
-        onClick={() => setObjectArrayValue([120000])}
-      />
+      <Cell linkable title="设置为: 天津市" onClick={() => setValue(120000)} />
+      <Cell linkable title="清空" onClick={() => setValue(undefined)} />
       <Cell>
-        <Picker
-          value={objectArrayValue}
-          columns={objectArray}
-          optionKeys={{ label: 'name', value: 'code' }}
-          onChange={(value, ...restArgs) => {
-            setObjectArrayValue(value)
-            handleChange(value, ...restArgs)
-          }}
-        />
+        <PopoutInput
+          title="请选择"
+          inputProps={{ placeholder: '请选择' }}
+          value={value}
+          onChange={setValue}
+        >
+          <Picker
+            columns={columns}
+            optionKeys={{ label: 'name', value: 'code' }}
+          />
+        </PopoutInput>
       </Cell>
     </Cell.Group>
   )

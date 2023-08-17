@@ -65,6 +65,7 @@ page {
     text-align: center;
     user-select: none;
     cursor: pointer;
+    overflow: visible;
     transition: var(--sar-button-transition-duration);
 
     @include button-size(

@@ -67,5 +67,3 @@ export function useBem(block: string | number) {
 
   return [bem] as const
 }
-
-export default useBem

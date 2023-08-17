@@ -1,20 +1,19 @@
-import { FC, ReactNode, useRef } from 'react'
+import { FC, ReactNode, useEffect, useRef } from 'react'
 import { arrayMove, isFunction, arrayRemoveAtIndexes, toArray } from '../utils'
 import { Rule } from './Validator'
-import { AnyType } from '../base'
 import { useEvent } from '../use'
 import { ValidateStatus, NamePath, NodeName } from './type'
 import { useNode } from './useNode'
-import { NodeContext } from './NodeContext'
+import { NodeContext, useDescendant } from './NodeContext'
 import useInternalWatch from './useInternalWatch'
 
 export interface FormListField {
-  key: number | string
+  key: number
   name: number
 }
 
 export interface FormListOperations {
-  add: (defaultValue?: AnyType, insertIndex?: number) => void
+  add: (defaultValue?: any, insertIndex?: number) => void
   move: (from: number, to: number) => void
   remove: (index: number | number[]) => void
 }
@@ -34,11 +33,12 @@ export interface FormListProps {
   required?: boolean
 
   name: NodeName
-  initialValue?: AnyType[]
+  initialValue?: any[]
 
   label?: ReactNode
   rules?: Rule[]
   validateFirst?: boolean
+  validateTrigger?: string | string[]
   validateStatus?: ValidateStatus
 
   watch?: NamePath[]
@@ -53,9 +53,15 @@ export const FormList: FC<FormListProps> = (props) => {
     initialValue,
     rules,
     validateFirst,
+    validateTrigger,
     validateStatus,
     watch,
   } = props
+
+  const { mergedValidateFirst } = useDescendant({
+    validateFirst,
+    validateTrigger,
+  })
 
   useInternalWatch(watch)
 
@@ -65,7 +71,7 @@ export const FormList: FC<FormListProps> = (props) => {
     label,
     initialValue,
     rules,
-    validateFirst,
+    validateFirst: mergedValidateFirst,
     validateStatus,
     required,
   })
@@ -76,20 +82,31 @@ export const FormList: FC<FormListProps> = (props) => {
     errors,
     finalRequired,
     finalValidateStatus,
+    getDeepValue,
+    setValue,
   } = node
 
   const value = Array.isArray(mayNullishValue) ? mayNullishValue : []
+
+  const shoudUpdateStructure = useRef(false)
+  useEffect(() => {
+    if (shoudUpdateStructure.current) {
+      shoudUpdateStructure.current = false
+      setValue(getDeepValue())
+    }
+  })
 
   // operation
 
   const increment = useRef(0)
   const keys = useRef([])
 
-  const add = useEvent((defaultValue: AnyType, insertIndex?: number) => {
+  const add = useEvent((defaultValue: any, insertIndex?: number) => {
     const nextValue = [...value]
     nextValue.splice(insertIndex ?? value.length, 0, defaultValue)
     keys.current.splice(insertIndex ?? value.length, 0, increment.current++)
     setValueAndValidate(nextValue)
+    shoudUpdateStructure.current = true
   })
 
   const move = useEvent((from: number, to: number) => {

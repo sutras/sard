@@ -37,6 +37,8 @@ page {
   --sar-cell-title-font-size: var(--sar-text-base);
   --sar-cell-title-line-height: var(--sar-line-height);
 
+  --sar-cell-footer-margin-left: 8px;
+
   --sar-cell-value-gap-left: 10px;
   --sar-cell-value-font-size: var(--sar-text-base);
   --sar-cell-value-line-height: var(--sar-leading-normal);
@@ -47,7 +49,7 @@ page {
   --sar-cell-label-color: var(--sar-tertiary-color);
 
   --sar-cell-arrow-gap-left: 10px;
-  --sar-cell-arrow-font-size: var(--sar-text-xs);
+  --sar-cell-arrow-font-size: var(--sar-text-base);
   --sar-cell-arrow-color: var(--sar-tertiary-color);
 }
 // #endvariables
@@ -216,6 +218,7 @@ page {
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+    margin-left: var(--sar-cell-footer-margin-left);
   }
 
   @include e(value) {

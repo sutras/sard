@@ -17,7 +17,7 @@ export default () => {
       </Tabbar.Item>
       <Tabbar.Item
         icon={{ prefix: 'demo-icon', name: 'person-fill' }}
-        badge={{ isDot: true, color: 'orange' }}
+        badge={{ isDot: true, color: 'var(--sar-pink)' }}
       >
         我的
       </Tabbar.Item>

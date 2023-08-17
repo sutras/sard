@@ -265,9 +265,7 @@ export const DropdownItem: DropdownItemFC = forwardRef((props, ref) => {
         {arrow ? (
           arrow(actualVisible, direction)
         ) : (
-          <Icon
-            name={actualVisible ? 'caret-up-fill' : 'caret-down-fill'}
-          ></Icon>
+          <Icon name={actualVisible ? 'caret-up' : 'caret-down'}></Icon>
         )}
       </View>
     )

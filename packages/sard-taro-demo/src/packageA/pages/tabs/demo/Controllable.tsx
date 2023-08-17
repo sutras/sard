@@ -7,7 +7,9 @@ export default () => {
 
   return (
     <Space vertical>
-      <Button onClick={() => setActiveKey(2)}>切换到标签3</Button>
+      <View>
+        <Button onClick={() => setActiveKey(2)}>切换到标签3</Button>
+      </View>
 
       <Tabs activeKey={activeKey} onChange={setActiveKey}>
         <TabsPane label="标签1">

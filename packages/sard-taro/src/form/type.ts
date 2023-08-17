@@ -1,5 +1,3 @@
-import { AnyType } from '../base'
-
 export type NodeName = string | number
 
 export type NamePath = NodeName | NodeName[]
@@ -11,18 +9,18 @@ export interface ValidateOptions {
   validateOnly?: boolean
 }
 
-export interface FieldError {
+export interface FieldErrors {
   errors: string[]
   name: NodeName[]
 }
 
 export interface ErrorInfo {
-  errorFields: FieldError[]
-  values: Record<string, AnyType>
+  errorFields: FieldErrors[]
+  values: Record<string, any>
 }
 
 export interface NodeData {
   errors?: string[]
   name?: NamePath
-  value?: AnyType
+  value?: any
 }

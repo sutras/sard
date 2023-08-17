@@ -1,5 +1,5 @@
 import { Icon } from 'sard-taro'
 
 export default () => {
-  return <Icon name="search" color="orange" />
+  return <Icon name="search" color="var(--sar-pink)" />
 }

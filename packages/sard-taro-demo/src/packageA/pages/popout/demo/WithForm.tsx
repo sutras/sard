@@ -1,4 +1,11 @@
-import { Calendar, Cascader, Cell, DatetimePicker, Popout } from 'sard-taro'
+import {
+  Calendar,
+  Cascader,
+  Cell,
+  DatetimePicker,
+  Picker,
+  Popout,
+} from 'sard-taro'
 
 import { getRegionData } from 'region-data'
 
@@ -9,10 +16,10 @@ export default () => {
     <Cell.Group card>
       <Popout title="日历">
         <Popout.Outlet>
-          {({ value, setVisible }) => (
+          {({ outletValue, setVisible }) => (
             <Cell
               onClick={() => setVisible(true)}
-              value={value?.toLocaleDateString()}
+              value={outletValue}
               title="日历"
               linkable
             />
@@ -25,10 +32,10 @@ export default () => {
 
       <Popout title="级联选择">
         <Popout.Outlet>
-          {({ triggerArgs: [, options = []], setVisible }) => (
+          {({ outletValue, setVisible }) => (
             <Cell
+              value={outletValue}
               onClick={() => setVisible(true)}
-              value={options.map((option) => option.name).join('/')}
               title="级联选择"
               linkable
             />
@@ -44,10 +51,10 @@ export default () => {
 
       <Popout title="日期时间">
         <Popout.Outlet>
-          {({ value, setVisible }) => (
+          {({ outletValue, setVisible }) => (
             <Cell
+              value={outletValue}
               onClick={() => setVisible(true)}
-              value={value?.toLocaleString()}
               title="日期时间"
               linkable
             />
@@ -55,6 +62,26 @@ export default () => {
         </Popout.Outlet>
         <Popout.Target>
           <DatetimePicker />
+        </Popout.Target>
+      </Popout>
+
+      <Popout title="选择器">
+        <Popout.Outlet>
+          {({ outletValue, setVisible }) => (
+            <Cell
+              value={outletValue}
+              onClick={() => setVisible(true)}
+              title="选择器"
+              linkable
+            />
+          )}
+        </Popout.Outlet>
+        <Popout.Target>
+          <Picker
+            columns={Array(5)
+              .fill(0)
+              .map((_, i) => `选项${i}`)}
+          />
         </Popout.Target>
       </Popout>
     </Cell.Group>

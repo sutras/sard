@@ -9,7 +9,7 @@ export default () => {
       <Checkbox
         defaultChecked={fixed}
         onChange={setFixed}
-        style={{ marginBottom: 20 }}
+        style={{ margin: 20 }}
       >
         固定定位
       </Checkbox>

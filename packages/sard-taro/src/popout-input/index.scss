@@ -1,0 +1,20 @@
+@import '../style/base.scss';
+
+// #variables
+:root,
+page {
+  --sar-popout-input-arrow-font-size: var(--sar-text-base);
+  --sar-popout-input-arrow-color: var(--sar-border-color);
+}
+// #endvariables
+
+@include bem(popout-input) {
+  @include b() {
+    cursor: pointer;
+  }
+
+  @include e(arrow) {
+    font-size: var(--sar-popout-input-arrow-font-size);
+    color: var(--sar-popout-input-arrow-color);
+  }
+}

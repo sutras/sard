@@ -11,16 +11,18 @@ export default () => {
         <Cell linkable title="显示弹出框" onClick={() => setVisible(true)} />
       </Cell.Group>
       <Popout
-        visible={visible}
-        title="标题"
         type="compact"
-        onClose={setVisible}
+        title="标题"
+        visible={visible}
+        onVisible={setVisible}
         onConfirm={() => Toast.show('确定')}
         onCancel={() => Toast.show('取消')}
       >
-        <View>弹出框内容</View>
-        <View>弹出框内容</View>
-        <View>弹出框内容</View>
+        <View style={{ paddingLeft: 16, paddingRight: 16 }}>
+          <View>弹出框内容</View>
+          <View>弹出框内容</View>
+          <View>弹出框内容</View>
+        </View>
       </Popout>
     </>
   )

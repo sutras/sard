@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import { ReactElement } from 'react'
 import { isPlainObject, isFunction, isNullish } from './is'
-import { AnyType } from '../base'
 
 export * from './animate'
 export * from './date'
@@ -9,12 +8,15 @@ export * from './file'
 export * from './dom'
 export * from './is'
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+export function noop() {}
+
 /**
  * @description: 确保目标是一个数组
  * @param target 目标对象
  * @return 原数组或新的数组
  */
-export function toArray(target: AnyType) {
+export function toArray(target: any) {
   return Array.isArray(target) ? target : [target]
 }
 
@@ -171,8 +173,8 @@ export function getOverflowRangeInArea(
  * @return 扩散性下标、或开始下标
  */
 export function spreadEach(
-  array: AnyType[],
-  callback: (el: AnyType, spreadIndex: number, index: number) => AnyType,
+  array: any[],
+  callback: (el: any, spreadIndex: number, index: number) => any,
   startIndex = 0,
   direction = -1,
 ) {
@@ -202,17 +204,17 @@ export function spreadEach(
 
 /**
  * @description: 克隆对象
- * @param {AnyType} target
- * @return {AnyType}
+ * @param {any} target
+ * @return {any}
  */
-export function deepClone(target: AnyType): AnyType {
+export function deepClone(target: any): any {
   if (Array.isArray(target)) {
     return target.map((item) => {
       return deepClone(item)
     })
   }
   if (isPlainObject(target)) {
-    const obj: Record<string, AnyType> = {}
+    const obj: Record<string, any> = {}
     Object.keys(target).forEach((k) => {
       obj[k] = deepClone(target[k])
     })
@@ -223,10 +225,10 @@ export function deepClone(target: AnyType): AnyType {
 
 /**
  * @description: 深度合并其他对象到第一个对象
- * @param {AnyType[]} args
- * @return {AnyType} 第一个对象
+ * @param {any[]} args
+ * @return {any} 第一个对象
  */
-export function deepMerge(...args: AnyType[]) {
+export function deepMerge(...args: any[]) {
   const target = args[0],
     l = args.length
 
@@ -278,14 +280,14 @@ export interface DebounceOptions {
   maxWait?: number
 }
 export function debounce(
-  func: (...args: AnyType[]) => AnyType,
+  func: (...args: any[]) => any,
   wait: number,
   options: DebounceOptions = {},
 ) {
-  let lastArgs: AnyType[] | undefined,
-    lastThis: AnyType | undefined,
+  let lastArgs: any[] | undefined,
+    lastThis: any | undefined,
     maxWait: number | undefined,
-    result: AnyType,
+    result: any,
     timerId: number | undefined,
     lastCallTime: number | undefined
 
@@ -406,7 +408,7 @@ export function debounce(
     return timerId !== undefined
   }
 
-  function debounced(...args: AnyType[]) {
+  function debounced(...args: any[]) {
     const time = Date.now()
     const isInvoking = shouldInvoke(time)
 
@@ -436,7 +438,7 @@ export function debounce(
 }
 
 export function throttle(
-  func: (...args: AnyType[]) => AnyType,
+  func: (...args: any[]) => any,
   wait: number,
   options: DebounceOptions = {},
 ) {
@@ -514,23 +516,23 @@ export function treeToMap(
 
 // 如果 first 指定属性为 null 或 undefined， 则从 second 中提取
 export function pickNullish<T extends string>(
-  parentProps: Record<T, AnyType>,
-  subProps: Record<string, AnyType>,
+  parentProps: Record<T, any>,
+  subProps: Record<string, any>,
 ) {
   return Object.keys(parentProps).reduce((result, prop) => {
     result[prop] = subProps[prop] ?? parentProps[prop]
     return result
-  }, {} as Record<T, AnyType>)
+  }, {} as Record<T, any>)
 }
 
 export function pickContextNullish<T extends string>(
-  props: Record<T, AnyType>,
-  contextProps: Record<string, AnyType>,
+  props: Record<T, any>,
+  contextProps: Record<string, any>,
 ) {
   return Object.keys(props).reduce((result, prop) => {
     result[prop] = props[prop] ?? contextProps[prop]
     return result
-  }, {} as Record<T, AnyType>)
+  }, {} as Record<T, any>)
 }
 
 /**
@@ -538,7 +540,7 @@ export function pickContextNullish<T extends string>(
  * @param arr 要打乱的数组
  * @param inPlace 是否改变原数组
  */
-export function shuffle(arr: AnyType[], inPlace = false) {
+export function shuffle(arr: any[], inPlace = false) {
   if (!inPlace) {
     arr = arr.slice()
   }
@@ -609,7 +611,7 @@ export function toElementArray(children: ReactElement | ReactElement[]) {
  * @return {{}}
  */
 export function transitionEnd(
-  callback: (...args: AnyType[]) => AnyType,
+  callback: (...args: any[]) => any,
   duration = 300,
 ) {
   let timer = 0
@@ -651,7 +653,7 @@ export function transitionEnd(
  * @param {array} args
  * @return {*}
  */
-export function mergeProps(...args: AnyType[]) {
+export function mergeProps(...args: any[]) {
   const l = args.length
 
   let target = args[0],
@@ -733,11 +735,7 @@ export function getObjectValueInDepth(object, keys: (string | number)[]) {
 }
 
 // 重新排列数组元素的顺序
-export function arrayMove(
-  array: AnyType[],
-  fromIndex: number,
-  toIndex: number,
-) {
+export function arrayMove(array: any[], fromIndex: number, toIndex: number) {
   if (
     fromIndex === toIndex ||
     fromIndex < 0 ||
@@ -754,7 +752,7 @@ export function arrayMove(
 }
 
 // 删除数组中指定下标的元素，此函数会修改数组使其保存相同的引用
-export function arrayRemoveAtIndexes(arr: AnyType[], indexes: number[]) {
+export function arrayRemoveAtIndexes(arr: any[], indexes: number[]) {
   indexes = indexes.sort((a, b) => b - a)
   for (const index of indexes) {
     if (index > -1 && index < arr.length) {
@@ -765,13 +763,13 @@ export function arrayRemoveAtIndexes(arr: AnyType[], indexes: number[]) {
 }
 
 // 判断两数组的每个元素是否相等
-export function arrayEqual(arr1: AnyType[], arr2: AnyType[]) {
+export function arrayEqual(arr1: any[], arr2: any[]) {
   return arr1.length === arr2.length && arr1.every((el, i) => el === arr2[i])
 }
 
 // 将嵌套数据结构转换为多维数组
 export function nestedToMulti(
-  nested: AnyType[],
+  nested: any[],
   values: (number | string)[],
   fieldKeys: {
     value: string

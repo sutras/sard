@@ -6,6 +6,8 @@ import {
   useState,
   useMemo,
   useImperativeHandle,
+  useEffect,
+  useRef,
 } from 'react'
 import classNames from 'classnames'
 import {
@@ -15,52 +17,49 @@ import {
   PickerViewProps,
 } from './PickerView'
 import { useBem, useControllableValue, useEvent } from '../use'
-import { arrayEqual, nestedToMulti } from '../utils'
-import useUpdateEffect from '../use/useUpdateEffect'
-import { AnyType } from '../base'
+import { arrayEqual, isNullish, nestedToMulti, toArray } from '../utils'
+import { useUpdateEffect } from '../use'
 
 export * from './PickerView'
 
-export interface PickerProps
-  extends Omit<PickerViewProps, 'value' | 'onChange'> {
-  value?: (number | string)[]
-  defaultValue?: (number | string)[]
+type ValueType = any
+
+export interface PickerProps<V = ValueType>
+  extends Omit<PickerViewProps, 'value' | 'onChange' | 'columns'> {
+  columns?: PickerOption[] | PickerOption[][]
+  value?: V
+  defaultValue?: V
   onChange?: (
-    value: (number | string)[],
+    value: V,
     selectedOptions: PickerOption[],
     selectedIndex: number[],
   ) => void
+  onOutletChange?: (outletValue: any, isManual: boolean) => void
+  outletFormatter?: (value: (string | number)[]) => string
 }
 
 export interface PickerRef {
-  getTriggerArgsForcibly: () => readonly [
-    value: (number | string)[],
-    selectedOptions: PickerOption[],
-    selectedIndex: number[],
-  ]
+  getTriggerArgsForcibly: () => readonly [value: any, outletValue: string]
 }
 
 export interface PickerFC
   extends ForwardRefExoticComponent<
     PropsWithoutRef<PickerProps> & RefAttributes<PickerRef>
   > {
-  canListenOuterValueChange: boolean
   alwaysHasValue: boolean
+  hasOutletChange: boolean
 }
 
-const getValueByOption = (
+const getValueOrLabelByOption = (
   option: PickerOption,
-  optionKeys: PickerOptionKeys,
+  valueOrLabelKey: string,
 ) => {
   const isPrimitive = option !== null && typeof option !== 'object'
-  return (isPrimitive ? option : option[optionKeys.value]) as string | number
+  return (isPrimitive ? option : option[valueOrLabelKey]) as string | number
 }
 
-const getValuesByOptions = (
-  options: PickerOption[],
-  optionKeys: PickerOptionKeys,
-) => {
-  return options.map((option) => getValueByOption(option, optionKeys))
+const getValuesByOptions = (options: PickerOption[], valueKey: string) => {
+  return options.map((option) => getValueOrLabelByOption(option, valueKey))
 }
 
 const getColumnsType = (
@@ -82,7 +81,7 @@ const getColumnsType = (
 }
 
 const getIndexesByValue = (
-  value: AnyType[],
+  value: any[],
   columns: PickerOption[] | PickerOption[][],
   optionKeys: PickerOptionKeys,
 ) => {
@@ -115,7 +114,8 @@ const getIndexesByValue = (
 
   return columns.map((column, index) => {
     const optionIndex = column.findIndex(
-      (option) => getValueByOption(option, optionKeys) === value[index],
+      (option) =>
+        getValueOrLabelByOption(option, optionKeys.value) === value[index],
     )
     return Math.max(optionIndex, 0)
   })
@@ -168,10 +168,26 @@ function getCascaderValidIndexes(
   return recurse(columns)
 }
 
+function getMaySingleValueByOptions(
+  options: PickerOption[],
+  optionKeys: PickerOptionKeys,
+  columns: PickerOption[] | PickerOption[][],
+) {
+  const values = getValuesByOptions(options, optionKeys.value)
+
+  getColumnsType(columns, optionKeys)
+
+  return getColumnsType(columns, optionKeys) === 'single' ? values[0] : values
+}
+
 const defaultOptionKeys = {
   label: 'label',
   value: 'value',
   children: 'children',
+}
+
+function defaultOutletFormatter(labels: (string | number)[]) {
+  return labels.join('/')
 }
 
 export const Picker = forwardRef<PickerRef, PickerProps>((props, ref) => {
@@ -183,6 +199,8 @@ export const Picker = forwardRef<PickerRef, PickerProps>((props, ref) => {
     optionKeys,
     immediateChange = true,
     onChange,
+    onOutletChange,
+    outletFormatter = defaultOutletFormatter,
     ...restProps
   } = props
 
@@ -199,29 +217,64 @@ export const Picker = forwardRef<PickerRef, PickerProps>((props, ref) => {
     },
   })
 
+  const memoFinalColumns = useRef<any>()
   const finalColumns: PickerOption[][] = useMemo(() => {
+    if (memoFinalColumns.current && (!innerValue || innerValue.length === 0)) {
+      return memoFinalColumns.current
+    }
     switch (getColumnsType(columns, fieldKeys)) {
       case 'single':
         return [columns]
       case 'multi':
         return columns
       case 'cascader':
-        return nestedToMulti(columns, innerValue, fieldKeys)
+        return nestedToMulti(columns, toArray(innerValue), fieldKeys)
     }
   }, [columns, innerValue])
 
+  memoFinalColumns.current = finalColumns
+
   const [columnIndexes, setColumnIndexes] = useState<number[]>(() => {
-    return getIndexesByValue(innerValue, columns, fieldKeys)
+    return getIndexesByValue(toArray(innerValue), columns, fieldKeys)
   })
 
   useUpdateEffect(() => {
-    if (value) {
-      const indexes = getIndexesByValue(value, columns, fieldKeys)
+    if (!isNullish(value)) {
+      const indexes = getIndexesByValue(toArray(value), columns, fieldKeys)
       if (!arrayEqual(indexes, columnIndexes)) {
         setColumnIndexes(indexes)
       }
     }
   }, [value])
+
+  const isManual = useRef(false)
+
+  useEffect(() => {
+    if (onOutletChange) {
+      if (
+        isNullish(innerValue) ||
+        (Array.isArray(innerValue) && innerValue.length === 0)
+      ) {
+        onOutletChange('', false)
+      } else {
+        const indexes = getIndexesByValue(
+          toArray(innerValue),
+          columns,
+          fieldKeys,
+        )
+        const options = getOptionsByIndexes(indexes, columns, fieldKeys)
+        onOutletChange(
+          outletFormatter(
+            options.map((option) =>
+              getValueOrLabelByOption(option, fieldKeys.label),
+            ),
+          ),
+          isManual.current,
+        )
+        isManual.current = false
+      }
+    }
+  }, [innerValue])
 
   const handleChange: PickerViewProps['onChange'] = (indexes) => {
     const columnType = getColumnsType(columns, fieldKeys)
@@ -264,10 +317,11 @@ export const Picker = forwardRef<PickerRef, PickerProps>((props, ref) => {
     }
 
     setInnerValue(
-      getValuesByOptions(selectedOptions, fieldKeys),
+      getMaySingleValueByOptions(selectedOptions, fieldKeys, columns),
       selectedOptions,
       indexes,
     )
+    isManual.current = true
   }
 
   const handlePickEnd = () => {
@@ -279,9 +333,12 @@ export const Picker = forwardRef<PickerRef, PickerProps>((props, ref) => {
   const getTriggerArgsForcibly = useEvent(() => {
     const options = getOptionsByIndexes(columnIndexes, columns, fieldKeys)
     return [
-      getValuesByOptions(options, fieldKeys),
-      options,
-      columnIndexes,
+      getMaySingleValueByOptions(options, fieldKeys, columns),
+      outletFormatter(
+        options.map((option) =>
+          getValueOrLabelByOption(option, fieldKeys.label),
+        ),
+      ),
     ] as const
   })
 
@@ -303,7 +360,7 @@ export const Picker = forwardRef<PickerRef, PickerProps>((props, ref) => {
   )
 }) as PickerFC
 
-Picker.canListenOuterValueChange = true
 Picker.alwaysHasValue = true
+Picker.hasOutletChange = true
 
 export default Picker

@@ -1,4 +1,4 @@
-import { Cascader, Cell, Popout } from 'sard-taro'
+import { Cascader, Cell, PopoutInput } from 'sard-taro'
 
 const disabledOptions = Array(10)
   .fill(0)
@@ -21,22 +21,12 @@ const disabledOptions = Array(10)
 
 export default () => {
   return (
-    <Cell.Group card bodyStyle={{ flex: 'none' }}>
-      <Popout title="请选择">
-        <Popout.Outlet>
-          {({ triggerArgs: [, options = []], setVisible }) => (
-            <Cell
-              title="请选择"
-              value={options.map((option) => option.label).join('/')}
-              onClick={() => setVisible(true)}
-              linkable
-            />
-          )}
-        </Popout.Outlet>
-        <Popout.Target>
+    <Cell.Group card>
+      <Cell>
+        <PopoutInput title="请选择" inputProps={{ placeholder: '请选择' }}>
           <Cascader options={disabledOptions} />
-        </Popout.Target>
-      </Popout>
+        </PopoutInput>
+      </Cell>
     </Cell.Group>
   )
 }

@@ -15,7 +15,9 @@ import { Icon } from '../icon'
 import { useBem, useEvent } from '../use'
 import useTranslate from '../locale/useTranslate'
 import { BaseProps } from '../base'
+import { isFunction, isNullish, noop } from '../utils'
 
+const CLOSE = 'close'
 const CANCEL = 'cancel'
 const CONFIRM = 'confirm'
 
@@ -50,7 +52,7 @@ const buttonProps: {
   },
 }
 
-type CloseType = 'cancel' | 'confirm'
+export type DialogCloseType = 'close' | 'cancel' | 'confirm'
 
 type DialogButtonType = 'round' | 'text'
 
@@ -68,9 +70,9 @@ export interface DialogProps extends BaseProps, PopupProps {
   confirmText?: ReactNode
   confirmProps?: ButtonProps
   maskClosable?: boolean
-  onCancel?: () => void
-  onConfirm?: () => void
-  beforeClose?: (done: () => void, type: CloseType) => Promise<unknown> | void
+  onClose?: () => void | Promise<unknown>
+  onCancel?: () => void | Promise<unknown>
+  onConfirm?: () => void | Promise<unknown>
   visible?: boolean
   onVisible?: (visible: boolean) => void
 }
@@ -102,9 +104,9 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
       confirmText = t('confirm'),
       confirmProps,
       maskClosable = false,
+      onClose,
       onCancel,
       onConfirm,
-      beforeClose,
       onVisible,
 
       onMaskClick,
@@ -118,27 +120,9 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
       confirm: false,
     })
 
-    const handleMaskClick = useEvent((event: ITouchEvent) => {
-      onMaskClick?.(event)
-
-      if (maskClosable) {
-        onCancel?.()
-      }
-    })
-
-    const handleClose = () => {
-      perhapsClose(CANCEL, onCancel)
-    }
-    const handleCancel = () => {
-      perhapsClose(CANCEL, onCancel)
-    }
-    const handleConfirm = () => {
-      perhapsClose(CONFIRM, onConfirm)
-    }
-
     const perhapsClose = (
-      type: CloseType,
-      callback: (() => void) | undefined,
+      type: DialogCloseType,
+      callback?: () => void | Promise<unknown>,
     ) => {
       function toggleLoading(play: boolean) {
         setLoading((loading) => ({
@@ -147,31 +131,41 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
         }))
       }
 
-      function didClose() {
-        onVisible?.(false)
-        callback?.()
-      }
+      if (isFunction(callback)) {
+        const result = callback()
+        if (result instanceof Promise) {
+          toggleLoading(true)
 
-      if (beforeClose) {
-        toggleLoading(true)
-
-        const beforeResult = beforeClose(() => {
-          toggleLoading(false)
-          didClose()
-        }, type)
-
-        if (beforeResult instanceof Promise) {
-          beforeResult
+          return result
             .then(() => {
-              didClose()
+              onVisible?.(false)
             })
+            .catch(noop)
             .finally(() => {
               toggleLoading(false)
             })
         }
-      } else {
-        didClose()
       }
+
+      onVisible?.(false)
+    }
+
+    const handleMaskClick = useEvent((event: ITouchEvent) => {
+      onMaskClick?.(event)
+
+      if (maskClosable) {
+        perhapsClose(CLOSE, onClose)
+      }
+    })
+
+    const handleClose = () => {
+      perhapsClose(CLOSE, onClose)
+    }
+    const handleCancel = () => {
+      perhapsClose(CANCEL, onCancel)
+    }
+    const handleConfirm = () => {
+      perhapsClose(CONFIRM, onConfirm)
     }
 
     useImperativeHandle(ref, () => ({}))
@@ -182,6 +176,8 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
           className={classNames(
             bem.e('title'),
             bem.em('title', 'headed', headed),
+            bem.em('title', 'headless', !headed),
+            bem.em('title', 'headless-message', !headed && !isNullish(message)),
           )}
         >
           {title}
@@ -201,10 +197,10 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
           <View
             className={classNames(
               bem.e('header'),
-              bem.em('header', 'titled', !!title),
+              bem.em('header', 'titled', !isNullish(title)),
             )}
           >
-            {header || renderTitle()}
+            {header ?? renderTitle()}
 
             <Button
               className={bem.e('close')}
@@ -220,17 +216,26 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
         <View
           className={classNames(
             bem.e('body'),
-            bem.em('body', 'untitled', !title),
+            bem.em('body', 'untitled', isNullish(title)),
           )}
         >
           {children ?? (
             <>
-              {!headed && title && renderTitle()}
-              {message && (
+              {!headed && !isNullish(title) && renderTitle()}
+              {!isNullish(message) && (
                 <View
                   className={classNames(
                     bem.e('message'),
-                    bem.em('message', 'headless-titled', !headed && !!title),
+                    bem.em(
+                      'message',
+                      'headless-titled',
+                      !headed && !isNullish(title),
+                    ),
+                    bem.em(
+                      'message',
+                      'headed-untitled',
+                      headed && isNullish(title),
+                    ),
                   )}
                 >
                   {message}
@@ -246,7 +251,7 @@ export const Dialog: DialogFC = forwardRef<DialogRef, DialogProps>(
             bem.em('footer', 'round-button', buttonType === 'round'),
           )}
         >
-          {footer || (
+          {footer ?? (
             <>
               {showCancel && (
                 <Button

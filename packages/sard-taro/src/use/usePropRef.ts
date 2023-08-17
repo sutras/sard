@@ -11,5 +11,3 @@ export function usePropRef<T>(prop: T) {
 
   return ref
 }
-
-export default usePropRef

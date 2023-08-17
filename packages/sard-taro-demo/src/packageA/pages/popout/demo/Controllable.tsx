@@ -6,12 +6,12 @@ export default () => {
   return (
     <Popout title="请选择日期" value={value} onChange={setValue}>
       <Popout.Outlet>
-        {({ value, setVisible }) => (
+        {({ outletValue, setVisible }) => (
           <Cell.Group card>
             <Cell
               linkable
               title="请选择日期"
-              value={value?.toLocaleDateString() || ''}
+              value={outletValue}
               onClick={() => setVisible(true)}
             />
           </Cell.Group>

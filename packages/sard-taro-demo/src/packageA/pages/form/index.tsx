@@ -2,11 +2,8 @@ import Demo from '@/components/demo'
 import Page from '@/components/page'
 import { Cell, Toast } from 'sard-taro'
 
-import './index.scss'
-
 import DemoPopup from './DemoPopup'
 
-// import Demo1 from './Demo1'
 import AntDemo1 from './ant-demo/Demo1'
 import AntDemo2 from './ant-demo/Demo2'
 import AntDemo3 from './ant-demo/Demo3'
@@ -20,6 +17,15 @@ import AntDemo10 from './ant-demo/Demo10'
 import AntDemo11 from './ant-demo/Demo11'
 import AntDemo12 from './ant-demo/Demo12'
 import AntDemo13 from './ant-demo/Demo13'
+import AntDemo14 from './ant-demo/Demo14'
+import AntDemo15 from './ant-demo/Demo15'
+import AntDemo16 from './ant-demo/Demo16'
+import AntDemo17 from './ant-demo/Demo17'
+import AntDemo18 from './ant-demo/Demo18'
+import AntDemo19 from './ant-demo/Demo19'
+import AntDemo20 from './ant-demo/Demo20'
+import AntDemo21 from './ant-demo/Demo21'
+import AntDemo22 from './ant-demo/Demo22'
 
 export default () => {
   return (
@@ -41,14 +47,17 @@ export default () => {
           <DemoPopup demo={AntDemo11} />
           <DemoPopup demo={AntDemo12} />
           <DemoPopup demo={AntDemo13} />
+          <DemoPopup demo={AntDemo14} />
+          <DemoPopup demo={AntDemo15} />
+          <DemoPopup demo={AntDemo16} />
+          <DemoPopup demo={AntDemo17} />
+          <DemoPopup demo={AntDemo18} />
+          <DemoPopup demo={AntDemo19} />
+          <DemoPopup demo={AntDemo20} />
+          <DemoPopup demo={AntDemo21} />
+          <DemoPopup demo={AntDemo22} />
         </Cell.Group>
       </Demo>
-
-      {/* <Demo title="Custom Demo" full>
-        <Cell.Group card>
-          <DemoPopup demo={Demo1} />
-        </Cell.Group>
-      </Demo> */}
     </Page>
   )
 }

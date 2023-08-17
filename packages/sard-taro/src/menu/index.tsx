@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
-import { AnyType, BaseProps } from '../base'
+import { BaseProps } from '../base'
 import { useBem } from '../use'
 import { IconProps } from '../icon'
 import MenuItem from './Item'
@@ -10,7 +10,7 @@ export interface MenuOption {
   text?: ReactNode
   disabled?: boolean
   iconProps?: IconProps
-  [key: PropertyKey]: AnyType
+  [key: PropertyKey]: any
 }
 
 export interface MenuProps extends Omit<BaseProps, 'children'> {

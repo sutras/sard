@@ -19,7 +19,7 @@ export type PrimitiveType =
   | bigint
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type AnyType = any
+export type any = any
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyFunction = (...args: any[]) => any

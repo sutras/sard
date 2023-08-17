@@ -3,6 +3,7 @@ import type {
   DialogFC as DialogOriginFC,
   DialogProps,
   DialogRef,
+  DialogCloseType,
 } from './Dialog'
 import { DialogAgent } from './Agent'
 import { show, alert, confirm } from './imperative'
@@ -21,6 +22,6 @@ Dialog.alert = alert
 Dialog.confirm = confirm
 Dialog.Agent = DialogAgent
 
-export { Dialog, DialogProps, DialogRef, DialogAgent }
+export { Dialog, DialogProps, DialogRef, DialogAgent, DialogCloseType }
 
 export default Dialog

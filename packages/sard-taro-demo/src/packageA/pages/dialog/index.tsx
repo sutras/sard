@@ -6,6 +6,7 @@ import Imperative from './demo/Imperative'
 import AsyncClose from './demo/AsyncClose'
 import Round from './demo/Round'
 import Headed from './demo/Headed'
+import Content from './demo/Content'
 
 export default () => {
   return (
@@ -28,6 +29,10 @@ export default () => {
 
       <Demo title="有头部的" full>
         <Headed />
+      </Demo>
+
+      <Demo title="自定义内容" full>
+        <Content />
       </Demo>
     </Page>
   )

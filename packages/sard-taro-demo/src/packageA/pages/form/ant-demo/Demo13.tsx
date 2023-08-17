@@ -3,9 +3,8 @@ import {
   Button,
   Col,
   Form,
-  Input,
   Picker,
-  Popout,
+  PopoutInput,
   Row,
   Stepper,
   Toast,
@@ -42,15 +41,15 @@ const PriceInput: FC<PriceInputProps> = ({ value = {}, onChange }) => {
     triggerChange({ number: newNumber })
   }
 
-  const onCurrencyChange = (newCurrency: Currency[]) => {
+  const onCurrencyChange = (newCurrency: Currency) => {
     if (!('currency' in value)) {
-      setCurrency(newCurrency[0])
+      setCurrency(newCurrency)
     }
-    triggerChange({ currency: newCurrency[0] })
+    triggerChange({ currency: newCurrency })
   }
 
   return (
-    <Row gap={10}>
+    <Row gap={10} align="center">
       <Col>
         <Stepper
           value={String(value.number || number)}
@@ -59,35 +58,24 @@ const PriceInput: FC<PriceInputProps> = ({ value = {}, onChange }) => {
       </Col>
 
       <Col>
-        <Popout>
-          <Popout.Target>
-            <Picker
-              columns={[
-                {
-                  label: 'RMB',
-                  value: 'rmb',
-                },
-                {
-                  label: 'Dollar',
-                  value: 'dollar',
-                },
-              ]}
-              value={[value.currency || currency]}
-              onChange={onCurrencyChange}
-            ></Picker>
-          </Popout.Target>
-          <Popout.Outlet>
-            {({ value, setVisible }) => {
-              return (
-                <Input
-                  readOnly
-                  value={value || currency}
-                  onClick={() => setVisible(true)}
-                />
-              )
-            }}
-          </Popout.Outlet>
-        </Popout>
+        <PopoutInput
+          inputProps={{ placeholder: '请选择' }}
+          value={[value.currency || currency]}
+          onChange={onCurrencyChange}
+        >
+          <Picker
+            columns={[
+              {
+                label: 'RMB',
+                value: 'rmb',
+              },
+              {
+                label: 'Dollar',
+                value: 'dollar',
+              },
+            ]}
+          />
+        </PopoutInput>
       </Col>
     </Row>
   )
@@ -117,6 +105,7 @@ function App() {
         },
       }}
       labelWidth={40}
+      labelValign="center"
     >
       <Form.Field
         name="price"

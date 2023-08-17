@@ -15,16 +15,18 @@ page {
   --sar-dialog-header-border-color: var(--sar-border-color);
   --sar-dialog-header-line-height: var(--sar-leading-normal);
 
+  --sar-dialog-title-padding-x: 16px;
+  --sar-dialog-title-padding-y: 24px;
+  --sar-dialog-title-headless-message-padding-bottom: 4px;
   --sar-dialog-title-font-size: var(--sar-text-lg);
   --sar-dialog-headed-title-font-size: var(--sar-text-base);
 
   --sar-dialog-close-padding: 16px;
   --sar-dialog-close-font-size: var(--sar-text-lg);
 
-  --sar-dialog-body-padding-y: 24px;
-  --sar-dialog-body-padding-x: 16px;
-
-  --sar-dialog-message-margin-top: 10px;
+  --sar-dialog-message-padding-y: 24px;
+  --sar-dialog-message-padding-x: 16px;
+  --sar-dialog-message-less-padding-top: 4px;
   --sar-dialog-message-font-size: var(--sar-text-base);
   --sar-dialog-message-color: var(--sar-secondary-color);
 
@@ -71,6 +73,15 @@ page {
     @include m(headed) {
       font-size: var(--sar-dialog-headed-title-font-size);
     }
+
+    @include m(headless) {
+      padding: var(--sar-dialog-title-padding-y)
+        var(--sar-dialog-title-padding-x);
+    }
+
+    @include m(headless-message) {
+      padding-bottom: var(--sar-dialog-title-headless-message-padding-bottom);
+    }
   }
 
   @include e(close) {
@@ -85,21 +96,15 @@ page {
     cursor: pointer;
   }
 
-  @include e(body) {
-    padding: var(--sar-dialog-body-padding-y) var(--sar-dialog-body-padding-x);
-
-    @include m(untitled) {
-      padding-top: 0;
-    }
-  }
-
   @include e(message) {
+    padding: var(--sar-dialog-message-padding-y)
+      var(--sar-dialog-message-padding-x);
     font-size: var(--sar-dialog-message-font-size);
     text-align: center;
     color: var(--sar-dialog-message-color);
 
-    @include m(headless-titled) {
-      margin-top: var(--sar-dialog-message-margin-top);
+    @include m(headless-titled, headed-untitled) {
+      padding-top: var(--sar-dialog-message-less-padding-top);
     }
   }
 

@@ -9,5 +9,3 @@ export function useForceRender() {
 
   return forceRender
 }
-
-export default useForceRender

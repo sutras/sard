@@ -1,4 +1,3 @@
-import { AnyType } from '../base'
 import {
   getObjectValueInDepth,
   isNullish,
@@ -8,7 +7,7 @@ import {
 
 import {
   ErrorInfo,
-  FieldError,
+  FieldErrors,
   NamePath,
   NodeData,
   ValidateOptions,
@@ -23,31 +22,25 @@ export const HOOK_KEY = Symbol('HOOK_KEY')
 export type FormStore = ReturnType<typeof createFormStore>
 
 export interface FormCallbacks {
-  onSuccess?: (values: Record<string, AnyType>) => void
+  onSuccess?: (values: Record<string, any>) => void
   onFail?: (errorInfo: ErrorInfo) => void
   onReset?: () => void
 }
 
-export interface FormStoreCallbacks {
-  onSuccess?: (values: Record<string, AnyType>) => void
-  onFail?: (errorInfo: ErrorInfo) => void
-  onReset?: () => void
+function createInternalStore(initialValues) {
+  function reducer(previousState, value) {
+    return deepMergePlainObject(
+      {
+        ...previousState,
+      },
+      value,
+    )
+  }
+
+  return createStore(reducer, initialValues)
 }
 
-// function createInternalStore(initialValues) {
-//   function reducer(previousState, value) {
-//     return deepMergePlainObject(
-//       {
-//         ...previousState,
-//       },
-//       value,
-//     )
-//   }
-
-//   return createStore(reducer, initialValues)
-// }
-
-function deepMergePlainObject(...args: AnyType[]) {
+function deepMergePlainObject(...args: any[]) {
   const target = args[0],
     l = args.length
 
@@ -71,8 +64,9 @@ function deepMergePlainObject(...args: AnyType[]) {
         }
 
         // 深复制
-        if (isPlainObject(src) && isMapNodeValue(copy)) {
-          clone = isPlainObject(src) ? { ...src } : {}
+        // if (isPlainObject(src) && isMapNodeValue(copy)) {
+        if (isPlainObject(src) && isPlainObject(copy)) {
+          clone = { ...src }
 
           target[name] = deepMergePlainObject(clone, copy)
         } else if (Array.isArray(src) && isListNodeValue(copy)) {
@@ -96,25 +90,12 @@ function deepMergePlainObject(...args: AnyType[]) {
 }
 
 export default function createFormStore() {
-  let initialValues: Record<string, AnyType> = {}
+  let initialValues: Record<string, any> = {}
   let callbacks: FormCallbacks
   const validator = new Validator({})
   let rootFormNode: FormNode
 
-  function reducer(previousState, value) {
-    return deepMergePlainObject(
-      {
-        ...previousState,
-      },
-      value,
-    )
-  }
-
-  const store = createStore(reducer, initialValues)
-
-  store.subscribe((state) => {
-    console.log('[store state]', state)
-  })
+  const store = createInternalStore(initialValues)
 
   // # 工具函数
 
@@ -138,11 +119,11 @@ export default function createFormStore() {
   function getError(name: NamePath) {
     const node = getNodeByName(name)
 
-    return node
+    return node?.errors
   }
 
   // 返回所有或指定节点的错误信息
-  function getErrors(name?: NamePath[]): FieldError[] {
+  function getErrors(name?: NamePath[]): FieldErrors[] {
     function recurse(nodes, errors) {
       nodes.forEach((node) => {
         errors.push({
@@ -182,7 +163,8 @@ export default function createFormStore() {
     if (name) {
       return deepMergePlainObject(...name.map(getValue))
     } else {
-      return rootFormNode?.getDeepValue()
+      return store.getState()
+      // return rootFormNode?.getDeepValue()
     }
   }
 
@@ -226,7 +208,7 @@ export default function createFormStore() {
   }
 
   // 设置指定节点的值
-  function setValue(name: NamePath, value: AnyType) {
+  function setValue(name: NamePath, value: any) {
     const node = getNodeByName(name)
     if (node) {
       setValues(node.makeNamePathValue(value))
@@ -242,7 +224,7 @@ export default function createFormStore() {
       options = name as ValidateOptions
       name = undefined
     }
-    return new Promise<Record<string, AnyType>>((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
       Promise.allSettled(
         getNodesByName(name as NamePath[]).map((node) =>
           node.validate(options),
@@ -254,12 +236,10 @@ export default function createFormStore() {
           resolve(getValues())
         } else {
           reject({
-            errorFields: rejected.map(
-              ({ reason: { name, errors } }: AnyType) => ({
-                name,
-                errors,
-              }),
-            ),
+            errorFields: rejected.map(({ reason: { name, errors } }: any) => ({
+              name,
+              errors,
+            })),
             values: getValues(),
           })
         }
@@ -269,7 +249,9 @@ export default function createFormStore() {
 
   // 提交表单，与点击 submit 按钮效果相同
   function submit() {
-    return validate()
+    return validate({
+      triggerName: 'onSubmit',
+    })
       .then((values) => {
         callbacks.onSuccess?.(values)
       })
@@ -287,7 +269,7 @@ export default function createFormStore() {
 
   // 设置表单初始值
   function setInitialValues(
-    values: Record<string, AnyType> = {},
+    values: Record<string, any> = {},
     onlyCacheValues: boolean,
   ) {
     initialValues = values
@@ -303,7 +285,7 @@ export default function createFormStore() {
   }
 
   // 设置表单回调函数
-  function setCallbacks(cbs: FormStoreCallbacks) {
+  function setCallbacks(cbs: FormCallbacks) {
     callbacks = cbs
   }
 
@@ -331,13 +313,13 @@ export default function createFormStore() {
     getErrors,
     getValue,
     getValues,
-    reset,
     scrollToField,
     setNodeData,
     setValues,
     setValue,
     validate,
     submit,
+    reset,
 
     getInternalHooks,
   }

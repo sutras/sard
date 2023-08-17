@@ -7,9 +7,9 @@ import {
   isNumber,
   isPlainObject,
   isUndefined,
+  noop,
   toArray,
 } from '../utils'
-import { AnyType } from '../base'
 import FieldContext from './FieldContext'
 import { FormStore, HOOK_KEY } from './createFormStore'
 import { Rule } from './Validator'
@@ -22,7 +22,7 @@ import { Store } from './store/createStore'
 const listSymbol = Symbol('LIST_NODE_SYMBOL')
 const mapSymbol = Symbol('MAP_NODE_SYMBOL')
 
-function markListNodeValue(list: AnyType[]) {
+function markListNodeValue(list: any[]) {
   list[listSymbol] = true
   return list
 }
@@ -32,7 +32,7 @@ function markMapNodeValue(map: object) {
   return map
 }
 
-export function isListNodeValue(list?: AnyType[]) {
+export function isListNodeValue(list?: any[]) {
   return Array.isArray(list) && list[listSymbol]
 }
 
@@ -45,24 +45,24 @@ export type FormNodeType = 'list' | 'map' | 'field' | 'form'
 export interface FormNode {
   type: FormNodeType
   name: NodeName
-  value: AnyType
+  value: any
   parentNode: FormNode
   childNodes: FormNode[]
-  data: Record<string, AnyType>
+  data: Record<string, any>
   appendChild: (node: FormNode) => void
   removeChild: (node: FormNode) => void
   getNamePath: () => NodeName[]
-  makeNamePathValue: (value: AnyType) => AnyType
+  makeNamePathValue: (value: any) => any
   getDescendantNode: (name: NamePath) => FormNode | null
   getAllDescendantNode: () => FormNode[]
-  getInitialValue: () => AnyType
-  getDeepInitialValue: () => AnyType
-  getDeepValue: () => AnyType
-  setValue: (value: AnyType) => void
-  setValueAndValidate: (value: AnyType) => void
-  setValueAndDeepValidate: (value: AnyType) => void
+  getInitialValue: () => any
+  getDeepInitialValue: () => any
+  getDeepValue: () => any
+  setValue: (value: any) => void
+  setValueAndValidate: (value: any) => void
+  setValueAndDeepValidate: (value: any) => void
   reset: () => void
-  dispatch: (value: AnyType) => void
+  dispatch: (value: any) => void
   validate: (options?: ValidateOptions) => Promise<void>
   errors: string[]
   finalRequired: boolean
@@ -89,13 +89,21 @@ export function getNamePathByCurrentName(
   return namePath
 }
 
+function getUnFieldParentNode(parentNode: FormNode) {
+  let currentParentNode = parentNode
+  while (currentParentNode && currentParentNode.type === 'field') {
+    currentParentNode = currentParentNode.parentNode
+  }
+  return currentParentNode
+}
+
 export function useNode(options: {
   store?: Store
   formStore?: FormStore
   type: FormNodeType
   name?: NodeName
   label?: ReactNode
-  initialValue?: AnyType
+  initialValue?: any
   rules?: Rule[]
   validateFirst?: boolean
   validateStatus?: ValidateStatus
@@ -116,7 +124,11 @@ export function useNode(options: {
 
   const dispatch = useDispatch(store)
 
-  const parentNode = useContext(NodeContext)
+  const mayParentNode = useContext(NodeContext)
+
+  const parentNode = useMemo(() => {
+    return getUnFieldParentNode(mayParentNode)
+  }, [mayParentNode])
 
   const value = useSelector((state) => {
     if (!isNullish(name)) {
@@ -154,14 +166,12 @@ export function useNode(options: {
     getNamePath,
   })
 
-  const data = useRef<Record<string, AnyType>>({})
+  const data = useRef<Record<string, any>>({})
 
   useLayoutEffect(() => {
     if (data.current.shouldValidate) {
       data.current.shouldValidate = false
-      validate().catch(() => {
-        void 0
-      })
+      validate().catch(noop)
     }
   }, [value])
 
@@ -178,7 +188,7 @@ export function useNode(options: {
     }
   })
 
-  const makeNamePathValue = useEvent((value: AnyType) => {
+  const makeNamePathValue = useEvent((value: any) => {
     let currentValue = value
     let currentName = name
     let currentParentNode = parentNode

@@ -14,7 +14,7 @@ export default () => {
           />
         }
         inputPrepend={
-          <Icon name="caret-down-fill" color="var(--sar-gray-700)" size={14} />
+          <Icon name="caret-down" color="var(--sar-gray-700)" size={14} />
         }
         inputAppend={<Icon prefix="demo-icon" name="camera" size={20} />}
       />

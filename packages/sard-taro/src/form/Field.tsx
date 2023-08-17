@@ -4,26 +4,27 @@ import {
   isValidElement,
   ReactNode,
   useContext,
+  useEffect,
   useRef,
 } from 'react'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
-
-import FieldContext from './FieldContext'
-import { FormStore } from './createFormStore'
-import { ValidateStatus, NamePath, NodeName } from './type'
 import { useBem, useEvent } from '../use'
-import { Rule } from './Validator'
 import {
   mergeProps,
   toArray,
   scrollIntoView,
   isFunction,
   isNullish,
+  noop,
 } from '../utils'
-import { AnyFunction, AnyType, BaseProps } from '../base'
+import { AnyFunction, BaseProps } from '../base'
+import FieldContext from './FieldContext'
+import { FormStore } from './createFormStore'
+import { ValidateStatus, NamePath, NodeName } from './type'
+import { Rule } from './Validator'
 import { useNode } from './useNode'
-import { NodeContext } from './NodeContext'
+import { NodeContext, useDescendant } from './NodeContext'
 import useInternalWatch from './useInternalWatch'
 
 export interface FormFieldProps extends Omit<BaseProps, 'children'> {
@@ -31,7 +32,7 @@ export interface FormFieldProps extends Omit<BaseProps, 'children'> {
     | ReactNode
     | ((
         params: {
-          value: AnyType
+          value: any
           onChange: AnyFunction
           disabled: boolean
           readOnly: boolean
@@ -41,7 +42,8 @@ export interface FormFieldProps extends Omit<BaseProps, 'children'> {
   layout?: 'horizontal' | 'vertical'
   label?: ReactNode
   labelWidth?: number | string
-  labelAlign?: 'left' | 'right'
+  labelAlign?: 'start' | 'center' | 'end'
+  labelValign?: 'start' | 'center' | 'end'
   starPosition?: 'left' | 'right'
   required?: boolean
   hidden?: boolean
@@ -50,7 +52,7 @@ export interface FormFieldProps extends Omit<BaseProps, 'children'> {
   inlaid?: boolean
 
   name?: NodeName
-  initialValue?: AnyType
+  initialValue?: any
   valuePropName?: string
   trigger?: string
   getValueFromEvent?: AnyFunction
@@ -59,8 +61,8 @@ export interface FormFieldProps extends Omit<BaseProps, 'children'> {
 
   rules?: Rule[]
   validateFirst?: boolean
-  validateStatus?: ValidateStatus
   validateTrigger?: string | string[]
+  validateStatus?: ValidateStatus
   feedback?: ReactNode
   extra?: ReactNode
 
@@ -74,7 +76,8 @@ export const FormField: FC<FormFieldProps> = (props) => {
     layout,
     label,
     labelWidth,
-    labelAlign = 'left',
+    labelAlign,
+    labelValign,
     starPosition,
     required,
     hidden,
@@ -91,9 +94,9 @@ export const FormField: FC<FormFieldProps> = (props) => {
     readOnly,
 
     rules,
-    validateFirst = true,
+    validateFirst,
+    validateTrigger,
     validateStatus,
-    validateTrigger = 'onChange',
     feedback,
     extra,
 
@@ -103,6 +106,11 @@ export const FormField: FC<FormFieldProps> = (props) => {
 
   const [bem] = useBem('form-field')
 
+  const { mergedValidateFirst, mergedValidateTrigger } = useDescendant({
+    validateFirst,
+    validateTrigger,
+  })
+
   useInternalWatch(watch)
 
   const [node] = useNode({
@@ -111,7 +119,7 @@ export const FormField: FC<FormFieldProps> = (props) => {
     label,
     initialValue,
     rules,
-    validateFirst,
+    validateFirst: mergedValidateFirst,
     validateStatus,
     required,
   })
@@ -130,6 +138,7 @@ export const FormField: FC<FormFieldProps> = (props) => {
     layout: formLayout,
     labelWidth: formLabelWidth,
     labelAlign: formLabelAlign,
+    labelValign: formlabelValign,
     starPosition: formStarPosition,
     disabled: formDisabled,
     readOnly: fromReadOnly,
@@ -138,6 +147,7 @@ export const FormField: FC<FormFieldProps> = (props) => {
   const mergedLyaout = layout || formLayout
   const mergedLabelWidth = labelWidth || formLabelWidth
   const mergedLabelAlign = labelAlign || formLabelAlign
+  const mergedLabelValign = labelValign || formlabelValign
   const mergedStarPosition = starPosition || formStarPosition
   const mergedDisabled = disabled || formDisabled
   const mergedReadOnly = readOnly || fromReadOnly
@@ -157,6 +167,21 @@ export const FormField: FC<FormFieldProps> = (props) => {
 
   node.data.scrollToField = scrollToField
 
+  const changeTriggerNameList = useRef([])
+  useEffect(() => {
+    if (changeTriggerNameList.current.length > 0) {
+      Promise.all(
+        changeTriggerNameList.current.map((trigger) =>
+          validate({
+            triggerName: trigger,
+          }).catch(noop),
+        ),
+      ).finally(() => {
+        changeTriggerNameList.current = []
+      })
+    }
+  }, [value])
+
   const renderField = () => {
     function renderFunction(children) {
       return children({
@@ -173,20 +198,14 @@ export const FormField: FC<FormFieldProps> = (props) => {
       return isFunction(children) ? renderFunction(children) : children
     }
 
-    const mergedValidateTrigger = toArray(validateTrigger).filter(Boolean)
-
     const triggerProps = {}
-    mergedValidateTrigger.forEach((item) => {
-      triggerProps[item] = () => {
-        setTimeout(() => {
-          validate({
-            triggerName: item,
-          }).catch(() => {
-            void 0
-          })
-        })
-      }
-    })
+    toArray(mergedValidateTrigger)
+      .filter(Boolean)
+      .forEach((item) => {
+        triggerProps[item] = () => {
+          changeTriggerNameList.current.push(item)
+        }
+      })
 
     const handleChange = (...args) => {
       setValue(getValueFromEvent(...args))
@@ -242,7 +261,8 @@ export const FormField: FC<FormFieldProps> = (props) => {
           <View
             className={classNames(
               bem.e('label'),
-              bem.em('label', mergedLabelAlign, mergedLabelAlign),
+              bem.em('label', `align-${mergedLabelAlign}`),
+              bem.em('label', `valign-${mergedLabelValign}`),
               bem.em('label', mergedLyaout, mergedLyaout),
             )}
             style={{

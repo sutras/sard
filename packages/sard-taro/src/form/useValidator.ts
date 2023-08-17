@@ -2,9 +2,8 @@ import { ReactNode, useContext, useMemo, useState } from 'react'
 import FieldContext from './FieldContext'
 import { FormStore, HOOK_KEY } from './createFormStore'
 import { NodeName, ValidateOptions, ValidateStatus } from './type'
-import { Rule } from './Validator'
+import { Rule, getRuleConfig } from './Validator'
 import { useEvent } from '../use'
-import { AnyType } from '../base'
 import { isBoolean, toArray } from '../utils'
 
 export function useValidator(options: {
@@ -12,7 +11,7 @@ export function useValidator(options: {
   rules: Rule[]
   validateFirst: boolean
   validateStatus: ValidateStatus
-  value: AnyType
+  value: any
   name: NodeName
   label: ReactNode
   getNamePath: () => NodeName[]
@@ -42,7 +41,9 @@ export function useValidator(options: {
   const finalValidateStatus = validateStatus || innerValidateStatus
 
   const ruleRequired = useMemo(() => {
-    return !!(rules && rules.some((rule) => rule.required))
+    return !!(
+      rules && rules.some((rule) => getRuleConfig(rule, formStore).required)
+    )
   }, [rules])
 
   const validate = useEvent((options: ValidateOptions = {}) => {
@@ -60,7 +61,8 @@ export function useValidator(options: {
 
       if (triggerName) {
         filteredRules = rules.filter(Boolean).filter((rule) => {
-          const { trigger } = rule
+          const ruleConfig = getRuleConfig(rule, formStore)
+          const { trigger } = ruleConfig
           if (!trigger) {
             return true
           }
@@ -74,6 +76,7 @@ export function useValidator(options: {
           value,
           name,
           label,
+          form: formStore,
         })
         .then(() => {
           if (!validateOnly) {

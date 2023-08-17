@@ -6,8 +6,8 @@ export default () => {
     <Space vertical>
       <Tabs
         headerStyle={{ borderBottom: '1px solid var(--sar-border-color)' }}
-        activeLabelStyle={{ color: 'var(--sar-danger)' }}
-        lineStyle={{ background: 'var(--sar-danger)' }}
+        activeLabelStyle={{ color: 'var(--sar-pink)' }}
+        lineStyle={{ background: 'var(--sar-pink)' }}
       >
         <TabsPane label="标签1">
           <View className="demo-pane">内容1</View>
@@ -23,10 +23,10 @@ export default () => {
       <Tabs
         type="border"
         labelStyle={{
-          color: 'var(--sar-danger)',
-          borderColor: 'var(--sar-danger)',
+          color: 'var(--sar-pink)',
+          borderColor: 'var(--sar-pink)',
         }}
-        activeLabelStyle={{ color: '#fff', background: 'var(--sar-danger)' }}
+        activeLabelStyle={{ color: '#fff', background: 'var(--sar-pink)' }}
       >
         <TabsPane label="标签1">
           <View className="demo-pane">内容1</View>
@@ -41,7 +41,7 @@ export default () => {
 
       <Tabs
         type="pill"
-        activeLabelStyle={{ backgroundColor: 'var(--sar-danger)' }}
+        activeLabelStyle={{ backgroundColor: 'var(--sar-pink)' }}
       >
         <TabsPane label="标签1">
           <View className="demo-pane">内容1</View>

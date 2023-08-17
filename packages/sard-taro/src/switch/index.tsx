@@ -3,9 +3,9 @@ import { ITouchEvent, View } from '@tarojs/components'
 import classNames from 'classnames'
 import { useBem, useControllableValue } from '../use'
 import Loading from '../loading'
-import { AnyType, BaseProps } from '../base'
+import { BaseProps } from '../base'
 
-type ValueType = AnyType
+type ValueType = any
 
 export interface SwitchProps extends BaseProps {
   checked?: boolean

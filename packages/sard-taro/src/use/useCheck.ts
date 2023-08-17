@@ -9,7 +9,7 @@ import {
   useControllableValue,
   UseControllableValueOptions,
 } from './useControllableValue'
-import useEvent from './useEvent'
+import { useEvent } from './useEvent'
 
 export interface CheckContextValue<V> {
   value: V

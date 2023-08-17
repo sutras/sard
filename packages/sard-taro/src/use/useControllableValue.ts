@@ -3,16 +3,15 @@
  */
 
 import { useRef, useMemo, SetStateAction } from 'react'
-import useForceRender from './useForceRender'
-import useEvent from './useEvent'
-import useLayoutUpdateEffect from './useLayoutUpdateEffect'
+import { useForceRender } from './useForceRender'
+import { useEvent } from './useEvent'
+import { useLayoutUpdateEffect } from './useLayoutUpdateEffect'
 import { isFunction, isNullish } from '../utils'
-import { AnyType } from '../base'
 
 export interface UseControllableValueOptions<T> {
   value?: T
   defaultValue?: T
-  trigger?: (value: T, ...args: AnyType[]) => void
+  trigger?: (value: T, ...args: any[]) => void
   initialValue?: T | (() => T)
   postValue?: (value: T) => T
 }
@@ -82,5 +81,3 @@ export function useControllableValue<T>(
 
   return [stateRef.current, setState] as const
 }
-
-export default useControllableValue

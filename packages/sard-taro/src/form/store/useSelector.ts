@@ -1,11 +1,10 @@
 import { useContext, useLayoutEffect, useRef } from 'react'
 import Context from './Context'
 import { useForceRender } from '../../use'
-import { AnyType } from '../../base'
 import { Store } from './createStore'
 
 interface Selector<S> {
-  (state: AnyType): S
+  (state: any): S
 }
 
 export function useSelectorWithStoreAndSubscription<S>(
@@ -13,7 +12,7 @@ export function useSelectorWithStoreAndSubscription<S>(
   subscribe,
   selector: Selector<S>,
 ) {
-  const latestSelector = useRef<AnyType>()
+  const latestSelector = useRef<any>()
   const latestStoreState = useRef<S>()
 
   const forceRender = useForceRender()

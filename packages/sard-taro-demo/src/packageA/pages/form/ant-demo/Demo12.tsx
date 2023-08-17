@@ -18,7 +18,7 @@ function App() {
       form={form}
       onSuccess={handleSuccess}
       onFail={handleFail}
-      labelWidth={75}
+      labelWidth={80}
     >
       <Form.Field label="Username" required>
         <Row gap={10}>

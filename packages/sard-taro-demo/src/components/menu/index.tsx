@@ -76,6 +76,10 @@ const menus = [
         name: 'Picker',
       },
       {
+        title: 'PopoutInput 弹出式输入框',
+        name: 'PopoutInput',
+      },
+      {
         title: 'Radio 单选按钮',
         name: 'Radio',
       },

@@ -43,7 +43,7 @@ import { Popout } from 'sard-taro'
 
 %(${DEMO_PATH}/popout/demo/Fast.tsx)
 
-### 结合 Cell 组件使用
+### 结合其他表单组件
 
 %(${DEMO_PATH}/popout/demo/WithCell.tsx)
 
@@ -51,29 +51,30 @@ import { Popout } from 'sard-taro'
 
 ### PopoutProps
 
-| 属性           | 描述                                                             | 类型                       | 默认值  |
-| -------------- | ---------------------------------------------------------------- | -------------------------- | ------- |
-| title          | 弹出框标题                                                       | React.ReactNode            | -       |
-| visible        | 是否显示弹出框                                                   | boolean                    | -       |
-| defaultVisible | 默认是否显示弹出框                                               | boolean                    | -       |
-| onVisible      | 弹出框显隐时触发                                                 | (visible: boolean) => void | -       |
-| showCancel     | 是否显示取消按钮，适用 `loose` 类型                              | boolean                    | false   |
-| cancelText     | 取消按钮文案                                                     | React.ReactNode            | '取消'  |
-| cancelProps    | 取消按钮组件的 `props`                                           | ButtonProps                | -       |
-| showConfirm    | 是否显示确定按钮，适用 `loose` 类型                              | boolean                    | true    |
-| confirmText    | 确定按钮文案                                                     | React.ReactNode            | '确定'  |
-| confirmProps   | 确定按钮组件的 `props`                                           | ButtonProps                | -       |
-| showClose      | 是否显示关闭按钮，适用 `loose` 类型                              | boolean                    | true    |
-| type           | 弹出框按钮排版方式                                               | 'compact' \| 'loose'       | 'loose' |
-| fast           | 快捷选择，在目标组件触发改变事件时自动选择，通常需要隐藏确定按钮 | boolean                    | false   |
-| onClose        | 点击确定、取消、关闭按钮、遮罩时触发                             | (visible: false) => void   | -       |
-| onCancel       | 点击取消按钮时触发                                               | (visible: false) => void   | -       |
-| onConfirm      | 点击确定按钮时触发                                               | (visible: false) => void   | -       |
-| value          | 目标组件的当前值                                                 | any                        | -       |
-| defaultValue   | 目标组件的默认值                                                 | any                        | -       |
-| onChange       | 目标组件值改变时触发                                             | (value: any) => void       | -       |
-| disabled       | 禁用状态                                                         | boolean                    | false   |
-| readOnly       | 只读状态                                                         | boolean                    | false   |
+| 属性           | 描述                                                                                                                   | 类型                           | 默认值  |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ------- |
+| title          | 弹出框标题                                                                                                             | React.ReactNode                | -       |
+| showCancel     | 是否显示取消按钮，适用 `loose` 类型                                                                                    | boolean                        | false   |
+| cancelText     | 取消按钮文案                                                                                                           | React.ReactNode                | '取消'  |
+| cancelProps    | 取消按钮组件的 `props`                                                                                                 | ButtonProps                    | -       |
+| showConfirm    | 是否显示确定按钮，适用 `loose` 类型                                                                                    | boolean                        | true    |
+| confirmText    | 确定按钮文案                                                                                                           | React.ReactNode                | '确定'  |
+| confirmProps   | 确定按钮组件的 `props`                                                                                                 | ButtonProps                    | -       |
+| showClose      | 是否显示关闭按钮，适用 `loose` 类型                                                                                    | boolean                        | true    |
+| type           | 弹出框按钮排版方式                                                                                                     | 'compact' \| 'loose'           | 'loose' |
+| fast           | 快捷选择，在目标组件触发改变事件时自动选择，通常需要隐藏确定按钮                                                       | boolean                        | false   |
+| visible        | 是否显示弹出框                                                                                                         | boolean                        | -       |
+| defaultVisible | 默认是否显示弹出框                                                                                                     | boolean                        | -       |
+| onVisible      | 弹出框显隐时触发                                                                                                       | (visible: boolean) => void     | -       |
+| maskClosable   | 点击遮罩是否关闭                                                                                                       | boolean                        | true    |
+| onConfirm      | 点击确认按钮时触发，如果返回`Promise`对象则会在`fulfilled`状态时关闭，期间会显示加载状态                               | () => void \| Promise<unknown> | -       |
+| onCancel       | 点击取消按钮时触发，如果返回`Promise`对象则会在`fulfilled`状态时关闭，期间会显示加载状态                               | () => void \| Promise<unknown> | -       |
+| onClose        | 点击关闭按钮或遮罩（如果允许点击遮罩关闭）时触发，如果返回`Promise`对象则会在`fulfilled`状态时关闭，期间会显示加载状态 | () => void \| Promise<unknown> | -       |
+| value          | 目标组件的当前值                                                                                                       | any                            | -       |
+| defaultValue   | 目标组件的默认值                                                                                                       | any                            | -       |
+| onChange       | 目标组件值改变时触发                                                                                                   | (value: any) => void           | -       |
+| disabled       | 禁用状态                                                                                                               | boolean                        | false   |
+| readOnly       | 只读状态                                                                                                               | boolean                        | false   |
 
 ### PopoutBridgeProps
 

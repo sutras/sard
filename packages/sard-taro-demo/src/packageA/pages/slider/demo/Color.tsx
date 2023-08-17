@@ -5,17 +5,15 @@ export default () => {
     <Space vertical>
       <Slider
         defaultValue={50}
-        pieceColor="orange"
-        trackColor="fuchsia"
-        thumbColor="pink"
+        pieceColor="var(--sar-pink)"
+        thumbColor="var(--sar-pink)"
       />
 
       <Slider
         range
         defaultValue={[20, 80]}
-        pieceColor="orange"
-        trackColor="fuchsia"
-        thumbColor="pink"
+        pieceColor="var(--sar-pink)"
+        thumbColor="var(--sar-pink)"
       />
     </Space>
   )

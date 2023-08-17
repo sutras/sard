@@ -5,7 +5,7 @@ import {
   Icon,
   Input,
   Picker,
-  Popout,
+  PopoutInput,
   Radio,
   Row,
   Toast,
@@ -42,7 +42,7 @@ function App() {
       form={form}
       onSuccess={handleSuccess}
       onFail={handleFail}
-      labelWidth={40}
+      labelWidth={50}
     >
       <Form.Field
         name="area"
@@ -72,40 +72,23 @@ function App() {
                         {({ getValue }) => {
                           return (
                             <Form.Field
-                              label="Sight"
                               name="sight"
+                              label="Sight"
                               disabled={!getValue('area')}
                               rules={[
                                 { required: true, message: 'Missing sight' },
                               ]}
                               inlaid
                             >
-                              <Popout>
-                                <Popout.Outlet>
-                                  {({
-                                    triggerArgs: [, options],
-                                    setVisible,
-                                  }) => {
-                                    console.log(options)
-                                    return (
-                                      <Input
-                                        inlaid
-                                        readOnly
-                                        value={options?.[0]}
-                                        placeholder="Sight"
-                                        onClick={() => {
-                                          setVisible(true)
-                                        }}
-                                      />
-                                    )
-                                  }}
-                                </Popout.Outlet>
-                                <Popout.Target>
-                                  <Picker
-                                    columns={sights[form.getValue('area')]}
-                                  ></Picker>
-                                </Popout.Target>
-                              </Popout>
+                              <PopoutInput
+                                inputProps={{
+                                  placeholder: '请选择',
+                                }}
+                              >
+                                <Picker
+                                  columns={sights[form.getValue('area')]}
+                                />
+                              </PopoutInput>
                             </Form.Field>
                           )
                         }}
@@ -114,12 +97,12 @@ function App() {
 
                     <Col>
                       <Form.Field
-                        label="Price"
                         name="price"
+                        label="Price"
                         rules={[{ required: true, message: 'Missing price' }]}
                         inlaid
                       >
-                        <Input inlaid placeholder="Price" />
+                        <Input inlaid placeholder="请输入" />
                       </Form.Field>
                     </Col>
 

@@ -1,38 +1,37 @@
-import { Cell, DatetimePicker, Space } from 'sard-taro'
+import { Cell, DatetimePicker, PopoutInput, Space } from 'sard-taro'
 
 export default () => {
   return (
     <Space vertical gap="large">
       <Cell.Group card>
-        <Cell title="年月日" value="2021-04-13, 2023-07-08" />
         <Cell>
-          <DatetimePicker
-            type="yMd"
-            min={new Date(2021, 4, 13)}
-            max={new Date(2023, 6, 8)}
-          />
+          <PopoutInput title="日期" inputProps={{ placeholder: '日期' }}>
+            <DatetimePicker
+              type="yMd"
+              min={new Date(2000, 4, 13)}
+              max={new Date(2003, 6, 8)}
+            />
+          </PopoutInput>
         </Cell>
-      </Cell.Group>
 
-      <Cell.Group card>
-        <Cell title="时分秒" value="09:00:00, 18:30:00" />
         <Cell>
-          <DatetimePicker
-            type="hms"
-            min={new Date(0, 0, 1, 9, 0, 0)}
-            max={new Date(0, 0, 1, 18, 30, 0)}
-          />
+          <PopoutInput title="月份" inputProps={{ placeholder: '月份' }}>
+            <DatetimePicker
+              type="yM"
+              min={new Date(2000, 4)}
+              max={new Date(2003, 6)}
+            />
+          </PopoutInput>
         </Cell>
-      </Cell.Group>
 
-      <Cell.Group card>
-        <Cell title="日时分" value="01日 09:45, 06日 12:12" />
         <Cell>
-          <DatetimePicker
-            type="dhm"
-            min={new Date(0, 0, 1, 9, 45)}
-            max={new Date(0, 0, 6, 12, 12)}
-          />
+          <PopoutInput title="时间" inputProps={{ placeholder: '时间' }}>
+            <DatetimePicker
+              type="hms"
+              min={new Date(0, 0, 1, 9, 0, 0)}
+              max={new Date(0, 0, 1, 18, 30, 0)}
+            />
+          </PopoutInput>
         </Cell>
       </Cell.Group>
     </Space>

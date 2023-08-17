@@ -1,5 +1,5 @@
 import { View } from '@tarojs/components'
-import { Calendar, CalendarDay, Cell, Popout } from 'sard-taro'
+import { Calendar, CalendarDay, Cell, PopoutInput } from 'sard-taro'
 
 export default () => {
   const formatter = (day: CalendarDay) => {
@@ -44,29 +44,20 @@ export default () => {
   }
 
   return (
-    <Cell.Group card bodyStyle={{ flex: 'none' }}>
-      <Popout title="请选择日期">
-        <Popout.Outlet>
-          {({ value, setVisible }) => (
-            <Cell
-              linkable
-              title="选择范围"
-              value={
-                value?.map((date) => date.toLocaleDateString()).join('-') || ''
-              }
-              onClick={() => setVisible(true)}
-            />
-          )}
-        </Popout.Outlet>
-        <Popout.Target>
+    <Cell.Group card>
+      <Cell>
+        <PopoutInput
+          title="请选择日期"
+          inputProps={{ placeholder: '请选择日期' }}
+        >
           <Calendar
             type="range"
             min={new Date(2000, 4, 1)}
             max={new Date(2000, 6, 1)}
             formatter={formatter}
           />
-        </Popout.Target>
-      </Popout>
+        </PopoutInput>
+      </Cell>
     </Cell.Group>
   )
 }

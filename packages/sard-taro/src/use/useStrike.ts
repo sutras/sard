@@ -1,6 +1,6 @@
 import { MutableRefObject, useEffect, useRef } from 'react'
 import { createStrike, Strike, PartialConfig } from '../strike'
-import useEvent from './useEvent'
+import { useEvent } from './useEvent'
 import { isNullish } from '../utils'
 
 export type UseStrikeConfig = PartialConfig & {
@@ -73,5 +73,3 @@ export function useStrike(
     configure,
   }
 }
-
-export default useStrike

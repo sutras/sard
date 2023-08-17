@@ -81,7 +81,7 @@ page {
     padding-top: var(--sar-toast-text-padding-y);
     padding-bottom: var(--sar-toast-text-padding-y);
     white-space: normal;
-    word-wrap: break-word;
+    word-break: break-word;
   }
 
   @include m(not-text) {

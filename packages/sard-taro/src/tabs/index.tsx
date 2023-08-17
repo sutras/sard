@@ -30,7 +30,7 @@ import {
 
 import { TabsPane, TabPaneProps } from './Pane'
 import { TabsLabel, TabLabelRef } from './Label'
-import { getRectById, matchScrollVisible } from '../utils'
+import { getRectById, matchScrollVisible, noop } from '../utils'
 import { BaseProps } from '../base'
 import PopoutContext from '../popout/PopoutContext'
 
@@ -166,7 +166,7 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
 
       const contentRes = await getRectById(labelContentId)
 
-      const labelRes = await labelEl.getFields()
+      const labelRes = await labelEl.getRect()
 
       if (!wrapperRes || !contentRes || !labelRes) {
         throw Error
@@ -205,10 +205,7 @@ export const Tabs: TabsFC = forwardRef((props, ref) => {
         .then(() => {
           setStyle()
         })
-        .catch((err) => {
-          console.error(err)
-          void 0
-        })
+        .catch(noop)
     }
   }
 

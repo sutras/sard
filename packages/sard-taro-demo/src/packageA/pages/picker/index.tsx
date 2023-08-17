@@ -18,7 +18,11 @@ export default () => {
         <General />
       </Demo>
 
-      <Demo title="对象类型数组" full>
+      <Demo title="配合弹出框" full>
+        <WithPopout />
+      </Demo>
+
+      <Demo title="对象类型" full>
         <ObjectOption />
       </Demo>
 
@@ -32,10 +36,6 @@ export default () => {
 
       <Demo title="级联选择" full>
         <Cascaded />
-      </Demo>
-
-      <Demo title="配合弹出框" full>
-        <WithPopout />
       </Demo>
     </Page>
   )

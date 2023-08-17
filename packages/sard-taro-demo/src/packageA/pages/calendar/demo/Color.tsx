@@ -1,32 +1,21 @@
-import { Calendar, Cell, Popout } from 'sard-taro'
+import { Calendar, Cell, PopoutInput } from 'sard-taro'
 
 export default () => {
   return (
-    <Cell.Group card bodyStyle={{ flex: 'none' }}>
-      <Popout
-        title="请选择日期"
-        style={{
-          '--sar-primary': 'var(--sar-danger)',
-          '--sar-calendar-day-selected-bg': 'var(--sar-danger)',
-          '--sar-calendar-day-today-color': 'var(--sar-danger)',
-        }}
-      >
-        <Popout.Outlet>
-          {({ value, setVisible }) => (
-            <Cell
-              linkable
-              title="选择范围"
-              value={
-                value?.map((date) => date.toLocaleDateString()).join('-') || ''
-              }
-              onClick={() => setVisible(true)}
-            />
-          )}
-        </Popout.Outlet>
-        <Popout.Target>
+    <Cell.Group card>
+      <Cell>
+        <PopoutInput
+          title="请选择日期"
+          style={{
+            '--sar-primary': 'var(--sar-pink)',
+            '--sar-calendar-day-selected-bg': 'var(--sar-pink)',
+            '--sar-calendar-day-today-color': 'var(--sar-pink)',
+          }}
+          inputProps={{ placeholder: '请选择日期' }}
+        >
           <Calendar type="range" />
-        </Popout.Target>
-      </Popout>
+        </PopoutInput>
+      </Cell>
     </Cell.Group>
   )
 }

@@ -15,7 +15,7 @@ if (process.env.TARO_ENV === 'h5') {
 
 function App({ children }: PropsWithChildren) {
   useLaunch(() => {
-    console.log('App launched.')
+    // console.log('App launched.')
   })
 
   return <ConfigProvider lang={currentLang}>{children}</ConfigProvider>

@@ -3,7 +3,7 @@
 // #variables
 :root,
 page {
-  --sar-result-icon-font-size: 64px;
+  --sar-result-icon-font-size: 48px;
 
   --sar-result-success-color: var(--sar-success);
   --sar-result-info-color: var(--sar-info);
@@ -12,7 +12,7 @@ page {
   --sar-result-question-color: var(--sar-primary);
 
   --sar-result-title-margin-top: 15px;
-  --sar-result-title-font-size: var(--sar-text-xl);
+  --sar-result-title-font-size: 18px;
 
   --sar-result-description-margin-top: 5px;
   --sar-result-description-font-size: var(--sar-text-base);
@@ -61,6 +61,7 @@ page {
   @include e(title) {
     margin-top: var(--sar-result-title-margin-top);
     font-size: var(--sar-result-title-font-size);
+
     text-align: center;
   }
 

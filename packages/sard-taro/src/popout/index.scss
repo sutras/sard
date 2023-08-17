@@ -13,7 +13,7 @@ page {
   --sar-popout-close-color: var(--sar-secondary-color);
 
   --sar-popout-header-compact-height: 44px;
-  --sar-popout-header-loose-height: 56px;
+  --sar-popout-header-loose-height: 44px;
   --sar-popout-header-loose-padding-x: calc(
     var(--sar-popout-close-padding) * 2 + var(--sar-popout-close-font-size)
   );
@@ -21,6 +21,8 @@ page {
   --sar-popout-title-max-width: 65%;
   --sar-popout-title-font-size: var(--sar-text-lg);
   --sar-popout-title-color: var(--sar-emphasis-color);
+
+  --sar-popout-button-wrap-min-width: 80px;
 
   --sar-popout-footer-gap-y: 8px;
   --sar-popout-footer-gap-x: 16px;
@@ -55,6 +57,12 @@ page {
       padding-left: var(--sar-popout-header-loose-padding-x);
       padding-right: var(--sar-popout-header-loose-padding-x);
     }
+  }
+
+  @include e(button-wrap) {
+    display: flex;
+    height: 100%;
+    min-width: var(--sar-popout-button-wrap-min-width);
   }
 
   @include e(header-button) {

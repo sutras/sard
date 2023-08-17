@@ -1,4 +1,4 @@
-import { Cascader, Cell, Popout } from 'sard-taro'
+import { Cascader, Cell, PopoutInput } from 'sard-taro'
 import { getRegionData } from 'region-data'
 import { View } from '@tarojs/components'
 
@@ -6,19 +6,9 @@ const regionData = getRegionData()
 
 export default () => {
   return (
-    <Cell.Group card bodyStyle={{ flex: 'none' }}>
-      <Popout title="请选择">
-        <Popout.Outlet>
-          {({ triggerArgs: [, options = []], setVisible }) => (
-            <Cell
-              title="请选择"
-              value={options.map((option) => option.name).join('/')}
-              onClick={() => setVisible(true)}
-              linkable
-            />
-          )}
-        </Popout.Outlet>
-        <Popout.Target>
+    <Cell.Group card>
+      <Cell>
+        <PopoutInput title="请选择" inputProps={{ placeholder: '请选择' }}>
           <Cascader
             options={regionData}
             fieldNames={{ label: 'name', value: 'code' }}
@@ -34,8 +24,8 @@ export default () => {
               </View>
             )}
           />
-        </Popout.Target>
-      </Popout>
+        </PopoutInput>
+      </Cell>
     </Cell.Group>
   )
 }

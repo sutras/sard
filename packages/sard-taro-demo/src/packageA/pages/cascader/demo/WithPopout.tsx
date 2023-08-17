@@ -1,30 +1,33 @@
-import { Cascader, Cell, Popout } from 'sard-taro'
+import { Cascader, Cell, PopoutInput } from 'sard-taro'
 import { getRegionData } from 'region-data'
+import { useState } from 'react'
 
 const regionData = getRegionData()
 
 export default () => {
+  const [value, setValue] = useState<number>()
+
   return (
-    <Cell.Group card bodyStyle={{ flex: 'none' }}>
-      <Popout title="请选择省市区">
-        <Popout.Outlet>
-          {({ triggerArgs: [, options = []], setVisible }) => (
-            <Cell
-              linkable
-              title="请选择省市区"
-              value={options.map((option) => option.name).join('/')}
-              onClick={() => setVisible(true)}
-            />
-          )}
-        </Popout.Outlet>
-        <Popout.Target>
+    <Cell.Group card>
+      <Cell
+        linkable
+        title="设置为：广东省/广州市/白云区"
+        onClick={() => setValue(440111)}
+      />
+      <Cell linkable title="清空" onClick={() => setValue(undefined)} />
+      <Cell>
+        <PopoutInput
+          title="请选择省市区"
+          inputProps={{ placeholder: '请选择' }}
+          value={value}
+          onChange={setValue}
+        >
           <Cascader
-            defaultValue={440111}
             options={regionData}
             fieldNames={{ label: 'name', value: 'code' }}
           />
-        </Popout.Target>
-      </Popout>
+        </PopoutInput>
+      </Cell>
     </Cell.Group>
   )
 }

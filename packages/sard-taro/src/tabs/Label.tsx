@@ -31,7 +31,7 @@ export interface TabLabelProps extends Omit<BaseProps, 'children'> {
 }
 
 export interface TabLabelRef {
-  getFields: () => Promise<Record<string, number>>
+  getRect: () => Promise<Record<string, number>>
 }
 
 export const TabsLabel = forwardRef<TabLabelRef, TabLabelProps>(
@@ -72,7 +72,7 @@ export const TabsLabel = forwardRef<TabLabelRef, TabLabelProps>(
     }
 
     useImperativeHandle(ref, () => ({
-      getFields() {
+      getRect() {
         return getRectById(selectorId)
       },
     }))

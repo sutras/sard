@@ -1,45 +1,23 @@
-import { Calendar, Cell, Popout, Toast } from 'sard-taro'
+import { Calendar, Cell, PopoutInput, Toast } from 'sard-taro'
 
 export default () => {
   return (
     <Cell.Group card bodyStyle={{ flex: 'none' }}>
-      <Popout title="请选择日期">
-        <Popout.Outlet>
-          {({ value, setVisible }) => (
-            <Cell
-              linkable
-              title="选择多个日期"
-              value={
-                value?.map((date) => date.toLocaleDateString()).join(', ') || ''
-              }
-              onClick={() => setVisible(true)}
-            />
-          )}
-        </Popout.Outlet>
-        <Popout.Target>
+      <Cell>
+        <PopoutInput
+          title="选择多个日期"
+          inputProps={{ placeholder: '选择多个日期' }}
+        >
           <Calendar
             type="multiple"
             maxDays={3}
             overMaxDays={() => Toast.show('最多选择3天')}
           />
-        </Popout.Target>
-      </Popout>
+        </PopoutInput>
+      </Cell>
 
-      <Popout title="请选择日期">
-        <Popout.Outlet>
-          {({ value, setVisible }) => (
-            <Cell
-              linkable
-              title="选择范围"
-              value={
-                value?.map((date) => date.toLocaleDateString()).join(' - ') ||
-                ''
-              }
-              onClick={() => setVisible(true)}
-            />
-          )}
-        </Popout.Outlet>
-        <Popout.Target>
+      <Cell>
+        <PopoutInput title="选择范围" inputProps={{ placeholder: '选择范围' }}>
           <Calendar
             type="range"
             maxDays={3}
@@ -47,8 +25,8 @@ export default () => {
             max={new Date(2000, 0, 20)}
             overMaxDays={() => Toast.show('最多选择3天')}
           />
-        </Popout.Target>
-      </Popout>
+        </PopoutInput>
+      </Cell>
     </Cell.Group>
   )
 }

@@ -1,21 +1,21 @@
 import { FC, ReactNode } from 'react'
-import { AnyType } from '../base'
 import { useNode } from './useNode'
 import { NamePath, NodeName, ValidateStatus } from './type'
 import { Rule } from './Validator'
-import { NodeContext } from './NodeContext'
+import { NodeContext, useDescendant } from './NodeContext'
 import useInternalWatch from './useInternalWatch'
 
 export interface FormMapProps {
   children?: ReactNode
   name: NodeName
-  initialValue?: Record<string, AnyType>
+  initialValue?: Record<string, any>
 
   required?: boolean
 
   label?: ReactNode
   rules?: Rule[]
   validateFirst?: boolean
+  validateTrigger?: string | string[]
   validateStatus?: ValidateStatus
 
   watch?: NamePath[]
@@ -30,9 +30,15 @@ export const FormMap: FC<FormMapProps> = (props) => {
     initialValue,
     rules,
     validateFirst,
+    validateTrigger,
     validateStatus,
     watch,
   } = props
+
+  const { mergedValidateFirst } = useDescendant({
+    validateFirst,
+    validateTrigger,
+  })
 
   useInternalWatch(watch)
 
@@ -42,7 +48,7 @@ export const FormMap: FC<FormMapProps> = (props) => {
     label,
     initialValue,
     rules,
-    validateFirst,
+    validateFirst: mergedValidateFirst,
     validateStatus,
     required,
   })

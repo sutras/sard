@@ -79,5 +79,3 @@ export function useIndexableMap<K, V>(initData: [K, V][]) {
     return new IndexableMap(initData)
   }, [])
 }
-
-export default useIndexableMap
