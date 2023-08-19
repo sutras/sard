@@ -19,7 +19,9 @@
     "resolveJsonModule": true,
     "typeRoots": ["node_modules/@types"],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "sard-taro": ["../sard-taro/src"],
+      "sard-taro/*": ["../sard-taro/src/*"]
     }
   },
   "include": ["./src/", "./types"],

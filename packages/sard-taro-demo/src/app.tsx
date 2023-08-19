@@ -1,8 +1,8 @@
 import { PropsWithChildren } from 'react'
 import { useLaunch } from '@tarojs/taro'
 import { ConfigProvider } from 'sard-taro'
-// import enUS from 'sard-taro/src/locale/lang/en-US'
-import zhCN from 'sard-taro/src/locale/lang/zh-CN'
+// import enUS from 'sard-taro/locale/lang/en-US'
+import zhCN from 'sard-taro/locale/lang/zh-CN'
 import './app.scss'
 
 import { ganged } from './ganged'

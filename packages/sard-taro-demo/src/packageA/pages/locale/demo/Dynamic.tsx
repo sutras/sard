@@ -9,8 +9,8 @@ import {
   Radio,
 } from 'sard-taro'
 
-import zhCN from 'sard-taro/src/locale/lang/zh-CN'
-import enUS from 'sard-taro/src/locale/lang/en-US'
+import zhCN from 'sard-taro/locale/lang/zh-CN'
+import enUS from 'sard-taro/locale/lang/en-US'
 
 const langMap = {
   zhCN,

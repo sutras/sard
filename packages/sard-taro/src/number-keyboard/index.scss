@@ -35,7 +35,6 @@ page {
     z-index: var(--sar-number-keyboard-z-index);
 
     background-color: var(--sar-number-keyboard-bg);
-    touch-action: none;
   }
 
   @include e(body) {

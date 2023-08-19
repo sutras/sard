@@ -20,7 +20,7 @@ function getMayFnValue(value) {
   return isFunction(value) ? value() : value
 }
 
-const hasValue = <T>(value: T) => {
+function hasValue<T>(value: T) {
   return value !== undefined
 }
 

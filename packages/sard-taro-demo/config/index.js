@@ -4,7 +4,7 @@ function getOutputRoot() {
   const platform = process.env.TARO_ENV
 
   if (platform === 'h5') {
-    return path.resolve(process.cwd(), '../sard-taro-docs/docs/mobile')
+    return path.resolve(process.cwd(), '../sard-taro/site/mobile')
   }
   return `dist/${platform}`
 }
@@ -35,6 +35,7 @@ const config = {
     '@/components': path.resolve(__dirname, '..', 'src/components'),
     '@/static': path.resolve(__dirname, '..', 'src/static'),
     '@/utils': path.resolve(__dirname, '..', 'src/utils'),
+    'sard-taro': 'sard-taro/src',
   },
   mini: {
     baseLevel: 20,

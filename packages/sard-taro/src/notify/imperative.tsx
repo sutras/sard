@@ -1,8 +1,7 @@
 import { ReactNode } from 'react'
 import { NotifyProps } from './Notify'
-import { mapIdAgent, NotifyAgent } from './Agent'
+import { mapIdAgent } from './Agent'
 import { isNotReactNode } from '../utils'
-import { mountAgent } from '../utils/imperative'
 
 export interface NotifyOptions extends NotifyProps {
   id?: string
@@ -41,8 +40,6 @@ const internalShow: NotifyInternalShow = (
   if (ref) {
     ref.current?.reset()
     ref.current?.show(options)
-  } else {
-    mountAgent(id, NotifyAgent, mapIdAgent, options)
   }
 }
 

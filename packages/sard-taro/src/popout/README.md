@@ -45,7 +45,7 @@ import { Popout } from 'sard-taro'
 
 ### 结合其他表单组件
 
-%(${DEMO_PATH}/popout/demo/WithCell.tsx)
+%(${DEMO_PATH}/popout/demo/WithForm.tsx)
 
 ## API
 

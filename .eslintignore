@@ -129,4 +129,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-docs/
+package-lock.json
+*/sard-taro/site/

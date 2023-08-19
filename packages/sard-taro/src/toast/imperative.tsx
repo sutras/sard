@@ -1,8 +1,7 @@
 import { ReactNode } from 'react'
 import { ToastProps } from './Toast'
-import { mapIdAgent, ToastAgent } from './Agent'
+import { mapIdAgent } from './Agent'
 import { isNotReactNode } from '../utils'
-import { mountAgent } from '../utils/imperative'
 
 export interface ToastOptions extends ToastProps {
   id?: string
@@ -41,8 +40,6 @@ const internalShow: ToastInternalShow = (
   if (ref) {
     ref.current?.reset()
     ref.current?.show(options)
-  } else {
-    mountAgent(id, ToastAgent, mapIdAgent, options)
   }
 }
 

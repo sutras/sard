@@ -14,6 +14,7 @@ const defaultSardConfig = {
     name: 'MyLib',
     fileName: 'my-lib',
     outDir: 'dist',
+    srcDir: 'src',
     external: ['react', 'react-dom'],
     globals: {
       react: 'React',

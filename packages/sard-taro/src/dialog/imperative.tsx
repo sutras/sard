@@ -1,6 +1,5 @@
 import { DialogProps } from './Dialog'
-import { mapIdAgent, DialogAgent } from './Agent'
-import { mountAgent } from '../utils/imperative'
+import { mapIdAgent } from './Agent'
 
 export interface DialogOptions extends DialogProps {
   id?: string
@@ -13,8 +12,6 @@ export const show = (options: DialogOptions) => {
 
   if (ref) {
     ref.current?.show(options)
-  } else {
-    mountAgent(id, DialogAgent, mapIdAgent, options)
   }
 }
 

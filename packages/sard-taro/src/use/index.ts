@@ -6,7 +6,6 @@ export * from './useScroll'
 export * from './useSetTimeout'
 export * from './useSelectorId'
 export * from './useStopMovePropagate'
-export * from './useStrike'
 export * from './useBrush'
 export * from './useBem'
 

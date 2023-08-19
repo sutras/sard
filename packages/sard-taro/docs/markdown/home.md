@@ -3,7 +3,7 @@
     <div class="logo-img">
       <img src="logo.svg" alt="" />
     </div>
-    <h1 class="logo-name">Sard</h1>
+    <h1 class="logo-name">sard-taro</h1>
     <p class="description">Taro React 移动端 UI 组件库</p>
   </div>
   <div class="feature">

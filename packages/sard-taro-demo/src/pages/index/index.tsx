@@ -10,10 +10,10 @@ export default () => {
         <View>
           <View className="flex-row">
             <Image className="logo" src={logo} />
-            <Text className="title">Sard taro</Text>
+            <Text className="title">sard-taro</Text>
           </View>
           <View className="desc">
-            <Text>Taro UI 组件库</Text>
+            <Text>Taro React 移动端 UI 组件库</Text>
           </View>
         </View>
       </View>

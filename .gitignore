@@ -130,4 +130,4 @@ dist
 .pnp.*
 
 package-lock.json
-docs/
+*/sard-taro/site/

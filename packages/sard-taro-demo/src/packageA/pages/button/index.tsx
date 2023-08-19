@@ -1,5 +1,5 @@
-import Page from '@/components/page'
 import Demo from '@/components/demo'
+import Page from '@/components/page'
 
 import Type from './demo/Type'
 import Theme from './demo/Theme'

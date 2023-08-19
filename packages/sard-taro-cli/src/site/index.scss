@@ -15,6 +15,14 @@ pre[class*='language-'] {
   color: var(--doc-white);
 }
 
+ul {
+  margin: 0;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
 // code[class*='language-'],
 // pre[class*='language-'] {
 //   border-radius: inherit;

@@ -2,12 +2,10 @@ import {
   createElement,
   useState,
   useRef,
-  ReactNode,
   useEffect,
   MutableRefObject,
 } from 'react'
 
-import { createRoot } from 'react-dom/client'
 import { PopupProps } from '../popup'
 
 export type AgentProps<
@@ -81,50 +79,4 @@ export function useAgent<
     },
     ref: componentRef,
   } as any)
-}
-
-export function mountComponent() {
-  const container = document.createElement('div')
-  document.body.appendChild(container)
-
-  const root = createRoot(container)
-
-  return {
-    unmount() {
-      setTimeout(() => {
-        root.unmount()
-        document.body.removeChild(container)
-      })
-    },
-    mount(element: ReactNode) {
-      root.render(element)
-    },
-    container,
-  }
-}
-
-export function mountAgent<ComponentProps, ComponentRef>(
-  id: string,
-  agent: (
-    agentProps: AgentProps<ComponentProps>,
-  ) => React.CElement<any, React.Component<any, any, any>>,
-  mapIdAgent: MapIdAgent<ComponentProps, ComponentRef>,
-  props: ComponentProps,
-) {
-  const { mount, unmount, container } = mountComponent()
-
-  const element = createElement(agent, {
-    id,
-    $$afterRender() {
-      mapIdAgent[id]?.current?.show(props)
-    },
-    popupProps: {
-      container,
-      onExited() {
-        unmount()
-      },
-    },
-  } as unknown as AgentProps<ComponentProps>)
-
-  mount(element)
 }

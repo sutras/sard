@@ -36,9 +36,14 @@
 
       @at-root {
         .doc-brand {
-          display: flex;
-          align-items: center;
-          color: var(--doc-emphasis-color);
+          text-decoration: none;
+
+          h1 {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            color: var(--doc-emphasis-color);
+          }
 
           img {
             width: 32px;
