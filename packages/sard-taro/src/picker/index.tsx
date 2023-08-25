@@ -8,25 +8,39 @@ import {
   useImperativeHandle,
   useEffect,
   useRef,
+  ReactNode,
 } from 'react'
 import classNames from 'classnames'
-import {
-  PickerOption,
-  PickerOptionKeys,
-  PickerView,
-  PickerViewProps,
-} from './PickerView'
 import { useBem, useControllableValue, useEvent } from '../use'
 import { arrayEqual, isNullish, nestedToMulti, toArray } from '../utils'
 import { useUpdateEffect } from '../use'
+import { CustomWrapper, View } from '@tarojs/components'
+import { PickerView, PickerViewColumn, PickerViewProps } from './PickerView'
+import { PrimitiveType } from '../base'
 
 export * from './PickerView'
+
+export interface PickerOptionKeys {
+  label?: string
+  value?: string
+  children?: string
+}
+
+export type PickerOption =
+  | {
+      label?: ReactNode
+      value?: string | number
+      children?: PickerOption[]
+      [key: PropertyKey]: any
+    }
+  | PrimitiveType
 
 type ValueType = any
 
 export interface PickerProps<V = ValueType>
-  extends Omit<PickerViewProps, 'value' | 'onChange' | 'columns'> {
+  extends Omit<PickerViewProps, 'value' | 'onChange'> {
   columns?: PickerOption[] | PickerOption[][]
+  optionKeys?: PickerOptionKeys
   value?: V
   defaultValue?: V
   onChange?: (
@@ -276,7 +290,8 @@ export const Picker = forwardRef<PickerRef, PickerProps>((props, ref) => {
     }
   }, [innerValue])
 
-  const handleChange: PickerViewProps['onChange'] = (indexes) => {
+  const handleChange: PickerViewProps['onChange'] = useEvent((event) => {
+    let indexes = event.detail.value
     const columnType = getColumnsType(columns, fieldKeys)
 
     if (columnType === 'cascader') {
@@ -322,7 +337,7 @@ export const Picker = forwardRef<PickerRef, PickerProps>((props, ref) => {
       indexes,
     )
     isManual.current = true
-  }
+  })
 
   const handlePickEnd = () => {
     if (immediateChange && getColumnsType(columns, fieldKeys) === 'cascader') {
@@ -347,16 +362,34 @@ export const Picker = forwardRef<PickerRef, PickerProps>((props, ref) => {
   }))
 
   return (
-    <PickerView
-      {...restProps}
-      className={classNames(bem.b(), className)}
-      optionKeys={fieldKeys}
-      columns={finalColumns}
-      value={columnIndexes}
-      immediateChange={immediateChange}
-      onChange={handleChange}
-      onPickEnd={handlePickEnd}
-    />
+    <CustomWrapper>
+      <PickerView
+        {...restProps}
+        className={classNames(bem.b(), className)}
+        indicatorClass={classNames(bem.e('indicator'))}
+        value={columnIndexes}
+        immediateChange={immediateChange}
+        onChange={handleChange}
+        onPickEnd={handlePickEnd}
+      >
+        {finalColumns.map((column, columnIndex) => {
+          return (
+            <PickerViewColumn key={columnIndex}>
+              {column.map((option, optionIndex) => {
+                const isObject = option instanceof Object
+                return (
+                  <View className={bem.e('item')} key={optionIndex}>
+                    {isObject ? option[fieldKeys.label] : option}
+                    {/* <View className={bem.e('item-text')}>
+                  </View> */}
+                  </View>
+                )
+              })}
+            </PickerViewColumn>
+          )
+        })}
+      </PickerView>
+    </CustomWrapper>
   )
 }) as PickerFC
 

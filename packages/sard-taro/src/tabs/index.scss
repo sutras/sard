@@ -3,178 +3,67 @@
 // #variables
 :root,
 page {
-  --sar-tabs-label-height: 44px;
-  --sar-tabs-label-font-size: var(--sar-text-base);
-  --sar-tabs-label-color: var(--sar-secondary-color);
+  --sar-tabs-tab-height: 44px;
+  --sar-tabs-tab-font-size: var(--sar-text-base);
+  --sar-tabs-tab-line-height: var(--sar-leading-snug);
+  --sar-tabs-tab-color: var(--sar-secondary-color);
+  --sar-tabs-tab-active-color: var(--sar-emphasis-color);
 
-  --sar-tabs-auto-label-padding-x: 15px;
+  --sar-tabs-tab-padding-x: 15px;
 
-  --sar-tabs-label-line-length: 40px;
-  --sar-tabs-label-line-thickness: 3px;
-  --sar-tabs-label-line-bg: var(--sar-primary);
-  --sar-tabs-label-line-active-color: var(--sar-emphasis-color);
-
-  --sar-tabs-label-border-color: var(--sar-primary);
-  --sar-tabs-label-border-height: 30px;
-  --sar-tabs-label-border-border-radius: var(--sar-rounded-sm);
-  --sar-tabs-label-border-border-color: var(--sar-primary);
-  --sar-tabs-label-border-active-color: var(--sar-white);
-  --sar-tabs-label-border-active-bg: var(--sar-primary);
-
-  --sar-tabs-label-pill-height: 30px;
-  --sar-tabs-label-pill-border-radius: var(--sar-rounded-full);
-  --sar-tabs-label-pill-active-bg: var(--sar-primary);
-  --sar-tabs-label-pill-active-color: var(--sar-white);
-
-  --sar-tabs-vertical-label-height: 40px;
-
-  --sar-tabs-prepend-gap: 5px;
-  --sar-tabs-append-gap: 5px;
+  --sar-tabs-line-width: 40px;
+  --sar-tabs-line-height: 3px;
+  --sar-tabs-line-bg: var(--sar-primary);
 }
 // #endvariables
 
 @include bem(tabs) {
   @include b() {
-    position: relative;
-
-    @include m(horizontal) {
-      display: flex;
-      flex-direction: column;
-    }
-
-    @include m(vertical) {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-    }
+    display: flex;
+    flex-direction: row;
   }
 
-  @include e(header) {
-    position: relative;
-    z-index: 1;
-    display: flex;
-
-    @include m(horizontal) {
-      flex-direction: row;
-    }
-
-    @include m(vertical) {
-      flex-direction: column;
-    }
+  @include e(scroll) {
+    width: 100%;
   }
 
   @include e(container) {
-    flex: 1;
-
-    &::-webkit-scrollbar {
-      display: none;
-      width: 0;
-      height: 0;
-      color: transparent;
-    }
-
-    @include m(horizontal) {
-      width: 0;
-    }
-
-    @include m(vertical) {
-      height: 0;
-    }
+    display: flex;
+    flex-direction: row;
   }
 
   @include e(wrapper) {
     position: relative;
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     min-width: 100%;
-
-    @include m(horizontal) {
-      flex-direction: row;
-      flex-wrap: nowrap;
-    }
-
-    @include m(vertical) {
-      flex-direction: column;
-    }
+    flex: none;
   }
 
-  @include e(label) {
+  @include e(tab) {
     position: relative;
+    z-index: 2;
     box-sizing: border-box;
     display: flex;
     flex: 1;
-    height: var(--sar-tabs-label-height);
+    height: var(--sar-tabs-tab-height);
     justify-content: center;
     align-items: center;
-    font-size: var(--sar-tabs-label-font-size);
-    color: var(--sar-tabs-label-color);
+    padding: 0 var(--sar-tabs-tab-padding-x);
+    font-size: var(--sar-tabs-tab-font-size);
+    line-height: var(--sar-tabs-tab-line-height);
+    white-space: nowrap;
+    color: var(--sar-tabs-tab-color);
     cursor: pointer;
 
-    @include m(line-active) {
-      font-weight: bold;
-      color: var(--sar-tabs-label-line-active-color);
+    @include m(active) {
+      font-weight: var(--sar-font-bold);
+      color: var(--sar-tabs-tab-active-color);
     }
 
-    @include m(pill) {
-      height: var(--sar-tabs-label-pill-height);
-      border-radius: var(--sar-tabs-label-pill-border-radius);
-    }
-
-    @include m(pill-active) {
-      font-weight: bold;
-      color: var(--sar-tabs-label-pill-active-color);
-      background-color: var(--sar-tabs-label-pill-active-bg);
-    }
-
-    @include m(border) {
-      color: var(--sar-tabs-label-border-color);
-      height: var(--sar-tabs-label-border-height);
-      border: 1px solid var(--sar-tabs-label-border-border-color);
-    }
-
-    @include m(horizontal-border-first) {
-      border-top-left-radius: var(--sar-tabs-label-border-border-radius);
-      border-bottom-left-radius: var(--sar-tabs-label-border-border-radius);
-    }
-
-    @include m(horizontal-border-last) {
-      border-top-right-radius: var(--sar-tabs-label-border-border-radius);
-      border-bottom-right-radius: var(--sar-tabs-label-border-border-radius);
-    }
-
-    @include m(horizontal-border-later) {
-      border-left: none;
-    }
-
-    @include m(vertical-border-first) {
-      border-top-left-radius: var(--sar-tabs-label-border-border-radius);
-      border-top-right-radius: var(--sar-tabs-label-border-border-radius);
-    }
-
-    @include m(vertical-border-last) {
-      border-bottom-left-radius: var(--sar-tabs-label-border-border-radius);
-      border-bottom-right-radius: var(--sar-tabs-label-border-border-radius);
-    }
-
-    @include m(vertical-border-later) {
-      border-top: none;
-    }
-
-    @include m(border-active) {
-      font-weight: bold;
-      color: var(--sar-tabs-label-border-active-color);
-      background-color: var(--sar-tabs-label-border-active-bg);
-    }
-
-    @include m(auto) {
+    @include m(scrollable) {
       flex: 0;
-      padding: 0 var(--sar-tabs-auto-label-padding-x);
-      white-space: nowrap;
-    }
-
-    @include m(vertical) {
-      flex: none;
-      padding: 0 15px;
-      height: var(--sar-tabs-vertical-label-height);
     }
 
     @include m(disabled) {
@@ -182,83 +71,17 @@ page {
     }
   }
 
-  @include e(label-line) {
+  @include e(line) {
     position: absolute;
-    max-width: 100%;
-    max-height: 100%;
-    background-color: var(--sar-tabs-label-line-bg);
-
-    @include m(horizontal) {
-      top: auto;
-      right: auto;
-      left: auto;
-      bottom: 0;
-      width: 0;
-      height: var(--sar-tabs-label-line-thickness);
-    }
-
-    @include m(horizontal-active) {
-      width: var(--sar-tabs-label-line-length);
-      transition: width 0.3s ease-out;
-    }
-
-    @include m(vertical) {
-      top: auto;
-      right: 0;
-      bottom: auto;
-      left: auto;
-      width: var(--sar-tabs-label-line-thickness);
-      height: 0;
-    }
-
-    @include m(vertical-active) {
-      height: var(--sar-tabs-label-line-length);
-      transition: height 0.3s ease-out;
-    }
-  }
-
-  @include e(prepend, append) {
+    bottom: 0;
+    z-index: 10;
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex: none;
-  }
-
-  @include e(prepend) {
-    padding-right: var(--sar-tabs-prepend-gap);
-  }
-
-  @include e(append) {
-    padding-left: var(--sar-tabs-append-gap);
-  }
-
-  @include e(body) {
-    position: relative;
-
-    @include m(vertical) {
-      flex: 1;
-      align-self: stretch;
-    }
-
-    @include m(animated) {
-      overflow: hidden;
-    }
-  }
-
-  @include e(body-wrapper) {
-    @include m(animated) {
-      display: flex;
-      flex-wrap: nowrap;
-      transition: transform 0.3s;
-    }
-  }
-
-  @include e(pane) {
-    width: 100%;
-    flex: none;
-
-    @include m(hide) {
-      display: none;
-    }
+    align-items: center;
+    opacity: 0;
+    width: var(--sar-tabs-line-width);
+    height: var(--sar-tabs-line-height);
+    background-color: var(--sar-tabs-line-bg);
+    pointer-events: none;
   }
 }

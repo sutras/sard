@@ -84,7 +84,7 @@ export const CellGroup: FC<CellGroupProps> = (props) => {
         <CellContext.Provider value={cellContextValue}>
           {Children.map(children, (element: ReactElement<CellProps>, index) => {
             return (
-              <OrderContext.Provider value={{ index, count }}>
+              <OrderContext.Provider value={{ index, count, card }}>
                 {cloneElement(element)}
               </OrderContext.Provider>
             )

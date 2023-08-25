@@ -29,7 +29,11 @@ export default () => {
         visible={visible}
         effect={effect}
         onMaskClick={handleMaskClick}
-        style={{ boxSizing: 'border-box', padding: 20, background: '#fff' }}
+        style={{
+          boxSizing: 'border-box',
+          padding: 20,
+          background: 'var(--sar-emphasis-bg)',
+        }}
       >
         Popup
       </Popup>

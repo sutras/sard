@@ -5,7 +5,7 @@ import {
   CSSProperties,
   FC,
   ReactElement,
-  useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react'
@@ -160,7 +160,7 @@ export const Transition: FC<TransitionProps> = (props) => {
     setTimeout(setNextCallback(handler), timeout || 0)
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (_in) {
       if (status !== ENTERING && status !== ENTERED) {
         finishNextCallback(_in)
@@ -216,7 +216,7 @@ export const Transition: FC<TransitionProps> = (props) => {
     }
   })
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     initialUnmount.current = false
     return cancelNextCallback
   }, [])

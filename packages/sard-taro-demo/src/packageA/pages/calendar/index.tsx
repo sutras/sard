@@ -2,7 +2,6 @@ import Demo from '@/components/demo'
 import Page from '@/components/page'
 import { Toast } from 'sard-taro'
 
-import Basic from './demo/Basic'
 import WithPopout from './demo/WithPopout'
 import Type from './demo/Type'
 import MinMax from './demo/MinMax'
@@ -17,11 +16,7 @@ export default () => {
     <Page className="page-calendar">
       <Toast.Agent />
 
-      <Demo title="基础使用">
-        <Basic />
-      </Demo>
-
-      <Demo title="配合弹出框使用" full>
+      <Demo title="基础使用" full>
         <WithPopout />
       </Demo>
 

@@ -65,7 +65,7 @@ page {
 
   @include e(title) {
     font-size: var(--sar-action-sheet-title-font-size);
-    font-weight: bold;
+    font-weight: var(--sar-font-bold);
     text-align: center;
   }
 

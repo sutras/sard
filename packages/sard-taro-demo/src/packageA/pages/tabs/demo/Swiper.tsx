@@ -1,6 +1,6 @@
 import { View } from '@tarojs/components'
 import { useState } from 'react'
-import { Swiper, Tabs, TabsPane } from 'sard-taro'
+import { Swiper, Tabs } from 'sard-taro'
 
 export default () => {
   const [swipeActiveKey, setSwipeActiveKey] = useState<number | string>(0)
@@ -8,9 +8,9 @@ export default () => {
   return (
     <>
       <Tabs activeKey={swipeActiveKey} onChange={setSwipeActiveKey}>
-        <TabsPane label="标签1" />
-        <TabsPane label="标签2" />
-        <TabsPane label="标签3" />
+        <Tabs.Tab>标签1</Tabs.Tab>
+        <Tabs.Tab>标签2</Tabs.Tab>
+        <Tabs.Tab>标签3</Tabs.Tab>
       </Tabs>
 
       <Swiper
@@ -21,13 +21,13 @@ export default () => {
         }}
       >
         <Swiper.Item>
-          <View className="demo-pane">内容1</View>
+          <View className="demo-swiper-pane">内容1</View>
         </Swiper.Item>
         <Swiper.Item>
-          <View className="demo-pane">内容2</View>
+          <View className="demo-swiper-pane">内容2</View>
         </Swiper.Item>
         <Swiper.Item>
-          <View className="demo-pane">内容3</View>
+          <View className="demo-swiper-pane">内容3</View>
         </Swiper.Item>
       </Swiper>
     </>

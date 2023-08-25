@@ -28,7 +28,7 @@ $indent-gap: 15px !default;
       margin-bottom: 5px;
       padding-bottom: 5px;
       border-bottom: 1px solid var(--doc-border-color);
-      font-size: 16px;
+      font-size: var(--doc-text-base);
     }
     &[data-level='2'] {
       ~ [data-level='3'] {

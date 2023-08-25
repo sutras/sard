@@ -3,7 +3,8 @@
 // #variables
 :root,
 page {
-  --sar-form-bg: var(--sar-white);
+  --sar-form-bg: var(--sar-emphasis-bg);
+  --sar-form-border-radius: var(--sar-rounded-lg);
 
   --sar-form-field-padding-x: 15px;
   --sar-form-field-padding-y: 10px;
@@ -37,6 +38,7 @@ page {
   @include b() {
     display: flex;
     flex-direction: column;
+    border-radius: var(--sar-form-border-radius);
     background-color: var(--sar-form-bg);
   }
 }

@@ -1,6 +1,6 @@
 import { FC, ReactNode, useRef, useState, useMemo } from 'react'
 import classNames from 'classnames'
-import { ITouchEvent, View } from '@tarojs/components'
+import { CustomWrapper, ITouchEvent, View } from '@tarojs/components'
 import PopoutTarget from './Target'
 import PopoutOutlet from './Outlet'
 import { PopoutContext, PopoutContexValue } from './PopoutContext'
@@ -299,7 +299,7 @@ export const Popout: PopoutFC = (props) => {
   }
 
   return (
-    <>
+    <CustomWrapper>
       <PopoutContext.Provider value={context}>
         {outlet}
         <Popup
@@ -314,7 +314,7 @@ export const Popout: PopoutFC = (props) => {
           {renderFooter()}
         </Popup>
       </PopoutContext.Provider>
-    </>
+    </CustomWrapper>
   )
 }
 

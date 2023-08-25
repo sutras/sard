@@ -4,11 +4,12 @@ import Page from '@/components/page'
 import Basic from './demo/Basic'
 import Controllable from './demo/Controllable'
 import Disabled from './demo/Disabled'
-import Vertical from './demo/Vertical'
 import Size from './demo/Size'
 import Color from './demo/Color'
 import Type from './demo/Type'
 import CustomIcon from './demo/CustomIcon'
+import Custom from './demo/Custom'
+import CustomFully from './demo/CustomFully'
 
 export default () => {
   return (
@@ -25,10 +26,6 @@ export default () => {
         <Disabled />
       </Demo>
 
-      <Demo title="垂直">
-        <Vertical />
-      </Demo>
-
       <Demo title="图标大小">
         <Size />
       </Demo>
@@ -43,6 +40,14 @@ export default () => {
 
       <Demo title="自定义图标">
         <CustomIcon />
+      </Demo>
+
+      <Demo title="自定义组件" full>
+        <Custom />
+      </Demo>
+
+      <Demo title="完全自定义组件" full>
+        <CustomFully />
       </Demo>
     </Page>
   )

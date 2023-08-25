@@ -1,18 +1,13 @@
-import { View } from '@tarojs/components'
-import { Tabs, TabsPane } from 'sard-taro'
+import { Tabs } from 'sard-taro'
 
 export default () => {
   return (
-    <Tabs>
-      <TabsPane label="标签1">
-        <View className="demo-pane">内容1</View>
-      </TabsPane>
-      <TabsPane label="标签2">
-        <View className="demo-pane">内容2</View>
-      </TabsPane>
-      <TabsPane label="标签3">
-        <View className="demo-pane">内容3</View>
-      </TabsPane>
+    <Tabs defaultActiveKey={0}>
+      {Array(3)
+        .fill(0)
+        .map((_, i) => {
+          return <Tabs.Tab key={i}>{`标签${i + 1}`}</Tabs.Tab>
+        })}
     </Tabs>
   )
 }

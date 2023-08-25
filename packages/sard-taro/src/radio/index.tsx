@@ -10,9 +10,9 @@ export interface RadioFC extends FC<RadioProps> {
   Group: typeof RadioGroup
 }
 
-export const Radio: RadioFC = (props) => {
+export const Radio = ((props) => {
   return useInternalCheck('single', 'radio', props)
-}
+}) as RadioFC
 
 Radio.Group = RadioGroup
 

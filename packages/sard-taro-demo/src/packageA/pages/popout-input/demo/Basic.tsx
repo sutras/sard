@@ -34,7 +34,7 @@ export default () => {
         </PopoutInput>
       </Form.Field>
 
-      <Form.Field label="选择器">
+      <Form.Field label="选择器" underline={false}>
         <PopoutInput title="选择器" inputProps={{ placeholder: '请选择' }}>
           <Picker
             columns={Array(5)

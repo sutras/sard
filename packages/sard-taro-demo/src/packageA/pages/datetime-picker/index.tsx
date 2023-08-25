@@ -2,7 +2,6 @@ import Demo from '@/components/demo'
 import Page from '@/components/page'
 
 import Basic from './demo/Basic'
-import Controllable from './demo/Controllable'
 import Type from './demo/Type'
 import MinMax from './demo/MinMax'
 import Filter from './demo/Filter'
@@ -13,10 +12,6 @@ export default () => {
     <Page className="page-datetime-picker">
       <Demo title="基础使用" full>
         <Basic />
-      </Demo>
-
-      <Demo title="受控" full>
-        <Controllable />
       </Demo>
 
       <Demo title="类型" full>

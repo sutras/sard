@@ -85,7 +85,7 @@ page {
     margin-right: auto;
     text-align: center;
     font-size: var(--sar-popout-title-font-size);
-    font-weight: bold;
+    font-weight: var(--sar-font-bold);
     color: var(--sar-popout-title-color);
     @include ellipsis;
   }
@@ -106,15 +106,13 @@ page {
 
   @include e(footer) {
     display: flex;
+    flex-direction: row;
+    gap: var(--sar-popout-button-gap);
     align-items: center;
     padding: var(--sar-popout-footer-gap-y) var(--sar-popout-footer-gap-x);
   }
 
   @include e(footer-button) {
     flex: 1 1 0;
-
-    &:not(:first-child) {
-      margin-left: var(--sar-popout-button-gap);
-    }
   }
 }

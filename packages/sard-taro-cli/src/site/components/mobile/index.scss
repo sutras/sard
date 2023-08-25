@@ -4,7 +4,8 @@
   width: 375px;
   height: 667px;
   border: 1px solid var(--doc-border-color);
-  border-radius: 10px;
+  box-shadow: var(--doc-shadow-md);
+  border-radius: var(--doc-rounded-xl);
   overflow: hidden;
 }
 

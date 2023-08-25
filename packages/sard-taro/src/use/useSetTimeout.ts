@@ -4,13 +4,20 @@
 
 import { useEffect, useRef } from 'react'
 import { useEvent } from './useEvent'
-import { useUpdateEffect } from './useUpdateEffect'
+import { AnyFunction } from '../base'
+
+interface UseSetTimeoutOptions {
+  canReset?: AnyFunction
+  tailing?: boolean
+}
 
 export function useSetTimeout(
-  callback: (...args: unknown[]) => unknown,
+  callback: AnyFunction,
   duration: number,
-  canReset: (...args: unknown[]) => unknown = () => true,
+  options: UseSetTimeoutOptions = {},
 ) {
+  const { canReset = () => true, tailing } = options
+
   const timer = useRef(0)
 
   const func = useEvent(callback)
@@ -20,19 +27,27 @@ export function useSetTimeout(
     if (timer.current) {
       clearTimeout(timer.current)
       timer.current = 0
+      if (tailing) {
+        func()
+      }
     }
   })
 
-  const reset = useEvent(() => {
+  const reset = useEvent((...args) => {
     clear()
     if (canResetCallback()) {
-      timer.current = setTimeout(func, duration) as unknown as number
+      timer.current = setTimeout(() => {
+        timer.current = 0
+        func(...args)
+      }, duration) as unknown as number
     }
+  })
+
+  const running = useEvent(() => {
+    return !!timer.current
   })
 
   useEffect(() => clear, [])
 
-  useUpdateEffect(() => reset, [duration])
-
-  return [reset, clear] as const
+  return [reset, clear, running] as const
 }

@@ -7,6 +7,8 @@ import './app.scss'
 
 import { ganged } from './ganged'
 
+// Taro.options.debug = true
+
 const currentLang = zhCN
 
 if (process.env.TARO_ENV === 'h5') {

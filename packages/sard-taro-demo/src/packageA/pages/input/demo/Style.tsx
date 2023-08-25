@@ -4,10 +4,11 @@ export default () => {
   return (
     <Input
       placeholder="请输入"
+      borderless
       style={{
-        borderRadius: 9999,
-        borderColor: 'var(--sar-pink)',
-        backgroundColor: '#fff',
+        height: 30,
+        borderRadius: 'var(--sar-rounded-full)',
+        backgroundColor: 'var(--sar-secondary-bg)',
       }}
     />
   )

@@ -67,7 +67,7 @@ page {
 
   @include e(title) {
     font-size: var(--sar-dialog-title-font-size);
-    font-weight: bold;
+    font-weight: var(--sar-font-bold);
     text-align: center;
 
     @include m(headed) {

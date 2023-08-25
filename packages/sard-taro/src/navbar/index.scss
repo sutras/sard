@@ -44,7 +44,7 @@ page {
     width: 100%;
     max-width: var(--sar-navbar-title-max-width);
     font-size: var(--sar-navbar-title-font-size);
-    font-weight: bold;
+    font-weight: var(--sar-font-bold);
     text-align: center;
     color: var(--sar-navbar-title-color);
     @include ellipsis;

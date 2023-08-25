@@ -5,7 +5,7 @@
 page {
   --sar-dropdown-height: 48px;
   --sar-dropdown-bg: var(--sar-emphasis-bg);
-  --sar-dropdown-box-shadow: var(--sar-shadow-lg);
+  --sar-dropdown-box-shadow: var(--sar-shadow);
 
   --sar-dropdown-item-padding-x: 10px;
   --sar-dropdown-item-active-opacity: var(--sar-active-opacity);
@@ -62,9 +62,12 @@ page {
     overflow: hidden;
 
     @include m(show) {
-      z-index: calc(var(--sar-dropdown-popup-z-index) + 1);
       touch-action: none;
       color: var(--sar-dropdown-item-show-color);
+    }
+
+    @include m(some-show) {
+      z-index: calc(var(--sar-dropdown-popup-z-index) + 1);
     }
 
     @include m(interactive) {

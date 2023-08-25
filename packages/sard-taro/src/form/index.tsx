@@ -8,7 +8,7 @@ import {
   useEffect,
 } from 'react'
 import classNames from 'classnames'
-import { Form as TaroForm } from '@tarojs/components'
+import { CustomWrapper, Form as TaroForm } from '@tarojs/components'
 
 import { FormField } from './Field'
 import { FormList } from './List'
@@ -175,26 +175,28 @@ export const Form: FormFC = forwardRef<FormRef, FormProps>((props, ref) => {
   }, [validateTrigger, validateFirst])
 
   return (
-    <StoreContext.Provider value={store}>
-      <NodeContext.Provider value={node}>
-        <FieldContext.Provider value={fieldContext}>
-          <DescendantContext.Provider value={validateInfo}>
-            <TaroForm
-              {...restProps}
-              className={classNames(
-                bem.b(),
-                bem.m('layout', layout),
-                className,
-              )}
-              onSubmit={handleSubmit}
-              onReset={handleReset}
-            >
-              {children}
-            </TaroForm>
-          </DescendantContext.Provider>
-        </FieldContext.Provider>
-      </NodeContext.Provider>
-    </StoreContext.Provider>
+    <CustomWrapper>
+      <StoreContext.Provider value={store}>
+        <NodeContext.Provider value={node}>
+          <FieldContext.Provider value={fieldContext}>
+            <DescendantContext.Provider value={validateInfo}>
+              <TaroForm
+                {...restProps}
+                className={classNames(
+                  bem.b(),
+                  bem.m('layout', layout),
+                  className,
+                )}
+                onSubmit={handleSubmit}
+                onReset={handleReset}
+              >
+                {children}
+              </TaroForm>
+            </DescendantContext.Provider>
+          </FieldContext.Provider>
+        </NodeContext.Provider>
+      </StoreContext.Provider>
+    </CustomWrapper>
   )
 }) as FormFC
 

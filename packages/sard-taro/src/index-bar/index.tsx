@@ -55,6 +55,7 @@ export interface IndexBarFC
   Item: typeof IndexBarItem
 }
 
+// todo: ios老机型在小程序会有性能问题
 export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
   const {
     className,
@@ -131,7 +132,9 @@ export const IndexBar: IndexBarFC = forwardRef((props, ref) => {
         (index) => {
           setInnerActiveKey(srcData[index][0])
         },
-        -offset,
+        {
+          offset: -offset,
+        },
       )
     },
     threshold,

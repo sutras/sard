@@ -1,25 +1,36 @@
 import {
   CSSProperties,
   ReactNode,
-  ReactElement,
-  Children,
-  cloneElement,
+  createContext,
+  useContext,
+  useMemo,
 } from 'react'
 import classNames from 'classnames'
 import { Icon } from '../icon'
-import { isNullish, pickNullish } from '../utils'
+import { isFunction, isNullish } from '../utils'
 import { CheckContext, useCheck, useCheckGroup } from './useCheck'
-import { ITouchEvent, View } from '@tarojs/components'
+import { CustomWrapper, ITouchEvent, View } from '@tarojs/components'
 import { useBem } from './useBem'
 
 type IconType = 'square' | 'circle' | 'record'
 
 type ValueType = any
 
+export interface InternalCheckContextValue {
+  disabled?: boolean
+  size?: string | number
+  type?: IconType
+  icon?: (checked: boolean) => ReactNode
+  checkedColor?: string
+}
+
+export const InternalCheckContext =
+  createContext<InternalCheckContextValue>(null)
+
 export interface InternalCheckProps {
   className?: string
   style?: CSSProperties
-  children?: ReactNode
+  children?: ReactNode | ((checked: boolean, toggle: () => void) => ReactNode)
   checked?: boolean
   defaultChecked?: boolean
   value?: ValueType
@@ -49,9 +60,9 @@ export const useInternalCheck = <T extends 'single' | 'multiple'>(
     checked,
     defaultChecked,
     value,
-    disabled = false,
+    disabled,
     size,
-    type = checkType === 'single' ? 'record' : 'square',
+    type,
     onChange,
     onClick,
     icon,
@@ -72,48 +83,67 @@ export const useInternalCheck = <T extends 'single' | 'multiple'>(
     value,
   )
 
+  if (isFunction(children)) {
+    return (
+      <InternalCheckContext.Provider value={null}>
+        {children(isChecked, toggle)}
+      </InternalCheckContext.Provider>
+    )
+  }
+
+  const internalContext = useContext(InternalCheckContext)
+
+  const mergedDisabled = disabled ?? internalContext?.disabled
+  const mergedSize = size ?? internalContext?.size
+  const mergedType =
+    type ??
+    internalContext?.type ??
+    (checkType === 'single' ? 'record' : 'square')
+  const mergedIcon = icon ?? internalContext?.icon
+  const mergedCheckedColor = checkedColor ?? internalContext?.checkedColor
+
   const handleCheckboxClick = (event: ITouchEvent) => {
-    if (!disabled) {
+    if (!mergedDisabled) {
       toggle()
     }
     onClick?.(event)
   }
 
-  const iconStyle = {
-    fontSize: size,
-    color: isChecked ? checkedColor : '',
-  }
-
-  const checkboxClass = classNames(
-    bem.b(),
-    bem.m('checked', isChecked),
-    bem.m('disabled', disabled),
-    className,
-  )
-
   return (
-    <View
-      {...restProps}
-      className={checkboxClass}
-      onClick={handleCheckboxClick}
-    >
-      <View
-        className={classNames(
-          bem.e('icon'),
-          bem.em('icon', 'checked', isChecked),
-        )}
-        style={iconStyle}
-      >
-        {icon ? (
-          icon(isChecked)
-        ) : (
-          <Icon name={mapTypeIcon[type][isChecked ? 1 : 0]}></Icon>
-        )}
-      </View>
-      {!isNullish(children) && (
-        <View className={bem.e('label')}>{children}</View>
-      )}
-    </View>
+    <CustomWrapper>
+      <InternalCheckContext.Provider value={null}>
+        <View
+          {...restProps}
+          className={classNames(
+            bem.b(),
+            bem.m('checked', isChecked),
+            bem.m('disabled', mergedDisabled),
+            className,
+          )}
+          onClick={handleCheckboxClick}
+        >
+          <View
+            className={classNames(
+              bem.e('icon'),
+              bem.em('icon', 'checked', isChecked),
+            )}
+            style={{
+              fontSize: mergedSize,
+              color: isChecked ? mergedCheckedColor : '',
+            }}
+          >
+            {mergedIcon ? (
+              mergedIcon(isChecked)
+            ) : (
+              <Icon name={mapTypeIcon[mergedType][isChecked ? 1 : 0]}></Icon>
+            )}
+          </View>
+          {!isNullish(children) && (
+            <View className={bem.e('label')}>{children}</View>
+          )}
+        </View>
+      </InternalCheckContext.Provider>
+    </CustomWrapper>
   )
 }
 
@@ -121,12 +151,9 @@ export interface InternalCheckGroupProps<
   T extends 'single' | 'multiple',
   V = T extends 'single' ? ValueType : ValueType[],
 > {
-  className?: string
-  style?: CSSProperties
   children?: ReactNode
   value?: V
   defaultValue?: V
-  vertical?: boolean
   disabled?: boolean
   size?: string | number
   type?: IconType
@@ -137,14 +164,11 @@ export interface InternalCheckGroupProps<
 
 export const useInternalCheckGroup = <T extends 'single' | 'multiple'>(
   checkType: T,
-  checkClass: string,
   props: InternalCheckGroupProps<T>,
 ) => {
   const {
-    className,
     value,
     defaultValue,
-    vertical,
     disabled,
     size,
     type,
@@ -152,11 +176,7 @@ export const useInternalCheckGroup = <T extends 'single' | 'multiple'>(
     checkedColor,
     children,
     onChange,
-    ...restProps
   } = props
-
-  const [bem] = useBem(checkClass)
-  const [gBem] = useBem(`${checkClass}-group`)
 
   const context = useCheckGroup({
     value,
@@ -168,42 +188,19 @@ export const useInternalCheckGroup = <T extends 'single' | 'multiple'>(
         : ValueType[],
   })
 
-  const checkboxGroupClass = classNames(
-    gBem.b(),
-    gBem.m('vertical', vertical),
-    className,
-  )
+  const internalContext = useMemo(() => {
+    return {
+      disabled,
+      size,
+      type,
+      icon,
+      checkedColor,
+    }
+  }, [disabled, size, type, icon, checkedColor])
 
   return (
-    <View {...restProps} className={checkboxGroupClass}>
-      <CheckContext.Provider value={context}>
-        {Children.map(
-          children,
-          (element: ReactElement<InternalCheckProps>, index: number) => {
-            return cloneElement(element, {
-              ...element.props,
-              className: classNames(
-                bem.m(index === 0 ? 'first' : 'later', !vertical),
-                bem.m(
-                  index === 0 ? 'vertical-first' : 'vertical-later',
-                  vertical,
-                ),
-                element.props.className,
-              ),
-              ...pickNullish(
-                {
-                  disabled,
-                  size,
-                  type,
-                  icon,
-                  checkedColor,
-                },
-                element.props,
-              ),
-            })
-          },
-        )}
-      </CheckContext.Provider>
-    </View>
+    <InternalCheckContext.Provider value={internalContext}>
+      <CheckContext.Provider value={context}>{children}</CheckContext.Provider>
+    </InternalCheckContext.Provider>
   )
 }

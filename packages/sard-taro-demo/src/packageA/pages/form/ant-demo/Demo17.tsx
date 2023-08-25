@@ -62,7 +62,7 @@ function App() {
   const [form] = Form.useForm()
 
   const prefixSelector = (
-    <Form.Field name="prefix" unstyled style={{ width: 50 }}>
+    <Form.Field name="prefix" unstyled>
       <PopoutInput title="请选择" inputProps={{ placeholder: '请选择' }}>
         <Picker
           columns={[
@@ -192,7 +192,7 @@ function App() {
       >
         <Input
           inlaid
-          prepend={<View style={{ width: 50 }}>{prefixSelector}</View>}
+          prepend={<View style={{ width: 60 }}>{prefixSelector}</View>}
           placeholder="请输入"
         />
       </Form.Field>

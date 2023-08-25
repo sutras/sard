@@ -4,17 +4,16 @@
 
 import { useRef, useCallback } from 'react'
 
-export function useEvent<
-  T extends (...args: unknown[]) => unknown = (...args: unknown[]) => unknown,
->(callback: T) {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function useEvent<T extends Function>(callback: T) {
   const callbackRef = useRef<T>()
 
   callbackRef.current = callback
 
   return useCallback<T>(
-    ((...args: unknown[]) => {
+    ((...args: any[]) => {
       return callbackRef.current?.(...args)
-    }) as unknown as T,
+    }) as any as T,
     [],
   )
 }

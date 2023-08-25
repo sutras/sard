@@ -1,3 +1,4 @@
+import { View } from '@tarojs/components'
 import {
   ReactElement,
   ReactNode,
@@ -28,7 +29,7 @@ function DemoPopup(props) {
   }, [demo])
 
   return (
-    <>
+    <View>
       {mounted && (
         <Popup
           effect="slide-bottom"
@@ -39,7 +40,7 @@ function DemoPopup(props) {
             maxHeight: '80%',
             overflowY: 'auto',
             overflowX: 'hidden',
-            background: '#fff',
+            background: 'var(--sar-emphasis-bg)',
             borderTopLeftRadius: 10,
             borderTopRightRadius: 10,
           }}
@@ -48,7 +49,7 @@ function DemoPopup(props) {
         </Popup>
       )}
       <Cell title={demo.title} linkable onClick={() => setMounted(true)}></Cell>
-    </>
+    </View>
   )
 }
 

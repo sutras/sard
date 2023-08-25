@@ -1,16 +1,35 @@
-import { FC, ReactElement, useState, cloneElement } from 'react'
+import {
+  FC,
+  ReactElement,
+  useState,
+  cloneElement,
+  useLayoutEffect,
+  CSSProperties,
+} from 'react'
 import classNames from 'classnames'
 import { ITouchEvent, View } from '@tarojs/components'
-import { Popup, PopupProps } from '../popup'
 import { Menu, MenuOption } from '../menu'
-import { useBem, useControllableValue, useEvent, useSelectorId } from '../use'
-import { getRectById } from '../utils'
+import {
+  useBem,
+  useControllableValue,
+  useEvent,
+  useSelectorId,
+  useSetTimeout,
+  useUpdateEffect,
+} from '../use'
+import { getRectById, isNumber } from '../utils'
 
 import { Placement, getPopoverPosition } from './utils'
+import Mask from '../mask'
+import { BaseProps } from '../base'
 
 export type { Placement as PopoverPlacement, MenuOption as PopoverOption }
 
-export interface PopoverProps extends PopupProps {
+function mayAddPixel(value: string | number) {
+  return isNumber(value) ? value + 'px' : value
+}
+
+export interface PopoverProps extends BaseProps {
   options?: MenuOption[]
   reference?: ReactElement
   refGap?: number
@@ -18,10 +37,26 @@ export interface PopoverProps extends PopupProps {
   placement?: Placement
   direction?: 'vertical' | 'horizontal'
   theme?: 'dark' | 'light'
+  zIndex?: number
   onSelect?: (option: MenuOption) => void
+
   visible?: boolean
   defaultVisible?: boolean
   onVisible?: (visible: boolean) => void
+  duration?: number
+
+  mask?: boolean
+  transparent?: boolean
+  maskClass?: string
+  maskStyle?: CSSProperties
+  onMaskClick?: (event: ITouchEvent) => void
+
+  onEnter?: () => void
+  onEntering?: () => void
+  onEntered?: () => void
+  onExit?: () => void
+  onExiting?: () => void
+  onExited?: () => void
 }
 
 export const Popover: FC<PopoverProps> = (props) => {
@@ -31,17 +66,31 @@ export const Popover: FC<PopoverProps> = (props) => {
     className,
     style,
     children,
-    onMaskClick,
-    transparent = true,
     refGap = 10,
     viewportGap = 10,
     placement = 'bottom',
     direction = 'vertical',
     theme = 'light',
+    zIndex,
     onSelect,
+
     visible,
     defaultVisible,
     onVisible,
+    duration = 150,
+
+    mask = true,
+    transparent = true,
+    maskClass,
+    maskStyle,
+    onMaskClick,
+
+    onEnter,
+    onEntering,
+    onEntered,
+    onExit,
+    onExiting,
+    onExited,
     ...restProps
   } = props
 
@@ -58,6 +107,9 @@ export const Popover: FC<PopoverProps> = (props) => {
     initialValue: false,
   })
 
+  // visible -> realVisible -> !visible -> !realVisible
+  const [realVisible, setRealVisible] = useState(false)
+
   const handleMaskClick = useEvent((event: ITouchEvent) => {
     setInnerVisible(false)
     onMaskClick?.(event)
@@ -69,7 +121,7 @@ export const Popover: FC<PopoverProps> = (props) => {
     left: number | string
   }>({ top: 0, left: 0 })
 
-  const handleEntering = async () => {
+  const getAndSetPosition = async () => {
     const referenceRect = await getRectById(mergedReferenceId)
     const contentRect = await getRectById(contentId)
     if (referenceRect) {
@@ -87,6 +139,46 @@ export const Popover: FC<PopoverProps> = (props) => {
     }
   }
 
+  const [hideReset, hideClear] = useSetTimeout(
+    () => {
+      setRealVisible(false)
+      onExited?.()
+    },
+    duration,
+    {
+      tailing: true,
+    },
+  )
+
+  const [showReset, showClear] = useSetTimeout(
+    () => {
+      onEntered?.()
+    },
+    duration,
+    {
+      tailing: true,
+    },
+  )
+
+  useLayoutEffect(() => {
+    if (innerVisible) {
+      hideClear()
+      onEnter?.()
+      getAndSetPosition()
+    } else {
+      showClear()
+      onExit?.()
+      onExiting?.()
+      hideReset()
+    }
+  }, [innerVisible])
+
+  useUpdateEffect(() => {
+    setRealVisible(true)
+    onEntering?.()
+    showReset()
+  }, [popperPosition])
+
   const handleSelect = (option) => {
     setInnerVisible(false)
     onSelect?.(option)
@@ -102,19 +194,40 @@ export const Popover: FC<PopoverProps> = (props) => {
             reference.props.onClick?.(event)
           },
         })}
-      <Popup
-        timeout={150}
+
+      {mask && (
+        <Mask
+          visible={innerVisible}
+          timeout={duration}
+          style={maskStyle}
+          className={maskClass}
+          transparent={transparent}
+          onClick={handleMaskClick}
+          zIndex={zIndex}
+        />
+      )}
+
+      <View
+        catchMove
         {...restProps}
-        customEffect={bem.m('fade')}
-        visible={innerVisible}
-        onMaskClick={handleMaskClick}
-        transparent={transparent}
-        className={classNames(bem.b(), bem.m(theme), className)}
+        className={classNames(
+          bem.b(),
+          bem.m(theme),
+          bem.m('zoom-enter', realVisible),
+          bem.m('zoom-exit', !innerVisible),
+          className,
+        )}
         style={{
           ...popperPosition,
+          display: innerVisible || realVisible ? 'flex' : 'none',
+          opacity: realVisible ? 1 : 0,
+          transformOrigin: `${mayAddPixel(arrowPosition.left)} ${mayAddPixel(
+            arrowPosition.top,
+          )}`,
+          animationDuration: duration + 'ms',
+          zIndex,
           ...style,
         }}
-        onEntering={handleEntering}
       >
         <View
           className={classNames(bem.e('content'), bem.em('content', direction))}
@@ -126,14 +239,11 @@ export const Popover: FC<PopoverProps> = (props) => {
               direction={direction}
               theme={theme}
               onSelect={handleSelect}
-            ></Menu>
+            />
           )}
         </View>
-        <View
-          className={classNames(bem.e('arrow'))}
-          style={arrowPosition}
-        ></View>
-      </Popup>
+        <View className={classNames(bem.e('arrow'))} style={arrowPosition} />
+      </View>
     </>
   )
 }

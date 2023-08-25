@@ -3,25 +3,25 @@
 
   h1 {
     margin: 0 0 30px;
-    font-size: 32px;
-    font-weight: normal;
+    font-size: var(--doc-text-2xl);
+    font-weight: 700;
   }
 
   h2 {
     margin: 0 0 20px;
-    font-size: 24px;
-    font-weight: normal;
+    font-size: var(--doc-text-xl);
+    font-weight: 700;
   }
 
   h3 {
     margin: 0 0 15px;
-    font-size: 18px;
+    font-size: var(--doc-text-lg);
     font-weight: 700;
   }
 
   h4 {
     margin: 30px 0 15px;
-    font-size: 16px;
+    font-size: var(--doc-text-lg);
     font-weight: 700;
   }
 
@@ -36,18 +36,20 @@
   }
 
   code:not([class*='language-']) {
-    padding: 0 3px;
+    padding: 1px 4px;
     font-size: 0.9em;
     word-wrap: break-word;
     color: var(--doc-emphasis-color);
-    background: rgba(255, 229, 100, 0.2);
+    background: rgba(var(--doc-gray-200-rgb), 0.6);
+    border-radius: var(--doc-rounded-xs);
   }
 
   @at-root {
     .doc-card {
       padding: 20px;
       margin-bottom: 20px;
-      border-radius: 10px;
+      border-radius: var(--doc-rounded-xl);
+      box-shadow: var(--doc-shadow-md);
       background-color: var(--doc-emphasis-bg);
 
       > *:last-child {
@@ -118,7 +120,7 @@
           &:nth-child(3) {
             width: 25%;
             font-size: 0.9em;
-            color: var(--doc-code-color);
+            color: var(--doc-danger);
             word-wrap: break-word;
           }
 
@@ -129,7 +131,7 @@
           &:nth-child(1),
           &:nth-child(3),
           &:nth-child(4) {
-            font-family: var(--doc-code-font-family);
+            font-family: var(--doc-font-monospace);
           }
         }
 

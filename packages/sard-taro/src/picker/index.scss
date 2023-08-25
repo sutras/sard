@@ -10,36 +10,95 @@ page {
 
   --sar-picker-indicator-height: 48px;
   --sar-picker-indicator-border-color: var(--sar-border-color);
+
+  --sar-picker-mask-from-color: rgba(var(--sar-emphasis-bg-rgb), 0.95);
+  --sar-picker-mask-to-color: rgba(var(--sar-emphasis-bg-rgb), 0.6);
+  --sar-picker-mask-top-bg-image: linear-gradient(
+    to bottom,
+    var(--sar-picker-mask-from-color),
+    var(--sar-picker-mask-to-color)
+  );
+  --sar-picker-mask-bottom-bg-image: linear-gradient(
+    to top,
+    var(--sar-picker-mask-from-color),
+    var(--sar-picker-mask-to-color)
+  );
 }
 // #endvariables
 
 @include bem(picker) {
   @include b() {
-    position: relative;
     height: var(--sar-picker-height);
+  }
+
+  @include e(wrapper) {
+    position: relative;
+    display: flex;
+    flex-direction: row;
     overflow: hidden;
     user-select: none;
     -webkit-user-drag: none;
   }
 
+  @include e(column) {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 0;
+    height: 100%;
+    touch-action: pan-x;
+  }
+
+  @include e(mask) {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    flex: auto;
+    pointer-events: none;
+
+    @include m(top) {
+      background-image: var(--sar-picker-mask-top-bg-image);
+    }
+
+    @include m(bottom) {
+      background-image: var(--sar-picker-mask-bottom-bg-image);
+    }
+  }
+
+  @include e(indicator) {
+    position: relative;
+    width: 100%;
+    height: var(--sar-picker-indicator-height) !important;
+    flex: none;
+    align-items: center;
+    pointer-events: none;
+
+    @include border-vertical(var(--sar-picker-indicator-border-color)) {
+      z-index: 2;
+    }
+  }
+
+  @include e(item-group) {
+    pointer-events: auto;
+    will-change: transform;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.68, 1);
+  }
+
   @include e(item) {
     flex: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: var(--sar-picker-indicator-height);
+    line-height: var(--sar-picker-indicator-height);
     font-size: var(--sar-picker-item-font-size);
     text-align: center;
     color: var(--sar-picker-item-color);
-  }
-
-  @include e(item-text) {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  @include e(indicator) {
-    height: var(--sar-picker-indicator-height) !important;
-  }
+  // @include e(item-text) {
+  //   white-space: nowrap;
+  //   overflow: hidden;
+  //   text-overflow: ellipsis;
+  // }
 }

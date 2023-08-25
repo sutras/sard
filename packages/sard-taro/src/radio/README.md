@@ -24,10 +24,6 @@ import { Radio } from 'sard-taro'
 
 %(${DEMO_PATH}/radio/demo/Disabled.tsx)
 
-### 垂直
-
-%(${DEMO_PATH}/radio/demo/Vertical.tsx)
-
 ### 图标大小
 
 %(${DEMO_PATH}/radio/demo/Size.tsx)
@@ -43,6 +39,18 @@ import { Radio } from 'sard-taro'
 ### 自定义图标
 
 %(${DEMO_PATH}/radio/demo/CustomIcon.tsx)
+
+### 自定义组件
+
+`Radio`的`children`属性可以是一个接收“是否选中状态”和“切换选中函数”参数的函数，用于随心所欲地定制选框组件。
+
+%(${DEMO_PATH}/radio/demo/Custom.tsx)
+
+### 完全自定义组件
+
+内置的`Radio`组件在内部是基于`useCheck`和`useCheckGroup`钩子以及`CheckContext`上下文对象实现的，并添加默认的结构和样式。也许你也需要定制自己的`Radio`。
+
+%(${DEMO_PATH}/radio/demo/CustomFully.tsx)
 
 ## API
 

@@ -53,6 +53,7 @@ import { Cell } from 'sard-taro'
 | value          | 右侧值                                             | React.ReactNode              | -        |
 | footer         | 自定义 `footer`，会覆盖 `value`、`label` 和`arrow` | React.ReactNode              | -        |
 | linkable       | 是否展示右侧箭头并开启点击反馈                     | boolean                      | false    |
+| clickable      | 开启点击反馈                                       | boolean                      | -        |
 | arrowDirection | 箭头方向                                           | 'up' \| 'right' \| 'down'    | 'right'  |
 | arrow          | 自定义箭头                                         | React.ReactNode              | -        |
 | icon           | 左侧图标                                           | React.ReactNode              | -        |

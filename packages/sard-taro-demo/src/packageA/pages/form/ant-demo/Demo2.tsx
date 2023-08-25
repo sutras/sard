@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Radio, Row, Toast } from 'sard-taro'
+import { Button, Col, Form, Input, Radio, Row, Space, Toast } from 'sard-taro'
 
 function App() {
   const [form] = Form.useForm()
@@ -39,16 +39,23 @@ function App() {
   }
 
   return (
-    <Form form={form} onSuccess={handleSuccess} onFail={handleFail}>
+    <Form
+      form={form}
+      onSuccess={handleSuccess}
+      onFail={handleFail}
+      labelWidth={80}
+    >
       <Form.Field name="note" label="Note" rules={[{ required: true }]}>
         <Input inlaid placeholder="Note" />
       </Form.Field>
 
       <Form.Field name="gender" label="Gender" rules={[{ required: true }]}>
         <Radio.Group onChange={onGenderChange}>
-          <Radio value="male">male</Radio>
-          <Radio value="female">female</Radio>
-          <Radio value="other">other</Radio>
+          <Space gap="medium">
+            <Radio value="male">male</Radio>
+            <Radio value="female">female</Radio>
+            <Radio value="other">other</Radio>
+          </Space>
         </Radio.Group>
       </Form.Field>
 

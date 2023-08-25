@@ -1,7 +1,14 @@
 @import './components/style/index.scss';
 
-.doc-code-wrapper:not(:last-child) {
-  margin-bottom: 30px;
+.doc-code-wrapper {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--doc-border-color);
+  border-radius: var(--doc-rounded-lg);
+
+  &:not(:last-child) {
+    margin-bottom: 30px;
+  }
 }
 
 pre[class*='language-'] {
@@ -10,9 +17,9 @@ pre[class*='language-'] {
   overflow: auto;
 }
 
-code[class*='language-'],
-pre[class*='language-'] {
-  color: var(--doc-white);
+pre[class*='language-'],
+code[class*='language-'] {
+  border-radius: inherit;
 }
 
 ul {
@@ -22,15 +29,3 @@ ul {
 li {
   margin-bottom: 5px;
 }
-
-// code[class*='language-'],
-// pre[class*='language-'] {
-//   border-radius: inherit;
-//   background-color: var(--doc-white);
-// }
-
-// .doc-code-wrapper {
-//   border-radius: 8px;
-//   box-shadow: 0px 0.8px 2px rgba(0, 0, 0, 0.032),
-//     0px 2.7px 6.7px rgba(0, 0, 0, 0.048), 0px 12px 30px rgba(0, 0, 0, 0.08);
-// }

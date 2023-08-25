@@ -24,12 +24,6 @@ import { Checkbox } from 'sard-taro'
 
 %(${DEMO_PATH}/checkbox/demo/Disabled.tsx)
 
-### 复选框组
-
-复选框组用于收集选中状态的复选框值。
-
-%(${DEMO_PATH}/checkbox/demo/Group.tsx)
-
 ### 图标大小
 
 %(${DEMO_PATH}/checkbox/demo/Size.tsx)
@@ -45,6 +39,24 @@ import { Checkbox } from 'sard-taro'
 ### 自定义图标
 
 %(${DEMO_PATH}/checkbox/demo/Icon.tsx)
+
+### 复选框组
+
+复选框组用于收集选中状态的复选框值。
+
+%(${DEMO_PATH}/checkbox/demo/Group.tsx)
+
+### 自定义组件
+
+`Checkbox`的`children`属性可以是一个接收“是否选中状态”和“切换选中函数”参数的函数，用于随心所欲地定制选框组件。
+
+%(${DEMO_PATH}/checkbox/demo/Custom.tsx)
+
+### 完全自定义组件
+
+内置的`Checkbox`组件在内部是基于`useCheck`和`useCheckGroup`钩子以及`CheckContext`上下文对象实现的，并添加默认的结构和样式。也许你也需要定制自己的`Checkbox`。
+
+%(${DEMO_PATH}/checkbox/demo/CustomFully.tsx)
 
 ## API
 

@@ -13,7 +13,11 @@ export default () => {
           }}
           inputProps={{ placeholder: '请选择日期' }}
         >
-          <Calendar type="range" />
+          <Calendar
+            type="range"
+            min={new Date(2000, 0, 1)}
+            max={new Date(2000, 1, 0)}
+          />
         </PopoutInput>
       </Cell>
     </Cell.Group>

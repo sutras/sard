@@ -22,10 +22,10 @@ page {
 @media (prefers-color-scheme: dark) {
   :root,
   page {
-    --sar-number-keyboard-bg: var(--sar-gray-700);
+    --sar-number-keyboard-bg: var(--sar-gray-800);
     --sar-number-keyboard-key-color: var(--sar-white);
-    --sar-number-keyboard-key-bg: var(--sar-gray-600);
-    --sar-number-keyboard-key-active-bg: var(--sar-gray-500);
+    --sar-number-keyboard-key-bg: var(--sar-gray-700);
+    --sar-number-keyboard-key-active-bg: var(--sar-gray-600);
   }
 }
 // #endvariables

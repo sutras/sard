@@ -47,4 +47,8 @@ page {
       gap: var(--sar-space-gap-large);
     }
   }
+
+  @include e(item) {
+    max-width: 100%;
+  }
 }

@@ -4,7 +4,7 @@ export default () => {
   return (
     <>
       <Mesh direction="horizontal" reverse>
-        {Array(8)
+        {Array(4)
           .fill(0)
           .map((_, index) => (
             <Mesh.Item
@@ -16,7 +16,7 @@ export default () => {
       </Mesh>
 
       <Mesh direction="vertical" reverse style={{ marginTop: 20 }}>
-        {Array(8)
+        {Array(4)
           .fill(0)
           .map((_, index) => (
             <Mesh.Item

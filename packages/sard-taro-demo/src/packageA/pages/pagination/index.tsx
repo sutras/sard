@@ -1,8 +1,6 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
 
-import './index.scss'
-
 import Basic from './demo/Basic'
 import Controllable from './demo/Controllable'
 import Ellipsis from './demo/Ellipsis'

@@ -23,7 +23,7 @@ import { scrollIntoView, ScrollIntoViewPosition } from '../utils'
 import useTranslate from '../locale/useTranslate'
 
 import { BaseProps } from '../base'
-import { ScrollView, View } from '@tarojs/components'
+import { CustomWrapper, ScrollView, View } from '@tarojs/components'
 
 export interface CalendarDay {
   date: Date
@@ -400,12 +400,14 @@ export const Calendar = forwardRef<CalendarRef, CalendarProps>((props, ref) => {
                     day.className,
                   )}
                   style={{
-                    gridColumnStart:
+                    marginLeft:
                       i === 0
                         ? getOffsetWeek(
                             getWeekOnFirstDay(year, month),
                             weekStartsOn,
-                          ) + 1
+                          ) *
+                            (100 / 7) +
+                          '%'
                         : '',
                     ...day.style,
                   }}
@@ -448,31 +450,33 @@ export const Calendar = forwardRef<CalendarRef, CalendarProps>((props, ref) => {
   }, [innerValue, startDate, type])
 
   return (
-    <View {...restProps} className={classNames(bem.b(), className)}>
-      {/* <ResizeSpy /> */}
-      <View className={bem.e('header')}>
-        {title && <View className={bem.e('title')}>{title}</View>}
-        <View className={bem.e('week')}>
-          {getWeeks(weekStartsOn).map((item) => (
-            <View key={item} className={bem.e('week-item')}>
-              {t(`weeks.${item}`)}
-            </View>
-          ))}
+    <CustomWrapper>
+      <View {...restProps} className={classNames(bem.b(), className)}>
+        {/* <ResizeSpy /> */}
+        <View className={bem.e('header')}>
+          {title && <View className={bem.e('title')}>{title}</View>}
+          <View className={bem.e('week')}>
+            {getWeeks(weekStartsOn).map((item) => (
+              <View key={item} className={bem.e('week-item')}>
+                {t(`weeks.${item}`)}
+              </View>
+            ))}
+          </View>
         </View>
+        <ScrollView
+          enableFlex
+          className={bem.e('body')}
+          scrollY
+          onScrollToUpper={(event) => event.preventDefault()}
+          onScrollToLower={(event) => event.preventDefault()}
+        >
+          {Array(maxMonthCount - minMonthCount + 1)
+            .fill(0)
+            .map((_, i) => renderMonth(currentDates, getYearMonthByIndex(i)))}
+        </ScrollView>
+        <View className={bem.e('footer')}></View>
       </View>
-      <ScrollView
-        enableFlex
-        className={bem.e('body')}
-        scrollY
-        onScrollToUpper={(event) => event.preventDefault()}
-        onScrollToLower={(event) => event.preventDefault()}
-      >
-        {Array(maxMonthCount - minMonthCount + 1)
-          .fill(0)
-          .map((_, i) => renderMonth(currentDates, getYearMonthByIndex(i)))}
-      </ScrollView>
-      <View className={bem.e('footer')}></View>
-    </View>
+    </CustomWrapper>
   )
 }) as CalendarFC
 

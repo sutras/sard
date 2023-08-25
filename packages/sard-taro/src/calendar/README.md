@@ -14,10 +14,6 @@ import { Calendar } from 'sard-taro'
 
 ### 基础使用
 
-%(${DEMO_PATH}/calendar/demo/Basic.tsx)
-
-### 配合弹出框使用
-
 %(${DEMO_PATH}/calendar/demo/WithPopout.tsx)
 
 ### 自定义日期范围

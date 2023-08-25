@@ -23,7 +23,6 @@ page {
 
   --sar-index-bar-hint-text-font-size: 24px;
   --sar-index-bar-hint-text-line-height: 1;
-  --sar-index-bar-hint-text-font-weight: bold;
   --sar-index-bar-hint-text-color: var(--sar-white);
 }
 
@@ -82,7 +81,7 @@ page {
   @include e(hint-text) {
     font-size: var(--sar-index-bar-hint-text-font-size);
     line-height: var(--sar-index-bar-hint-text-line-height);
-    font-weight: var(--sar-index-bar-hint-text-font-weight);
+    font-weight: var(--sar-font-bold);
     transform: rotate(45deg);
     color: var(--sar-index-bar-hint-text-color);
   }

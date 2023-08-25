@@ -2,9 +2,9 @@ import { Badge, Space } from 'sard-taro'
 
 export default () => {
   return (
-    <Space>
+    <Space gap="medium">
       <Badge value={10}></Badge>
-      <Badge isDot style={{ marginLeft: '10px' }}></Badge>
+      <Badge isDot></Badge>
     </Space>
   )
 }

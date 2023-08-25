@@ -1,9 +1,10 @@
+@use 'sass:math';
 @import '../style/base.scss';
 
 // #variables
 :root,
 page {
-  --sar-calendar-header-box-shadow: var(--sar-shadow-lg);
+  --sar-calendar-header-box-shadow: var(--sar-shadow);
   --sar-calendar-title-font-size: var(--sar-text-base);
   --sar-calendar-title-line-height: var(--sar-leading-normal);
   --sar-calendar-week-item-height: 36px;
@@ -11,7 +12,6 @@ page {
 
   --sar-calendar-month-title-height: 40px;
   --sar-calendar-month-title-font-size: var(--sar-text-base);
-  --sar-calendar-month-title-font-weight: bold;
   --sar-calendar-month-title-color: var(--sar-emphasis-color);
   --sar-calendar-month-body-row-gap: 4px;
 
@@ -99,16 +99,17 @@ page {
     align-items: center;
     text-align: center;
     font-size: var(--sar-calendar-month-title-font-size);
-    font-weight: var(--sar-calendar-month-title-font-weight);
+    font-weight: var(--sar-font-bold);
     color: var(--sar-calendar-month-title-color);
   }
 
   @include e(month-body) {
     position: relative;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-row-gap: var(--sar-calendar-month-body-row-gap);
-    grid-column-gap: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: var(--sar-calendar-month-body-row-gap);
+    column-gap: 0;
   }
 
   @include e(day) {
@@ -116,6 +117,8 @@ page {
     z-index: 1;
     display: flex;
     flex-direction: column;
+    flex: none;
+    width: #{math.div(100, 7)} + '%';
     height: var(--sar-calendar-day-height);
     justify-content: center;
     align-items: center;

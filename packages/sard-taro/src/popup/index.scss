@@ -4,8 +4,6 @@
 :root,
 page {
   --sar-popup-z-index: 1100;
-  --sar-popup-mask-z-index: 1100;
-  --sar-popup-mask-bg: var(--sar-mask);
 }
 // #endvariables
 
@@ -52,22 +50,6 @@ page {
       margin-right: auto;
       margin-left: auto;
       transform: translateY(-50%);
-    }
-  }
-
-  @include e(mask) {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: var(--sar-popup-mask-z-index);
-    display: none;
-    background-color: var(--sar-popup-mask-bg);
-    touch-action: none;
-
-    @include m(transparent) {
-      background-color: transparent;
     }
   }
 

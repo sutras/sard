@@ -13,7 +13,10 @@ export default () => {
       }
       right={<Navbar.Item>搜索</Navbar.Item>}
     >
-      <Input placeholder="请输入关键词" />
+      <Input
+        placeholder="请输入关键词"
+        style={{ borderRadius: 'var(--sar-rounded-full)' }}
+      />
     </Navbar>
   )
 }

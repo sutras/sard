@@ -129,17 +129,17 @@ page {
     background-color: var(--sar-cell-bg);
     transition: background-color var(--sar-cell-transition-duration);
 
-    @include m(first) {
-      border-top-left-radius: inherit;
-      border-top-right-radius: inherit;
+    @include m(first-card) {
+      border-top-left-radius: var(--sar-cell-group-card-border-radius);
+      border-top-right-radius: var(--sar-cell-group-card-border-radius);
     }
 
-    @include m(last) {
-      border-bottom-left-radius: inherit;
-      border-bottom-right-radius: inherit;
+    @include m(last-card) {
+      border-bottom-left-radius: var(--sar-cell-group-card-border-radius);
+      border-bottom-right-radius: var(--sar-cell-group-card-border-radius);
     }
 
-    @include m(linkable) {
+    @include m(clickable) {
       cursor: pointer;
       &:active {
         background-color: var(--sar-cell-active-bg);
@@ -233,7 +233,6 @@ page {
   @include e(arrow) {
     margin-left: var(--sar-cell-arrow-gap-left);
     font-size: var(--sar-cell-arrow-font-size);
-    font-weight: var(--sar-font-weight-bold);
     color: var(--sar-cell-arrow-color);
   }
 }

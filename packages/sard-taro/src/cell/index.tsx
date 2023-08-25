@@ -18,6 +18,7 @@ export interface CellProps extends BaseProps {
   value?: ReactNode
   footer?: ReactNode
   linkable?: boolean
+  clickable?: boolean
   arrowDirection?: 'up' | 'right' | 'down'
   arrow?: ReactNode
   icon?: ReactNode
@@ -41,7 +42,8 @@ export const Cell: CellFC = (props) => {
     label,
     value,
     footer,
-    linkable = false,
+    linkable,
+    clickable,
     arrowDirection = 'right',
     arrow,
     icon,
@@ -55,7 +57,7 @@ export const Cell: CellFC = (props) => {
 
   const [bem] = useBem('cell')
 
-  const { index, count } = useContext(OrderContext)
+  const { index, count, card } = useContext(OrderContext)
 
   const cellContext = useContext(CellContext)
   const contextProps = pickContextNullish(
@@ -75,8 +77,10 @@ export const Cell: CellFC = (props) => {
       className={classNames(
         bem.b(),
         bem.m('first', index === 0),
+        bem.m('first-card', index === 0 && card),
         bem.m('last', index === count - 1),
-        bem.m('linkable', linkable),
+        bem.m('last-card', index === count - 1 && card),
+        bem.m('clickable', clickable || (clickable !== false && linkable)),
         className,
       )}
     >

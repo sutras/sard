@@ -1,4 +1,6 @@
 export default defineAppConfig({
+  darkmode: true,
+  themeLocation: 'theme.json',
   pages: ['pages/index/index'],
   subPackages: [
     {
@@ -63,8 +65,8 @@ export default defineAppConfig({
   ],
   window: {
     backgroundTextStyle: 'light',
-    navigationBarBackgroundColor: '#fff',
-    navigationBarTitleText: 'WeChat',
-    navigationBarTextStyle: 'black',
+    navigationBarBackgroundColor: '@navBgColor',
+    navigationBarTitleText: 'SardTaro',
+    navigationBarTextStyle: '@navTxtStyle' as any,
   },
 })

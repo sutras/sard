@@ -1,5 +1,7 @@
-import Taro from '@tarojs/taro'
+import Taro, { SelectorQuery } from '@tarojs/taro'
 import { TouchEvent } from 'react'
+import { minmax, noop } from './index'
+import { AnyFunction } from '../base'
 
 export function pageScrollTop(top: number, animated = true) {
   window.scrollTo({
@@ -109,106 +111,100 @@ export function getOffset(
 export type ScrollIntoViewPosition = 'start' | 'center' | 'end' | 'nearest'
 
 export interface ScrollIntoViewOptions {
-  block?: ScrollIntoViewPosition
-  inline?: ScrollIntoViewPosition
-  blockOffset?: number
-  inlineOffset?: number
-  topOffset?: number
-  bottomOffset?: number
-  leftOffset?: number
-  rightOffset?: number
+  placement?: ScrollIntoViewPosition
+  startOffset?: number
+  endOffset?: number
+  limited?: boolean
+  pageHeight?: number
 }
 
-// todo
-export function scrollIntoView(
-  elem: HTMLElement,
-  options: ScrollIntoViewOptions,
+/**    
+```
+                      page               
+                     ╱ 
+    ╭───────────────╮    viewport
+  ╭─│─ ─ ─ ─ ─ ─ ─ ─│─╮ ╱  
+  │ │ ╭───────────╮ │ │
+  │ │ │  element  │ │ │
+  │ │ ╰───────────╯ │ │
+  ╰─│─ ─ ─ ─ ─ ─ ─ ─│─╯
+    │               │
+    │               │
+    ╰───────────────╯
+```
+
+# 对象
+- viewport: 视窗
+- page: 页面
+- element: 元素
+
+# 参数
+- viewportHeight: 视窗高度
+- viewportScrollTop: 视窗顶部滚动距离
+- elementHeight: 元素高度
+- elementToPageTopOffset: 元素距离页面顶部距离
+
+# 选项
+- placement: 元素在视窗中的位置(start, center, end, nearest)
+- startOffset: 元素距离视窗顶部的偏移量
+- endOffset: 元素距离视窗底部的偏移量
+- limited: 是否限定视窗滚动的距离，让页面始终覆盖视窗；需要同时传递pageHeight选项
+- pageHeight: 页面高度
+
+# 结果值
+- viewportScrollTop: 视窗顶部滚动的新的距离
+
+*/
+export function getScrollIntoViewValue(
+  viewportHeight: number,
+  viewportScrollTop: number,
+  elementHeight: number,
+  elementToPageTopOffset: number,
+  options: ScrollIntoViewOptions = {},
 ) {
-  return
-  const {
-    block,
-    inline,
-    blockOffset = 0,
-    inlineOffset = 0,
-    topOffset = 0,
-    bottomOffset = 0,
-    leftOffset = 0,
-    rightOffset = 0,
-  } = options
+  const { startOffset = 0, endOffset = 0, pageHeight, limited } = options
 
-  const scrollParent = getScrollParent(elem)
+  let placement = options.placement || 'nearest'
 
-  const offset = getOffset(elem, scrollParent)
+  const elementToViewportTopOffset = elementToPageTopOffset - viewportScrollTop
+  const elementToViewportBottomOffset =
+    elementToPageTopOffset + elementHeight - viewportScrollTop - viewportHeight
 
-  function setScroll(
-    Side: string,
-    side: string,
-    Size: string,
-    position: ScrollIntoViewPosition,
-    offsetValue: number,
-    startOffset: number,
-    endOffset: number,
-  ) {
-    const scrollValue = scrollParent[`scroll${Side}`] - startOffset
-    const viewportSize = scrollParent[`client${Size}`] + startOffset + endOffset
-    const offsetBegin = offset[side]
-    const startValue = offsetBegin - scrollValue
-    const elemSize = elem[`offset${Size}`]
-    const endValue = offsetBegin + elemSize - scrollValue - viewportSize
-
-    let stop = false
-
-    if (position === 'nearest') {
-      if (startValue >= 0 && endValue <= 0) {
-        stop = true
-      } else {
-        position = Math.abs(startValue) > Math.abs(endValue) ? 'end' : 'start'
-      }
-    }
-
-    if (!stop) {
-      let nextScrollValue = 0
-
-      switch (position) {
-        case 'start':
-          nextScrollValue = offsetBegin
-          break
-        case 'center':
-          nextScrollValue = offsetBegin - (viewportSize - elemSize) / 2
-          break
-        case 'end':
-          nextScrollValue = offsetBegin + elemSize - viewportSize
-          break
-      }
-
-      scrollParent[`scroll${Side}`] = nextScrollValue + offsetValue
+  if (placement === 'nearest') {
+    if (elementToViewportTopOffset >= 0 && elementToViewportBottomOffset <= 0) {
+      return viewportScrollTop
+    } else {
+      placement =
+        Math.abs(elementToViewportTopOffset) >
+        Math.abs(elementToViewportBottomOffset)
+          ? 'end'
+          : 'start'
     }
   }
 
-  if (block) {
-    setScroll(
-      'Top',
-      'top',
-      'Height',
-      block,
-      blockOffset,
-      topOffset,
-      bottomOffset,
-    )
+  let nextScrollTop = 0
+
+  switch (placement) {
+    case 'start':
+      nextScrollTop = elementToPageTopOffset - startOffset
+      break
+    case 'center':
+      nextScrollTop =
+        elementToPageTopOffset - (viewportHeight - elementHeight) / 2
+      break
+    case 'end':
+      nextScrollTop =
+        elementToPageTopOffset + elementHeight - viewportHeight + endOffset
+      break
   }
 
-  if (inline) {
-    setScroll(
-      'Left',
-      'left',
-      'Width',
-      inline,
-      inlineOffset,
-      leftOffset,
-      rightOffset,
-    )
-  }
+  return limited
+    ? minmax(nextScrollTop, 0, pageHeight - viewportHeight)
+    : nextScrollTop
 }
+
+// todo: form, calendar需要用到
+export const scrollIntoView: AnyFunction = noop
 
 export type NodeRect = {
   width: number
@@ -220,9 +216,22 @@ export type NodeRect = {
 }
 
 // NodesRef.fields 的异步封装
-export function getRectById(id: string) {
+export function getRectById(id: string, ctxId?: string) {
   return new Promise<NodeRect>((resolve) => {
-    Taro.createSelectorQuery()
+    let query: SelectorQuery
+
+    if (ctxId) {
+      const element = document.getElementById(ctxId) as any
+      if (element && element.ctx) {
+        query = Taro.createSelectorQuery().in(element.ctx)
+      }
+    }
+
+    if (!query) {
+      query = Taro.createSelectorQuery()
+    }
+
+    query
       .select(`#${id}`)
       .fields(
         {
@@ -245,18 +254,25 @@ export function getRectById(id: string) {
  * @param {number} errorValue 误差值
  * @return {void}
  */
+
+interface MatchScrollVisibleOptions {
+  offset?: number
+  errorValue?: number
+  contextId?: string
+}
+
 export async function matchScrollVisible(
   ids: string[],
   callback: (index: number, id: string) => unknown,
-  offset = 0,
-  errorValue = 5,
+  options: MatchScrollVisibleOptions = {},
 ) {
-  offset += errorValue
+  const { offset: optionOffset = 0, errorValue = 5, contextId } = options
+  const offset = optionOffset + errorValue
 
   for (let i = 0, l = ids.length; i < l; i++) {
     const id = ids[i]
 
-    const res = await getRectById(id)
+    const res = await getRectById(id, contextId)
     if (res) {
       if (i === 0) {
         if (res.top > offset) {

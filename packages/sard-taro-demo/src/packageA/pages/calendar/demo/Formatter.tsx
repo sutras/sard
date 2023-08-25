@@ -53,7 +53,7 @@ export default () => {
           <Calendar
             type="range"
             min={new Date(2000, 4, 1)}
-            max={new Date(2000, 6, 1)}
+            max={new Date(2000, 5, 0)}
             formatter={formatter}
           />
         </PopoutInput>

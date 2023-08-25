@@ -14,10 +14,6 @@ import { Cascader } from 'sard-taro'
 
 ### 基础使用
 
-%(${DEMO_PATH}/cascader/demo/Basic.tsx)
-
-### 配合弹出框使用
-
 %(${DEMO_PATH}/cascader/demo/WithPopout.tsx)
 
 ### 异步加载

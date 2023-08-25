@@ -1,6 +1,6 @@
 import { FC, ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import classNames from 'classnames'
-import { View } from '@tarojs/components'
+import { CustomWrapper, View } from '@tarojs/components'
 import { Tabs, TabsProps } from '../tabs'
 import Icon from '../icon'
 import useTranslate from '../locale/useTranslate'
@@ -280,16 +280,49 @@ export const Cascader: CascaderFC = (props) => {
     )
   }
 
-  const renderPane = (tab: CascaderTab, tabIndex: number) => {
-    const { options, selected } = tab
-    const tabLabel = selected ? selected[fieldkeys.label] : placeholder
-
+  const renderTabs = () => {
     return (
-      <Tabs.Pane label={tabLabel} key={tabIndex}>
-        {isFunction(optionTop) ? optionTop(tabIndex) : optionTop}
-        {renderOptions(options, selected, tabIndex)}
-        {isFunction(optionBottom) ? optionBottom(tabIndex) : optionBottom}
-      </Tabs.Pane>
+      <Tabs
+        scrollable
+        {...restProps}
+        activeKey={String(tabsActiveKey)}
+        onChange={handleTabsChange}
+        className={classNames(bem.b(), className)}
+      >
+        {tabs.map((tab, tabIndex) => {
+          const { selected } = tab
+          const tabLabel = selected ? selected[fieldkeys.label] : placeholder
+
+          return <Tabs.Tab key={tabIndex}>{tabLabel}</Tabs.Tab>
+        })}
+      </Tabs>
+    )
+  }
+
+  const renderPanes = () => {
+    return (
+      <View className={classNames(bem.e('container'))}>
+        <View
+          className={classNames(bem.e('wrapper'))}
+          style={{
+            transform: `translate3d(-${Number(tabsActiveKey) * 100}%,0,0)`,
+          }}
+        >
+          {tabs.map((tab, tabIndex) => {
+            const { options, selected } = tab
+
+            return (
+              <View className={classNames(bem.e('pane'))} key={tabIndex}>
+                {isFunction(optionTop) ? optionTop(tabIndex) : optionTop}
+                {renderOptions(options, selected, tabIndex)}
+                {isFunction(optionBottom)
+                  ? optionBottom(tabIndex)
+                  : optionBottom}
+              </View>
+            )
+          })}
+        </View>
+      </View>
     )
   }
 
@@ -313,16 +346,10 @@ export const Cascader: CascaderFC = (props) => {
   }, [tabs, innerValue])
 
   return (
-    <Tabs
-      animated
-      scrollCount={0}
-      {...restProps}
-      activeKey={String(tabsActiveKey)}
-      onChange={handleTabsChange}
-      className={classNames(bem.b(), className)}
-    >
-      {tabs.map(renderPane)}
-    </Tabs>
+    <CustomWrapper>
+      {renderTabs()}
+      {renderPanes()}
+    </CustomWrapper>
   )
 }
 

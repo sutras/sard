@@ -1,5 +1,13 @@
 import { useState } from 'react'
-import { Button, Form, FormFieldProps, Input, Radio, Toast } from 'sard-taro'
+import {
+  Button,
+  Form,
+  FormFieldProps,
+  Input,
+  Radio,
+  Space,
+  Toast,
+} from 'sard-taro'
 
 function App() {
   const [form] = Form.useForm()
@@ -30,8 +38,10 @@ function App() {
     >
       <Form.Field name="layout" label="Form Layout">
         <Radio.Group value={formLayout} onChange={onFormLayoutChange}>
-          <Radio value="horizontal">Horizontal</Radio>
-          <Radio value="vertical">Vertical</Radio>
+          <Space gap="medium">
+            <Radio value="horizontal">Horizontal</Radio>
+            <Radio value="vertical">Vertical</Radio>
+          </Space>
         </Radio.Group>
       </Form.Field>
 

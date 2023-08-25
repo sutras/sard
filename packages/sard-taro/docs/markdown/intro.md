@@ -8,14 +8,36 @@
 
 ### 特性
 
-- 🚀 50+ 高质量组件，覆盖移动端主流场景
+- 🧩 50+ 高质量组件，覆盖移动端主流场景
 - 💪 支持一套代码同时开发多端小程序+H5
-- 🍭 支持按需引用
+- 🌿 支持按需引用
 - 📖 详尽的文档和示例
-- 💪 支持 TypeScript
-- 🍭 支持定制主题
+- ʦ 支持 TypeScript
+- 🌈 支持定制主题
 - 🌍 国际化支持
-- 🍭 单元测试覆盖率超过 80%，保障稳定性
+- 🌙 支持暗黑模式
+- 🧪 单元测试覆盖率超过 80%，保障稳定性
+
+### 扫码体验
+
+<div class="qrcode">
+  <div class="qrcode-item">
+    <img
+      class="qrcode-img"
+      src="demo-h5.png"
+      alt="sard-taro 演示 H5"
+    />
+    <div class="qrcode-text">H5</div>
+  </div>
+  <div class="qrcode-item">
+    <img
+      class="qrcode-img"
+      src="demo-weapp.jpg"
+      alt="sard-taro 演示 weapp"
+    />
+    <div class="qrcode-text">微信小程序</div>
+  </div>
+</div>
 
 ### 开源协议
 

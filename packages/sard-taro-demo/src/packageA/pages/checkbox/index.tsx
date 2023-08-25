@@ -9,6 +9,8 @@ import Size from './demo/Size'
 import Color from './demo/Color'
 import Type from './demo/Type'
 import Icon from './demo/Icon'
+import Custom from './demo/Custom'
+import CustomFully from './demo/CustomFully'
 
 export default () => {
   return (
@@ -25,10 +27,6 @@ export default () => {
         <Disabled />
       </Demo>
 
-      <Demo title="复选框组">
-        <Group />
-      </Demo>
-
       <Demo title="图标大小">
         <Size />
       </Demo>
@@ -43,6 +41,18 @@ export default () => {
 
       <Demo title="自定义图标">
         <Icon />
+      </Demo>
+
+      <Demo title="复选框组">
+        <Group />
+      </Demo>
+
+      <Demo title="自定义组件" full>
+        <Custom />
+      </Demo>
+
+      <Demo title="完全自定义组件" full>
+        <CustomFully />
       </Demo>
     </Page>
   )

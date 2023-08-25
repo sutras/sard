@@ -6,12 +6,12 @@
   min-height: calc(100vh - 60px);
 
   .logo-img {
-    width: 200px;
+    width: 240px;
     height: auto;
   }
 
   .logo-name {
-    margin: 20px 0 0;
+    margin: 0;
     font-size: 80px;
     line-height: 1;
     font-weight: bold;
@@ -62,14 +62,16 @@
 @media (max-width: 768px) {
   .jumbotron {
     .logo-img {
-      width: 150px;
+      width: 160px;
+      height: 160px;
     }
 
     .logo-name {
-      font-size: 60px;
+      font-size: 48px;
     }
 
     .description {
+      margin-top: 15px;
       font-size: 18px;
     }
   }
@@ -81,5 +83,26 @@
     li {
       width: 100%;
     }
+  }
+}
+
+.qrcode {
+  display: flex;
+  gap: 10px;
+
+  &-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &-img {
+    display: block;
+    width: 144px;
+    height: 144px;
+  }
+
+  &-text {
+    font-size: 14px;
   }
 }

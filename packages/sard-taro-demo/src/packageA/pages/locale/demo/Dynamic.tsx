@@ -7,6 +7,7 @@ import {
   LocaleContext,
   Pagination,
   Radio,
+  Space,
 } from 'sard-taro'
 
 import zhCN from 'sard-taro/locale/lang/zh-CN'
@@ -31,8 +32,10 @@ export default () => {
         footer={
           <View>
             <Radio.Group defaultValue="zhCN" onChange={handleChange}>
-              <Radio value="zhCN">中文</Radio>
-              <Radio value="enUS">英文</Radio>
+              <Space gap="medium">
+                <Radio value="zhCN">中文</Radio>
+                <Radio value="enUS">英文</Radio>
+              </Space>
             </Radio.Group>
           </View>
         }

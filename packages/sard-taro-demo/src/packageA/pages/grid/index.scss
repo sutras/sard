@@ -2,7 +2,8 @@
   .demo-box {
     box-sizing: border-box;
     padding: 10px;
-    border: 1px solid var(--sar-border-color);
+    border: 1px solid var(--sar-deemphasis-color);
+    background-color: var(--sar-secondary-bg);
   }
 
   .demo-box-higher {

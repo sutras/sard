@@ -7,7 +7,7 @@ import {
 export type CheckboxGroupProps = InternalCheckGroupProps<'multiple'>
 
 export const CheckboxGroup: FC<CheckboxGroupProps> = (props) => {
-  return useInternalCheckGroup('multiple', 'checkbox', props)
+  return useInternalCheckGroup('multiple', props)
 }
 
 export default CheckboxGroup

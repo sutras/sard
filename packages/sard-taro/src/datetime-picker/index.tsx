@@ -14,6 +14,7 @@ import { Picker, PickerRef } from '../picker'
 import { useEvent, useControllableValue, useLayoutUpdateEffect } from '../use'
 import { formatDate, getDaysInMonth, minmax } from '../utils'
 import { BaseProps } from '../base'
+import { CustomWrapper } from '@tarojs/components'
 
 export type DatetimeLetter = 'y' | 'M' | 'd' | 'h' | 'm' | 's'
 
@@ -396,13 +397,15 @@ export const DatetimePicker = forwardRef<
   }))
 
   return (
-    <Picker
-      {...restProps}
-      columns={columns}
-      value={pickerValue}
-      onChange={handleChange}
-      ref={pickerRef}
-    ></Picker>
+    <CustomWrapper>
+      <Picker
+        {...restProps}
+        columns={columns}
+        value={pickerValue}
+        onChange={handleChange}
+        ref={pickerRef}
+      />
+    </CustomWrapper>
   )
 }) as DatetimePickerFC
 

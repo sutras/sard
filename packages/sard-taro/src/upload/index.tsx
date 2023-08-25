@@ -10,7 +10,7 @@ import classNames from 'classnames'
 import Taro from '@tarojs/taro'
 import { ImageProps, View } from '@tarojs/components'
 import { useBem, useControllableValue, useEvent } from '../use'
-import { getFileName, isFunction, isImageUrl } from '../utils'
+import { getFileName, isFunction, isImageUrl, noop } from '../utils'
 import { Icon } from '../icon'
 
 import { UploadPreview, UploadFileItem, UploadFile } from './Preview'
@@ -59,6 +59,7 @@ export interface UploadFC
   Preview: typeof UploadPreview
 }
 
+// todo: taro在H5不能正常选择
 export const Upload: UploadFC = forwardRef<UploadRef, UploadProps>(
   (props, ref) => {
     const {
@@ -253,7 +254,7 @@ export const Upload: UploadFC = forwardRef<UploadRef, UploadProps>(
               ),
             )
           },
-        })
+        }).catch(noop)
       } else if (accept === 'video') {
         Taro.chooseVideo({
           sourceType,

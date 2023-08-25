@@ -8,6 +8,7 @@ import {
   PopoutInput,
   Radio,
   Row,
+  Space,
   Toast,
 } from 'sard-taro'
 
@@ -50,13 +51,15 @@ function App() {
         rules={[{ required: true, message: 'Missing area' }]}
       >
         <Radio.Group onChange={handleChange}>
-          {areas.map((area) => {
-            return (
-              <Radio value={area.value} key={area.value}>
-                {area.label}
-              </Radio>
-            )
-          })}
+          <Space gap="medium">
+            {areas.map((area) => {
+              return (
+                <Radio value={area.value} key={area.value}>
+                  {area.label}
+                </Radio>
+              )
+            })}
+          </Space>
         </Radio.Group>
       </Form.Field>
 

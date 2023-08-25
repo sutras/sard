@@ -21,7 +21,7 @@
         align-items: center;
         width: 30px;
         height: 30px;
-        font-size: 16px;
+        font-size: var(--doc-text-base);
         cursor: pointer;
       }
       &-item ~ &-item {

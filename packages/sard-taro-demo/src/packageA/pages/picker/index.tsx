@@ -2,7 +2,6 @@ import Demo from '@/components/demo'
 import Page from '@/components/page'
 import { Toast } from 'sard-taro'
 
-import General from './demo/General'
 import ObjectOption from './demo/ObjectOption'
 import Multiple from './demo/Multiple'
 import ObjectMultiple from './demo/ObjectMultiple'
@@ -13,10 +12,6 @@ export default () => {
   return (
     <Page className="page-Picker">
       <Toast.Agent />
-
-      <Demo title="普通选择器" full>
-        <General />
-      </Demo>
 
       <Demo title="配合弹出框" full>
         <WithPopout />

@@ -1,9 +1,9 @@
 :root,
 page {
   --doc-scrollbar-track-bg: var(--doc-gray-100);
-  --doc-scrollbar-thumb-bg: var(--doc-gray-400);
-  --doc-scrollbar-thumb-hover-bg: var(--doc-gray-500);
-  --doc-scrollbar-thumb-active-bg: var(--doc-gray-600);
+  --doc-scrollbar-thumb-bg: var(--doc-gray-300);
+  --doc-scrollbar-thumb-hover-bg: var(--doc-gray-400);
+  --doc-scrollbar-thumb-active-bg: var(--doc-gray-500);
 }
 
 [data-doc-theme='dark'] {
@@ -19,13 +19,13 @@ page {
     height: 7px;
   }
 
-  ::-webkit-scrollbar-track {
-    background-color: var(--doc-scrollbar-track-bg);
-  }
+  // ::-webkit-scrollbar-track {
+  //   background-color: var(--doc-scrollbar-track-bg);
+  // }
 
   ::-webkit-scrollbar-thumb {
     background-color: var(--doc-scrollbar-thumb-bg);
-    border-radius: 2px;
+    border-radius: var(--doc-rounded-full);
   }
 
   ::-webkit-scrollbar-thumb:hover {
@@ -46,7 +46,7 @@ body {
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
     Arial, 'Noto Sans', 'Liberation Sans', sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  font-size: 16px;
+  font-size: var(--doc-text-base);
   line-height: 1.5;
   color: var(--doc-body-color);
   background-color: var(--doc-body-bg);
@@ -55,7 +55,7 @@ body {
 }
 
 code {
-  font-family: var(--doc-code-font-family);
+  font-family: var(--doc-font-monospace);
 }
 
 a {

@@ -14,6 +14,7 @@ import {
   Rate,
   Row,
   Slider,
+  Space,
   Stepper,
   Switch,
   Toast,
@@ -151,7 +152,7 @@ function App() {
         }}
         rules={[{ required: true, len: 6 }]}
       >
-        <PasswordInput disabled={disabled} type="underline" plainText />
+        <PasswordInput type="underline" plainText />
       </Form.Field>
 
       <Form.Field label="姓名" name="name" rules={[{ required: true }]}>
@@ -164,8 +165,10 @@ function App() {
         rules={[{ required: true, message: '请选择${label}' }]}
       >
         <Radio.Group>
-          <Radio value="male">男</Radio>
-          <Radio value="female">女</Radio>
+          <Space gap="medium">
+            <Radio value="male">男</Radio>
+            <Radio value="female">女</Radio>
+          </Space>
         </Radio.Group>
       </Form.Field>
 
@@ -174,13 +177,7 @@ function App() {
       </Form.Field>
 
       <Form.Field label="身份证号" name="idNumber" rules={[{ required: true }]}>
-        <Input
-          readOnly
-          disabled={disabled}
-          inlaid
-          placeholder="请输入身份证号"
-          clearable
-        />
+        <Input readOnly inlaid placeholder="请输入身份证号" clearable />
       </Form.Field>
 
       <Form.Field label="籍贯" name="nativePlace" rules={[{ required: true }]}>
@@ -242,11 +239,13 @@ function App() {
       </Form.Field>
 
       <Form.Field label="兴趣爱好" name="hobbies" rules={[{ required: true }]}>
-        <Checkbox.Group vertical>
-          <Checkbox value="h1">运动</Checkbox>
-          <Checkbox value="h2">读书</Checkbox>
-          <Checkbox value="h3">旅行</Checkbox>
-          <Checkbox value="h4">购物</Checkbox>
+        <Checkbox.Group>
+          <Space gap="medium">
+            <Checkbox value="h1">运动</Checkbox>
+            <Checkbox value="h2">读书</Checkbox>
+            <Checkbox value="h3">旅行</Checkbox>
+            <Checkbox value="h4">购物</Checkbox>
+          </Space>
         </Checkbox.Group>
       </Form.Field>
 

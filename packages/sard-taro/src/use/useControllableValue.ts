@@ -55,7 +55,6 @@ export function useControllableValue<T>(
   const forceRender = useForceRender()
 
   // change（同步）
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setState = useEvent((v: SetStateAction<T>, ...args: any[]) => {
     const nextState = isFunction(v) ? (v as (s: T) => T)(stateRef.current) : v
 

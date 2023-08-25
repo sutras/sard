@@ -43,17 +43,13 @@ page {
     width: 0;
   }
 
-  @include e(item-content) {
+  @include e(item-wrapper) {
     position: relative;
-    height: 100%;
-
-    @include m(square) {
-      height: 0;
-      padding-top: 100%;
-    }
+    height: 0;
+    padding-top: 100%;
   }
 
-  @include e(item-wrapper) {
+  @include e(item-content) {
     position: relative;
     box-sizing: border-box;
     display: flex;

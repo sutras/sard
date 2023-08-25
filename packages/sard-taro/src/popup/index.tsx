@@ -4,6 +4,7 @@ import { ITouchEvent, View } from '@tarojs/components'
 import { useBem, useEvent } from '../use'
 import { CSSTransition } from '../transition/CSSTransition'
 import { BaseProps } from '../base'
+import Mask from '../mask'
 
 export interface PopupProps extends BaseProps {
   visible?: boolean
@@ -28,6 +29,7 @@ export interface PopupProps extends BaseProps {
   onExit?: () => void
   onExiting?: () => void
   onExited?: () => void
+  catchMove?: boolean
 }
 
 export type PopupRef = typeof View
@@ -59,7 +61,7 @@ export const Popup: FC<PopupProps> = forwardRef<PopupRef, PopupProps>(
 
     const [bem] = useBem('popup')
 
-    const [popupVisible, setPopupVisible] = useState(visible)
+    const [realVisible, setRealVisible] = useState(visible)
     const [isHiding, setIsHiding] = useState(!visible)
 
     const handleMaskClick = useEvent((event: ITouchEvent) => {
@@ -68,7 +70,7 @@ export const Popup: FC<PopupProps> = forwardRef<PopupRef, PopupProps>(
 
     const handleEnter = useEvent(() => {
       setIsHiding(false)
-      setPopupVisible(true)
+      setRealVisible(true)
       onEnter?.()
     })
 
@@ -91,32 +93,24 @@ export const Popup: FC<PopupProps> = forwardRef<PopupRef, PopupProps>(
 
     const handleExited = useEvent(() => {
       setIsHiding(false)
-      setPopupVisible(false)
+      setRealVisible(false)
       onExited?.()
     })
 
     const renderPopup = () => {
       return (
         <>
-          <CSSTransition in={visible} timeout={timeout} effect="fade">
-            {mask ? (
-              <View
-                className={classNames(
-                  bem.e('mask'),
-                  bem.m('hiding', isHiding),
-                  bem.em('mask', 'transparent', transparent),
-                  maskClass,
-                )}
-                style={{
-                  zIndex,
-                  display: popupVisible ? 'flex' : 'none',
-                  ...maskStyle,
-                }}
-                onClick={handleMaskClick}
-                catchMove
-              ></View>
-            ) : null}
-          </CSSTransition>
+          {mask && (
+            <Mask
+              visible={visible}
+              zIndex={zIndex}
+              timeout={timeout}
+              transparent={transparent}
+              onClick={handleMaskClick}
+              className={maskClass}
+              style={maskStyle}
+            />
+          )}
 
           <CSSTransition
             in={visible}
@@ -140,11 +134,7 @@ export const Popup: FC<PopupProps> = forwardRef<PopupRef, PopupProps>(
               )}
               style={{
                 zIndex,
-                // display: popupVisible ? 'flex' : 'none',
-                // tips: 不通过display控制显隐可以解决picker在web滑动的问题。
-                opacity: popupVisible ? 1 : 0,
-                visibility: popupVisible ? 'visible' : 'hidden',
-                pointerEvents: popupVisible ? 'auto' : 'none',
+                display: realVisible ? 'flex' : 'none',
                 ...style,
               }}
               ref={ref}

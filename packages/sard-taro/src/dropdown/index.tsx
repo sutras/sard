@@ -97,6 +97,7 @@ export const Dropdown: DropdownFC = (props) => {
               toggleItem(index)
               element.props.onClick?.(event)
             },
+            itemShow: show,
             ...pickNullish(
               {
                 direction,

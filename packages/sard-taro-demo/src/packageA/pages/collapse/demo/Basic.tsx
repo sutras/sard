@@ -10,8 +10,8 @@ export default () => {
   }
 
   return (
-    <Space vertical>
-      <Cell.Group card style={{ marginBottom: 20 }}>
+    <Space vertical gap="medium">
+      <Cell.Group card>
         <Cell linkable title="toggle" onClick={handleClick}></Cell>
       </Cell.Group>
 

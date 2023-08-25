@@ -8,9 +8,8 @@
   .header {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 50px 20px 20px;
+    align-items: flex-start;
+    padding: 50px 32px 20px;
   }
 
   .flex-row {
@@ -26,12 +25,13 @@
 
   .title {
     margin-left: 10px;
-    font-size: 20px;
+    font-size: 24px;
+    font-weight: bold;
   }
 
   .desc {
     margin-top: 10px;
-    font-size: 17px;
+    font-size: 14px;
     color: var(--sar-tertiary-color);
   }
 }

@@ -1,6 +1,6 @@
 import { View } from '@tarojs/components'
 import { FC, useState } from 'react'
-import { Button, Form, Input, Dialog, Radio, Toast } from 'sard-taro'
+import { Button, Form, Input, Dialog, Radio, Toast, Space } from 'sard-taro'
 
 interface Values {
   title: string
@@ -70,8 +70,10 @@ const CollectionCreateForm: FC<CollectionCreateFormProps> = ({
           className="collection-create-form_last-form-item"
         >
           <Radio.Group>
-            <Radio value="public">Public</Radio>
-            <Radio value="private">Private</Radio>
+            <Space gap="medium">
+              <Radio value="public">Public</Radio>
+              <Radio value="private">Private</Radio>
+            </Space>
           </Radio.Group>
         </Form.Field>
       </Form>

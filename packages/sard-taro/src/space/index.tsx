@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { Children, FC } from 'react'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import { BaseProps } from '../base'
@@ -39,7 +39,9 @@ export const Space: FC<SpaceProps> = (props) => {
         className,
       )}
     >
-      {children}
+      {Children.map(children, (node) => {
+        return <View className={bem.e('item')}>{node}</View>
+      })}
     </View>
   )
 }

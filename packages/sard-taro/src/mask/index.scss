@@ -1,0 +1,31 @@
+@import '../style/base.scss';
+
+// #variables
+:root,
+page {
+  --sar-mask-z-index: 1100;
+  --sar-mask-bg: var(--sar-mask);
+}
+// #endvariables
+
+@include bem(mask) {
+  @include b() {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: var(--sar-mask-z-index);
+    display: none;
+    background-color: var(--sar-mask-bg);
+    touch-action: none;
+
+    @include m(transparent) {
+      background-color: transparent;
+    }
+
+    @include m(hiding) {
+      pointer-events: none;
+    }
+  }
+}

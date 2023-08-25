@@ -1,4 +1,4 @@
-import { Icon, Radio } from 'sard-taro'
+import { Icon, Radio, Space } from 'sard-taro'
 
 export default () => {
   return (
@@ -8,8 +8,10 @@ export default () => {
         <Icon prefix="demo-icon" name={checked ? 'heart-fill' : 'heart'} />
       )}
     >
-      <Radio value="option1">选项1</Radio>
-      <Radio value="option2">选项2</Radio>
+      <Space gap="medium">
+        <Radio value="option1">选项1</Radio>
+        <Radio value="option2">选项2</Radio>
+      </Space>
     </Radio.Group>
   )
 }

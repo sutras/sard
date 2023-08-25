@@ -12,14 +12,6 @@ import { DatetimePicker } from 'sard-taro'
 
 ## 代码演示
 
-### 基础使用
-
-%(${DEMO_PATH}/datetime-picker/demo/Basic.tsx)
-
-### 受控
-
-%(${DEMO_PATH}/datetime-picker/demo/Controllable.tsx)
-
 ### 类型
 
 可以使用 'yMdhms'（年月日时分秒）进行任意组合。

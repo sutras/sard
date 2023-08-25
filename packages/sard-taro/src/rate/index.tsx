@@ -1,6 +1,6 @@
 import { ReactNode, useRef, FC, useEffect } from 'react'
 import classNames from 'classnames'
-import { ITouch, ITouchEvent, View } from '@tarojs/components'
+import { CustomWrapper, ITouch, ITouchEvent, View } from '@tarojs/components'
 import {
   useControllableValue,
   useEvent,
@@ -60,6 +60,7 @@ export const Rate: FC<RateProps> = (props) => {
   })
 
   const rateStartLeft = useRef(0)
+  const contextId = useSelectorId()
   const rateId = useSelectorId()
   const rateItemId = useSelectorId()
 
@@ -94,7 +95,7 @@ export const Rate: FC<RateProps> = (props) => {
     }
 
     if (allowHalf) {
-      getRectById(`${rateItemId}_${index}`).then((res) => {
+      getRectById(`${rateItemId}_${index}`, contextId).then((res) => {
         let touch = event as unknown as ITouch
         if (event.touches) {
           touch = event.touches[0]
@@ -118,13 +119,13 @@ export const Rate: FC<RateProps> = (props) => {
 
     brush.start(event)
 
-    getRectById(rateId).then((res) => {
+    getRectById(rateId, contextId).then((res) => {
       rateStartLeft.current = res.left
     })
 
     itemsBoundary.current = []
     for (let i = 0; i < count; i++) {
-      getRectById(`${rateItemId}_${i}`).then((res) => {
+      getRectById(`${rateItemId}_${i}`, contextId).then((res) => {
         itemsBoundary.current[i] = [res.left, res.right]
       })
     }
@@ -172,59 +173,64 @@ export const Rate: FC<RateProps> = (props) => {
   }, [innerValue, itemStars.current])
 
   return (
-    <View
-      {...restProps}
-      id={rateId}
-      className={classNames(
-        bem.b(),
-        bem.m('disabled', disabled),
-        bem.m('readonly', readOnly),
-        className,
-      )}
-      style={{
-        fontSize: size,
-        ...style,
-      }}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      onTouchCancel={handleTouchEnd}
-    >
-      {Array(count)
-        .fill(0)
-        .map((_, index) => {
-          const itemValue = index + 1
-          const id = `${rateItemId}_${index}`
+    <CustomWrapper id={contextId}>
+      <View
+        {...restProps}
+        id={rateId}
+        className={classNames(
+          bem.b(),
+          bem.m('disabled', disabled),
+          bem.m('readonly', readOnly),
+          className,
+        )}
+        style={{
+          fontSize: size,
+          ...style,
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
+      >
+        {Array(count)
+          .fill(0)
+          .map((_, index) => {
+            const itemValue = index + 1
+            const id = `${rateItemId}_${index}`
 
-          return (
-            <View
-              className={classNames(
-                bem.e('item'),
-                bem.em('item', 'later', index > 0),
-              )}
-              id={id}
-              key={itemValue}
-              style={{
-                marginLeft: itemValue !== 1 ? spacing : '',
-              }}
-              onClick={(event) => handleClick(event, index)}
-            >
-              <View className={bem.e('star-void')} style={{ color: voidColor }}>
-                {voidIcon ?? <Icon name="star"></Icon>}
-              </View>
+            return (
               <View
-                className={bem.e('star')}
+                className={classNames(
+                  bem.e('item'),
+                  bem.em('item', 'later', index > 0),
+                )}
+                id={id}
+                key={itemValue}
                 style={{
-                  color: color,
+                  marginLeft: itemValue !== 1 ? spacing : '',
                 }}
-                ref={(el) => itemStarRefCallback(index, el)}
+                onClick={(event) => handleClick(event, index)}
               >
-                {icon ?? <Icon name="star-fill"></Icon>}
+                <View
+                  className={bem.e('star-void')}
+                  style={{ color: voidColor }}
+                >
+                  {voidIcon ?? <Icon name="star"></Icon>}
+                </View>
+                <View
+                  className={bem.e('star')}
+                  style={{
+                    color: color,
+                  }}
+                  ref={(el) => itemStarRefCallback(index, el)}
+                >
+                  {icon ?? <Icon name="star-fill"></Icon>}
+                </View>
               </View>
-            </View>
-          )
-        })}
-    </View>
+            )
+          })}
+      </View>
+    </CustomWrapper>
   )
 }
 

@@ -13,9 +13,9 @@ page {
   --sar-input-focused-border-color: var(--sar-primary);
 
   --sar-input-control-font-size: var(--sar-text-base);
-  --sar-input-control-line-height: 1.5;
+  --sar-input-control-line-height: 24px;
   --sar-input-control-min-height: 24px;
-  --sar-input-control-textarea-min-height: 42px;
+  --sar-input-control-textarea-height: 52px;
 
   --sar-input-placeholder-color: var(--sar-deemphasis-color);
 
@@ -119,11 +119,16 @@ page {
       background-color: transparent;
 
       &::-webkit-input-placeholder {
+        line-height: inherit;
         color: var(--sar-input-placeholder-color);
       }
     }
 
     .weui-input {
+      // 覆盖 iphone的opacity: 0.4
+      &:disabled {
+        opacity: 1;
+      }
       min-height: 100%;
     }
 
@@ -133,7 +138,13 @@ page {
     }
 
     @include m(is-textarea) {
-      min-height: var(--sar-input-control-textarea-min-height);
+      line-height: 1;
+      height: var(--sar-input-control-textarea-height);
+    }
+
+    @include m(auto-height) {
+      min-height: var(--sar-input-control-textarea-height);
+      height: auto;
     }
   }
 

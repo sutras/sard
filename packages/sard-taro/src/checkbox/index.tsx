@@ -10,9 +10,9 @@ export interface CheckboxFC extends FC<CheckboxProps> {
   Group: typeof CheckboxGroup
 }
 
-export const Checkbox: CheckboxFC = (props) => {
+export const Checkbox = ((props) => {
   return useInternalCheck('multiple', 'checkbox', props)
-}
+}) as CheckboxFC
 
 Checkbox.Group = CheckboxGroup
 

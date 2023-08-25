@@ -78,6 +78,7 @@ export const Input: InputFC = forwardRef((props, ref) => {
     onChange,
     type = 'text',
     placeholder = '',
+    placeholderClass,
     disabled,
     readOnly,
     maxLength = 140,
@@ -148,11 +149,12 @@ export const Input: InputFC = forwardRef((props, ref) => {
     className: classNames(
       bem.e('control'),
       bem.em('control', 'is-textarea', type === 'textarea'),
+      bem.em('control', 'auto-height', autoHeight),
     ),
     autoComplete: 'off',
     value: String(innerValue),
     placeholder,
-    placeholderClass: bem.e('placeholder'),
+    placeholderClass: classNames(placeholderClass, bem.e('placeholder')),
     password: type === 'password',
     maxlength: maxLength,
     disabled: disabled || readOnly,
@@ -210,6 +212,7 @@ export const Input: InputFC = forwardRef((props, ref) => {
         bem.m('focused', focused || innerFocused),
         bem.m('is-textarea', type === 'textarea'),
         bem.m('is-textarea-count', type === 'textarea' && showCount && !!count),
+
         className,
       )}
       onClick={handleRootClick}

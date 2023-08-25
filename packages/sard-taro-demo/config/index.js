@@ -38,7 +38,7 @@ const config = {
     'sard-taro': 'sard-taro/src',
   },
   mini: {
-    baseLevel: 20,
+    baseLevel: 16,
     postcss: {
       pxtransform: {
         enable: false,

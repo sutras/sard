@@ -1,6 +1,6 @@
 import { useState, useRef, ReactNode, FC } from 'react'
 import classNames from 'classnames'
-import { ITouch, ITouchEvent, View } from '@tarojs/components'
+import { CustomWrapper, ITouch, ITouchEvent, View } from '@tarojs/components'
 import {
   useControllableValue,
   useEvent,
@@ -75,6 +75,7 @@ export const Slider: FC<SliderProps> = (props) => {
 
   const [bem] = useBem('slider')
 
+  const contextId = useSelectorId()
   const trackId = useSelectorId()
 
   const [innerValue, setInnerValue] = useControllableValue({
@@ -95,7 +96,7 @@ export const Slider: FC<SliderProps> = (props) => {
       touch = event.touches[0]
     }
 
-    const res = await getRectById(trackId)
+    const res = await getRectById(trackId, contextId)
 
     const size = vertical ? res.height : res.width
     const tapCoord = vertical ? touch.clientY : touch.clientX
@@ -138,7 +139,7 @@ export const Slider: FC<SliderProps> = (props) => {
 
       brush.start(event)
 
-      downFields.current = await getRectById(trackId)
+      downFields.current = await getRectById(trackId, contextId)
 
       const value = Array.isArray(innerValue) ? innerValue[index] : innerValue
 
@@ -265,45 +266,47 @@ export const Slider: FC<SliderProps> = (props) => {
   }
 
   return (
-    <View
-      {...restProps}
-      className={classNames(
-        bem.b(),
-        bem.m('vertical', vertical),
-        bem.m('disabled', disabled),
-        bem.m('readonly', readOnly),
-        className,
-      )}
-      onClick={handleSliderClick}
-    >
+    <CustomWrapper id={contextId}>
       <View
-        id={trackId}
+        {...restProps}
         className={classNames(
-          bem.e('track'),
-          bem.em('track', 'vertical', vertical),
+          bem.b(),
+          bem.m('vertical', vertical),
+          bem.m('disabled', disabled),
+          bem.m('readonly', readOnly),
+          className,
         )}
-        style={{
-          width: vertical ? trackSize : '',
-          height: !vertical ? trackSize : '',
-          backgroundColor: trackColor,
-        }}
+        onClick={handleSliderClick}
       >
         <View
+          id={trackId}
           className={classNames(
-            bem.e('track-piece'),
-            bem.em('track-piece', 'vertical', vertical),
-            bem.em('track-piece', 'is-down', isDown),
+            bem.e('track'),
+            bem.em('track', 'vertical', vertical),
           )}
           style={{
-            [vertical ? 'top' : 'left']: startPercent,
-            [vertical ? 'height' : 'width']: endPercent,
-            backgroundColor: pieceColor,
+            width: vertical ? trackSize : '',
+            height: !vertical ? trackSize : '',
+            backgroundColor: trackColor,
           }}
         >
-          {range ? [renderThumb(0), renderThumb(1)] : renderThumb(1)}
+          <View
+            className={classNames(
+              bem.e('track-piece'),
+              bem.em('track-piece', 'vertical', vertical),
+              bem.em('track-piece', 'is-down', isDown),
+            )}
+            style={{
+              [vertical ? 'top' : 'left']: startPercent,
+              [vertical ? 'height' : 'width']: endPercent,
+              backgroundColor: pieceColor,
+            }}
+          >
+            {range ? [renderThumb(0), renderThumb(1)] : renderThumb(1)}
+          </View>
         </View>
       </View>
-    </View>
+    </CustomWrapper>
   )
 }
 

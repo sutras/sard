@@ -35,6 +35,7 @@ export interface DropdownItemProps extends BaseProps {
   defaultVisible?: boolean
   onVisible?: (visible: boolean) => void
   onVisibleChange?: (visible: boolean) => void
+  itemShow?: boolean
   awayClosable?: boolean
   maskClosable?: boolean
   arrow?: (
@@ -76,6 +77,7 @@ export const DropdownItem: DropdownItemFC = forwardRef((props, ref) => {
     defaultVisible,
     onVisible,
     onVisibleChange,
+    itemShow,
     awayClosable = true,
     maskClosable = true,
     arrow,
@@ -292,6 +294,7 @@ export const DropdownItem: DropdownItemFC = forwardRef((props, ref) => {
         className={classNames(
           bem.e('item'),
           bem.em('item', 'show', actualVisible),
+          bem.em('item', 'some-show', itemShow),
           bem.em('item', 'disabled', disabled),
           bem.em('item', 'interactive', !disabled),
           className,

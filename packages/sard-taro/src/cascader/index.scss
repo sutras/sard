@@ -31,6 +31,21 @@ page {
     position: relative;
   }
 
+  @include e(container) {
+    overflow: hidden;
+  }
+
+  @include e(wrapper) {
+    display: flex;
+    flex-wrap: nowrap;
+    transition: transform 0.3s;
+  }
+
+  @include e(pane) {
+    width: 100%;
+    flex: none;
+  }
+
   @include e(options) {
     box-sizing: border-box;
     height: var(--sar-cascader-options-height);
@@ -58,7 +73,7 @@ page {
 
     @include m(selected) {
       color: var(--sar-cascader-selected-color);
-      font-weight: bold;
+      font-weight: var(--sar-font-bold);
     }
   }
 

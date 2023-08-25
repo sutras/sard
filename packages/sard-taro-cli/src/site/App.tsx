@@ -2,7 +2,7 @@ import { RouterProvider } from 'react-router-dom'
 import router from './router'
 import useHash from './use/useHash'
 import { useChannel } from './use/useChannel'
-import React from 'react'
+// import React from 'react'
 
 router.subscribe(() => {
   window.scrollTo(0, 0)
@@ -15,7 +15,7 @@ function App() {
     channel.emit('scrollTo', id)
   })
 
-  console.log(`[React.version] ${React.version}`)
+  // console.log(`[React.version] ${React.version}`)
 
   return <RouterProvider router={router} />
 }

@@ -12,10 +12,6 @@ import { Picker } from 'sard-taro'
 
 ## 代码演示
 
-### 普通选择器
-
-%(${DEMO_PATH}/picker/demo/General.tsx)
-
 ### 对象类型数组
 
 %(${DEMO_PATH}/picker/demo/ObjectOption.tsx)

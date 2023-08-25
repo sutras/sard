@@ -80,3 +80,39 @@ export function animate({
 
   return stop
 }
+
+interface Point {
+  x: number
+  y: number
+}
+
+// 计算两点之间的距离
+export function getDistanceByTowPoints(p1: Point, p2: Point) {
+  return Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2)
+}
+
+// 根据箭头获取角度，值的范围是：0到PI
+export function getAngle360(p1: Point, p2: Point) {
+  const angle = (Math.atan2(p1.y - p2.y, p2.x - p1.x) / Math.PI) * 180
+  return angle < 0 ? angle + 360 : angle
+}
+
+// 根据角度返回方向
+export type Direction = 'right' | 'left' | 'up' | 'down'
+export function getDirectionByAngle(angle: number): Direction {
+  if (angle <= 45 || angle >= 315) {
+    return 'right'
+  } else if (angle > 45 && angle < 135) {
+    return 'up'
+  } else if (angle >= 135 && angle <= 225) {
+    return 'left'
+  } else {
+    // angle > 225 && angle < 315
+    return 'down'
+  }
+}
+
+// 根据起始点和结束点获取方向
+export function getDirectionByTwoPoints(p1: Point, p2: Point) {
+  return getDirectionByAngle(getAngle360(p1, p2))
+}
