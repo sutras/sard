@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/notify';
 
 // #variables
 :root,
@@ -12,8 +13,8 @@ page {
 }
 // #endvariables
 
-@include bem(notify) {
-  @include b() {
+@include bem.bem(notify) {
+  @include bem.b() {
     z-index: var(--sar-notify-z-index);
 
     display: flex;
@@ -33,8 +34,8 @@ page {
         error: var(--sar-danger)
       )
   {
-    @include m($color) {
-      @include notify-theme($value);
+    @include bem.m($color) {
+      @include notify.notify-theme($value);
     }
   }
 }

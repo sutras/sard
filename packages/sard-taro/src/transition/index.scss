@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/functions' as fn;
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -9,14 +10,14 @@ page {
 }
 // #endvariables
 
-@include bem(transition) {
+@include bem.bem(transition) {
   // fade
-  @include m(fade-enter, fade-entering) {
-    animation: #{bem-ns(fade-enter)} var(--sar-transition-duration) var(
+  @include bem.m(fade-enter, fade-entering) {
+    animation: #{fn.bem-ns(fade-enter)} var(--sar-transition-duration) var(
         --sar-transition-ease-in
       ) both;
   }
-  @keyframes #{bem-ns(fade-enter)} {
+  @keyframes #{fn.bem-ns(fade-enter)} {
     from {
       opacity: 0;
     }
@@ -24,12 +25,12 @@ page {
       opacity: 1;
     }
   }
-  @include m(fade-exiting, fade-exited) {
-    animation: #{bem-ns(fade-exit)} var(--sar-transition-duration) var(
+  @include bem.m(fade-exiting, fade-exited) {
+    animation: #{fn.bem-ns(fade-exit)} var(--sar-transition-duration) var(
         --sar-transition-ease-out
       ) both;
   }
-  @keyframes #{bem-ns(fade-exit)} {
+  @keyframes #{fn.bem-ns(fade-exit)} {
     from {
       opacity: 1;
     }
@@ -39,12 +40,12 @@ page {
   }
 
   // zoom
-  @include m(zoom-enter, zoom-entering) {
-    animation: #{bem-ns(zoom-enter)} var(--sar-transition-duration) var(
+  @include bem.m(zoom-enter, zoom-entering) {
+    animation: #{fn.bem-ns(zoom-enter)} var(--sar-transition-duration) var(
         --sar-transition-ease-in
       ) both;
   }
-  @keyframes #{bem-ns(zoom-enter)} {
+  @keyframes #{fn.bem-ns(zoom-enter)} {
     from {
       opacity: 0;
       transform: translateY(-50%) scale(0.7);
@@ -54,12 +55,12 @@ page {
       transform: translateY(-50%) scale(1);
     }
   }
-  @include m(zoom-exiting, zoom-exited) {
-    animation: #{bem-ns(zoom-exit)} var(--sar-transition-duration) var(
+  @include bem.m(zoom-exiting, zoom-exited) {
+    animation: #{fn.bem-ns(zoom-exit)} var(--sar-transition-duration) var(
         --sar-transition-ease-out
       ) both;
   }
-  @keyframes #{bem-ns(zoom-exit)} {
+  @keyframes #{fn.bem-ns(zoom-exit)} {
     from {
       opacity: 1;
       transform: translateY(-50%) scale(1);
@@ -71,12 +72,12 @@ page {
   }
 
   // slideTop
-  @include m(slide-top-enter, slide-top-entering) {
-    animation: #{bem-ns(slide-top-enter)} var(--sar-transition-duration) var(
+  @include bem.m(slide-top-enter, slide-top-entering) {
+    animation: #{fn.bem-ns(slide-top-enter)} var(--sar-transition-duration) var(
         --sar-transition-ease-in
       ) both;
   }
-  @keyframes #{bem-ns(slide-top-enter)} {
+  @keyframes #{fn.bem-ns(slide-top-enter)} {
     from {
       transform: translate3d(0, -100%, 0);
     }
@@ -85,12 +86,12 @@ page {
     }
   }
 
-  @include m(slide-top-exiting, slide-top-exited) {
-    animation: #{bem-ns(slide-top-exit)} var(--sar-transition-duration) var(
+  @include bem.m(slide-top-exiting, slide-top-exited) {
+    animation: #{fn.bem-ns(slide-top-exit)} var(--sar-transition-duration) var(
         --sar-transition-ease-out
       ) both;
   }
-  @keyframes #{bem-ns(slide-top-exit)} {
+  @keyframes #{fn.bem-ns(slide-top-exit)} {
     from {
       transform: translate3d(0, 0, 0);
     }
@@ -100,12 +101,12 @@ page {
   }
 
   // slideRight
-  @include m(slide-right-enter, slide-right-entering) {
-    animation: #{bem-ns(slide-right-enter)} var(--sar-transition-duration) var(
+  @include bem.m(slide-right-enter, slide-right-entering) {
+    animation: #{fn.bem-ns(slide-right-enter)} var(--sar-transition-duration) var(
         --sar-transition-ease-in
       ) both;
   }
-  @keyframes #{bem-ns(slide-right-enter)} {
+  @keyframes #{fn.bem-ns(slide-right-enter)} {
     from {
       transform: translate3d(100%, 0, 0);
     }
@@ -114,12 +115,12 @@ page {
     }
   }
 
-  @include m(slide-right-exiting, slide-right-exited) {
-    animation: #{bem-ns(slide-right-exit)} var(--sar-transition-duration) var(
+  @include bem.m(slide-right-exiting, slide-right-exited) {
+    animation: #{fn.bem-ns(slide-right-exit)} var(--sar-transition-duration) var(
         --sar-transition-ease-out
       ) both;
   }
-  @keyframes #{bem-ns(slide-right-exit)} {
+  @keyframes #{fn.bem-ns(slide-right-exit)} {
     from {
       transform: translate3d(0, 0, 0);
     }
@@ -129,12 +130,12 @@ page {
   }
 
   // slideBottom
-  @include m(slide-bottom-enter, slide-bottom-entering) {
-    animation: #{bem-ns(slide-bottom-enter)} var(--sar-transition-duration) var(
+  @include bem.m(slide-bottom-enter, slide-bottom-entering) {
+    animation: #{fn.bem-ns(slide-bottom-enter)} var(--sar-transition-duration) var(
         --sar-transition-ease-in
       ) both;
   }
-  @keyframes #{bem-ns(slide-bottom-enter)} {
+  @keyframes #{fn.bem-ns(slide-bottom-enter)} {
     from {
       transform: translate3d(0, 100%, 0);
     }
@@ -143,12 +144,12 @@ page {
     }
   }
 
-  @include m(slide-bottom-exiting, slide-bottom-exited) {
-    animation: #{bem-ns(slide-bottom-exit)} var(--sar-transition-duration) var(
+  @include bem.m(slide-bottom-exiting, slide-bottom-exited) {
+    animation: #{fn.bem-ns(slide-bottom-exit)} var(--sar-transition-duration) var(
         --sar-transition-ease-out
       ) both;
   }
-  @keyframes #{bem-ns(slide-bottom-exit)} {
+  @keyframes #{fn.bem-ns(slide-bottom-exit)} {
     from {
       transform: translate3d(0, 0, 0);
     }
@@ -158,10 +159,10 @@ page {
   }
 
   // slideLeft
-  @include m(slide-left-enter, slide-left-entering) {
-    animation: #{bem-ns(slide-left-enter)} var(--sar-transition-duration) var(--sar-transition-ease-in);
+  @include bem.m(slide-left-enter, slide-left-entering) {
+    animation: #{fn.bem-ns(slide-left-enter)} var(--sar-transition-duration) var(--sar-transition-ease-in);
   }
-  @keyframes #{bem-ns(slide-left-enter)} {
+  @keyframes #{fn.bem-ns(slide-left-enter)} {
     from {
       transform: translate3d(-100%, 0, 0);
     }
@@ -170,12 +171,12 @@ page {
     }
   }
 
-  @include m(slide-left-exiting, slide-left-exited) {
-    animation: #{bem-ns(slide-left-exit)} var(--sar-transition-duration) var(
+  @include bem.m(slide-left-exiting, slide-left-exited) {
+    animation: #{fn.bem-ns(slide-left-exit)} var(--sar-transition-duration) var(
         --sar-transition-ease-out
       ) both;
   }
-  @keyframes #{bem-ns(slide-left-exit)} {
+  @keyframes #{fn.bem-ns(slide-left-exit)} {
     from {
       transform: translate3d(0, 0, 0);
     }
@@ -185,23 +186,23 @@ page {
   }
 
   // collapse
-  @include m(collapse-enter, collapse-entering) {
-    animation: #{bem-ns(collapse-enter)} var(--sar-transition-duration) var(
+  @include bem.m(collapse-enter, collapse-entering) {
+    animation: #{fn.bem-ns(collapse-enter)} var(--sar-transition-duration) var(
         --sar-transition-ease-in
       ) both;
   }
-  @keyframes #{bem-ns(collapse-enter)} {
+  @keyframes #{fn.bem-ns(collapse-enter)} {
     from {
       height: 0;
     }
   }
 
-  @include m(collapse-exiting, collapse-exited) {
-    animation: #{bem-ns(collapse-exit)} var(--sar-transition-duration) var(
+  @include bem.m(collapse-exiting, collapse-exited) {
+    animation: #{fn.bem-ns(collapse-exit)} var(--sar-transition-duration) var(
         --sar-transition-ease-out
       ) both;
   }
-  @keyframes #{bem-ns(collapse-exit)} {
+  @keyframes #{fn.bem-ns(collapse-exit)} {
     to {
       height: 0;
     }

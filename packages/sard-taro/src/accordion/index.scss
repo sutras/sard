@@ -1,4 +1,6 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/border';
+@use '../style/mixins/disabled';
 
 // #variables
 :root,
@@ -19,54 +21,54 @@ page {
 }
 // #endvariables
 
-@include bem(accordion) {
-  @include b() {
+@include bem.bem(accordion) {
+  @include bem.b() {
     position: relative;
-    @include border-vertical(var(--sar-accordion-border-color));
+    @include border.border-vertical(var(--sar-accordion-border-color));
     border-radius: var(--sar-accordion-border-radius);
   }
 }
 
-@include bem(accordion-item) {
-  @include b() {
+@include bem.bem(accordion-item) {
+  @include bem.b() {
     position: relative;
   }
 
-  @include m(later) {
-    @include border-top(var(--sar-accordion-border-color));
+  @include bem.m(later) {
+    @include border.border-top(var(--sar-accordion-border-color));
   }
 
-  @include e(header) {
+  @include bem.e(header) {
     display: flex;
     padding: var(--sar-accordion-item-header-padding);
     cursor: pointer;
 
-    @include m(disabled) {
-      @include disabled-text;
+    @include bem.m(disabled) {
+      @include disabled.disabled-text;
     }
   }
 
-  @include e(title) {
+  @include bem.e(title) {
     display: flex;
     align-items: center;
     font-size: var(--sar-accordion-item-title-font-size);
   }
 
-  @include e(icon) {
+  @include bem.e(icon) {
     margin-left: auto;
     font-size: var(--sar-accordion-item-icon-font-size);
     color: var(--sar-accordion-item-icon-color);
   }
 
-  @include e(arrow) {
+  @include bem.e(arrow) {
     transition: transform var(--sar-accordion-item-arrow-transition-duration);
 
-    @include m(active) {
+    @include bem.m(active) {
       transform: rotate(-180deg);
     }
   }
 
-  @include e(content) {
+  @include bem.e(content) {
     padding: var(--sar-accordion-item-content-padding);
   }
 }

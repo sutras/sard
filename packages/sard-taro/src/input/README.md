@@ -100,7 +100,3 @@ import { Input } from 'sard-taro'
 ### CSS 变量
 
 %(./index.scss#variables)
-
-```
-
-```

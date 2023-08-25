@@ -129,7 +129,8 @@
       flex: none;
       padding: 10px 10px 10px 0;
       overflow: auto;
-      border-right: 1px solid var(--doc-border-color);
+      // border-right: 1px solid var(--doc-border-color);
+      box-shadow: var(--doc-shadow-md);
       background-color: var(--doc-emphasis-bg);
       transition: transform 300ms;
       transform: translateX(0);

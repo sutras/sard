@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/variables' as var;
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -23,8 +24,8 @@ page {
 }
 // #endvariables
 
-@include bem(tag) {
-  @include b() {
+@include bem.bem(tag) {
+  @include bem.b() {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -32,58 +33,58 @@ page {
     border: 1px solid transparent;
   }
 
-  @each $theme, $value in $sar-theme-colors {
+  @each $theme, $value in var.$sar-theme-colors {
     $color: nth($value, 1);
 
-    @include m($theme) {
+    @include bem.m($theme) {
       color: var(--sar-white);
       background-color: $color;
     }
 
-    @include m(#{$theme}-plain) {
+    @include bem.m(#{$theme}-plain) {
       color: $color;
       border-color: currentColor;
       background-color: transparent;
     }
   }
 
-  @include m(default) {
+  @include bem.m(default) {
     color: var(--sar-tag-color);
     background-color: var(--sar-tag-bg);
   }
 
   // 圆角
-  @include m(round) {
+  @include bem.m(round) {
     border-radius: var(--sar-rounded-full);
   }
 
   // 标记
-  @include m(mark) {
+  @include bem.m(mark) {
     border-top-right-radius: var(--sar-rounded-full);
     border-bottom-right-radius: var(--sar-rounded-full);
   }
 
   // 尺寸
-  @include m(small) {
+  @include bem.m(small) {
     padding: var(--sar-tag-small-padding);
     font-size: var(--sar-tag-small-font-size);
     border-radius: var(--sar-tag-small-border-radius);
   }
 
-  @include m(medium) {
+  @include bem.m(medium) {
     padding: var(--sar-tag-medium-padding);
     font-size: var(--sar-tag-medium-font-size);
     border-radius: var(--sar-tag-medium-border-radius);
   }
 
-  @include m(large) {
+  @include bem.m(large) {
     padding: var(--sar-tag-large-padding);
     font-size: var(--sar-tag-large-font-size);
     border-radius: var(--sar-tag-large-border-radius);
   }
 
   // 可关闭的
-  @include e(close) {
+  @include bem.e(close) {
     display: flex;
     justify-content: center;
     align-items: center;

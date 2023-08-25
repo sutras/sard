@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/border';
 
 // #variables
 :root,
@@ -26,12 +27,12 @@ page {
 }
 // #endvariables
 
-@include bem(picker) {
-  @include b() {
+@include bem.bem(picker) {
+  @include bem.b() {
     height: var(--sar-picker-height);
   }
 
-  @include e(wrapper) {
+  @include bem.e(wrapper) {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -40,7 +41,7 @@ page {
     -webkit-user-drag: none;
   }
 
-  @include e(column) {
+  @include bem.e(column) {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -49,23 +50,23 @@ page {
     touch-action: pan-x;
   }
 
-  @include e(mask) {
+  @include bem.e(mask) {
     position: relative;
     z-index: 1;
     width: 100%;
     flex: auto;
     pointer-events: none;
 
-    @include m(top) {
+    @include bem.m(top) {
       background-image: var(--sar-picker-mask-top-bg-image);
     }
 
-    @include m(bottom) {
+    @include bem.m(bottom) {
       background-image: var(--sar-picker-mask-bottom-bg-image);
     }
   }
 
-  @include e(indicator) {
+  @include bem.e(indicator) {
     position: relative;
     width: 100%;
     height: var(--sar-picker-indicator-height) !important;
@@ -73,18 +74,18 @@ page {
     align-items: center;
     pointer-events: none;
 
-    @include border-vertical(var(--sar-picker-indicator-border-color)) {
+    @include border.border-vertical(var(--sar-picker-indicator-border-color)) {
       z-index: 2;
     }
   }
 
-  @include e(item-group) {
+  @include bem.e(item-group) {
     pointer-events: auto;
     will-change: transform;
     transition-timing-function: cubic-bezier(0.23, 1, 0.68, 1);
   }
 
-  @include e(item) {
+  @include bem.e(item) {
     flex: none;
     height: var(--sar-picker-indicator-height);
     line-height: var(--sar-picker-indicator-height);
@@ -96,7 +97,7 @@ page {
     text-overflow: ellipsis;
   }
 
-  // @include e(item-text) {
+  // @include bem.e(item-text) {
   //   white-space: nowrap;
   //   overflow: hidden;
   //   text-overflow: ellipsis;

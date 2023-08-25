@@ -35,6 +35,7 @@ const config = {
     '@/components': path.resolve(__dirname, '..', 'src/components'),
     '@/static': path.resolve(__dirname, '..', 'src/static'),
     '@/utils': path.resolve(__dirname, '..', 'src/utils'),
+    'sard-taro/dist': 'sard-taro/src',
     'sard-taro': 'sard-taro/src',
   },
   mini: {

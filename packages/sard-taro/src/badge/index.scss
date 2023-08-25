@@ -1,4 +1,4 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -25,14 +25,14 @@ page {
 }
 // #endvariables
 
-@include bem(badge) {
-  @include b() {
+@include bem.bem(badge) {
+  @include bem.b() {
     position: relative;
     display: inline-flex;
     vertical-align: middle;
   }
 
-  @include e(content) {
+  @include bem.e(content) {
     box-sizing: border-box;
     display: inline-flex;
     flex: none;
@@ -51,7 +51,7 @@ page {
     box-shadow: var(--sar-badge-content-box-shadow);
   }
 
-  @include m(is-dot) {
+  @include bem.m(is-dot) {
     width: var(--sar-badge-content-dot-size);
     height: var(--sar-badge-content-dot-size);
     min-width: unset;
@@ -59,11 +59,11 @@ page {
     border-radius: 50%;
   }
 
-  @include m(zero-hide) {
+  @include bem.m(zero-hide) {
     display: none;
   }
 
-  @include m(fixed) {
+  @include bem.m(fixed) {
     position: absolute;
     top: 0;
     right: 0;

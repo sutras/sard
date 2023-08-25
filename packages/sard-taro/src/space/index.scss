@@ -1,4 +1,4 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -9,46 +9,46 @@ page {
 }
 // #endvariables
 
-@include bem(space) {
-  @include b() {
+@include bem.bem(space) {
+  @include bem.b() {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
 
-    @include m(vertical) {
+    @include bem.m(vertical) {
       flex-direction: column;
     }
 
-    @include m(wrap) {
+    @include bem.m(wrap) {
       flex-wrap: wrap;
     }
 
-    @include m(start) {
+    @include bem.m(start) {
       align-items: flex-start;
     }
 
-    @include m(center) {
+    @include bem.m(center) {
       align-items: center;
     }
 
-    @include m(end) {
+    @include bem.m(end) {
       align-items: flex-end;
     }
 
-    @include m(small) {
+    @include bem.m(small) {
       gap: var(--sar-space-gap-small);
     }
 
-    @include m(medium) {
+    @include bem.m(medium) {
       gap: var(--sar-space-gap-medium);
     }
 
-    @include m(large) {
+    @include bem.m(large) {
       gap: var(--sar-space-gap-large);
     }
   }
 
-  @include e(item) {
+  @include bem.e(item) {
     max-width: 100%;
   }
 }

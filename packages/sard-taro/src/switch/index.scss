@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/disabled';
 
 // #variables
 :root,
@@ -31,8 +32,8 @@ page {
 }
 // #endvariables
 
-@include bem(switch) {
-  @include b() {
+@include bem.bem(switch) {
+  @include bem.b() {
     position: relative;
     box-sizing: content-box;
     display: inline-flex;
@@ -50,7 +51,7 @@ page {
       opacity var(--sar-switch-transition-duration);
   }
 
-  @include e(thumb) {
+  @include bem.e(thumb) {
     position: absolute;
     left: 0;
     top: 0;
@@ -67,31 +68,31 @@ page {
     box-shadow: var(--sar-switch-thumb-box-shadow);
     transition: transform var(--sar-switch-thumb-transition-duration);
 
-    @include m(checked) {
+    @include bem.m(checked) {
       transform: translateX(var(--sar-switch-thumb-checked-left));
     }
   }
 
-  @include e(loading) {
+  @include bem.e(loading) {
     width: var(--sar-switch-loading-size);
     height: var(--sar-switch-loading-size);
     color: var(--sar-switch-loading-color);
   }
 
-  @include m(checked) {
+  @include bem.m(checked) {
     border-color: transparent;
     background-color: var(--sar-switch-checked-bg);
   }
 
-  @include m(disabled) {
-    @include disabled;
+  @include bem.m(disabled) {
+    @include disabled.disabled;
   }
 
-  @include m(readonly) {
+  @include bem.m(readonly) {
     cursor: default;
   }
 
-  @include m(loading) {
+  @include bem.m(loading) {
     opacity: var(--sar-switch-is-loading-opacity);
     cursor: var(--sar-switch-is-loading-cursor);
   }

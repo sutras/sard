@@ -1,4 +1,4 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -7,8 +7,8 @@ page {
 }
 // #endvariables
 
-@include bem(collapse) {
-  @include b() {
+@include bem.bem(collapse) {
+  @include bem.b() {
     position: absolute;
     z-index: -10;
     width: 100%;
@@ -18,7 +18,7 @@ page {
     transition: height var(--sar-collapse-transition-duration);
   }
 
-  @include m(show) {
+  @include bem.m(show) {
     position: relative;
     z-index: 0;
     height: auto;
@@ -26,7 +26,7 @@ page {
     overflow: visible;
   }
 
-  @include m(collapsing) {
+  @include bem.m(collapsing) {
     overflow: hidden;
   }
 }

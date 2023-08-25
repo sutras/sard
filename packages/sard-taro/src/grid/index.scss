@@ -1,17 +1,19 @@
-@import '../style/base.scss';
+@use '../style/variables' as var;
+@use '../style/mixins/bem';
+@use '../style/mixins/grid';
 
 // #variables
 // #endvariables
 
-@include bem(row) {
-  @include b() {
+@include bem.bem(row) {
+  @include bem.b() {
     display: flex;
     flex-flow: row wrap;
   }
 }
 
-@include bem(col) {
-  @include b() {
+@include bem.bem(col) {
+  @include bem.b() {
     box-sizing: border-box;
     flex: 1 0 0;
     width: 100%;
@@ -19,17 +21,17 @@
     min-height: 1px;
   }
 
-  @include m(auto) {
+  @include bem.m(auto) {
     flex: 0 0 auto;
     width: auto;
   }
 
-  @include m(none) {
+  @include bem.m(none) {
     flex: 0 0 auto;
     width: auto;
   }
 
-  @include make-col($sar-col-columns);
+  @include grid.make-col(var.$sar-col-columns);
 
-  @include make-offset($sar-col-columns);
+  @include grid.make-offset(var.$sar-col-columns);
 }

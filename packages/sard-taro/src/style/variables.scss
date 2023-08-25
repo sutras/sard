@@ -1,15 +1,15 @@
 // # 颜色
 // ## 灰度值
 $sar-white: #fff !default;
-$sar-gray-100: #f3f5f7 !default;
-$sar-gray-200: #e9ecef !default;
-$sar-gray-300: #dee2e6 !default;
-$sar-gray-400: #ced4da !default;
-$sar-gray-500: #adb5bd !default;
-$sar-gray-600: #6c757d !default;
-$sar-gray-700: #495057 !default;
-$sar-gray-800: #343a40 !default;
-$sar-gray-900: #212529 !default;
+$sar-gray-100: #f5f5f5 !default;
+$sar-gray-200: #ededed !default;
+$sar-gray-300: #e3e3e3 !default;
+$sar-gray-400: #d4d4d4 !default;
+$sar-gray-500: #b5b5b5 !default;
+$sar-gray-600: #757575 !default;
+$sar-gray-700: #4f4f4f !default;
+$sar-gray-800: #3b3b3b !default;
+$sar-gray-900: #262626 !default;
 $sar-black: #000 !default;
 
 // ## 颜色
@@ -23,16 +23,6 @@ $sar-yellow: #ffc107 !default;
 $sar-green: #198754 !default;
 $sar-teal: #20c997 !default;
 $sar-cyan: #0dcaf0 !default;
-
-// ## 主题色
-$sar-primary: $sar-blue !default;
-$sar-secondary: $sar-gray-600 !default;
-$sar-success: $sar-green !default;
-$sar-info: $sar-cyan !default;
-$sar-warning: $sar-yellow !default;
-$sar-danger: $sar-red !default;
-$sar-light: $sar-gray-100 !default;
-$sar-dark: $sar-gray-900 !default;
 
 // ## 主题色列表
 $sar-theme-colors: (

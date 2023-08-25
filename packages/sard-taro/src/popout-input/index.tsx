@@ -11,15 +11,14 @@ export interface PopoutInputProps extends PopoutProps {
 }
 
 export const PopoutInput: FC<PopoutInputProps> = (props) => {
-  const { className, children, inputProps, disabled, readOnly, ...restProps } =
-    props
+  const { className, children, inputProps, ...restProps } = props
 
   const [bem] = useBem('popout-input')
 
   return (
     <Popout {...restProps} className={classNames(bem.b(), className)}>
       <Popout.Outlet>
-        {({ outletValue, setVisible }) => {
+        {({ outletValue, setVisible, disabled, readOnly }) => {
           return (
             <Input
               inlaid

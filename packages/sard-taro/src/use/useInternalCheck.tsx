@@ -18,6 +18,7 @@ type ValueType = any
 
 export interface InternalCheckContextValue {
   disabled?: boolean
+  readOnly?: boolean
   size?: string | number
   type?: IconType
   icon?: (checked: boolean) => ReactNode
@@ -35,6 +36,7 @@ export interface InternalCheckProps {
   defaultChecked?: boolean
   value?: ValueType
   disabled?: boolean
+  readOnly?: boolean
   size?: string | number
   type?: IconType
   icon?: (checked: boolean) => ReactNode
@@ -61,6 +63,7 @@ export const useInternalCheck = <T extends 'single' | 'multiple'>(
     defaultChecked,
     value,
     disabled,
+    readOnly,
     size,
     type,
     onChange,
@@ -94,6 +97,7 @@ export const useInternalCheck = <T extends 'single' | 'multiple'>(
   const internalContext = useContext(InternalCheckContext)
 
   const mergedDisabled = disabled ?? internalContext?.disabled
+  const mergedReadOnly = readOnly ?? internalContext?.readOnly
   const mergedSize = size ?? internalContext?.size
   const mergedType =
     type ??
@@ -103,7 +107,7 @@ export const useInternalCheck = <T extends 'single' | 'multiple'>(
   const mergedCheckedColor = checkedColor ?? internalContext?.checkedColor
 
   const handleCheckboxClick = (event: ITouchEvent) => {
-    if (!mergedDisabled) {
+    if (!mergedDisabled && !mergedReadOnly) {
       toggle()
     }
     onClick?.(event)
@@ -118,6 +122,7 @@ export const useInternalCheck = <T extends 'single' | 'multiple'>(
             bem.b(),
             bem.m('checked', isChecked),
             bem.m('disabled', mergedDisabled),
+            bem.m('readonly', mergedReadOnly),
             className,
           )}
           onClick={handleCheckboxClick}
@@ -155,6 +160,7 @@ export interface InternalCheckGroupProps<
   value?: V
   defaultValue?: V
   disabled?: boolean
+  readOnly?: boolean
   size?: string | number
   type?: IconType
   icon?: (checked: boolean) => ReactNode
@@ -170,6 +176,7 @@ export const useInternalCheckGroup = <T extends 'single' | 'multiple'>(
     value,
     defaultValue,
     disabled,
+    readOnly,
     size,
     type,
     icon,
@@ -191,12 +198,13 @@ export const useInternalCheckGroup = <T extends 'single' | 'multiple'>(
   const internalContext = useMemo(() => {
     return {
       disabled,
+      readOnly,
       size,
       type,
       icon,
       checkedColor,
     }
-  }, [disabled, size, type, icon, checkedColor])
+  }, [disabled, readOnly, size, type, icon, checkedColor])
 
   return (
     <InternalCheckContext.Provider value={internalContext}>

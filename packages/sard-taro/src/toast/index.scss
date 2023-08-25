@@ -1,4 +1,4 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -30,8 +30,8 @@ page {
 }
 // #endvariables
 
-@include bem(toast) {
-  @include b() {
+@include bem.bem(toast) {
+  @include bem.b() {
     z-index: var(--sar-toast-z-index);
 
     display: flex;
@@ -45,7 +45,7 @@ page {
     background-color: var(--sar-toast-bg);
   }
 
-  @include e(icon) {
+  @include bem.e(icon) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,26 +56,26 @@ page {
     text-align: center;
   }
 
-  @include e(loading) {
+  @include bem.e(loading) {
     font-size: var(--sar-toast-loading-size);
   }
 
-  @include e(title) {
+  @include bem.e(title) {
     font-size: var(--sar-toast-title-font-size);
     line-height: var(--sar-toast-title-line-height);
     text-align: center;
   }
 
-  @include m(top) {
+  @include bem.m(top) {
     top: var(--sar-toast-top);
   }
 
-  @include m(bottom) {
+  @include bem.m(bottom) {
     top: auto;
     bottom: var(--sar-toast-bottom);
   }
 
-  @include m(is-text) {
+  @include bem.m(is-text) {
     width: fit-content;
     max-width: var(--sar-toast-text-max-width);
     padding-top: var(--sar-toast-text-padding-y);
@@ -84,7 +84,7 @@ page {
     word-break: break-word;
   }
 
-  @include m(not-text) {
+  @include bem.m(not-text) {
     width: var(--sar-toast-width);
     min-height: var(--sar-toast-not-text-min-height);
   }

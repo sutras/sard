@@ -1,11 +1,11 @@
-@import '../style/base.scss';
-@import './sari-icons.scss';
+@use '../style/mixins/bem';
+@use './sari-icons';
 
 // #variables
 // #endvariables
 
-@include bem(icon) {
-  @include b() {
+@include bem.bem(icon) {
+  @include bem.b() {
     position: relative;
     display: inline-flex;
     vertical-align: middle;
@@ -16,7 +16,7 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  @include e(image) {
+  @include bem.e(image) {
     display: inline-flex;
     width: 1em;
     height: 1em;

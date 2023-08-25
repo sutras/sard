@@ -1,11 +1,5 @@
 import { ReactNode, useState } from 'react'
-import {
-  Cell,
-  CheckContext,
-  Checkbox,
-  useCheck,
-  useCheckGroup,
-} from 'sard-taro'
+import { Cell, CheckContext, Icon, useCheck, useCheckGroup } from 'sard-taro'
 
 interface CustomCheckGroupProps {
   value?: any[]
@@ -54,22 +48,22 @@ const CustomCheckbox = (props: CustomCheckProps) => {
   )
   return (
     <Cell
-      icon={<Checkbox checked={isChecked} />}
       clickable
       title={children}
       onClick={toggle}
+      value={isChecked && <Icon color="var(--sar-primary)" name="success" />}
     />
   )
 }
 
 export default () => {
-  const [value, setValue] = useState<string[]>(['apple'])
+  const [value, setValue] = useState<string[]>(['option2'])
 
   return (
     <CustomCheckboxGroup value={value} onChange={setValue}>
-      <CustomCheckbox value="apple">苹果</CustomCheckbox>
-      <CustomCheckbox value="banana">香蕉</CustomCheckbox>
-      <CustomCheckbox value="peach">桃子</CustomCheckbox>
+      <CustomCheckbox value="option1">选项1</CustomCheckbox>
+      <CustomCheckbox value="option2">选项2</CustomCheckbox>
+      <CustomCheckbox value="option3">选项3</CustomCheckbox>
     </CustomCheckboxGroup>
   )
 }

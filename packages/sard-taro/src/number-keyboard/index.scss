@@ -1,4 +1,4 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -30,14 +30,14 @@ page {
 }
 // #endvariables
 
-@include bem(number-keyboard) {
-  @include b() {
+@include bem.bem(number-keyboard) {
+  @include bem.b() {
     z-index: var(--sar-number-keyboard-z-index);
 
     background-color: var(--sar-number-keyboard-bg);
   }
 
-  @include e(body) {
+  @include bem.e(body) {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -46,7 +46,7 @@ page {
     margin: calc(var(--sar-number-keyboard-key-gap) / 2 * -1);
   }
 
-  @include e(key-wrapper) {
+  @include bem.e(key-wrapper) {
     box-sizing: border-box;
     flex-grow: 1;
     flex-shrink: 1;
@@ -54,17 +54,17 @@ page {
     width: 33.3333%;
     padding: calc(var(--sar-number-keyboard-key-gap) / 2);
 
-    @include m(lastnum) {
+    @include bem.m(lastnum) {
       order: 1;
     }
   }
 
-  @include e(backspace) {
+  @include bem.e(backspace) {
     max-width: 33.3333%;
     order: 2;
   }
 
-  @include e(key) {
+  @include bem.e(key) {
     display: flex;
     align-items: center;
     justify-content: center;

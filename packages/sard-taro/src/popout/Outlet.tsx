@@ -5,7 +5,7 @@ import { isFunction } from '../utils'
 
 type PopoutOutletCallbackParams = Pick<
   PopoutContexValue,
-  'setValue' | 'setVisible' | 'outletValue'
+  'setValue' | 'setVisible' | 'outletValue' | 'disabled' | 'readOnly'
 >
 
 export interface PopoutOutletProps {
@@ -17,13 +17,16 @@ export const PopoutOutlet: FC<PopoutOutletProps> = (props) => {
 
   const popoutContext = useContext(PopoutContext)
 
-  const { outletValue, setValue, setVisible } = popoutContext
+  const { outletValue, setValue, setVisible, disabled, readOnly } =
+    popoutContext
 
   const callbackParams = useMemo<PopoutOutletCallbackParams>(() => {
     return {
       outletValue,
       setValue,
       setVisible,
+      readOnly,
+      disabled,
     }
   }, [popoutContext])
 

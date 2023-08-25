@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/border';
 
 // #variables
 :root,
@@ -16,25 +17,25 @@ page {
 }
 // #endvariables
 
-@include bem(mesh) {
-  @include b() {
+@include bem.bem(mesh) {
+  @include bem.b() {
     position: relative;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 
-    @include m(outline) {
+    @include bem.m(outline) {
       &::after {
-        @include border(var(--sar-mesh-border-color));
+        @include border.border(var(--sar-mesh-border-color));
       }
     }
 
-    @include m(outline-vertical) {
-      @include border-vertical(var(--sar-mesh-border-color));
+    @include bem.m(outline-vertical) {
+      @include border.border-vertical(var(--sar-mesh-border-color));
     }
   }
 
-  @include e(item) {
+  @include bem.e(item) {
     position: relative;
     box-sizing: border-box;
     flex-grow: 0;
@@ -43,13 +44,13 @@ page {
     width: 0;
   }
 
-  @include e(item-wrapper) {
+  @include bem.e(item-wrapper) {
     position: relative;
     height: 0;
     padding-top: 100%;
   }
 
-  @include e(item-content) {
+  @include bem.e(item-content) {
     position: relative;
     box-sizing: border-box;
     display: flex;
@@ -61,12 +62,12 @@ page {
     background-color: var(--sar-mesh-bg);
 
     &::after {
-      @include border(var(--sar-mesh-border-color)) {
+      @include border.border(var(--sar-mesh-border-color)) {
         border-width: 0;
       }
     }
 
-    @include m(square) {
+    @include bem.m(square) {
       position: absolute;
       top: 0;
       left: 0;
@@ -74,72 +75,72 @@ page {
     }
   }
 
-  @include e(item-icon) {
+  @include bem.e(item-icon) {
     display: flex;
     font-size: var(--sar-item-icon-font-size);
   }
 
-  @include e(item-text) {
+  @include bem.e(item-text) {
     font-size: var(--sar-item-text-font-size);
     line-height: var(--sar-item-text-line-height);
 
-    @include m(vertical) {
+    @include bem.m(vertical) {
       margin-top: var(--sar-item-text-gap);
     }
 
-    @include m(vertical-reverse) {
+    @include bem.m(vertical-reverse) {
       margin-bottom: var(--sar-item-text-gap);
     }
 
-    @include m(horizontal) {
+    @include bem.m(horizontal) {
       margin-left: var(--sar-item-text-gap);
     }
 
-    @include m(horizontal-reverse) {
+    @include bem.m(horizontal-reverse) {
       margin-right: var(--sar-item-text-gap);
     }
   }
 
-  @include m(border-right) {
+  @include bem.m(border-right) {
     &::after {
       border-right-width: 1px;
     }
   }
 
-  @include m(border-bottom) {
+  @include bem.m(border-bottom) {
     &::after {
       border-bottom-width: 1px;
     }
   }
 
-  @include m(border-surround) {
+  @include bem.m(border-surround) {
     &::after {
       border-width: 1px;
     }
   }
 
-  @include m(vertical) {
+  @include bem.m(vertical) {
     flex-direction: column;
   }
 
-  @include m(vertical-reverse) {
+  @include bem.m(vertical-reverse) {
     flex-direction: column-reverse;
   }
 
-  @include m(horizontal) {
+  @include bem.m(horizontal) {
     flex-direction: row;
   }
 
-  @include m(horizontal-reverse) {
+  @include bem.m(horizontal-reverse) {
     flex-direction: row-reverse;
   }
 
-  @include m(center) {
+  @include bem.m(center) {
     justify-content: center;
     align-items: center;
   }
 
-  @include m(clickable) {
+  @include bem.m(clickable) {
     cursor: pointer;
 
     &:active {

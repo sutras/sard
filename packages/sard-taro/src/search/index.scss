@@ -1,4 +1,4 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -12,8 +12,8 @@ page {
 }
 // #endvariables
 
-@include bem(search) {
-  @include b() {
+@include bem.bem(search) {
+  @include bem.b() {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -21,19 +21,19 @@ page {
     background-color: var(--sar-search-bg);
   }
 
-  @include m(show-action) {
+  @include bem.m(show-action) {
     padding-right: 0;
   }
 
-  @include e(input) {
+  @include bem.e(input) {
     background-color: var(--sar-search-input-bg);
 
-    @include m(round) {
+    @include bem.m(round) {
       border-radius: var(--sar-rounded-full);
     }
   }
 
-  @include e(icon) {
+  @include bem.e(icon) {
     color: var(--sar-search-icon-color);
   }
 }

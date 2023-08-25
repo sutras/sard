@@ -325,6 +325,7 @@ export const DropdownItem: DropdownItemFC = forwardRef((props, ref) => {
           onEnter={handleEnter}
           onExited={handleExited}
           onMaskClick={handleMaskClick}
+          catchMove
         >
           {children ?? (
             <Cell.Group className={bem.e('options')} inlaid>

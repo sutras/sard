@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/functions' as fn;
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -18,8 +19,8 @@ page {
 }
 // #endvariables
 
-@include bem(popover) {
-  @include b() {
+@include bem.bem(popover) {
+  @include bem.b() {
     position: fixed;
     z-index: var(--sar-popover-z-index);
     top: auto;
@@ -33,23 +34,23 @@ page {
     touch-action: none;
   }
 
-  @include m(light) {
+  @include bem.m(light) {
     background-color: var(--sar-popover-bg);
   }
 
-  @include m(dark) {
+  @include bem.m(dark) {
     color: var(--sar-popover-dark-color);
     background-color: var(--sar-popover-dark-bg);
   }
 
-  @include e(content) {
+  @include bem.e(content) {
     position: relative;
     z-index: 1;
     min-width: var(--sar-popover-min-width);
     border-radius: inherit;
   }
 
-  @include e(arrow) {
+  @include bem.e(arrow) {
     position: absolute;
     width: var(--sar-popover-arrow-size);
     height: var(--sar-popover-arrow-size);
@@ -58,10 +59,10 @@ page {
   }
 
   // zoom
-  @include m(zoom-enter) {
-    animation: #{bem-ns(popover_zoom-enter)} var(--sar-duration-fast) both;
+  @include bem.m(zoom-enter) {
+    animation: #{fn.bem-ns(popover_zoom-enter)} var(--sar-duration-fast) both;
   }
-  @keyframes #{bem-ns(popover_zoom-enter)} {
+  @keyframes #{fn.bem-ns(popover_zoom-enter)} {
     from {
       opacity: 0;
       transform: scale(0.8);
@@ -71,10 +72,10 @@ page {
       transform: scale(1);
     }
   }
-  @include m(zoom-exit) {
-    animation: #{bem-ns(popover_zoom-exit)} var(--sar-duration-fast) both;
+  @include bem.m(zoom-exit) {
+    animation: #{fn.bem-ns(popover_zoom-exit)} var(--sar-duration-fast) both;
   }
-  @keyframes #{bem-ns(popover_zoom-exit)} {
+  @keyframes #{fn.bem-ns(popover_zoom-exit)} {
     from {
       opacity: 1;
       transform: scale(1);

@@ -1,8 +1,11 @@
-// $sar-namespace: 'custom';
-// $sar-modifier-separator: '--';
+// @use 'sard-taro/dist/style/variables' with (
+//   $sar-blue: orange,
+//   $sar-namespace: 'custom',
+//   $sar-modifier-separator: '--'
+// );
 
-@import 'sard-taro/index.scss';
-@import './demo-icon.scss';
+@use 'sard-taro/dist/index.scss';
+@use './demo-icon';
 
 .taro_page {
   &::-webkit-scrollbar {

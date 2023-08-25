@@ -1,7 +1,7 @@
-@import '../variables.scss';
+@use '../variables.scss' as var;
 
 @mixin bem($block) {
-  $selector: $sar-namespace + $sar-block-separator + $block;
+  $selector: var.$sar-namespace + var.$sar-block-separator + $block;
 
   .#{$selector} {
     @content;
@@ -21,7 +21,7 @@
     @each $element in $elements {
       $selector: join(
         $selector,
-        $outer + $sar-element-separator + $element,
+        $outer + var.$sar-element-separator + $element,
         comma
       );
     }
@@ -41,7 +41,7 @@
     @each $modifier in $modifiers {
       $selector: join(
         $selector,
-        $outer + $sar-modifier-separator + $modifier,
+        $outer + var.$sar-modifier-separator + $modifier,
         comma
       );
     }

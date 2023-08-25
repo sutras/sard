@@ -1,4 +1,4 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -9,8 +9,8 @@ page {
 }
 // #endvariables
 
-@include bem(progress-circle) {
-  @include b() {
+@include bem.bem(progress-circle) {
+  @include bem.b() {
     position: relative;
     display: flex;
     justify-content: center;
@@ -19,7 +19,7 @@ page {
     height: var(--sar-progress-circle-size);
   }
 
-  @include e(track) {
+  @include bem.e(track) {
     position: absolute;
     top: 0;
     left: 0;
@@ -29,29 +29,29 @@ page {
     background-color: var(--sar-progress-circle-track-color);
   }
 
-  @include e(trail) {
+  @include bem.e(trail) {
     width: 100%;
     height: 100%;
     color: var(--sar-progress-circle-trail-color);
   }
 
-  @include e(cap) {
+  @include bem.e(cap) {
     position: absolute;
     top: 0;
     left: 50%;
     background-color: currentColor;
     border-radius: 50%;
 
-    @include m(percent-zero) {
+    @include bem.m(percent-zero) {
       display: none;
     }
   }
 
-  @include e(cap-start) {
+  @include bem.e(cap-start) {
     transform: translate(-50%, 0);
   }
 
-  @include e(cap-end) {
+  @include bem.e(cap-end) {
     transform: translate(-50%, -50%);
   }
 }

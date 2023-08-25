@@ -1,6 +1,8 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
 
+import './index.scss'
+
 import Basic from './demo/Basic'
 import Expand from './demo/Expand'
 import MultipleExpand from './demo/MultipleExpand'

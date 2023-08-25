@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/disabled';
 
 // #variables
 :root,
@@ -32,8 +33,8 @@ page {
 }
 // #endvariables
 
-@include bem(input) {
-  @include b() {
+@include bem.bem(input) {
+  @include bem.b() {
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -47,34 +48,34 @@ page {
     transition: var(--sar-input-transition-duration);
     cursor: text;
 
-    @include m(borderless) {
+    @include bem.m(borderless) {
       border: none;
     }
 
-    @include m(inlaid) {
+    @include bem.m(inlaid) {
       min-height: auto;
       padding: 0;
       border: none;
     }
 
-    @include m(focused) {
+    @include bem.m(focused) {
       border-color: var(--sar-input-focused-border-color);
     }
 
-    @include m(disabled) {
-      @include disabled;
+    @include bem.m(disabled) {
+      @include disabled.disabled;
     }
 
-    @include m(is-textarea) {
+    @include bem.m(is-textarea) {
       position: relative;
     }
 
-    @include m(is-textarea-count) {
+    @include bem.m(is-textarea-count) {
       margin-bottom: var(--sar-input-count-occupy-height);
     }
   }
 
-  @include e(prepend) {
+  @include bem.e(prepend) {
     display: flex;
     align-items: center;
     flex: none;
@@ -87,7 +88,7 @@ page {
     flex-direction: row;
   }
 
-  @include e(control) {
+  @include bem.e(control) {
     flex: 1 1 0;
     align-self: stretch;
     width: 0;
@@ -137,22 +138,22 @@ page {
       outline: none;
     }
 
-    @include m(is-textarea) {
+    @include bem.m(is-textarea) {
       line-height: 1;
       height: var(--sar-input-control-textarea-height);
     }
 
-    @include m(auto-height) {
+    @include bem.m(auto-height) {
       min-height: var(--sar-input-control-textarea-height);
       height: auto;
     }
   }
 
-  @include e(placeholder) {
+  @include bem.e(placeholder) {
     color: var(--sar-input-placeholder-color);
   }
 
-  @include e(append) {
+  @include bem.e(append) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -160,7 +161,7 @@ page {
     margin-left: var(--sar-input-append-gap-left);
   }
 
-  @include e(clear) {
+  @include bem.e(clear) {
     display: flex;
     flex: none;
     width: auto;
@@ -173,18 +174,18 @@ page {
     cursor: pointer;
     user-select: none;
 
-    @include m(hide) {
+    @include bem.m(hide) {
       display: none;
     }
   }
 
-  @include e(count) {
+  @include bem.e(count) {
     margin-left: var(--sar-input-count-margin-left);
     font-size: var(--sar-input-count-font-size);
     color: var(--sar-input-count-color);
     pointer-events: none;
 
-    @include m(is-textarea) {
+    @include bem.m(is-textarea) {
       position: absolute;
       top: 100%;
       right: 0;

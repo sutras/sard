@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/disabled';
 
 // #variables
 :root,
@@ -18,55 +19,55 @@ page {
 }
 // #endvariables
 
-@include bem(slider) {
-  @include b() {
+@include bem.bem(slider) {
+  @include bem.b() {
     position: relative;
     box-sizing: border-box;
     padding: var(--sar-slider-padding);
     cursor: pointer;
   }
 
-  @include m(vertical) {
+  @include bem.m(vertical) {
     display: inline-flex;
     width: auto;
     height: 100%;
   }
 
-  @include e(track) {
+  @include bem.e(track) {
     position: relative;
     width: var(--sar-slider-track-main-axis-size);
     height: var(--sar-slider-track-cross-axis-size);
     background-color: var(--sar-slider-track-bg);
 
-    @include m(vertical) {
+    @include bem.m(vertical) {
       width: var(--sar-slider-track-cross-axis-size);
       height: var(--sar-slider-track-main-axis-size);
     }
   }
 
-  @include e(track-piece) {
+  @include bem.e(track-piece) {
     position: absolute;
     width: auto;
     height: 100%;
     background-color: var(--sar-slider-track-piece-bg);
     transition: all var(--sar-slider-track-piece-transition-duration);
 
-    @include m(is-down) {
+    @include bem.m(is-down) {
       transition: none;
     }
 
-    @include m(vertical) {
+    @include bem.m(vertical) {
       width: 100%;
       height: auto;
     }
   }
 
-  @include e(thumb-container) {
+  @include bem.e(thumb-container) {
     position: absolute;
     touch-action: none;
   }
 
-  @include e(thumb) {
+  @include bem.e(thumb) {
     width: var(--sar-slider-thumb-size);
     height: var(--sar-slider-thumb-size);
     border-radius: 50%;
@@ -75,29 +76,29 @@ page {
     user-select: none;
     cursor: grab;
 
-    @include m(readonly, disabled) {
+    @include bem.m(readonly, disabled) {
       cursor: default;
     }
   }
 
-  @include e(thumb-start) {
+  @include bem.e(thumb-start) {
     top: 50%;
     left: 0;
     transform: translate(-50%, -50%);
 
-    @include m(vertical) {
+    @include bem.m(vertical) {
       top: 0;
       left: 50%;
       transform: translate(-50%, -50%);
     }
   }
 
-  @include e(thumb-end) {
+  @include bem.e(thumb-end) {
     top: 50%;
     right: 0;
     transform: translate(50%, -50%);
 
-    @include m(vertical) {
+    @include bem.m(vertical) {
       top: auto;
       bottom: 0;
       left: 50%;
@@ -106,11 +107,11 @@ page {
     }
   }
 
-  @include m(disabled) {
-    @include disabled;
+  @include bem.m(disabled) {
+    @include disabled.disabled;
   }
 
-  @include m(readonly) {
+  @include bem.m(readonly) {
     cursor: default;
   }
 }

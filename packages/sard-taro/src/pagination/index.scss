@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/disabled';
 
 // #variables
 :root,
@@ -23,8 +24,8 @@ page {
 }
 // #endvariables
 
-@include bem(pagination) {
-  @include b() {
+@include bem.bem(pagination) {
+  @include bem.b() {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -33,7 +34,7 @@ page {
     user-select: none;
   }
 
-  @include e(item) {
+  @include bem.e(item) {
     box-sizing: border-box;
     display: flex;
     height: var(--sar-pagination-item-height);
@@ -49,55 +50,55 @@ page {
     cursor: pointer;
     user-select: none;
 
-    @include m(later) {
+    @include bem.m(later) {
       margin-left: -1px;
     }
 
-    @include m(first) {
+    @include bem.m(first) {
       border-top-left-radius: inherit;
       border-bottom-left-radius: inherit;
     }
 
-    @include m(last) {
+    @include bem.m(last) {
       border-top-right-radius: inherit;
       border-bottom-right-radius: inherit;
     }
 
-    @include m(current) {
+    @include bem.m(current) {
       z-index: 3;
       color: var(--sar-pagination-item-current-color);
       border-color: var(--sar-pagination-item-current-border-color);
       background-color: var(--sar-pagination-item-current-bg);
     }
 
-    @include m(disabled) {
-      @include disabled;
+    @include bem.m(disabled) {
+      @include disabled.disabled;
     }
 
-    @include m(interactive) {
+    @include bem.m(interactive) {
       &:active {
         background-color: var(--sar-pagination-item-active-bg);
       }
     }
   }
 
-  @include e(prev, next) {
+  @include bem.e(prev, next) {
     flex: 1 0 auto;
 
-    @include m(simple) {
+    @include bem.m(simple) {
       flex: 1;
       padding: 0;
       border-radius: inherit;
     }
   }
 
-  @include e(next) {
-    @include m(simple) {
+  @include bem.e(next) {
+    @include bem.m(simple) {
       margin-left: 0;
     }
   }
 
-  @include e(ratio) {
+  @include bem.e(ratio) {
     display: flex;
     flex: 1;
     align-items: center;

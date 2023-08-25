@@ -266,18 +266,18 @@ export const Slider: FC<SliderProps> = (props) => {
   }
 
   return (
-    <CustomWrapper id={contextId}>
-      <View
-        {...restProps}
-        className={classNames(
-          bem.b(),
-          bem.m('vertical', vertical),
-          bem.m('disabled', disabled),
-          bem.m('readonly', readOnly),
-          className,
-        )}
-        onClick={handleSliderClick}
-      >
+    <View
+      {...restProps}
+      className={classNames(
+        bem.b(),
+        bem.m('vertical', vertical),
+        bem.m('disabled', disabled),
+        bem.m('readonly', readOnly),
+        className,
+      )}
+      onClick={handleSliderClick}
+    >
+      <CustomWrapper id={contextId}>
         <View
           id={trackId}
           className={classNames(
@@ -305,8 +305,8 @@ export const Slider: FC<SliderProps> = (props) => {
             {range ? [renderThumb(0), renderThumb(1)] : renderThumb(1)}
           </View>
         </View>
-      </View>
-    </CustomWrapper>
+      </CustomWrapper>
+    </View>
   )
 }
 

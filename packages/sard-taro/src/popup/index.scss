@@ -1,4 +1,4 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -7,42 +7,42 @@ page {
 }
 // #endvariables
 
-@include bem(popup) {
-  @include b() {
+@include bem.bem(popup) {
+  @include bem.b() {
     position: fixed;
     z-index: var(--sar-popup-z-index);
     display: flex;
     flex-direction: column;
     overflow: hidden;
 
-    @include m(slide-top) {
+    @include bem.m(slide-top) {
       top: 0;
       right: 0;
       bottom: auto;
       left: 0;
     }
 
-    @include m(slide-right) {
+    @include bem.m(slide-right) {
       top: 0;
       right: 0;
       bottom: 0;
       left: auto;
     }
 
-    @include m(slide-bottom) {
+    @include bem.m(slide-bottom) {
       top: auto;
       right: 0;
       bottom: 0;
       left: 0;
     }
 
-    @include m(slide-left) {
+    @include bem.m(slide-left) {
       top: 0;
       right: auto;
       bottom: 0;
       left: 0;
     }
-    @include m(fade, zoom) {
+    @include bem.m(fade, zoom) {
       top: 50%;
       right: 0;
       bottom: auto;
@@ -53,7 +53,7 @@ page {
     }
   }
 
-  @include m(hiding) {
+  @include bem.m(hiding) {
     pointer-events: none;
   }
 }

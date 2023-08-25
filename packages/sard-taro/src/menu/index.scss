@@ -1,4 +1,6 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/border';
+@use '../style/mixins/disabled';
 
 // #variables
 :root,
@@ -18,21 +20,21 @@ page {
 }
 // #endvariables
 
-@include bem(menu) {
-  @include b() {
+@include bem.bem(menu) {
+  @include bem.b() {
     display: flex;
     border-radius: inherit;
 
-    @include m(vertical) {
+    @include bem.m(vertical) {
       flex-direction: column;
     }
 
-    @include m(horizontal) {
+    @include bem.m(horizontal) {
       flex-direction: row;
     }
   }
 
-  @include e(item) {
+  @include bem.e(item) {
     position: relative;
     display: flex;
     justify-content: center;
@@ -43,60 +45,60 @@ page {
     font-size: var(--sar-menu-item-font-size);
     cursor: pointer;
 
-    @include m(vertical-first) {
+    @include bem.m(vertical-first) {
       border-top-left-radius: inherit;
       border-top-right-radius: inherit;
     }
 
-    @include m(vertical-last) {
+    @include bem.m(vertical-last) {
       border-bottom-left-radius: inherit;
       border-bottom-right-radius: inherit;
     }
 
-    @include m(horizontal-first) {
+    @include bem.m(horizontal-first) {
       border-top-left-radius: inherit;
       border-bottom-left-radius: inherit;
     }
 
-    @include m(horizontal-last) {
+    @include bem.m(horizontal-last) {
       border-top-right-radius: inherit;
       border-bottom-right-radius: inherit;
     }
 
-    @include m(disabled) {
-      @include disabled-text;
+    @include bem.m(disabled) {
+      @include disabled.disabled-text;
     }
 
-    @include m(light-interactive) {
+    @include bem.m(light-interactive) {
       &:active {
         background-color: var(--sar-menu-item-active-bg);
       }
     }
 
-    @include m(dark-interactive) {
+    @include bem.m(dark-interactive) {
       &:active {
         background-color: var(--sar-menu-item-dark-active-bg);
       }
     }
 
-    @include m(horizontal) {
+    @include bem.m(horizontal) {
       height: var(--sar-menu-item-horizontal-height);
     }
 
-    @include m(light-horizontal-later) {
-      @include border-left(var(--sar-menu-item-border-color));
+    @include bem.m(light-horizontal-later) {
+      @include border.border-left(var(--sar-menu-item-border-color));
     }
 
-    @include m(dark-horizontal-later) {
-      @include border-left(var(--sar-menu-item-dark-border-color));
+    @include bem.m(dark-horizontal-later) {
+      @include border.border-left(var(--sar-menu-item-dark-border-color));
     }
   }
 
-  @include e(item-icon) {
+  @include bem.e(item-icon) {
     margin-right: var(--sar-menu-item-icon-margin-right);
   }
 
-  @include e(item-text) {
+  @include bem.e(item-text) {
     position: relative;
     display: flex;
     justify-content: center;
@@ -104,15 +106,15 @@ page {
     height: 100%;
     flex: 1;
 
-    @include m(light-vertical-later) {
-      @include border-top(var(--sar-menu-item-border-color));
+    @include bem.m(light-vertical-later) {
+      @include border.border-top(var(--sar-menu-item-border-color));
     }
 
-    @include m(dark-vertical-later) {
-      @include border-top(var(--sar-menu-item-dark-border-color));
+    @include bem.m(dark-vertical-later) {
+      @include border.border-top(var(--sar-menu-item-dark-border-color));
     }
 
-    @include m(has-icon) {
+    @include bem.m(has-icon) {
       justify-content: flex-start;
     }
   }

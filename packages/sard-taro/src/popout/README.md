@@ -91,12 +91,13 @@ import { Popout } from 'sard-taro'
 
 ### PopoutOutletCallbackParams
 
-| 属性        | 描述                                                        | 类型                       |
-| ----------- | ----------------------------------------------------------- | -------------------------- |
-| value       | 弹出框组件的当前值                                          | any                        |
-| triggerArgs | 目标组件值改变事件回调的参数列表，通常用于展示 `label` 文案 | any[]                      |
-| setValue    | 设置弹出框组件和目标组件的当前值                            | (value?: any) => void      |
-| setVisible  | 设置弹出框的显隐                                            | (visible: boolean) => void |
+| 属性       | 描述                             | 类型                       |
+| ---------- | -------------------------------- | -------------------------- |
+| value      | 弹出框组件的当前值               | any                        |
+| setValue   | 设置弹出框组件和目标组件的当前值 | (value?: any) => void      |
+| setVisible | 设置弹出框的显隐                 | (visible: boolean) => void |
+| disabled   | 是否禁用                         | boolean                    |
+| readOnly   | 是否只读                         | boolean                    |
 
 ## 主题定制
 

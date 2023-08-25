@@ -17,7 +17,7 @@ import {
   TextareaProps,
 } from '@tarojs/components'
 import classNames from 'classnames'
-import { useBem, useControllableValue } from '../use'
+import { useBem, useControllableValue, useEvent } from '../use'
 import { Icon } from '../icon'
 import { BaseProps } from '../base'
 import { isBoolean, isFunction, isNullish, isString } from '../utils'
@@ -193,9 +193,9 @@ export const Input: InputFC = forwardRef((props, ref) => {
     inputRef.current = el
   }
 
-  const handleRootClick = (event: ITouchEvent) => {
+  const handleRootClick = useEvent((event: ITouchEvent) => {
     onClick?.(event)
-  }
+  })
 
   return (
     <View

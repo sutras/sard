@@ -7,9 +7,9 @@ export default () => {
   return (
     <Checkbox.Group value={value} onChange={setValue}>
       <Space gap="medium">
-        <Checkbox value="apple">苹果</Checkbox>
-        <Checkbox value="banana">香蕉</Checkbox>
-        <Checkbox value="peach">桃子</Checkbox>
+        <Checkbox value="option1">选项1</Checkbox>
+        <Checkbox value="option2">选项2</Checkbox>
+        <Checkbox value="option3">选项3</Checkbox>
       </Space>
     </Checkbox.Group>
   )

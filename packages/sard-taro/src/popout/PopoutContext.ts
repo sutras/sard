@@ -19,6 +19,8 @@ export interface PopoutContexValue {
   temporaryOutletValue: MutableRefObject<any>
   alwaysHasValue: MutableRefObject<boolean>
   targetRef: MutableRefObject<any>
+  readOnly: boolean
+  disabled: boolean
 }
 
 export const PopoutContext = createContext<PopoutContexValue>(null)

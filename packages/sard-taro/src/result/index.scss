@@ -1,4 +1,4 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -22,8 +22,8 @@ page {
 }
 // #endvariables
 
-@include bem(result) {
-  @include b() {
+@include bem.bem(result) {
+  @include bem.b() {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,48 +31,48 @@ page {
     text-align: center;
   }
 
-  @include e(icon) {
+  @include bem.e(icon) {
     display: flex;
     font-size: var(--sar-result-icon-font-size);
     line-height: 1;
     text-align: center;
 
-    @include m(success) {
+    @include bem.m(success) {
       color: var(--sar-result-success-color);
     }
 
-    @include m(info) {
+    @include bem.m(info) {
       color: var(--sar-result-info-color);
     }
 
-    @include m(warning) {
+    @include bem.m(warning) {
       color: var(--sar-result-warning-color);
     }
 
-    @include m(error) {
+    @include bem.m(error) {
       color: var(--sar-result-error-color);
     }
 
-    @include m(question) {
+    @include bem.m(question) {
       color: var(--sar-result-question-color);
     }
   }
 
-  @include e(title) {
+  @include bem.e(title) {
     margin-top: var(--sar-result-title-margin-top);
     font-size: var(--sar-result-title-font-size);
 
     text-align: center;
   }
 
-  @include e(description) {
+  @include bem.e(description) {
     margin-top: var(--sar-result-description-margin-top);
     font-size: var(--sar-result-description-font-size);
     color: var(--sar-result-description-color);
     text-align: center;
   }
 
-  @include e(extra) {
+  @include bem.e(extra) {
     margin-top: var(--sar-result-extra-margin-top);
   }
 }

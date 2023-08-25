@@ -1,4 +1,4 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -20,8 +20,8 @@ page {
 }
 // #endvariables
 
-@include bem(empty) {
-  @include b() {
+@include bem.bem(empty) {
+  @include bem.b() {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,7 +29,7 @@ page {
     text-align: center;
   }
 
-  @include e(icon) {
+  @include bem.e(icon) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,13 +38,13 @@ page {
     color: var(--sar-empty-icon-color);
   }
 
-  @include e(description) {
+  @include bem.e(description) {
     margin-top: var(--sar-empty-description-margin-top);
     font-size: var(--sar-empty-description-font-size);
     color: var(--sar-empty-description-color);
   }
 
-  @include e(extra) {
+  @include bem.e(extra) {
     margin-top: var(--sar-empty-extra-margin-top);
   }
 }

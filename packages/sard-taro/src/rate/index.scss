@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/disabled';
 
 // #variables
 :root,
@@ -12,8 +13,8 @@ page {
 }
 // #endvariables
 
-@include bem(rate) {
-  @include b() {
+@include bem.bem(rate) {
+  @include bem.b() {
     display: flex;
     flex-direction: row;
     white-space: nowrap;
@@ -23,22 +24,22 @@ page {
     touch-action: pan-y;
   }
 
-  @include e(item) {
+  @include bem.e(item) {
     position: relative;
     display: flex;
 
-    @include m(later) {
+    @include bem.m(later) {
       margin-left: var(--sar-rate-item-margin-left);
     }
   }
 
-  @include e(star-void) {
+  @include bem.e(star-void) {
     position: relative;
     display: flex;
     color: var(--sar-rate-star-void-color);
   }
 
-  @include e(star) {
+  @include bem.e(star) {
     position: absolute;
     top: 0;
     left: 0;
@@ -48,13 +49,13 @@ page {
     color: var(--sar-rate-star-color);
   }
 
-  @include m(readonly) {
+  @include bem.m(readonly) {
     cursor: default;
     touch-action: auto;
   }
 
-  @include m(disabled) {
+  @include bem.m(disabled) {
     touch-action: auto;
-    @include disabled;
+    @include disabled.disabled;
   }
 }

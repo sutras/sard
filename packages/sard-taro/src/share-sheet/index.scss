@@ -1,4 +1,6 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/border';
+@use '../style/mixins/disabled';
 
 // #variables
 :root,
@@ -56,8 +58,8 @@ page {
 }
 // #endvariables
 
-@include bem(share-sheet) {
-  @include b() {
+@include bem.bem(share-sheet) {
+  @include bem.b() {
     z-index: var(--sar-share-sheet-z-index);
 
     border-top-left-radius: var(--sar-share-sheet-border-radius);
@@ -66,30 +68,30 @@ page {
     touch-action: pan-x;
   }
 
-  @include e(header) {
+  @include bem.e(header) {
     position: relative;
     padding: var(--sar-share-sheet-header-padding);
 
-    @include border-bottom(var(--sar-share-sheet-header-border-color));
+    @include border.border-bottom(var(--sar-share-sheet-header-border-color));
   }
 
-  @include e(title) {
+  @include bem.e(title) {
     font-size: var(--sar-share-sheet-title-font-size);
     font-weight: var(--sar-font-bold);
     text-align: center;
   }
 
-  @include e(description) {
+  @include bem.e(description) {
     font-size: var(--sar-share-sheet-description-font-size);
     text-align: center;
     color: var(--sar-share-sheet-description-color);
 
-    @include m(titled) {
+    @include bem.m(titled) {
       margin-top: var(--sar-share-sheet-description-margin-top);
     }
   }
 
-  @include e(row) {
+  @include bem.e(row) {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -103,17 +105,17 @@ page {
       height: 0;
     }
 
-    @include m(later) {
-      @include border-top(var(--sar-share-sheet-row-border-color));
+    @include bem.m(later) {
+      @include border.border-top(var(--sar-share-sheet-row-border-color));
     }
 
-    @include m(headless-first) {
+    @include bem.m(headless-first) {
       border-top-left-radius: var(--sar-share-sheet-border-radius);
       border-top-right-radius: var(--sar-share-sheet-border-radius);
     }
   }
 
-  @include e(item) {
+  @include bem.e(item) {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -123,19 +125,19 @@ page {
     line-height: inherit;
     cursor: pointer;
 
-    @include m(interactive) {
+    @include bem.m(interactive) {
       &:active {
         background-color: transparent;
         opacity: var(--sar-share-sheet-item-active-opacity);
       }
     }
 
-    @include m(disabled) {
-      @include disabled;
+    @include bem.m(disabled) {
+      @include disabled.disabled;
     }
   }
 
-  @include e(item-icon) {
+  @include bem.e(item-icon) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -148,7 +150,7 @@ page {
     background-color: var(--sar-share-sheet-icon-bg);
   }
 
-  @include e(item-img) {
+  @include bem.e(item-img) {
     display: flex;
     width: var(--sar-share-sheet-icon-size);
     height: var(--sar-share-sheet-icon-size);
@@ -156,26 +158,26 @@ page {
     object-fit: contain;
   }
 
-  @include e(item-name) {
+  @include bem.e(item-name) {
     margin-top: var(--sar-share-sheet-name-margin-top);
     padding: 0 var(--sar-share-sheet-name-padding-x);
     font-size: var(--sar-share-sheet-name-font-size);
     color: var(--sar-share-sheet-name-color);
   }
 
-  @include e(item-label) {
+  @include bem.e(item-label) {
     margin-top: var(--sar-share-sheet-label-margin-top);
     padding: 0 var(--sar-share-sheet-label-padding-x);
     font-size: var(--sar-share-sheet-label-font-size);
     color: var(--sar-share-sheet-label-color);
   }
 
-  @include e(gap) {
+  @include bem.e(gap) {
     height: var(--sar-share-sheet-gap-height);
     background-color: var(--sar-share-sheet-gap-bg);
   }
 
-  @include e(cancel) {
+  @include bem.e(cancel) {
     display: flex;
     justify-content: center;
     align-items: center;

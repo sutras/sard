@@ -20,7 +20,6 @@ import {
   Toast,
   Upload,
 } from 'sard-taro'
-import { View } from '@tarojs/components'
 
 import { useState } from 'react'
 import { getRegionData } from 'region-data'
@@ -81,6 +80,7 @@ function App() {
   }
 
   const [disabled, setDisabled] = useState(false)
+  const [readOnly, setReadOnly] = useState(false)
 
   return (
     <Form
@@ -90,12 +90,14 @@ function App() {
       form={form}
       scrollToFirstError
       disabled={disabled}
+      readOnly={readOnly}
       starPosition="left"
       labelWidth={100}
     >
-      <View style={{ padding: 10 }}>
+      <Space style={{ padding: 20 }}>
         <Switch checked={disabled} onChange={setDisabled} /> 禁用
-      </View>
+        <Switch checked={readOnly} onChange={setReadOnly} /> 只读
+      </Space>
 
       <Form.Field label="用户名" name="username" rules={[{ required: true }]}>
         <Input placeholder="请输入用户名" inlaid clearable></Input>
@@ -225,7 +227,7 @@ function App() {
         <PopoutInput title="请选择学历" inputProps={{ placeholder: '请选择' }}>
           <Picker
             columns={['小学', '初中', '高中', '专科', '本科', '研究生']}
-          ></Picker>
+          />
         </PopoutInput>
       </Form.Field>
 
@@ -303,6 +305,6 @@ function App() {
   )
 }
 
-App.title = '表单禁用'
+App.title = '表单只读和禁用'
 
 export default App

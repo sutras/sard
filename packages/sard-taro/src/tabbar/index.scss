@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/border';
 
 // #variables
 :root,
@@ -17,8 +18,8 @@ page {
 }
 // #endvariables
 
-@include bem(tabbar) {
-  @include b() {
+@include bem.bem(tabbar) {
+  @include bem.b() {
     position: relative;
     display: flex;
     align-items: stretch;
@@ -26,10 +27,10 @@ page {
     color: var(--sar-tabbar-color);
     background-color: var(--sar-tabbar-bg);
 
-    @include border-top(var(--sar-tabbar-border-color));
+    @include border.border-top(var(--sar-tabbar-border-color));
   }
 
-  @include m(fixed) {
+  @include bem.m(fixed) {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -39,8 +40,8 @@ page {
   }
 }
 
-@include bem(tabbar-item) {
-  @include b() {
+@include bem.bem(tabbar-item) {
+  @include bem.b() {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -49,18 +50,18 @@ page {
     cursor: pointer;
   }
 
-  @include m(active) {
+  @include bem.m(active) {
     color: var(--sar-tabbar-item-ative-color);
   }
 
-  @include e(icon) {
+  @include bem.e(icon) {
     position: relative;
     display: flex;
     margin-bottom: var(--sar-tabbar-item-icon-margin-bottom);
     font-size: var(--sar-tabbar-item-icon-font-size);
   }
 
-  @include e(text) {
+  @include bem.e(text) {
     font-size: var(--sar-tabbar-item-text-font-size);
     line-height: var(--sar-tabbar-item-text-line-height);
   }

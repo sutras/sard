@@ -1,4 +1,4 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -34,8 +34,8 @@ page {
 }
 // #endvariables
 
-@include bem(index-bar) {
-  @include e(nav) {
+@include bem.bem(index-bar) {
+  @include bem.e(nav) {
     position: fixed;
     right: 0;
     top: 50%;
@@ -47,7 +47,7 @@ page {
     touch-action: none;
   }
 
-  @include e(nav-item) {
+  @include bem.e(nav-item) {
     font-size: var(--sar-index-bar-nav-item-font-size);
     line-height: 1;
     padding: var(--sar-index-bar-nav-item-padding);
@@ -57,13 +57,13 @@ page {
     cursor: pointer;
     user-select: none;
 
-    @include m(active) {
+    @include bem.m(active) {
       color: var(--sar-index-bar-nav-item-active-color);
       background-color: var(--sar-index-bar-nav-item-active-bg);
     }
   }
 
-  @include e(hint) {
+  @include bem.e(hint) {
     position: absolute;
     width: var(--sar-index-bar-hint-width);
     height: var(--sar-index-bar-hint-height);
@@ -78,7 +78,7 @@ page {
     pointer-events: none;
   }
 
-  @include e(hint-text) {
+  @include bem.e(hint-text) {
     font-size: var(--sar-index-bar-hint-text-font-size);
     line-height: var(--sar-index-bar-hint-text-line-height);
     font-weight: var(--sar-font-bold);
@@ -87,15 +87,15 @@ page {
   }
 }
 
-@include bem(index-bar-item) {
-  @include e(anchor) {
+@include bem.bem(index-bar-item) {
+  @include bem.e(anchor) {
     position: sticky;
     z-index: 1;
     padding: var(--sar-index-bar-anchor-padding);
     background-color: var(--sar-index-bar-anchor-bg);
   }
 
-  @include e(content) {
+  @include bem.e(content) {
     position: relative;
     z-index: 0;
   }

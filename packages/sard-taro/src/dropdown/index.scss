@@ -1,4 +1,6 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/disabled';
+@use '../style/mixins/ellipsis';
 
 // #variables
 :root,
@@ -30,15 +32,15 @@ page {
 }
 // #endvariables
 
-@include bem(dropdown) {
-  @include b() {
+@include bem.bem(dropdown) {
+  @include bem.b() {
     position: relative;
     display: flex;
     height: var(--sar-dropdown-height);
     background: var(--sar-dropdown-bg);
   }
 
-  @include e(shadow) {
+  @include bem.e(shadow) {
     position: absolute;
     top: 0;
     left: 0;
@@ -46,12 +48,12 @@ page {
     height: 100%;
     box-shadow: var(--sar-dropdown-box-shadow);
 
-    @include m(show) {
+    @include bem.m(show) {
       z-index: calc(var(--sar-dropdown-popup-z-index) + 1);
     }
   }
 
-  @include e(item) {
+  @include bem.e(item) {
     position: relative;
     display: flex;
     align-items: center;
@@ -61,16 +63,16 @@ page {
     user-select: none;
     overflow: hidden;
 
-    @include m(show) {
+    @include bem.m(show) {
       touch-action: none;
       color: var(--sar-dropdown-item-show-color);
     }
 
-    @include m(some-show) {
+    @include bem.m(some-show) {
       z-index: calc(var(--sar-dropdown-popup-z-index) + 1);
     }
 
-    @include m(interactive) {
+    @include bem.m(interactive) {
       cursor: pointer;
       &:active {
         opacity: var(--sar-dropdown-item-active-opacity);
@@ -78,38 +80,38 @@ page {
     }
   }
 
-  @include e(label) {
+  @include bem.e(label) {
     flex: none;
     color: var(--sar-dropdown-label-color);
-    @include ellipsis;
+    @include ellipsis.ellipsis;
 
-    @include m(disabled) {
-      @include disabled-text;
+    @include bem.m(disabled) {
+      @include disabled.disabled-text;
     }
   }
 
-  @include e(title, value) {
+  @include bem.e(title, value) {
     flex: 0 1 auto;
-    @include ellipsis;
+    @include ellipsis.ellipsis;
 
-    @include m(has-label) {
+    @include bem.m(has-label) {
       margin-left: var(--sar-dropdown-label-margin-right);
     }
 
-    @include m(disabled) {
-      @include disabled-text;
+    @include bem.m(disabled) {
+      @include disabled.disabled-text;
     }
   }
 
-  @include e(placeholder) {
+  @include bem.e(placeholder) {
     color: var(--sar-dropdown-placeholder-color);
 
-    @include m(has-label) {
+    @include bem.m(has-label) {
       margin-left: var(--sar-dropdown-label-margin-right);
     }
   }
 
-  @include e(arrow) {
+  @include bem.e(arrow) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -117,59 +119,59 @@ page {
     color: var(--sar-dropdown-arrow-color);
     font-size: var(--sar-dropdown-arrow-font-size);
 
-    @include m(up) {
+    @include bem.m(up) {
       transform: rotate(180deg);
     }
 
-    @include m(show) {
+    @include bem.m(show) {
       color: inherit;
     }
   }
 
-  @include e(away) {
+  @include bem.e(away) {
     position: fixed;
     z-index: var(--sar-dropdown-popup-z-index);
     display: none;
     opacity: 0;
     touch-action: none;
 
-    @include m(show) {
+    @include bem.m(show) {
       display: flex;
     }
   }
 
-  @include e(option) {
+  @include bem.e(option) {
     display: flex;
     justify-content: space-between;
 
-    @include m(active) {
+    @include bem.m(active) {
       color: var(--sar-dropdown-option-active-color);
     }
   }
 
-  @include e(option-icon) {
+  @include bem.e(option-icon) {
     display: none;
     margin-left: auto;
     font-size: var(--sar-dropdown-option-icon-font-size);
     color: var(--sar-dropdown-option-icon-color);
 
-    @include m(active) {
+    @include bem.m(active) {
       display: flex;
     }
   }
 
-  @include e(popover) {
+  @include bem.e(popover) {
     position: fixed;
     z-index: var(--sar-dropdown-popup-z-index);
     display: none;
     overflow: hidden;
 
-    @include m(show) {
+    @include bem.m(show) {
       display: flex;
     }
   }
 
-  @include e(popup) {
+  @include bem.e(popup) {
     position: absolute;
     max-height: 80%;
     overflow-y: auto;
@@ -178,7 +180,7 @@ page {
     background-color: var(--sar-dropdown-popup-content-bg);
   }
 
-  @include e(mask) {
+  @include bem.e(mask) {
     position: absolute;
   }
 }

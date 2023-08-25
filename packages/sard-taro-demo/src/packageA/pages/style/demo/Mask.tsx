@@ -25,7 +25,7 @@ const maskList: [string, string][] = [
 
 export default () => {
   return (
-    <Space>
+    <Space vertical>
       {maskList.map((item) => {
         return renderBox(...item)
       })}

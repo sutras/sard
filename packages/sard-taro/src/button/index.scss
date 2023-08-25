@@ -1,4 +1,8 @@
-@import '../style/base.scss';
+@use '../style/variables' as var;
+@use '../style/mixins/bem';
+@use '../style/mixins/button';
+@use '../style/mixins/border';
+@use '../style/mixins/disabled';
 
 // #variables
 :root,
@@ -46,8 +50,8 @@ page {
 }
 // #endvariables
 
-@include bem(button) {
-  @include b() {
+@include bem.bem(button) {
+  @include bem.b() {
     position: relative;
     box-sizing: border-box;
     display: inline-flex;
@@ -68,7 +72,7 @@ page {
     overflow: visible;
     transition: var(--sar-button-transition-duration);
 
-    @include button-size(
+    @include button.button-size(
       var(--sar-button-height),
       var(--sar-button-padding-y),
       var(--sar-button-padding-x),
@@ -78,7 +82,7 @@ page {
 
     // border
     &::after {
-      @include border(var(--sar-button-border-color)) {
+      @include border.border(var(--sar-button-border-color)) {
         display: none;
         border-radius: calc(var(--sar-button-border-radius) * 2);
         transition: var(--sar-button-transition-duration);
@@ -102,18 +106,18 @@ page {
     }
   }
 
-  @include e(loading-text) {
+  @include bem.e(loading-text) {
     margin-left: var(--sar-button-loading-text-margin-left);
   }
 
-  @include e(loading-icon) {
+  @include bem.e(loading-icon) {
     width: var(--sar-button-loading-icon-size);
     height: var(--sar-button-loading-icon-size);
     color: inherit;
   }
 
-  @include m(small) {
-    @include button-size(
+  @include bem.m(small) {
+    @include button.button-size(
       var(--sar-button-height-sm),
       var(--sar-button-padding-y-sm),
       var(--sar-button-padding-x-sm),
@@ -122,8 +126,8 @@ page {
     );
   }
 
-  @include m(large) {
-    @include button-size(
+  @include bem.m(large) {
+    @include button.button-size(
       var(--sar-button-height-lg),
       var(--sar-button-padding-y-lg),
       var(--sar-button-padding-x-lg),
@@ -133,7 +137,7 @@ page {
   }
 
   // # 圆形按钮
-  @include m(round) {
+  @include bem.m(round) {
     border-radius: var(--sar-rounded-full);
 
     &::after {
@@ -142,18 +146,18 @@ page {
   }
 
   // # 块级按钮
-  @include m(block) {
+  @include bem.m(block) {
     display: flex;
     width: 100%;
   }
 
   // # 禁用状态
-  @include m(disabled) {
-    @include disabled;
+  @include bem.m(disabled) {
+    @include disabled.disabled;
   }
 
   // # 加载状态
-  @include m(loading) {
+  @include bem.m(loading) {
     opacity: var(--sar-button-loading-opacity);
     cursor: var(--sar-button-loading-cursor);
   }
@@ -161,8 +165,8 @@ page {
   // # 按钮类型
 
   // ## 默认类型
-  @include m(default) {
-    @include button-active {
+  @include bem.m(default) {
+    @include button.button-active {
       &::before {
         opacity: 1;
       }
@@ -170,8 +174,8 @@ page {
   }
 
   // ## 淡颜色类型
-  @include m(pale) {
-    @include button-active {
+  @include bem.m(pale) {
+    @include button.button-active {
       &::before {
         opacity: 1;
       }
@@ -179,8 +183,8 @@ page {
   }
 
   // ## 温和类型
-  @include m(mild) {
-    @include button-active {
+  @include bem.m(mild) {
+    @include button.button-active {
       &::before {
         opacity: 1;
       }
@@ -188,13 +192,13 @@ page {
   }
 
   // ## 轮廓类型
-  @include m(outline) {
+  @include bem.m(outline) {
     &::after {
       display: flex;
       border-color: currentColor;
     }
 
-    @include button-active {
+    @include button.button-active {
       &::before {
         opacity: 1;
       }
@@ -202,8 +206,8 @@ page {
   }
 
   // ## 文本类型
-  @include m(text) {
-    @include button-active {
+  @include bem.m(text) {
+    @include button.button-active {
       &::before {
         opacity: 1;
       }
@@ -211,60 +215,60 @@ page {
   }
 
   // ## 淡文本类型
-  @include m(pale-text) {
-    @include button-active {
+  @include bem.m(pale-text) {
+    @include button.button-active {
       opacity: var(--sar-button-active-opacity);
     }
   }
 
   // # 主题色
-  @each $theme, $value in $sar-theme-colors {
+  @each $theme, $value in var.$sar-theme-colors {
     $color: nth($value, 1);
     $color-rgb: nth($value, 2);
 
     // ## 默认类型
-    @include m(default-#{$theme}) {
-      @include button-set-theme {
+    @include bem.m(default-#{$theme}) {
+      @include button.button-set-theme {
         color: var(--sar-white);
         background-color: $color;
       }
     }
 
     // ## 淡颜色类型
-    @include m(pale-#{$theme}) {
-      @include button-set-theme {
+    @include bem.m(pale-#{$theme}) {
+      @include button.button-set-theme {
         color: $color;
         background-color: rgba($color-rgb, var(--sar-button-pale-bg-opacity));
       }
     }
 
     // ## 温和类型
-    @include m(mild-#{$theme}) {
-      @include button-set-theme {
+    @include bem.m(mild-#{$theme}) {
+      @include button.button-set-theme {
         color: $color;
         background-color: var(--sar-button-mild-bg);
       }
     }
 
     // ## 轮廓类型
-    @include m(outline-#{$theme}) {
-      @include button-set-theme {
+    @include bem.m(outline-#{$theme}) {
+      @include button.button-set-theme {
         color: $color;
         background-color: transparent;
       }
     }
 
     // ## 文本类型
-    @include m(text-#{$theme}) {
-      @include button-set-theme {
+    @include bem.m(text-#{$theme}) {
+      @include button.button-set-theme {
         color: $color;
         background-color: transparent;
       }
     }
 
     // ## 淡文本类型
-    @include m(pale-text-#{$theme}) {
-      @include button-set-theme {
+    @include bem.m(pale-text-#{$theme}) {
+      @include button.button-set-theme {
         color: $color;
         background-color: transparent;
       }

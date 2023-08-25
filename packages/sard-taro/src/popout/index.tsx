@@ -203,6 +203,8 @@ export const Popout: PopoutFC = (props) => {
       temporaryOutletValue,
       alwaysHasValue,
       targetRef,
+      disabled,
+      readOnly,
     }),
     [innerVisible, innerValue, outletValue, disabled, readOnly],
   )

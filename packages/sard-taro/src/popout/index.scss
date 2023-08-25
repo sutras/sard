@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/ellipsis';
 
 // #variables
 :root,
@@ -31,8 +32,8 @@ page {
 }
 // #endvariables
 
-@include bem(popout) {
-  @include b() {
+@include bem.bem(popout) {
+  @include bem.b() {
     z-index: var(--sar-popout-z-index);
 
     border-top-left-radius: var(--sar-popout-border-top-radius);
@@ -40,7 +41,7 @@ page {
     background-color: var(--sar-popout-bg);
   }
 
-  @include e(header) {
+  @include bem.e(header) {
     position: relative;
     display: flex;
     align-items: center;
@@ -48,38 +49,38 @@ page {
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
 
-    @include m(compact) {
+    @include bem.m(compact) {
       height: var(--sar-popout-header-compact-height);
     }
 
-    @include m(loose) {
+    @include bem.m(loose) {
       height: var(--sar-popout-header-loose-height);
       padding-left: var(--sar-popout-header-loose-padding-x);
       padding-right: var(--sar-popout-header-loose-padding-x);
     }
   }
 
-  @include e(button-wrap) {
+  @include bem.e(button-wrap) {
     display: flex;
     height: 100%;
     min-width: var(--sar-popout-button-wrap-min-width);
   }
 
-  @include e(header-button) {
+  @include bem.e(header-button) {
     height: 100%;
   }
 
-  @include e(header-cancel) {
+  @include bem.e(header-cancel) {
     margin-right: auto;
     border-top-left-radius: inherit;
   }
 
-  @include e(header-confirm) {
+  @include bem.e(header-confirm) {
     margin-left: auto;
     border-top-right-radius: inherit;
   }
 
-  @include e(title) {
+  @include bem.e(title) {
     flex: 1 1 0;
     margin-left: auto;
     margin-right: auto;
@@ -87,10 +88,10 @@ page {
     font-size: var(--sar-popout-title-font-size);
     font-weight: var(--sar-font-bold);
     color: var(--sar-popout-title-color);
-    @include ellipsis;
+    @include ellipsis.ellipsis;
   }
 
-  @include e(close) {
+  @include bem.e(close) {
     position: absolute;
     top: 0;
     right: 0;
@@ -104,7 +105,7 @@ page {
     cursor: pointer;
   }
 
-  @include e(footer) {
+  @include bem.e(footer) {
     display: flex;
     flex-direction: row;
     gap: var(--sar-popout-button-gap);
@@ -112,7 +113,7 @@ page {
     padding: var(--sar-popout-footer-gap-y) var(--sar-popout-footer-gap-x);
   }
 
-  @include e(footer-button) {
+  @include bem.e(footer-button) {
     flex: 1 1 0;
   }
 }

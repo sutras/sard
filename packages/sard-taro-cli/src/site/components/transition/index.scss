@@ -1,4 +1,4 @@
-@import '../style/vars.scss';
+@use '../style/vars.scss' as *;
 
 // #variables
 $doc-transition-duration: 300ms !default;

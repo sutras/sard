@@ -22,7 +22,7 @@ const sizeList: [string, string][] = [
 
 export default () => {
   return (
-    <Space>
+    <Space vertical>
       {sizeList.map((item) => {
         return renderSize(...item)
       })}

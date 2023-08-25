@@ -25,7 +25,7 @@ const leadingList: [string, string][] = [
 
 export default () => {
   return (
-    <Space>
+    <Space vertical>
       {leadingList.map((item) => {
         return renderBox(...item)
       })}

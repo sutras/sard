@@ -1,5 +1,7 @@
 @use 'sass:math';
-@import '../style/base.scss';
+@use '../style/variables' as var;
+@use '../style/functions' as fn;
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -23,8 +25,8 @@ page {
 }
 // #endvariables
 
-@include bem(loading) {
-  @include b() {
+@include bem.bem(loading) {
+  @include bem.b() {
     display: inline-flex;
     flex-direction: row;
     justify-content: center;
@@ -32,11 +34,11 @@ page {
     vertical-align: middle;
   }
 
-  @include m(vertical) {
+  @include bem.m(vertical) {
     flex-direction: column;
   }
 
-  @include e(icon) {
+  @include bem.e(icon) {
     position: relative;
     box-sizing: border-box;
     width: var(--sar-loading-icon-width);
@@ -44,22 +46,22 @@ page {
     color: var(--sar-loading-icon-color);
   }
 
-  @include e(text) {
+  @include bem.e(text) {
     margin-left: var(--sar-loading-text-margin-left);
     font-size: var(--sar-loading-text-font-size);
     color: var(--sar-loading-text-color);
 
-    @include m(vertical) {
+    @include bem.m(vertical) {
       margin-left: 0;
       margin-top: var(--sar-loading-text-vertical-margin-top);
     }
   }
 
-  @include e(circular-item) {
+  @include bem.e(circular-item) {
     position: absolute;
     width: 100%;
     height: 100%;
-    animation: #{bem-ns(loading-rotate)} var(
+    animation: #{fn.bem-ns(loading-rotate)} var(
         --sar-loading-circular-item-animation-duration
       ) cubic-bezier(0.5, 0, 0.5, 1) infinite;
 
@@ -77,26 +79,26 @@ page {
       transform-origin: 0 0;
     }
 
-    @include m(1) {
+    @include bem.m(1) {
       animation-delay: -0.45s;
     }
 
-    @include m(2) {
+    @include bem.m(2) {
       animation-delay: -0.3s;
     }
 
-    @include m(3) {
+    @include bem.m(3) {
       animation-delay: -0.15s;
     }
   }
 
-  @include e(clock) {
-    animation: #{bem-ns(loading-rotate)} var(
+  @include bem.e(clock) {
+    animation: #{fn.bem-ns(loading-rotate)} var(
         --sar-loading-clock-animation-duration
-      ) steps(#{$sar-loading-scale-number}) infinite;
+      ) steps(#{var.$sar-loading-scale-number}) infinite;
   }
 
-  @include e(scale) {
+  @include bem.e(scale) {
     position: absolute;
     top: 0;
     left: 0;
@@ -113,19 +115,21 @@ page {
       content: '';
     }
 
-    @for $i from 1 through $sar-loading-scale-number {
-      @include m($i) {
-        opacity: tofixed(
-          1 - math.div(1, $sar-loading-scale-number) * ($i - 1),
+    @for $i from 1 through var.$sar-loading-scale-number {
+      @include bem.m($i) {
+        opacity: fn.tofixed(
+          1 - math.div(1, var.$sar-loading-scale-number) * ($i - 1),
           6
         );
-        transform: rotate(#{math.div(360, $sar-loading-scale-number) * $i}deg);
+        transform: rotate(
+          #{math.div(360, var.$sar-loading-scale-number) * $i}deg
+        );
       }
     }
   }
 }
 
-@keyframes #{bem-ns(loading-rotate)} {
+@keyframes #{fn.bem-ns(loading-rotate)} {
   from {
     transform: rotate(0deg);
   }

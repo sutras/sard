@@ -1,4 +1,4 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -8,8 +8,8 @@ page {
 }
 // #endvariables
 
-@include bem(mask) {
-  @include b() {
+@include bem.bem(mask) {
+  @include bem.b() {
     position: fixed;
     top: 0;
     right: 0;
@@ -20,11 +20,11 @@ page {
     background-color: var(--sar-mask-bg);
     touch-action: none;
 
-    @include m(transparent) {
+    @include bem.m(transparent) {
       background-color: transparent;
     }
 
-    @include m(hiding) {
+    @include bem.m(hiding) {
       pointer-events: none;
     }
   }

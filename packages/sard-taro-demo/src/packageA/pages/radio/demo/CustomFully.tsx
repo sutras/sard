@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react'
-import { Cell, CheckContext, Radio, useCheck, useCheckGroup } from 'sard-taro'
+import { Cell, CheckContext, Icon, useCheck, useCheckGroup } from 'sard-taro'
 
 interface CustomCheckGroupProps {
   value?: any
@@ -48,22 +48,22 @@ const CustomRadio = (props: CustomCheckProps) => {
   )
   return (
     <Cell
-      icon={<Radio checked={isChecked} />}
       clickable
       title={children}
       onClick={toggle}
+      value={isChecked && <Icon color="var(--sar-primary)" name="success" />}
     />
   )
 }
 
 export default () => {
-  const [value, setValue] = useState<string[]>(['apple'])
+  const [value, setValue] = useState('option2')
 
   return (
     <CustomRadioGroup value={value} onChange={setValue}>
-      <CustomRadio value="apple">苹果</CustomRadio>
-      <CustomRadio value="banana">香蕉</CustomRadio>
-      <CustomRadio value="peach">桃子</CustomRadio>
+      <CustomRadio value="option1">选项1</CustomRadio>
+      <CustomRadio value="option2">选项2</CustomRadio>
+      <CustomRadio value="option3">选项3</CustomRadio>
     </CustomRadioGroup>
   )
 }

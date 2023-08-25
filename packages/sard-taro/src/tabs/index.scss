@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/disabled';
 
 // #variables
 :root,
@@ -17,22 +18,22 @@ page {
 }
 // #endvariables
 
-@include bem(tabs) {
-  @include b() {
+@include bem.bem(tabs) {
+  @include bem.b() {
     display: flex;
     flex-direction: row;
   }
 
-  @include e(scroll) {
+  @include bem.e(scroll) {
     width: 100%;
   }
 
-  @include e(container) {
+  @include bem.e(container) {
     display: flex;
     flex-direction: row;
   }
 
-  @include e(wrapper) {
+  @include bem.e(wrapper) {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -41,7 +42,7 @@ page {
     flex: none;
   }
 
-  @include e(tab) {
+  @include bem.e(tab) {
     position: relative;
     z-index: 2;
     box-sizing: border-box;
@@ -57,21 +58,21 @@ page {
     color: var(--sar-tabs-tab-color);
     cursor: pointer;
 
-    @include m(active) {
+    @include bem.m(active) {
       font-weight: var(--sar-font-bold);
       color: var(--sar-tabs-tab-active-color);
     }
 
-    @include m(scrollable) {
+    @include bem.m(scrollable) {
       flex: 0;
     }
 
-    @include m(disabled) {
-      @include disabled-text;
+    @include bem.m(disabled) {
+      @include disabled.disabled-text;
     }
   }
 
-  @include e(line) {
+  @include bem.e(line) {
     position: absolute;
     bottom: 0;
     z-index: 10;

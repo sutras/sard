@@ -1,58 +1,59 @@
 @use 'sass:color';
-@import './base.scss';
+@use './variables' as var;
+@use './functions.scss' as fn;
 
 // #variables
 :root,
 page {
   // # 灰度值
-  --sar-white: #{$sar-white};
-  --sar-gray-100: #{$sar-gray-100};
-  --sar-gray-200: #{$sar-gray-200};
-  --sar-gray-300: #{$sar-gray-300};
-  --sar-gray-400: #{$sar-gray-400};
-  --sar-gray-500: #{$sar-gray-500};
-  --sar-gray-600: #{$sar-gray-600};
-  --sar-gray-700: #{$sar-gray-700};
-  --sar-gray-800: #{$sar-gray-800};
-  --sar-gray-900: #{$sar-gray-900};
-  --sar-black: #{$sar-black};
+  --sar-white: #{var.$sar-white};
+  --sar-gray-100: #{var.$sar-gray-100};
+  --sar-gray-200: #{var.$sar-gray-200};
+  --sar-gray-300: #{var.$sar-gray-300};
+  --sar-gray-400: #{var.$sar-gray-400};
+  --sar-gray-500: #{var.$sar-gray-500};
+  --sar-gray-600: #{var.$sar-gray-600};
+  --sar-gray-700: #{var.$sar-gray-700};
+  --sar-gray-800: #{var.$sar-gray-800};
+  --sar-gray-900: #{var.$sar-gray-900};
+  --sar-black: #{var.$sar-black};
 
   // # 灰度值 rgb
-  --sar-white-rgb: #{extractRGB($sar-white)};
-  --sar-gray-100-rgb: #{extractRGB($sar-gray-100)};
-  --sar-gray-200-rgb: #{extractRGB($sar-gray-200)};
-  --sar-gray-300-rgb: #{extractRGB($sar-gray-300)};
-  --sar-gray-400-rgb: #{extractRGB($sar-gray-400)};
-  --sar-gray-500-rgb: #{extractRGB($sar-gray-500)};
-  --sar-gray-600-rgb: #{extractRGB($sar-gray-600)};
-  --sar-gray-700-rgb: #{extractRGB($sar-gray-700)};
-  --sar-gray-800-rgb: #{extractRGB($sar-gray-800)};
-  --sar-gray-900-rgb: #{extractRGB($sar-gray-900)};
-  --sar-black-rgb: #{extractRGB($sar-black)};
+  --sar-white-rgb: #{fn.extractRGB(var.$sar-white)};
+  --sar-gray-100-rgb: #{fn.extractRGB(var.$sar-gray-100)};
+  --sar-gray-200-rgb: #{fn.extractRGB(var.$sar-gray-200)};
+  --sar-gray-300-rgb: #{fn.extractRGB(var.$sar-gray-300)};
+  --sar-gray-400-rgb: #{fn.extractRGB(var.$sar-gray-400)};
+  --sar-gray-500-rgb: #{fn.extractRGB(var.$sar-gray-500)};
+  --sar-gray-600-rgb: #{fn.extractRGB(var.$sar-gray-600)};
+  --sar-gray-700-rgb: #{fn.extractRGB(var.$sar-gray-700)};
+  --sar-gray-800-rgb: #{fn.extractRGB(var.$sar-gray-800)};
+  --sar-gray-900-rgb: #{fn.extractRGB(var.$sar-gray-900)};
+  --sar-black-rgb: #{fn.extractRGB(var.$sar-black)};
 
   // # 基础颜色
-  --sar-blue: #{$sar-blue};
-  --sar-indigo: #{$sar-indigo};
-  --sar-purple: #{$sar-purple};
-  --sar-pink: #{$sar-pink};
-  --sar-red: #{$sar-red};
-  --sar-orange: #{$sar-orange};
-  --sar-yellow: #{$sar-yellow};
-  --sar-green: #{$sar-green};
-  --sar-teal: #{$sar-teal};
-  --sar-cyan: #{$sar-cyan};
+  --sar-blue: #{var.$sar-blue};
+  --sar-indigo: #{var.$sar-indigo};
+  --sar-purple: #{var.$sar-purple};
+  --sar-pink: #{var.$sar-pink};
+  --sar-red: #{var.$sar-red};
+  --sar-orange: #{var.$sar-orange};
+  --sar-yellow: #{var.$sar-yellow};
+  --sar-green: #{var.$sar-green};
+  --sar-teal: #{var.$sar-teal};
+  --sar-cyan: #{var.$sar-cyan};
 
   // # 基础颜色 rgb
-  --sar-blue-rgb: #{extractRGB($sar-blue)};
-  --sar-indigo-rgb: #{extractRGB($sar-indigo)};
-  --sar-purple-rgb: #{extractRGB($sar-purple)};
-  --sar-pink-rgb: #{extractRGB($sar-pink)};
-  --sar-red-rgb: #{extractRGB($sar-red)};
-  --sar-orange-rgb: #{extractRGB($sar-orange)};
-  --sar-yellow-rgb: #{extractRGB($sar-yellow)};
-  --sar-green-rgb: #{extractRGB($sar-green)};
-  --sar-teal-rgb: #{extractRGB($sar-teal)};
-  --sar-cyan-rgb: #{extractRGB($sar-cyan)};
+  --sar-blue-rgb: #{fn.extractRGB(var.$sar-blue)};
+  --sar-indigo-rgb: #{fn.extractRGB(var.$sar-indigo)};
+  --sar-purple-rgb: #{fn.extractRGB(var.$sar-purple)};
+  --sar-pink-rgb: #{fn.extractRGB(var.$sar-pink)};
+  --sar-red-rgb: #{fn.extractRGB(var.$sar-red)};
+  --sar-orange-rgb: #{fn.extractRGB(var.$sar-orange)};
+  --sar-yellow-rgb: #{fn.extractRGB(var.$sar-yellow)};
+  --sar-green-rgb: #{fn.extractRGB(var.$sar-green)};
+  --sar-teal-rgb: #{fn.extractRGB(var.$sar-teal)};
+  --sar-cyan-rgb: #{fn.extractRGB(var.$sar-cyan)};
 
   // # 主题色
   --sar-primary: var(--sar-blue);
@@ -71,12 +72,12 @@ page {
   --sar-danger-rgb: var(--sar-red-rgb);
 
   // # 主题色 深文本
-  --sar-primary-text: #{darken($sar-blue, 20%)};
-  --sar-secondary-text: #{darken($sar-gray-600, 20%)};
-  --sar-success-text: #{darken($sar-green, 10%)};
-  --sar-info-text: #{darken($sar-cyan, 20%)};
-  --sar-warning-text: #{darken($sar-yellow, 20%)};
-  --sar-danger-text: #{darken($sar-red, 20%)};
+  --sar-primary-text: #{darken(var.$sar-blue, 20%)};
+  --sar-secondary-text: #{darken(var.$sar-gray-600, 20%)};
+  --sar-success-text: #{darken(var.$sar-green, 10%)};
+  --sar-info-text: #{darken(var.$sar-cyan, 20%)};
+  --sar-warning-text: #{darken(var.$sar-yellow, 20%)};
+  --sar-danger-text: #{darken(var.$sar-red, 20%)};
 
   // # 灰度场景色
   --sar-body-color: var(--sar-gray-900);
@@ -165,7 +166,7 @@ page {
 
   // # 禁用状态
   --sar-disabled-pointer-events: none;
-  --sar-disabled-opacity: 0.6;
+  --sar-disabled-opacity: 0.4;
   --sar-disabled-cursor: default;
   --sar-disabled-color: var(--sar-deemphasis-color);
   --sar-disabled-filter: grayscale(100%);

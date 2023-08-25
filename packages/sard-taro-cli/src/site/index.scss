@@ -1,4 +1,4 @@
-@import './components/style/index.scss';
+@use './components/style/index.scss' as *;
 
 .doc-code-wrapper {
   position: relative;

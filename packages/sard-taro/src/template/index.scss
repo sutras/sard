@@ -1,4 +1,4 @@
-@import '../style/base.scss';
+// @use '../style/mixins/bem';
 
 // #variables
 // :root,
@@ -6,14 +6,14 @@
 // }
 // #endvariables
 
-@include bem(template) {
-  @include b() {
-    @include m() {
-    }
-  }
+// @include bem.bem(template) {
+//   @include bem.b() {
+//     @include bem.m() {
+//     }
+//   }
 
-  @include e() {
-    @include m() {
-    }
-  }
-}
+//   @include bem.e() {
+//     @include bem.m() {
+//     }
+//   }
+// }

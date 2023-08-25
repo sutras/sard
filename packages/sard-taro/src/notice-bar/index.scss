@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/functions' as fn;
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -17,8 +18,8 @@ page {
 }
 // #endvariables
 
-@include bem(notice-bar) {
-  @include b() {
+@include bem.bem(notice-bar) {
+  @include bem.b() {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -30,22 +31,22 @@ page {
     background-color: var(--sar-notice-bar-bg);
   }
 
-  @include m(wrap) {
+  @include bem.m(wrap) {
     height: auto;
     padding-top: var(--sar-notice-bar-padding-y);
     padding-bottom: var(--sar-notice-bar-padding-y);
   }
 
-  @include m(linkable) {
+  @include bem.m(linkable) {
     cursor: pointer;
   }
 
-  @include e(left-icon) {
+  @include bem.e(left-icon) {
     display: flex;
     margin-right: var(--sar-notice-bar-left-icon-gap);
   }
 
-  @include e(content) {
+  @include bem.e(content) {
     flex: 1;
     display: flex;
     align-items: center;
@@ -54,47 +55,47 @@ page {
     overflow: hidden;
   }
 
-  @include e(wrapper) {
+  @include bem.e(wrapper) {
     display: inline-block;
     height: 100%;
     line-height: var(--sar-notice-bar-height);
     white-space: nowrap;
 
-    @include m(scroll-never) {
+    @include bem.m(scroll-never) {
       display: block;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    @include m(scrollable) {
-      animation: #{bem-ns(notice-bar-scroll)} linear both running;
+    @include bem.m(scrollable) {
+      animation: #{fn.bem-ns(notice-bar-scroll)} linear both running;
     }
 
-    @include m(infinite) {
-      animation: #{bem-ns(notice-bar-scroll-infinite)} linear both running infinite;
+    @include bem.m(infinite) {
+      animation: #{fn.bem-ns(notice-bar-scroll-infinite)} linear both running infinite;
     }
 
-    @include m(wrap) {
+    @include bem.m(wrap) {
       display: block;
       white-space: normal;
       line-height: var(--sar-notice-bar-wrap-line-height);
     }
   }
 
-  @include e(right-icon) {
+  @include bem.e(right-icon) {
     display: flex;
     padding-left: var(--sar-notice-bar-right-icon-gap);
     cursor: pointer;
   }
 }
 
-@keyframes #{bem-ns(notice-bar-scroll)} {
+@keyframes #{fn.bem-ns(notice-bar-scroll)} {
   100% {
     transform: translate3d(-100%, 0, 0);
   }
 }
 
-@keyframes #{bem-ns(notice-bar-scroll-infinite)} {
+@keyframes #{fn.bem-ns(notice-bar-scroll-infinite)} {
   100% {
     transform: translate3d(-100%, 0, 0);
   }

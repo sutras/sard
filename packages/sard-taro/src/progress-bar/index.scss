@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/functions' as fn;
+@use '../style/mixins/bem';
 
 // #variables
 :root,
@@ -15,15 +16,15 @@ page {
 }
 // #endvariables
 
-@include bem(progress-bar) {
-  @include b() {
+@include bem.bem(progress-bar) {
+  @include bem.b() {
     height: var(--sar-progress-bar-height);
     border-radius: var(--sar-progress-bar-border-radius);
     background-color: var(--sar-progress-bar-bg);
     overflow: hidden;
   }
 
-  @include e(trail) {
+  @include bem.e(trail) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,7 +34,7 @@ page {
     background-color: var(--sar-progress-bar-trail-bg);
     transition: width var(--sar-progress-bar-trail-transition-duration) ease;
 
-    @include m(striped) {
+    @include bem.m(striped) {
       background-image: linear-gradient(
         45deg,
         rgba(255, 255, 255, 0.15) 25%,
@@ -48,13 +49,13 @@ page {
         var(--sar-progress-bar-trail-striped-size);
     }
 
-    @include m(animated) {
-      animation: 1s linear infinite #{bem-ns(progress-bar-trail-striped)};
+    @include bem.m(animated) {
+      animation: 1s linear infinite #{fn.bem-ns(progress-bar-trail-striped)};
     }
   }
 }
 
-@keyframes #{bem-ns(progress-bar-trail-striped)} {
+@keyframes #{fn.bem-ns(progress-bar-trail-striped)} {
   0% {
     background-position-x: var(--sar-progress-bar-trail-striped-size);
   }

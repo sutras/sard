@@ -1,4 +1,6 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/border';
+@use '../style/mixins/ellipsis';
 
 // #variables
 :root,
@@ -18,8 +20,8 @@ page {
 }
 // #endvariables
 
-@include bem(navbar) {
-  @include b() {
+@include bem.bem(navbar) {
+  @include bem.b() {
     position: relative;
     box-sizing: border-box;
     display: flex;
@@ -28,10 +30,10 @@ page {
     justify-content: center;
     background-color: var(--sar-navbar-bg);
 
-    @include border-bottom(var(--sar-navbar-border-color));
+    @include border.border-bottom(var(--sar-navbar-border-color));
   }
 
-  @include e(content) {
+  @include bem.e(content) {
     display: flex;
     height: 100%;
     flex: 1;
@@ -40,21 +42,21 @@ page {
     overflow: hidden;
   }
 
-  @include e(title) {
+  @include bem.e(title) {
     width: 100%;
     max-width: var(--sar-navbar-title-max-width);
     font-size: var(--sar-navbar-title-font-size);
     font-weight: var(--sar-font-bold);
     text-align: center;
     color: var(--sar-navbar-title-color);
-    @include ellipsis;
+    @include ellipsis.ellipsis;
 
-    @include m(flow) {
+    @include bem.m(flow) {
       max-width: 100%;
     }
   }
 
-  @include e(left, right) {
+  @include bem.e(left, right) {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -63,20 +65,20 @@ page {
     align-items: center;
     height: 100%;
 
-    @include m(flow) {
+    @include bem.m(flow) {
       position: relative;
     }
   }
 
-  @include e(left) {
+  @include bem.e(left) {
     left: 0;
   }
 
-  @include e(right) {
+  @include bem.e(right) {
     right: 0;
   }
 
-  @include e(item) {
+  @include bem.e(item) {
     display: flex;
     height: 100%;
     align-items: center;
@@ -93,7 +95,7 @@ page {
     }
   }
 
-  @include m(fixed) {
+  @include bem.m(fixed) {
     position: fixed;
     top: 0;
     left: 0;

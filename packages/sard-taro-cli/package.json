@@ -27,10 +27,12 @@
     "commander": "^10.0.0",
     "consola": "^2.15.3",
     "fs-extra": "^11.1.0",
+    "glob": "^10.3.3",
     "inquirer": "^9.1.4",
     "markdown-it": "^13.0.1",
     "mime": "^3.0.0",
     "rimraf": "^5.0.1",
+    "sass": "^1.66.1",
     "shelljs": "^0.8.5",
     "terser": "^5.16.1",
     "vite": "^4.0.4"

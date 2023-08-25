@@ -5,9 +5,9 @@
 import { ITouchEvent } from '@tarojs/components'
 import { MutableRefObject, useRef } from 'react'
 
-export type Direction = '' | 'horizontal' | 'vertical'
+export type Axis = '' | 'horizontal' | 'vertical'
 
-function getDirection(x: number, y: number): Direction {
+function getDirection(x: number, y: number): Axis {
   return x > y ? 'horizontal' : 'vertical'
 }
 
@@ -20,7 +20,7 @@ export interface Brush {
   offsetY: number
   clientX: number
   clientY: number
-  direction: Direction
+  axis: Axis
   isVertical: () => boolean
   isHorizontal: () => boolean
   reset: () => void
@@ -38,16 +38,16 @@ export function useBrush() {
     offsetY: 0,
     clientX: 0,
     clientY: 0,
-    direction: '',
+    axis: '',
     isVertical: () => {
       const b = brush.current
 
-      return b.direction === 'vertical'
+      return b.axis === 'vertical'
     },
     isHorizontal: () => {
       const b = brush.current
 
-      return b.direction === 'horizontal'
+      return b.axis === 'horizontal'
     },
     reset: () => {
       const b = brush.current
@@ -60,7 +60,7 @@ export function useBrush() {
       b.offsetY = 0
       b.clientX = 0
       b.clientY = 0
-      b.direction = ''
+      b.axis = ''
     },
     start: (event) => {
       const b = brush.current
@@ -81,8 +81,8 @@ export function useBrush() {
       b.offsetX = Math.abs(b.deltaX)
       b.offsetY = Math.abs(b.deltaY)
 
-      if (b.direction === '') {
-        b.direction = getDirection(b.offsetX, b.offsetY)
+      if (b.axis === '') {
+        b.axis = getDirection(b.offsetX, b.offsetY)
       }
     },
   })

@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/border';
 
 // #variables
 :root,
@@ -54,35 +55,35 @@ page {
 }
 // #endvariables
 
-@include bem(cell-group) {
-  @include b() {
+@include bem.bem(cell-group) {
+  @include bem.b() {
     display: flex;
     flex-direction: column;
   }
 
-  @include e(header) {
+  @include bem.e(header) {
     padding-right: var(--sar-cell-group-header-gap-x);
     padding-bottom: var(--sar-cell-group-header-gap-y);
     padding-left: var(--sar-cell-group-header-gap-x);
   }
 
-  @include e(title) {
+  @include bem.e(title) {
     font-size: var(--sar-cell-group-title-font-size);
     line-height: var(--sar-cell-group-title-line-height);
     color: var(--sar-cell-group-title-color);
   }
 
-  @include e(body) {
+  @include bem.e(body) {
     position: relative;
     display: flex;
     flex-direction: column;
     border-radius: inherit;
 
-    @include border-vertical(var(--sar-cell-group-border-color)) {
+    @include border.border-vertical(var(--sar-cell-group-border-color)) {
       z-index: 1;
     }
 
-    @include m(card) {
+    @include bem.m(card) {
       border-radius: var(--sar-cell-group-card-border-radius);
 
       &::before,
@@ -91,7 +92,7 @@ page {
       }
     }
 
-    @include m(inlaid) {
+    @include bem.m(inlaid) {
       &::before,
       &::after {
         display: none;
@@ -99,26 +100,26 @@ page {
     }
   }
 
-  @include e(footer) {
+  @include bem.e(footer) {
     padding-top: var(--sar-cell-group-footer-gap-y);
     padding-right: var(--sar-cell-group-footer-gap-x);
     padding-left: var(--sar-cell-group-footer-gap-x);
   }
 
-  @include e(label) {
+  @include bem.e(label) {
     font-size: var(--sar-cell-group-label-font-size);
     line-height: var(--sar-cell-group-label-line-height);
     color: var(--sar-cell-group-label-color);
   }
 
-  @include m(card) {
+  @include bem.m(card) {
     margin-left: var(--sar-cell-group-card-margin-x);
     margin-right: var(--sar-cell-group-card-margin-x);
   }
 }
 
-@include bem(cell) {
-  @include b() {
+@include bem.bem(cell) {
+  @include bem.b() {
     position: relative;
     box-sizing: border-box;
     display: flex;
@@ -129,17 +130,17 @@ page {
     background-color: var(--sar-cell-bg);
     transition: background-color var(--sar-cell-transition-duration);
 
-    @include m(first-card) {
+    @include bem.m(first-card) {
       border-top-left-radius: var(--sar-cell-group-card-border-radius);
       border-top-right-radius: var(--sar-cell-group-card-border-radius);
     }
 
-    @include m(last-card) {
+    @include bem.m(last-card) {
       border-bottom-left-radius: var(--sar-cell-group-card-border-radius);
       border-bottom-right-radius: var(--sar-cell-group-card-border-radius);
     }
 
-    @include m(clickable) {
+    @include bem.m(clickable) {
       cursor: pointer;
       &:active {
         background-color: var(--sar-cell-active-bg);
@@ -147,7 +148,7 @@ page {
     }
   }
 
-  @include e(header) {
+  @include bem.e(header) {
     position: relative;
     display: flex;
     justify-content: center;
@@ -155,12 +156,12 @@ page {
     flex-grow: 0;
     padding-right: var(--sar-cell-header-gap-right);
 
-    @include m(inset-later) {
-      @include border-top(var(--sar-cell-border-color));
+    @include bem.m(inset-later) {
+      @include border.border-top(var(--sar-cell-border-color));
     }
   }
 
-  @include e(content) {
+  @include bem.e(content) {
     position: relative;
     box-sizing: border-box;
     display: flex;
@@ -172,17 +173,17 @@ page {
     padding-bottom: var(--sar-cell-padding-y);
     overflow: hidden;
 
-    @include m(custom) {
+    @include bem.m(custom) {
       flex-direction: column;
       justify-content: center;
     }
 
-    @include m(later) {
-      @include border-top(var(--sar-cell-border-color));
+    @include bem.m(later) {
+      @include border.border-top(var(--sar-cell-border-color));
     }
   }
 
-  @include e(body, footer) {
+  @include bem.e(body, footer) {
     display: flex;
     flex-grow: 1;
     flex-shrink: 1;
@@ -192,36 +193,36 @@ page {
     overflow: hidden;
   }
 
-  @include e(body) {
+  @include bem.e(body) {
     flex-direction: column;
     justify-content: center;
   }
 
-  @include e(icon) {
+  @include bem.e(icon) {
     display: flex;
     align-items: center;
     flex: none;
   }
 
-  @include e(title) {
+  @include bem.e(title) {
     font-size: var(--sar-cell-title-font-size);
     line-height: var(--sar-cell-title-line-height);
   }
 
-  @include e(label) {
+  @include bem.e(label) {
     font-size: var(--sar-cell-label-font-size);
     line-height: var(--sar-cell-label-line-height);
     color: var(--sar-cell-label-color);
   }
 
-  @include e(footer) {
+  @include bem.e(footer) {
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
     margin-left: var(--sar-cell-footer-margin-left);
   }
 
-  @include e(value) {
+  @include bem.e(value) {
     margin-left: var(--sar-cell-value-gap-left);
     font-size: var(--sar-cell-value-font-size);
     line-height: var(--sar-cell-value-line-height);
@@ -230,7 +231,7 @@ page {
     text-align: right;
   }
 
-  @include e(arrow) {
+  @include bem.e(arrow) {
     margin-left: var(--sar-cell-arrow-gap-left);
     font-size: var(--sar-cell-arrow-font-size);
     color: var(--sar-cell-arrow-color);

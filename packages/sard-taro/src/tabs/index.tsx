@@ -233,8 +233,6 @@ export const Tabs: TabsFC = (props) => {
     setInnerActiveKey(key)
   }
 
-  console.log('tabs render', activeKey)
-
   return (
     <CustomWrapper id={contextId}>
       <View {...restProps} className={classNames(bem.b(), className)}>

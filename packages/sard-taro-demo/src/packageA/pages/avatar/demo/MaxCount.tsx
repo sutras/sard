@@ -2,7 +2,7 @@ import { Avatar } from 'sard-taro'
 
 export default () => {
   return (
-    <Avatar.Group maxCount={4}>
+    <Avatar.Group maxCount={4} gap={-25}>
       <Avatar>头</Avatar>
       <Avatar>像</Avatar>
       <Avatar>组</Avatar>

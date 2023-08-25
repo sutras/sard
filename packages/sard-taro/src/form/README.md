@@ -26,7 +26,7 @@ import { Form } from 'sard-taro'
 
 %(${DEMO_PATH}/form/ant-demo/Demo3.tsx)
 
-#### 表单禁用
+#### 表单只读和禁用
 
 %(${DEMO_PATH}/form/ant-demo/Demo4.tsx)
 

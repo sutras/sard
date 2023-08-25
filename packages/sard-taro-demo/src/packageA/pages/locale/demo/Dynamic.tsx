@@ -10,8 +10,8 @@ import {
   Space,
 } from 'sard-taro'
 
-import zhCN from 'sard-taro/locale/lang/zh-CN'
-import enUS from 'sard-taro/locale/lang/en-US'
+import zhCN from 'sard-taro/dist/locale/lang/zh-CN'
+import enUS from 'sard-taro/dist/locale/lang/en-US'
 
 const langMap = {
   zhCN,
@@ -41,7 +41,7 @@ export default () => {
         }
       ></Cell>
       <Cell>
-        <Calendar />
+        <Calendar type="range" />
       </Cell>
       <Cell>
         <Empty />

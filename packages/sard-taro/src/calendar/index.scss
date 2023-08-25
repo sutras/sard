@@ -1,5 +1,6 @@
 @use 'sass:math';
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/disabled';
 
 // #variables
 :root,
@@ -39,14 +40,14 @@ page {
 }
 // #endvariables
 
-@include bem(calendar) {
-  @include b() {
+@include bem.bem(calendar) {
+  @include bem.b() {
     display: flex;
     flex-direction: column;
     overflow: hidden;
   }
 
-  @include e(header) {
+  @include bem.e(header) {
     position: relative;
     z-index: 1;
     display: flex;
@@ -55,7 +56,7 @@ page {
     box-shadow: var(--sar-calendar-header-box-shadow);
   }
 
-  @include e(title) {
+  @include bem.e(title) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,12 +65,12 @@ page {
     line-height: var(--sar-calendar-title-line-height);
   }
 
-  @include e(week) {
+  @include bem.e(week) {
     display: flex;
     flex-direction: row;
   }
 
-  @include e(week-item) {
+  @include bem.e(week-item) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -78,7 +79,7 @@ page {
     font-size: var(--sar-calendar-week-item-font-size);
   }
 
-  @include e(body) {
+  @include bem.e(body) {
     position: relative;
     z-index: 0;
     display: flex;
@@ -87,12 +88,12 @@ page {
     height: var(--sar-calendar-body-height);
   }
 
-  @include e(month) {
+  @include bem.e(month) {
     display: flex;
     flex-direction: column;
   }
 
-  @include e(month-title) {
+  @include bem.e(month-title) {
     display: flex;
     height: var(--sar-calendar-month-title-height);
     justify-content: center;
@@ -103,7 +104,7 @@ page {
     color: var(--sar-calendar-month-title-color);
   }
 
-  @include e(month-body) {
+  @include bem.e(month-body) {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -112,7 +113,7 @@ page {
     column-gap: 0;
   }
 
-  @include e(day) {
+  @include bem.e(day) {
     position: relative;
     z-index: 1;
     display: flex;
@@ -127,31 +128,31 @@ page {
     cursor: pointer;
     transition: var(--sar-transition-duration-fast);
 
-    @include m(today) {
+    @include bem.m(today) {
       color: var(--sar-calendar-day-today-color);
     }
 
-    @include m(disabled) {
-      @include disabled-text;
+    @include bem.m(disabled) {
+      @include disabled.disabled-text;
     }
 
-    @include m(selected) {
+    @include bem.m(selected) {
       border-radius: var(--sar-calendar-day-selected-border-radius);
       color: var(--sar-calendar-day-selected-color);
       background-color: var(--sar-calendar-day-selected-bg);
     }
 
-    @include m(prev-selected, only-end) {
+    @include bem.m(prev-selected, only-end) {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
 
-    @include m(next-selected, only-start) {
+    @include bem.m(next-selected, only-start) {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
 
-    @include m(middle) {
+    @include bem.m(middle) {
       color: var(--sar-primary);
 
       &::after {
@@ -168,7 +169,7 @@ page {
     }
   }
 
-  @include e(topinfo, bottominfo) {
+  @include bem.e(topinfo, bottominfo) {
     position: absolute;
     left: 0;
     right: 0;
@@ -177,15 +178,15 @@ page {
     line-height: var(--sar-calendar-info-line-height);
   }
 
-  @include e(topinfo) {
+  @include bem.e(topinfo) {
     top: var(--sar-calendar-topinfo-top);
   }
 
-  @include e(bottominfo) {
+  @include bem.e(bottominfo) {
     bottom: var(--sar-calendar-bottominfo-bottom);
   }
 
-  @include e(mark) {
+  @include bem.e(mark) {
     position: absolute;
     top: 0;
     right: 0;

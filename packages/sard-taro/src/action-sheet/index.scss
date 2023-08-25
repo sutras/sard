@@ -1,4 +1,6 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/border';
+@use '../style/mixins/disabled';
 
 // #variables
 :root,
@@ -46,8 +48,8 @@ page {
 }
 // #endvariables
 
-@include bem(action-sheet) {
-  @include b() {
+@include bem.bem(action-sheet) {
+  @include bem.b() {
     z-index: var(--sar-action-sheet-z-index);
 
     border-top-left-radius: var(--sar-action-sheet-border-radius);
@@ -56,35 +58,35 @@ page {
     line-height: var(--sar-action-sheet-line-height);
   }
 
-  @include e(header) {
+  @include bem.e(header) {
     position: relative;
     padding: var(--sar-action-sheet-header-padding);
 
-    @include border-bottom(var(--sar-action-sheet-header-border-color));
+    @include border.border-bottom(var(--sar-action-sheet-header-border-color));
   }
 
-  @include e(title) {
+  @include bem.e(title) {
     font-size: var(--sar-action-sheet-title-font-size);
     font-weight: var(--sar-font-bold);
     text-align: center;
   }
 
-  @include e(description) {
+  @include bem.e(description) {
     font-size: var(--sar-action-sheet-description-font-size);
     text-align: center;
     color: var(--sar-action-sheet-description-color);
 
-    @include m(has-title) {
+    @include bem.m(has-title) {
       margin-top: var(--sar-action-sheet-description-margin-top);
     }
   }
 
-  @include e(gap) {
+  @include bem.e(gap) {
     height: var(--sar-action-sheet-gap-height);
     background-color: var(--sar-action-sheet-gap-bg);
   }
 
-  @include e(item) {
+  @include bem.e(item) {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -95,41 +97,41 @@ page {
     cursor: pointer;
     background-color: var(--sar-action-sheet-item-bg);
 
-    @include m(headless-first) {
+    @include bem.m(headless-first) {
       border-top-left-radius: var(--sar-action-sheet-border-radius);
       border-top-right-radius: var(--sar-action-sheet-border-radius);
     }
 
-    @include m(later) {
-      @include border-top(var(--sar-action-sheet-item-border-color));
+    @include bem.m(later) {
+      @include border.border-top(var(--sar-action-sheet-item-border-color));
     }
 
-    @include m(interactive) {
+    @include bem.m(interactive) {
       &:active {
         background-color: var(--sar-action-sheet-item-active-bg);
       }
     }
 
-    @include m(disabled) {
-      @include disabled-text;
+    @include bem.m(disabled) {
+      @include disabled.disabled-text;
     }
 
-    @include m(loading) {
+    @include bem.m(loading) {
       cursor: default;
     }
   }
 
-  @include e(item-title) {
+  @include bem.e(item-title) {
     font-size: var(--sar-action-sheet-item-title-font-size);
   }
 
-  @include e(item-label) {
+  @include bem.e(item-label) {
     margin-top: var(--sar-action-sheet-item-label-margin-top);
     font-size: var(--sar-action-sheet-item-label-font-size);
     color: var(--sar-action-sheet-item-label-color);
   }
 
-  @include e(cancel) {
+  @include bem.e(cancel) {
     display: flex;
     justify-content: center;
     align-items: center;

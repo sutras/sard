@@ -1,8 +1,8 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
 
 // #variables
 
 // #endvariables
 
-@include bem(swiper-item) {
+@include bem.bem(swiper-item) {
 }

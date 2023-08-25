@@ -31,7 +31,7 @@ async function transform() {
         }
         return stylePath
       })
-      .map((path) => `@import '${path}';`)
+      .map((path) => `@use '${path}';`)
       .join('\n')
   } catch {
     return ''

@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/ellipsis';
 
 // #variables
 :root,
@@ -52,18 +53,18 @@ page {
 }
 // #endvariables
 
-@include bem(upload) {
-  @include b() {
+@include bem.bem(upload) {
+  @include bem.b() {
     display: flex;
   }
 
-  @include e(wrapper) {
+  @include bem.e(wrapper) {
     display: flex;
     flex-wrap: wrap;
     gap: var(--sar-upload-preview-gap);
   }
 
-  @include e(preview) {
+  @include bem.e(preview) {
     position: relative;
     width: var(--sar-upload-preview-width);
     height: var(--sar-upload-preview-height);
@@ -76,21 +77,21 @@ page {
     cursor: pointer;
   }
 
-  @include e(image) {
+  @include bem.e(image) {
     display: flex;
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  @include e(video) {
+  @include bem.e(video) {
     display: flex;
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
 
-  @include e(video-play) {
+  @include bem.e(video-play) {
     position: absolute;
     top: 0;
     left: 0;
@@ -104,7 +105,7 @@ page {
     color: var(--sar-upload-video-play-color);
   }
 
-  @include e(file) {
+  @include bem.e(file) {
     display: flex;
     width: 100%;
     height: 100%;
@@ -114,20 +115,20 @@ page {
     color: var(--sar-upload-file-color);
   }
 
-  @include e(file-icon) {
+  @include bem.e(file-icon) {
     font-size: var(--sar-upload-file-icon-font-size);
   }
 
-  @include e(file-name) {
+  @include bem.e(file-name) {
     box-sizing: border-box;
     max-width: 100%;
     padding: 0 var(--sar-upload-file-name-padding-x);
     margin-top: var(--sar-upload-file-name-margin-top);
     font-size: var(--sar-upload-file-name-font-size);
-    @include ellipsis;
+    @include ellipsis.ellipsis;
   }
 
-  @include e(status) {
+  @include bem.e(status) {
     position: absolute;
     top: 0;
     left: 0;
@@ -142,36 +143,36 @@ page {
     background-color: var(--sar-upload-status-bg);
   }
 
-  @include e(status-icon) {
+  @include bem.e(status-icon) {
     display: flex;
     font-size: var(--sar-upload-status-icon-font-size);
   }
 
-  @include e(status-message) {
+  @include bem.e(status-message) {
     box-sizing: border-box;
     max-width: 100%;
     padding: 0 var(--sar-upload-status-message-padding-x);
     margin-top: var(--sar-upload-status-message-margin-top);
     font-size: var(--sar-upload-status-message-font-size);
-    @include ellipsis;
+    @include ellipsis.ellipsis;
   }
 
-  @include e(status-message) {
+  @include bem.e(status-message) {
     box-sizing: border-box;
     max-width: 100%;
     padding: 0 var(--sar-upload-status-message-padding-x);
     margin-top: var(--sar-upload-status-message-margin-top);
     font-size: var(--sar-upload-status-message-font-size);
-    @include ellipsis;
+    @include ellipsis.ellipsis;
   }
 
-  @include e(loading) {
+  @include bem.e(loading) {
     width: var(--sar-upload-loading-size);
     height: var(--sar-upload-loading-size);
     color: inherit;
   }
 
-  @include e(remove) {
+  @include bem.e(remove) {
     position: absolute;
     top: 0;
     right: 0;
@@ -180,7 +181,7 @@ page {
     cursor: pointer;
   }
 
-  @include e(close) {
+  @include bem.e(close) {
     margin-right: var(--sar-upload-close-right);
     margin-top: var(--sar-upload-close-top);
     display: flex;
@@ -194,7 +195,7 @@ page {
     background-color: var(--sar-upload-close-bg);
   }
 
-  @include e(select) {
+  @include bem.e(select) {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -208,14 +209,14 @@ page {
     background-color: var(--sar-upload-select-bg);
     cursor: pointer;
 
-    @include m(interactive) {
+    @include bem.m(interactive) {
       &:active {
         background-color: var(--sar-upload-select-active-bg);
       }
     }
   }
 
-  @include e(input) {
+  @include bem.e(input) {
     position: absolute;
     top: 0;
     left: 0;

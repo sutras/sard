@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/disabled';
 
 // #variables
 :root,
@@ -32,91 +33,91 @@ page {
 }
 // #endvariables
 
-@include bem(steps) {
-  @include b() {
+@include bem.bem(steps) {
+  @include bem.b() {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: flex-start;
   }
 
-  @include m(vertical) {
+  @include bem.m(vertical) {
     flex-direction: column;
     align-items: stretch;
   }
 
-  @include m(finish) {
+  @include bem.m(finish) {
     color: var(--sar-steps-text-finish-color);
   }
 
-  @include m(process) {
+  @include bem.m(process) {
     color: var(--sar-steps-text-process-color);
   }
 
-  @include m(wait) {
+  @include bem.m(wait) {
     color: var(--sar-steps-text-wait-color);
   }
 
-  @include m(error) {
+  @include bem.m(error) {
     color: var(--sar-steps-text-error-color);
   }
 
-  @include e(step) {
+  @include bem.e(step) {
     display: flex;
     flex-direction: column;
     flex: 1;
     font-size: var(--sar-steps-step-font-size);
 
-    @include m(last) {
+    @include bem.m(last) {
       flex: none;
       white-space: nowrap;
     }
 
-    @include m(center) {
+    @include bem.m(center) {
       justify-content: center;
       text-align: center;
     }
 
-    @include m(center-last) {
+    @include bem.m(center-last) {
       flex: 1;
       white-space: unset;
     }
 
-    @include m(vertical) {
+    @include bem.m(vertical) {
       flex-direction: row;
     }
 
-    @include m(vertical-center) {
+    @include bem.m(vertical-center) {
       justify-content: center;
       align-items: center;
       text-align: left;
     }
 
-    @include m(vertical-center-last) {
+    @include bem.m(vertical-center-last) {
       flex: 1;
       white-space: unset;
     }
 
-    @include m(interactive) {
+    @include bem.m(interactive) {
       cursor: pointer;
       &:active {
         background-color: var(--sar-steps-step-active-bg);
       }
     }
 
-    @include m(disabled) {
-      @include disabled;
+    @include bem.m(disabled) {
+      @include disabled.disabled;
     }
   }
 
-  @include e(header) {
+  @include bem.e(header) {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding-top: var(--sar-steps-header-gap-y);
     padding-bottom: var(--sar-steps-header-gap-y);
 
-    @include m(vertical) {
+    @include bem.m(vertical) {
       position: relative;
       top: calc(
         var(--sar-steps-header-vertical-top) + var(--sar-steps-body-padding-y) /
@@ -130,13 +131,13 @@ page {
       padding-right: var(--sar-steps-header-gap-x);
     }
 
-    @include m(vertical-center) {
+    @include bem.m(vertical-center) {
       top: 0;
       align-self: stretch;
     }
   }
 
-  @include e(line) {
+  @include bem.e(line) {
     height: var(--sar-steps-line-thickness);
     width: 0;
     flex-grow: 1;
@@ -146,19 +147,19 @@ page {
     margin-right: var(--sar-steps-line-gap);
     background-color: var(--sar-steps-line-color);
 
-    @include m(behind) {
+    @include bem.m(behind) {
       background-color: var(--sar-steps-line-active-color);
     }
 
-    @include m(last) {
+    @include bem.m(last) {
       display: none;
     }
 
-    @include m(center-last) {
+    @include bem.m(center-last) {
       display: flex;
     }
 
-    @include m(vertical) {
+    @include bem.m(vertical) {
       width: var(--sar-steps-line-thickness);
       height: 0;
       margin-left: 0;
@@ -167,73 +168,73 @@ page {
       margin-bottom: var(--sar-steps-line-gap);
     }
 
-    @include m(vertical-last) {
+    @include bem.m(vertical-last) {
       white-space: unset;
     }
 
-    @include m(vertical-center-last) {
+    @include bem.m(vertical-center-last) {
       display: flex;
     }
   }
 
-  @include e(line-before) {
+  @include bem.e(line-before) {
     display: none;
 
-    @include m(self) {
+    @include bem.m(self) {
       background-color: var(--sar-steps-line-active-color);
     }
 
-    @include m(first) {
+    @include bem.m(first) {
       visibility: hidden;
     }
 
-    @include m(center) {
+    @include bem.m(center) {
       display: flex;
       margin-left: 0;
     }
 
-    @include m(vertical-center) {
+    @include bem.m(vertical-center) {
       margin-top: 0;
     }
   }
 
-  @include e(line-after) {
-    @include m(last) {
+  @include bem.e(line-after) {
+    @include bem.m(last) {
       visibility: hidden;
     }
 
-    @include m(center) {
+    @include bem.m(center) {
       margin-right: 0;
     }
 
-    @include m(vertical-center) {
+    @include bem.m(vertical-center) {
       margin-bottom: 0;
     }
   }
 
-  @include e(icon) {
+  @include bem.e(icon) {
     font-size: var(--sar-steps-icon-font-size);
     line-height: 1;
 
-    @include m(finish) {
+    @include bem.m(finish) {
       color: var(--sar-steps-icon-finish-color);
     }
 
-    @include m(process) {
+    @include bem.m(process) {
       color: var(--sar-steps-icon-process-color);
     }
 
-    @include m(wait) {
+    @include bem.m(wait) {
       color: var(--sar-steps-icon-wait-color);
     }
 
-    @include m(error) {
+    @include bem.m(error) {
       color: var(--sar-steps-icon-error-color);
     }
   }
 
-  @include e(body) {
-    @include m(vertical) {
+  @include bem.e(body) {
+    @include bem.m(vertical) {
       flex: 1;
       padding-top: calc(var(--sar-steps-body-padding-y) / 2);
       padding-bottom: calc(var(--sar-steps-body-padding-y) / 2);

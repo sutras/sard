@@ -1,4 +1,5 @@
-@import '../style/base.scss';
+@use '../style/mixins/bem';
+@use '../style/mixins/disabled';
 
 // #variables
 :root,
@@ -26,44 +27,44 @@ page {
 }
 // #endvariables
 
-@include bem(cascader) {
-  @include b() {
+@include bem.bem(cascader) {
+  @include bem.b() {
     position: relative;
   }
 
-  @include e(container) {
+  @include bem.e(container) {
     overflow: hidden;
   }
 
-  @include e(wrapper) {
+  @include bem.e(wrapper) {
     display: flex;
     flex-wrap: nowrap;
     transition: transform 0.3s;
   }
 
-  @include e(pane) {
+  @include bem.e(pane) {
     width: 100%;
     flex: none;
   }
 
-  @include e(options) {
+  @include bem.e(options) {
     box-sizing: border-box;
     height: var(--sar-cascader-options-height);
     overflow-y: auto;
   }
 
-  @include e(option) {
+  @include bem.e(option) {
     display: flex;
     font-size: var(--sar-cascader-option-font-size);
     line-height: var(--sar-cascader-option-line-height);
     padding: var(--sar-cascader-option-padding-y)
       var(--sar-cascader-option-padding-x);
 
-    @include m(disabled) {
-      @include disabled-text;
+    @include bem.m(disabled) {
+      @include disabled.disabled-text;
     }
 
-    @include m(interactive) {
+    @include bem.m(interactive) {
       cursor: pointer;
 
       &:active {
@@ -71,22 +72,22 @@ page {
       }
     }
 
-    @include m(selected) {
+    @include bem.m(selected) {
       color: var(--sar-cascader-selected-color);
       font-weight: var(--sar-font-bold);
     }
   }
 
-  @include e(option-icon) {
+  @include bem.e(option-icon) {
     display: none;
     margin-left: auto;
 
-    @include m(selected) {
+    @include bem.m(selected) {
       display: flex;
     }
   }
 
-  @include m(loading) {
+  @include bem.m(loading) {
     position: absolute;
     top: 0;
     left: 0;

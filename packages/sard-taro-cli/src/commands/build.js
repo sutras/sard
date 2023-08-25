@@ -1,68 +1,15 @@
 import fse from 'fs-extra'
-import { resolve } from 'node:path'
-import { build as viteBuild } from 'vite'
-import { CWD_DIR, sardConfig, TEMP_STYLE_NAME } from '../utils/constants.js'
-import deepMerge from '../utils/deepMerge.js'
+import path, { resolve } from 'node:path'
+import { CWD_DIR, sardConfig } from '../utils/constants.js'
 import child_process from 'child_process'
+import { glob } from 'glob'
+import * as sass from 'sass'
 
 const { build: buildConfig } = sardConfig
 
-const outDir = resolve(CWD_DIR, sardConfig.build.outDir)
-
-function mergedBuildLibConfig(options) {
-  return deepMerge(
-    {
-      configFile: false,
-      build: {
-        copyPublicDir: false,
-        outDir,
-        lib: {},
-      },
-    },
-    options,
-  )
-}
-
-void function buildLib() {
-  return viteBuild(
-    mergedBuildLibConfig({
-      build: {
-        lib: {
-          entry: resolve(CWD_DIR, buildConfig.entry),
-          name: buildConfig.name,
-          formats: ['es'],
-          fileName: buildConfig.fileName,
-        },
-        minify: false,
-        rollupOptions: {
-          external: buildConfig.external,
-        },
-      },
-    }),
-  )
-}
-
-async function buildCss() {
-  await viteBuild(
-    mergedBuildLibConfig({
-      build: {
-        emptyOutDir: false,
-        lib: {
-          entry: resolve(CWD_DIR, buildConfig.cssEntry),
-          formats: ['es'],
-          fileName: TEMP_STYLE_NAME,
-        },
-      },
-    }),
-  )
-
-  await fse.remove(resolve(outDir, `${TEMP_STYLE_NAME}.js`))
-
-  await fse.rename(
-    resolve(outDir, 'style.css'),
-    resolve(outDir, `${buildConfig.fileName}.css`),
-  )
-}
+const outDir = resolve(CWD_DIR, buildConfig.outDir)
+const srcDir = resolve(CWD_DIR, buildConfig.srcDir)
+const cssEntry = resolve(CWD_DIR, buildConfig.cssEntry)
 
 async function buildModuleAndDeclare() {
   const config = [
@@ -80,6 +27,57 @@ async function buildModuleAndDeclare() {
       resolve()
     })
   })
+}
+
+async function combineCompile() {
+  const result = sass.compile(cssEntry, {
+    style: 'compressed',
+  })
+  await fse.outputFile(path.resolve(outDir, './index.css'), result.css)
+}
+
+async function separateCompile() {
+  const result = await glob(path.resolve(srcDir, './*/index.scss'))
+  const targetResult = result.map((file) =>
+    path.resolve(
+      path.dirname(path.resolve(outDir, '.' + file.replace(srcDir, ''))),
+      'index.css',
+    ),
+  )
+
+  await Promise.all(
+    result.map(async (source, index) => {
+      const target = targetResult[index]
+      const result = sass.compile(source, {
+        style: 'compressed',
+      })
+      await fse.outputFile(target, result.css)
+    }),
+  )
+}
+
+async function copyScss() {
+  const result = await glob(path.resolve(srcDir, './**/*.scss'))
+  const targetResult = result.map((file) =>
+    path.resolve(outDir, '.' + file.replace(srcDir, '')),
+  )
+
+  await Promise.all(
+    result.map(async (source, index) => {
+      const target = targetResult[index]
+      const targetPath = path.dirname(target)
+      if (!fse.existsSync(targetPath)) {
+        fse.mkdirSync(targetPath)
+      }
+      await fse.copyFile(source, target)
+    }),
+  )
+}
+
+async function buildCss() {
+  await combineCompile()
+  await separateCompile()
+  await copyScss()
 }
 
 export async function build() {

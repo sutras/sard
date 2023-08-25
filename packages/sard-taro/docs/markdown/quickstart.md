@@ -12,6 +12,14 @@ npm install sard-taro
 
 ### 全局样式引入
 
+导入 `CSS` 文件：
+
+```scss
+@import 'sard-taro/dist/index.css';
+```
+
+如果需要修改默认 `SCSS` 变量，也可以导入 `SCSS` 文件：
+
 ```scss
 @import 'sard-taro/dist/index.scss';
 ```
