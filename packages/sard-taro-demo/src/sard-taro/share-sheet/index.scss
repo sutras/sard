@@ -1,0 +1,195 @@
+@import '../style/variables.scss';
+@import '../style/mixins/bem.scss';
+@import '../style/mixins/disabled.scss';
+@import '../style/mixins/universal.scss';
+
+// #variables
+$sar-share-sheet-z-index: 1100 !default;
+
+$sar-share-sheet-border-radius: $sar-rounded-xl !default;
+$sar-share-sheet-bg: $sar-emphasis-bg !default;
+
+$sar-share-sheet-header-padding: 16px !default;
+
+$sar-share-sheet-title-font-size: $sar-text-lg !default;
+
+$sar-share-sheet-description-margin-top: 8px !default;
+$sar-share-sheet-description-font-size: $sar-text-base !default;
+$sar-share-sheet-description-color: $sar-tertiary-color !default;
+
+$sar-share-sheet-row-padding-y: 16px !default;
+$sar-share-sheet-row-padding-x: 8px !default;
+
+$sar-share-sheet-item-active-opacity: $sar-active-opacity !default;
+
+$sar-share-sheet-icon-wrapper-size: 48px !default;
+$sar-share-sheet-icon-wrapper-margin-x: 16px !default;
+$sar-share-sheet-icon-wrapper-border-radius: $sar-rounded-full !default;
+
+$sar-share-sheet-icon-font-size: 24px !default;
+$sar-share-sheet-icon-color: $sar-tertiary-color !default;
+$sar-share-sheet-icon-bg: $sar-secondary-bg !default;
+
+$sar-share-sheet-name-margin-top: 8px !default;
+$sar-share-sheet-name-padding-x: 4px !default;
+$sar-share-sheet-name-font-size: $sar-text-base !default;
+$sar-share-sheet-name-color: $sar-tertiary-color !default;
+
+$sar-share-sheet-label-margin-top: 0 !default;
+$sar-share-sheet-label-padding-x: 4px !default;
+$sar-share-sheet-label-font-size: $sar-text-sm !default;
+$sar-share-sheet-label-color: $sar-tertiary-color !default;
+
+$sar-share-sheet-gap-bg: $sar-gray-100 !default;
+$sar-share-sheet-gap-height: 8px !default;
+
+$sar-share-sheet-cancel-min-height: 48px !default;
+$sar-share-sheet-cancel-padding: 8px 16px !default;
+$sar-share-sheet-cancel-font-size: $sar-text-lg !default;
+$sar-share-sheet-cancel-bg: $sar-emphasis-bg !default;
+$sar-share-sheet-cancel-active-bg: $sar-active-bg !default;
+
+// @media (prefers-color-scheme: dark) {
+//   :root,
+//   page {
+//     $sar-share-sheet-gap-bg: $sar-gray-900;
+//   }
+// }
+// #endvariables
+
+@include bem(share-sheet) {
+  @include b() {
+    border-top-left-radius: $sar-share-sheet-border-radius;
+    border-top-right-radius: $sar-share-sheet-border-radius;
+    background-color: $sar-share-sheet-bg;
+    @include ifweb {
+      touch-action: pan-x;
+    }
+  }
+
+  @include e(popup) {
+    z-index: $sar-share-sheet-z-index;
+  }
+
+  @include e(header) {
+    @include universal;
+    padding: $sar-share-sheet-header-padding;
+  }
+
+  @include e(title) {
+    @include universal;
+    font-size: $sar-share-sheet-title-font-size;
+    font-weight: $sar-font-bold;
+    text-align: center;
+  }
+
+  @include e(description) {
+    @include universal;
+    font-size: $sar-share-sheet-description-font-size;
+    text-align: center;
+    color: $sar-share-sheet-description-color;
+
+    @include m(titled) {
+      margin-top: $sar-share-sheet-description-margin-top;
+    }
+  }
+
+  @include e(row) {
+    @include universal;
+  }
+
+  @include e(row-content) {
+    @include universal;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: $sar-share-sheet-row-padding-y $sar-share-sheet-row-padding-x;
+
+    @include m(headless-first) {
+      border-top-left-radius: $sar-share-sheet-border-radius;
+      border-top-right-radius: $sar-share-sheet-border-radius;
+    }
+  }
+
+  @include e(item) {
+    @include universal;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    @include ifweb {
+      cursor: pointer;
+    }
+
+    @include m(pressed) {
+      opacity: $sar-share-sheet-item-active-opacity;
+    }
+
+    @include m(disabled) {
+      @include disabled;
+    }
+  }
+
+  @include e(icon-wrapper) {
+    @include universal;
+    justify-content: center;
+    align-items: center;
+    width: $sar-share-sheet-icon-wrapper-size;
+    height: $sar-share-sheet-icon-wrapper-size;
+    margin: 0 $sar-share-sheet-icon-wrapper-margin-x;
+    border-radius: $sar-share-sheet-icon-wrapper-border-radius;
+    background-color: $sar-share-sheet-icon-bg;
+  }
+
+  @include e(icon) {
+    font-size: $sar-share-sheet-icon-font-size;
+    color: $sar-share-sheet-icon-color;
+  }
+
+  @include e(img) {
+    @include universal;
+    width: 100%;
+    height: 100%;
+    border-radius: $sar-share-sheet-icon-wrapper-border-radius;
+  }
+
+  @include e(item-name) {
+    @include universal;
+    margin-top: $sar-share-sheet-name-margin-top;
+    padding: 0 $sar-share-sheet-name-padding-x;
+    font-size: $sar-share-sheet-name-font-size;
+    color: $sar-share-sheet-name-color;
+  }
+
+  @include e(item-label) {
+    @include universal;
+    margin-top: $sar-share-sheet-label-margin-top;
+    padding: 0 $sar-share-sheet-label-padding-x;
+    font-size: $sar-share-sheet-label-font-size;
+    color: $sar-share-sheet-label-color;
+  }
+
+  @include e(gap) {
+    @include universal;
+    height: $sar-share-sheet-gap-height;
+    background-color: $sar-share-sheet-gap-bg;
+  }
+
+  @include e(cancel) {
+    @include universal;
+    justify-content: center;
+    align-items: center;
+    min-height: $sar-share-sheet-cancel-min-height;
+    padding: $sar-share-sheet-cancel-padding;
+    font-size: $sar-share-sheet-cancel-font-size;
+    background-color: $sar-share-sheet-cancel-bg;
+
+    @include ifweb {
+      cursor: pointer;
+    }
+
+    @include m(pressed) {
+      background-color: $sar-share-sheet-cancel-active-bg;
+    }
+  }
+}

@@ -2,20 +2,15 @@ import Demo from '@/components/demo'
 import Page from '@/components/page'
 
 import Basic from './demo/Basic'
-import Controllable from './demo/Controllable'
 import Ellipsis from './demo/Ellipsis'
 import Simple from './demo/Simple'
 import Custom from './demo/Custom'
 
 export default () => {
   return (
-    <Page className="page-pagination">
+    <Page>
       <Demo title="基础使用">
         <Basic />
-      </Demo>
-
-      <Demo title="受控的">
-        <Controllable />
       </Demo>
 
       <Demo title="显示省略号">

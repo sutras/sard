@@ -1,0 +1,14 @@
+@import '../variables.scss';
+@import './ifweb.scss';
+
+@mixin disabled {
+  opacity: $sar-disabled-opacity;
+  @include ifweb {
+    cursor: not-allowed;
+  }
+  // filter: $sar-disabled-filter;
+}
+
+@mixin disabled-text {
+  color: $sar-disabled-color;
+}

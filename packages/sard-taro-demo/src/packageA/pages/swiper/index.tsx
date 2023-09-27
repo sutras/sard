@@ -1,8 +1,6 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
 
-import './index.scss'
-
 import Basic from './demo/Basic'
 import Controllable from './demo/Controllable'
 import Vertical from './demo/Vertical'
@@ -11,7 +9,7 @@ import Circular from './demo/Circular'
 
 export default () => {
   return (
-    <Page className="page-swiper">
+    <Page>
       <Demo title="基础使用" full>
         <Basic />
       </Demo>

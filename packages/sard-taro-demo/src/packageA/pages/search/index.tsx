@@ -1,6 +1,5 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { Toast } from 'sard-taro'
 
 import Basic from './demo/Basic'
 import SearchButton from './demo/SearchButton'
@@ -13,9 +12,7 @@ import Slot from './demo/Slot'
 
 export default () => {
   return (
-    <Page className="page-search">
-      <Toast.Agent />
-
+    <Page>
       <Demo title="基础使用" full>
         <Basic />
       </Demo>

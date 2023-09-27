@@ -6,10 +6,13 @@ export default () => {
       placeholder="请输入"
       borderless
       style={{
-        height: 30,
-        borderRadius: 'var(--sar-rounded-full)',
-        backgroundColor: 'var(--sar-secondary-bg)',
+        height: 32,
+        borderRadius: 9999,
+        color: 'white',
+        backgroundColor: 'tomato',
+        textAlign: 'center',
       }}
+      placeholderStyle="color: rgba(255,255,255,.6)"
     />
   )
 }

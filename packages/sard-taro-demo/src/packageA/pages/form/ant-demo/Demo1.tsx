@@ -37,9 +37,7 @@ function App() {
       </Form.Field>
 
       <Form.Field underline={false}>
-        <Button block formType="submit">
-          Submit
-        </Button>
+        <Button formType="submit">Submit</Button>
       </Form.Field>
     </Form>
   )

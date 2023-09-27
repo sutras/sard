@@ -5,7 +5,7 @@ export default () => {
   return (
     <CountDown time={1000 * 60 * 60 * 2} interval={93}>
       {(time) => (
-        <Space>
+        <Space direction="horizontal">
           <Tag theme="primary" size="large">
             {String(time.hours).padStart(2, '0')}
           </Tag>

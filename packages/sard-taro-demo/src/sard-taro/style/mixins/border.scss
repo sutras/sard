@@ -1,0 +1,80 @@
+@import './universal.scss';
+
+@mixin border-base($color) {
+  @include universal;
+  position: absolute;
+  z-index: 5;
+  background-color: $color;
+  pointer-events: none;
+  opacity: 1;
+  @content;
+}
+
+@mixin border-vertical-base($color) {
+  @include border-base($color) {
+    left: 0;
+    right: 0;
+    height: 1px;
+    transform: scaleY(0.5);
+    @content;
+  }
+}
+
+@mixin border-horizontal-base($color) {
+  @include border-base($color) {
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    transform: scaleX(0.5);
+    @content;
+  }
+}
+
+@mixin border-top($color) {
+  @include border-vertical-base($color) {
+    top: 0;
+    transform-origin: top center;
+    @content;
+  }
+}
+
+@mixin border-bottom($color) {
+  @include border-vertical-base($color) {
+    bottom: 0;
+    transform-origin: bottom center;
+    @content;
+  }
+}
+
+@mixin border-left($color) {
+  @include border-horizontal-base($color) {
+    left: 0;
+    transform-origin: left center;
+    @content;
+  }
+}
+
+@mixin border-right($color) {
+  @include border-horizontal-base($color) {
+    right: 0;
+    transform-origin: right center;
+    @content;
+  }
+}
+
+@mixin border($color) {
+  @include universal;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  width: 200%;
+  height: 200%;
+  border-width: 1px;
+  border-style: solid;
+  border-color: $color;
+  transform-origin: 0 0;
+  transform: scale(0.5);
+  pointer-events: none;
+  @content;
+}

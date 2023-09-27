@@ -10,10 +10,8 @@ function App() {
     console.log('Failed:', errorInfo)
   }
 
-  const [form] = Form.useForm()
-
   return (
-    <Form form={form} onSuccess={handleSuccess} onFail={handleFail}>
+    <Form onSuccess={handleSuccess} onFail={handleFail}>
       <Form.List name="users">
         {(fields, { add, remove }) => (
           <>
@@ -24,10 +22,10 @@ function App() {
                     <Col>
                       <Form.Field
                         name="first"
+                        inlaid
                         rules={[
                           { required: true, message: 'Missing first name' },
                         ]}
-                        inlaid
                       >
                         <Input placeholder="First Name" />
                       </Form.Field>
@@ -36,10 +34,10 @@ function App() {
                     <Col>
                       <Form.Field
                         name="last"
+                        inlaid
                         rules={[
                           { required: true, message: 'Missing last name' },
                         ]}
-                        inlaid
                       >
                         <Input placeholder="Last Name" />
                       </Form.Field>
@@ -57,7 +55,7 @@ function App() {
               </Form.Map>
             ))}
             <Form.Field>
-              <Button type="mild" onClick={() => add()} block>
+              <Button type="mild" onClick={() => add()}>
                 <Icon name="plus" />
                 Add field
               </Button>
@@ -67,9 +65,7 @@ function App() {
       </Form.List>
 
       <Form.Field underline={false}>
-        <Button block formType="submit">
-          Submit
-        </Button>
+        <Button formType="submit">Submit</Button>
       </Form.Field>
     </Form>
   )

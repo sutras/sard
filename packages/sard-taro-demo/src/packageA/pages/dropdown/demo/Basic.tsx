@@ -32,8 +32,8 @@ export default () => {
 
   return (
     <Dropdown>
-      <Dropdown.Item options={options1} defaultValue="1"></Dropdown.Item>
-      <Dropdown.Item options={options2} defaultValue="2"></Dropdown.Item>
+      <Dropdown.Item options={options1} defaultValue="1" />
+      <Dropdown.Item options={options2} defaultValue="2" />
     </Dropdown>
   )
 }

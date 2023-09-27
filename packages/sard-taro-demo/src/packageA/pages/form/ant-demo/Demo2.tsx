@@ -12,10 +12,6 @@ function App() {
     console.log('Failed:', errorInfo)
   }
 
-  const onReset = () => {
-    form.reset()
-  }
-
   const onFill = () => {
     form.setValues({
       note: 'Hello world!',
@@ -51,7 +47,7 @@ function App() {
 
       <Form.Field name="gender" label="Gender" rules={[{ required: true }]}>
         <Radio.Group onChange={onGenderChange}>
-          <Space gap="medium">
+          <Space direction="horizontal" gap="medium" wrap>
             <Radio value="male">male</Radio>
             <Radio value="female">female</Radio>
             <Radio value="other">other</Radio>
@@ -75,20 +71,14 @@ function App() {
 
       <Form.Field underline={false}>
         <Row gap={10}>
-          <Col>
-            <Button block formType="submit">
-              Submit
-            </Button>
+          <Col span="auto">
+            <Button formType="submit">Submit</Button>
           </Col>
-          <Col>
-            <Button block onClick={onReset}>
-              Reset
-            </Button>
+          <Col span="auto">
+            <Button formType="reset">Reset</Button>
           </Col>
-          <Col>
-            <Button block onClick={onFill}>
-              Fill form
-            </Button>
+          <Col span="auto">
+            <Button onClick={onFill}>Fill form</Button>
           </Col>
         </Row>
       </Form.Field>

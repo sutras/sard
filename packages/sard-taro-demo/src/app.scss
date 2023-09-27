@@ -1,27 +1,27 @@
-// @use 'sard-taro/dist/style/variables' with (
+// @import 'sard-taro/dist/style/variables' with (
 //   $sar-blue: orange,
 //   $sar-namespace: 'custom',
 //   $sar-modifier-separator: '--'
 // );
 
-@use 'sard-taro/dist/index.scss';
-@use './demo-icon';
+@import './assets/fonts/iconfont.scss';
+@import 'sard-taro/dist/index.scss';
+@import 'sard-taro/dist/style/mixins/ifweb.scss';
 
-.taro_page {
-  &::-webkit-scrollbar {
-    display: none;
+@include ifweb {
+  .taro_page {
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
-}
 
-.taro_router div.taro_page,
-page {
-  font-size: 16px;
-  line-height: 1.5;
-  min-height: calc(100vh - var(--window-top) - var(--window-bottom));
-  color: var(--sar-body-color);
-  background-color: var(--sar-body-bg);
-}
-
-view {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  .taro_router div.taro_page,
+  page {
+    font-size: $sar-text-base;
+    line-height: $sar-text-base * $sar-leading-normal;
+    min-height: 100vh;
+    color: $sar-body-color;
+    background-color: $sar-body-bg;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
 }

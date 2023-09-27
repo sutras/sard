@@ -1,9 +1,9 @@
-import { Cell, Dialog } from 'sard-taro'
+import { List, Dialog } from 'sard-taro'
 
 export default () => {
   return (
-    <Cell.Group card>
-      <Cell
+    <List card>
+      <List.Item
         linkable
         title="确定按钮异步关闭"
         onClick={() => {
@@ -19,7 +19,7 @@ export default () => {
         }}
       />
 
-      <Cell
+      <List.Item
         linkable
         title="取消按钮异步关闭"
         onClick={() => {
@@ -34,6 +34,6 @@ export default () => {
           })
         }}
       />
-    </Cell.Group>
+    </List>
   )
 }

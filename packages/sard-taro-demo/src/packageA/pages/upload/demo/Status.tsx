@@ -7,6 +7,7 @@ import pic3 from '@/static/pic3.jpg'
 
 export default () => {
   const handleAfterRead = (fileItem: UploadFileItem) => {
+    console.log(fileItem)
     fileItem.status = 'uploading'
     fileItem.message = '正在上传'
     setList((list) => [...list])

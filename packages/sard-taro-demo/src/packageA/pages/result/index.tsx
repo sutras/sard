@@ -7,7 +7,7 @@ import Icon from './demo/Icon'
 
 export default () => {
   return (
-    <Page className="page-result">
+    <Page>
       <Demo title="基础使用">
         <Basic />
       </Demo>

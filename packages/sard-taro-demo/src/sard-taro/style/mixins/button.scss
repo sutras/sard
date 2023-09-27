@@ -1,0 +1,7 @@
+@mixin button-set-theme {
+  // 浏览器端覆盖默认active样式
+  &,
+  &:not([disabled]):active {
+    @content;
+  }
+}

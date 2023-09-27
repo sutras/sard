@@ -1,5 +1,5 @@
 import { Switch } from 'sard-taro'
 
 export default () => {
-  return <Switch checkedColor="var(--sar-pink)" defaultChecked />
+  return <Switch checkedColor="tomato" defaultChecked />
 }

@@ -1,29 +1,36 @@
-import { View } from '@tarojs/components'
 import { useState } from 'react'
-import { Slider, Space } from 'sard-taro'
+import { List, Slider, Space } from 'sard-taro'
 
 export default () => {
   const [value, setValue] = useState(0)
 
-  const [rangeValue4, setRangeValue4] = useState([0, 30])
+  const [rangeValue, setRangeValue] = useState([0, 30])
 
   return (
-    <Space vertical>
-      <Space vertical>
-        <Slider defaultValue={0} min={-50} max={50} onChange={setValue} />
-        <View>{value}</View>
-      </Space>
+    <Space>
+      <List card>
+        <List.Item title="当前值" label="值范围：[-50, 50]" value={value} />
+        <List.Item>
+          <Slider value={value} min={-50} max={50} onChange={setValue} />
+        </List.Item>
+      </List>
 
-      <Space vertical>
-        <Slider
-          range
-          defaultValue={rangeValue4}
-          min={-50}
-          max={50}
-          onChange={setRangeValue4}
+      <List card>
+        <List.Item
+          title="当前值"
+          label="值范围：[-50, 50]"
+          value={rangeValue.join(', ')}
         />
-        <View>{rangeValue4.join(',')}</View>
-      </Space>
+        <List.Item>
+          <Slider
+            range
+            value={rangeValue}
+            min={-50}
+            max={50}
+            onChange={setRangeValue}
+          />
+        </List.Item>
+      </List>
     </Space>
   )
 }

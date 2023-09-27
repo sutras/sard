@@ -10,10 +10,8 @@ function App() {
     console.log('Failed:', errorInfo)
   }
 
-  const [form] = Form.useForm()
-
   return (
-    <Form form={form} onSuccess={handleSuccess} onFail={handleFail}>
+    <Form onSuccess={handleSuccess} onFail={handleFail}>
       <Form.List
         name="names"
         rules={[
@@ -51,13 +49,12 @@ function App() {
                     placeholder="passenger name"
                     append={
                       fields.length > 0 ? (
-                        <Button type="pale-text" size="small">
-                          <Icon
-                            name="close"
-                            size={16}
-                            onClick={() => remove(field.name)}
-                          />
-                        </Button>
+                        <Button
+                          type="pale-text"
+                          size="small"
+                          iconProps={{ name: 'close', size: 14 }}
+                          onClick={() => remove(field.name)}
+                        />
                       ) : null
                     }
                   />
@@ -66,12 +63,12 @@ function App() {
             })}
 
             <Form.Field label>
-              <Button block type="mild" onClick={() => add()}>
+              <Button type="mild" size="small" onClick={() => add()}>
                 <Icon name="plus" /> Add field
               </Button>
               <Button
-                block
                 type="mild"
+                size="small"
                 onClick={() => {
                   add('headding', 0)
                 }}
@@ -87,9 +84,7 @@ function App() {
       </Form.List>
 
       <Form.Field underline={false}>
-        <Button block formType="submit">
-          Submit
-        </Button>
+        <Button formType="submit">Submit</Button>
       </Form.Field>
     </Form>
   )

@@ -5,7 +5,7 @@ import Basic from './demo/Basic'
 
 export default () => {
   return (
-    <Page className="page-index-bar">
+    <Page>
       <Demo title="基础使用" full>
         <Basic />
       </Demo>

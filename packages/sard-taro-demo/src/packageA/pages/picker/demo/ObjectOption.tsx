@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Cell, Picker, PopoutInput } from 'sard-taro'
+import { List, Picker, PopoutInput } from 'sard-taro'
 
 export default () => {
   const columns = [
@@ -24,10 +24,14 @@ export default () => {
   const [value, setValue] = useState<number>()
 
   return (
-    <Cell.Group card>
-      <Cell linkable title="设置为: 天津市" onClick={() => setValue(120000)} />
-      <Cell linkable title="清空" onClick={() => setValue(undefined)} />
-      <Cell>
+    <List card>
+      <List.Item
+        linkable
+        title="设置为: 天津市"
+        onClick={() => setValue(120000)}
+      />
+      <List.Item linkable title="清空" onClick={() => setValue(undefined)} />
+      <List.Item>
         <PopoutInput
           title="请选择"
           inputProps={{ placeholder: '请选择' }}
@@ -39,7 +43,7 @@ export default () => {
             optionKeys={{ label: 'name', value: 'code' }}
           />
         </PopoutInput>
-      </Cell>
-    </Cell.Group>
+      </List.Item>
+    </List>
   )
 }

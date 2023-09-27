@@ -1,5 +1,6 @@
+import { Text } from '@tarojs/components'
 import { useState } from 'react'
-import { Cell, Popup, PopupProps } from 'sard-taro'
+import { List, Popup, PopupProps } from 'sard-taro'
 
 export default () => {
   const [visible, setVisible] = useState(false)
@@ -16,26 +17,41 @@ export default () => {
 
   return (
     <>
-      <Cell.Group card>
-        <Cell linkable title="顶部划出" onClick={() => show('slide-top')} />
-        <Cell linkable title="右边划出" onClick={() => show('slide-right')} />
-        <Cell linkable title="底部划出" onClick={() => show('slide-bottom')} />
-        <Cell linkable title="左边划出" onClick={() => show('slide-left')} />
-        <Cell linkable title="缩放" onClick={() => show('zoom')} />
-        <Cell linkable title="淡入淡出" onClick={() => show('fade')} />
-      </Cell.Group>
+      <List card>
+        <List.Item
+          linkable
+          title="顶部划出"
+          onClick={() => show('slide-top')}
+        />
+        <List.Item
+          linkable
+          title="右边划出"
+          onClick={() => show('slide-right')}
+        />
+        <List.Item
+          linkable
+          title="底部划出"
+          onClick={() => show('slide-bottom')}
+        />
+        <List.Item
+          linkable
+          title="左边划出"
+          onClick={() => show('slide-left')}
+        />
+        <List.Item linkable title="缩放" onClick={() => show('zoom')} />
+        <List.Item linkable title="淡入淡出" onClick={() => show('fade')} />
+      </List>
 
       <Popup
         visible={visible}
         effect={effect}
         onMaskClick={handleMaskClick}
-        style={{
-          boxSizing: 'border-box',
+        contentStyle={{
           padding: 20,
-          background: 'var(--sar-emphasis-bg)',
+          backgroundColor: 'white',
         }}
       >
-        Popup
+        <Text>Popup</Text>
       </Popup>
     </>
   )

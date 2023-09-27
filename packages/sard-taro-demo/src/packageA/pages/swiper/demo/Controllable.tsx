@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import { Mesh, Swiper } from 'sard-taro'
+import { Text } from '@tarojs/components'
+
+import '../index.scss'
 
 export default () => {
   const [activeIndex, setActiveIndex] = useState<number>(0)
@@ -20,22 +23,27 @@ export default () => {
     <>
       <Mesh columns={2} outlineVertical>
         <Mesh.Item clickable onClick={handlePrev}>
-          prev
+          <Text>prev</Text>
         </Mesh.Item>
         <Mesh.Item clickable onClick={handleNext}>
-          next
+          <Text>next</Text>
         </Mesh.Item>
       </Mesh>
 
       <Swiper
         indicatorDots
-        className="demo-swiper"
         current={activeIndex}
         onChange={(event) => setActiveIndex(event.detail.current)}
       >
-        <Swiper.Item className="demo-item demo-item1">item1</Swiper.Item>
-        <Swiper.Item className="demo-item demo-item2">item2</Swiper.Item>
-        <Swiper.Item className="demo-item demo-item3">item3</Swiper.Item>
+        <Swiper.Item className="demo-swiper-item demo-swiper-item1">
+          <Text>item1</Text>
+        </Swiper.Item>
+        <Swiper.Item className="demo-swiper-item demo-swiper-item2">
+          <Text>item2</Text>
+        </Swiper.Item>
+        <Swiper.Item className="demo-swiper-item demo-swiper-item3">
+          <Text>item3</Text>
+        </Swiper.Item>
       </Swiper>
     </>
   )

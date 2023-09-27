@@ -1,6 +1,6 @@
 import { View } from '@tarojs/components'
 import { useState } from 'react'
-import { Cell, Popout, Toast } from 'sard-taro'
+import { List, Popout, Toast } from 'sard-taro'
 
 export default () => {
   const [visible, setVisible] = useState(false)
@@ -8,10 +8,18 @@ export default () => {
 
   return (
     <>
-      <Cell.Group card>
-        <Cell linkable title="默认弹出框" onClick={() => setVisible(true)} />
-        <Cell linkable title="显示取消按钮" onClick={() => setVisible2(true)} />
-      </Cell.Group>
+      <List card>
+        <List.Item
+          linkable
+          title="默认弹出框"
+          onClick={() => setVisible(true)}
+        />
+        <List.Item
+          linkable
+          title="显示取消按钮"
+          onClick={() => setVisible2(true)}
+        />
+      </List>
 
       <Popout
         title="标题"

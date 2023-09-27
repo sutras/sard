@@ -2,7 +2,6 @@ import Demo from '@/components/demo'
 import Page from '@/components/page'
 
 import Basic from './demo/Basic'
-import Controllable from './demo/Controllable'
 import Disabled from './demo/Disabled'
 import Group from './demo/Group'
 import Size from './demo/Size'
@@ -14,13 +13,9 @@ import CustomFully from './demo/CustomFully'
 
 export default () => {
   return (
-    <Page className="page-checkbox">
+    <Page>
       <Demo title="基础使用">
         <Basic />
-      </Demo>
-
-      <Demo title="受控">
-        <Controllable />
       </Demo>
 
       <Demo title="禁用">

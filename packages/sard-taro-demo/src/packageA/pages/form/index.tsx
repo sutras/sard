@@ -1,6 +1,6 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { Cell, Toast } from 'sard-taro'
+import { List } from 'sard-taro'
 
 import DemoPopup from './DemoPopup'
 
@@ -29,34 +29,32 @@ import AntDemo22 from './ant-demo/Demo22'
 
 export default () => {
   return (
-    <Page className="page-form">
-      <Toast.Agent />
-
+    <Page>
       <Demo title="Ant Demo" full>
-        <Cell.Group card>
-          <DemoPopup demo={AntDemo1} />
-          <DemoPopup demo={AntDemo2} />
-          <DemoPopup demo={AntDemo3} />
-          <DemoPopup demo={AntDemo4} />
-          <DemoPopup demo={AntDemo5} />
-          <DemoPopup demo={AntDemo6} />
-          <DemoPopup demo={AntDemo7} />
-          <DemoPopup demo={AntDemo8} />
-          <DemoPopup demo={AntDemo9} />
-          <DemoPopup demo={AntDemo10} />
-          <DemoPopup demo={AntDemo11} />
-          <DemoPopup demo={AntDemo12} />
-          <DemoPopup demo={AntDemo13} />
-          <DemoPopup demo={AntDemo14} />
-          <DemoPopup demo={AntDemo15} />
-          <DemoPopup demo={AntDemo16} />
-          <DemoPopup demo={AntDemo17} />
-          <DemoPopup demo={AntDemo18} />
-          <DemoPopup demo={AntDemo19} />
-          <DemoPopup demo={AntDemo20} />
-          <DemoPopup demo={AntDemo21} />
-          <DemoPopup demo={AntDemo22} />
-        </Cell.Group>
+        <List card>
+          <DemoPopup index={1} demo={AntDemo1} />
+          <DemoPopup index={2} demo={AntDemo2} />
+          <DemoPopup index={3} demo={AntDemo3} />
+          <DemoPopup index={4} demo={AntDemo4} />
+          <DemoPopup index={5} demo={AntDemo5} />
+          <DemoPopup index={6} demo={AntDemo6} />
+          <DemoPopup index={7} demo={AntDemo7} />
+          <DemoPopup index={8} demo={AntDemo8} />
+          <DemoPopup index={9} demo={AntDemo9} />
+          <DemoPopup index={10} demo={AntDemo10} />
+          <DemoPopup index={11} demo={AntDemo11} />
+          <DemoPopup index={12} demo={AntDemo12} />
+          <DemoPopup index={13} demo={AntDemo13} />
+          <DemoPopup index={14} demo={AntDemo14} />
+          <DemoPopup index={15} demo={AntDemo15} />
+          <DemoPopup index={16} demo={AntDemo16} />
+          <DemoPopup index={17} demo={AntDemo17} />
+          <DemoPopup index={18} demo={AntDemo18} />
+          <DemoPopup index={19} demo={AntDemo19} />
+          <DemoPopup index={20} demo={AntDemo20} />
+          <DemoPopup index={21} demo={AntDemo21} />
+          <DemoPopup index={22} demo={AntDemo22} />
+        </List>
       </Demo>
     </Page>
   )

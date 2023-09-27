@@ -1,50 +1,34 @@
-import { useState } from 'react'
-import { Cell, Toast, ToastProps } from 'sard-taro'
+import { List, Toast } from 'sard-taro'
 
 export default () => {
-  const [visible, setVisible] = useState(false)
-  const [type, setType] = useState<ToastProps['type']>('text')
-  const [title, setTitle] = useState<ToastProps['title']>('')
-
-  const showToast = (type: ToastProps['type'], title: ToastProps['title']) => {
-    setType(type)
-    setTitle(title)
-    setVisible(true)
-  }
-
   return (
-    <>
-      <Cell.Group card>
-        <Cell
-          linkable
-          title="文本提示"
-          onClick={() => showToast('text', '文本提示')}
-        />
-        <Cell
-          linkable
-          title="成功提示"
-          onClick={() => showToast('success', '成功')}
-        />
-
-        <Cell
-          linkable
-          title="失败提示"
-          onClick={() => showToast('fail', '失败')}
-        />
-        <Cell
-          linkable
-          title="加载中提示"
-          onClick={() => showToast('loading', '加载中')}
-        />
-        <Cell linkable title="隐藏提示" onClick={() => setVisible(false)} />
-      </Cell.Group>
-
-      <Toast
-        visible={visible}
-        type={type}
-        title={title}
-        onTimeout={setVisible}
+    <List card>
+      <List.Item
+        linkable
+        title="文本提示"
+        onClick={() => Toast.show('文本提示')}
       />
-    </>
+      <List.Item
+        linkable
+        title="很长的文本"
+        onClick={() =>
+          Toast.show(
+            '春山暖日和风，阑干楼阁帘栊，杨柳秋千院中。啼莺舞燕，小桥流水飞红。',
+          )
+        }
+      />
+      <List.Item
+        linkable
+        title="成功提示"
+        onClick={() => Toast.success('成功')}
+      />
+      <List.Item linkable title="失败提示" onClick={() => Toast.fail('失败')} />
+      <List.Item
+        linkable
+        title="加载中提示"
+        onClick={() => Toast.loading('加载中')}
+      />
+      <List.Item linkable title="隐藏提示" onClick={() => Toast.hide()} />
+    </List>
   )
 }

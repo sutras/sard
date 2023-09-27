@@ -1,23 +1,22 @@
-import { Calendar, Cell, Popout } from 'sard-taro'
+import { useState } from 'react'
+import { Calendar, List, Popout } from 'sard-taro'
 
 export default () => {
+  const [visible, setVisible] = useState(false)
+
   return (
-    <Popout title="请选择日期">
-      <Popout.Outlet>
-        {({ outletValue, setVisible }) => (
-          <Cell.Group card>
-            <Cell
-              linkable
-              title="请选择日期"
-              value={outletValue}
-              onClick={() => setVisible(true)}
-            />
-          </Cell.Group>
-        )}
-      </Popout.Outlet>
-      <Popout.Target>
+    <>
+      <List card>
+        <List.Item
+          linkable
+          title="显示弹出框"
+          onClick={() => setVisible(true)}
+        />
+      </List>
+
+      <Popout title="请选择日期" visible={visible} onVisible={setVisible}>
         <Calendar />
-      </Popout.Target>
-    </Popout>
+      </Popout>
+    </>
   )
 }

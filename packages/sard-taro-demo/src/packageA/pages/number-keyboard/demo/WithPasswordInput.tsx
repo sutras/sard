@@ -1,9 +1,15 @@
 import { View } from '@tarojs/components'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { NumberKeyboard, PasswordInput } from 'sard-taro'
 
 export default () => {
   const [value, setValue] = useState('')
+
+  const handleInput = useCallback((key) => setValue((value) => value + key), [])
+  const handleDelete = useCallback(
+    () => setValue((value) => value.slice(0, -1)),
+    [],
+  )
 
   return (
     <>
@@ -17,10 +23,7 @@ export default () => {
         />
       </View>
 
-      <NumberKeyboard
-        onInput={(key) => setValue((value) => value + key)}
-        onDelete={() => setValue((value) => value.slice(0, -1))}
-      />
+      <NumberKeyboard onInput={handleInput} onDelete={handleDelete} />
     </>
   )
 }

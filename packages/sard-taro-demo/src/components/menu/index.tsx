@@ -1,7 +1,6 @@
-import taro from '@tarojs/taro'
-import { CellGroup, Cell } from 'sard-taro'
+import Taro from '@tarojs/taro'
+import { List } from 'sard-taro'
 import { View } from '@tarojs/components'
-import './index.scss'
 
 import { kebabCase } from '@/utils'
 
@@ -27,12 +26,16 @@ const menus = [
     title: '布局',
     children: [
       {
+        title: 'Grid 栅格',
+        name: 'Grid',
+      },
+      {
         title: 'Mesh 宫格',
         name: 'Mesh',
       },
       {
-        title: 'Grid 栅格',
-        name: 'Grid',
+        title: 'Space 间距',
+        name: 'Space',
       },
     ],
   },
@@ -125,8 +128,8 @@ const menus = [
         name: 'Badge',
       },
       {
-        title: 'Cell 单元格',
-        name: 'Cell',
+        title: 'Card 卡片',
+        name: 'Card',
       },
       {
         title: 'Collapse 折叠',
@@ -135,6 +138,10 @@ const menus = [
       {
         title: 'CountDown 倒计时',
         name: 'CountDown',
+      },
+      {
+        title: 'List 列表',
+        name: 'List',
       },
       {
         title: 'Empty 空状态',
@@ -244,37 +251,46 @@ const menus = [
       },
     ],
   },
+  {
+    title: '底层组件',
+    children: [
+      {
+        title: 'Pressable 可按压的',
+        name: 'Toast',
+      },
+    ],
+  },
 ]
 
 export default () => {
   const navigateTo = (name: string) => {
-    taro.navigateTo({
+    Taro.navigateTo({
       url: `/packageA/pages/${name}/index`,
     })
   }
 
   return (
-    <View className="menu">
+    <View style={{ paddingTop: 10, paddingBottom: 10 }}>
       {menus.map((group) => {
         return (
-          <CellGroup
+          <List
             key={group.title}
             title={group.title}
             card
-            footerStyle={{ flex: 'none' }}
+            footerStyle={{ flexGrow: 0 }}
             style={{ marginBottom: 20 }}
           >
             {group.children.map((comp) => {
               return (
-                <Cell
+                <List.Item
                   key={comp.title}
                   title={comp.title}
                   linkable
                   onClick={() => navigateTo(kebabCase(comp.name))}
-                ></Cell>
+                />
               )
             })}
-          </CellGroup>
+          </List>
         )
       })}
     </View>

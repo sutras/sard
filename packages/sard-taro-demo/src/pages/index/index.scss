@@ -1,37 +1,18 @@
-.index-page {
-  .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+.demo-index-header {
+  padding: 50px 32px 20px;
+}
 
-  .header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 50px 32px 20px;
-  }
+.demo-index-logo {
+  width: 32px;
+  height: 32px;
+}
 
-  .flex-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
+.demo-index-title {
+  font-size: 24px;
+  font-weight: bold;
+}
 
-  .logo {
-    width: 32px;
-    height: 32px;
-  }
-
-  .title {
-    margin-left: 10px;
-    font-size: 24px;
-    font-weight: bold;
-  }
-
-  .desc {
-    margin-top: 10px;
-    font-size: 14px;
-    color: var(--sar-tertiary-color);
-  }
+.demo-index-desc {
+  font-size: 14px;
+  color: var(--sar-tertiary-color);
 }

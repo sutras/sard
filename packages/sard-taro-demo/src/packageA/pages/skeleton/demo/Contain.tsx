@@ -6,24 +6,24 @@ export default () => {
   const [loading, setLoading] = useState(true)
 
   return (
-    <Space vertical>
+    <Space>
       <Switch
         defaultChecked={!loading}
         onChange={(check) => setLoading(!check)}
-      ></Switch>
+      />
 
       <Skeleton avatar title animated loading={loading}>
-        <View style={{ display: 'flex' }}>
-          <View style={{ flex: 'none', marginRight: 15 }}>
-            <Icon name="person" size={32}></Icon>
+        <Space direction="horizontal" gap={15}>
+          <View style={{ flexGrow: 0 }}>
+            <Icon name="person" size={32} />
           </View>
-          <View style={{ flex: 1 }}>
-            <View style={{ marginBottom: 10, fontSize: 16 }}>我是一个标题</View>
+          <Space style={{ flex: 1 }}>
+            <View style={{ fontSize: 16 }}>我是一个标题</View>
             <View>
               我是一个段落我是一个段落我是一个段落我是一个段落我是一个段落我是一个段落我是一个段落我是一个段落
             </View>
-          </View>
-        </View>
+          </Space>
+        </Space>
       </Skeleton>
     </Space>
   )

@@ -2,7 +2,6 @@ import Demo from '@/components/demo'
 import Page from '@/components/page'
 
 import Basic from './demo/Basic'
-import Theme from './demo/Theme'
 import Plain from './demo/Plain'
 import Round from './demo/Round'
 import Mark from './demo/Mark'
@@ -12,13 +11,9 @@ import Closable from './demo/Closable'
 
 export default () => {
   return (
-    <Page className="page-tag">
+    <Page>
       <Demo title="基础使用">
         <Basic />
-      </Demo>
-
-      <Demo title="主题色">
-        <Theme />
       </Demo>
 
       <Demo title="镂空">

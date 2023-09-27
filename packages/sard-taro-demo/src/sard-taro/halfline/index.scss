@@ -1,0 +1,65 @@
+@import '../style/variables.scss';
+@import '../style/mixins/bem.scss';
+@import '../style/mixins/universal.scss';
+
+// #variables
+$sar-halfline-border-color: $sar-border-color !default;
+$sar-halfline-z-index: 2 !default;
+$sar-halfline-scale: 0.5 !default;
+// #endvariables
+
+@include bem(halfline) {
+  @include b() {
+    @include universal;
+    position: absolute;
+    z-index: $sar-halfline-z-index;
+    pointer-events: none;
+
+    @include m(top) {
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: $sar-halfline-border-color;
+      transform: scaleY($sar-halfline-scale);
+    }
+
+    @include m(right) {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 1px;
+      background-color: $sar-halfline-border-color;
+      transform: scaleX($sar-halfline-scale);
+    }
+
+    @include m(bottom) {
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 1px;
+      background-color: $sar-halfline-border-color;
+      transform: scaleY($sar-halfline-scale);
+    }
+
+    @include m(left) {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 1px;
+      background-color: $sar-halfline-border-color;
+      transform: scaleX($sar-halfline-scale);
+    }
+
+    @include m(around) {
+      top: -50%;
+      left: -50%;
+      right: -50%;
+      bottom: -50%;
+      border-width: 1px;
+      border-style: solid;
+      border-color: $sar-halfline-border-color;
+      transform: scale($sar-halfline-scale);
+    }
+  }
+}

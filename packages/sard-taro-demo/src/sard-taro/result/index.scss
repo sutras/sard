@@ -1,0 +1,79 @@
+@import '../style/variables.scss';
+@import '../style/mixins/bem.scss';
+@import '../style/mixins/universal.scss';
+
+// #variables
+$sar-result-icon-font-size: 48px !default;
+
+$sar-result-success-color: $sar-success !default;
+$sar-result-info-color: $sar-info !default;
+$sar-result-warning-color: $sar-warning !default;
+$sar-result-error-color: $sar-danger !default;
+$sar-result-question-color: $sar-primary !default;
+
+$sar-result-title-margin-top: 16px !default;
+$sar-result-title-font-size: $sar-text-xl !default;
+
+$sar-result-description-margin-top: 4px !default;
+$sar-result-description-font-size: $sar-text-base !default;
+$sar-result-description-color: $sar-tertiary-color !default;
+
+$sar-result-extra-margin-top: 16px !default;
+// #endvariables
+
+@include bem(result) {
+  @include b() {
+    @include universal;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  @include e(icon) {
+    @include universal;
+    font-size: $sar-result-icon-font-size;
+    line-height: $sar-result-icon-font-size * $sar-leading-none;
+    text-align: center;
+
+    @include m(success) {
+      color: $sar-result-success-color;
+    }
+
+    @include m(info) {
+      color: $sar-result-info-color;
+    }
+
+    @include m(warning) {
+      color: $sar-result-warning-color;
+    }
+
+    @include m(error) {
+      color: $sar-result-error-color;
+    }
+
+    @include m(question) {
+      color: $sar-result-question-color;
+    }
+  }
+
+  @include e(title) {
+    @include universal;
+    margin-top: $sar-result-title-margin-top;
+    font-size: $sar-result-title-font-size;
+
+    text-align: center;
+  }
+
+  @include e(description) {
+    @include universal;
+    margin-top: $sar-result-description-margin-top;
+    font-size: $sar-result-description-font-size;
+    color: $sar-result-description-color;
+    text-align: center;
+  }
+
+  @include e(extra) {
+    @include universal;
+    margin-top: $sar-result-extra-margin-top;
+  }
+}

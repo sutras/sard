@@ -9,7 +9,7 @@ import Gap from './demo/Gap'
 
 export default () => {
   return (
-    <Page className="page-password-input">
+    <Page>
       <Demo title="基础使用">
         <Basic />
       </Demo>

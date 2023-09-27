@@ -1,6 +1,6 @@
 import { View } from '@tarojs/components'
 import { useState } from 'react'
-import { Cell, Steps } from 'sard-taro'
+import { List, Steps } from 'sard-taro'
 
 export default () => {
   const [current, setCurrent] = useState(1)
@@ -13,11 +13,11 @@ export default () => {
   }
 
   return (
-    <Cell.Group card>
-      <Cell title="上一步" onClick={prevStep} linkable></Cell>
-      <Cell title="下一步" onClick={nextStep} linkable></Cell>
-      <Cell>
-        <Steps vertical center current={current}>
+    <List card>
+      <List.Item title="上一步" onClick={prevStep} linkable />
+      <List.Item title="下一步" onClick={nextStep} linkable />
+      <List.Item>
+        <Steps direction="vertical" center current={current}>
           <Steps.Step>
             <View>步骤1</View>
             <View>这是描述</View>
@@ -31,7 +31,7 @@ export default () => {
             <View>这是描述</View>
           </Steps.Step>
         </Steps>
-      </Cell>
-    </Cell.Group>
+      </List.Item>
+    </List>
   )
 }

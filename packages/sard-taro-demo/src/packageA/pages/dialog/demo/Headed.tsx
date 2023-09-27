@@ -1,9 +1,9 @@
-import { Cell, Dialog } from 'sard-taro'
+import { List, Dialog } from 'sard-taro'
 
 export default () => {
   return (
-    <Cell.Group card>
-      <Cell
+    <List card>
+      <List.Item
         linkable
         title="显示提示框"
         onClick={() => {
@@ -15,7 +15,7 @@ export default () => {
           })
         }}
       />
-      <Cell
+      <List.Item
         linkable
         title="显示确定框"
         onClick={() => {
@@ -27,7 +27,7 @@ export default () => {
           })
         }}
       />
-      <Cell
+      <List.Item
         linkable
         title="显示提示框-无标题"
         onClick={() => {
@@ -38,7 +38,7 @@ export default () => {
           })
         }}
       />
-      <Cell
+      <List.Item
         linkable
         title="显示确定框-无标题"
         onClick={() => {
@@ -49,6 +49,6 @@ export default () => {
           })
         }}
       />
-    </Cell.Group>
+    </List>
   )
 }

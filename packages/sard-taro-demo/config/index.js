@@ -9,6 +9,8 @@ function getOutputRoot() {
   return `dist/${platform}`
 }
 
+const nativeShellPath = path.resolve(process.cwd(), '../taro-native-shell/')
+
 const config = {
   projectName: 'sard-taro',
   date: '2023-6-27',
@@ -35,8 +37,10 @@ const config = {
     '@/components': path.resolve(__dirname, '..', 'src/components'),
     '@/static': path.resolve(__dirname, '..', 'src/static'),
     '@/utils': path.resolve(__dirname, '..', 'src/utils'),
-    'sard-taro/dist': 'sard-taro/src',
-    'sard-taro': 'sard-taro/src',
+    // 'sard-taro/dist': 'sard-taro/src',
+    // 'sard-taro': 'sard-taro/src',
+    'sard-taro/dist': path.resolve(__dirname, '..', 'src/sard-taro'),
+    'sard-taro': path.resolve(__dirname, '..', 'src/sard-taro'),
   },
   mini: {
     baseLevel: 16,
@@ -54,7 +58,7 @@ const config = {
         },
       },
       cssModules: {
-        enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
+        enable: true, // 默认为 false，如需使用 css modules 功能，则设为 true
         config: {
           namingPattern: 'module', // 转换模式，取值为 global/module
           generateScopedName: '[name]__[local]___[hash:base64:5]',
@@ -77,7 +81,7 @@ const config = {
         config: {},
       },
       cssModules: {
-        enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
+        enable: true, // 默认为 false，如需使用 css modules 功能，则设为 true
         config: {
           namingPattern: 'module', // 转换模式，取值为 global/module
           generateScopedName: '[name]__[local]___[hash:base64:5]',
@@ -95,8 +99,29 @@ const config = {
         },
       },
       cssModules: {
-        enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
+        enable: true, // 默认为 false，如需使用 css modules 功能，则设为 true
       },
+    },
+    output: {
+      iosSourceMapUrl: '', // sourcemap 文件url
+      iosSourcemapOutput: path.resolve(nativeShellPath, 'ios/main.map'), // sourcemap 文件输出路径
+      iosSourcemapSourcesRoot: '', // 将 sourcemap 资源路径转为相对路径时的根目录
+      androidSourceMapUrl: '',
+      androidSourcemapOutput: path.resolve(
+        nativeShellPath,
+        'android/app/src/main/assets/index.android.map',
+      ),
+      androidSourcemapSourcesRoot: '',
+      ios: path.resolve(nativeShellPath, 'ios/main.jsbundle'),
+      iosAssetsDest: path.resolve(nativeShellPath, 'ios'),
+      android: path.resolve(
+        nativeShellPath,
+        'android/app/src/main/assets/index.android.bundle',
+      ),
+      androidAssetsDest: path.resolve(
+        nativeShellPath,
+        'android/app/src/main/res',
+      ),
     },
   },
 }

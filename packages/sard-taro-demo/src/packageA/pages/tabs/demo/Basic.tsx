@@ -1,13 +1,14 @@
+import { useState } from 'react'
 import { Tabs } from 'sard-taro'
 
 export default () => {
+  const [activeKey, setActiveKey] = useState<number | string>(0)
+
   return (
-    <Tabs defaultActiveKey={0}>
-      {Array(3)
-        .fill(0)
-        .map((_, i) => {
-          return <Tabs.Tab key={i}>{`标签${i + 1}`}</Tabs.Tab>
-        })}
+    <Tabs activeKey={activeKey} onChange={setActiveKey}>
+      <Tabs.Tab>标签1</Tabs.Tab>
+      <Tabs.Tab>标签2</Tabs.Tab>
+      <Tabs.Tab>标签3</Tabs.Tab>
     </Tabs>
   )
 }

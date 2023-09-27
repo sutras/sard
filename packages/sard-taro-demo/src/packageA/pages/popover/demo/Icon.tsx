@@ -3,25 +3,26 @@ import { Button, Popover, Toast } from 'sard-taro'
 export default () => {
   return (
     <Popover
+      theme="dark"
       options={[
         {
           text: '选项1',
           iconProps: {
-            prefix: 'demo-icon',
+            family: 'demo-icons',
             name: 'upc-scan',
           },
         },
         {
           text: '选项2',
           iconProps: {
-            prefix: 'demo-icon',
+            family: 'demo-icons',
             name: 'camera',
           },
         },
         {
           text: '选项3',
           iconProps: {
-            prefix: 'demo-icon',
+            family: 'demo-icons',
             name: 'bell',
           },
         },

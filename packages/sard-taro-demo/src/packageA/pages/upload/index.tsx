@@ -1,6 +1,5 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { Toast } from 'sard-taro'
 
 import Basic from './demo/Basic'
 import Video from './demo/Video'
@@ -14,9 +13,7 @@ import CustomSelect from './demo/CustomSelect'
 
 export default () => {
   return (
-    <Page className="page-upload">
-      <Toast.Agent />
-
+    <Page>
       <Demo title="基础使用">
         <Basic />
       </Demo>

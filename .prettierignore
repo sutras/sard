@@ -130,6 +130,6 @@ dist
 .pnp.*
 
 package-lock.json
+yarn.lock
 */sard-taro/site/
-
-*.html
+taro-native-shell

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Cell, Steps } from 'sard-taro'
+import { List, Steps } from 'sard-taro'
 
 export default () => {
   const [current, setCurrent] = useState(1)
@@ -12,16 +12,16 @@ export default () => {
   }
 
   return (
-    <Cell.Group card>
-      <Cell title="上一步" onClick={prevStep} linkable></Cell>
-      <Cell title="下一步" onClick={nextStep} linkable></Cell>
-      <Cell>
+    <List card>
+      <List.Item title="上一步" onClick={prevStep} linkable />
+      <List.Item title="下一步" onClick={nextStep} linkable />
+      <List.Item>
         <Steps current={current} center>
           <Steps.Step>步骤1</Steps.Step>
           <Steps.Step>步骤2</Steps.Step>
           <Steps.Step>步骤3</Steps.Step>
         </Steps>
-      </Cell>
-    </Cell.Group>
+      </List.Item>
+    </List>
   )
 }

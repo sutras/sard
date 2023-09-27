@@ -1,14 +1,16 @@
-import { Tag } from 'sard-taro'
+import { Space, Tag } from 'sard-taro'
 
 export default () => {
   return (
-    <Tag
-      style={{
-        background: 'rgba(var(--sar-pink-rgb), 0.1)',
-        color: 'var(--sar-pink)',
-      }}
-    >
-      标签
-    </Tag>
+    <Space direction="horizontal">
+      <Tag color="tomato">标签</Tag>
+      <Tag color="#ededed" textColor="tomato">
+        标签
+      </Tag>
+
+      <Tag plain color="tomato">
+        标签
+      </Tag>
+    </Space>
   )
 }

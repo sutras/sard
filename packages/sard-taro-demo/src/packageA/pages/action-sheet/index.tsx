@@ -1,36 +1,38 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
 
-import { Toast } from 'sard-taro'
 import Basic from './demo/Basic'
-import Manual from './demo/Manual'
+import NoAgent from './demo/NoAgent'
+import Explicit from './demo/Explicit'
 import Cancel from './demo/Cancel'
 import Status from './demo/Status'
-import TitleDesc from './demo/TitleDesc'
+import Description from './demo/Description'
 
 export default () => {
   return (
-    <Page className="page-action-sheet">
-      <Toast.Agent />
-
+    <Page>
       <Demo title="基础使用" full>
         <Basic />
       </Demo>
 
-      <Demo title="手动声明项目组件" full>
-        <Manual />
+      <Demo title="不使用代理" full>
+        <NoAgent />
+      </Demo>
+
+      <Demo title="显式声明动作项组件" full>
+        <Explicit />
       </Demo>
 
       <Demo title="取消按钮" full>
         <Cancel />
       </Demo>
 
-      <Demo title="状态" full>
+      <Demo title="自定义操作状态" full>
         <Status />
       </Demo>
 
-      <Demo title="标题&描述" full>
-        <TitleDesc />
+      <Demo title="描述" full>
+        <Description />
       </Demo>
     </Page>
   )

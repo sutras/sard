@@ -2,7 +2,7 @@ import { Input, Space } from 'sard-taro'
 
 export default () => {
   return (
-    <Space vertical>
+    <Space>
       <Input type="textarea" autoHeight placeholder="autoHeight" />
       <Input
         type="textarea"

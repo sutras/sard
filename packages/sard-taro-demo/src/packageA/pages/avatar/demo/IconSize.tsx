@@ -1,5 +1,5 @@
 import { Avatar } from 'sard-taro'
 
 export default () => {
-  return <Avatar iconSize={24} />
+  return <Avatar iconProps={{ size: 24 }} />
 }

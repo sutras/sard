@@ -1,19 +1,13 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { Toast } from 'sard-taro'
 
 import Basic from './demo/Basic'
 import Compact from './demo/Compact'
 import WithCalendar from './demo/WithCalendar'
-import Controllable from './demo/Controllable'
-import Fast from './demo/Fast'
-import WithForm from './demo/WithForm'
 
 export default () => {
   return (
-    <Page className="page-popout">
-      <Toast.Agent />
-
+    <Page>
       <Demo title="基础使用" full>
         <Basic />
       </Demo>
@@ -24,18 +18,6 @@ export default () => {
 
       <Demo title="结合日期组件" full>
         <WithCalendar />
-      </Demo>
-
-      <Demo title="受控的弹出框" full>
-        <Controllable />
-      </Demo>
-
-      <Demo title="快捷确认" full>
-        <Fast />
-      </Demo>
-
-      <Demo title="结合其他表单组件" full>
-        <WithForm />
       </Demo>
     </Page>
   )

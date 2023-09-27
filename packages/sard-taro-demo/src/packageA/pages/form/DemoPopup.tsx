@@ -1,55 +1,51 @@
-import { View } from '@tarojs/components'
+import Taro from '@tarojs/taro'
 import {
-  ReactElement,
+  FunctionComponent,
   ReactNode,
   createElement,
-  useEffect,
   useMemo,
   useState,
 } from 'react'
-import { Cell, Popup } from 'sard-taro'
+import { List, Popout, PopoutProps } from 'sard-taro'
 
-interface DemoPopup {
+export const systemInfo = Taro.getSystemInfoSync()
+
+interface DemoPopupProps {
   children?: ReactNode
-  demo?: ReactElement
+  demo: FunctionComponent & { title?: ReactNode }
+  index?: number
+  popoutProps?: PopoutProps
 }
 
-function DemoPopup(props) {
-  const { demo } = props
+function DemoPopup(props: DemoPopupProps) {
+  const { demo, index, popoutProps } = props
 
   const [visible, setVisible] = useState(false)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setVisible(mounted)
-  }, [mounted])
 
   const element = useMemo(() => {
     return createElement(demo)
   }, [demo])
 
   return (
-    <View>
-      {mounted && (
-        <Popup
-          effect="slide-bottom"
-          visible={visible}
-          onExited={() => setMounted(false)}
-          onMaskClick={() => setVisible(false)}
-          style={{
-            maxHeight: '80%',
-            overflowY: 'auto',
-            overflowX: 'hidden',
-            background: 'var(--sar-emphasis-bg)',
-            borderTopLeftRadius: 10,
-            borderTopRightRadius: 10,
-          }}
-        >
-          {element}
-        </Popup>
-      )}
-      <Cell title={demo.title} linkable onClick={() => setMounted(true)}></Cell>
-    </View>
+    <>
+      <Popout
+        {...popoutProps}
+        visible={visible}
+        onVisible={setVisible}
+        title={`${index}. ${demo.title}`}
+        showFooter={false}
+      >
+        {element}
+      </Popout>
+
+      <List.Item
+        title={`${index}. ${demo.title}`}
+        linkable
+        onClick={() => {
+          setVisible(true)
+        }}
+      />
+    </>
   )
 }
 

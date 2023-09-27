@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Cell, Dropdown, Switch } from 'sard-taro'
+import { Button, List, Dropdown, Switch } from 'sard-taro'
 
 export default () => {
   const options1 = [
@@ -20,18 +20,16 @@ export default () => {
   const [visible, setVisible] = useState(false)
 
   return (
-    <Dropdown>
-      <Dropdown.Item options={options1} defaultValue="1"></Dropdown.Item>
+    <Dropdown direction="up">
+      <Dropdown.Item options={options1} defaultValue="1" />
       <Dropdown.Item title="筛选" visible={visible} onVisible={setVisible}>
-        <Cell.Group inlaid>
-          <Cell title="包邮" value={<Switch></Switch>}></Cell>
-          <Cell title="团购" value={<Switch></Switch>}></Cell>
-          <Cell>
-            <Button block onClick={() => setVisible(false)}>
-              确认
-            </Button>
-          </Cell>
-        </Cell.Group>
+        <List inlaid>
+          <List.Item title="包邮" value={<Switch />} />
+          <List.Item title="团购" value={<Switch />} />
+          <List.Item>
+            <Button onClick={() => setVisible(false)}>确认</Button>
+          </List.Item>
+        </List>
       </Dropdown.Item>
     </Dropdown>
   )

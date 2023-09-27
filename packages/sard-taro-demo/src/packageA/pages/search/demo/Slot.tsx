@@ -1,35 +1,75 @@
-import { Icon, Search, Space } from 'sard-taro'
+import { Button, Search, Space } from 'sard-taro'
 
 export default () => {
   return (
-    <Space vertical>
+    <Space gap="medium">
       <Search
         placeholder="请输入关键词"
         shape="round"
         prepend={
-          <Icon
-            prefix="demo-icon"
-            name="upc-scan"
-            style={{ marginLeft: 5, marginRight: 17 }}
+          <Button
+            type="pale-text"
+            size="small"
+            theme="secondary"
+            style={{ marginRight: 6 }}
+            iconProps={{
+              family: 'demo-icons',
+              name: 'upc-scan',
+              size: 16,
+            }}
           />
         }
         inputPrepend={
-          <Icon name="caret-down" color="var(--sar-gray-700)" size={14} />
+          <Button
+            type="pale-text"
+            size="mini"
+            theme="secondary"
+            iconProps={{
+              name: 'caret-down',
+              size: 14,
+            }}
+          />
         }
-        inputAppend={<Icon prefix="demo-icon" name="camera" size={20} />}
+        inputAppend={
+          <Button
+            type="pale-text"
+            size="mini"
+            theme="secondary"
+            iconProps={{
+              family: 'demo-icons',
+              name: 'camera',
+              size: 18,
+            }}
+          />
+        }
       />
 
       <Search
-        style={{ marginTop: 20 }}
         placeholder="请输入关键词"
         shape="round"
-        prepend={<Icon name="left" size={18} style={{ marginRight: 12 }} />}
+        prepend={
+          <Button
+            type="pale-text"
+            size="small"
+            theme="secondary"
+            style={{ marginRight: 6 }}
+            iconProps={{
+              name: 'left',
+              size: 16,
+            }}
+          />
+        }
         append={
-          <Icon
-            prefix="demo-icon"
-            name="list-task"
-            size={20}
-            style={{ marginLeft: 10 }}
+          <Button
+            type="pale-text"
+            size="small"
+            theme="secondary"
+            style={{ marginLeft: 6 }}
+            iconProps={{
+              family: 'demo-icons',
+              name: 'list-task',
+              size: 20,
+            }}
           />
         }
       />

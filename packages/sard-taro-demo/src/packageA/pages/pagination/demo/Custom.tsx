@@ -5,10 +5,10 @@ export default () => {
     <Pagination
       total={100}
       pageSize={10}
-      prev={<Icon name="left"></Icon>}
-      next={<Icon name="right"></Icon>}
+      prev={<Icon name="left" />}
+      next={<Icon name="right" />}
       page={(page) =>
-        page === 2 ? <Icon prefix="demo-icon" name="emoji-smile"></Icon> : page
+        page === 2 ? <Icon family="demo-icons" name="emoji-smile" /> : page
       }
     />
   )

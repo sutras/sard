@@ -1,0 +1,39 @@
+@import '../style/variables.scss';
+@import '../style/functions.scss';
+@import '../style/mixins/bem.scss';
+@import '../style/mixins/universal.scss';
+@import '../style/mixins/ifweb.scss';
+
+// #variables
+$sar-progress-bar-height: 4px !default;
+$sar-progress-bar-border-radius: $sar-rounded-sm !default;
+$sar-progress-bar-bg: $sar-secondary-bg !default;
+
+$sar-progress-bar-trail-color: $sar-white !default;
+$sar-progress-bar-trail-bg: $sar-primary !default;
+$sar-progress-bar-trail-font-size: 12px !default;
+$sar-progress-bar-trail-transition-duration: $sar-duration-slow !default;
+// #endvariables
+
+@include bem(progress-bar) {
+  @include b() {
+    @include universal;
+    height: $sar-progress-bar-height;
+    border-radius: $sar-progress-bar-border-radius;
+    background-color: $sar-progress-bar-bg;
+    overflow: hidden;
+  }
+
+  @include e(trail) {
+    @include universal;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: $sar-progress-bar-trail-font-size;
+    color: $sar-progress-bar-trail-color;
+    background-color: $sar-progress-bar-trail-bg;
+    @include ifweb {
+      transition: width $sar-progress-bar-trail-transition-duration ease;
+    }
+  }
+}

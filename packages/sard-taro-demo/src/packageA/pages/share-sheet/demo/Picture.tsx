@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Cell, ShareSheet, ShareSheetItemProps, Toast } from 'sard-taro'
+import { List, ShareSheet, ShareSheetItemProps, Toast } from 'sard-taro'
 
 import pic1 from '@/static/pic1.jpg'
 
@@ -13,7 +13,7 @@ const itemList: ShareSheetItemProps[] = [
     color: '#fff',
     background: '#0bc15f',
     icon: {
-      prefix: 'demo-icon',
+      family: 'demo-icons',
       name: 'wechat-fill',
     },
   },
@@ -28,17 +28,20 @@ export default () => {
 
   return (
     <>
-      <Cell.Group card>
-        <Cell linkable title="显示分享面板" onClick={() => setVisible(true)} />
-      </Cell.Group>
+      <List card>
+        <List.Item
+          linkable
+          title="显示分享面板"
+          onClick={() => setVisible(true)}
+        />
+      </List>
 
       <ShareSheet
-        visible={visible}
         itemList={itemList}
         cancel="取消"
-        actionClosable
         onSelect={handleSelect}
-        onClose={setVisible}
+        visible={visible}
+        onVisible={setVisible}
       />
     </>
   )

@@ -1,5 +1,12 @@
+import { useState } from 'react'
 import { Checkbox } from 'sard-taro'
 
 export default () => {
-  return <Checkbox>复选框</Checkbox>
+  const [checked, setChecked] = useState(false)
+
+  return (
+    <Checkbox checked={checked} onChange={setChecked}>
+      {checked ? '已选中' : '未选中'}
+    </Checkbox>
+  )
 }

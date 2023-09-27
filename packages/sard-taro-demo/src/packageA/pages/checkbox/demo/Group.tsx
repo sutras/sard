@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Checkbox, Space } from 'sard-taro'
 
 export default () => {
-  const [value, setValue] = useState<string[]>(['apple'])
+  const [value, setValue] = useState<string[]>(['option2'])
 
   return (
     <Checkbox.Group value={value} onChange={setValue}>

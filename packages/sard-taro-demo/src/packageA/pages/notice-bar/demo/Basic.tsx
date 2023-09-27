@@ -2,7 +2,7 @@ import { NoticeBar, Space } from 'sard-taro'
 
 export default () => {
   return (
-    <Space vertical>
+    <Space>
       <NoticeBar>这是一条公告！</NoticeBar>
 
       <NoticeBar>

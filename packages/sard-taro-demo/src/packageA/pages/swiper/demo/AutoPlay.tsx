@@ -1,5 +1,8 @@
 import { useState } from 'react'
-import { Cell, Slider, Swiper } from 'sard-taro'
+import { List, Slider, Swiper } from 'sard-taro'
+import { Text } from '@tarojs/components'
+
+import '../index.scss'
 
 export default () => {
   const [interval, setInterval$] = useState(2000)
@@ -7,36 +10,40 @@ export default () => {
 
   return (
     <>
-      <Cell.Group>
-        <Cell>duration: {duration}</Cell>
-        <Cell>
+      <List>
+        <List.Item>
+          <Text>duration: {duration}</Text>
+        </List.Item>
+        <List.Item>
           <Slider
             min={500}
             max={2000}
             value={duration}
             onChange={(value: number) => setDuration(value)}
           />
-        </Cell>
-        <Cell>interval: {interval}</Cell>
-        <Cell>
+        </List.Item>
+        <List.Item>
+          <Text>interval: {interval}</Text>
+        </List.Item>
+        <List.Item>
           <Slider
             min={2000}
             max={8000}
             value={interval}
             onChange={(value: number) => setInterval$(value)}
           />
-        </Cell>
-      </Cell.Group>
-      <Swiper
-        className="demo-swiper"
-        autoplay
-        duration={duration}
-        interval={interval}
-        indicatorDots
-      >
-        <Swiper.Item className="demo-item demo-item1">item1</Swiper.Item>
-        <Swiper.Item className="demo-item demo-item2">item2</Swiper.Item>
-        <Swiper.Item className="demo-item demo-item3">item3</Swiper.Item>
+        </List.Item>
+      </List>
+      <Swiper autoplay duration={duration} interval={interval} indicatorDots>
+        <Swiper.Item className="demo-swiper-item demo-swiper-item1">
+          <Text>item1</Text>
+        </Swiper.Item>
+        <Swiper.Item className="demo-swiper-item demo-swiper-item2">
+          <Text>item2</Text>
+        </Swiper.Item>
+        <Swiper.Item className="demo-swiper-item demo-swiper-item3">
+          <Text>item3</Text>
+        </Swiper.Item>
       </Swiper>
     </>
   )

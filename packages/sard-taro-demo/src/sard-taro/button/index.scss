@@ -1,0 +1,307 @@
+@import '../style/variables.scss';
+@import '../style/mixins/bem.scss';
+@import '../style/mixins/button.scss';
+@import '../style/mixins/disabled.scss';
+@import '../style/mixins/universal.scss';
+@import '../style/mixins/ifweb.scss';
+
+// #variables
+$sar-button-sizes: (
+  mini: (
+    height: 24px,
+    padding-x: 8px,
+    border-radius: $sar-rounded-sm,
+    font-size: $sar-text-sm,
+    gap: 4px,
+  ),
+  small: (
+    height: 32px,
+    padding-x: 12px,
+    border-radius: $sar-rounded-sm,
+    font-size: $sar-text-sm,
+    gap: 4px,
+  ),
+  medium: (
+    height: 40px,
+    padding-x: 16px,
+    border-radius: $sar-rounded,
+    font-size: $sar-text-base,
+    gap: 8px,
+  ),
+  large: (
+    height: 48px,
+    padding-x: 20px,
+    border-radius: $sar-rounded-lg,
+    font-size: $sar-text-lg,
+    gap: 8px,
+  ),
+);
+
+$sar-button-border-color: $sar-border-color !default;
+$sar-button-transition-duration: $sar-duration-fast !default;
+
+$sar-button-active-opacity: $sar-active-opacity !default;
+$sar-button-default-active-bg: rgba(0, 0, 0, 0.25) !default;
+$sar-button-active-bg: rgba(0, 0, 0, 0.125) !default;
+$sar-button-mild-bg: $sar-gray-200 !default;
+$sar-button-pale-bg-opacity: 0.25 !default;
+$sar-button-text-active-bg: $sar-gray-200 !default;
+
+$sar-button-loading-opacity: $sar-loading-opacity !default;
+
+$sar-button-loading-gap: 4px !default;
+
+// @media (prefers-color-scheme: dark) {
+//   :root,
+//   page {
+//     $sar-button-text-active-bg: $sar-gray-700;
+//   }
+// }
+// #endvariables
+
+@mixin button-size($height, $padding-x, $border-radius, $font-size, $gap) {
+  height: $height;
+  min-width: $height;
+  padding-right: $padding-x;
+  padding-left: $padding-x;
+  border-radius: $border-radius;
+  font-size: $font-size;
+}
+
+@include bem(button) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    margin: 0;
+    flex: none;
+    overflow: hidden;
+    border-width: 0;
+    text-align: center;
+    @include ifweb {
+      white-space: nowrap;
+      transition: $sar-button-transition-duration;
+      cursor: pointer;
+    }
+
+    // 尺寸
+    @each $size, $value in $sar-button-sizes {
+      @include m($size) {
+        @include button-size($value...);
+      }
+    }
+
+    // 圆形按钮
+    @include m(round) {
+      border-radius: $sar-rounded-full;
+    }
+
+    // 按压状态
+    @include m(pressed) {
+      opacity: $sar-button-active-opacity;
+    }
+
+    // 禁用状态
+    @include m(disabled) {
+      @include disabled;
+    }
+
+    // 加载状态
+    @include m(loading) {
+      opacity: $sar-button-loading-opacity;
+      @include ifweb {
+        cursor: not-allowed;
+      }
+    }
+
+    // 图标按钮
+    @include m(is-icon) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  @include e(content) {
+    @include universal;
+    z-index: 2;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    @each $size, $value in $sar-button-sizes {
+      @include m($size) {
+        font-size: map-get($value, font-size);
+      }
+    }
+
+    // 尺寸
+    @each $size, $value in $sar-button-sizes {
+      @include m(gap-#{$size}) {
+        margin-left: map-get($value, gap);
+      }
+    }
+  }
+
+  @include e(loading-wrapper) {
+    @include universal;
+  }
+
+  // border
+  &::after {
+    display: none;
+  }
+  @include e(halfline-wrapper) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    pointer-events: none;
+  }
+  @include e(halfline) {
+    @include ifweb {
+      transition: $sar-button-transition-duration;
+    }
+
+    @each $size, $value in $sar-button-sizes {
+      @include m($size) {
+        border-radius: map-get($value, border-radius) * 2;
+      }
+    }
+
+    @include m(round) {
+      border-radius: $sar-rounded-full;
+    }
+  }
+
+  @include e(shade) {
+    @include universal;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 4;
+    opacity: 0;
+    background-color: $sar-button-active-bg;
+    @include ifweb {
+      border-radius: inherit;
+      transition: $sar-button-transition-duration;
+    }
+    pointer-events: none;
+
+    @include m(default) {
+      background-color: $sar-button-default-active-bg;
+    }
+
+    @include m(pressed) {
+      opacity: 1;
+    }
+  }
+
+  // # 主题色
+  @each $theme, $value in $sar-theme-colors {
+    $color: nth($value, 1);
+    $color-pale: nth($value, 2);
+    $color-saturated: nth($value, 3);
+
+    // ## 默认类型
+    @include m(default-#{$theme}) {
+      @include button-set-theme {
+        background-color: $color;
+      }
+    }
+
+    @include em(content, default-#{$theme}) {
+      color: $sar-white;
+    }
+
+    @include em(loading, default-#{$theme}) {
+      color: $sar-white;
+    }
+
+    // ## 淡颜色类型
+    @include m(pale-#{$theme}) {
+      @include button-set-theme {
+        background-color: rgba($color-pale, $sar-button-pale-bg-opacity);
+      }
+    }
+
+    @include em(content, pale-#{$theme}) {
+      color: $color-saturated;
+    }
+
+    @include em(loading, pale-#{$theme}) {
+      color: $color-saturated;
+    }
+
+    // ## 温和类型
+    @include m(mild-#{$theme}) {
+      @include button-set-theme {
+        background-color: $sar-button-mild-bg;
+      }
+    }
+
+    @include em(content, mild-#{$theme}) {
+      color: $color-saturated;
+    }
+
+    @include em(loading, mild-#{$theme}) {
+      color: $color-saturated;
+    }
+
+    // ## 轮廓类型
+    @include m(outline-#{$theme}) {
+      @include button-set-theme {
+        color: $color-saturated;
+        background-color: transparent;
+      }
+    }
+
+    @include em(content, outline-#{$theme}) {
+      color: $color-saturated;
+    }
+
+    @include em(loading, outline-#{$theme}) {
+      color: $color-saturated;
+    }
+
+    @include em(halfline, $theme) {
+      border-color: $color-saturated;
+    }
+
+    // ## 文本类型
+    @include m(text-#{$theme}) {
+      @include button-set-theme {
+        background-color: transparent;
+      }
+    }
+
+    @include em(content, text-#{$theme}) {
+      color: $color-saturated;
+    }
+
+    @include em(loading, text-#{$theme}) {
+      color: $color-saturated;
+    }
+
+    // ## 淡文本类型
+    @include m(pale-text-#{$theme}) {
+      @include button-set-theme {
+        background-color: transparent;
+      }
+    }
+
+    @include em(content, pale-text-#{$theme}) {
+      color: $color-saturated;
+    }
+
+    @include em(loading, pale-text-#{$theme}) {
+      color: $color-saturated;
+    }
+  }
+}

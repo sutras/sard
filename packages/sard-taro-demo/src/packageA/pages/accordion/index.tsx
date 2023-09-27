@@ -1,44 +1,42 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
 
-import './index.scss'
-
 import Basic from './demo/Basic'
 import Expand from './demo/Expand'
 import MultipleExpand from './demo/MultipleExpand'
 import Controllable from './demo/Controllable'
 import Disabled from './demo/Disabled'
-import Slot from './demo/Slot'
+import Arrow from './demo/Arrow'
 import Duration from './demo/Duration'
 
 export default () => {
   return (
-    <Page className="page-accordion">
-      <Demo title="基础使用">
+    <Page>
+      <Demo title="基础使用" full>
         <Basic />
       </Demo>
 
-      <Demo title="默认展开">
+      <Demo title="默认展开" full>
         <Expand />
       </Demo>
 
-      <Demo title="展开多个">
+      <Demo title="展开多个" full>
         <MultipleExpand />
       </Demo>
 
-      <Demo title="受控">
+      <Demo title="受控" full>
         <Controllable />
       </Demo>
 
-      <Demo title="禁用">
+      <Demo title="禁用" full>
         <Disabled />
       </Demo>
 
-      <Demo title="插槽">
-        <Slot />
+      <Demo title="自定义箭头" full>
+        <Arrow />
       </Demo>
 
-      <Demo title="折叠时间">
+      <Demo title="折叠时间" full>
         <Duration />
       </Demo>
     </Page>

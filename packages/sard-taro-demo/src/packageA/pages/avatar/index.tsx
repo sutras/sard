@@ -16,7 +16,7 @@ import MaxCount from './demo/MaxCount'
 
 export default () => {
   return (
-    <Page className="page-loading">
+    <Page>
       <Demo title="基础使用">
         <Basic />
       </Demo>

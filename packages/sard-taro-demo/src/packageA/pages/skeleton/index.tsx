@@ -12,7 +12,7 @@ import Custom from './demo/Custom'
 
 export default () => {
   return (
-    <Page className="page-skeleton">
+    <Page style={{ backgroundColor: 'white' }}>
       <Demo title="基础使用">
         <Basic />
       </Demo>

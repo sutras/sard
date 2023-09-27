@@ -1,9 +1,9 @@
-import { Calendar, Cell, PopoutInput, Toast } from 'sard-taro'
+import { Calendar, List, PopoutInput, Toast } from 'sard-taro'
 
 export default () => {
   return (
-    <Cell.Group card bodyStyle={{ flex: 'none' }}>
-      <Cell>
+    <List card bodyStyle={{ flex: 'none' }}>
+      <List.Item>
         <PopoutInput
           title="选择多个日期"
           inputProps={{ placeholder: '选择多个日期' }}
@@ -12,23 +12,19 @@ export default () => {
             type="multiple"
             maxDays={3}
             overMaxDays={() => Toast.show('最多选择3天')}
-            min={new Date(2000, 0, 1)}
-            max={new Date(2000, 1, 0)}
           />
         </PopoutInput>
-      </Cell>
+      </List.Item>
 
-      <Cell>
+      <List.Item>
         <PopoutInput title="选择范围" inputProps={{ placeholder: '选择范围' }}>
           <Calendar
             type="range"
             maxDays={3}
             overMaxDays={() => Toast.show('最多选择3天')}
-            min={new Date(2000, 0, 1)}
-            max={new Date(2000, 1, 0)}
           />
         </PopoutInput>
-      </Cell>
-    </Cell.Group>
+      </List.Item>
+    </List>
   )
 }

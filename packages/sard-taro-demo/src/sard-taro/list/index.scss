@@ -1,0 +1,226 @@
+@import '../style/variables.scss';
+@import '../style/mixins/bem.scss';
+@import '../style/mixins/universal.scss';
+@import '../style/mixins/ifweb.scss';
+
+// #variables
+// list
+$sar-list-header-gap-x: 16px !default;
+$sar-list-header-gap-y: 8px !default;
+
+$sar-list-title-font-size: $sar-text-sm !default;
+$sar-list-title-line-height: $sar-list-title-font-size * $sar-leading-snug !default;
+$sar-list-title-color: $sar-tertiary-color !default;
+
+$sar-list-footer-gap-x: 16px !default;
+$sar-list-footer-gap-y: 8px !default;
+
+$sar-list-label-font-size: $sar-text-sm !default;
+$sar-list-label-line-height: $sar-list-label-font-size * $sar-leading-snug !default;
+$sar-list-label-color: $sar-tertiary-color !default;
+
+$sar-list-card-margin-x: 16px !default;
+$sar-list-card-border-radius: $sar-rounded-lg !default;
+
+// item
+$sar-list-item-bg: $sar-emphasis-bg !default;
+
+$sar-list-item-min-height: 44px !default;
+$sar-list-item-padding-x: 16px !default;
+$sar-list-item-padding-y: 6px !default;
+
+$sar-list-item-active-bg: $sar-active-bg !default;
+$sar-list-item-disabled-opacity: $sar-disabled-opacity !default;
+
+$sar-list-item-header-gap-right: 12px !default;
+
+$sar-list-item-title-font-size: $sar-text-base !default;
+$sar-list-item-title-line-height: $sar-list-item-title-font-size *
+  $sar-leading-normal !default;
+
+$sar-list-item-footer-margin-left: 8px !default;
+
+$sar-list-item-value-font-size: $sar-text-base !default;
+$sar-list-item-value-line-height: $sar-list-item-value-font-size *
+  $sar-leading-normal !default;
+$sar-list-item-value-color: $sar-tertiary-color !default;
+
+$sar-list-item-label-margin-top: 4px !default;
+$sar-list-item-label-font-size: $sar-text-sm !default;
+$sar-list-item-label-line-height: $sar-list-item-label-font-size *
+  $sar-leading-normal !default;
+$sar-list-item-label-color: $sar-tertiary-color !default;
+
+$sar-list-item-arrow-gap-left: 8px !default;
+$sar-list-item-arrow-font-size: $sar-text-base !default;
+$sar-list-item-arrow-color: $sar-tertiary-color !default;
+// #endvariables
+
+@include bem(list) {
+  @include b() {
+    @include universal;
+  }
+
+  @include e(header) {
+    @include universal;
+    padding-right: $sar-list-header-gap-x;
+    padding-bottom: $sar-list-header-gap-y;
+    padding-left: $sar-list-header-gap-x;
+  }
+
+  @include e(title) {
+    @include universal;
+    font-size: $sar-list-title-font-size;
+    line-height: $sar-list-title-line-height;
+    color: $sar-list-title-color;
+  }
+
+  @include e(body) {
+    @include universal;
+
+    @include m(card) {
+      border-radius: $sar-list-card-border-radius;
+    }
+  }
+
+  @include e(footer) {
+    @include universal;
+    padding-top: $sar-list-footer-gap-y;
+    padding-right: $sar-list-footer-gap-x;
+    padding-left: $sar-list-footer-gap-x;
+  }
+
+  @include e(label) {
+    @include universal;
+    font-size: $sar-list-label-font-size;
+    line-height: $sar-list-label-line-height;
+    color: $sar-list-label-color;
+  }
+
+  @include m(card) {
+    margin-left: $sar-list-card-margin-x;
+    margin-right: $sar-list-card-margin-x;
+  }
+
+  @include e(item) {
+    @include universal;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding-left: $sar-list-item-padding-x;
+    padding-right: $sar-list-item-padding-x;
+    background-color: $sar-list-item-bg;
+
+    @include m(first-card) {
+      border-top-left-radius: $sar-list-card-border-radius;
+      border-top-right-radius: $sar-list-card-border-radius;
+    }
+
+    @include m(last-card) {
+      border-bottom-left-radius: $sar-list-card-border-radius;
+      border-bottom-right-radius: $sar-list-card-border-radius;
+    }
+
+    @include m(pressed) {
+      background-color: $sar-list-item-active-bg;
+    }
+
+    @include m(clickable) {
+      @include ifweb {
+        cursor: pointer;
+      }
+    }
+  }
+
+  @include e(item-header) {
+    @include universal;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 0;
+    padding-right: $sar-list-item-header-gap-right;
+  }
+
+  @include e(item-content) {
+    @include universal;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    flex: auto;
+    min-height: $sar-list-item-min-height;
+    padding-top: $sar-list-item-padding-y;
+    padding-bottom: $sar-list-item-padding-y;
+    overflow: hidden;
+
+    @include m(custom) {
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  @include e(item-body, item-footer) {
+    @include universal;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    width: auto;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  @include e(item-body) {
+    justify-content: center;
+  }
+
+  @include e(item-icon) {
+    @include universal;
+    align-items: center;
+    flex: none;
+  }
+
+  @include e(item-title) {
+    @include universal;
+    font-size: $sar-list-item-title-font-size;
+    line-height: $sar-list-item-title-line-height;
+  }
+
+  @include e(item-label) {
+    @include universal;
+    margin-top: $sar-list-item-label-margin-top;
+    font-size: $sar-list-item-label-font-size;
+    line-height: $sar-list-item-label-line-height;
+    color: $sar-list-item-label-color;
+  }
+
+  @include e(item-footer) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: $sar-list-item-footer-margin-left;
+    gap: $sar-list-item-arrow-gap-left;
+
+    @include m(custom) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      gap: 0;
+    }
+  }
+
+  @include e(item-value) {
+    @include universal;
+    font-size: $sar-list-item-value-font-size;
+    line-height: $sar-list-item-value-line-height;
+    color: $sar-list-item-value-color;
+    text-align: right;
+    @include ifweb {
+      word-wrap: break-word;
+    }
+  }
+
+  @include e(item-arrow) {
+    @include universal;
+  }
+
+  @include e(item-arrow-icon) {
+    font-size: $sar-list-item-arrow-font-size;
+    color: $sar-list-item-arrow-color;
+  }
+}

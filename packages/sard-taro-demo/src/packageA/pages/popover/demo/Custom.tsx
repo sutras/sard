@@ -23,7 +23,7 @@ export default () => {
                 Toast.show(`选项${index + 1}`)
                 setVisible(false)
               }}
-            ></Mesh.Item>
+            />
           ))}
       </Mesh>
     </Popover>

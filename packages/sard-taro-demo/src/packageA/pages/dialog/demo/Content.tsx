@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Cell, Dialog, Form, Input, Toast } from 'sard-taro'
+import { List, Dialog, Form, Input, Toast } from 'sard-taro'
 
 export default () => {
   const [visible, setVisible] = useState(false)
@@ -15,9 +15,9 @@ export default () => {
 
   return (
     <>
-      <Cell.Group card>
-        <Cell linkable title="登录表单" onClick={() => setVisible(true)} />
-      </Cell.Group>
+      <List card>
+        <List.Item linkable title="登录表单" onClick={() => setVisible(true)} />
+      </List>
 
       <Dialog
         visible={visible}

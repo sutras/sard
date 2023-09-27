@@ -1,5 +1,8 @@
+import { useState } from 'react'
 import { Rate } from 'sard-taro'
 
 export default () => {
-  return <Rate defaultValue={3} />
+  const [value, setValue] = useState(3)
+
+  return <Rate value={value} onChange={setValue} />
 }

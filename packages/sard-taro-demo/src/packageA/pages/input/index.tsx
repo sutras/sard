@@ -2,28 +2,22 @@ import Demo from '@/components/demo'
 import Page from '@/components/page'
 
 import Basic from './demo/Basic'
-import Controllable from './demo/Controllable'
 import Style from './demo/Style'
 import Type from './demo/Type'
 import Clearable from './demo/Clearable'
 import ShowClearOnlyFocus from './demo/ShowClearOnlyFocus'
-import Disabled from './demo/Disabled'
-import ReadOnly from './demo/ReadOnly'
 import Slot from './demo/Slot'
 import Borderless from './demo/Borderless'
 import Inlaid from './demo/Inlaid'
 import AutoHeight from './demo/AutoHeight'
 import ShowCount from './demo/ShowCount'
+import DisabledReadOnly from './demo/DisabledReadOnly'
 
 export default () => {
   return (
-    <Page className="page-input">
+    <Page>
       <Demo title="基础使用">
         <Basic />
-      </Demo>
-
-      <Demo title="受控组件">
-        <Controllable />
       </Demo>
 
       <Demo title="自定义样式">
@@ -42,12 +36,8 @@ export default () => {
         <ShowClearOnlyFocus />
       </Demo>
 
-      <Demo title="禁用">
-        <Disabled />
-      </Demo>
-
-      <Demo title="只读">
-        <ReadOnly />
+      <Demo title="只读和禁用">
+        <DisabledReadOnly />
       </Demo>
 
       <Demo title="插槽">

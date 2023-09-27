@@ -27,6 +27,7 @@ const CollectionCreateForm: FC<CollectionCreateFormProps> = ({
       buttonType="round"
       title="Create a new collection"
       confirmText="Create"
+      showCancel
       cancelText="Cancel"
       onVisible={onVisible}
       onConfirm={() => {
@@ -70,7 +71,7 @@ const CollectionCreateForm: FC<CollectionCreateFormProps> = ({
           className="collection-create-form_last-form-item"
         >
           <Radio.Group>
-            <Space gap="medium">
+            <Space direction="horizontal" gap="medium">
               <Radio value="public">Public</Radio>
               <Radio value="private">Private</Radio>
             </Space>
@@ -91,21 +92,22 @@ function App() {
   }
 
   return (
-    <View style={{ padding: 20 }}>
-      <Button
-        block
-        onClick={() => {
-          setVisible(true)
-        }}
-      >
-        New Collection
-      </Button>
+    <>
+      <View style={{ padding: 20 }}>
+        <Button
+          onClick={() => {
+            setVisible(true)
+          }}
+        >
+          New Collection
+        </Button>
+      </View>
       <CollectionCreateForm
         visible={visible}
         onCreate={onCreate}
         onVisible={setVisible}
       />
-    </View>
+    </>
   )
 }
 

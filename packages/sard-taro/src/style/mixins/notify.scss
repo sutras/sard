@@ -1,6 +1,0 @@
-@use '../variables' as var;
-
-@mixin notify-theme($color) {
-  color: var.$sar-white;
-  background-color: $color;
-}

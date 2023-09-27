@@ -1,9 +1,9 @@
-import { Cell, Toast } from 'sard-taro'
+import { List, Toast } from 'sard-taro'
 
 export default () => {
   return (
-    <Cell.Group card>
-      <Cell
+    <List card>
+      <List.Item
         linkable
         title="顶部位置"
         onClick={() => {
@@ -12,7 +12,7 @@ export default () => {
           })
         }}
       />
-      <Cell
+      <List.Item
         linkable
         title="底部位置"
         onClick={() => {
@@ -21,6 +21,6 @@ export default () => {
           })
         }}
       />
-    </Cell.Group>
+    </List>
   )
 }

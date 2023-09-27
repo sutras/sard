@@ -1,13 +1,13 @@
-import { Cascader, Cell, PopoutInput } from 'sard-taro'
+import { Cascader, List, PopoutInput } from 'sard-taro'
 import { getRegionData } from 'region-data'
-import { View } from '@tarojs/components'
+import { Text, View } from '@tarojs/components'
 
 const regionData = getRegionData()
 
 export default () => {
   return (
-    <Cell.Group card>
-      <Cell>
+    <List card>
+      <List.Item>
         <PopoutInput title="请选择" inputProps={{ placeholder: '请选择' }}>
           <Cascader
             options={regionData}
@@ -15,17 +15,21 @@ export default () => {
             optionTop={(columnIndex) => (
               <View
                 style={{
-                  padding: '8px var(--sar-cascader-option-padding-x)',
-                  backgroundColor: 'rgba(var(--sar-warning-rgb), 0.1)',
-                  color: 'var(--sar-warning-text)',
+                  paddingTop: 8,
+                  paddingBottom: 8,
+                  paddingLeft: 16,
+                  paddingRight: 16,
+                  backgroundColor: '#f5f5f5',
                 }}
               >
-                当前为第{columnIndex + 1}级
+                <Text style={{ color: 'tomato' }}>
+                  当前为第{columnIndex + 1}级
+                </Text>
               </View>
             )}
           />
         </PopoutInput>
-      </Cell>
-    </Cell.Group>
+      </List.Item>
+    </List>
   )
 }

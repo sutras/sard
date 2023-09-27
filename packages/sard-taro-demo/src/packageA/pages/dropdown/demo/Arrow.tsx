@@ -33,11 +33,11 @@ export default () => {
   return (
     <Dropdown
       arrow={(visible) => {
-        return <Icon name={visible ? 'up' : 'down'}></Icon>
+        return <Icon name={visible ? 'up' : 'down'} />
       }}
     >
-      <Dropdown.Item options={options1} defaultValue="1"></Dropdown.Item>
-      <Dropdown.Item options={options2} defaultValue="2"></Dropdown.Item>
+      <Dropdown.Item options={options1} defaultValue="1" />
+      <Dropdown.Item options={options2} defaultValue="2" />
     </Dropdown>
   )
 }

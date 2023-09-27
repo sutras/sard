@@ -54,7 +54,7 @@ const PriceInput: FC<PriceInputProps> = ({ value = {}, onChange }) => {
         <Stepper
           value={String(value.number || number)}
           onChange={onNumberChange}
-        ></Stepper>
+        />
       </Col>
 
       <Col>
@@ -125,9 +125,7 @@ function App() {
       </Form.Field>
 
       <Form.Field underline={false}>
-        <Button block formType="submit">
-          Submit
-        </Button>
+        <Button formType="submit">Submit</Button>
       </Form.Field>
     </Form>
   )

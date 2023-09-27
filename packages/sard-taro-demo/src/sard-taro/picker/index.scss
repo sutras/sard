@@ -1,0 +1,109 @@
+@import '../style/variables.scss';
+@import '../style/mixins/bem.scss';
+@import '../style/mixins/universal.scss';
+@import '../style/mixins/ifweb.scss';
+
+// #variables
+$sar-picker-height: 240px !default;
+
+$sar-picker-item-font-size: $sar-text-lg !default;
+$sar-picker-item-color: $sar-body-color !default;
+
+$sar-picker-indicator-height: 48px !default;
+
+$sar-picker-mask-from-color: rgba($sar-white, 0.95) !default;
+$sar-picker-mask-to-color: rgba($sar-white, 0.6) !default;
+$sar-picker-mask-top-bg-image: linear-gradient(
+  to bottom,
+  $sar-picker-mask-from-color,
+  $sar-picker-mask-to-color
+) !default;
+$sar-picker-mask-bottom-bg-image: linear-gradient(
+  to top,
+  $sar-picker-mask-from-color,
+  $sar-picker-mask-to-color
+) !default;
+// #endvariables
+
+@include bem(picker) {
+  @include b() {
+    @include universal;
+    height: $sar-picker-height;
+  }
+
+  @include e(wrapper) {
+    @include universal;
+    flex-direction: row;
+    overflow: hidden;
+    @include ifweb {
+      -webkit-user-drag: none;
+    }
+  }
+
+  @include e(column) {
+    @include universal;
+    flex: 1;
+    width: 0;
+    height: 100%;
+    @include ifweb {
+      touch-action: pan-x;
+    }
+  }
+
+  @include e(mask) {
+    @include universal;
+    z-index: 1;
+    width: 100%;
+    flex: auto;
+    pointer-events: none;
+
+    @include m(top) {
+      @include ifweb {
+        background-image: $sar-picker-mask-top-bg-image;
+      }
+    }
+
+    @include m(bottom) {
+      @include ifweb {
+        background-image: $sar-picker-mask-bottom-bg-image;
+      }
+    }
+  }
+
+  @include e(indicator) {
+    @include universal;
+    width: 100%;
+    height: $sar-picker-indicator-height;
+    flex: none;
+    align-items: center;
+    pointer-events: none;
+  }
+
+  @include e(item-group) {
+    @include universal;
+    width: 100%;
+    pointer-events: auto;
+    @include ifweb {
+      will-change: transform;
+      transition-timing-function: cubic-bezier(0.23, 1, 0.68, 1);
+    }
+  }
+
+  @include e(item) {
+    @include universal;
+    flex: none;
+    height: $sar-picker-indicator-height;
+    line-height: $sar-picker-indicator-height;
+    font-size: $sar-picker-item-font-size;
+    text-align: center;
+    color: $sar-picker-item-color;
+
+    @include ifweb {
+      display: block;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

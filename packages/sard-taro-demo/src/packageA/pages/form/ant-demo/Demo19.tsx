@@ -34,15 +34,8 @@ function App() {
     console.log('Failed:', errorInfo)
   }
 
-  const [form] = Form.useForm()
-
   return (
-    <Form
-      onSuccess={handleSuccess}
-      onFail={handleFail}
-      form={form}
-      labelWidth={100}
-    >
+    <Form onSuccess={handleSuccess} onFail={handleFail} labelWidth={100}>
       <Form.Field name="date-picker" label="DatePicker" {...config}>
         <PopoutInput title="请选择" inputProps={{ placeholder: '请选择' }}>
           <DatetimePicker type="yMd" />
@@ -62,9 +55,7 @@ function App() {
       </Form.Field>
 
       <Form.Field underline={false}>
-        <Button block formType="submit">
-          Submit
-        </Button>
+        <Button formType="submit">Submit</Button>
       </Form.Field>
     </Form>
   )

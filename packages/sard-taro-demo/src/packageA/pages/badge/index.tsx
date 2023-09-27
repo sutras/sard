@@ -12,7 +12,7 @@ import UnWrap from './demo/UnWrap'
 
 export default () => {
   return (
-    <Page className="page-badge">
+    <Page>
       <Demo title="基础使用">
         <Basic />
       </Demo>

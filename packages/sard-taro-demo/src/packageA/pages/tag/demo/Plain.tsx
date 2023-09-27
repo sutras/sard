@@ -2,7 +2,7 @@ import { Space, Tag } from 'sard-taro'
 
 export default () => {
   return (
-    <Space>
+    <Space direction="horizontal" wrap>
       <Tag plain theme="primary">
         primary
       </Tag>

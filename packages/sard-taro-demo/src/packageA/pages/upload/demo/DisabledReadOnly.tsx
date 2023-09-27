@@ -11,7 +11,7 @@ export default () => {
             url: pic1,
           },
         ]}
-        disabled
+        readOnly
       />
 
       <Upload
@@ -20,7 +20,7 @@ export default () => {
             url: pic1,
           },
         ]}
-        readOnly
+        disabled
       />
     </Space>
   )

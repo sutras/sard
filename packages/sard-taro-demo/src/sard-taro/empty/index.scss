@@ -1,0 +1,53 @@
+@import '../style/variables.scss';
+@import '../style/mixins/bem.scss';
+@import '../style/mixins/universal.scss';
+
+// #variables
+$sar-empty-icon-font-size: 48px !default;
+$sar-empty-icon-color: $sar-gray-300 !default;
+
+$sar-empty-description-margin-top: 16px !default;
+$sar-empty-description-font-size: $sar-text-base !default;
+$sar-empty-description-color: $sar-deemphasis-color !default;
+$sar-empty-extra-margin-top: 20px !default;
+
+// @media (prefers-color-scheme: dark) {
+//   :root,
+//   page {
+//     $sar-empty-icon-color: $sar-gray-700;
+//   }
+// }
+// #endvariables
+
+@include bem(empty) {
+  @include b() {
+    @include universal;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  @include e(icon-wrapper) {
+    @include universal;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @include e(icon) {
+    font-size: $sar-empty-icon-font-size;
+    line-height: $sar-empty-icon-font-size * $sar-leading-none;
+    color: $sar-empty-icon-color;
+  }
+
+  @include e(description) {
+    @include universal;
+    margin-top: $sar-empty-description-margin-top;
+    font-size: $sar-empty-description-font-size;
+    color: $sar-empty-description-color;
+  }
+
+  @include e(extra) {
+    @include universal;
+    margin-top: $sar-empty-extra-margin-top;
+  }
+}

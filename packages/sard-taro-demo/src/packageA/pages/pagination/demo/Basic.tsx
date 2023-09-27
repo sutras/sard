@@ -1,5 +1,8 @@
+import { useState } from 'react'
 import { Pagination } from 'sard-taro'
 
 export default () => {
-  return <Pagination total={100} pageSize={10} />
+  const [current, setCurrent] = useState(1)
+
+  return <Pagination total={100} current={current} onChange={setCurrent} />
 }

@@ -6,18 +6,18 @@ export default () => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '30px',
-    height: '24px',
-    borderRadius: '4px',
+    width: 30,
+    height: 24,
+    borderRadius: 4,
     color: '#fff',
-    backgroundColor: 'var(--sar-pink)',
+    backgroundColor: 'tomato',
   }
 
   const startButton = (value) => <View style={buttonStyle}>{value}</View>
   const endButton = (value) => <View style={buttonStyle}>{value}</View>
 
   return (
-    <Space vertical>
+    <Space>
       <Slider defaultValue={50} thumb={endButton} />
       <Slider
         range

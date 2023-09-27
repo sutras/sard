@@ -1,6 +1,6 @@
 {
   "name": "sard-taro",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.0",
   "description": "Taro React 移动端 UI 组件库",
   "type": "module",
   "main": "dist/index.js",

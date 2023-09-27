@@ -2,9 +2,9 @@ import { NoticeBar, Space } from 'sard-taro'
 
 export default () => {
   return (
-    <Space vertical>
+    <Space>
       <NoticeBar
-        leftIconProps={{ prefix: 'demo-icon', name: 'bell', size: 16 }}
+        leftIconProps={{ family: 'demo-icons', name: 'bell', size: 16 }}
       >
         这是一条很长很长很长很长很长很长很长很长很长很长的公告！
       </NoticeBar>
@@ -13,7 +13,7 @@ export default () => {
         这是一条很长很长很长很长很长很长很长很长很长很长的公告！
       </NoticeBar>
 
-      <NoticeBar leftIcon="消息">
+      <NoticeBar leftIcon="消息: ">
         这是一条很长很长很长很长很长很长很长很长很长很长的公告！
       </NoticeBar>
     </Space>

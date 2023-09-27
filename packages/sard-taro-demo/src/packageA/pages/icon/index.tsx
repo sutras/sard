@@ -6,10 +6,7 @@ import Size from './demo/Size'
 import Color from './demo/Color'
 import Picture from './demo/Picture'
 import Inbuilt from './demo/Inbuilt'
-
-// function matchIconName(str) {
-//   return JSON.stringify(str.match(/(?<=\.sari-)[a-z\-]+/g))
-// }
+import Custom from './demo/Custom'
 
 export default () => {
   return (
@@ -28,6 +25,10 @@ export default () => {
 
       <Demo title="图片类型图标">
         <Picture />
+      </Demo>
+
+      <Demo title="自定义图标">
+        <Custom />
       </Demo>
 
       <Demo title="内置图标">

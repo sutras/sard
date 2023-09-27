@@ -2,12 +2,16 @@ import { Space, Switch } from 'sard-taro'
 
 export default () => {
   return (
-    <Space vertical>
-      <Switch disabled />
-      <Switch defaultChecked disabled />
+    <Space>
+      <Space direction="horizontal">
+        <Switch readOnly />
+        <Switch defaultChecked readOnly />
+      </Space>
 
-      <Switch readOnly />
-      <Switch defaultChecked readOnly />
+      <Space direction="horizontal">
+        <Switch disabled />
+        <Switch defaultChecked disabled />
+      </Space>
     </Space>
   )
 }

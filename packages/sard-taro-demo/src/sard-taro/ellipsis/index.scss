@@ -1,0 +1,19 @@
+@import '../style/mixins/bem.scss';
+
+// #variables
+// #endvariables
+
+@include bem(ellipsis) {
+  @include m(tail) {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  @include m(clip) {
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}

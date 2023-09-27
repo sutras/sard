@@ -14,7 +14,7 @@ import Vertical from './demo/Vertical'
 
 export default () => {
   return (
-    <Page className="page-notice-bar">
+    <Page>
       <Demo title="基础使用">
         <Basic />
       </Demo>

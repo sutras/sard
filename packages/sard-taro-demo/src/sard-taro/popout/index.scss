@@ -1,0 +1,118 @@
+@import '../style/variables.scss';
+@import '../style/mixins/bem.scss';
+@import '../style/mixins/universal.scss';
+
+// #variables
+$sar-popout-z-index: 1100 !default;
+
+$sar-popout-border-top-radius: $sar-rounded-xl !default;
+$sar-popout-bg: $sar-emphasis-bg !default;
+
+$sar-popout-close-padding: 16px !default;
+$sar-popout-close-font-size: $sar-text-lg !default;
+$sar-popout-close-color: $sar-secondary-color !default;
+
+$sar-popout-header-compact-height: 44px !default;
+$sar-popout-header-loose-height: 44px !default;
+$sar-popout-header-loose-padding-x: $sar-popout-close-padding * 2 +
+  $sar-popout-close-font-size !default;
+
+$sar-popout-title-max-width: 65% !default;
+$sar-popout-title-font-size: $sar-text-lg !default;
+$sar-popout-title-color: $sar-emphasis-color !default;
+
+$sar-popout-button-wrap-min-width: 80px !default;
+
+$sar-popout-footer-gap-y: 8px !default;
+$sar-popout-footer-gap-x: 16px !default;
+
+$sar-popout-button-gap: 16px !default;
+// #endvariables
+
+@include bem(popout) {
+  @include b() {
+    max-height: 100%;
+    border-top-left-radius: $sar-popout-border-top-radius;
+    border-top-right-radius: $sar-popout-border-top-radius;
+    background-color: $sar-popout-bg;
+  }
+
+  @include e(popup) {
+    z-index: $sar-popout-z-index;
+  }
+
+  @include e(header) {
+    @include universal;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    @include m(compact) {
+      height: $sar-popout-header-compact-height;
+    }
+
+    @include m(loose) {
+      height: $sar-popout-header-loose-height;
+      padding-left: $sar-popout-header-loose-padding-x;
+      padding-right: $sar-popout-header-loose-padding-x;
+    }
+  }
+
+  @include e(button-wrap) {
+    @include universal;
+    height: 100%;
+    min-width: $sar-popout-button-wrap-min-width;
+  }
+
+  @include e(header-button) {
+    height: 100%;
+  }
+
+  @include e(header-cancel) {
+    margin-right: auto;
+  }
+
+  @include e(header-confirm) {
+    margin-left: auto;
+  }
+
+  @include e(title) {
+    @include universal;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 0;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: $sar-popout-title-font-size;
+    font-weight: $sar-font-bold;
+    color: $sar-popout-title-color;
+  }
+
+  @include e(close) {
+    @include universal;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    padding: 0 $sar-popout-close-padding;
+    border-width: 0;
+    font-size: $sar-popout-close-font-size;
+    color: $sar-popout-close-color;
+  }
+
+  @include e(footer) {
+    @include universal;
+    flex-direction: row;
+    gap: $sar-popout-button-gap;
+    align-items: center;
+    padding: $sar-popout-footer-gap-y $sar-popout-footer-gap-x;
+  }
+
+  @include e(footer-button) {
+    flex: 1 1 0;
+  }
+}

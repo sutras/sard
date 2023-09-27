@@ -1,26 +1,7 @@
-import {
-  Button,
-  Col,
-  Form,
-  Icon,
-  Input,
-  Picker,
-  PopoutInput,
-  Radio,
-  Row,
-  Space,
-  Toast,
-} from 'sard-taro'
+import { useEffect } from 'react'
+import { Button, Card, Col, Form, Input, Row, Space, Toast } from 'sard-taro'
 
-const areas = [
-  { label: 'Beijing', value: 'Beijing' },
-  { label: 'Shanghai', value: 'Shanghai' },
-]
-
-const sights = {
-  Beijing: ['Tiananmen', 'Great Wall'],
-  Shanghai: ['Oriental Pearl', 'The Bund'],
-}
+import DemoScrollView from '../DemoScrollView'
 
 function App() {
   const handleSuccess = (values) => {
@@ -34,9 +15,12 @@ function App() {
 
   const [form] = Form.useForm()
 
-  const handleChange = () => {
-    form.setValues({ sights: [] })
-  }
+  const values = Form.useWatch([], form)
+
+  useEffect(() => {
+    console.clear()
+    console.log(JSON.stringify(values, null, 2))
+  }, [values])
 
   return (
     <Form
@@ -44,97 +28,122 @@ function App() {
       onSuccess={handleSuccess}
       onFail={handleFail}
       labelWidth={50}
+      initialValues={{ items: [{}] }}
     >
-      <Form.Field
-        name="area"
-        label="Area"
-        rules={[{ required: true, message: 'Missing area' }]}
-      >
-        <Radio.Group onChange={handleChange}>
-          <Space gap="medium">
-            {areas.map((area) => {
-              return (
-                <Radio value={area.value} key={area.value}>
-                  {area.label}
-                </Radio>
-              )
-            })}
-          </Space>
-        </Radio.Group>
-      </Form.Field>
-
-      <Form.List name="sights">
+      <Form.List name="items">
         {(fields, { add, remove }) => (
-          <>
-            {fields.map(({ key, name }) => (
-              <Form.Map name={name} key={key}>
-                <Form.Field>
-                  <Row gap={10} align="start">
-                    <Col>
-                      <Form.Field watch={['area']} unstyled>
-                        {({ getValue }) => {
-                          return (
+          <DemoScrollView
+            footer={
+              <Space>
+                <Button type="outline" onClick={() => add()}>
+                  + Add Item
+                </Button>
+                <Button onClick={() => form.submit()}>Submit</Button>
+              </Space>
+            }
+          >
+            {fields.map((field) => (
+              <Card
+                key={field.key}
+                title={`Item ${field.name + 1}`}
+                extra={
+                  <Button
+                    type="pale-text"
+                    size="mini"
+                    iconProps={{ name: 'close', size: 16 }}
+                    onClick={() => remove(field.name)}
+                  />
+                }
+                bodyStyle={{ padding: 0 }}
+                style={{
+                  borderWidth: 1,
+                  borderStyle: 'solid',
+                  borderColor: '#e3e3e3',
+                  marginLeft: 16,
+                  marginRight: 16,
+                  marginBottom: 16,
+                }}
+              >
+                <Form.Map name={field.name}>
+                  <Form.Field
+                    label="Name"
+                    name="name"
+                    rules={[{ required: true, message: 'Missing  Name' }]}
+                  >
+                    <Input inlaid placeholder="请输入" />
+                  </Form.Field>
+
+                  <Form.List name="list">
+                    {(subFields, subOpt) => (
+                      <>
+                        {subFields.map((subField, index) => (
+                          <Form.Map key={subField.key} name={subField.name}>
                             <Form.Field
-                              name="sight"
-                              label="Sight"
-                              disabled={!getValue('area')}
-                              rules={[
-                                { required: true, message: 'Missing sight' },
-                              ]}
-                              inlaid
+                              label={index === 0 ? 'List' : ''}
+                              required={index === 0}
                             >
-                              <PopoutInput
-                                inputProps={{
-                                  placeholder: '请选择',
-                                }}
-                              >
-                                <Picker
-                                  columns={sights[form.getValue('area')]}
+                              <Row gap={10} align="start">
+                                <Col>
+                                  <Form.Field
+                                    inlaid
+                                    name="first"
+                                    rules={[
+                                      {
+                                        required: true,
+                                        message: 'Missing First',
+                                      },
+                                    ]}
+                                  >
+                                    <Input placeholder="first" inlaid />
+                                  </Form.Field>
+                                </Col>
+
+                                <Col>
+                                  <Form.Field
+                                    inlaid
+                                    name="second"
+                                    rules={[
+                                      {
+                                        required: true,
+                                        message: 'Missing Second',
+                                      },
+                                    ]}
+                                  >
+                                    <Input placeholder="second" inlaid />
+                                  </Form.Field>
+                                </Col>
+
+                                <Button
+                                  type="pale"
+                                  size="mini"
+                                  round
+                                  style={{ marginTop: 5 }}
+                                  iconProps={{ name: 'minus', size: 14 }}
+                                  onClick={() => subOpt.remove(subField.name)}
                                 />
-                              </PopoutInput>
+                              </Row>
                             </Form.Field>
-                          )
-                        }}
-                      </Form.Field>
-                    </Col>
+                          </Form.Map>
+                        ))}
 
-                    <Col>
-                      <Form.Field
-                        name="price"
-                        label="Price"
-                        rules={[{ required: true, message: 'Missing price' }]}
-                        inlaid
-                      >
-                        <Input inlaid placeholder="请输入" />
-                      </Form.Field>
-                    </Col>
-
-                    <Button type="pale-text" size="small">
-                      <Icon
-                        name="close"
-                        size={16}
-                        onClick={() => remove(name)}
-                      />
-                    </Button>
-                  </Row>
-                </Form.Field>
-              </Form.Map>
+                        <Form.Field label underline={false}>
+                          <Button
+                            type="outline"
+                            size="small"
+                            onClick={() => subOpt.add()}
+                          >
+                            + Add Sub Item
+                          </Button>
+                        </Form.Field>
+                      </>
+                    )}
+                  </Form.List>
+                </Form.Map>
+              </Card>
             ))}
-            <Form.Field>
-              <Button type="mild" onClick={() => add()} block>
-                <Icon name="plus" />
-                Add sights
-              </Button>
-            </Form.Field>
-          </>
+          </DemoScrollView>
         )}
       </Form.List>
-
-      <Form.Field underline={false}>
-        <Button block formType="submit">
-          Submit
-        </Button>
-      </Form.Field>
     </Form>
   )
 }

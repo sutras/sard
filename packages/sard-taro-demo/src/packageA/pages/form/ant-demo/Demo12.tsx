@@ -26,14 +26,13 @@ function App() {
             <Form.Field
               name="username"
               inlaid
-              underline={false}
               rules={[{ required: true, message: 'Username is required' }]}
             >
               <Input inlaid placeholder="Please input" />
             </Form.Field>
           </Col>
           <Col>
-            <View style={{ color: 'var(--sar-primary)' }}>Need Help?</View>
+            <View style={{ color: 'tomato' }}>Need Help?</View>
           </Col>
         </Row>
       </Form.Field>
@@ -45,7 +44,6 @@ function App() {
               <Form.Field
                 name="province"
                 inlaid
-                underline={false}
                 rules={[{ required: true, message: 'Province is required' }]}
               >
                 <Input inlaid placeholder="Input province" />
@@ -55,7 +53,6 @@ function App() {
               <Form.Field
                 name="street"
                 inlaid
-                underline={false}
                 rules={[{ required: true, message: 'Street is required' }]}
               >
                 <Input inlaid placeholder="Input street" />
@@ -81,9 +78,7 @@ function App() {
       </Form.Field>
 
       <Form.Field underline={false}>
-        <Button block formType="submit">
-          Submit
-        </Button>
+        <Button formType="submit">Submit</Button>
       </Form.Field>
     </Form>
   )

@@ -1,0 +1,53 @@
+@import '../style/variables.scss';
+@import '../style/mixins/bem.scss';
+@import '../style/mixins/disabled.scss';
+@import '../style/mixins/universal.scss';
+@import '../style/mixins/ifweb.scss';
+
+// #variables
+$sar-checkbox-icon-font-size: 20px !default;
+$sar-checkbox-icon-color: $sar-quaternary-color !default;
+$sar-checkbox-icon-checked-color: $sar-primary !default;
+$sar-checkbox-icon-transition-duration: $sar-duration !default;
+
+$sar-checkbox-label-margin-left: 8px !default;
+
+$sar-checkbox-margin-left: 20px !default;
+$sar-checkbox-margin-top: 10px !default;
+// #endvariables
+
+@include bem(checkbox) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    align-items: center;
+    align-self: flex-start;
+
+    @include ifweb {
+      cursor: pointer;
+    }
+  }
+
+  @include e(icon) {
+    @include universal;
+    font-size: $sar-checkbox-icon-font-size;
+    color: $sar-checkbox-icon-color;
+    @include ifweb {
+      transition: color $sar-checkbox-icon-transition-duration;
+    }
+
+    @include m(checked) {
+      color: $sar-checkbox-icon-checked-color;
+    }
+  }
+
+  @include e(label) {
+    @include universal;
+    flex-direction: row;
+    margin-left: $sar-checkbox-label-margin-left;
+  }
+
+  @include m(disabled) {
+    @include disabled;
+  }
+}

@@ -2,6 +2,7 @@
   "name": "sard-taro",
   "version": "1.0.0",
   "type": "module",
+  "private": true,
   "devDependencies": {
     "@commitlint/cli": "^17.6.6",
     "@commitlint/config-conventional": "^17.6.6",
@@ -33,7 +34,6 @@
   },
   "workspaces": [
     "packages/sard-taro",
-    "packages/sard-taro-cli",
-    "packages/sard-taro-demo"
+    "packages/sard-taro-cli"
   ]
 }

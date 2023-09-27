@@ -1,18 +1,18 @@
-import { Cell, Notify } from 'sard-taro'
+import { List, Notify } from 'sard-taro'
 
 export default () => {
   return (
-    <Cell.Group card>
-      <Cell
+    <List card>
+      <List.Item
         linkable
         title="显示通知"
         onClick={() =>
           Notify.show('这是一条通知', {
-            background: 'var(--sar-pink)',
+            background: 'tomato',
           })
         }
       />
-      <Cell linkable title="隐藏通知" onClick={() => Notify.hide()} />
-    </Cell.Group>
+      <List.Item linkable title="隐藏通知" onClick={() => Notify.hide()} />
+    </List>
   )
 }

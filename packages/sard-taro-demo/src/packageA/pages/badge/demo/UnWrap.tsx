@@ -1,9 +1,10 @@
-import { Badge, Button } from 'sard-taro'
+import { Badge } from 'sard-taro'
+import BadgeBox from './BadgeBox'
 
 export default () => {
   return (
-    <Button style={{ position: 'relative', overflow: 'visible' }}>
-      消息 <Badge fixed value={5}></Badge>
-    </Button>
+    <BadgeBox>
+      <Badge fixed value={5} />
+    </BadgeBox>
   )
 }

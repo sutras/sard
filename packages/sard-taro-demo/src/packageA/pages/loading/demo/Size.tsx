@@ -1,10 +1,5 @@
-import { Loading, Space } from 'sard-taro'
+import { Loading } from 'sard-taro'
 
 export default () => {
-  return (
-    <Space>
-      <Loading size={24} />
-      <Loading size={24} type="clock" />
-    </Space>
-  )
+  return <Loading size={36} />
 }

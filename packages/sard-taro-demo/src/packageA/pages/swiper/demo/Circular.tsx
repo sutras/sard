@@ -1,11 +1,20 @@
 import { Swiper } from 'sard-taro'
+import { Text } from '@tarojs/components'
+
+import '../index.scss'
 
 export default () => {
   return (
-    <Swiper className="demo-swiper" indicatorDots circular>
-      <Swiper.Item className="demo-item demo-item1">item1</Swiper.Item>
-      <Swiper.Item className="demo-item demo-item2">item2</Swiper.Item>
-      <Swiper.Item className="demo-item demo-item3">item3</Swiper.Item>
+    <Swiper indicatorDots circular>
+      <Swiper.Item className="demo-swiper-item demo-swiper-item1">
+        <Text>item1</Text>
+      </Swiper.Item>
+      <Swiper.Item className="demo-swiper-item demo-swiper-item2">
+        <Text>item2</Text>
+      </Swiper.Item>
+      <Swiper.Item className="demo-swiper-item demo-swiper-item3">
+        <Text>item3</Text>
+      </Swiper.Item>
     </Swiper>
   )
 }

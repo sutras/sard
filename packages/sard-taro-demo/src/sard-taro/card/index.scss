@@ -1,0 +1,56 @@
+@import '../style/variables.scss';
+@import '../style/mixins/bem.scss';
+@import '../style/mixins/universal.scss';
+
+// #variables
+$sar-card-border-radius: $sar-rounded-lg !default;
+$sar-card-bg: $sar-white !default;
+
+$sar-card-header-padding-y: 10px !default;
+$sar-card-header-padding-x: 16px !default;
+
+$sar-card-title-font-size: $sar-text-lg !default;
+$sar-card-title-line-height: $sar-card-title-font-size * $sar-leading-normal !default;
+
+$sar-card-body-padding-y: 10px !default;
+$sar-card-body-padding-x: 16px !default;
+
+$sar-card-footer-padding-y: 10px !default;
+$sar-card-footer-padding-x: 16px !default;
+// #endvariables
+
+@include bem(card) {
+  @include b() {
+    @include universal;
+    background-color: $sar-card-bg;
+    border-radius: $sar-card-border-radius;
+  }
+
+  @include e(header) {
+    @include universal;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: $sar-card-header-padding-y $sar-card-header-padding-x;
+  }
+
+  @include e(title) {
+    @include universal;
+    font-size: $sar-card-title-font-size;
+    line-height: $sar-card-title-line-height;
+  }
+
+  @include e(extra) {
+    @include universal;
+  }
+
+  @include e(body) {
+    @include universal;
+    padding: $sar-card-body-padding-y $sar-card-body-padding-x;
+  }
+
+  @include e(footer) {
+    @include universal;
+    padding: $sar-card-footer-padding-y $sar-card-footer-padding-x;
+  }
+}

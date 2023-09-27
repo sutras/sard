@@ -1,33 +1,33 @@
-import { Cell, Toast } from 'sard-taro'
+import { List, Toast } from 'sard-taro'
 
 import pic1 from '@/static/pic1.jpg'
 
 export default () => {
   return (
-    <Cell.Group card>
-      <Cell
+    <List card>
+      <List.Item
         linkable
         title="图标提示框"
         onClick={() => {
           Toast.show('笑一笑', {
             iconProps: {
-              prefix: 'demo-icon',
+              family: 'demo-icons',
               name: 'emoji-smile',
             },
           })
         }}
       />
-      <Cell
+      <List.Item
         linkable
         title="图片提示框"
         onClick={() => {
-          Toast.show('Sard', {
+          Toast.show('title', {
             iconProps: {
               name: pic1,
             },
           })
         }}
       />
-    </Cell.Group>
+    </List>
   )
 }

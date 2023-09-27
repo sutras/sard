@@ -4,6 +4,10 @@ import { useBuildChannel, useChannel } from '../../use/useChannel'
 import { useLocation } from 'react-router-dom'
 import useEvent from '../../use/useEvent'
 
+function getComponentPathName(path: string) {
+  return path.replace(/^.*\//, '')
+}
+
 export default function Mobile() {
   const baseUrl = '__MOBILE_URL_PLACEHOLDER__'
   const url = baseUrl
@@ -27,7 +31,7 @@ export default function Mobile() {
   const channel = useChannel()
 
   const emitRoute = useEvent(() => {
-    channel.emit('route', location.pathname.replace(/^.*\//, ''))
+    channel.emit('route', getComponentPathName(location.pathname))
   })
 
   useEffect(() => {
@@ -51,6 +55,20 @@ export default function Mobile() {
             ref={iframeCb}
             className="doc-mobile-iframe"
           ></iframe>
+          <div className="doc-mobile-toolbar">
+            <div
+              className="doc-mobile-open"
+              onClick={() => {
+                window.open(
+                  `${baseUrl}/#/packageA/pages/${getComponentPathName(
+                    location.pathname,
+                  )}/index`,
+                )
+              }}
+            >
+              在新窗口打开⤴
+            </div>
+          </div>
         </div>
       )}
     </>

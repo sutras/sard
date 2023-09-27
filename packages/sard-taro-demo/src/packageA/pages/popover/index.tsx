@@ -1,6 +1,5 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { Toast } from 'sard-taro'
 
 import Dark from './demo/Dark'
 import Basic from './demo/Basic'
@@ -12,9 +11,7 @@ import Placement from './demo/Placement'
 
 export default () => {
   return (
-    <Page className="page-popover">
-      <Toast.Agent />
-
+    <Page>
       <Demo title="基础使用">
         <Basic />
       </Demo>

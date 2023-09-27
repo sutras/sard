@@ -8,13 +8,7 @@ export default () => {
   return (
     <>
       <View style={{ padding: 20 }}>
-        <PasswordInput
-          type="underline"
-          custom
-          focused
-          value={value}
-          onChange={setValue}
-        />
+        <PasswordInput type="underline" custom focused value={value} />
       </View>
 
       <NumberKeyboard

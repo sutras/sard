@@ -30,7 +30,7 @@ const strategies: {
   scrollTo(data: string) {
     function attention(
       el: HTMLElement & {
-        __flashTimer?: number
+        __flashTimer?: NodeJS.Timeout
       },
     ) {
       if (el.__flashTimer) {
@@ -67,7 +67,7 @@ function sendMessage(message: { type: string; data?: DataType }) {
   parent.postMessage(message, '*')
 }
 
-export function ganged() {
+function ganged() {
   window.addEventListener(
     'message',
     (
@@ -90,4 +90,8 @@ export function ganged() {
   sendMessage({
     type: 'loaded',
   })
+}
+
+if (process.env.TARO_ENV === 'h5') {
+  ganged()
 }

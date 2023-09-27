@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Cell, IndexBar, IndexBarRef } from 'sard-taro'
+import { List, IndexBar, IndexBarRef } from 'sard-taro'
 
 export default () => {
   const indexList = [
@@ -67,31 +67,27 @@ export default () => {
 
   const indexBarRef = useRef<IndexBarRef>(null)
 
-  const handleChange = (activeKey) => {
-    console.log('activeKey: ', activeKey)
-  }
-
   return (
     <>
-      <IndexBar offset={0} onChange={handleChange} ref={indexBarRef}>
+      <IndexBar ref={indexBarRef} style={{ height: 320 }}>
         {indexList.map((item) => (
           <IndexBar.Item key={item.anchor} title={item.anchor}>
-            <Cell.Group>
+            <List>
               {item.provinces.map((province) => (
-                <Cell key={province} title={province}></Cell>
+                <List.Item key={province} title={province} />
               ))}
-            </Cell.Group>
+            </List>
           </IndexBar.Item>
         ))}
       </IndexBar>
 
-      <Cell.Group style={{ marginTop: 50 }}>
-        <Cell
+      <List style={{ marginTop: 50 }}>
+        <List.Item
           title="scrollTo G"
           linkable
           onClick={() => indexBarRef.current?.scrollTo('G')}
-        ></Cell>
-      </Cell.Group>
+        />
+      </List>
     </>
   )
 }

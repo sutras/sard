@@ -1,23 +1,20 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { Toast } from 'sard-taro'
 
-import WithPopout from './demo/WithPopout'
+import Basic from './demo/Basic'
 import Type from './demo/Type'
 import MinMax from './demo/MinMax'
 import MaxDays from './demo/MaxDays'
 import DisabledDate from './demo/DisabledDate'
-import Color from './demo/Color'
 import WeekStartsOn from './demo/WeekStartsOn'
 import Formatter from './demo/Formatter'
+import Alone from './demo/Alone'
 
 export default () => {
   return (
-    <Page className="page-calendar">
-      <Toast.Agent />
-
+    <Page>
       <Demo title="基础使用" full>
-        <WithPopout />
+        <Basic />
       </Demo>
 
       <Demo title="类型" full>
@@ -36,16 +33,16 @@ export default () => {
         <DisabledDate />
       </Demo>
 
-      <Demo title="自定义颜色" full>
-        <Color />
-      </Demo>
-
       <Demo title="自定义起始周" full>
         <WeekStartsOn />
       </Demo>
 
       <Demo title="格式化日期" full>
         <Formatter />
+      </Demo>
+
+      <Demo title="单独使用" full>
+        <Alone />
       </Demo>
     </Page>
   )

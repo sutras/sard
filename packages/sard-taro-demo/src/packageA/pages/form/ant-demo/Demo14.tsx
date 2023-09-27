@@ -44,9 +44,7 @@ const ModalForm: React.FC<ModalFormProps> = ({
       headed
       buttonType="round"
       visible={visible}
-      onVisible={(visible) => {
-        onVisible(visible)
-      }}
+      onVisible={onVisible}
       onConfirm={onConfirm}
     >
       <Form form={form} style={{ paddingTop: 10, paddingBottom: 16 }}>
@@ -106,10 +104,10 @@ function App() {
           {({ getValue }) => {
             const users: UserType[] = getValue('users') || []
             return users.length ? (
-              <Space vertical>
+              <Space>
                 {users.map((user, index) => (
-                  <Space key={index} align="center">
-                    <Avatar size={32} iconSize={16} />
+                  <Space direction="horizontal" key={index} align="center">
+                    <Avatar size={32} iconProps={{ size: 16 }} />
                     {user.name} - {user.age}
                   </Space>
                 ))}
@@ -123,12 +121,10 @@ function App() {
         <Form.Field underline={false}>
           <Row gap={10}>
             <Col>
-              <Button block formType="submit">
-                Submit
-              </Button>
+              <Button formType="submit">Submit</Button>
             </Col>
             <Col>
-              <Button block type="outline" onClick={showUserModal}>
+              <Button type="outline" onClick={showUserModal}>
                 Add User
               </Button>
             </Col>

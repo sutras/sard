@@ -1,24 +1,22 @@
 import { View, Text, Image } from '@tarojs/components'
 import Menu from '@/components/menu'
+import { Space } from 'sard-taro'
+import logo from '@/static/logo.png'
 import './index.scss'
-import logo from '@/static/logo.svg'
 
 export default () => {
   return (
-    <View className="index-page">
-      <View className="header">
-        <View>
-          <View className="flex-row">
-            <Image className="logo" src={logo} />
-            <Text className="title">sard-taro</Text>
-          </View>
-          <View className="desc">
-            <Text>Taro React 移动端 UI 组件库</Text>
-          </View>
+    <>
+      <Space className="demo-index-header">
+        <Space direction="horizontal">
+          <Image className="demo-index-logo" src={logo} />
+          <Text className="demo-index-title">sard-taro</Text>
+        </Space>
+        <View className="demo-index-desc">
+          <Text>Taro React 移动端 UI 组件库</Text>
         </View>
-      </View>
-
-      <Menu></Menu>
-    </View>
+      </Space>
+      <Menu />
+    </>
   )
 }

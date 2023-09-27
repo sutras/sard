@@ -6,12 +6,8 @@ export default () => {
     <Upload
       select={
         <>
-          <Icon
-            style={{ fontSize: 20 }}
-            prefix="demo-icon"
-            name="camera"
-          ></Icon>
-          <View style={{ fontSize: 12, marginTop: 5 }}>上传图片</View>
+          <Icon size={20} family="demo-icons" name="camera" />
+          <View style={{ fontSize: 12, marginTop: 4 }}>上传图片</View>
         </>
       }
     />

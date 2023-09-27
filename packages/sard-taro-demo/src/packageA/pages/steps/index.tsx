@@ -11,10 +11,11 @@ import ErrorStatus from './demo/ErrorStatus'
 import StepStatus from './demo/StepStatus'
 import Clickable from './demo/Clickable'
 import Disabled from './demo/Disabled'
+import Color from './demo/Color'
 
 export default () => {
   return (
-    <Page className="page-steps">
+    <Page>
       <Demo title="基础使用" full>
         <Basic />
       </Demo>
@@ -33,6 +34,10 @@ export default () => {
 
       <Demo title="自定义图标" full>
         <Icon />
+      </Demo>
+
+      <Demo title="自定义颜色" full>
+        <Color />
       </Demo>
 
       <Demo title="当前步骤状态" full>

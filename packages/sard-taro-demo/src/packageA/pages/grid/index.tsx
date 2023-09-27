@@ -10,7 +10,7 @@ import Order from './demo/Order'
 
 export default () => {
   return (
-    <Page className="page-grid">
+    <Page>
       <Demo title="基础使用">
         <Basic />
       </Demo>

@@ -1,8 +1,6 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
 
-import './index.scss'
-
 import Basic from './demo/Basic'
 import Placeholder from './demo/Placeholder'
 import Label from './demo/Label'
@@ -13,7 +11,7 @@ import Content from './demo/Content'
 
 export default () => {
   return (
-    <Page className="page-dropdown">
+    <Page>
       <Demo title="基础使用" full>
         <Basic />
       </Demo>

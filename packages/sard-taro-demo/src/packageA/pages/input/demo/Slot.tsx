@@ -2,14 +2,11 @@ import { Button, Icon, Input, Space } from 'sard-taro'
 
 export default () => {
   return (
-    <Space vertical>
+    <Space>
+      <Input placeholder="请输入" prepend={<Icon name="search" />} />
       <Input
         placeholder="请输入"
-        prepend={<Icon name="search" color="var(--sar-tertiary-color)" />}
-      />
-      <Input
-        placeholder="请输入"
-        append={<Button size="small">发送验证码</Button>}
+        append={<Button size="mini">发送验证码</Button>}
         style={{ marginTop: 10 }}
         clearable
       />

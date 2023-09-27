@@ -1,38 +1,37 @@
-import { View } from '@tarojs/components'
 import { Col, Row, Space } from 'sard-taro'
 
-import '../index.scss'
+import GridBox from '../GridBox'
 
 export default () => {
   return (
-    <Space vertical gap="large">
+    <Space gap="large">
       <Row>
         <Col>
-          <View className="demo-box">span</View>
+          <GridBox>span</GridBox>
         </Col>
         <Col>
-          <View className="demo-box">span</View>
+          <GridBox>span</GridBox>
         </Col>
       </Row>
 
       <Row>
         <Col span={4}>
-          <View className="demo-box">span-4</View>
+          <GridBox>span-4</GridBox>
         </Col>
         <Col span={8}>
-          <View className="demo-box">span-8</View>
+          <GridBox>span-8</GridBox>
         </Col>
       </Row>
 
       <Row>
         <Col span={3}>
-          <View className="demo-box">span-3</View>
+          <GridBox>span-3</GridBox>
         </Col>
         <Col>
-          <View className="demo-box">span</View>
+          <GridBox>span</GridBox>
         </Col>
         <Col span="auto">
-          <View className="demo-box">auto</View>
+          <GridBox>auto</GridBox>
         </Col>
       </Row>
     </Space>

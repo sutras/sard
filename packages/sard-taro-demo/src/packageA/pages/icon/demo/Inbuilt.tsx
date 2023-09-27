@@ -1,6 +1,7 @@
 import { Mesh } from 'sard-taro'
 
 const inbuiltIcons = [
+  'loading',
   'volume-up',
   'play',
   'caret-down',
@@ -50,7 +51,7 @@ export default () => {
             key={name}
             iconProps={{ name }}
             text={name}
-          ></Mesh.Item>
+          />
         )
       })}
     </Mesh>

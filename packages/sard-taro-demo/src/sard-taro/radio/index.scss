@@ -1,0 +1,52 @@
+@import '../style/variables.scss';
+@import '../style/mixins/bem.scss';
+@import '../style/mixins/disabled.scss';
+@import '../style/mixins/universal.scss';
+@import '../style/mixins/ifweb.scss';
+
+// #variables
+$sar-radio-icon-font-size: 20px !default;
+$sar-radio-icon-color: $sar-quaternary-color !default;
+$sar-radio-icon-checked-color: $sar-primary !default;
+$sar-radio-icon-transition-duration: $sar-duration !default;
+
+$sar-radio-label-margin-left: 8px !default;
+
+$sar-radio-margin-left: 20px !default;
+$sar-radio-margin-top: 10px !default;
+// #endvariables
+
+@include bem(radio) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    align-items: center;
+
+    @include ifweb {
+      cursor: pointer;
+    }
+  }
+
+  @include e(icon) {
+    @include universal;
+    font-size: $sar-radio-icon-font-size;
+    color: $sar-radio-icon-color;
+    @include ifweb {
+      transition: color $sar-radio-icon-transition-duration;
+    }
+
+    @include m(checked) {
+      color: $sar-radio-icon-checked-color;
+    }
+  }
+
+  @include e(label) {
+    @include universal;
+    flex-direction: row;
+    margin-left: $sar-radio-label-margin-left;
+  }
+
+  @include m(disabled) {
+    @include disabled;
+  }
+}

@@ -10,10 +10,8 @@ function App() {
     console.log('Failed:', errorInfo)
   }
 
-  const [form] = Form.useForm()
-
   return (
-    <Form form={form} onSuccess={handleSuccess} onFail={handleFail}>
+    <Form onSuccess={handleSuccess} onFail={handleFail}>
       <Form.Map name="user">
         <Form.Map name="name">
           <Form.Field
@@ -38,9 +36,7 @@ function App() {
       </Form.Map>
 
       <Form.Field underline={false}>
-        <Button block formType="submit">
-          Submit
-        </Button>
+        <Button formType="submit">Submit</Button>
       </Form.Field>
     </Form>
   )

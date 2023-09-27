@@ -1,19 +1,16 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { Toast } from 'sard-taro'
 
 import Basic from './demo/Basic'
 import MultipleRow from './demo/MultipleRow'
-import Description from './demo/Description'
+import TitleDescription from './demo/TitleDescription'
 import Picture from './demo/Picture'
 import Disabled from './demo/Disabled'
 import Manual from './demo/Manual'
 
 export default () => {
   return (
-    <Page className="page-share-sheet">
-      <Toast.Agent />
-
+    <Page>
       <Demo title="基础使用" full>
         <Basic />
       </Demo>
@@ -22,8 +19,8 @@ export default () => {
         <MultipleRow />
       </Demo>
 
-      <Demo title="描述" full>
-        <Description />
+      <Demo title="标题和描述" full>
+        <TitleDescription />
       </Demo>
 
       <Demo title="图片类型图标" full>

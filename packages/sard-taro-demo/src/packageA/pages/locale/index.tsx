@@ -5,7 +5,7 @@ import Dynamic from './demo/Dynamic'
 
 export default () => {
   return (
-    <Page className="page-locale">
+    <Page>
       <Demo title="动态修改语言" full>
         <Dynamic />
       </Demo>

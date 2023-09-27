@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Cell, ShareSheet, ShareSheetItemProps, Toast } from 'sard-taro'
+import { List, ShareSheet, ShareSheetItemProps, Toast } from 'sard-taro'
 
 import { itemList } from './Basic'
 
@@ -11,7 +11,7 @@ const itemList2: ShareSheetItemProps[][] = [
       color: '#fff',
       background: '#1ed760',
       icon: {
-        prefix: 'demo-icon',
+        family: 'demo-icons',
         name: 'spotify-fill',
       },
     },
@@ -20,7 +20,7 @@ const itemList2: ShareSheetItemProps[][] = [
       color: '#fff',
       background: '#0b64a4',
       icon: {
-        prefix: 'demo-icon',
+        family: 'demo-icons',
         name: 'skype-fill',
       },
     },
@@ -29,7 +29,7 @@ const itemList2: ShareSheetItemProps[][] = [
       color: '#fff',
       background: '#ff0000',
       icon: {
-        prefix: 'demo-icon',
+        family: 'demo-icons',
         name: 'youtube-fill',
       },
     },
@@ -38,7 +38,7 @@ const itemList2: ShareSheetItemProps[][] = [
       color: '#fff',
       background: '#0070ba',
       icon: {
-        prefix: 'demo-icon',
+        family: 'demo-icons',
         name: 'paypal-fill',
       },
     },
@@ -47,7 +47,7 @@ const itemList2: ShareSheetItemProps[][] = [
       color: '#fff',
       background: '#128c7e',
       icon: {
-        prefix: 'demo-icon',
+        family: 'demo-icons',
         name: 'whatsapp-fill',
       },
     },
@@ -56,7 +56,7 @@ const itemList2: ShareSheetItemProps[][] = [
       color: '#fff',
       background: '#0088cc',
       icon: {
-        prefix: 'demo-icon',
+        family: 'demo-icons',
         name: 'telegram-fill',
       },
     },
@@ -65,7 +65,7 @@ const itemList2: ShareSheetItemProps[][] = [
       color: '#000',
       background: '#fffc00',
       icon: {
-        prefix: 'demo-icon',
+        family: 'demo-icons',
         name: 'snapchat-fill',
       },
     },
@@ -81,18 +81,20 @@ export default () => {
 
   return (
     <>
-      <Cell.Group card>
-        <Cell linkable title="显示分享面板" onClick={() => setVisible(true)} />
-      </Cell.Group>
+      <List card>
+        <List.Item
+          linkable
+          title="显示分享面板"
+          onClick={() => setVisible(true)}
+        />
+      </List>
 
       <ShareSheet
-        title="分享到"
-        visible={visible}
         itemList={itemList2}
         cancel="取消"
-        actionClosable
         onSelect={handleSelect}
-        onClose={setVisible}
+        visible={visible}
+        onVisible={setVisible}
       />
     </>
   )

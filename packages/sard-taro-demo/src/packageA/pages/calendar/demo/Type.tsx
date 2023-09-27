@@ -1,39 +1,35 @@
-import { Calendar, Cell, PopoutInput } from 'sard-taro'
+import { Calendar, List, PopoutInput } from 'sard-taro'
 
 export default () => {
   return (
-    <Cell.Group card>
-      <Cell>
+    <List card>
+      <List.Item>
         <PopoutInput
           title="选择单个日期"
           inputProps={{ placeholder: '选择单个日期' }}
         >
-          <Calendar min={new Date(2000, 0, 1)} max={new Date(2000, 1, 0)} />
+          <Calendar />
         </PopoutInput>
-      </Cell>
+      </List.Item>
 
-      <Cell>
+      <List.Item>
         <PopoutInput
           title="选择多个日期"
-          inputProps={{ placeholder: '选择多个日期' }}
+          inputProps={{
+            placeholder: '选择多个日期',
+            type: 'textarea',
+            autoHeight: true,
+          }}
         >
-          <Calendar
-            type="multiple"
-            min={new Date(2000, 0, 1)}
-            max={new Date(2000, 1, 0)}
-          />
+          <Calendar type="multiple" />
         </PopoutInput>
-      </Cell>
+      </List.Item>
 
-      <Cell>
+      <List.Item>
         <PopoutInput title="选择范围" inputProps={{ placeholder: '选择范围' }}>
-          <Calendar
-            type="range"
-            min={new Date(2000, 0, 1)}
-            max={new Date(2000, 1, 0)}
-          />
+          <Calendar type="range" />
         </PopoutInput>
-      </Cell>
-    </Cell.Group>
+      </List.Item>
+    </List>
   )
 }

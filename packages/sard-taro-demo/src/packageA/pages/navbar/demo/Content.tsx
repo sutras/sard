@@ -1,4 +1,4 @@
-import { View } from '@tarojs/components'
+import { Text } from '@tarojs/components'
 import { Icon, Input, Navbar } from 'sard-taro'
 
 export default () => {
@@ -7,16 +7,13 @@ export default () => {
       flow
       left={
         <Navbar.Item>
-          <View style={{ marginRight: 2 }}>城市</View>
-          <Icon name="down" size={16}></Icon>
+          <Text style={{ marginRight: 2 }}>城市</Text>
+          <Icon name="down" size={16} />
         </Navbar.Item>
       }
       right={<Navbar.Item>搜索</Navbar.Item>}
     >
-      <Input
-        placeholder="请输入关键词"
-        style={{ borderRadius: 'var(--sar-rounded-full)' }}
-      />
+      <Input placeholder="请输入关键词" style={{ borderRadius: 9999 }} />
     </Navbar>
   )
 }

@@ -1,0 +1,132 @@
+@use 'sass:math';
+@import '../style/variables.scss';
+@import '../style/mixins/bem.scss';
+
+// #variables
+$sar-progress-circle-size: 100px !default;
+$sar-progress-circle-track-width: 4px !default;
+$sar-progress-circle-track-color: $sar-gray-300 !default;
+
+$sar-progress-circle-trail-width: 4px !default;
+$sar-progress-circle-trail-color: $sar-primary !default;
+
+$sar-progress-circle-cap-width: $sar-progress-circle-trail-width !default;
+$sar-progress-circle-cap-half: math.div(
+  $sar-progress-circle-cap-width,
+  2
+) !default;
+// #endvariables
+
+@include bem(progress-circle) {
+  @include b() {
+    @include universal;
+    justify-content: center;
+    align-items: center;
+    width: $sar-progress-circle-size;
+    height: $sar-progress-circle-size;
+  }
+
+  @include e(left, right) {
+    @include universal;
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  @include e(left) {
+    left: 0;
+  }
+
+  @include e(right) {
+    right: 0;
+  }
+
+  @include e(trail) {
+    @include universal;
+    position: absolute;
+    top: 0;
+    width: 200%;
+    height: 100%;
+    border: $sar-progress-circle-trail-width solid
+      $sar-progress-circle-trail-color;
+    border-radius: $sar-rounded-full;
+
+    @include m(left) {
+      left: 0;
+    }
+    @include m(right) {
+      right: 0;
+    }
+  }
+
+  @include e(track-container) {
+    @include universal;
+    position: absolute;
+    top: 0;
+    width: 200%;
+    height: 100%;
+
+    @include m(left) {
+      left: 0;
+    }
+    @include m(right) {
+      right: 0;
+    }
+  }
+
+  @include e(track-wrapper) {
+    @include universal;
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+
+    @include m(left) {
+      right: 0;
+    }
+    @include m(right) {
+      left: 0;
+    }
+  }
+
+  @include e(track) {
+    @include universal;
+    position: absolute;
+    top: 0;
+    width: 200%;
+    height: 100%;
+    border: $sar-progress-circle-track-width solid
+      $sar-progress-circle-track-color;
+    border-radius: $sar-rounded-full;
+
+    @include m(left) {
+      right: 0;
+    }
+    @include m(right) {
+      left: 0;
+    }
+  }
+
+  @include e(cap) {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: $sar-progress-circle-trail-width;
+    height: $sar-progress-circle-trail-width;
+    background-color: $sar-progress-circle-trail-color;
+    border-radius: $sar-rounded-full;
+
+    @include m(start) {
+      transform: translate(-$sar-progress-circle-cap-half, 0);
+    }
+    @include m(end) {
+      transform: translate(
+        -$sar-progress-circle-cap-half,
+        -$sar-progress-circle-cap-half
+      );
+    }
+  }
+}

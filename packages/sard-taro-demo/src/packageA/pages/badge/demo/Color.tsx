@@ -1,18 +1,20 @@
-import { Button, Badge, Space } from 'sard-taro'
+import { Badge, Space } from 'sard-taro'
+
+import BadgeBox from './BadgeBox'
 
 export default () => {
   return (
-    <Space gap="medium">
-      <Badge value={5} color="var(--sar-pink)">
-        <Button>消息</Button>
+    <Space gap="medium" direction="horizontal">
+      <Badge value={5} color="tomato">
+        <BadgeBox />
       </Badge>
 
-      <Badge isDot color="var(--sar-pink)">
-        <Button>消息</Button>
+      <Badge isDot color="tomato">
+        <BadgeBox />
       </Badge>
 
-      <Badge value={5} color="#eee" textColor="#222">
-        <Button>消息</Button>
+      <Badge value={5} color="#e3e3e3" textColor="#262626">
+        <BadgeBox />
       </Badge>
     </Space>
   )

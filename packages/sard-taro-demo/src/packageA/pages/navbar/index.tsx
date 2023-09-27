@@ -1,17 +1,14 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
 
-import './index.scss'
-
 import Basic from './demo/Basic'
 import Item from './demo/Item'
 import Flow from './demo/Flow'
 import Content from './demo/Content'
-import Fixed from './demo/Fixed'
 
 export default () => {
   return (
-    <Page className="page-navbar">
+    <Page style={{ paddingBottom: 300 }}>
       <Demo title="基础使用" full>
         <Basic />
       </Demo>
@@ -24,12 +21,8 @@ export default () => {
         <Flow />
       </Demo>
 
-      <Demo title="自定义 content" full>
+      <Demo title="自定义内容" full>
         <Content />
-      </Demo>
-
-      <Demo title="固定在顶部" full>
-        <Fixed />
       </Demo>
     </Page>
   )

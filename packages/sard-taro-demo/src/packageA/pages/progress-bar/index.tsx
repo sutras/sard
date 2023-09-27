@@ -4,12 +4,11 @@ import Page from '@/components/page'
 import Basic from './demo/Basic'
 import Thickness from './demo/Thickness'
 import Color from './demo/Color'
-import Striped from './demo/Striped'
 import Slot from './demo/Slot'
 
 export default () => {
   return (
-    <Page className="page-progress-bar">
+    <Page>
       <Demo title="基础使用">
         <Basic />
       </Demo>
@@ -20,10 +19,6 @@ export default () => {
 
       <Demo title="颜色">
         <Color />
-      </Demo>
-
-      <Demo title="条纹进度条">
-        <Striped />
       </Demo>
 
       <Demo title="插槽">

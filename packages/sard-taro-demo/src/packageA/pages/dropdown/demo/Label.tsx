@@ -32,12 +32,8 @@ export default () => {
 
   return (
     <Dropdown>
-      <Dropdown.Item label="排序" options={options1}></Dropdown.Item>
-      <Dropdown.Item
-        label="速度"
-        options={options2}
-        defaultValue="2"
-      ></Dropdown.Item>
+      <Dropdown.Item label="排序" options={options1} />
+      <Dropdown.Item label="速度" options={options2} defaultValue="2" />
     </Dropdown>
   )
 }

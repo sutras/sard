@@ -15,9 +15,10 @@ export default () => {
   const renderPlacementButton = (placement: PopoverPlacement) => {
     return (
       <Mesh.Item
+        key={placement}
         onClick={() => handlePlacement(placement)}
         style={{
-          fontWeight: placement === currentPlacement ? 'bold' : '',
+          fontWeight: placement === currentPlacement ? 'bold' : null,
         }}
       >
         {placement
@@ -50,10 +51,13 @@ export default () => {
             style={{
               width: 50,
               height: 50,
-              margin: '100px auto',
-              background: 'var(--sar-primary)',
+              marginTop: 100,
+              marginBottom: 100,
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              backgroundColor: 'tomato',
             }}
-          ></View>
+          />
         }
       />
 

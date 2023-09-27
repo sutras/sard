@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Cell, Picker, PopoutInput } from 'sard-taro'
+import { List, Picker, PopoutInput } from 'sard-taro'
 import { getRegionData } from 'region-data'
 
 const regionData = getRegionData()
@@ -8,14 +8,14 @@ export default () => {
   const [value, setValue] = useState<number[]>()
 
   return (
-    <Cell.Group card>
-      <Cell
+    <List card>
+      <List.Item
         linkable
         title="设置为: 广东省/广州市/白云区"
         onClick={() => setValue([440000, 440100, 440111])}
       />
-      <Cell linkable title="清空" onClick={() => setValue(undefined)} />
-      <Cell>
+      <List.Item linkable title="清空" onClick={() => setValue(undefined)} />
+      <List.Item>
         <PopoutInput
           title="请选择"
           inputProps={{ placeholder: '请选择' }}
@@ -27,7 +27,7 @@ export default () => {
             optionKeys={{ label: 'name', value: 'code' }}
           />
         </PopoutInput>
-      </Cell>
-    </Cell.Group>
+      </List.Item>
+    </List>
   )
 }

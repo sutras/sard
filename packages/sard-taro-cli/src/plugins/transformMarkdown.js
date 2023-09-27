@@ -3,14 +3,18 @@ import { normalizePath } from 'vite'
 import path from 'node:path'
 import esbuild from 'esbuild'
 import { readFileSync, existsSync } from 'fs'
-import { MD_DEMO_CODE_SEPARATOR, MD_PATH_R } from '../utils/constants.js'
+import {
+  MD_DEMO_CODE_SEPARATOR,
+  MD_PATH_R,
+  ROOT_DIR,
+} from '../utils/constants.js'
 import { hlCallback } from '../utils/highlight.js'
 import genHash from '../utils/genHash.js'
 
 const renderStrategies = {
   markdown(code) {
     const html = code
-      .replace(/[`$]/g, '\\$')
+      .replace(/([`$])/g, '\\$1')
       .replace(/\f/g, '')
       .replace(/(?=<h[23])/g, '\f')
       .split('\f')
@@ -66,7 +70,7 @@ function extractHashContent(text, hash) {
 
 function replaceDefaultPath(string) {
   const defaultPaths = {
-    DEMO_PATH: '../../../sard-taro-demo/src/packageA/pages/',
+    DEMO_PATH: path.resolve(ROOT_DIR, '../sard-taro-demo/src/packageA/pages/'),
   }
 
   const regexp = new RegExp(`\\$\\{(${Object.keys(defaultPaths).join('|')})\\}`)

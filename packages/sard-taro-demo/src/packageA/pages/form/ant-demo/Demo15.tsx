@@ -21,7 +21,7 @@ function App() {
         rules={[{ required: true, message: 'Please input your username!' }]}
       >
         <Input
-          prepend={<Icon prefix="demo-icon" name="person" />}
+          prepend={<Icon family="demo-icons" name="person" />}
           placeholder="Username"
         />
       </Form.Field>
@@ -31,7 +31,7 @@ function App() {
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
         <Input
-          prepend={<Icon prefix="demo-icon" name="key" />}
+          prepend={<Icon family="demo-icons" name="key" />}
           type="password"
           placeholder="Password"
         />
@@ -51,7 +51,7 @@ function App() {
           }, [values])
 
           return (
-            <Button block formType="submit" disabled={disabled}>
+            <Button formType="submit" disabled={disabled}>
               Log in
             </Button>
           )

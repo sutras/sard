@@ -8,7 +8,7 @@ import Size from './demo/Size'
 
 export default () => {
   return (
-    <Page className="page-progress-circle">
+    <Page>
       <Demo title="基础使用">
         <Basic />
       </Demo>

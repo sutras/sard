@@ -1,4 +1,4 @@
-import { Cell, DatetimeLetter, DatetimePicker, PopoutInput } from 'sard-taro'
+import { List, DatetimeLetter, DatetimePicker, PopoutInput } from 'sard-taro'
 
 const filter = (letter: DatetimeLetter, value: number) => {
   if (letter === 'm') {
@@ -9,13 +9,13 @@ const filter = (letter: DatetimeLetter, value: number) => {
 
 export default () => {
   return (
-    <Cell.Group card>
-      <Cell title="“分钟”取15的倍数：" />
-      <Cell>
+    <List card>
+      <List.Item title="“分钟”取15的倍数：" />
+      <List.Item>
         <PopoutInput title="请选择" inputProps={{ placeholder: '请选择' }}>
           <DatetimePicker type="hm" filter={filter} />
         </PopoutInput>
-      </Cell>
-    </Cell.Group>
+      </List.Item>
+    </List>
   )
 }

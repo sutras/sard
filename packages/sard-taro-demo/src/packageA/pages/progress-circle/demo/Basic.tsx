@@ -5,16 +5,15 @@ export default () => {
   const [percent, setPercent] = useState(50)
 
   return (
-    <Space vertical align="start">
+    <Space align="start">
       <Stepper
         value={percent}
         max={100}
         min={0}
         onChange={(value) => setPercent(Number(value))}
-        style={{ marginBottom: 10 }}
-      ></Stepper>
+      />
 
-      <ProgressCircle percent={percent}>{percent}%</ProgressCircle>
+      <ProgressCircle percent={percent}>{percent + '%'}</ProgressCircle>
     </Space>
   )
 }

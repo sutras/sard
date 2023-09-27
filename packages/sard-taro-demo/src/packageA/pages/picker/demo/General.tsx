@@ -1,4 +1,4 @@
-import { Cell, Picker, Toast } from 'sard-taro'
+import { List, Picker, Toast } from 'sard-taro'
 
 export default () => {
   const array = ['北京市', '天津市', '河北省', '山东省']
@@ -9,15 +9,15 @@ export default () => {
   }
 
   return (
-    <Cell.Group card>
-      <Cell>
+    <List card>
+      <List.Item>
         <Picker
           columns={array}
           onChange={(value, ...restArgs) => {
             handleChange(value, ...restArgs)
           }}
         />
-      </Cell>
-    </Cell.Group>
+      </List.Item>
+    </List>
   )
 }

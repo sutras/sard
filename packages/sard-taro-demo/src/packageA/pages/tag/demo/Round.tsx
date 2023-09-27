@@ -1,5 +1,11 @@
-import { Tag } from 'sard-taro'
+import { Space, Tag } from 'sard-taro'
 
 export default () => {
-  return <Tag round>标签</Tag>
+  return (
+    <Space direction="horizontal">
+      <Tag theme="primary" round>
+        标签
+      </Tag>
+    </Space>
+  )
 }

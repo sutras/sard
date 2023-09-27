@@ -1,0 +1,164 @@
+@font-face {
+  font-family: 'sard-icons'; /* Project id 2907887 */
+  src: url('iconfont.ttf?t=1694839538431') format('truetype');
+}
+
+.sard-icons {
+  font-family: 'sard-icons' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sari-loading:before {
+  content: '\e861';
+}
+
+.sari-volume-up:before {
+  content: '\ea24';
+}
+
+.sari-play:before {
+  content: '\e92a';
+}
+
+.sari-caret-down:before {
+  content: '\e72d';
+}
+
+.sari-caret-left:before {
+  content: '\e732';
+}
+
+.sari-caret-right:before {
+  content: '\e734';
+}
+
+.sari-caret-up:before {
+  content: '\e73c';
+}
+
+.sari-backspace:before {
+  content: '\e65c';
+}
+
+.sari-record-circle:before {
+  content: '\eaf5';
+}
+
+.sari-file:before {
+  content: '\e7f9';
+}
+
+.sari-x-circle-fill:before {
+  content: '\ea40';
+}
+
+.sari-square:before {
+  content: '\e986';
+}
+
+.sari-check-square-fill:before {
+  content: '\eaca';
+}
+
+.sari-image:before {
+  content: '\e87f';
+}
+
+.sari-star:before {
+  content: '\e992';
+}
+
+.sari-star-fill:before {
+  content: '\ead6';
+}
+
+.sari-x-circle:before {
+  content: '\ea3f';
+}
+
+.sari-circle-fill:before {
+  content: '\eaaf';
+}
+
+.sari-empty:before {
+  content: '\e6a6';
+}
+
+.sari-warning-fill:before {
+  content: '\e7b3';
+}
+
+.sari-info-circle-fill:before {
+  content: '\e88b';
+}
+
+.sari-question-circle-fill:before {
+  content: '\e939';
+}
+
+.sari-x-octagon-fill:before {
+  content: '\ea41';
+}
+
+.sari-check-circle-fill:before {
+  content: '\eacd';
+}
+
+.sari-person:before {
+  content: '\e9d5';
+}
+
+.sari-fail:before {
+  content: '\e822';
+}
+
+.sari-success:before {
+  content: '\e823';
+}
+
+.sari-close:before {
+  content: '\e81f';
+}
+
+.sari-question:before {
+  content: '\e81d';
+}
+
+.sari-info:before {
+  content: '\e819';
+}
+
+.sari-minus:before {
+  content: '\e821';
+}
+
+.sari-plus:before {
+  content: '\e820';
+}
+
+.sari-up:before {
+  content: '\e81e';
+}
+
+.sari-down:before {
+  content: '\e815';
+}
+
+.sari-left:before {
+  content: '\e818';
+}
+
+.sari-right:before {
+  content: '\e81b';
+}
+
+.sari-search:before {
+  content: '\ea30';
+}
+
+.sari-circle:before {
+  content: '\ea87';
+}

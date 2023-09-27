@@ -6,10 +6,11 @@ import Type from './demo/Type'
 import MinMax from './demo/MinMax'
 import Filter from './demo/Filter'
 import Formatter from './demo/Formatter'
+import Alone from './demo/Alone'
 
 export default () => {
   return (
-    <Page className="page-datetime-picker">
+    <Page>
       <Demo title="基础使用" full>
         <Basic />
       </Demo>
@@ -18,7 +19,7 @@ export default () => {
         <Type />
       </Demo>
 
-      <Demo title="最大最小值" full>
+      <Demo title="自定义日期范围" full>
         <MinMax />
       </Demo>
 
@@ -28,6 +29,10 @@ export default () => {
 
       <Demo title="格式化" full>
         <Formatter />
+      </Demo>
+
+      <Demo title="单独使用" full>
+        <Alone />
       </Demo>
     </Page>
   )

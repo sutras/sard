@@ -1,0 +1,86 @@
+@import '../style/variables.scss';
+@import '../style/mixins/bem.scss';
+@import '../style/mixins/disabled.scss';
+@import '../style/mixins/universal.scss';
+@import '../style/mixins/ifweb.scss';
+
+// #variables
+$sar-switch-width: 50px !default;
+$sar-switch-height: 30px !default;
+$sar-switch-border-width: 0 !default;
+$sar-switch-border-color: $sar-border-color !default;
+$sar-switch-transition-duration: $sar-duration !default;
+$sar-switch-bg: $sar-secondary-bg !default;
+$sar-switch-checked-bg: $sar-primary !default;
+
+$sar-switch-is-loading-opacity: $sar-loading-opacity !default;
+
+$sar-switch-thumb-border-width: 2px !default;
+$sar-switch-thumb-width: $sar-switch-height - $sar-switch-thumb-border-width * 2 !default;
+$sar-switch-thumb-height: $sar-switch-thumb-width !default;
+$sar-switch-thumb-border-radius: $sar-rounded-full !default;
+$sar-switch-thumb-bg: $sar-white !default;
+$sar-switch-thumb-transition-duration: $sar-duration !default;
+
+$sar-switch-loading-color: $sar-secondary-color !default;
+// #endvariables
+
+@include bem(switch) {
+  @include b() {
+    @include universal;
+    width: $sar-switch-width;
+    height: $sar-switch-height;
+    border: $sar-switch-border-width solid $sar-switch-border-color;
+    border-radius: $sar-switch-height;
+    background-color: $sar-switch-bg;
+
+    @include ifweb {
+      cursor: pointer;
+      transition: background-color $sar-switch-transition-duration,
+        border-color $sar-switch-transition-duration,
+        opacity $sar-switch-transition-duration;
+    }
+
+    @include m(checked) {
+      border-color: transparent;
+      background-color: $sar-switch-checked-bg;
+    }
+
+    @include m(disabled) {
+      @include disabled;
+    }
+
+    @include m(readonly) {
+      @include ifweb {
+        cursor: default;
+      }
+    }
+
+    @include m(loading) {
+      opacity: $sar-switch-is-loading-opacity;
+      @include ifweb {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  @include e(thumb) {
+    @include universal;
+    position: absolute;
+    left: $sar-switch-thumb-border-width;
+    top: $sar-switch-thumb-border-width;
+    width: $sar-switch-thumb-width;
+    height: $sar-switch-thumb-height;
+    justify-content: center;
+    align-items: center;
+    border-radius: $sar-rounded-full;
+    background-color: $sar-switch-thumb-bg;
+    @include ifweb {
+      transition: transform $sar-switch-thumb-transition-duration;
+    }
+  }
+
+  @include e(loading) {
+    color: $sar-switch-loading-color;
+  }
+}

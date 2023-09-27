@@ -4,7 +4,12 @@ export default () => {
   return (
     <Checkbox
       icon={(checked) => (
-        <Icon prefix="demo-icon" name={checked ? 'heart-fill' : 'heart'} />
+        <Icon
+          family="demo-icons"
+          size={20}
+          color={checked ? 'tomato' : '#bbb'}
+          name={checked ? 'heart-fill' : 'heart'}
+        />
       )}
     >
       复选框

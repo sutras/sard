@@ -1,39 +1,37 @@
-import { Icon, Tabbar } from 'sard-taro'
+import { Tabbar } from 'sard-taro'
 
 export default () => {
   return (
-    <Tabbar defaultActiveKey={0} fixed={false}>
+    <Tabbar defaultActiveKey={0}>
       <Tabbar.Item
-        icon={(active) => (
-          <Icon
-            prefix="demo-icon"
-            name={active ? 'house-door-fill' : 'house-door'}
-          />
-        )}
+        iconProps={(active) => ({
+          family: 'demo-icons',
+          name: active ? 'house-door-fill' : 'house-door',
+        })}
       >
         首页
       </Tabbar.Item>
       <Tabbar.Item
-        icon={(active) => (
-          <Icon prefix="demo-icon" name={active ? 'cart-fill' : 'cart'} />
-        )}
+        iconProps={(active) => ({
+          family: 'demo-icons',
+          name: active ? 'cart-fill' : 'cart',
+        })}
       >
         购物车
       </Tabbar.Item>
       <Tabbar.Item
-        icon={(active) => (
-          <Icon
-            prefix="demo-icon"
-            name={active ? 'chat-dots-fill' : 'chat-dots'}
-          />
-        )}
+        iconProps={(active) => ({
+          family: 'demo-icons',
+          name: active ? 'chat-dots-fill' : 'chat-dots',
+        })}
       >
         消息
       </Tabbar.Item>
       <Tabbar.Item
-        icon={(active) => (
-          <Icon prefix="demo-icon" name={active ? 'person-fill' : 'person'} />
-        )}
+        iconProps={(active) => ({
+          family: 'demo-icons',
+          name: active ? 'person-fill' : 'person',
+        })}
       >
         我的
       </Tabbar.Item>

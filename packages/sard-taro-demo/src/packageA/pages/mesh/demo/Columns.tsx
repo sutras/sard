@@ -6,11 +6,7 @@ export default () => {
       {Array(6)
         .fill(0)
         .map((_, index) => (
-          <Mesh.Item
-            key={index}
-            text="文字"
-            iconProps={{ name: 'image' }}
-          ></Mesh.Item>
+          <Mesh.Item key={index} text="文字" iconProps={{ name: 'image' }} />
         ))}
     </Mesh>
   )

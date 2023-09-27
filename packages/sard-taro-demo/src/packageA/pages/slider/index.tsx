@@ -2,8 +2,6 @@ import Demo from '@/components/demo'
 import Page from '@/components/page'
 
 import Basic from './demo/Basic'
-import Range from './demo/Range'
-import Controllable from './demo/Controllable'
 import MinMax from './demo/MinMax'
 import Step from './demo/Step'
 import Color from './demo/Color'
@@ -14,24 +12,16 @@ import Slot from './demo/Slot'
 
 export default () => {
   return (
-    <Page className="page-slider">
-      <Demo title="基础使用">
+    <Page>
+      <Demo title="基础使用" full>
         <Basic />
       </Demo>
 
-      <Demo title="范围选择">
-        <Range />
-      </Demo>
-
-      <Demo title="受控" full>
-        <Controllable />
-      </Demo>
-
-      <Demo title="最大最小值">
+      <Demo title="最大最小值" full>
         <MinMax />
       </Demo>
 
-      <Demo title="步长">
+      <Demo title="步长" full>
         <Step />
       </Demo>
 

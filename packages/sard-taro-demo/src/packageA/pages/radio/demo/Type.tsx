@@ -2,7 +2,7 @@ import { Radio, Space } from 'sard-taro'
 
 export default () => {
   return (
-    <Space vertical gap="large">
+    <Space gap="large">
       <Radio.Group defaultValue="option1" type="circle">
         <Space gap="medium">
           <Radio value="option1">选项1</Radio>

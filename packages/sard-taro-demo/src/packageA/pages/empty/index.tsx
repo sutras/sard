@@ -9,7 +9,7 @@ import Extra from './demo/Extra'
 
 export default () => {
   return (
-    <Page className="page-template">
+    <Page>
       <Demo title="基础使用">
         <Basic />
       </Demo>

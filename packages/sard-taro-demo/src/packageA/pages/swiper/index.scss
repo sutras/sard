@@ -1,21 +1,21 @@
-.page-swiper {
-  .demo-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 30px;
-    font-weight: normal;
-    text-align: center;
-    color: #333;
-    user-select: none;
-  }
-  .demo-item1 {
-    background-color: tomato;
-  }
-  .demo-item2 {
-    background-color: palegreen;
-  }
-  .demo-item3 {
-    background-color: deepskyblue;
-  }
+.demo-swiper-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: normal;
+  text-align: center;
+  color: #333;
+}
+
+.demo-swiper-item1 {
+  background-color: tomato;
+}
+
+.demo-swiper-item2 {
+  background-color: palegreen;
+}
+
+.demo-swiper-item3 {
+  background-color: deepskyblue;
 }

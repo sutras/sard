@@ -2,7 +2,7 @@ import { View } from '@tarojs/components'
 import { useContext } from 'react'
 import {
   Calendar,
-  Cell,
+  List,
   Empty,
   LocaleContext,
   Pagination,
@@ -22,33 +22,34 @@ export default () => {
   const { setLang } = useContext(LocaleContext)
 
   const handleChange = (value) => {
-    setLang(langMap[value])
+    setLang?.(langMap[value])
   }
 
   return (
-    <Cell.Group card>
-      <Cell
+    <List card>
+      <List.Item
         title="切换中英文"
+        footerStyle={{ flexGrow: 0 }}
         footer={
           <View>
             <Radio.Group defaultValue="zhCN" onChange={handleChange}>
-              <Space gap="medium">
+              <Space direction="horizontal" gap="medium">
                 <Radio value="zhCN">中文</Radio>
                 <Radio value="enUS">英文</Radio>
               </Space>
             </Radio.Group>
           </View>
         }
-      ></Cell>
-      <Cell>
+      />
+      <List.Item>
         <Calendar type="range" />
-      </Cell>
-      <Cell>
+      </List.Item>
+      <List.Item>
         <Empty />
-      </Cell>
-      <Cell>
+      </List.Item>
+      <List.Item>
         <Pagination total={30} type="simple" />
-      </Cell>
-    </Cell.Group>
+      </List.Item>
+    </List>
   )
 }

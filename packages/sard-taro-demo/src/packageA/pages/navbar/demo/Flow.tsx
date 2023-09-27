@@ -7,20 +7,20 @@ export default () => {
       flow
       left={
         <Navbar.Item>
-          <Icon prefix="demo-icon" name="list-task" size={18}></Icon>
+          <Icon family="demo-icons" name="list-task" size={18} />
         </Navbar.Item>
       }
       title={<View style={{ textAlign: 'left' }}>发现</View>}
       right={
         <>
           <Navbar.Item>
-            <Icon prefix="demo-icon" name="share" size={16}></Icon>
+            <Icon family="demo-icons" name="share" size={16} />
           </Navbar.Item>
           <Navbar.Item>
-            <Icon prefix="demo-icon" name="star" size={18}></Icon>
+            <Icon family="demo-icons" name="star" size={18} />
           </Navbar.Item>
           <Navbar.Item>
-            <Icon prefix="demo-icon" name="heart" size={16}></Icon>
+            <Icon family="demo-icons" name="heart" size={16} />
           </Navbar.Item>
         </>
       }

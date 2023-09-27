@@ -7,12 +7,12 @@ import CustomIcon from './demo/CustomIcon'
 import Color from './demo/Color'
 import Size from './demo/Size'
 import Count from './demo/Count'
-import AllowClear from './demo/AllowClear'
+import Clearable from './demo/Clearable'
 import DisableReadOnly from './demo/DisableReadOnly'
 
 export default () => {
   return (
-    <Page className="page-rate">
+    <Page>
       <Demo title="基础使用">
         <Basic />
       </Demo>
@@ -38,7 +38,7 @@ export default () => {
       </Demo>
 
       <Demo title="允许清空">
-        <AllowClear />
+        <Clearable />
       </Demo>
 
       <Demo title="只读和禁用">

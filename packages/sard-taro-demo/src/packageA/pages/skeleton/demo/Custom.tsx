@@ -1,34 +1,23 @@
 import { View } from '@tarojs/components'
-import { Skeleton, Space } from 'sard-taro'
+import { Col, Row, Skeleton, Space } from 'sard-taro'
 
 export default () => {
   return (
-    <Space vertical>
-      <View
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: 20,
-        }}
-      >
+    <Space gap="large">
+      <Row gap={20}>
         {Array(8)
           .fill(0)
           .map((_, i) => (
-            <View
-              key={i}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: 10,
-              }}
-            >
-              <Skeleton.Avatar size={48} animated />
-              <Skeleton.Block animated />
-            </View>
+            <Col key={i} span={3}>
+              <Space>
+                <Skeleton.Avatar size={48} animated />
+                <Skeleton.Block animated />
+              </Space>
+            </Col>
           ))}
-      </View>
-      <View style={{ display: 'flex', gap: 10, marginTop: 20 }}>
+      </Row>
+
+      <Space direction="horizontal">
         <Skeleton.Block style={{ width: 100, height: 80 }} animated />
         <View style={{ flex: 1 }}>
           <Skeleton.Paragraph rows={2} animated />
@@ -37,7 +26,7 @@ export default () => {
             animated
           />
         </View>
-      </View>
+      </Space>
     </Space>
   )
 }

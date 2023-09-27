@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: '模板',
+  navigationBarTitleText: 'PopoutInput 弹出式输入框',
 })

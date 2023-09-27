@@ -6,15 +6,10 @@ export default () => {
       defaultActiveKey={0}
       lineStyle={{
         height: 20,
-        background: 'transparent',
+        backgroundColor: 'transparent',
       }}
       line={
-        <Icon
-          prefix="demo-icon"
-          name="smile-line"
-          size={20}
-          color="var(--sar-warning)"
-        />
+        <Icon family="demo-icons" name="smile-line" size={20} color="tomato" />
       }
     >
       <Tabs.Tab>标签1</Tabs.Tab>

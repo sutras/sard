@@ -1,36 +1,32 @@
 import { useState } from 'react'
 import { View } from '@tarojs/components'
-import { Cell, Collapse, Space } from 'sard-taro'
+import { List, Collapse, Space } from 'sard-taro'
 
 export default () => {
   const [visible, setVisible] = useState(true)
 
-  const handleClick = () => {
-    setVisible(!visible)
-  }
-
   return (
-    <Space vertical gap="medium">
-      <Cell.Group card>
-        <Cell linkable title="toggle" onClick={handleClick}></Cell>
-      </Cell.Group>
+    <Space gap="medium">
+      <List card>
+        <List.Item
+          linkable
+          title="toggle"
+          onClick={() => setVisible(!visible)}
+        />
+      </List>
 
       <Collapse visible={visible}>
         <View
           style={{
-            backgroundColor: 'var(--sar-secondary-bg)',
             padding: 10,
-            marginLeft: 16,
-            marginRight: 16,
+            backgroundColor: '#e3e3e3',
           }}
         >
-          <View>collapse</View>
-          <View>collapse</View>
-          <View>collapse</View>
-          <View>collapse</View>
-          <View>collapse</View>
-          <View>collapse</View>
-          <View>collapse</View>
+          {Array(6)
+            .fill(0)
+            .map((_, i) => (
+              <View key={i}>collapse</View>
+            ))}
         </View>
       </Collapse>
     </Space>

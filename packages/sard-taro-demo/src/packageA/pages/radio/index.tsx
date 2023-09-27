@@ -2,7 +2,6 @@ import Demo from '@/components/demo'
 import Page from '@/components/page'
 
 import Basic from './demo/Basic'
-import Controllable from './demo/Controllable'
 import Disabled from './demo/Disabled'
 import Size from './demo/Size'
 import Color from './demo/Color'
@@ -13,13 +12,9 @@ import CustomFully from './demo/CustomFully'
 
 export default () => {
   return (
-    <Page className="page-radio">
+    <Page>
       <Demo title="基础使用">
         <Basic />
-      </Demo>
-
-      <Demo title="受控">
-        <Controllable />
       </Demo>
 
       <Demo title="禁用状态">
@@ -30,7 +25,7 @@ export default () => {
         <Size />
       </Demo>
 
-      <Demo title="颜色">
+      <Demo title="自定义颜色">
         <Color />
       </Demo>
 

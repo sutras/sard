@@ -2,7 +2,7 @@ import Demo from '@/components/demo'
 import Page from '@/components/page'
 
 import Basic from './demo/Basic'
-import Imperative from './demo/Imperative'
+import NoAgent from './demo/NoAgent'
 import AsyncClose from './demo/AsyncClose'
 import Round from './demo/Round'
 import Headed from './demo/Headed'
@@ -10,13 +10,13 @@ import Content from './demo/Content'
 
 export default () => {
   return (
-    <Page className="page-dialog">
+    <Page>
       <Demo title="基础使用" full>
         <Basic />
       </Demo>
 
-      <Demo title="命令式" full>
-        <Imperative />
+      <Demo title="不使用代理" full>
+        <NoAgent />
       </Demo>
 
       <Demo title="异步关闭" full>

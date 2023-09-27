@@ -1,5 +1,5 @@
-import { View } from '@tarojs/components'
-import { Calendar, CalendarDay, Cell, PopoutInput } from 'sard-taro'
+import { Text } from '@tarojs/components'
+import { Calendar, CalendarDay, List, PopoutInput } from 'sard-taro'
 
 export default () => {
   const formatter = (day: CalendarDay) => {
@@ -10,13 +10,13 @@ export default () => {
 
     if (month === 5) {
       if (date === 1) {
-        day.bottomInfo = '劳动节'
+        day.bottom = '劳动节'
       }
       if (date <= 3) {
-        day.topInfo = <View style={{ color: 'var(--sar-danger)' }}>休</View>
+        day.top = <Text style={{ color: 'tomato' }}>休</Text>
       }
       if (date === 4) {
-        day.bottomInfo = '青年节'
+        day.bottom = '青年节'
       }
 
       if (week === 0) {
@@ -24,40 +24,39 @@ export default () => {
         const secondSunday = 15 - (weekOnFirstDay || 7)
 
         if (secondSunday === date) {
-          day.bottomInfo = '母亲节'
+          day.bottom = '母亲节'
         }
       }
     }
 
     if (day.type === 'start') {
-      day.bottomInfo = '入店'
+      day.bottom = '入店'
     } else if (day.type === 'end') {
-      day.bottomInfo = '离店'
+      day.bottom = '离店'
     }
 
     if (week === 0 || week === 6) {
       day.style = {
         fontWeight: 'bold',
-        color: 'var(--sar-danger)',
+        color: 'tomato',
       }
     }
   }
 
   return (
-    <Cell.Group card>
-      <Cell>
+    <List card>
+      <List.Item>
         <PopoutInput
           title="请选择日期"
           inputProps={{ placeholder: '请选择日期' }}
         >
           <Calendar
             type="range"
-            min={new Date(2000, 4, 1)}
-            max={new Date(2000, 5, 0)}
+            defaultCurrentDate={new Date(new Date().getFullYear(), 4, 1)}
             formatter={formatter}
           />
         </PopoutInput>
-      </Cell>
-    </Cell.Group>
+      </List.Item>
+    </List>
   )
 }

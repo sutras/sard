@@ -7,11 +7,10 @@ import Color from './demo/Color'
 import Value from './demo/Value'
 import DisabledReadOnly from './demo/DisabledReadOnly'
 import Loading from './demo/Loading'
-import Async from './demo/Async'
 
 export default () => {
   return (
-    <Page className="page-switch">
+    <Page>
       <Demo title="基础使用">
         <Basic />
       </Demo>
@@ -34,10 +33,6 @@ export default () => {
 
       <Demo title="加载状态">
         <Loading />
-      </Demo>
-
-      <Demo title="异步控制">
-        <Async />
       </Demo>
     </Page>
   )

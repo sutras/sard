@@ -19,7 +19,7 @@ const SubmitButton = ({ form }: { form: FormStore }) => {
   }, [values])
 
   return (
-    <Button block formType="submit" disabled={!submittable}>
+    <Button formType="submit" disabled={!submittable}>
       Submit
     </Button>
   )
@@ -52,9 +52,7 @@ function App() {
             <SubmitButton form={form} />
           </Col>
           <Col>
-            <Button block formType="reset">
-              Reset
-            </Button>
+            <Button formType="reset">Reset</Button>
           </Col>
         </Row>
       </Form.Field>

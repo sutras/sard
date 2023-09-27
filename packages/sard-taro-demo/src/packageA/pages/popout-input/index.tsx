@@ -5,8 +5,8 @@ import Basic from './demo/Basic'
 
 export default () => {
   return (
-    <Page className="page-template">
-      <Demo title="基础使用">
+    <Page>
+      <Demo title="基础使用" full>
         <Basic />
       </Demo>
     </Page>

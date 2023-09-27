@@ -8,7 +8,7 @@ export default () => {
         {
           text: '选项1',
           iconProps: {
-            prefix: 'demo-icon',
+            family: 'demo-icons',
             name: 'upc-scan',
           },
         },

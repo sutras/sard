@@ -10,21 +10,28 @@ interface Props extends BaseProps {
 }
 
 export default (props: Props) => {
-  const { title, full, className, children, ...restProps } = props
+  const { title, full, children } = props
 
   return (
-    <View
-      {...restProps}
-      className={classNames(
-        'demo',
-        {
-          'demo-full': full,
-        },
-        className,
+    <>
+      <View className="demo-title">
+        <View className="demo-title-line" />
+        {title}
+      </View>
+
+      {full ? (
+        children
+      ) : (
+        <View
+          className={classNames('demo-body', {
+            'demo-full': full,
+          })}
+        >
+          {children}
+        </View>
       )}
-    >
-      <View className="demo-title">{title}</View>
-      <View className="demo-body">{children}</View>
-    </View>
+
+      <View style={{ marginBottom: 40 }}></View>
+    </>
   )
 }

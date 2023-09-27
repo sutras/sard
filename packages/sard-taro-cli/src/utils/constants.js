@@ -1,6 +1,6 @@
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { mergeSardConfig } from './mergeSardConfig.js'
+import { getSardConfig } from './getSardConfig.js'
 
 // path
 export const ROOT_DIR = resolve(
@@ -11,16 +11,9 @@ export const SITE_DIR = resolve(ROOT_DIR, './src/site')
 export const CWD_DIR = process.cwd()
 
 // sard config
-export const SARD_CONFIG_NAME = 'sard.config.json'
+export const SARD_CONFIG_NAME = 'sard.config.js'
 
-const customConfig = (
-  await import(resolve(CWD_DIR, SARD_CONFIG_NAME), {
-    assert: { type: 'json' },
-  })
-).default
-const mergedSardConfig = mergeSardConfig(customConfig)
-
-export const sardConfig = mergedSardConfig
+export const sardConfig = getSardConfig()
 
 export const VIRTUAL_SARD_CONFIG = 'virtual:sard-config'
 

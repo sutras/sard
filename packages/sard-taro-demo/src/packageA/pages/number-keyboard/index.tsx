@@ -1,6 +1,5 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { Toast } from 'sard-taro'
 
 import Basic from './demo/Basic'
 import Dot from './demo/Dot'
@@ -10,9 +9,7 @@ import WithPasswordInput from './demo/WithPasswordInput'
 
 export default () => {
   return (
-    <Page className="page-number-keyboard">
-      <Toast.Agent />
-
+    <Page>
       <Demo title="默认键盘" full>
         <Basic />
       </Demo>

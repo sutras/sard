@@ -2,7 +2,7 @@ import { Input, Space } from 'sard-taro'
 
 export default () => {
   return (
-    <Space vertical>
+    <Space>
       <Input placeholder="文本" type="text" />
       <Input placeholder="数字" type="number" />
       <Input placeholder="身份证" type="idcard" />

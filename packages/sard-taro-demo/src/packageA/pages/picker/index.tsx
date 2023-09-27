@@ -1,20 +1,19 @@
 import Demo from '@/components/demo'
 import Page from '@/components/page'
-import { Toast } from 'sard-taro'
 
 import ObjectOption from './demo/ObjectOption'
 import Multiple from './demo/Multiple'
 import ObjectMultiple from './demo/ObjectMultiple'
 import Cascaded from './demo/Cascaded'
-import WithPopout from './demo/WithPopout'
+import Basic from './demo/Basic'
+import Alone from './demo/Alone'
+import Appointment from './demo/Appointment'
 
 export default () => {
   return (
-    <Page className="page-Picker">
-      <Toast.Agent />
-
-      <Demo title="配合弹出框" full>
-        <WithPopout />
+    <Page>
+      <Demo title="基础使用" full>
+        <Basic />
       </Demo>
 
       <Demo title="对象类型" full>
@@ -31,6 +30,14 @@ export default () => {
 
       <Demo title="级联选择" full>
         <Cascaded />
+      </Demo>
+
+      <Demo title="预约时间" full>
+        <Appointment />
+      </Demo>
+
+      <Demo title="单独使用" full>
+        <Alone />
       </Demo>
     </Page>
   )

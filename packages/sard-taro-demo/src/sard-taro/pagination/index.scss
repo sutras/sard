@@ -1,0 +1,116 @@
+@import '../style/variables.scss';
+@import '../style/mixins/bem.scss';
+@import '../style/mixins/disabled.scss';
+@import '../style/mixins/universal.scss';
+@import '../style/mixins/ifweb.scss';
+
+// #variables
+$sar-pagination-border-radius: $sar-rounded !default;
+
+$sar-pagination-item-height: 40px !default;
+$sar-pagination-item-min-width: 40px !default;
+$sar-pagination-item-padding-x: 10px !default;
+$sar-pagination-item-border-color: $sar-border-color !default;
+$sar-pagination-item-font-size: $sar-text-base !default;
+$sar-pagination-item-color: $sar-primary !default;
+$sar-pagination-item-active-bg: $sar-active-bg !default;
+
+$sar-pagination-item-current-color: $sar-white !default;
+$sar-pagination-item-current-border-color: $sar-primary !default;
+$sar-pagination-item-current-bg: $sar-primary !default;
+
+$sar-pagination-ratio-height: 40px !default;
+$sar-pagination-ratio-font-size: $sar-text-base !default;
+$sar-pagination-ratio-color: $sar-body-color !default;
+// #endvariables
+
+@include bem(pagination) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  @include e(item) {
+    @include universal;
+    flex-direction: row;
+    flex: none;
+    justify-content: center;
+    align-items: center;
+    height: $sar-pagination-item-height;
+    min-width: $sar-pagination-item-min-width;
+    padding: 0 $sar-pagination-item-padding-x;
+    border: 1px solid $sar-pagination-item-border-color;
+
+    @include ifweb {
+      cursor: pointer;
+    }
+
+    @include m(later) {
+      margin-left: -1px;
+    }
+
+    @include m(first) {
+      border-top-left-radius: $sar-pagination-border-radius;
+      border-bottom-left-radius: $sar-pagination-border-radius;
+    }
+
+    @include m(last) {
+      border-top-right-radius: $sar-pagination-border-radius;
+      border-bottom-right-radius: $sar-pagination-border-radius;
+    }
+
+    @include m(current) {
+      z-index: 3;
+      border-color: $sar-pagination-item-current-border-color;
+      background-color: $sar-pagination-item-current-bg;
+    }
+
+    @include m(disabled) {
+      @include disabled;
+    }
+
+    @include m(pressed) {
+      background-color: $sar-pagination-item-active-bg;
+    }
+  }
+
+  @include e(item-text) {
+    font-size: $sar-pagination-item-font-size;
+    color: $sar-pagination-item-color;
+
+    @include m(current) {
+      color: $sar-pagination-item-current-color;
+    }
+  }
+
+  @include e(prev, next) {
+    @include universal;
+    flex-direction: row;
+    flex: 1 0 auto;
+
+    @include m(simple) {
+      flex: 1;
+      padding: 0;
+      border-radius: $sar-pagination-border-radius;
+    }
+  }
+
+  @include e(next) {
+    @include m(simple) {
+      margin-left: 0;
+    }
+  }
+
+  @include e(ratio) {
+    @include universal;
+    flex-direction: row;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    height: $sar-pagination-ratio-height;
+    font-size: $sar-pagination-ratio-font-size;
+    color: $sar-pagination-ratio-color;
+  }
+}

@@ -11,11 +11,8 @@ function App() {
     console.log('Failed:', errorInfo)
   }
 
-  const [form] = Form.useForm()
-
   return (
     <Form
-      form={form}
       onSuccess={handleSuccess}
       onFail={handleFail}
       initialValues={{ remember: true }}
@@ -26,7 +23,7 @@ function App() {
         rules={[{ required: true, message: 'Please input your Username!' }]}
       >
         <Input
-          prepend={<Icon prefix="demo-icon" name="person" />}
+          prepend={<Icon family="demo-icons" name="person" />}
           placeholder="Username"
         />
       </Form.Field>
@@ -36,29 +33,27 @@ function App() {
         rules={[{ required: true, message: 'Please input your Password!' }]}
       >
         <Input
-          prepend={<Icon prefix="demo-icon" name="key" />}
+          prepend={<Icon family="demo-icons" name="key" />}
           type="password"
           placeholder="Password"
         />
       </Form.Field>
       <Form.Field underline={false}>
-        <View style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Space direction="horizontal" justify="between" align="center">
           <Form.Field name="remember" valuePropName="checked" unstyled>
             <Checkbox>Remember me</Checkbox>
           </Form.Field>
 
-          <View style={{ color: 'var(--sar-primary)' }}>Forgot password</View>
-        </View>
+          <View style={{ color: 'tomato' }}>Forgot password</View>
+        </Space>
       </Form.Field>
 
       <Form.Field>
-        <Space vertical>
-          <Button block formType="submit">
-            Log in
-          </Button>
-          <Space>
+        <Space>
+          <Button formType="submit">Log in</Button>
+          <Space direction="horizontal">
             Or
-            <View style={{ color: 'var(--sar-primary)' }}>register now!</View>
+            <View style={{ color: 'tomato' }}>register now!</View>
           </Space>
         </Space>
       </Form.Field>

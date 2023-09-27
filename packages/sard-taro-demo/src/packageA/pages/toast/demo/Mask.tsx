@@ -1,9 +1,9 @@
-import { Cell, Toast } from 'sard-taro'
+import { List, Toast } from 'sard-taro'
 
 export default () => {
   return (
-    <Cell.Group card>
-      <Cell
+    <List card>
+      <List.Item
         linkable
         title="显示背景"
         onClick={() => {
@@ -13,11 +13,11 @@ export default () => {
 
           setTimeout(() => {
             Toast.hide()
-          }, 2000)
+          }, 1500)
         }}
       />
 
-      <Cell
+      <List.Item
         linkable
         title="透明背景"
         onClick={() => {
@@ -28,9 +28,9 @@ export default () => {
 
           setTimeout(() => {
             Toast.hide()
-          }, 2000)
+          }, 1500)
         }}
       />
-    </Cell.Group>
+    </List>
   )
 }

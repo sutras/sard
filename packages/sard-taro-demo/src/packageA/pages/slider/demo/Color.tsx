@@ -2,18 +2,14 @@ import { Slider, Space } from 'sard-taro'
 
 export default () => {
   return (
-    <Space vertical>
-      <Slider
-        defaultValue={50}
-        pieceColor="var(--sar-pink)"
-        thumbColor="var(--sar-pink)"
-      />
+    <Space>
+      <Slider defaultValue={50} pieceColor="tomato" thumbColor="tomato" />
 
       <Slider
         range
         defaultValue={[20, 80]}
-        pieceColor="var(--sar-pink)"
-        thumbColor="var(--sar-pink)"
+        pieceColor="tomato"
+        thumbColor="tomato"
       />
     </Space>
   )

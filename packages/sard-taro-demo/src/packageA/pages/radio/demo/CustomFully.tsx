@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react'
-import { Cell, CheckContext, Icon, useCheck, useCheckGroup } from 'sard-taro'
+import { List, SelectContext, Icon, useSelect, useSelectGroup } from 'sard-taro'
 
 interface CustomCheckGroupProps {
   value?: any
@@ -11,7 +11,7 @@ interface CustomCheckGroupProps {
 const CustomRadioGroup = (props: CustomCheckGroupProps) => {
   const { value, defaultValue, onChange, children } = props
 
-  const context = useCheckGroup({
+  const context = useSelectGroup({
     value,
     defaultValue,
     trigger: onChange,
@@ -19,9 +19,9 @@ const CustomRadioGroup = (props: CustomCheckGroupProps) => {
   })
 
   return (
-    <CheckContext.Provider value={context}>
-      <Cell.Group card>{children}</Cell.Group>
-    </CheckContext.Provider>
+    <SelectContext.Provider value={context}>
+      <List card>{children}</List>
+    </SelectContext.Provider>
   )
 }
 
@@ -36,7 +36,7 @@ interface CustomCheckProps {
 const CustomRadio = (props: CustomCheckProps) => {
   const { checked, defaultChecked, children, value, onChange } = props
 
-  const [isChecked, toggle] = useCheck(
+  const [isChecked, toggle] = useSelect(
     'single',
     {
       value: checked,
@@ -47,11 +47,11 @@ const CustomRadio = (props: CustomCheckProps) => {
     value,
   )
   return (
-    <Cell
+    <List.Item
       clickable
       title={children}
       onClick={toggle}
-      value={isChecked && <Icon color="var(--sar-primary)" name="success" />}
+      value={isChecked && <Icon color="tomato" name="success" />}
     />
   )
 }

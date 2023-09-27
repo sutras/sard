@@ -44,9 +44,7 @@ function App() {
       </Form.Field>
 
       <Form.Field underline={false}>
-        <Button block onClick={onCheck}>
-          Check
-        </Button>
+        <Button onClick={onCheck}>Check</Button>
       </Form.Field>
     </Form>
   )

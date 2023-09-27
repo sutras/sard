@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
     "types": ["node"],
-    "target": "es2017",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "ESNext",
     "removeComments": false,
     "preserveConstEnums": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
-    "outDir": "lib",
+    "outDir": "dist",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strictNullChecks": true,
@@ -20,8 +20,10 @@
     "typeRoots": ["node_modules/@types"],
     "paths": {
       "@/*": ["./src/*"],
-      "sard-taro": ["../sard-taro/src"],
-      "sard-taro/dist/*": ["../sard-taro/src/*"]
+      // "sard-taro": ["../sard-taro/src"],
+      // "sard-taro/dist/*": ["../sard-taro/src/*"]
+      "sard-taro": ["./src/sard-taro"],
+      "sard-taro/dist/*": ["./src/sard-taro/*"]
     }
   },
   "include": ["./src/", "./types"],

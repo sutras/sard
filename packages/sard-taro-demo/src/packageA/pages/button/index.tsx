@@ -6,13 +6,13 @@ import Theme from './demo/Theme'
 import CustomTheme from './demo/CustomTheme'
 import Round from './demo/Round'
 import Disabled from './demo/Disabled'
-import Block from './demo/Block'
 import Size from './demo/Size'
 import Loading from './demo/Loading'
+import Icon from './demo/Icon'
 
 export default () => {
   return (
-    <Page className="page-button">
+    <Page>
       <Demo title="按钮类型">
         <Type />
       </Demo>
@@ -33,16 +33,16 @@ export default () => {
         <Disabled />
       </Demo>
 
-      <Demo title="块级按钮">
-        <Block />
-      </Demo>
-
       <Demo title="按钮尺寸">
         <Size />
       </Demo>
 
       <Demo title="加载中">
         <Loading />
+      </Demo>
+
+      <Demo title="图标按钮">
+        <Icon />
       </Demo>
     </Page>
   )

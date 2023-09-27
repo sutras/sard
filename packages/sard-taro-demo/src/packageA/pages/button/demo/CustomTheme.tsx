@@ -1,35 +1,45 @@
-import { Button, Space } from 'sard-taro'
+import { Button, LinearGradient, Space } from 'sard-taro'
 
 export default () => {
   return (
     <Space>
-      <Button style={{ background: 'var(--sar-pink)' }}>default</Button>
+      <Button style={{ backgroundColor: 'tomato' }}>default</Button>
       <Button
         style={{
-          background: 'rgba(var(--sar-pink-rgb), 0.2)',
-          color: 'var(--sar-pink)',
+          backgroundColor: '#f5f5f5',
         }}
+        color="tomato"
         type="pale"
       >
         pale
       </Button>
-      <Button style={{ color: 'var(--sar-pink)' }} type="mild">
+      <Button color="tomato" type="mild">
         mild
       </Button>
-      <Button style={{ color: 'var(--sar-pink)' }} type="outline">
+      <Button color="tomato" type="outline">
         outline
       </Button>
-      <Button style={{ color: 'var(--sar-pink)' }} type="text">
+      <Button color="tomato" type="text">
         text
       </Button>
-      <Button style={{ color: 'var(--sar-pink)' }} type="pale-text">
+      <Button color="tomato" type="pale-text">
         pale-text
       </Button>
       <Button
-        style={{
-          background:
-            'linear-gradient(to right, var(--sar-indigo), var(--sar-pink))',
-        }}
+        before={
+          <LinearGradient
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            colors={['tomato', '#6f42c1']}
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+            }}
+          />
+        }
       >
         渐变色
       </Button>
