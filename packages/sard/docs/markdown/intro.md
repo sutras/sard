@@ -28,7 +28,7 @@
   <div class="qrcode-item">
     <img
       class="qrcode-img"
-      src="https://unpkg.com/@sard/assets@1.2.0/images/qrcode-h5.png"
+      src="https://unpkg.com/@sard/assets@1.3.1/images/qrcode-h5.png"
       alt="sard 演示 H5"
     />
     <div class="qrcode-text">H5</div>

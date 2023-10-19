@@ -2,7 +2,7 @@ import mime from 'mime'
 import { sardConfig } from '../utils/constants.js'
 
 const {
-  site: { seo, logo },
+  site: { logo, seo, tags },
 } = sardConfig
 
 export function transformIndexHtml() {
@@ -12,6 +12,7 @@ export function transformIndexHtml() {
       return {
         html,
         tags: [
+          ...tags,
           {
             tag: 'title',
             children: seo.title,

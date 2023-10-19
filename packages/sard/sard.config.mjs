@@ -31,6 +31,18 @@ export default {
       title: 'sard | React 移动端 UI 组件库',
       description: 'sard | React 移动端 UI 组件库',
     },
+    tags: [
+      {
+        tag: 'script',
+        children: `var _hmt = _hmt || []
+          ;(function () {
+            var hm = document.createElement('script')
+            hm.src = 'https://hm.baidu.com/hm.js?f83f5174c995e2f5c9520acb67f574b9'
+            var s = document.getElementsByTagName('script')[0]
+            s.parentNode.insertBefore(hm, s)
+          })()`,
+      },
+    ],
     routes: [
       {
         title: '首页',

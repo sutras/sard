@@ -26,10 +26,7 @@ const defaultSardConfig = {
   site: {
     title: '',
     logo: '',
-    seo: {
-      title: '',
-      description: '',
-    },
+    tags: [],
     routes: [],
   },
 }

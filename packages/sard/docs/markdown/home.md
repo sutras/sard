@@ -1,7 +1,7 @@
 <div class="home">
-  <div class="jumbotron">
+  <div class="jumbotron" align="center">
     <div class="logo-img">
-      <img src="https://unpkg.com/@sard/assets@1.2.0/images/logo.svg" alt="" />
+      <img src="https://unpkg.com/@sard/assets@1.2.0/images/logo.svg" width="240" alt="" />
     </div>
     <h1 class="logo-name">Sard</h1>
     <p class="description">一套基于 Taro + React 框架开发的兼容多端的 UI 组件库</p>
