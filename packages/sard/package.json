@@ -1,6 +1,6 @@
 {
   "name": "sard",
-  "version": "1.0.0-canary.1",
+  "version": "1.0.0-canary.1.1",
   "description": "Taro React 移动端 UI 组件库",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -14,8 +14,8 @@
     "preview": "sard preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "wuzhitao",
+  "license": "MIT",
   "dependencies": {
     "@tarojs/components": "3.6.16",
     "@tarojs/taro": "3.6.16",
@@ -25,5 +25,16 @@
   "directories": {
     "doc": "docs"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sutras/sard.git"
+  },
+  "keywords": [
+    "react",
+    "taro",
+    "小程序",
+    "组件库",
+    "UI"
+  ]
 }

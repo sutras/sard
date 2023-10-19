@@ -39,8 +39,8 @@
     "terser": "^5.16.1",
     "vite": "^4.0.4"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "wuzhitao",
+  "license": "MIT",
   "types": "./dist/index.d.ts",
   "description": ""
 }
