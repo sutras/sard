@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "types": ["node"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "dist",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "typeRoots": ["node_modules/@types"],
+    "paths": {
+      "@/*": ["./src/*"],
+      // "sard": ["../sard/src"],
+      // "sard/dist/*": ["../sard/src/*"]
+      "sard": ["./src/sard"],
+      "sard/dist/*": ["./src/sard/*"]
+    }
+  },
+  "include": ["./src/", "./types"],
+  "compileOnSave": false
+}

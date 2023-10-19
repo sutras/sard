@@ -1,0 +1,138 @@
+@use 'sass:math';
+@import '../style/base.scss';
+// #variables
+$sar-picker-height: 240px !default;
+
+$sar-picker-item-height: 48px !default;
+$sar-picker-item-count: 5 !default;
+$sar-picker-item-font-size: $sar-text-lg !default;
+$sar-picker-item-color: $sar-body-color !default;
+
+$sar-picker-height: $sar-picker-item-height * $sar-picker-item-count !default;
+$sar-picker-half-height: math.div(
+  $sar-picker-height - $sar-picker-item-height,
+  2
+) !default;
+
+$sar-picker-indicator-border-color: $sar-border-color !default;
+
+$sar-picker-mask-bg-image: linear-gradient(
+    to bottom,
+    rgba($sar-emphasis-bg-color, 0.95),
+    rgba($sar-emphasis-bg-color, 0.6)
+  ),
+  linear-gradient(
+    to top,
+    rgba($sar-emphasis-bg-color, 0.95),
+    rgba($sar-emphasis-bg-color, 0.6)
+  ) !default;
+
+// 暗黑模式
+$sar-picker-item-dark-color: $sar-dark-body-color !default;
+$sar-picker-indicator-dark-border-color: $sar-dark-border-color !default;
+$sar-picker-mask-dark-bg-image: linear-gradient(
+    to bottom,
+    rgba($sar-dark-emphasis-bg-color, 0.95),
+    rgba($sar-dark-emphasis-bg-color, 0.6)
+  ),
+  linear-gradient(
+    to top,
+    rgba($sar-dark-emphasis-bg-color, 0.95),
+    rgba($sar-dark-emphasis-bg-color, 0.6)
+  ) !default;
+// #endvariables
+
+@include bem(picker) {
+  @include b() {
+    @include universal;
+    height: $sar-picker-height;
+  }
+
+  @include e(wrapper) {
+    @include universal;
+    flex-direction: row;
+    overflow: hidden;
+    -webkit-user-drag: none;
+  }
+
+  @include e(column) {
+    @include universal;
+    flex: 1;
+    width: 0;
+    height: 100%;
+    touch-action: pan-x;
+  }
+
+  @include e(mask) {
+    @include universal;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    flex: auto;
+    pointer-events: none;
+    background-image: $sar-picker-mask-bg-image;
+    background-position: top, bottom;
+    background-repeat: no-repeat;
+    background-size: 100% $sar-picker-half-height;
+  }
+
+  @include e(indicator) {
+    @include universal;
+    top: $sar-picker-half-height;
+    width: 100%;
+    height: $sar-picker-item-height;
+    flex: none;
+    align-items: center;
+    pointer-events: none;
+    &::before,
+    &::after {
+      border-color: $sar-picker-indicator-border-color;
+    }
+  }
+
+  @include e(item-group) {
+    @include universal;
+    width: 100%;
+    pointer-events: auto;
+    will-change: transform;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.68, 1);
+  }
+
+  @include e(item) {
+    @include universal;
+    flex: none;
+    height: $sar-picker-item-height;
+    line-height: $sar-picker-item-height;
+    font-size: $sar-picker-item-font-size;
+    text-align: center;
+    color: $sar-picker-item-color;
+
+    display: block;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@include theme(dark) {
+  @include bem(picker) {
+    @include e(mask) {
+      background-image: $sar-picker-mask-dark-bg-image;
+    }
+
+    @include e(indicator) {
+      &::before,
+      &::after {
+        border-color: $sar-picker-indicator-dark-border-color;
+      }
+    }
+
+    @include e(item) {
+      color: $sar-picker-item-dark-color;
+    }
+  }
+}

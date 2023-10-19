@@ -1,0 +1,95 @@
+@import '@/base.scss';
+
+// 颜色
+@each $colors
+  in (
+    $sar-grays,
+    $sar-blues,
+    $sar-indigos,
+    $sar-purples,
+    $sar-pinks,
+    $sar-reds,
+    $sar-oranges,
+    $sar-yellows,
+    $sar-greens,
+    $sar-teals,
+    $sar-cyans
+  )
+{
+  @each $name, $color in $colors {
+    // 文字颜色
+    .demo-#{$name} {
+      color: $color;
+    }
+
+    // 背景色
+    .demo-#{$name}-bg {
+      background-color: $color;
+    }
+  }
+}
+
+// 主题色
+@each $name, $colors in $sar-theme-colors {
+  $color: nth($colors, 1);
+
+  // 文字颜色
+  .demo-#{$name} {
+    color: $color;
+  }
+
+  // 背景色
+  .demo-#{$name}-bg {
+    background-color: $color;
+  }
+}
+
+// 圆角
+.demo-rounded-xs {
+  border-radius: $sar-rounded-xs;
+}
+
+.demo-rounded-sm {
+  border-radius: $sar-rounded-sm;
+}
+
+.demo-rounded {
+  border-radius: $sar-rounded;
+}
+
+.demo-rounded-lg {
+  border-radius: $sar-rounded-lg;
+}
+
+.demo-rounded-xl {
+  border-radius: $sar-rounded-xl;
+}
+
+.demo-rounded-full {
+  border-radius: $sar-rounded-full;
+}
+
+// 字号
+.demo-text-xs {
+  font-size: $sar-text-xs;
+}
+
+.demo-text-sm {
+  font-size: $sar-text-sm;
+}
+
+.demo-text-base {
+  font-size: $sar-text-base;
+}
+
+.demo-text-lg {
+  font-size: $sar-text-lg;
+}
+
+.demo-text-xl {
+  font-size: $sar-text-xl;
+}
+
+.demo-text-2xl {
+  font-size: $sar-text-2xl;
+}

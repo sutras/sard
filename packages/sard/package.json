@@ -1,0 +1,29 @@
+{
+  "name": "sard",
+  "version": "1.0.0-canary.1",
+  "description": "Taro React 移动端 UI 组件库",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "dev": "sard dev",
+    "build:site": "sard build:site",
+    "build": "sard build",
+    "preview": "sard preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tarojs/components": "3.6.16",
+    "@tarojs/taro": "3.6.16",
+    "classnames": "^2.3.2",
+    "react": "^18.2.0"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {}
+}

@@ -1,0 +1,99 @@
+@import '../style/base.scss';
+// #variables
+$sar-rate-star-void-color: $sar-quaternary-color !default;
+$sar-rate-star-color: $sar-warning !default;
+
+// 暗黑模式
+$sar-rate-star-void-dark-color: $sar-dark-quaternary-color !default;
+$sar-rate-star-dark-color: $sar-warning !default;
+// #endvariables
+
+@include bem(rate) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    @include if-web {
+      touch-action: pan-y;
+
+      @include m(readonly, disabled) {
+        touch-action: auto;
+      }
+    }
+  }
+
+  @include e(item) {
+    @include universal;
+
+    @include if-web {
+      cursor: pointer;
+
+      @include m(readonly) {
+        cursor: default;
+      }
+
+      @include m(disabled) {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  @include e(star-void) {
+    @include universal;
+    color: $sar-rate-star-void-color;
+  }
+
+  @include e(star-void-icon) {
+    color: $sar-rate-star-void-color;
+  }
+
+  @include e(star) {
+    @include universal;
+    position: absolute;
+    top: 0;
+    left: 0;
+    align-items: flex-start;
+    width: 0;
+    overflow: hidden;
+    color: $sar-rate-star-color;
+
+    @include m(disabled) {
+      color: $sar-disabled-deep-bg-color;
+    }
+  }
+
+  @include e(star-icon) {
+    color: $sar-rate-star-color;
+
+    @include m(disabled) {
+      color: $sar-disabled-deep-bg-color;
+    }
+  }
+}
+
+@include theme(dark) {
+  @include bem(rate) {
+    @include e(star-void) {
+      color: $sar-rate-star-void-color;
+    }
+
+    @include e(star-void-icon) {
+      color: $sar-rate-star-void-color;
+    }
+
+    @include e(star) {
+      color: $sar-rate-star-color;
+
+      @include m(disabled) {
+        color: $sar-dark-disabled-deep-bg-color;
+      }
+    }
+
+    @include e(star-icon) {
+      color: $sar-rate-star-color;
+
+      @include m(disabled) {
+        color: $sar-dark-disabled-deep-bg-color;
+      }
+    }
+  }
+}

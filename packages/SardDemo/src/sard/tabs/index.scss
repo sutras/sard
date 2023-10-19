@@ -1,0 +1,113 @@
+@import '../style/base.scss';
+// #variables
+$sar-tabs-tab-height: 44px !default;
+$sar-tabs-tab-font-size: $sar-text-base !default;
+$sar-tabs-tab-line-height: $sar-tabs-tab-font-size * $sar-leading-snug !default;
+$sar-tabs-tab-color: $sar-secondary-color !default;
+$sar-tabs-tab-active-color: $sar-emphasis-color !default;
+
+$sar-tabs-tab-padding-x: 16px !default;
+
+$sar-tabs-line-width: 40px !default;
+$sar-tabs-line-height: 3px !default;
+$sar-tabs-line-bg-color: $sar-primary !default;
+
+// 暗黑模式
+$sar-tabs-tab-dark-color: $sar-dark-secondary-color !default;
+$sar-tabs-tab-active-dark-color: $sar-dark-emphasis-color !default;
+// #endvariables
+
+@include bem(tabs) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+  }
+
+  @include e(scroll) {
+    @include universal;
+    width: 100%;
+    flex: 1;
+  }
+
+  @include e(container) {
+    @include universal;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  @include e(wrapper) {
+    @include universal;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    min-width: 100%;
+    flex: none;
+  }
+
+  @include e(tab) {
+    @include universal;
+    z-index: 2;
+    flex-direction: row;
+    flex: 1;
+    height: $sar-tabs-tab-height;
+    justify-content: center;
+    align-items: center;
+    padding: 0 $sar-tabs-tab-padding-x;
+    font-size: $sar-tabs-tab-font-size;
+    line-height: $sar-tabs-tab-line-height;
+    color: $sar-tabs-tab-color;
+    @include if-web {
+      white-space: nowrap;
+    }
+
+    @include if-web {
+      cursor: pointer;
+    }
+
+    @include m(active) {
+      font-weight: $sar-font-bold;
+      color: $sar-tabs-tab-active-color;
+    }
+
+    @include m(scrollable) {
+      flex: 0;
+    }
+
+    @include m(disabled) {
+      color: $sar-disabled-color;
+      @include if-web {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  @include e(line) {
+    @include universal;
+    position: absolute;
+    bottom: 0;
+    z-index: 10;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    width: $sar-tabs-line-width;
+    height: $sar-tabs-line-height;
+    background-color: $sar-tabs-line-bg-color;
+    pointer-events: none;
+  }
+}
+
+@include theme(dark) {
+  @include bem(tabs) {
+    @include e(tab) {
+      color: $sar-tabs-tab-dark-color;
+
+      @include m(active) {
+        color: $sar-tabs-tab-active-dark-color;
+      }
+
+      @include m(disabled) {
+        color: $sar-dark-disabled-color;
+      }
+    }
+  }
+}

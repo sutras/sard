@@ -1,0 +1,106 @@
+@import '../style/base.scss';
+// #variables
+$sar-switch-width: 50px !default;
+$sar-switch-height: 30px !default;
+$sar-switch-transition-duration: $sar-duration !default;
+$sar-switch-bg-color: $sar-secondary-bg-color !default;
+$sar-switch-checked-bg-color: $sar-primary !default;
+
+$sar-switch-is-loading-opacity: $sar-loading-opacity !default;
+
+$sar-switch-thumb-border-width: 2px !default;
+$sar-switch-thumb-width: $sar-switch-height - $sar-switch-thumb-border-width * 2 !default;
+$sar-switch-thumb-height: $sar-switch-thumb-width !default;
+$sar-switch-thumb-border-radius: $sar-rounded-full !default;
+$sar-switch-thumb-bg-color: $sar-white !default;
+$sar-switch-thumb-transition-duration: $sar-duration !default;
+
+$sar-switch-loading-color: $sar-secondary-color !default;
+
+// 暗黑模式
+$sar-switch-dark-bg-color: $sar-dark-secondary-bg-color !default;
+$sar-switch-checked-dark-bg-color: $sar-primary !default;
+$sar-switch-thumb-dark-bg-color: $sar-white !default;
+$sar-switch-loading-dark-color: $sar-secondary-color !default;
+// #endvariables
+
+@include bem(switch) {
+  @include b() {
+    @include universal;
+    width: $sar-switch-width;
+    height: $sar-switch-height;
+    border-radius: $sar-switch-height;
+    background-color: $sar-switch-bg-color;
+
+    @include if-web {
+      cursor: pointer;
+      transition: background-color $sar-switch-transition-duration,
+        opacity $sar-switch-transition-duration;
+    }
+
+    @include m(checked) {
+      background-color: $sar-switch-checked-bg-color;
+    }
+
+    @include m(disabled-checked) {
+      background-color: $sar-disabled-deep-bg-color;
+    }
+
+    @include m(readonly) {
+      @include if-web {
+        cursor: default;
+      }
+    }
+
+    @include m(loading) {
+      opacity: $sar-switch-is-loading-opacity;
+      @include if-web {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  @include e(thumb) {
+    @include universal;
+    position: absolute;
+    left: $sar-switch-thumb-border-width;
+    top: $sar-switch-thumb-border-width;
+    width: $sar-switch-thumb-width;
+    height: $sar-switch-thumb-height;
+    justify-content: center;
+    align-items: center;
+    border-radius: $sar-rounded-full;
+    background-color: $sar-switch-thumb-bg-color;
+    @include if-web {
+      transition: transform $sar-switch-thumb-transition-duration;
+    }
+  }
+
+  @include e(loading) {
+    color: $sar-switch-loading-color;
+  }
+}
+
+@include theme(dark) {
+  @include bem(switch) {
+    @include b() {
+      background-color: $sar-switch-dark-bg-color;
+
+      @include m(checked) {
+        background-color: $sar-switch-checked-dark-bg-color;
+      }
+
+      @include m(disabled-checked) {
+        background-color: $sar-dark-disabled-deep-bg-color;
+      }
+    }
+
+    @include e(thumb) {
+      background-color: $sar-switch-thumb-dark-bg-color;
+    }
+
+    @include e(loading) {
+      color: $sar-switch-loading-dark-color;
+    }
+  }
+}

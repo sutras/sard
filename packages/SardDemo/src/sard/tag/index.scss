@@ -1,0 +1,93 @@
+@import '../style/base.scss';
+// #variables
+$sar-tag-sizes: (
+  small: (
+    padding: 0 2px,
+    font-size: $sar-text-xs,
+    line-height: 14px,
+    border-radius: $sar-rounded-xs,
+  ),
+  medium: (
+    padding: 0 4px,
+    font-size: $sar-text-sm,
+    line-height: 18px,
+    border-radius: $sar-rounded-sm,
+  ),
+  large: (
+    padding: 0 6px,
+    font-size: $sar-text-base,
+    line-height: 22px,
+    border-radius: $sar-rounded,
+  ),
+);
+
+$sar-tag-close-margin-left: 4px !default;
+// #endvariables
+
+@include bem(tag) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    border: 1px solid transparent;
+    color: $sar-white;
+  }
+
+  @each $theme, $value in $sar-theme-colors {
+    $color: nth($value, 1);
+
+    @include m($theme) {
+      background-color: $color;
+    }
+
+    @include m(#{$theme}-plain) {
+      color: $color;
+      border-color: $color;
+      background-color: transparent;
+    }
+  }
+
+  // 尺寸
+  @each $size, $value in $sar-tag-sizes {
+    @include m($size) {
+      padding: map-get($value, padding);
+      font-size: map-get($value, font-size);
+      line-height: map-get($value, line-height);
+      border-radius: map-get($value, border-radius);
+    }
+  }
+
+  // 圆角
+  @include m(round) {
+    border-radius: $sar-rounded-full;
+  }
+
+  // 标记
+  @include m(mark) {
+    border-top-right-radius: $sar-rounded-full;
+    border-bottom-right-radius: $sar-rounded-full;
+  }
+
+  // 可关闭的
+  @include e(close) {
+    @include universal;
+    justify-content: center;
+    align-items: center;
+    margin-left: $sar-tag-close-margin-left;
+    @include if-web {
+      cursor: pointer;
+    }
+
+    color: $sar-white;
+
+    @each $theme, $value in $sar-theme-colors {
+      $color: nth($value, 1);
+
+      @include m(#{$theme}-plain) {
+        color: $color;
+      }
+    }
+  }
+}

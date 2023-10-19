@@ -1,0 +1,10 @@
+@import '../style/base.scss';
+// #variables
+$sar-swiper-height: 150px !default;
+// #endvariables
+
+@include bem(swiper) {
+  @include b() {
+    height: $sar-swiper-height;
+  }
+}

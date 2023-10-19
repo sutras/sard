@@ -131,4 +131,5 @@ dist
 
 package-lock.json
 yarn.lock
-*/sard-taro/site/
+packages/sard/dist-site/
+packages/taro-native-shell/

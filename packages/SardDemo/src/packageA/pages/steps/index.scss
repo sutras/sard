@@ -1,0 +1,12 @@
+@import '@/base.scss';
+
+.demo-steps-small {
+  font-size: $sar-text-sm;
+  color: $sar-secondary-color;
+}
+
+@include theme(dark) {
+  .demo-steps-small {
+    color: $sar-dark-secondary-color;
+  }
+}

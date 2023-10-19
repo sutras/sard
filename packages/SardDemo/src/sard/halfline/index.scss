@@ -1,0 +1,80 @@
+@import '../style/base.scss';
+// #variables
+$sar-halfline-border-color: $sar-border-color !default;
+$sar-halfline-z-index: 2 !default;
+
+// 暗黑模式
+$sar-halfline-dark-border-color: $sar-dark-border-color !default;
+// #endvariables
+
+@include bem(halfline) {
+  @include b() {
+    @include universal;
+    position: absolute;
+    z-index: $sar-halfline-z-index;
+    pointer-events: none;
+
+    @include m(top) {
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: $sar-halfline-border-color;
+    }
+
+    @include m(right) {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background-color: $sar-halfline-border-color;
+    }
+
+    @include m(bottom) {
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: $sar-halfline-border-color;
+    }
+
+    @include m(left) {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      background-color: $sar-halfline-border-color;
+    }
+
+    @include m(around) {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-style: solid;
+      border-color: $sar-halfline-border-color;
+    }
+  }
+}
+
+@include theme(dark) {
+  @include bem(halfline) {
+    @include b() {
+      @include m(top) {
+        background-color: $sar-halfline-dark-border-color;
+      }
+
+      @include m(right) {
+        background-color: $sar-halfline-dark-border-color;
+      }
+
+      @include m(bottom) {
+        background-color: $sar-halfline-dark-border-color;
+      }
+
+      @include m(left) {
+        background-color: $sar-halfline-dark-border-color;
+      }
+
+      @include m(around) {
+        border-color: $sar-halfline-dark-border-color;
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+@import '@/base.scss';
+@import './assets/fonts/iconfont.scss';
+@import 'sard/dist/index.scss';
+
+@include if-web {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  .taro_router div.taro_page,
+  page {
+    font-size: $sar-text-base;
+    line-height: $sar-text-base * $sar-leading-normal;
+    min-height: 100vh;
+    color: $sar-body-color;
+    background-color: $sar-body-bg-color;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+}
+
+@include theme(dark) {
+  .taro_router div.taro_page,
+  page {
+    color: $sar-dark-body-color;
+    background-color: $sar-dark-body-bg-color;
+  }
+}

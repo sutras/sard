@@ -1,0 +1,249 @@
+@import '../style/base.scss';
+// #variables
+$sar-input-padding-y: 5px !default;
+$sar-input-padding-borderless-y: 6px !default;
+$sar-input-padding-x: 12px !default;
+$sar-input-border-radius: $sar-rounded !default;
+$sar-input-border-color: $sar-border-color !default;
+$sar-input-transition-duration: $sar-duration !default;
+
+$sar-input-focused-border-color: $sar-primary !default;
+
+$sar-input-control-padding-y: 2px !default;
+$sar-input-control-padding-x: 2px !default;
+$sar-input-control-font-size: $sar-text-base !default;
+$sar-input-control-line-height: 24px !default;
+
+$sar-input-placeholder-color: $sar-deemphasis-color !default;
+
+$sar-input-prepend-gap-right: 8px !default;
+$sar-input-append-gap-left: 8px !default;
+
+$sar-input-clear-margin-right: -8px !default;
+$sar-input-clear-padding-x: 8px !default;
+$sar-input-clear-color: $sar-quaternary-color !default;
+
+$sar-input-count-font-size: $sar-text-sm !default;
+$sar-input-count-color: $sar-tertiary-color !default;
+
+// 暗黑模式
+$sar-input-border-dark-color: $sar-dark-border-color !default;
+$sar-input-placeholder-dark-color: $sar-dark-deemphasis-color !default;
+$sar-input-clear-dark-color: $sar-dark-quaternary-color !default;
+$sar-input-count-dark-color: $sar-dark-tertiary-color !default;
+// #endvariables
+
+@include bem(input) {
+  @include b() {
+    @include universal;
+    width: 100%;
+    padding: $sar-input-padding-y $sar-input-padding-x;
+    border: 1px solid $sar-input-border-color;
+    border-radius: $sar-input-border-radius;
+    font-family: inherit;
+    font-size: $sar-input-control-font-size;
+    line-height: $sar-input-control-line-height;
+    @include if-web {
+      transition: $sar-input-transition-duration;
+    }
+
+    @include m(borderless) {
+      padding-top: $sar-input-padding-borderless-y;
+      padding-bottom: $sar-input-padding-borderless-y;
+      border-width: 0;
+    }
+
+    @include m(inlaid) {
+      padding: 0;
+      border-width: 0;
+    }
+
+    @include m(focused) {
+      border-color: $sar-input-focused-border-color;
+    }
+
+    @include m(disabled) {
+      background-color: $sar-disabled-shallow-bg-color;
+    }
+  }
+
+  // 兼容H5文本域文本溢出问题
+  @include if-web {
+    taro-textarea-core {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  @include e(content) {
+    @include universal;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  @include e(control) {
+    @include universal;
+    z-index: 0;
+    flex: 1;
+    align-self: center;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0 $sar-input-control-padding-x;
+    border-width: 0;
+
+    @include if-web {
+      &,
+      .weui-input,
+      .taro-input,
+      .taro-textarea {
+        resize: none;
+        font-family: inherit;
+        font-size: inherit;
+        font-style: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        color: inherit;
+        text-align: inherit;
+        text-indent: inherit;
+        text-transform: inherit;
+        text-emphasis: inherit;
+        text-rendering: inherit;
+        letter-spacing: inherit;
+        word-spacing: inherit;
+        background-color: transparent;
+
+        &::-webkit-input-placeholder {
+          line-height: inherit;
+          color: $sar-input-placeholder-color;
+        }
+
+        &:disabled {
+          cursor: not-allowed;
+        }
+      }
+
+      .weui-input {
+        &:disabled {
+          // 覆盖 iphone的opacity: 0.4
+          opacity: 1;
+        }
+        min-height: 100%;
+      }
+
+      &:focus,
+      &:active {
+        outline: none;
+      }
+    }
+
+    @include m(is-textarea) {
+      padding-top: $sar-input-control-padding-y;
+      padding-bottom: $sar-input-control-padding-y;
+      line-height: $sar-input-control-font-size * $sar-leading-tight;
+    }
+
+    @include m(readonly) {
+      pointer-events: none;
+    }
+
+    @include m(disabled) {
+      color: $sar-disabled-color;
+    }
+  }
+
+  @include e(placeholder) {
+    color: $sar-input-placeholder-color;
+  }
+
+  @include e(prepend, append) {
+    @include universal;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+
+  @include e(prepend) {
+    margin-right: $sar-input-prepend-gap-right;
+  }
+
+  @include e(append) {
+    margin-left: $sar-input-append-gap-left;
+  }
+
+  @include e(clear) {
+    @include universal;
+    z-index: 2;
+    flex: none;
+    width: auto;
+    align-self: stretch;
+    justify-content: center;
+    align-items: center;
+    margin-right: $sar-input-clear-margin-right;
+    padding: 0 $sar-input-clear-padding-x;
+    @include if-web {
+      cursor: pointer;
+    }
+
+    @include m(hide) {
+      display: none;
+    }
+  }
+
+  @include e(clear-icon) {
+    color: $sar-input-clear-color;
+  }
+
+  @include e(count) {
+    @include universal;
+    align-items: flex-end;
+    font-size: $sar-input-count-font-size;
+    line-height: $sar-input-count-font-size * $sar-leading-tight;
+    color: $sar-input-count-color;
+  }
+}
+
+@include theme(dark) {
+  @include bem(input) {
+    @include b() {
+      border-color: $sar-input-border-dark-color;
+
+      @include m(focused) {
+        border-color: $sar-input-focused-border-color;
+      }
+
+      @include m(disabled) {
+        background-color: $sar-dark-disabled-shallow-bg-color;
+      }
+    }
+
+    @include e(control) {
+      &,
+      .weui-input,
+      .taro-input,
+      .taro-textarea {
+        &::-webkit-input-placeholder {
+          color: $sar-input-placeholder-dark-color;
+        }
+      }
+
+      @include m(disabled) {
+        color: $sar-dark-disabled-color;
+      }
+    }
+
+    @include e(placeholder) {
+      color: $sar-input-placeholder-dark-color;
+    }
+
+    @include e(clear-icon) {
+      color: $sar-input-clear-dark-color;
+    }
+
+    @include e(count) {
+      color: $sar-input-count-dark-color;
+    }
+  }
+}

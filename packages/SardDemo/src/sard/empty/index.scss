@@ -1,0 +1,59 @@
+@import '../style/base.scss';
+// #variables
+$sar-empty-icon-font-size: 48px !default;
+$sar-empty-icon-color: $sar-gray-300 !default;
+
+$sar-empty-description-margin-top: 16px !default;
+$sar-empty-description-font-size: $sar-text-base !default;
+$sar-empty-description-color: $sar-deemphasis-color !default;
+$sar-empty-extra-margin-top: 20px !default;
+
+// 暗黑模式
+$sar-empty-icon-dark-color: $sar-gray-700 !default;
+$sar-empty-description-dark-color: $sar-dark-deemphasis-color !default;
+// #endvariables
+
+@include bem(empty) {
+  @include b() {
+    @include universal;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  @include e(icon-wrapper) {
+    @include universal;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @include e(icon) {
+    font-size: $sar-empty-icon-font-size;
+    line-height: $sar-empty-icon-font-size * $sar-leading-none;
+    color: $sar-empty-icon-color;
+  }
+
+  @include e(description) {
+    @include universal;
+    margin-top: $sar-empty-description-margin-top;
+    font-size: $sar-empty-description-font-size;
+    color: $sar-empty-description-color;
+  }
+
+  @include e(extra) {
+    @include universal;
+    margin-top: $sar-empty-extra-margin-top;
+  }
+}
+
+@include theme(dark) {
+  @include bem(empty) {
+    @include e(icon) {
+      color: $sar-empty-icon-dark-color;
+    }
+
+    @include e(description) {
+      color: $sar-empty-description-dark-color;
+    }
+  }
+}

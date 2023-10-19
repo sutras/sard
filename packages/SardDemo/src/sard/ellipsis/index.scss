@@ -1,0 +1,23 @@
+@import '../style/base.scss';
+
+// #variables
+// #endvariables
+
+@include if-web {
+  @include bem(ellipsis) {
+    @include m(tail) {
+      display: -webkit-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      white-space: normal;
+    }
+
+    @include m(clip) {
+      white-space: nowrap;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+}

@@ -1,0 +1,130 @@
+@import '../style/base.scss';
+// #variables
+$sar-cascader-selected-color: $sar-primary !default;
+
+$sar-cascader-options-height: 320px !default;
+
+$sar-cascader-option-padding-y: 8px !default;
+$sar-cascader-option-padding-x: 16px !default;
+$sar-cascader-option-font-size: $sar-text-base !default;
+$sar-cascader-option-line-height: 24px !default;
+$sar-cascader-option-active-bg-color: $sar-active-bg-color !default;
+
+$sar-cascader-loading-bg-color: $sar-emphasis-bg-color !default;
+$sar-cascader-loading-color: $sar-tertiary-color !default;
+
+// 暗黑模式
+$sar-cascader-option-active-dark-bg-color: $sar-dark-active-bg-color !default;
+$sar-cascader-loading-dark-bg-color: $sar-dark-emphasis-bg-color !default;
+$sar-cascader-loading-dark-color: $sar-dark-tertiary-color !default;
+// #endvariables
+
+@include bem(cascader) {
+  @include b() {
+    @include universal;
+  }
+
+  @include e(container) {
+    @include universal;
+    overflow: hidden;
+  }
+
+  @include e(wrapper) {
+    @include universal;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    @include if-web {
+      transition: transform $sar-duration;
+    }
+  }
+
+  @include e(pane) {
+    @include universal;
+    width: 100%;
+    flex: none;
+  }
+
+  @include e(options) {
+    @include universal;
+    flex-direction: row;
+    height: $sar-cascader-options-height;
+  }
+
+  @include e(scroll) {
+    height: 100%;
+  }
+
+  @include e(option) {
+    @include universal;
+    flex-direction: row;
+    padding: $sar-cascader-option-padding-y $sar-cascader-option-padding-x;
+
+    @include if-web {
+      cursor: pointer;
+    }
+
+    @include m(disabled) {
+      @include disabled;
+    }
+
+    @include m(pressed) {
+      background-color: $sar-cascader-option-active-bg-color;
+    }
+  }
+
+  @include e(option-label) {
+    font-size: $sar-cascader-option-font-size;
+    line-height: $sar-cascader-option-line-height;
+
+    @include m(selected) {
+      color: $sar-cascader-selected-color;
+      font-weight: $sar-font-bold;
+    }
+  }
+
+  @include e(option-icon) {
+    display: none;
+    margin-left: auto;
+
+    @include m(selected) {
+      display: flex;
+      color: $sar-cascader-selected-color;
+    }
+  }
+
+  @include e(loading-wrapper) {
+    @include universal;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: $sar-cascader-loading-bg-color;
+  }
+
+  @include e(loading) {
+    color: $sar-cascader-loading-color;
+  }
+}
+
+@include theme(dark) {
+  @include bem(cascader) {
+    @include e(option) {
+      @include m(pressed) {
+        background-color: $sar-cascader-option-active-dark-bg-color;
+      }
+    }
+
+    @include e(loading-wrapper) {
+      background-color: $sar-cascader-loading-dark-bg-color;
+    }
+
+    @include e(loading) {
+      color: $sar-cascader-loading-dark-color;
+    }
+  }
+}

@@ -1,0 +1,29 @@
+@import '../style/base.scss';
+// #variables
+$sar-footer-bar-padding-x: 16px !default;
+$sar-footer-bar-padding-y: 10px !default;
+$sar-footer-bar-gap: 8px !default;
+$sar-footer-bar-bg-color: $sar-emphasis-bg-color !default;
+
+// 暗黑模式
+$sar-footer-bar-dark-bg-color: $sar-dark-emphasis-bg-color !default;
+// #endvariables
+
+@include bem(footer-bar) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    align-items: center;
+    gap: $sar-footer-bar-gap;
+    padding: $sar-footer-bar-padding-y $sar-footer-bar-padding-x;
+    background-color: $sar-footer-bar-bg-color;
+  }
+}
+
+@include theme(dark) {
+  @include bem(footer-bar) {
+    @include b() {
+      background-color: $sar-footer-bar-dark-bg-color;
+    }
+  }
+}

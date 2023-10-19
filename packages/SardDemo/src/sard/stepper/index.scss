@@ -1,0 +1,106 @@
+@import '../style/base.scss';
+// #variables
+$sar-stepper-height: 36px !default;
+$sar-stepper-bg-color: $sar-secondary-bg-color !default;
+
+$sar-stepper-input-gap: 4px !default;
+$sar-stepper-input-width: 50px !default;
+$sar-stepper-input-padding-x: 5px !default;
+
+$sar-stepper-button-width: $sar-stepper-height !default;
+$sar-stepper-button-font-size: 18px !default;
+$sar-stepper-button-border-radius: $sar-rounded-sm !default;
+$sar-stepper-button-active-bg-color: $sar-active-deep-bg-color !default;
+
+// 暗黑模式
+$sar-stepper-dark-bg-color: $sar-dark-secondary-bg-color !default;
+$sar-stepper-button-active-dark-bg-color: $sar-dark-active-deep-bg-color !default;
+// #endvariables
+
+@include bem(stepper) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: $sar-stepper-input-gap;
+    height: $sar-stepper-height;
+  }
+
+  @include e(button) {
+    @include universal;
+    justify-content: center;
+    align-items: center;
+    width: $sar-stepper-button-width;
+    font-size: $sar-stepper-button-font-size;
+    background-color: $sar-stepper-bg-color;
+
+    @include if-web {
+      cursor: pointer;
+
+      @include m(readonly) {
+        cursor: default;
+      }
+    }
+
+    @include m(pressed) {
+      background-color: $sar-stepper-button-active-bg-color;
+    }
+
+    @include m(disabled) {
+      background-color: $sar-disabled-shallow-bg-color;
+    }
+  }
+
+  @include e(decrease) {
+    flex: none;
+    border-top-left-radius: $sar-stepper-button-border-radius;
+    border-bottom-left-radius: $sar-stepper-button-border-radius;
+  }
+
+  @include e(increase) {
+    flex: none;
+    border-top-right-radius: $sar-stepper-button-border-radius;
+    border-bottom-right-radius: $sar-stepper-button-border-radius;
+  }
+
+  @include e(icon) {
+    @include m(disabled) {
+      color: $sar-disabled-color;
+    }
+  }
+
+  @include e(input) {
+    width: $sar-stepper-input-width;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: $sar-stepper-input-padding-x;
+    padding-right: $sar-stepper-input-padding-x;
+    border: 0;
+    border-radius: 0;
+    text-align: center;
+    background-color: $sar-stepper-bg-color;
+  }
+}
+
+@include theme(dark) {
+  @include bem(stepper) {
+    @include e(button) {
+      background-color: $sar-stepper-dark-bg-color;
+
+      @include m(pressed) {
+        background-color: $sar-stepper-button-active-dark-bg-color;
+      }
+    }
+
+    @include e(input) {
+      background-color: $sar-stepper-dark-bg-color;
+    }
+
+    @include e(icon) {
+      @include m(disabled) {
+        color: $sar-dark-disabled-color;
+      }
+    }
+  }
+}

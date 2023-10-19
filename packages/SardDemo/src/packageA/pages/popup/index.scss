@@ -1,0 +1,13 @@
+@import '@/base.scss';
+
+.demo-popup-content {
+  flex: 1;
+  padding: 20px;
+  background-color: $sar-emphasis-bg-color;
+}
+
+@include theme(dark) {
+  .demo-popup-content {
+    background-color: $sar-dark-emphasis-bg-color;
+  }
+}

@@ -1,0 +1,128 @@
+@import '../style/base.scss';
+// #variables
+$sar-menu-item-border-radius: $sar-rounded !default;
+$sar-menu-item-height: 44px !default;
+$sar-menu-item-padding-x: 16px !default;
+$sar-menu-item-font-size: $sar-text-base !default;
+$sar-menu-item-active-bg-color: $sar-active-bg-color !default;
+
+$sar-menu-item-dark-active-bg-color: $sar-gray-900 !default;
+$sar-menu-item-dark-color: $sar-white !default;
+$sar-menu-dark-border-color: $sar-dark-border-color !default;
+
+$sar-menu-item-horizontal-height: 34px !default;
+
+$sar-menu-icon-margin-right: 12px !default;
+$sar-menu-icon-horizontal-margin-right: 8px !default;
+// #endvariables
+
+@include bem(menu) {
+  @include b() {
+    @include universal;
+
+    @include m(vertical) {
+      flex-direction: column;
+    }
+
+    @include m(horizontal) {
+      flex-direction: row;
+    }
+  }
+
+  @include e(item) {
+    @include universal;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: $sar-menu-item-height;
+    padding-left: $sar-menu-item-padding-x;
+    padding-right: $sar-menu-item-padding-x;
+    font-size: $sar-menu-item-font-size;
+
+    @include if-web {
+      cursor: pointer;
+    }
+
+    @include m(vertical-first) {
+      border-top-left-radius: $sar-menu-item-border-radius;
+      border-top-right-radius: $sar-menu-item-border-radius;
+    }
+
+    @include m(vertical-last) {
+      border-bottom-left-radius: $sar-menu-item-border-radius;
+      border-bottom-right-radius: $sar-menu-item-border-radius;
+    }
+
+    @include m(horizontal-first) {
+      border-top-left-radius: $sar-menu-item-border-radius;
+      border-bottom-left-radius: $sar-menu-item-border-radius;
+    }
+
+    @include m(horizontal-last) {
+      border-top-right-radius: $sar-menu-item-border-radius;
+      border-bottom-right-radius: $sar-menu-item-border-radius;
+    }
+
+    @include m(disabled) {
+      @include disabled;
+    }
+
+    @include m(light-active) {
+      background-color: $sar-menu-item-active-bg-color;
+    }
+
+    @include m(dark-active) {
+      background-color: $sar-menu-item-dark-active-bg-color;
+    }
+
+    @include m(horizontal) {
+      height: $sar-menu-item-horizontal-height;
+    }
+  }
+
+  @include e(divider) {
+    @include m(dark) {
+      background-color: $sar-menu-dark-border-color;
+    }
+  }
+
+  @include e(icon) {
+    @include universal;
+    margin-right: $sar-menu-icon-margin-right;
+
+    @include m(horizontal) {
+      margin-right: $sar-menu-icon-horizontal-margin-right;
+    }
+
+    @include m(dark) {
+      color: $sar-menu-item-dark-color;
+    }
+  }
+
+  @include e(text) {
+    @include universal;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-grow: 1;
+
+    @include m(has-icon) {
+      justify-content: flex-start;
+    }
+
+    @include m(dark) {
+      color: $sar-menu-item-dark-color;
+    }
+  }
+}
+
+@include theme(dark) {
+  @include bem(menu) {
+    @include e(item) {
+      @include m(light-active) {
+        background-color: $sar-menu-item-dark-active-bg-color;
+      }
+    }
+  }
+}

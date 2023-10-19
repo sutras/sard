@@ -1,0 +1,25 @@
+@use 'sass:math';
+@import '../style/base.scss';
+// #variables
+$sar-loading-duration: 1s !default;
+// #endvariables
+
+@include bem(loading) {
+  @include b() {
+    @include if-web {
+      display: inline-flex;
+      animation: #{bem-ns(loading-rotate)} $sar-loading-duration linear infinite;
+    }
+  }
+}
+
+@include if-web {
+  @keyframes #{bem-ns(loading-rotate)} {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(1turn);
+    }
+  }
+}

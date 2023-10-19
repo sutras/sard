@@ -1,0 +1,11 @@
+@import './platform.scss';
+
+@mixin theme($mode: light) {
+  @if $sar-darkmode {
+    @include if-web {
+      @media (prefers-color-scheme: #{$mode}) {
+        @content;
+      }
+    }
+  }
+}

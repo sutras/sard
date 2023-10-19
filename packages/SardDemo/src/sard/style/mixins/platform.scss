@@ -1,0 +1,11 @@
+@mixin if-web {
+  @if true {
+    @content;
+  }
+}
+
+@mixin if-rn {
+  @if false {
+    @content;
+  }
+}

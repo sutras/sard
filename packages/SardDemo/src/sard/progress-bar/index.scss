@@ -1,0 +1,45 @@
+@import '../style/base.scss';
+// #variables
+$sar-progress-bar-height: 4px !default;
+$sar-progress-bar-border-radius: $sar-rounded-sm !default;
+$sar-progress-bar-bg-color: $sar-secondary-bg-color !default;
+
+$sar-progress-bar-trail-color: $sar-white !default;
+$sar-progress-bar-trail-bg-color: $sar-primary !default;
+$sar-progress-bar-trail-font-size: 12px !default;
+$sar-progress-bar-trail-transition-duration: $sar-duration-slow !default;
+
+// 暗黑模式
+$sar-progress-bar-dark-bg-color: $sar-dark-secondary-bg-color !default;
+// #endvariables
+
+@include bem(progress-bar) {
+  @include b() {
+    @include universal;
+    height: $sar-progress-bar-height;
+    border-radius: $sar-progress-bar-border-radius;
+    background-color: $sar-progress-bar-bg-color;
+    overflow: hidden;
+  }
+
+  @include e(trail) {
+    @include universal;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: $sar-progress-bar-trail-font-size;
+    color: $sar-progress-bar-trail-color;
+    background-color: $sar-progress-bar-trail-bg-color;
+    @include if-web {
+      transition: width $sar-progress-bar-trail-transition-duration ease;
+    }
+  }
+}
+
+@include theme(dark) {
+  @include bem(progress-bar) {
+    @include b() {
+      background-color: $sar-progress-bar-dark-bg-color;
+    }
+  }
+}

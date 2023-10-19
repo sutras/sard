@@ -1,0 +1,60 @@
+@import '../style/base.scss';
+// #variables
+$sar-popup-z-index: 1100 !default;
+// #endvariables
+
+@include bem(popup) {
+  @include b() {
+    @include universal;
+    @include fixed();
+    top: 0;
+    left: 0;
+    z-index: $sar-popup-z-index;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    pointer-events: box-none;
+    @include if-web {
+      pointer-events: none;
+    }
+
+    @include m(slide-top) {
+      justify-content: flex-start;
+    }
+
+    @include m(slide-right) {
+      align-items: flex-end;
+    }
+
+    @include m(slide-bottom) {
+      justify-content: flex-end;
+    }
+
+    @include m(slide-left) {
+      align-items: flex-start;
+    }
+
+    @include m(fade, zoom) {
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  @include e(content) {
+    @include universal;
+    z-index: 1;
+
+    @include if-web {
+      pointer-events: auto;
+    }
+
+    @include m(slide-right) {
+      flex: 1;
+    }
+
+    @include m(slide-left) {
+      flex: 1;
+    }
+  }
+}

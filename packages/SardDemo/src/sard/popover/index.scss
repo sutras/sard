@@ -1,0 +1,94 @@
+@use 'sass:math';
+@import '../style/base.scss';
+// #variables
+$sar-popover-bg-color: $sar-emphasis-bg-color !default;
+$sar-popover-box-shadow: $sar-shadow-lg !default;
+$sar-popover-min-width: 120px !default;
+$sar-popover-border-radius: $sar-rounded !default;
+
+$sar-popover-dark-bg-color: $sar-gray-800 !default;
+$sar-popover-dark-color: $sar-white !default;
+
+$sar-popover-arrow-size: 10px !default;
+// #endvariables
+
+@include bem(popover) {
+  @include b() {
+    @include universal;
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    overflow: visible;
+    border-radius: $sar-popover-border-radius;
+    background-color: $sar-popover-bg-color;
+    box-shadow: $sar-popover-box-shadow;
+    @include if-web {
+      touch-action: none;
+    }
+  }
+
+  @include e(content) {
+    @include universal;
+    z-index: 1;
+    min-width: $sar-popover-min-width;
+  }
+
+  @include e(arrow) {
+    @include universal;
+    position: absolute;
+    width: $sar-popover-arrow-size;
+    height: $sar-popover-arrow-size;
+    margin-left: math.div(-$sar-popover-arrow-size, 2);
+    margin-top: math.div(-$sar-popover-arrow-size, 2);
+    transform: rotate(45deg);
+  }
+
+  @include m(light) {
+    background-color: $sar-popover-bg-color;
+  }
+
+  @include m(dark) {
+    color: $sar-popover-dark-color;
+    background-color: $sar-popover-dark-bg-color;
+  }
+
+  // zoom
+  @include if-web {
+    @include m(zoom-enter) {
+      animation: #{bem-ns(popover_zoom-enter)} $sar-duration-fast both;
+    }
+    @keyframes #{bem-ns(popover_zoom-enter)} {
+      from {
+        opacity: 0;
+        transform: scale(0.4);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    @include m(zoom-exit) {
+      animation: #{bem-ns(popover_zoom-exit)} $sar-duration-fast both;
+    }
+    @keyframes #{bem-ns(popover_zoom-exit)} {
+      from {
+        opacity: 1;
+        transform: scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: scale(0.4);
+      }
+    }
+  }
+}
+
+@include theme(dark) {
+  @include bem(popover) {
+    @include m(light) {
+      background-color: $sar-popover-dark-bg-color;
+    }
+  }
+}

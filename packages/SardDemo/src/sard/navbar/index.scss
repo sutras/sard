@@ -1,0 +1,128 @@
+@import '../style/base.scss';
+// #variables
+$sar-navbar-height: 44px !default;
+$sar-navbar-bg-color: $sar-emphasis-bg-color !default;
+
+$sar-navbar-title-max-width: 60% !default;
+$sar-navbar-title-font-size: $sar-text-lg !default;
+$sar-navbar-title-color: $sar-emphasis-color !default;
+
+$sar-navbar-item-padding-x: 10px !default;
+$sar-navbar-item-font-size: $sar-text-base !default;
+$sar-navbar-item-color: $sar-primary !default;
+$sar-navbar-item-active-opacity: $sar-active-opacity !default;
+
+// 暗黑模式
+$sar-navbar-dark-bg-color: $sar-dark-emphasis-bg-color !default;
+$sar-navbar-title-dark-color: $sar-dark-emphasis-color !default;
+// #endvariables
+
+@include bem(navbar) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    height: $sar-navbar-height;
+    align-items: center;
+    justify-content: center;
+    background-color: $sar-navbar-bg-color;
+  }
+
+  @include e(content) {
+    @include universal;
+    flex-direction: row;
+    height: 100%;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    @include m(custom) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  @include e(title) {
+    @include universal;
+    width: 100%;
+    max-width: $sar-navbar-title-max-width;
+    font-size: $sar-navbar-title-font-size;
+    font-weight: $sar-font-bold;
+    text-align: center;
+    color: $sar-navbar-title-color;
+
+    @include m(flow) {
+      max-width: 100%;
+      text-align: left;
+    }
+  }
+
+  @include e(left, right) {
+    @include universal;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    flex-direction: row;
+    flex: none;
+    align-items: center;
+    height: 100%;
+
+    @include m(flow) {
+      position: relative;
+    }
+  }
+
+  @include e(left) {
+    left: 0;
+  }
+
+  @include e(right) {
+    right: 0;
+  }
+
+  @include e(item) {
+    @include universal;
+    flex-direction: row;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 0 $sar-navbar-item-padding-x;
+
+    @include if-web {
+      cursor: pointer;
+    }
+
+    @include m(pressed) {
+      opacity: $sar-navbar-item-active-opacity;
+    }
+  }
+
+  @include e(item-text) {
+    @include universal;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: $sar-navbar-item-font-size;
+    color: $sar-navbar-item-color;
+  }
+
+  @include m(fixed) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+}
+
+@include theme(dark) {
+  @include bem(navbar) {
+    @include b() {
+      background-color: $sar-navbar-dark-bg-color;
+    }
+
+    @include e(title) {
+      color: $sar-navbar-title-dark-color;
+    }
+  }
+}

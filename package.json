@@ -1,5 +1,5 @@
 {
-  "name": "sard-taro",
+  "name": "sard",
   "version": "1.0.0",
   "type": "module",
   "private": true,
@@ -18,10 +18,10 @@
     "prettier": "2.8.8"
   },
   "scripts": {
-    "dev": "npm run dev -w sard-taro",
-    "build:site": "npm run build:site -w sard-taro",
-    "build": "npm run build -w sard-taro",
-    "preview": "npm run preview -w sard-taro",
+    "dev": "npm run dev -w sard",
+    "build:site": "npm run build:site -w sard",
+    "build": "npm run build -w sard",
+    "preview": "npm run preview -w sard",
     "prepare": "husky install",
     "lint:eslint": "eslint --cache --max-warnings 0  \"**/*.{ts,tsx,js,jsx,vue}\" --fix",
     "lint:prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,css,scss,less,md,vue,html}\"",
@@ -33,7 +33,7 @@
     "*.{ts,tsx,js,jsx,cjs,mjs,css,scss,less,md,vue}": "prettier --write"
   },
   "workspaces": [
-    "packages/sard-taro",
-    "packages/sard-taro-cli"
+    "packages/sard",
+    "packages/sard-cli"
   ]
 }

@@ -1,0 +1,64 @@
+@import '../style/base.scss';
+// #variables
+$sar-card-border-radius: $sar-rounded-lg !default;
+$sar-card-bg-color: $sar-emphasis-bg-color !default;
+
+$sar-card-header-padding-y: 10px !default;
+$sar-card-header-padding-x: 16px !default;
+
+$sar-card-title-font-size: $sar-text-lg !default;
+$sar-card-title-line-height: $sar-card-title-font-size * $sar-leading-normal !default;
+
+$sar-card-body-padding-y: 10px !default;
+$sar-card-body-padding-x: 16px !default;
+
+$sar-card-footer-padding-y: 10px !default;
+$sar-card-footer-padding-x: 16px !default;
+
+// 暗黑模式
+$sar-card-dark-bg-color: $sar-dark-emphasis-bg-color !default;
+// #endvariables
+
+@include bem(card) {
+  @include b() {
+    @include universal;
+    background-color: $sar-card-bg-color;
+    border-radius: $sar-card-border-radius;
+  }
+
+  @include e(header) {
+    @include universal;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: $sar-card-header-padding-y $sar-card-header-padding-x;
+  }
+
+  @include e(title) {
+    @include universal;
+    font-size: $sar-card-title-font-size;
+    line-height: $sar-card-title-line-height;
+  }
+
+  @include e(extra) {
+    @include universal;
+  }
+
+  @include e(body) {
+    @include universal;
+    padding: $sar-card-body-padding-y $sar-card-body-padding-x;
+  }
+
+  @include e(footer) {
+    @include universal;
+    padding: $sar-card-footer-padding-y $sar-card-footer-padding-x;
+  }
+}
+
+@include theme(dark) {
+  @include bem(card) {
+    @include b() {
+      background-color: $sar-card-dark-bg-color;
+    }
+  }
+}

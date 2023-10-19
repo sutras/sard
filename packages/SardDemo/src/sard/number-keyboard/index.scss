@@ -1,0 +1,93 @@
+@use 'sass:math';
+@import '../style/base.scss';
+// #variables
+$sar-number-keyboard-bg-color: $sar-gray-200 !default;
+
+$sar-number-keyboard-body-padding-x: 6px !default;
+$sar-number-keyboard-body-padding-y: 6px !default;
+
+$sar-number-keyboard-key-gap: 6px !default;
+$sar-number-keyboard-key-height: 48px !default;
+$sar-number-keyboard-key-border-radius: $sar-rounded !default;
+$sar-number-keyboard-key-font-size: $sar-text-2xl !default;
+$sar-number-keyboard-key-color: $sar-body-color !default;
+$sar-number-keyboard-key-bg-color: $sar-white !default;
+$sar-number-keyboard-key-active-bg-color: $sar-gray-200 !default;
+
+// 暗黑模式
+$sar-number-keyboard-dark-bg-color: $sar-gray-800 !default;
+$sar-number-keyboard-key-dark-color: $sar-white !default;
+$sar-number-keyboard-key-dark-bg-color: $sar-gray-700 !default;
+$sar-number-keyboard-key-active-dark-bg-color: $sar-gray-600 !default;
+// #endvariables
+
+@include bem(number-keyboard) {
+  @include b() {
+    @include universal;
+    background-color: $sar-number-keyboard-bg-color;
+  }
+
+  @include e(body) {
+    @include universal;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: $sar-number-keyboard-body-padding-y
+      $sar-number-keyboard-body-padding-x;
+    margin: math.div($sar-number-keyboard-key-gap, 2) * -1;
+  }
+
+  @include e(key-wrapper) {
+    @include universal;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 33.3333%;
+    width: 33.3333%;
+    padding: math.div($sar-number-keyboard-key-gap, 2);
+  }
+
+  @include e(backspace) {
+    @include universal;
+    max-width: 33.3333%;
+  }
+
+  @include e(key) {
+    @include universal;
+    align-items: center;
+    justify-content: center;
+
+    height: $sar-number-keyboard-key-height;
+    border-radius: $sar-number-keyboard-key-border-radius;
+    font-size: $sar-number-keyboard-key-font-size;
+    color: $sar-number-keyboard-key-color;
+    background-color: $sar-number-keyboard-key-bg-color;
+
+    @include if-web {
+      cursor: pointer;
+    }
+
+    @include m(pressed) {
+      background-color: $sar-number-keyboard-key-active-bg-color;
+    }
+  }
+
+  @include e(backspace-icon) {
+    font-size: $sar-number-keyboard-key-font-size;
+  }
+}
+
+@include theme(dark) {
+  @include bem(number-keyboard) {
+    @include b() {
+      background-color: $sar-number-keyboard-dark-bg-color;
+    }
+
+    @include e(key) {
+      color: $sar-number-keyboard-key-dark-color;
+      background-color: $sar-number-keyboard-key-dark-bg-color;
+
+      @include m(pressed) {
+        background-color: $sar-number-keyboard-key-active-dark-bg-color;
+      }
+    }
+  }
+}

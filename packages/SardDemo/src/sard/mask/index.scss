@@ -1,0 +1,24 @@
+@import '../style/base.scss';
+// #variables
+$sar-mask-bg-color: $sar-mask !default;
+// #endvariables
+
+@include bem(mask) {
+  @include b() {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: none;
+    background-color: $sar-mask-bg-color;
+    pointer-events: auto;
+    @include if-web {
+      touch-action: none;
+    }
+
+    @include m(transparent) {
+      background-color: transparent;
+    }
+  }
+}

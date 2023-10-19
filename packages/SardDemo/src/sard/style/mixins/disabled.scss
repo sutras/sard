@@ -1,0 +1,9 @@
+@import '../variables.scss';
+@import './platform.scss';
+
+@mixin disabled {
+  opacity: $sar-disabled-opacity;
+  @include if-web {
+    cursor: not-allowed;
+  }
+}

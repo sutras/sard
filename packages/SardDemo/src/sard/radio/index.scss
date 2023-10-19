@@ -1,0 +1,77 @@
+@import '../style/base.scss';
+// #variables
+$sar-radio-icon-font-size: 20px !default;
+$sar-radio-icon-color: $sar-quaternary-color !default;
+$sar-radio-icon-checked-color: $sar-primary !default;
+$sar-radio-icon-transition-duration: $sar-duration !default;
+
+$sar-radio-label-margin-left: 8px !default;
+
+$sar-radio-margin-left: 20px !default;
+$sar-radio-margin-top: 10px !default;
+
+// 暗黑模式
+$sar-radio-icon-dark-color: $sar-dark-quaternary-color !default;
+$sar-radio-icon-checked-dark-color: $sar-primary !default;
+// #endvariables
+
+@include bem(radio) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    align-items: center;
+
+    @include if-web {
+      cursor: pointer;
+    }
+  }
+
+  @include e(icon) {
+    @include universal;
+    font-size: $sar-radio-icon-font-size;
+    color: $sar-radio-icon-color;
+    @include if-web {
+      transition: color $sar-radio-icon-transition-duration;
+    }
+
+    @include m(checked) {
+      color: $sar-radio-icon-checked-color;
+    }
+
+    @include m(disabled) {
+      color: $sar-disabled-deep-bg-color;
+    }
+  }
+
+  @include e(label) {
+    @include universal;
+    flex-direction: row;
+    margin-left: $sar-radio-label-margin-left;
+
+    @include m(disabled) {
+      color: $sar-disabled-color;
+    }
+  }
+}
+
+@include theme(dark) {
+  @include bem(radio) {
+    @include e(icon) {
+      color: $sar-radio-icon-dark-color;
+
+      @include m(checked) {
+        color: $sar-radio-icon-checked-dark-color;
+      }
+
+      @include m(disabled) {
+        color: $sar-disabled-deep-bg-color;
+      }
+    }
+
+    @include e(label) {
+      @include m(disabled) {
+        color: $sar-dark-disabled-color;
+      }
+    }
+  }
+}

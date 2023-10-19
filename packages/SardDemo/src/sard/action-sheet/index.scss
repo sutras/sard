@@ -1,0 +1,148 @@
+@import '../style/base.scss';
+// #variables
+$sar-action-sheet-border-radius: $sar-rounded-xl !default;
+$sar-action-sheet-bg-color: $sar-emphasis-bg-color !default;
+
+$sar-action-sheet-header-padding: 16px !default;
+
+$sar-action-sheet-description-font-size: $sar-text-base !default;
+$sar-action-sheet-description-color: $sar-tertiary-color !default;
+
+$sar-action-sheet-item-min-height: 48px !default;
+$sar-action-sheet-item-padding: 8px 16px !default;
+
+$sar-action-sheet-gap-bg-color: $sar-gray-100 !default;
+$sar-action-sheet-gap-height: 8px !default;
+
+$sar-action-sheet-item-name-font-size: $sar-text-lg !default;
+
+$sar-action-sheet-item-description-margin-top: 0 !default;
+$sar-action-sheet-item-description-font-size: $sar-text-sm !default;
+$sar-action-sheet-item-description-color: $sar-tertiary-color !default;
+
+$sar-action-sheet-cancel-min-height: 48px !default;
+$sar-action-sheet-cancel-padding: 8px 16px !default;
+$sar-action-sheet-cancel-font-size: $sar-text-lg !default;
+
+$sar-action-sheet-active-bg-color: $sar-active-bg-color !default;
+
+// 暗黑模式
+$sar-action-sheet-dark-bg-color: $sar-dark-emphasis-bg-color !default;
+$sar-action-sheet-description-dark-color: $sar-dark-tertiary-color !default;
+$sar-action-sheet-gap-dark-bg-color: $sar-gray-900 !default;
+$sar-action-sheet-item-description-dark-color: $sar-dark-tertiary-color !default;
+$sar-action-sheet-active-dark-bg-color: $sar-dark-active-bg-color !default;
+// #endvariables
+
+@include bem(action-sheet) {
+  @include b() {
+    border-top-left-radius: $sar-action-sheet-border-radius;
+    border-top-right-radius: $sar-action-sheet-border-radius;
+    background-color: $sar-action-sheet-bg-color;
+    @include if-web {
+      touch-action: none;
+    }
+  }
+
+  @include e(header) {
+    @include universal;
+    padding: $sar-action-sheet-header-padding;
+  }
+
+  @include e(description) {
+    @include universal;
+    font-size: $sar-action-sheet-description-font-size;
+    text-align: center;
+    color: $sar-action-sheet-description-color;
+  }
+
+  @include e(gap) {
+    @include universal;
+    height: $sar-action-sheet-gap-height;
+    background-color: $sar-action-sheet-gap-bg-color;
+  }
+
+  @include e(item) {
+    @include universal;
+    justify-content: center;
+    align-items: center;
+    min-height: $sar-action-sheet-item-min-height;
+    padding: $sar-action-sheet-item-padding;
+
+    @include if-web {
+      cursor: pointer;
+    }
+
+    @include m(disabled, loading) {
+      @include if-web {
+        cursor: not-allowed;
+      }
+    }
+
+    @include m(headless-first) {
+      border-top-left-radius: $sar-action-sheet-border-radius;
+      border-top-right-radius: $sar-action-sheet-border-radius;
+    }
+  }
+
+  @include e(item-name) {
+    @include universal;
+    font-size: $sar-action-sheet-item-name-font-size;
+  }
+
+  @include e(item-description) {
+    @include universal;
+    margin-top: $sar-action-sheet-item-description-margin-top;
+    font-size: $sar-action-sheet-item-description-font-size;
+    color: $sar-action-sheet-item-description-color;
+  }
+
+  @include m(disabled) {
+    color: $sar-disabled-color;
+  }
+
+  @include e(cancel) {
+    @include universal;
+    justify-content: center;
+    align-items: center;
+    min-height: $sar-action-sheet-cancel-min-height;
+    padding: $sar-action-sheet-cancel-padding;
+    font-size: $sar-action-sheet-cancel-font-size;
+
+    @include if-web {
+      cursor: pointer;
+    }
+  }
+
+  @include m(pressed) {
+    background-color: $sar-action-sheet-active-bg-color;
+  }
+}
+
+@include theme(dark) {
+  @include bem(action-sheet) {
+    @include b() {
+      background-color: $sar-action-sheet-dark-bg-color;
+    }
+
+    @include e(description) {
+      color: $sar-action-sheet-description-dark-color;
+    }
+
+    @include e(gap) {
+      background-color: $sar-action-sheet-gap-dark-bg-color;
+    }
+
+    @include e(item-description) {
+      color: $sar-action-sheet-item-description-dark-color;
+    }
+
+    @include m(disabled) {
+      color: $sar-dark-disabled-color;
+    }
+
+    @include m(pressed) {
+      background-color: $sar-action-sheet-active-dark-bg-color;
+    }
+  }
+}

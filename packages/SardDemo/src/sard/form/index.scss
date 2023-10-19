@@ -1,0 +1,200 @@
+@import '../style/base.scss';
+// #variables
+$sar-form-field-padding-x: 16px !default;
+$sar-form-field-padding-y: 10px !default;
+$sar-form-field-font-size: $sar-text-base !default;
+$sar-form-field-line-height: 24px !default;
+
+$sar-form-field-label-width: 88px !default;
+$sar-form-field-label-margin-right: 12px !default;
+$sar-form-field-label-margin-bottom: 4px !default;
+
+$sar-form-field-star-color: $sar-danger !default;
+$sar-form-field-star-gap: 4px !default;
+
+$sar-form-field-feedback-margin-top: 4px !default;
+$sar-form-field-feedback-font-size: $sar-text-sm !default;
+$sar-form-field-feedback-line-height: $sar-form-field-feedback-font-size *
+  $sar-leading-tight !default;
+$sar-form-field-feedback-color: $sar-tertiary-color !default;
+$sar-form-field-feedback-failed-color: $sar-danger !default;
+$sar-form-field-feedback-passed-color: $sar-tertiary-color !default;
+$sar-form-field-feedback-unvalidated-color: $sar-tertiary-color !default;
+
+$sar-form-field-extra-margin-top: 4px !default;
+$sar-form-field-extra-font-size: $sar-text-sm !default;
+$sar-form-field-extra-line-height: $sar-form-field-extra-font-size *
+  $sar-leading-tight !default;
+$sar-form-field-extra-color: $sar-tertiary-color !default;
+
+// 暗黑模式
+$sar-form-field-feedback-dark-color: $sar-dark-tertiary-color !default;
+$sar-form-field-feedback-failed-dark-color: $sar-danger !default;
+$sar-form-field-feedback-passed-dark-color: $sar-dark-tertiary-color !default;
+$sar-form-field-feedback-unvalidated-dark-color: $sar-dark-tertiary-color !default;
+$sar-form-field-extra-dark-color: $sar-dark-tertiary-color !default;
+// #endvariables
+
+@include bem(form) {
+  @include b() {
+    @include universal;
+  }
+}
+
+@include bem(form-field) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    padding: $sar-form-field-padding-y $sar-form-field-padding-x;
+    font-size: $sar-form-field-font-size;
+    line-height: $sar-form-field-line-height;
+
+    @include m(inlaid) {
+      padding: 0;
+    }
+  }
+
+  @include e(underline) {
+    left: $sar-form-field-padding-x;
+    right: $sar-form-field-padding-x;
+  }
+
+  @include e(label) {
+    @include universal;
+    flex-direction: row;
+    flex: none;
+    @include if-web {
+      word-wrap: break-word;
+      word-break: break-word;
+    }
+
+    @include m(align-start) {
+      justify-content: flex-start;
+    }
+
+    @include m(align-center) {
+      justify-content: center;
+    }
+
+    @include m(align-end) {
+      justify-content: end;
+    }
+
+    @include m(valign-start) {
+      align-items: flex-start;
+    }
+
+    @include m(valign-center) {
+      align-items: center;
+    }
+
+    @include m(valign-end) {
+      align-items: flex-end;
+    }
+
+    @include m(horizontal) {
+      width: $sar-form-field-label-width;
+      margin-right: $sar-form-field-label-margin-right;
+    }
+
+    @include m(vertical) {
+      margin-right: 0;
+      margin-bottom: $sar-form-field-label-margin-bottom;
+    }
+  }
+
+  @include e(star) {
+    @include universal;
+    justify-content: center;
+    align-items: flex-start;
+    color: $sar-form-field-star-color;
+
+    @include m(left) {
+      margin-right: $sar-form-field-star-gap;
+    }
+    @include m(right) {
+      margin-left: $sar-form-field-star-gap;
+    }
+  }
+
+  @include e(label-text) {
+    @include universal;
+  }
+
+  @include e(content) {
+    @include universal;
+    justify-content: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+
+    @include m(vertical) {
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+  }
+
+  @include e(control) {
+    @include universal;
+  }
+
+  @include e(feedback) {
+    @include universal;
+    margin-top: $sar-form-field-feedback-margin-top;
+    font-size: $sar-form-field-feedback-font-size;
+    line-height: $sar-form-field-feedback-line-height;
+    color: $sar-form-field-feedback-color;
+
+    @include m(failed) {
+      color: $sar-form-field-feedback-failed-color;
+    }
+
+    @include m(passed) {
+      color: $sar-form-field-feedback-passed-color;
+    }
+
+    @include m(unvalidated) {
+      color: $sar-form-field-feedback-unvalidated-color;
+    }
+  }
+
+  @include e(extra) {
+    @include universal;
+    margin-top: $sar-form-field-extra-margin-top;
+    font-size: $sar-form-field-extra-font-size;
+    line-height: $sar-form-field-extra-line-height;
+    color: $sar-form-field-extra-color;
+  }
+
+  @include m(vertical) {
+    flex-direction: column;
+  }
+
+  @include m(hidden) {
+    display: none;
+  }
+}
+
+@include theme(dark) {
+  @include bem(form-field) {
+    @include e(feedback) {
+      @include universal;
+      color: $sar-form-field-feedback-dark-color;
+
+      @include m(failed) {
+        color: $sar-form-field-feedback-failed-dark-color;
+      }
+
+      @include m(passed) {
+        color: $sar-form-field-feedback-passed-dark-color;
+      }
+
+      @include m(unvalidated) {
+        color: $sar-form-field-feedback-unvalidated-dark-color;
+      }
+    }
+
+    @include e(extra) {
+      color: $sar-form-field-extra-dark-color;
+    }
+  }
+}

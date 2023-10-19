@@ -1,0 +1,81 @@
+@use 'sass:math';
+@import '../style/base.scss';
+// #variables
+$sar-badge-content-padding-x: 4px !default;
+$sar-badge-content-padding-y: 2px !default;
+$sar-badge-content-font-size: 12px !default;
+$sar-badge-content-height: $sar-badge-content-padding-y * 2 +
+  $sar-badge-content-font-size + 2px !default;
+$sar-badge-content-min-width: $sar-badge-content-padding-y * 2 +
+  $sar-badge-content-font-size + 2px !default;
+$sar-badge-content-bg-color: $sar-danger !default;
+$sar-badge-content-color: $sar-white !default;
+$sar-badge-content-border-color: $sar-white !default;
+$sar-badge-content-dot-size: 8px !default;
+
+// 暗黑模式
+$sar-badge-content-border-dark-color: $sar-gray-200 !default;
+// #endvariables
+
+@include bem(badge) {
+  @include b() {
+    @include universal;
+    justify-content: center;
+  }
+
+  @include e(content-wrapper) {
+    @include universal;
+  }
+
+  @include e(content) {
+    @include universal;
+    flex: none;
+    justify-content: center;
+    align-self: center;
+    min-width: $sar-badge-content-min-width;
+    height: $sar-badge-content-height;
+    padding-top: $sar-badge-content-padding-y;
+    padding-bottom: $sar-badge-content-padding-y;
+    padding-left: $sar-badge-content-padding-x;
+    padding-right: $sar-badge-content-padding-x;
+    font-size: $sar-badge-content-font-size;
+    line-height: $sar-badge-content-font-size * $sar-leading-none;
+    text-align: center;
+    border: 1px solid $sar-badge-content-border-color;
+    border-radius: $sar-rounded-full;
+    color: $sar-badge-content-color;
+    background-color: $sar-badge-content-bg-color;
+
+    @include m(fixed) {
+      top: math.div(-$sar-badge-content-height, 2);
+      left: 50%;
+    }
+  }
+
+  @include m(fixed) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+  }
+
+  @include m(zero-hide) {
+    display: none;
+  }
+
+  @include m(is-dot) {
+    width: $sar-badge-content-dot-size;
+    height: $sar-badge-content-dot-size;
+    min-width: $sar-badge-content-dot-size;
+    padding: 0;
+    border-radius: $sar-rounded-full;
+  }
+}
+
+@include theme(dark) {
+  @include bem(badge) {
+    @include e(content) {
+      border-color: $sar-badge-content-border-dark-color;
+    }
+  }
+}

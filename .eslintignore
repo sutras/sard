@@ -130,5 +130,5 @@ dist
 .pnp.*
 
 package-lock.json
-*/sard-taro/site/
+dist-site
 taro-native-shell

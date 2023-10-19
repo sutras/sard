@@ -1,0 +1,13 @@
+@import '@/base.scss';
+
+.demo-grid-box {
+  height: auto;
+  margin: 2px;
+  padding: 10px;
+  border-radius: $sar-rounded;
+  background-color: $sar-primary;
+  color: $sar-white;
+}
+.demo-grid-box-higher {
+  height: 90px;
+}

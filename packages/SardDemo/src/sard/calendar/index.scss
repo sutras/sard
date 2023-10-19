@@ -1,0 +1,210 @@
+@use 'sass:math';
+@import '../style/base.scss';
+// #variables
+$sar-calendar-header-margin-bottom: 4px !default;
+$sar-calendar-current-month-font-size: $sar-text-lg !default;
+
+$sar-calendar-week-item-height: 32px !default;
+$sar-calendar-week-item-font-size: $sar-text-base !default;
+
+$sar-calendar-month-body-row-gap: 4px !default;
+
+$sar-calendar-day-height: 48px !default;
+$sar-calendar-day-font-size: $sar-text-base !default;
+$sar-calendar-day-selected-border-radius: $sar-rounded !default;
+$sar-calendar-day-selected-color: $sar-white !default;
+$sar-calendar-day-selected-bg-color: $sar-primary !default;
+$sar-calendar-day-middle-color: $sar-primary !default;
+$sar-calendar-day-middle-bg-color: rgba($sar-blue-100, 0.5) !default;
+$sar-calendar-day-disabled-color: $sar-disabled-color !default;
+
+$sar-calendar-info-font-size: $sar-text-xs !default;
+$sar-calendar-info-line-height: $sar-calendar-info-font-size *
+  $sar-leading-tight !default;
+$sar-calendar-top-gap: 2px !default;
+$sar-calendar-bottom-gap: 2px !default;
+
+$sar-calendar-mark-font-size: 160px !default;
+$sar-calendar-mark-color: $sar-deemphasis-color !default;
+$sar-calendar-mark-opacity: 0.2 !default;
+
+// 暗黑模式
+$sar-calendar-day-middle-dark-bg-color: rgba($sar-blue-100, 0.05) !default;
+$sar-calendar-day-disabled-dark-color: $sar-dark-disabled-color !default;
+$sar-calendar-mark-dark-color: $sar-dark-deemphasis-color !default;
+// #endvariables
+
+@include bem(calendar) {
+  @include b() {
+    @include universal;
+    @include if-web {
+      touch-action: none;
+    }
+  }
+
+  @include e(header) {
+    @include universal;
+    z-index: 1;
+    flex: none;
+    margin-bottom: $sar-calendar-header-margin-bottom;
+  }
+
+  @include e(toolbar) {
+    @include universal;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @include e(current-month) {
+    @include universal;
+    font-size: $sar-calendar-current-month-font-size;
+  }
+
+  @include e(week) {
+    @include universal;
+    flex-direction: row;
+  }
+
+  @include e(week-item) {
+    @include universal;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    height: $sar-calendar-week-item-height;
+    font-size: $sar-calendar-week-item-font-size;
+  }
+
+  @include e(body) {
+    @include universal;
+    z-index: 0;
+    flex: none;
+  }
+
+  @include e(month) {
+    @include universal;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: $sar-calendar-month-body-row-gap;
+    column-gap: 0;
+  }
+
+  @include e(day-wrapper) {
+    @include universal;
+    z-index: 1;
+    width: #{math.div(100, 7)} + '%';
+    height: $sar-calendar-day-height;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @include e(day) {
+    @include universal;
+    z-index: 1;
+    width: #{math.div(100, 7)} + '%';
+    height: $sar-calendar-day-height;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: $sar-calendar-day-selected-border-radius;
+    font-size: $sar-calendar-day-font-size;
+    line-height: $sar-calendar-day-height;
+    @include if-web {
+      transition: $sar-duration-fast;
+      cursor: pointer;
+    }
+
+    @include m(today) {
+      font-weight: $sar-font-bold;
+    }
+
+    @include m(disabled) {
+      color: $sar-calendar-day-disabled-color;
+      @include if-web {
+        cursor: not-allowed;
+      }
+    }
+
+    @include m(selected) {
+      border-radius: $sar-calendar-day-selected-border-radius;
+      color: $sar-calendar-day-selected-color;
+      background-color: $sar-calendar-day-selected-bg-color;
+    }
+
+    @include m(prev-selected, only-end) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    @include m(next-selected, only-start) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    @include m(middle) {
+      color: $sar-calendar-day-middle-color;
+      background-color: $sar-calendar-day-middle-bg-color;
+      border-radius: 0;
+    }
+  }
+
+  @include e(top, bottom) {
+    @include universal;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    font-size: $sar-calendar-info-font-size;
+    line-height: $sar-calendar-info-line-height;
+
+    @include m(selected) {
+      color: $sar-calendar-day-selected-color;
+    }
+  }
+
+  @include e(top) {
+    top: $sar-calendar-top-gap;
+  }
+
+  @include e(bottom) {
+    bottom: $sar-calendar-bottom-gap;
+  }
+
+  @include e(mark) {
+    @include universal;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: $sar-calendar-mark-font-size;
+    color: $sar-calendar-mark-color;
+    opacity: $sar-calendar-mark-opacity;
+    pointer-events: none;
+  }
+}
+
+@include theme(dark) {
+  @include bem(calendar) {
+    @include e(day) {
+      @include m(middle) {
+        background-color: $sar-calendar-day-middle-dark-bg-color;
+      }
+
+      @include m(disabled) {
+        color: $sar-calendar-day-disabled-dark-color;
+      }
+    }
+
+    @include e(mark) {
+      color: $sar-calendar-mark-dark-color;
+    }
+  }
+}

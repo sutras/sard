@@ -1,0 +1,75 @@
+@import '../style/base.scss';
+// #variables
+$sar-search-padding-x: 12px !default;
+$sar-search-padding-y: 10px !default;
+$sar-search-bg-color: $sar-emphasis-bg-color !default;
+
+$sar-search-input-bg-color: $sar-body-bg-color !default;
+$sar-search-input-disabled-bg-color: $sar-disabled-shallow-bg-color !default;
+$sar-search-icon-color: $sar-quaternary-color !default;
+
+// 暗黑模式
+$sar-search-dark-bg-color: $sar-dark-emphasis-bg-color !default;
+$sar-search-input-dark-bg-color: $sar-dark-body-bg-color !default;
+$sar-search-input-disabled-dark-bg-color: $sar-dark-disabled-shallow-bg-color !default;
+$sar-search-icon-dark-color: $sar-dark-quaternary-color !default;
+// #endvariables
+
+@include bem(search) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    align-items: stretch;
+    padding: $sar-search-padding-y $sar-search-padding-x;
+    background-color: $sar-search-bg-color;
+  }
+
+  @include m(show-action) {
+    padding-right: 0;
+  }
+
+  @include e(input-wrapper) {
+    flex: 1;
+  }
+
+  @include e(input) {
+    background-color: $sar-search-input-bg-color;
+
+    @include m(round) {
+      border-radius: $sar-rounded-full;
+    }
+
+    @include m(disabled) {
+      background-color: $sar-search-input-disabled-bg-color;
+    }
+  }
+
+  @include e(button) {
+    height: auto;
+  }
+
+  @include e(icon) {
+    @include universal;
+    color: $sar-search-icon-color;
+  }
+}
+
+@include theme(dark) {
+  @include bem(search) {
+    @include b() {
+      background-color: $sar-search-dark-bg-color;
+    }
+
+    @include e(input) {
+      background-color: $sar-search-input-dark-bg-color;
+
+      @include m(disabled) {
+        background-color: $sar-search-input-disabled-dark-bg-color;
+      }
+    }
+
+    @include e(icon) {
+      color: $sar-search-icon-dark-color;
+    }
+  }
+}

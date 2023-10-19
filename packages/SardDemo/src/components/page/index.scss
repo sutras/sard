@@ -1,0 +1,18 @@
+@import '@/base.scss';
+
+.demo-page {
+  padding: 15px 0;
+  @include if-web {
+    min-height: 100vh;
+  }
+}
+
+.demo-page-emphasis {
+  background-color: $sar-emphasis-bg-color;
+}
+
+@include theme(dark) {
+  .demo-page-emphasis {
+    background-color: $sar-dark-emphasis-bg-color;
+  }
+}

@@ -1,0 +1,189 @@
+@import '../style/base.scss';
+// #variables
+$sar-password-input-gap: 10px !default;
+$sar-password-input-border-color: $sar-border-color !default;
+$sar-password-input-active-border-color: $sar-primary !default;
+
+$sar-password-input-height: 48px !default;
+$sar-password-input-ciphertext-size: 10px !default;
+$sar-password-input-ciphertext-bg-color: $sar-body-color !default;
+
+$sar-password-input-plaintext-font-size: 20px !default;
+
+$sar-password-input-cursor-width: 1px !default;
+$sar-password-input-cursor-height: 20px !default;
+$sar-password-input-cursor-color: $sar-body-color !default;
+$sar-password-input-cursor-animation-duration: 1s !default;
+
+// 暗黑模式
+$sar-password-input-border-dark-color: $sar-dark-border-color !default;
+$sar-password-input-active-border-dark-color: $sar-primary !default;
+$sar-password-input-ciphertext-dark-bg-color: $sar-dark-body-color !default;
+$sar-password-input-cursor-dark-color: $sar-dark-body-color !default;
+// #endvariables
+
+@include bem(password-input) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: $sar-password-input-height;
+    gap: $sar-password-input-gap;
+    overflow: hidden;
+  }
+
+  @include e(item) {
+    @include universal;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 100%;
+
+    @include m(active) {
+      z-index: 2;
+    }
+
+    @include m(disabled) {
+      background-color: $sar-disabled-shallow-bg-color;
+    }
+  }
+
+  @include e(halfline) {
+    border-color: transparent;
+
+    @include m(border) {
+      border-color: $sar-password-input-border-color;
+    }
+
+    @include m(border-active) {
+      border-color: $sar-password-input-active-border-color;
+    }
+
+    @include m(underline) {
+      border-bottom-color: $sar-password-input-border-color;
+    }
+
+    @include m(underline-active) {
+      border-bottom-color: $sar-password-input-active-border-color;
+    }
+  }
+
+  @include e(plaintext) {
+    @include universal;
+    font-size: $sar-password-input-plaintext-font-size;
+
+    @include m(disabled) {
+      color: $sar-disabled-color;
+    }
+  }
+
+  @include e(ciphertext) {
+    @include universal;
+    width: $sar-password-input-ciphertext-size;
+    height: $sar-password-input-ciphertext-size;
+    border-radius: $sar-rounded-full;
+    background-color: $sar-password-input-ciphertext-bg-color;
+
+    @include m(disabled) {
+      color: $sar-disabled-color;
+    }
+  }
+
+  @include e(cursor) {
+    @include universal;
+    width: $sar-password-input-cursor-width;
+    height: $sar-password-input-cursor-height;
+    background-color: $sar-password-input-cursor-color;
+    @include if-web {
+      animation: $sar-password-input-cursor-animation-duration #{bem-ns(
+          password-input-cursor-flicker
+        )} infinite;
+    }
+  }
+
+  @include e(input) {
+    @include universal;
+    position: absolute;
+    top: 0;
+    z-index: 3;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    opacity: 0;
+
+    @include if-web {
+      .weui-input {
+        width: 100%;
+        height: 100%;
+      }
+
+      input:disabled {
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+@include if-web {
+  @keyframes #{bem-ns(password-input-cursor-flicker)} {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+@include theme(dark) {
+  @include bem(password-input) {
+    @include e(item) {
+      @include m(disabled) {
+        background-color: $sar-dark-disabled-shallow-bg-color;
+      }
+    }
+
+    @include e(halfline) {
+      @include m(border) {
+        border-color: $sar-password-input-border-dark-color;
+      }
+
+      @include m(border-active) {
+        border-color: $sar-password-input-active-border-dark-color;
+      }
+
+      @include m(underline) {
+        border-bottom-color: $sar-password-input-border-dark-color;
+      }
+
+      @include m(underline-active) {
+        border-bottom-color: $sar-password-input-active-border-dark-color;
+      }
+    }
+
+    @include e(plaintext) {
+      @include m(disabled) {
+        color: $sar-dark-disabled-color;
+      }
+    }
+
+    @include e(ciphertext) {
+      background-color: $sar-password-input-ciphertext-dark-bg-color;
+
+      @include m(disabled) {
+        color: $sar-dark-disabled-color;
+      }
+    }
+
+    @include e(cursor) {
+      background-color: $sar-password-input-cursor-dark-color;
+    }
+  }
+}

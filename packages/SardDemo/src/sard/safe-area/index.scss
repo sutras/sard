@@ -1,0 +1,24 @@
+@import '../style/base.scss';
+// #variables
+// #endvariables
+
+@include bem(safe-area) {
+  @include b() {
+    pointer-events: none;
+
+    @include if-web {
+      @include m(top) {
+        height: env(safe-area-inset-top);
+      }
+      @include m(right) {
+        width: env(safe-area-inset-right);
+      }
+      @include m(bottom) {
+        height: env(safe-area-inset-bottom);
+      }
+      @include m(left) {
+        width: env(safe-area-inset-left);
+      }
+    }
+  }
+}

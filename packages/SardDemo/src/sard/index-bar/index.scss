@@ -1,0 +1,153 @@
+@use 'sass:math';
+@import '../style/base.scss';
+// #variables
+$sar-index-bar-anchor-padding: 0 16px !default;
+$sar-index-bar-anchor-font-size: $sar-text-base !default;
+$sar-index-bar-anchor-line-height: 32px !default;
+$sar-index-bar-anchor-color: $sar-tertiary-color !default;
+$sar-index-bar-anchor-bg-color: $sar-body-bg-color !default;
+
+$sar-index-bar-nav-wrapper-right: 4px !default;
+
+$sar-index-bar-nav-padding: 4px !default;
+$sar-index-bar-nav-bg-color: $sar-body-bg-color !default;
+
+$sar-index-bar-nav-item-font-size: 12px !default;
+$sar-index-bar-nav-item-size: 20px !default;
+$sar-index-bar-nav-item-color: $sar-body-color !default;
+$sar-index-bar-nav-item-active-color: $sar-white !default;
+$sar-index-bar-nav-item-active-bg-color: $sar-primary !default;
+
+$sar-index-bar-hint-width: 50px !default;
+$sar-index-bar-hint-height: 50px !default;
+$sar-index-bar-hint-right: 36px !default;
+$sar-index-bar-hint-border-radius: 100px 100px 0 100px !default;
+$sar-index-bar-hint-bg-color: $sar-mask !default;
+
+$sar-index-bar-hint-text-font-size: 24px !default;
+$sar-index-bar-hint-text-color: $sar-white !default;
+
+// 暗黑模式
+$sar-index-bar-anchor-dark-color: $sar-dark-tertiary-color !default;
+$sar-index-bar-anchor-dark-bg-color: $sar-dark-body-bg-color !default;
+$sar-index-bar-nav-dark-bg-color: $sar-dark-body-bg-color !default;
+$sar-index-bar-nav-item-dark-color: $sar-dark-body-color !default;
+// #endvariables
+
+@include bem(index-bar) {
+  @include b() {
+    @include universal;
+  }
+
+  @include e(scroll-view) {
+    height: 100%;
+  }
+
+  @include e(nav-container) {
+    @include universal;
+    position: absolute;
+    right: $sar-index-bar-nav-wrapper-right;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+    justify-content: center;
+    @include if-web {
+      touch-action: none;
+    }
+  }
+
+  @include e(nav-wrapper) {
+    @include universal;
+    padding: $sar-index-bar-nav-padding;
+    background-color: $sar-index-bar-nav-bg-color;
+    border-radius: $sar-rounded-full;
+    @include if-web {
+      touch-action: none;
+    }
+  }
+
+  @include e(nav) {
+    @include universal;
+
+    @include if-web {
+      cursor: pointer;
+    }
+  }
+
+  @include e(nav-item) {
+    @include universal;
+    justify-content: center;
+    align-items: center;
+    width: $sar-index-bar-nav-item-size;
+    height: $sar-index-bar-nav-item-size;
+    border-radius: $sar-rounded-full;
+    font-size: $sar-index-bar-nav-item-font-size;
+    color: $sar-index-bar-nav-item-color;
+
+    @include m(active) {
+      color: $sar-index-bar-nav-item-active-color;
+      background-color: $sar-index-bar-nav-item-active-bg-color;
+    }
+  }
+
+  @include e(hint) {
+    @include universal;
+    position: absolute;
+    width: $sar-index-bar-hint-width;
+    height: $sar-index-bar-hint-height;
+    right: $sar-index-bar-hint-right;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: math.div(-$sar-index-bar-hint-height, 2);
+    border-radius: $sar-index-bar-hint-border-radius;
+    background-color: $sar-index-bar-hint-bg-color;
+    transform: rotate(-45deg);
+    pointer-events: none;
+  }
+
+  @include e(hint-text) {
+    @include universal;
+    font-size: $sar-index-bar-hint-text-font-size;
+    line-height: $sar-index-bar-hint-text-font-size * $sar-leading-none;
+    font-weight: $sar-font-bold;
+    transform: rotate(45deg);
+    color: $sar-index-bar-hint-text-color;
+  }
+
+  @include e(item-anchor) {
+    @include universal;
+    @include sticky;
+    top: 0;
+    z-index: 1;
+    padding: $sar-index-bar-anchor-padding;
+    font-size: $sar-index-bar-anchor-font-size;
+    line-height: $sar-index-bar-anchor-line-height;
+    color: $sar-index-bar-anchor-color;
+    background-color: $sar-index-bar-anchor-bg-color;
+  }
+
+  @include e(item-content) {
+    @include universal;
+    z-index: 0;
+  }
+}
+
+@include theme(dark) {
+  @include bem(index-bar) {
+    @include e(item-anchor) {
+      color: $sar-index-bar-anchor-dark-color;
+      background-color: $sar-index-bar-anchor-dark-bg-color;
+    }
+
+    @include e(nav-wrapper) {
+      @include universal;
+      background-color: $sar-index-bar-nav-dark-bg-color;
+    }
+
+    @include e(nav-item) {
+      color: $sar-index-bar-nav-item-dark-color;
+    }
+  }
+}

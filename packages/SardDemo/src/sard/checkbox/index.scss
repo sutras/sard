@@ -1,0 +1,82 @@
+@import '../style/base.scss';
+// #variables
+$sar-checkbox-icon-font-size: 20px !default;
+$sar-checkbox-icon-color: $sar-quaternary-color !default;
+$sar-checkbox-icon-checked-color: $sar-primary !default;
+$sar-checkbox-icon-transition-duration: $sar-duration !default;
+
+$sar-checkbox-label-margin-left: 8px !default;
+
+$sar-checkbox-margin-left: 20px !default;
+$sar-checkbox-margin-top: 10px !default;
+
+// 暗黑模式
+$sar-checkbox-icon-dark-color: $sar-dark-quaternary-color !default;
+$sar-checkbox-icon-checked-dark-color: $sar-primary !default;
+// #endvariables
+
+@include bem(checkbox) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    align-items: center;
+    align-self: flex-start;
+
+    @include if-web {
+      cursor: pointer;
+
+      @include m(disabled) {
+        cursor: default;
+      }
+    }
+  }
+
+  @include e(icon) {
+    @include universal;
+    font-size: $sar-checkbox-icon-font-size;
+    color: $sar-checkbox-icon-color;
+    @include if-web {
+      transition: color $sar-checkbox-icon-transition-duration;
+    }
+
+    @include m(checked) {
+      color: $sar-checkbox-icon-checked-color;
+    }
+
+    @include m(disabled) {
+      color: $sar-disabled-deep-bg-color;
+    }
+  }
+
+  @include e(label) {
+    @include universal;
+    flex-direction: row;
+    margin-left: $sar-checkbox-label-margin-left;
+
+    @include m(disabled) {
+      color: $sar-disabled-color;
+    }
+  }
+}
+
+@include theme(dark) {
+  @include bem(checkbox) {
+    @include e(icon) {
+      color: $sar-checkbox-icon-dark-color;
+
+      @include m(checked) {
+        color: $sar-checkbox-icon-checked-dark-color;
+      }
+
+      @include m(disabled) {
+        color: $sar-disabled-deep-bg-color;
+      }
+    }
+
+    @include e(label) {
+      @include m(disabled) {
+        color: $sar-dark-disabled-color;
+      }
+    }
+  }
+}

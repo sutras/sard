@@ -1,0 +1,89 @@
+@import '../style/base.scss';
+// #variables
+$sar-tabbar-height: 50px !default;
+$sar-tabbar-bg-color: $sar-emphasis-bg-color !default;
+$sar-tabbar-color: $sar-secondary-color !default;
+
+$sar-tabbar-item-ative-color: $sar-primary !default;
+$sar-tabbar-item-icon-margin-bottom: 4px !default;
+$sar-tabbar-item-icon-font-size: 20px !default;
+$sar-tabbar-item-text-font-size: $sar-text-sm !default;
+
+// 暗黑模式
+$sar-tabbar-bg-dark-color: $sar-dark-emphasis-bg-color !default;
+$sar-tabbar-dark-color: $sar-dark-secondary-color !default;
+// #endvariables
+
+@include bem(tabbar) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    align-items: stretch;
+    height: $sar-tabbar-height;
+    color: $sar-tabbar-color;
+    background-color: $sar-tabbar-bg-color;
+  }
+
+  @include e(item) {
+    @include universal;
+    z-index: 3;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+
+    @include if-web {
+      cursor: pointer;
+    }
+  }
+
+  @include e(icon-wrapper) {
+    @include universal;
+    margin-bottom: $sar-tabbar-item-icon-margin-bottom;
+  }
+
+  @include e(icon) {
+    font-size: $sar-tabbar-item-icon-font-size;
+    line-height: $sar-tabbar-item-icon-font-size * $sar-leading-none;
+    color: $sar-tabbar-color;
+
+    @include m(active) {
+      color: $sar-tabbar-item-ative-color;
+    }
+  }
+
+  @include e(text) {
+    @include universal;
+    font-size: $sar-tabbar-item-text-font-size;
+    line-height: $sar-tabbar-item-text-font-size * $sar-leading-tight;
+    color: $sar-tabbar-color;
+
+    @include m(active) {
+      color: $sar-tabbar-item-ative-color;
+    }
+  }
+}
+
+@include theme(dark) {
+  @include bem(tabbar) {
+    @include b() {
+      color: $sar-tabbar-dark-color;
+      background-color: $sar-tabbar-bg-dark-color;
+    }
+
+    @include e(icon) {
+      color: $sar-tabbar-dark-color;
+
+      @include m(active) {
+        color: $sar-tabbar-item-ative-color;
+      }
+    }
+
+    @include e(text) {
+      color: $sar-tabbar-dark-color;
+
+      @include m(active) {
+        color: $sar-tabbar-item-ative-color;
+      }
+    }
+  }
+}

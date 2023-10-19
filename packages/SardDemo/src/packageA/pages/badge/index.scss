@@ -1,0 +1,15 @@
+@import '@/base.scss';
+
+.demo-badge-box {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: $sar-rounded;
+  background-color: $sar-tertiary-bg-color;
+}
+
+@include theme(dark) {
+  .demo-badge-box {
+    background-color: $sar-dark-tertiary-bg-color;
+  }
+}

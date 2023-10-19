@@ -1,0 +1,140 @@
+@use 'sass:math';
+@import '../style/base.scss';
+// #variables
+$sar-slider-track-main-axis-size: 100% !default;
+$sar-slider-track-cross-axis-size: 2px !default;
+$sar-slider-track-bg-color: $sar-secondary-bg-color !default;
+
+$sar-slider-track-piece-bg-color: $sar-primary !default;
+
+$sar-slider-thumb-size: 24px !default;
+$sar-slider-thumb-bg-color: $sar-white !default;
+$sar-slider-thumb-box-shadow: $sar-shadow-sm !default;
+
+$sar-slider-padding: math.div($sar-slider-thumb-size, 2) + 3px !default;
+
+// 暗黑模式
+$sar-slider-track-dark-bg-color: $sar-dark-secondary-bg-color !default;
+$sar-slider-track-piece-dark-bg-color: $sar-primary !default;
+$sar-slider-thumb-dark-bg-color: $sar-white !default;
+// #endvariables
+
+@include bem(slider) {
+  @include b() {
+    @include universal;
+    flex-direction: row;
+    padding: $sar-slider-padding;
+
+    @include if-web {
+      cursor: pointer;
+
+      @include m(readonly) {
+        cursor: default;
+      }
+    }
+  }
+
+  @include m(vertical) {
+    width: auto;
+    height: 100%;
+  }
+
+  @include e(track) {
+    @include universal;
+    width: $sar-slider-track-main-axis-size;
+    height: $sar-slider-track-cross-axis-size;
+    background-color: $sar-slider-track-bg-color;
+
+    @include m(vertical) {
+      width: $sar-slider-track-cross-axis-size;
+      height: $sar-slider-track-main-axis-size;
+    }
+  }
+
+  @include e(track-piece) {
+    @include universal;
+    position: absolute;
+    width: auto;
+    height: 100%;
+    background-color: $sar-slider-track-piece-bg-color;
+
+    @include m(vertical) {
+      width: 100%;
+      height: auto;
+    }
+
+    @include m(disabled) {
+      background-color: $sar-disabled-deep-bg-color;
+    }
+  }
+
+  @include e(thumb-container) {
+    @include universal;
+    position: absolute;
+    width: 0;
+    height: 0;
+    justify-content: center;
+    align-items: center;
+    @include if-web {
+      touch-action: none;
+
+      @include m(readonly, disabled) {
+        touch-action: auto;
+      }
+    }
+  }
+
+  @include e(thumb) {
+    @include universal;
+    flex: none;
+    width: $sar-slider-thumb-size;
+    height: $sar-slider-thumb-size;
+    border-radius: $sar-rounded-full;
+    background-color: $sar-slider-thumb-bg-color;
+    @include if-web {
+      box-shadow: $sar-slider-thumb-box-shadow;
+    }
+  }
+
+  @include e(thumb-start) {
+    top: 50%;
+    left: 0;
+
+    @include m(vertical) {
+      top: 0;
+      left: 50%;
+    }
+  }
+
+  @include e(thumb-end) {
+    top: 50%;
+    right: 0;
+
+    @include m(vertical) {
+      top: auto;
+      bottom: 0;
+      left: 50%;
+      right: auto;
+    }
+  }
+}
+
+@include theme(dark) {
+  @include bem(slider) {
+    @include e(track) {
+      background-color: $sar-slider-track-dark-bg-color;
+    }
+
+    @include e(track-piece) {
+      background-color: $sar-slider-track-piece-dark-bg-color;
+
+      @include m(disabled) {
+        background-color: $sar-dark-disabled-deep-bg-color;
+      }
+    }
+
+    @include e(thumb) {
+      background-color: $sar-slider-thumb-dark-bg-color;
+    }
+  }
+}
