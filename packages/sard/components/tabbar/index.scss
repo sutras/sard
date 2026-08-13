@@ -1,0 +1,73 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(tabbar-z-index)}: css-var(z-index-secondary);
+  #{css-var-name(tabbar-height)}: 50px;
+  #{css-var-name(tabbar-border-color)}: css-var(border-color);
+  #{css-var-name(tabbar-bg)}: css-var(bg-color-container);
+  #{css-var-name(tabbar-color)}: css-var(text-color-secondary);
+
+  #{css-var-name(tabbar-item-color-active)}: css-var(color-primary);
+  #{css-var-name(tabbar-item-icon-margin-bottom)}: css-var(size-2xs);
+  #{css-var-name(tabbar-item-icon-font-size)}: css-var(size-lg);
+
+  #{css-var-name(tabbar-item-text-font-size)}: css-var(font-size-sm);
+}
+// #endregion variables
+
+@include b(tabbar) {
+  display: flex;
+  align-items: stretch;
+  height: css-var(tabbar-height);
+  color: css-var(tabbar-color);
+  background: css-var(tabbar-bg);
+
+  @include m(fixed) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: css-var(tabbar-z-index);
+  }
+
+  @include m(safe) {
+    height: calc(css-var(tabbar-height) + css-var(safe-bottom));
+    padding-bottom: css-var(safe-bottom);
+  }
+
+  @include m(bordered) {
+    &::before {
+      @include border-top(css-var(tabbar-border-color));
+    }
+  }
+}
+
+@include b(tabbar) {
+  @include e(item) {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    font-size: css-var(tabbar-item-text-font-size);
+    line-height: css-var(line-height-tight);
+    color: css-var(tabbar-color);
+    cursor: pointer;
+
+    @include m(current) {
+      color: css-var(tabbar-item-color-active);
+    }
+  }
+
+  @include e(icon) {
+    margin-bottom: css-var(tabbar-item-icon-margin-bottom);
+    font-size: css-var(tabbar-item-icon-font-size);
+    line-height: css-var(line-height-none);
+  }
+
+  @include e(text) {
+  }
+}

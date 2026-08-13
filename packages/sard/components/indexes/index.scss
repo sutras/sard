@@ -1,0 +1,110 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(indexes-anchor-padding)}: 0 css-var(content-padding-x);
+  #{css-var-name(indexes-anchor-font-size)}: css-var(font-size);
+  #{css-var-name(indexes-anchor-height)}: css-var(size-2xl);
+  #{css-var-name(indexes-anchor-color)}: css-var(text-color-tertiary);
+  #{css-var-name(indexes-anchor-bg)}: css-var(fill-color-fourth);
+
+  #{css-var-name(indexes-nav-padding-end)}: css-var(size-2xs);
+
+  #{css-var-name(indexes-nav-item-font-size)}: css-var(size-sm);
+  #{css-var-name(indexes-nav-item-size)}: css-var(size-lg);
+  #{css-var-name(indexes-nav-item-color)}: css-var(text-color-primary);
+  #{css-var-name(indexes-nav-item-color-active)}: css-var(white);
+  #{css-var-name(indexes-nav-item-bg-active)}: css-var(color-primary);
+
+  #{css-var-name(indexes-hint-size)}: css-var(size-4xl);
+  #{css-var-name(indexes-hint-margin-end)}: css-var(size-2xs);
+  #{css-var-name(indexes-hint-bg)}: css-var(overlay);
+
+  #{css-var-name(indexes-hint-text-font-size)}: css-var(size-xl);
+  #{css-var-name(indexes-hint-text-color)}: css-var(white);
+}
+// #endregion variables
+
+@include b(indexes) {
+  @include e(scroll) {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  @include e(anchor) {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    height: css-var(indexes-anchor-height);
+    padding: css-var(indexes-anchor-padding);
+    font-size: css-var(indexes-anchor-font-size);
+    line-height: css-var(indexes-anchor-height);
+    color: css-var(indexes-anchor-color);
+    background: css-var(indexes-anchor-bg);
+  }
+
+  @include e(nav) {
+    position: absolute;
+    top: 50%;
+    inset-inline-end: 0;
+    z-index: 10;
+    padding-inline-end: css-var(indexes-nav-padding-end);
+    transform: translateY(-50%);
+    cursor: pointer;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  @include e(nav-item) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: css-var(indexes-nav-item-size);
+    height: css-var(indexes-nav-item-size);
+    border-radius: css-var(border-radius-full);
+    font-size: css-var(indexes-nav-item-font-size);
+    color: css-var(indexes-nav-item-color);
+
+    @include m(active) {
+      color: css-var(indexes-nav-item-color-active);
+      background: css-var(indexes-nav-item-bg-active);
+    }
+  }
+
+  @include e(hint) {
+    position: absolute;
+    inset-inline-end: 100%;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: css-var(indexes-hint-size);
+    height: css-var(indexes-hint-size);
+    margin-inline-end: css-var(indexes-hint-margin-end);
+    border-radius: 50% 0 50% 50%;
+    background: css-var(indexes-hint-bg);
+    transform-origin: top right;
+    transform: rotate(45deg);
+    pointer-events: none;
+
+    @include rtl {
+      border-radius: 0 50% 50% 50%;
+      transform-origin: top left;
+      transform: rotate(-45deg);
+    }
+  }
+
+  @include e(hint-text) {
+    font-size: css-var(indexes-hint-text-font-size);
+    line-height: css-var(line-height-none);
+    font-weight: css-var(font-weight-bold);
+    transform: rotate(-45deg);
+    color: css-var(indexes-hint-text-color);
+
+    @include rtl {
+      transform: rotate(45deg);
+    }
+  }
+}

@@ -1,0 +1,7 @@
+// # 命名空间与分隔符（标准 BEM）
+$namespace: 's' !default;
+$block-separator: '-' !default;
+$element-separator: '__' !default;
+$modifier-separator: '--' !default; // 标准 BEM
+$state-prefix: 'is-' !default; // 状态：is-disabled, is-active
+$action-prefix: 'has-' !default; // 动作/拥有：has-icon, has-error

@@ -1,0 +1,137 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(switch-size)}: 30px;
+  #{css-var-name(switch-width)}: calc(css-var(switch-size) / 6 * 10);
+  #{css-var-name(switch-height)}: css-var(switch-size);
+  #{css-var-name(switch-bg)}: css-var(fill-color-secondary);
+  #{css-var-name(switch-bg-checked)}: css-var(color-primary);
+
+  #{css-var-name(switch-opacity-loading)}: css-var(opacity-loading);
+
+  #{css-var-name(switch-thumb-gap)}: 3px;
+  #{css-var-name(switch-thumb-width)}: calc(css-var(switch-height) - css-var(switch-thumb-gap) * 2);
+  #{css-var-name(switch-thumb-height)}: css-var(switch-thumb-width);
+  #{css-var-name(switch-thumb-radius)}: css-var(border-radius-full);
+  #{css-var-name(switch-thumb-bg)}: css-var(white);
+  #{css-var-name(switch-thumb-color)}: css-var(gray-600);
+
+  #{css-var-name(switch-text-min-margin)}: 9px;
+  #{css-var-name(switch-text-max-margin)}: calc(
+    css-var(switch-thumb-width) + css-var(switch-text-min-margin)
+  );
+  #{css-var-name(switch-text-color)}: css-var(white);
+  #{css-var-name(switch-text-font-size)}: css-var(font-size);
+}
+
+@include theme-dark {
+  #{css-var-name(switch-thumb-bg)}: css-var(gray-200);
+}
+// #endregion variables
+
+@include b(switch) {
+  #{css-var-name(switch-overflow-margin)}: calc(
+    100% + css-var(switch-text-max-margin) + css-var(switch-thumb-gap)
+  );
+
+  position: relative;
+  display: inline-flex;
+  width: fit-content;
+  height: css-var(switch-height);
+  border-radius: css-var(border-radius-full);
+  font-size: css-var(switch-size);
+  vertical-align: middle;
+  background: css-var(switch-bg);
+  cursor: pointer;
+  transition:
+    background-color css-var(duration),
+    opacity css-var(duration);
+
+  @include m(checked) {
+    background: css-var(switch-bg-checked);
+  }
+
+  @include m(disabled) {
+    opacity: css-var(opacity-disabled);
+    cursor: not-allowed;
+  }
+
+  @include m(readonly) {
+    cursor: unset;
+  }
+
+  @include m(loading) {
+    opacity: css-var(switch-opacity-loading);
+    cursor: wait;
+  }
+
+  @include e(thumb) {
+    position: absolute;
+    top: css-var(switch-thumb-gap);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: css-var(switch-thumb-width);
+    height: css-var(switch-thumb-height);
+    inset-inline-start: css-var(switch-thumb-gap);
+    border-radius: css-var(border-radius-full);
+    color: css-var(switch-thumb-color);
+    background: css-var(switch-thumb-bg);
+    transition: css-var(duration);
+  }
+
+  @include e(text) {
+    overflow: hidden;
+    height: 100%;
+    min-width: css-var(switch-width);
+    padding-inline-start: css-var(switch-text-max-margin);
+    padding-inline-end: css-var(switch-text-min-margin);
+    border-radius: css-var(border-radius-full);
+    transition: padding css-var(duration);
+  }
+
+  @include e(text-checked, text-unchecked) {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex: none;
+    text-align: center;
+    font-size: css-var(switch-text-font-size);
+    line-height: css-var(line-height-none);
+    color: css-var(switch-text-color);
+    pointer-events: none;
+    transition: margin css-var(duration);
+  }
+
+  @include e(text-checked) {
+    margin-inline-start: calc(css-var(switch-overflow-margin) * -1);
+    margin-inline-end: css-var(switch-overflow-margin);
+  }
+
+  @include e(text-unchecked) {
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    top: -100%;
+  }
+
+  @include m(checked) {
+    @include e(thumb) {
+      inset-inline-start: calc(100% - css-var(switch-thumb-width) - css-var(switch-thumb-gap));
+    }
+    @include e(text) {
+      padding-inline-start: css-var(switch-text-min-margin);
+      padding-inline-end: css-var(switch-text-max-margin);
+    }
+    @include e(text-checked) {
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+    }
+    @include e(text-unchecked) {
+      margin-inline-start: css-var(switch-overflow-margin);
+      margin-inline-end: calc(css-var(switch-overflow-margin) * -1);
+    }
+  }
+}

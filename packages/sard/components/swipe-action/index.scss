@@ -1,0 +1,47 @@
+@use '../style/base' as *;
+
+// #region variables
+// #endregion variables
+
+@include b(swipe-action) {
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+
+  @include e(content) {
+    --swipe-action-x: var(--swipe-action-x-raw);
+    position: relative;
+    cursor: grab;
+    transform: translate3d(var(--swipe-action-x), 0, 0);
+
+    @include rtl {
+      --swipe-action-x: calc(var(--swipe-action-x-raw) * -1);
+    }
+  }
+
+  @include e(left, right) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    pointer-events: auto;
+  }
+
+  @include e(left) {
+    inset-inline-start: 0;
+    transform: translateX(-100%);
+
+    @include rtl {
+      transform: translateX(100%);
+    }
+  }
+
+  @include e(right) {
+    inset-inline-end: 0;
+    transform: translateX(100%);
+
+    @include rtl {
+      transform: translateX(-100%);
+    }
+  }
+}

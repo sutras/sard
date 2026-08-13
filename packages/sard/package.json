@@ -1,0 +1,30 @@
+{
+  "name": "sard",
+  "version": "1.0.1",
+  "description": "sard 是基于 Vue3 的 Web 移动端 UI 组件库",
+  "keywords": [
+    "UI",
+    "components",
+    "typescript",
+    "vue3",
+    "组件库"
+  ],
+  "homepage": "https://sard.wzt.zone/",
+  "license": "MIT",
+  "author": "wuzhitao",
+  "repository": "https://github.com/sutras/sard",
+  "files": [
+    "*"
+  ],
+  "main": "index.js",
+  "devDependencies": {
+    "@sard/icons": "workspace:*",
+    "lwa": "^0.2.3",
+    "vue": "^3.5.0"
+  },
+  "peerDependencies": {
+    "@sard/icons": "workspace:*",
+    "lwa": "^0.2.3",
+    "vue": "^3.5.0"
+  }
+}

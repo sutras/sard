@@ -1,0 +1,308 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(slider-vertical-height)}: 150px;
+  #{css-var-name(slider-padding)}: calc(css-var(slider-thumb-size) / 2);
+
+  #{css-var-name(slider-padding-x-show-scale)}: 34px;
+  #{css-var-name(slider-padding-y-show-scale)}: 26px;
+
+  #{css-var-name(slider-track-main-axis-size)}: 100%;
+  #{css-var-name(slider-track-cross-axis-size)}: 4px;
+  #{css-var-name(slider-track-bg)}: css-var(fill-color-secondary);
+
+  #{css-var-name(slider-fill-bg)}: css-var(color-primary);
+
+  #{css-var-name(slider-thumb-size)}: 24px;
+  #{css-var-name(slider-thumb-bg)}: css-var(white);
+  #{css-var-name(slider-thumb-box-shadow)}: css-var(box-shadow-tertiary);
+
+  #{css-var-name(slider-value-padding)}: 4px;
+  #{css-var-name(slider-value-min-width)}: 20px;
+  #{css-var-name(slider-value-min-width-horizontal)}: 28px;
+  #{css-var-name(slider-value-font-size)}: css-var(font-size-sm);
+  #{css-var-name(slider-value-color)}: css-var(white);
+  #{css-var-name(slider-value-bg)}: css-var(gray-800);
+  #{css-var-name(slider-value-box-shadow)}: css-var(box-shadow-tertiary);
+  #{css-var-name(slider-value-arrow-size)}: 6px;
+
+  #{css-var-name(slider-scale-size)}: 8px;
+  #{css-var-name(slider-scale-text-font-size)}: css-var(font-size-sm);
+  #{css-var-name(slider-scale-text-offset)}: 20px;
+}
+
+@include theme-dark {
+  #{css-var-name(slider-thumb-bg)}: css-var(gray-200);
+  #{css-var-name(slider-value-bg)}: css-var(gray-700);
+}
+// #endregion variables
+
+@include b(slider) {
+  display: flex;
+  padding: css-var(slider-padding);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+
+  @include m(vertical) {
+    width: auto;
+    height: css-var(slider-vertical-height);
+  }
+
+  // ============================ track ============================
+  @include e(track) {
+    position: relative;
+    width: css-var(slider-track-main-axis-size);
+    height: css-var(slider-track-cross-axis-size);
+    border-radius: css-var(border-radius-full);
+    background: css-var(slider-track-bg);
+  }
+
+  @include m(vertical) {
+    @include e(track) {
+      width: css-var(slider-track-cross-axis-size);
+      height: css-var(slider-track-main-axis-size);
+    }
+  }
+
+  // ============================ fill ============================
+  @include e(fill) {
+    position: absolute;
+    width: auto;
+    height: 100%;
+    border-radius: css-var(border-radius-full);
+    background: css-var(slider-fill-bg);
+  }
+  @include m(vertical) {
+    @include e(fill) {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  // ============================ thumb ============================
+  @include e(thumb-container) {
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    touch-action: none;
+    transform: translate(-50%, -50%);
+
+    @include rtl {
+      transform: translate(50%, -50%);
+    }
+
+    @include m(start) {
+      top: 50%;
+      inset-inline-start: 0;
+    }
+
+    @include m(end) {
+      top: 50%;
+      inset-inline-start: 100%;
+    }
+  }
+
+  @include e(thumb) {
+    flex: none;
+    width: css-var(slider-thumb-size);
+    height: css-var(slider-thumb-size);
+    border-radius: css-var(border-radius-full);
+    background: css-var(slider-thumb-bg);
+    box-shadow: css-var(slider-thumb-box-shadow);
+  }
+
+  @include m(vertical) {
+    @include e(thumb-container) {
+      touch-action: auto;
+
+      @include m(start) {
+        top: 0;
+        inset-inline-start: 50%;
+      }
+
+      @include m(end) {
+        top: 100%;
+        inset-inline-start: 50%;
+      }
+    }
+  }
+
+  // ============================ value ============================
+  @include e(value) {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: css-var(slider-value-padding);
+    font-size: css-var(slider-value-font-size);
+    line-height: css-var(line-height-none);
+    color: css-var(slider-value-color);
+    border-radius: css-var(border-radius-sm);
+    background: css-var(slider-value-bg);
+    box-shadow: css-var(slider-value-box-shadow);
+
+    &::after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: css-var(slider-value-arrow-size);
+      height: css-var(slider-value-arrow-size);
+      background-color: inherit;
+    }
+
+    @include m(top) {
+      bottom: calc(100% + css-var(slider-value-arrow-size));
+      &::after {
+        top: 100%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+    }
+
+    @include m(bottom) {
+      top: calc(100% + css-var(slider-value-arrow-size));
+      &::after {
+        bottom: 100%;
+        left: 50%;
+        transform: translate(-50%, 50%) rotate(45deg);
+      }
+    }
+
+    @include m(left) {
+      inset-inline-end: calc(100% + css-var(slider-value-arrow-size));
+      &::after {
+        top: 50%;
+        inset-inline-start: 100%;
+        transform: translate(-50%, -50%) rotate(45deg);
+        @include rtl {
+          transform: translate(50%, -50%) rotate(45deg);
+        }
+      }
+    }
+
+    @include m(right) {
+      inset-inline-start: calc(100% + css-var(slider-value-arrow-size));
+      &::after {
+        top: 50%;
+        inset-inline-end: 100%;
+        transform: translate(50%, -50%) rotate(45deg);
+        @include rtl {
+          transform: translate(-50%, -50%) rotate(45deg);
+        }
+      }
+    }
+
+    @include m(top, bottom) {
+      min-width: css-var(slider-value-min-width);
+    }
+
+    @include m(left, right) {
+      min-width: css-var(slider-value-min-width-horizontal);
+    }
+  }
+
+  // ============================ scale ============================
+  @include e(scale) {
+    position: absolute;
+    width: css-var(slider-scale-size);
+    height: css-var(slider-scale-size);
+    border-radius: 50%;
+    background: css-var(slider-track-bg);
+    @include m(active) {
+      background: css-var(slider-fill-bg);
+    }
+  }
+
+  @include m(horizontal) {
+    @include e(scale) {
+      top: 50%;
+      transform: translate(-50%, -50%);
+
+      @include rtl {
+        transform: translate(50%, -50%);
+      }
+    }
+  }
+
+  @include m(vertical) {
+    @include e(scale) {
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  // ============================ scale-text ============================
+  @include e(scale-text) {
+    position: absolute;
+    font-size: css-var(slider-scale-text-font-size);
+    line-height: css-var(line-height-none);
+  }
+
+  @include m(horizontal) {
+    @include e(scale-text) {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  @include m(vertical) {
+    @include e(scale-text) {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  @include m(scale-top) {
+    padding-top: css-var(slider-padding-y-show-scale);
+
+    @include e(scale-text) {
+      bottom: css-var(slider-scale-text-offset);
+    }
+  }
+
+  @include m(scale-bottom) {
+    padding-bottom: css-var(slider-padding-y-show-scale);
+
+    @include e(scale-text) {
+      top: css-var(slider-scale-text-offset);
+    }
+  }
+
+  @include m(scale-left) {
+    padding-inline-start: css-var(slider-padding-x-show-scale);
+
+    @include e(scale-text) {
+      inset-inline-end: css-var(slider-scale-text-offset);
+    }
+  }
+
+  @include m(scale-right) {
+    padding-inline-end: css-var(slider-padding-x-show-scale);
+
+    @include e(scale-text) {
+      inset-inline-start: css-var(slider-scale-text-offset);
+    }
+  }
+
+  @include m(readonly) {
+    cursor: unset;
+  }
+
+  @include m(disabled) {
+    cursor: not-allowed;
+
+    @include e(fill) {
+      background: css-var(text-color-disabled);
+    }
+  }
+
+  @include m(readonly, disabled) {
+    @include e(thumb-container) {
+      touch-action: auto;
+    }
+  }
+}

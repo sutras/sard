@@ -1,0 +1,32 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(radio-popout-max-height)}: 320px;
+  #{css-var-name(radio-popout-toolbar-gap)}: css-var(size-xs);
+  #{css-var-name(radio-popout-toolbar-padding)}: css-var(size-xs) css-var(size);
+}
+// #endregion variables
+
+@include b(radio-popout) {
+  @include e(container) {
+    @include scroll-shadow;
+  }
+
+  @include e(scroll) {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: css-var(radio-popout-max-height);
+
+    @include m(searchable) {
+      height: css-var(radio-popout-max-height);
+    }
+  }
+
+  @include e(toolbar) {
+    display: flex;
+    flex-direction: column;
+    gap: css-var(radio-popout-toolbar-gap);
+    padding: css-var(radio-popout-toolbar-padding);
+  }
+}

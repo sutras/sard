@@ -1,0 +1,67 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(radio-group-column-gap)}: css-var(size-sm);
+  #{css-var-name(radio-group-row-gap)}: css-var(size-xs);
+
+  #{css-var-name(radio-icon-font-size)}: 20px;
+  #{css-var-name(radio-icon-color)}: css-var(text-color-fourth);
+  #{css-var-name(radio-icon-color-checked)}: css-var(color-primary);
+  #{css-var-name(radio-icon-color-disabled)}: css-var(text-color-disabled);
+
+  #{css-var-name(radio-label-margin-start)}: css-var(size-xs);
+}
+// #endregion variables
+
+@include b(radio) {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  @include e(icon) {
+    font-size: css-var(radio-icon-font-size);
+    line-height: css-var(line-height-none);
+    color: css-var(radio-icon-color);
+    transition: color css-var(duration);
+
+    @include m(checked) {
+      color: css-var(radio-icon-color-checked);
+    }
+  }
+
+  @include e(label) {
+    margin-inline-start: css-var(radio-label-margin-start);
+  }
+
+  @include m(readonly) {
+    cursor: unset;
+  }
+
+  @include m(disabled) {
+    cursor: css-var(cursor-disabled);
+
+    @include e(icon) {
+      color: css-var(radio-icon-color-disabled);
+    }
+
+    @include e(label) {
+      @include disabled-text;
+    }
+  }
+}
+
+@include b(radio-group) {
+  display: flex;
+  row-gap: css-var(radio-group-row-gap);
+  column-gap: css-var(radio-group-column-gap);
+
+  @include m(horizontal) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  @include m(vertical) {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,228 @@
+@use '../functions' as *;
+@use './dir' as *;
+
+@mixin border-base {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  touch-action: none;
+  opacity: 1;
+  content: '';
+  @content;
+}
+
+@mixin border-vertical-base {
+  @include border-base {
+    left: 0;
+    right: 0;
+    transform: scaleY(0.5);
+    @content;
+  }
+}
+
+@mixin border-horizontal-base {
+  @include border-base {
+    top: 0;
+    bottom: 0;
+    transform: scaleX(0.5);
+    @content;
+  }
+}
+
+@mixin border-top(
+  $color: css-var(border-color),
+  $style: css-var(border-style),
+  $width: css-var(border-width)
+) {
+  @include border-vertical-base {
+    top: 0;
+    border-top: $width $style $color;
+    transform-origin: top center;
+    @content;
+  }
+}
+
+@mixin border-bottom(
+  $color: css-var(border-color),
+  $style: css-var(border-style),
+  $width: css-var(border-width)
+) {
+  @include border-vertical-base {
+    bottom: 0;
+    border-bottom: $width $style $color;
+    transform-origin: bottom center;
+    @content;
+  }
+}
+
+@mixin border-left(
+  $color: css-var(border-color),
+  $style: css-var(border-style),
+  $width: css-var(border-width)
+) {
+  @include border-horizontal-base {
+    inset-inline-start: 0;
+    border-inline-start: $width $style $color;
+    transform-origin: left center;
+    @include rtl {
+      transform-origin: right center;
+    }
+    @content;
+  }
+}
+
+@mixin border-right(
+  $color: css-var(border-color),
+  $style: css-var(border-style),
+  $width: css-var(border-width)
+) {
+  @include border-horizontal-base {
+    inset-inline-end: 0;
+    border-inline-end: $width $style $color;
+    transform-origin: right center;
+    @include rtl {
+      transform-origin: left center;
+    }
+    @content;
+  }
+}
+
+@mixin border-cover-base($width: css-var(border-width), $style: css-var(border-style)) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 200%;
+  height: 200%;
+  border: $width $style transparent;
+  transform: scale(0.5);
+  transform-origin: 0 0;
+  pointer-events: none;
+  touch-action: none;
+  content: '';
+  @content;
+}
+
+@mixin border-top-right(
+  $color: css-var(border-color),
+  $style: css-var(border-style),
+  $width: css-var(border-width)
+) {
+  @include border-cover-base($width, $style);
+  border-top-color: $color;
+  border-right-color: $color;
+  @content;
+}
+
+@mixin border-bottom-right(
+  $color: css-var(border-color),
+  $style: css-var(border-style),
+  $width: css-var(border-width)
+) {
+  @include border-cover-base($width, $style);
+  border-bottom-color: $color;
+  border-right-color: $color;
+  @content;
+}
+
+@mixin border-top-left(
+  $color: css-var(border-color),
+  $style: css-var(border-style),
+  $width: css-var(border-width)
+) {
+  @include border-cover-base($width, $style);
+  border-top-color: $color;
+  border-left-color: $color;
+  @content;
+}
+
+@mixin border-bottom-left(
+  $color: css-var(border-color),
+  $style: css-var(border-style),
+  $width: css-var(border-width)
+) {
+  @include border-cover-base($width, $style);
+  border-bottom-color: $color;
+  border-left-color: $color;
+  @content;
+}
+
+@mixin border-horizontal(
+  $color: css-var(border-color),
+  $style: css-var(border-style),
+  $width: css-var(border-width)
+) {
+  @include border-cover-base($width, $style);
+  border-left-color: $color;
+  border-right-color: $color;
+  @content;
+}
+
+@mixin border-vertical(
+  $color: css-var(border-color),
+  $style: css-var(border-style),
+  $width: css-var(border-width)
+) {
+  @include border-cover-base($width, $style);
+  border-top-color: $color;
+  border-bottom-color: $color;
+  @content;
+}
+
+@mixin border-lack-top(
+  $color: css-var(border-color),
+  $style: css-var(border-style),
+  $width: css-var(border-width)
+) {
+  @include border-cover-base($width, $style);
+  border-left-color: $color;
+  border-right-color: $color;
+  border-bottom-color: $color;
+  @content;
+}
+
+@mixin border-lack-right(
+  $color: css-var(border-color),
+  $style: css-var(border-style),
+  $width: css-var(border-width)
+) {
+  @include border-cover-base($width, $style);
+  border-top-color: $color;
+  border-bottom-color: $color;
+  border-left-color: $color;
+  @content;
+}
+
+@mixin border-lack-bottom(
+  $color: css-var(border-color),
+  $style: css-var(border-style),
+  $width: css-var(border-width)
+) {
+  @include border-cover-base($width, $style);
+  border-top-color: $color;
+  border-right-color: $color;
+  border-left-color: $color;
+  @content;
+}
+
+@mixin border-lack-left(
+  $color: css-var(border-color),
+  $style: css-var(border-style),
+  $width: css-var(border-width)
+) {
+  @include border-cover-base($width, $style);
+  border-top-color: $color;
+  border-right-color: $color;
+  border-bottom-color: $color;
+  @content;
+}
+
+@mixin border-surround(
+  $color: css-var(border-color),
+  $style: css-var(border-style),
+  $width: css-var(border-width)
+) {
+  @include border-cover-base($width, $style);
+  border-color: $color;
+  @content;
+}

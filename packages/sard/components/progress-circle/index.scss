@@ -1,0 +1,79 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(progress-circle-size)}: 100px;
+  #{css-var-name(progress-circle-track-bg)}: css-var(fill-color-secondary);
+  #{css-var-name(progress-circle-fill-bg)}: css-var(color-primary);
+  #{css-var-name(progress-circle-text-font-size)}: css-var(font-size);
+  #{css-var-name(progress-circle-status-font-size)}: 18px;
+  #{css-var-name(progress-circle-color-success)}: css-var(color-success);
+  #{css-var-name(progress-circle-color-warning)}: css-var(color-warning);
+  #{css-var-name(progress-circle-color-error)}: css-var(color-danger);
+}
+// #endregion variables
+
+@include b(progress-circle) {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: css-var(progress-circle-size);
+  height: css-var(progress-circle-size);
+
+  @include e(graph) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  @include e(track) {
+    stroke: css-var(progress-circle-track-bg);
+  }
+
+  @include e(fill) {
+    stroke: css-var(progress-circle-fill-bg);
+    transition: stroke-dasharray css-var(duration) ease;
+  }
+
+  @include e(text) {
+    font-size: css-var(progress-circle-text-font-size);
+  }
+
+  @include e(status) {
+    font-size: css-var(progress-circle-status-font-size);
+  }
+
+  @include m(success) {
+    @include e(fill) {
+      stroke: css-var(progress-circle-color-success);
+    }
+
+    @include e(status) {
+      color: css-var(progress-circle-color-success);
+    }
+  }
+
+  @include m(warning) {
+    @include e(fill) {
+      stroke: css-var(progress-circle-color-warning);
+    }
+
+    @include e(status) {
+      color: css-var(progress-circle-color-warning);
+    }
+  }
+
+  @include m(error) {
+    @include e(fill) {
+      stroke: css-var(progress-circle-color-error);
+    }
+
+    @include e(status) {
+      color: css-var(progress-circle-color-error);
+    }
+  }
+}

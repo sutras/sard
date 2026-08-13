@@ -1,0 +1,67 @@
+@use '../style/base' as *;
+
+@include b(preview-image) {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+
+  @include e(overlay) {
+    @include is(preview-image) {
+      background: css-var(overlay-illegible);
+
+      @include is(immersive) {
+        background: css-var(black);
+      }
+    }
+  }
+
+  @include e(swiper) {
+    @include is(preview-image) {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  @include e(item) {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  @include e(puppet) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: top left;
+    transition: transform css-var(duration-fast);
+    pointer-events: none;
+    background-size: contain;
+  }
+
+  @include e(toolbar) {
+    position: absolute;
+    top: calc(css-var(status-bar-height) + 16px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    pointer-events: none;
+  }
+
+  @include e(indicator) {
+    font-size: css-var(font-size);
+    color: css-var(white);
+    text-shadow: 1px 1px css-var(black);
+    transition: opacity css-var(duration-fast);
+  }
+
+  @include is(immersive) {
+    @include e(indicator) {
+      opacity: 0;
+    }
+  }
+}

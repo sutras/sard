@@ -1,0 +1,58 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(popover-bg)}: css-var(bg-color-elevated);
+  #{css-var-name(popover-box-shadow)}: css-var(box-shadow-secondary);
+  #{css-var-name(popover-min-width)}: 80px;
+  #{css-var-name(popover-border-radius)}: css-var(border-radius);
+
+  #{css-var-name(popover-bg-dark)}: css-var(gray-800);
+  #{css-var-name(popover-color-dark)}: css-var(white);
+
+  #{css-var-name(popover-arrow-size)}: 10px;
+}
+// #endregion variables
+
+@include b(popover) {
+  position: fixed;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  overflow: visible;
+  border-radius: css-var(popover-border-radius);
+  background: css-var(popover-bg);
+  box-shadow: css-var(popover-box-shadow);
+  touch-action: none;
+
+  @include e(content) {
+    position: relative;
+    z-index: 1;
+  }
+
+  @include m(vertical) {
+    @include e(content) {
+      min-width: css-var(popover-min-width);
+    }
+  }
+
+  @include e(arrow) {
+    position: absolute;
+    width: css-var(popover-arrow-size);
+    height: css-var(popover-arrow-size);
+    margin-inline-start: calc(css-var(popover-arrow-size) / 2 * -1);
+    margin-top: calc(css-var(popover-arrow-size) / 2 * -1);
+    transform: rotate(45deg);
+    background-color: inherit;
+  }
+
+  @include m(light) {
+    background: css-var(popover-bg);
+  }
+
+  @include m(dark) {
+    color: css-var(popover-color-dark);
+    background: css-var(popover-bg-dark);
+  }
+}

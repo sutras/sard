@@ -1,0 +1,114 @@
+@use '../style/base.scss' as *;
+
+@include b(motion) {
+  &-fade {
+    &-enter-from,
+    &-leave-to {
+      opacity: 0;
+    }
+
+    &-enter-to,
+    &-leave-from {
+      opacity: 1;
+    }
+
+    &-enter-active,
+    &-leave-active {
+      transition: opacity css-var(duration) ease-in-out;
+    }
+
+    &-leave-active {
+      pointer-events: none;
+    }
+  }
+
+  &-zoom {
+    &-enter-from {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    &-leave-to {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    &-enter-active {
+      transition:
+        transform css-var(duration) ease-out,
+        opacity css-var(duration) ease-out;
+    }
+    &-leave-active {
+      transition:
+        transform css-var(duration) ease-out,
+        opacity css-var(duration) ease-in;
+      pointer-events: none;
+    }
+  }
+
+  &-wide-zoom {
+    &-enter-from,
+    &-leave-to {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+    &-enter-active {
+      transition:
+        transform css-var(duration-fast) ease-out,
+        opacity css-var(duration-fast) ease-out;
+    }
+    &-leave-active {
+      transition:
+        transform css-var(duration-fast) ease-out,
+        opacity css-var(duration-fast) ease-in;
+      pointer-events: none;
+    }
+  }
+
+  &-slide {
+    &-top {
+      &-enter-from,
+      &-leave-to {
+        transform: translate3d(0, -100%, 0);
+      }
+    }
+
+    &-right {
+      &-enter-from,
+      &-leave-to {
+        transform: translate3d(100%, 0, 0);
+      }
+    }
+
+    &-bottom {
+      &-enter-from,
+      &-leave-to {
+        transform: translate3d(0, 100%, 0);
+      }
+    }
+
+    &-left {
+      &-enter-from,
+      &-leave-to {
+        transform: translate3d(-100%, 0, 0);
+      }
+    }
+
+    &-top,
+    &-right,
+    &-bottom,
+    &-left {
+      &-enter-to,
+      &-leave-from {
+        transform: translate3d(0, 0, 0);
+      }
+
+      &-enter-active {
+        transition: transform css-var(duration) ease-out;
+      }
+
+      &-leave-active {
+        transition: transform css-var(duration) ease-in;
+        pointer-events: none;
+      }
+    }
+  }
+}

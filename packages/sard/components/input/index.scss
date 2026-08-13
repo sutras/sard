@@ -1,0 +1,218 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(input-padding-y)}: 5px;
+  #{css-var-name(input-padding-y-borderless)}: 6px;
+  #{css-var-name(input-padding-x)}: css-var(size-sm);
+  #{css-var-name(input-gap)}: css-var(size-xs);
+  #{css-var-name(input-border-radius)}: css-var(border-radius);
+  #{css-var-name(input-border-color)}: css-var(border-color);
+  #{css-var-name(input-border-color-focused)}: css-var(color-primary);
+  #{css-var-name(input-bg)}: transparent;
+  #{css-var-name(input-bg-disabled)}: css-var(bg-color-disabled);
+  #{css-var-name(input-duration)}: css-var(duration);
+
+  #{css-var-name(input-control-height)}: 24px;
+  #{css-var-name(input-control-font-size)}: css-var(font-size);
+  #{css-var-name(input-control-line-height)}: css-var(line-height-normal);
+  #{css-var-name(input-control-color-disabled)}: css-var(text-color-disabled);
+
+  #{css-var-name(input-placeholder-color)}: css-var(text-color-fourth);
+
+  #{css-var-name(input-append-gap)}: css-var(size-xs);
+
+  #{css-var-name(input-clear-font-size)}: css-var(size);
+  #{css-var-name(input-clear-color)}: css-var(text-color-fourth);
+
+  #{css-var-name(input-eye-font-size)}: css-var(size);
+  #{css-var-name(input-eye-color)}: css-var(text-color-fourth);
+
+  #{css-var-name(input-count-font-size)}: css-var(font-size-sm);
+  #{css-var-name(input-count-line-height)}: css-var(line-height-tight);
+  #{css-var-name(input-count-color)}: css-var(text-color-tertiary);
+  #{css-var-name(input-count-margin-top)}: css-var(size-2xs);
+}
+// #endregion variables
+
+@include b(input) {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: css-var(input-gap);
+  padding: css-var(input-padding-y) css-var(input-padding-x);
+  border: 1px solid css-var(input-border-color);
+  border-radius: css-var(input-border-radius);
+  font-size: css-var(input-control-font-size);
+  line-height: css-var(input-control-line-height);
+  transition: css-var(input-duration);
+
+  @include m(borderless) {
+    padding-top: css-var(input-padding-y-borderless);
+    padding-bottom: css-var(input-padding-y-borderless);
+    border-width: 0;
+  }
+
+  @include m(inlaid) {
+    padding: 0;
+    border-width: 0;
+
+    @include e(tools) {
+      min-width: 0;
+      margin-inline-end: 0;
+    }
+
+    @include e(append) {
+      margin-inline-end: 0;
+    }
+  }
+
+  @include is(focused) {
+    border-color: css-var(input-border-color-focused);
+    z-index: 1;
+  }
+
+  @include is(disabled) {
+    background: css-var(input-bg-disabled);
+  }
+
+  @include e(control) {
+    flex: 1;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    font-size: inherit;
+    line-height: inherit;
+    background: css-var(input-bg);
+    appearance: none;
+    outline: none;
+    text-align: inherit;
+    color: inherit;
+
+    &:is(input) {
+      height: css-var(input-control-height);
+
+      &::-ms-reveal {
+        display: none;
+      }
+      &::-webkit-search-cancel-button {
+        display: none;
+      }
+    }
+
+    &:is(textarea) {
+      min-height: css-var(input-control-height);
+      resize: none;
+    }
+
+    &::placeholder {
+      color: css-var(input-placeholder-color);
+    }
+  }
+
+  @include e(prepend, append) {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    flex: none;
+    line-height: 1;
+  }
+
+  @include e(append) {
+    gap: css-var(input-append-gap);
+  }
+
+  @include e(clear) {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-self: stretch;
+    justify-content: center;
+    align-items: center;
+    font-size: css-var(input-clear-font-size);
+    color: css-var(input-clear-color);
+    cursor: pointer;
+
+    @include expand-touch-range(1.5, 1);
+  }
+
+  @include e(eye) {
+    position: relative;
+    display: flex;
+    align-self: stretch;
+    justify-content: center;
+    align-items: center;
+    font-size: css-var(input-eye-font-size);
+    color: css-var(input-eye-color);
+    cursor: pointer;
+
+    @include expand-touch-range(1.5, 1);
+  }
+
+  @include e(count) {
+    display: flex;
+    align-items: center;
+    font-size: css-var(input-count-font-size);
+    line-height: css-var(input-count-line-height);
+    color: css-var(input-count-color);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  @include m(textarea) {
+    @include e(count) {
+      position: absolute;
+      top: 100%;
+      margin-top: css-var(input-count-margin-top);
+      inset-inline-end: 0;
+    }
+  }
+
+  @include is(disabled) {
+    @include e(control) {
+      color: css-var(input-control-color-disabled);
+    }
+  }
+
+  @include is(readonly) {
+    @include e(control) {
+      pointer-events: none;
+    }
+  }
+
+  // ============================ 紧凑模式 ============================
+  @include m(compact-horizontal) {
+    width: auto;
+    flex: 0 1 auto;
+
+    &:not(:first-child) {
+      margin-inline-start: -1px;
+      @include not-rtl {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      @include rtl {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+
+    &:not(:last-child) {
+      @include not-rtl {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      @include rtl {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+  }
+
+  @include m(compact-block) {
+    flex: 1 1 auto;
+  }
+}

@@ -1,0 +1,61 @@
+@use '../style/base' as *;
+
+// #region variables
+// #endregion variables
+
+@include b(marquee) {
+  overflow: hidden;
+
+  @include e(wrapper) {
+    flex: none;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-play-state: paused;
+  }
+
+  @include m(vertical) {
+    display: block;
+    @include e(wrapper) {
+      display: flex;
+      flex-direction: column;
+      animation-name: #{bem-ns(marquee-scroll-vertical)};
+    }
+    @include e(content) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  @include m(horizontal) {
+    display: flex;
+    @include e(wrapper) {
+      display: inline-flex;
+      animation-name: #{bem-ns(marquee-scroll-horizontal)};
+
+      @include rtl {
+        animation-name: #{bem-ns(marquee-scroll-horizontal-rtl)};
+      }
+    }
+    @include e(content) {
+      display: inline-flex;
+    }
+  }
+
+  @keyframes #{bem-ns(marquee-scroll-vertical)} {
+    100% {
+      transform: translate3d(0, -50%, 0);
+    }
+  }
+
+  @keyframes #{bem-ns(marquee-scroll-horizontal)} {
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @keyframes #{bem-ns(marquee-scroll-horizontal-rtl)} {
+    100% {
+      transform: translate3d(50%, 0, 0);
+    }
+  }
+}

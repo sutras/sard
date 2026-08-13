@@ -1,0 +1,114 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(picker-view-height)}: 240px;
+
+  #{css-var-name(picker-view-font-size)}: css-var(font-size-lg);
+  #{css-var-name(picker-view-color)}: css-var(text-color-primary);
+
+  #{css-var-name(picker-view-indicator-height)}: css-var(content-height-lg);
+  #{css-var-name(picker-view-indicator-border-color)}: css-var(border-color);
+
+  #{css-var-name(picker-view-mask-bg-image)}:
+    linear-gradient(
+      to bottom,
+      rgba(css-var(bg-color-elevated-rgb), 0.95),
+      rgba(css-var(bg-color-elevated-rgb), 0.6)
+    ),
+    linear-gradient(
+      to top,
+      rgba(css-var(bg-color-elevated-rgb), 0.95),
+      rgba(css-var(bg-color-elevated-rgb), 0.6)
+    );
+}
+// #endregion variables
+
+@include b(picker-view) {
+  height: css-var(picker-view-height);
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+
+  @include e(wrapper) {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+  }
+}
+
+@include b(picker-view-column) {
+  flex: 1;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+
+  @include e(group) {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  @include e(indicator, mask) {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  @include e(mask) {
+    top: 0;
+    height: 100%;
+    margin: 0 auto;
+    background-image: css-var(picker-view-mask-bg-image);
+    background-position: top, bottom;
+    background-size: 100% 102px;
+    background-repeat: no-repeat;
+    transform: translateZ(0);
+  }
+
+  @include e(indicator) {
+    height: css-var(picker-view-indicator-height);
+    top: 50%;
+    transform: translateY(-50%);
+
+    &::before,
+    &::after {
+      content: ' ';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+    }
+
+    &::before {
+      top: 0;
+      border-top: 1px solid css-var(picker-view-indicator-border-color);
+      transform-origin: 0 0;
+      transform: scaleY(0.5);
+    }
+
+    &::after {
+      bottom: 0;
+      border-bottom: 1px solid css-var(picker-view-indicator-border-color);
+      transform-origin: 0 100%;
+      transform: scaleY(0.5);
+    }
+  }
+
+  @include e(content) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    will-change: transform;
+    padding: 102px 0;
+    cursor: pointer;
+
+    > * {
+      height: var(--picker-view-indicator-height);
+      overflow: hidden;
+    }
+  }
+}

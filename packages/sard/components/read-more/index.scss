@@ -1,0 +1,52 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(read-more-shadow-max-height)}: 80%;
+  #{css-var-name(read-more-shadow-height)}: 100px;
+  #{css-var-name(read-more-shadow-bg)}: linear-gradient(
+    to bottom,
+    rgba(css-var(bg-color-container-rgb), 0),
+    rgba(css-var(bg-color-container-rgb), 1) 95%
+  );
+}
+// #endregion variables
+
+@include b(read-more) {
+  @include e(content) {
+    position: relative;
+  }
+
+  @include e(shadow) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: css-var(read-more-shadow-max-height);
+    height: css-var(read-more-shadow-height);
+    background: css-var(read-more-shadow-bg);
+    display: none;
+  }
+
+  @include e(toggle) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+  }
+
+  @include e(toggle-btn) {
+    gap: 4px;
+  }
+
+  @include m(close) {
+    @include e(content) {
+      overflow: hidden;
+    }
+
+    @include e(shadow) {
+      display: block;
+    }
+  }
+}

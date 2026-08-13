@@ -1,0 +1,128 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(fab-z-index)}: css-var(z-index-secondary);
+  #{css-var-name(fab-right)}: css-var(size-xl);
+  #{css-var-name(fab-bottom)}: css-var(size-4xl);
+  #{css-var-name(fab-mask)}: css-var(overlay-illegible);
+
+  #{css-var-name(fab-item-gap)}: css-var(size);
+  #{css-var-name(fab-item-opacity-active)}: css-var(opacity-active);
+
+  #{css-var-name(fab-item-btn-size)}: css-var(size-4xl);
+  #{css-var-name(fab-item-btn-font-size)}: css-var(size-xl);
+  #{css-var-name(fab-item-btn-color)}: css-var(white);
+  #{css-var-name(fab-item-btn-bg)}: css-var(color-primary);
+  #{css-var-name(fab-item-btn-box-shadow)}: css-var(box-shadow-secondary);
+
+  #{css-var-name(fab-item-name-gap)}: css-var(size-xs);
+  #{css-var-name(fab-item-name-font-size)}: css-var(font-size);
+  #{css-var-name(fab-item-name-color)}: css-var(white);
+}
+// #endregion variables
+
+@include b(fab) {
+  position: fixed;
+  right: css-var(fab-right);
+  bottom: css-var(fab-bottom);
+  z-index: css-var(fab-z-index);
+  opacity: 0;
+  touch-action: none;
+  direction: ltr;
+  -webkit-user-select: none;
+  user-select: none;
+
+  @include e(overlay) {
+    @include is(fab) {
+      background: css-var(fab-mask);
+    }
+  }
+
+  @include e(content) {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+  }
+
+  @include m(draggable) {
+    top: 0;
+    left: 0;
+    right: auto;
+    bottom: auto;
+  }
+
+  @include m(top) {
+    @include e(content) {
+      top: calc(100% + css-var(fab-item-gap));
+    }
+  }
+
+  @include m(bottom) {
+    @include e(content) {
+      bottom: calc(100% + css-var(fab-item-gap));
+    }
+  }
+
+  @include m(left) {
+    @include e(content) {
+      left: 0;
+      align-items: flex-start;
+    }
+  }
+
+  @include m(right) {
+    @include e(content) {
+      right: 0;
+      align-items: flex-end;
+    }
+  }
+
+  @include m(initialized) {
+    opacity: 1;
+  }
+
+  @include m(animated) {
+    transition: transform css-var(duration);
+  }
+}
+
+@include b(fab-item) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: css-var(fab-item-name-gap);
+  cursor: pointer;
+
+  &:active {
+    opacity: css-var(fab-item-opacity-active);
+  }
+
+  @include m(left) {
+    flex-direction: row-reverse;
+  }
+
+  &:not(:first-child) {
+    margin-top: css-var(fab-item-gap);
+  }
+
+  @include e(name) {
+    font-size: css-var(fab-item-name-font-size);
+    color: css-var(fab-item-name-color);
+    white-space: nowrap;
+  }
+
+  @include e(btn) {
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: css-var(fab-item-btn-size);
+    height: css-var(fab-item-btn-size);
+    border-radius: css-var(border-radius-full);
+    font-size: css-var(fab-item-btn-font-size);
+    color: css-var(fab-item-btn-color);
+    background: css-var(fab-item-btn-bg);
+    box-shadow: css-var(fab-item-btn-box-shadow);
+  }
+}

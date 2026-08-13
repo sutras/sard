@@ -1,0 +1,69 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(text-font-size-sm)}: css-var(font-size-sm);
+  #{css-var-name(text-font-size)}: css-var(font-size);
+  #{css-var-name(text-font-size-lg)}: css-var(font-size-lg);
+}
+// #endregion variables
+
+@include b(text) {
+  @include m(default) {
+    color: css-var(text-color-primary);
+  }
+
+  @include m(secondary) {
+    color: css-var(text-color-secondary);
+  }
+
+  @include m(tertiary) {
+    color: css-var(text-color-tertiary);
+  }
+
+  @include m(fourth) {
+    color: css-var(text-color-fourth);
+  }
+
+  @include m(primary) {
+    color: css-var(color-primary);
+  }
+
+  @include m(success) {
+    color: css-var(color-success);
+  }
+
+  @include m(warning) {
+    color: css-var(color-warning);
+  }
+
+  @include m(danger) {
+    color: css-var(color-danger);
+  }
+
+  @include m(small) {
+    font-size: css-var(text-font-size-sm);
+  }
+
+  @include m(medium) {
+    font-size: css-var(text-font-size);
+  }
+
+  @include m(large) {
+    font-size: css-var(text-font-size-lg);
+  }
+
+  @include m(truncated) {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @include m(line-clamp) {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

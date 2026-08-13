@@ -1,0 +1,65 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(descriptions-label-color)}: css-var(text-color-tertiary);
+  #{css-var-name(descriptions-label-font-size)}: css-var(font-size);
+  #{css-var-name(descriptions-label-bg)}: css-var(fill-color-fourth);
+  #{css-var-name(descriptions-content-color)}: css-var(text-color-primary);
+  #{css-var-name(descriptions-content-font-size)}: css-var(font-size);
+
+  #{css-var-name(descriptions-item-padding-y)}: css-var(size-xs);
+  #{css-var-name(descriptions-item-padding-x)}: css-var(size-sm);
+
+  #{css-var-name(descriptions-border-color)}: css-var(border-color);
+}
+// #endregion variables
+
+@include b(descriptions) {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+
+  @include e(item-label) {
+    padding-bottom: css-var(descriptions-item-padding-y);
+    padding-inline-end: css-var(descriptions-item-padding-x);
+    color: css-var(descriptions-label-color);
+    font-size: css-var(descriptions-label-font-size);
+    word-break: break-word;
+
+    @include is(bordered) {
+      padding: css-var(descriptions-item-padding-y) css-var(descriptions-item-padding-x);
+      border: css-var(border-width) solid css-var(descriptions-border-color);
+      background: css-var(descriptions-label-bg);
+    }
+
+    @include has(colon) {
+      &::after {
+        content: ':';
+      }
+    }
+  }
+
+  @include e(item-content) {
+    padding-bottom: css-var(descriptions-item-padding-y);
+    &:not(:last-child) {
+      padding-inline-end: css-var(descriptions-item-padding-x);
+    }
+    color: css-var(descriptions-content-color);
+    font-size: css-var(descriptions-content-font-size);
+    word-break: break-word;
+
+    @include is(bordered) {
+      padding: css-var(descriptions-item-padding-y) css-var(descriptions-item-padding-x);
+      border: css-var(border-width) solid css-var(descriptions-border-color);
+    }
+  }
+
+  tr:last-child {
+    @include e(item-label, item-content) {
+      @include is-not(bordered) {
+        padding-bottom: 0;
+      }
+    }
+  }
+}

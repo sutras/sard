@@ -1,0 +1,224 @@
+@use 'sass:math';
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(calendar-week-item-height)}: css-var(size-2xl);
+  #{css-var-name(calendar-week-item-font-size)}: css-var(font-size);
+  #{css-var-name(calendar-week-item-color)}: css-var(text-color-primary);
+
+  #{css-var-name(calendar-month-padding)}: css-var(size-2xs);
+  #{css-var-name(calendar-month-title-height)}: css-var(content-height);
+  #{css-var-name(calendar-month-title-font-size)}: css-var(font-size);
+  #{css-var-name(calendar-month-title-font-weight)}: css-var(font-weight-bold);
+  #{css-var-name(calendar-month-title-color)}: css-var(text-color-primary);
+
+  #{css-var-name(calendar-days-row-gap)}: css-var(size-2xs);
+  #{css-var-name(calendar-days-column-gap)}: 0;
+
+  #{css-var-name(calendar-day-height)}: 50px;
+  #{css-var-name(calendar-day-font-size)}: css-var(font-size);
+  #{css-var-name(calendar-day-border-radius)}: css-var(border-radius);
+  #{css-var-name(calendar-day-color-selected)}: css-var(white);
+  #{css-var-name(calendar-day-color-middle)}: css-var(color-primary);
+  #{css-var-name(calendar-day-color-disabled)}: css-var(text-color-disabled);
+  #{css-var-name(calendar-day-bg-selected)}: css-var(color-primary);
+  #{css-var-name(calendar-day-bg-middle)}: rgba(
+    css-var(color-primary-rgb),
+    css-var(opacity-theme-bg)
+  );
+
+  #{css-var-name(calendar-day-top-top)}: css-var(size-2xs);
+  #{css-var-name(calendar-day-top-font-size)}: css-var(font-size-xs);
+  #{css-var-name(calendar-day-top-line-height)}: css-var(line-height-tight);
+
+  #{css-var-name(calendar-day-bottom-bottom)}: css-var(size-2xs);
+  #{css-var-name(calendar-day-bottom-font-size)}: css-var(font-size-xs);
+  #{css-var-name(calendar-day-bottom-line-height)}: css-var(line-height-tight);
+
+  #{css-var-name(calendar-mark-font-size)}: 160px;
+  #{css-var-name(calendar-mark-color)}: css-var(fill-color-fourth);
+}
+// #endregion variables
+
+@include b(calendar) {
+  overflow: hidden;
+
+  @include m(no-scroll) {
+    touch-action: pan-x;
+  }
+
+  @include e(header) {
+    position: relative;
+    z-index: 1;
+
+    &::after {
+      @include border-bottom(css-var(border-color));
+    }
+  }
+
+  @include e(toolbar) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @include e(prev-month, next-month) {
+    font-size: 16px;
+    @include rtl-flip;
+  }
+
+  @include e(week) {
+    display: flex;
+    align-items: center;
+  }
+
+  @include e(week-item) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    height: css-var(calendar-week-item-height);
+    font-size: css-var(calendar-week-item-font-size);
+    color: css-var(calendar-week-item-color);
+  }
+
+  @include e(body) {
+    position: relative;
+  }
+
+  @include m(several) {
+    @include e(body) {
+      height: 360px;
+
+      @include scroll-shadow;
+    }
+    @include e(scroll) {
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
+}
+
+@include b(calendar) {
+  @include e(month) {
+    position: relative;
+    padding: css-var(calendar-month-padding);
+  }
+
+  @include e(month-title) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: css-var(calendar-month-title-height);
+    font-size: css-var(calendar-month-title-font-size);
+    font-weight: css-var(calendar-month-title-font-weight);
+    color: css-var(calendar-month-title-color);
+  }
+
+  @include e(days) {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    row-gap: css-var(calendar-days-row-gap);
+    column-gap: css-var(calendar-days-column-gap);
+  }
+
+  @include e(day) {
+    position: relative;
+    z-index: 1;
+    height: css-var(calendar-day-height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: css-var(calendar-day-font-size);
+    line-height: css-var(calendar-day-height);
+    cursor: pointer;
+
+    @include m(today) {
+      font-weight: css-var(font-weight-bold);
+    }
+
+    @include m(disabled) {
+      color: css-var(calendar-day-color-disabled);
+      cursor: not-allowed;
+    }
+
+    @include m(selected, same) {
+      border-radius: css-var(calendar-day-border-radius);
+      color: css-var(calendar-day-color-selected);
+      background: css-var(calendar-day-bg-selected);
+    }
+
+    @include m(start, end) {
+      color: css-var(calendar-day-color-selected);
+      background: css-var(calendar-day-bg-selected);
+    }
+
+    @include m(start) {
+      @include not-rtl {
+        border-top-left-radius: css-var(calendar-day-border-radius);
+        border-bottom-left-radius: css-var(calendar-day-border-radius);
+      }
+      @include rtl {
+        border-top-right-radius: css-var(calendar-day-border-radius);
+        border-bottom-right-radius: css-var(calendar-day-border-radius);
+      }
+    }
+
+    @include m(end) {
+      @include not-rtl {
+        border-top-right-radius: css-var(calendar-day-border-radius);
+        border-bottom-right-radius: css-var(calendar-day-border-radius);
+      }
+      @include rtl {
+        border-top-left-radius: css-var(calendar-day-border-radius);
+        border-bottom-left-radius: css-var(calendar-day-border-radius);
+      }
+    }
+
+    @include m(middle) {
+      color: css-var(calendar-day-color-middle);
+      background: css-var(calendar-day-bg-middle);
+    }
+  }
+
+  @include e(day-top, day-bottom) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @include e(day-top) {
+    top: css-var(calendar-day-top-top);
+    font-size: css-var(calendar-day-top-font-size);
+    line-height: css-var(calendar-day-top-line-height);
+  }
+
+  @include e(day-bottom) {
+    bottom: css-var(calendar-day-bottom-bottom);
+    font-size: css-var(calendar-day-bottom-font-size);
+    line-height: css-var(calendar-day-bottom-line-height);
+  }
+
+  @include e(mark) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: css-var(calendar-mark-font-size);
+    color: css-var(calendar-mark-color);
+    pointer-events: none;
+  }
+}

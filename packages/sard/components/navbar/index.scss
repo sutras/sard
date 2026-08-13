@@ -1,0 +1,144 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(navbar-height)}: css-var(content-height);
+  #{css-var-name(navbar-bg)}: css-var(bg-color-container);
+  #{css-var-name(navbar-z-index)}: css-var(z-index-secondary);
+
+  #{css-var-name(navbar-title-max-width)}: 60%;
+  #{css-var-name(navbar-title-font-size)}: css-var(font-size-lg);
+  #{css-var-name(navbar-title-color)}: css-var(text-color-emphasis);
+  #{css-var-name(navbar-back-color)}: css-var(text-color-secondary);
+
+  #{css-var-name(navbar-item-padding-x)}: css-var(size-xs);
+  #{css-var-name(navbar-item-gap)}: css-var(size-2xs);
+  #{css-var-name(navbar-item-font-size)}: css-var(font-size-lg);
+  #{css-var-name(navbar-item-icon-size)}: css-var(size-lg);
+  #{css-var-name(navbar-item-color)}: css-var(color-primary);
+  #{css-var-name(navbar-item-opacity-active)}: css-var(opacity-active);
+
+  #{css-var-name(navbar-start-gap)}: css-var(size-2xs);
+  #{css-var-name(navbar-end-gap)}: css-var(size-2xs);
+}
+// #endregion variables
+
+@include b(navbar) {
+  background: css-var(navbar-bg);
+
+  @include m(fixed) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: css-var(navbar-z-index);
+  }
+
+  @include e(wrapper) {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: css-var(navbar-height);
+
+    @include is(divider) {
+      &::after {
+        @include border-bottom(css-var(border-color));
+      }
+    }
+  }
+
+  @include e(content) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  @include e(title) {
+    display: block;
+    width: 100%;
+    max-width: css-var(navbar-title-max-width);
+    font-size: css-var(navbar-title-font-size);
+    font-weight: css-var(font-weight-bold);
+    text-align: center;
+    color: css-var(navbar-title-color);
+    @include ellipsis;
+  }
+
+  @include e(start, end) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    flex: none;
+    align-items: stretch;
+    height: 100%;
+  }
+
+  @include e(start) {
+    inset-inline-start: 0;
+    padding-inline-start: css-var(navbar-start-gap);
+  }
+
+  @include e(end) {
+    inset-inline-end: 0;
+    padding-inline-end: css-var(navbar-end-gap);
+  }
+
+  @include m(custom) {
+    @include e(content) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  @include m(flow) {
+    @include e(title) {
+      max-width: 100%;
+      text-align: start;
+    }
+
+    @include e(start, end) {
+      position: relative;
+    }
+  }
+}
+
+@include b(navbar) {
+  @include e(item) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: css-var(navbar-item-gap);
+    padding: 0 css-var(navbar-item-padding-x);
+    font-size: css-var(navbar-item-font-size);
+    color: css-var(navbar-item-color);
+    cursor: pointer;
+    line-height: 1;
+
+    &:active {
+      opacity: css-var(navbar-item-opacity-active);
+    }
+
+    @include e(item-icon) {
+      font-size: css-var(navbar-item-icon-size);
+    }
+
+    @include is(back) {
+      color: css-var(navbar-back-color);
+
+      @include e(item-icon) {
+        @include rtl-flip;
+      }
+    }
+  }
+
+  @include m(reverse) {
+    flex-direction: row-reverse;
+  }
+}

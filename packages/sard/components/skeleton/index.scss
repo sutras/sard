@@ -1,0 +1,93 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(skeleton-bg)}: css-var(fill-color-secondary);
+  #{css-var-name(skeleton-radius)}: css-var(border-radius-sm);
+  #{css-var-name(skeleton-highlight-color)}: rgba(0, 0, 0, 0.08);
+
+  #{css-var-name(skeleton-block-height)}: css-var(size);
+
+  #{css-var-name(skeleton-avatar-size)}: css-var(size-2xl);
+  #{css-var-name(skeleton-avatar-margin-end)}: css-var(size);
+
+  #{css-var-name(skeleton-title-width)}: 40%;
+  #{css-var-name(skeleton-title-height)}: css-var(size-lg);
+  #{css-var-name(skeleton-title-margin-bottom)}: css-var(size);
+
+  #{css-var-name(skeleton-row-last-width)}: 60%;
+  #{css-var-name(skeleton-row-gap)}: css-var(size-sm);
+}
+
+@include theme-dark {
+  #{css-var-name(skeleton-highlight-color)}: rgba(255, 255, 255, 0.15);
+}
+// #endregion variables
+
+@include b(skeleton) {
+  display: flex;
+  flex-wrap: nowrap;
+  column-gap: css-var(skeleton-avatar-margin-end);
+
+  @include e(block) {
+    width: 100%;
+    height: css-var(skeleton-block-height);
+    background: css-var(skeleton-bg);
+    border-radius: css-var(skeleton-radius);
+  }
+
+  @include e(avatar) {
+    flex: none;
+    width: css-var(skeleton-avatar-size);
+    height: css-var(skeleton-avatar-size);
+    border-radius: css-var(skeleton-radius);
+  }
+
+  @include e(title) {
+    width: css-var(skeleton-title-width);
+    height: css-var(skeleton-title-height);
+  }
+
+  @include e(row) {
+    &:last-child {
+      width: css-var(skeleton-row-last-width);
+    }
+  }
+
+  @include e(content) {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    row-gap: css-var(skeleton-title-margin-bottom);
+  }
+
+  @include e(paragraph) {
+    display: flex;
+    flex-direction: column;
+    row-gap: css-var(skeleton-row-gap);
+  }
+
+  @include m(round) {
+    border-radius: css-var(border-radius-full);
+  }
+
+  @include m(animated) {
+    background-image: linear-gradient(
+      90deg,
+      transparent 25%,
+      css-var(skeleton-highlight-color) 37%,
+      transparent 50%
+    );
+    background-size: 400% 100%;
+    animation: #{bem-ns(skeleton-animated)} 1.2s ease infinite;
+  }
+
+  @keyframes #{bem-ns(skeleton-animated)} {
+    0% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0 50%;
+    }
+  }
+}

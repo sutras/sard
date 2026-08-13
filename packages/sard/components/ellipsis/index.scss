@@ -1,0 +1,52 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(ellipsis-action-margin-start)}: css-var(size-2xs);
+  #{css-var-name(ellipsis-action-color)}: css-var(color-primary);
+}
+// #endregion variables
+
+@include b(ellipsis) {
+  position: relative;
+
+  @include e(content) {
+    display: block;
+    white-space: pre-wrap;
+    word-break: break-all;
+
+    @include m(clamp) {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+  @include e(action) {
+    position: relative;
+    display: inline;
+    margin-inline-start: css-var(ellipsis-action-margin-start);
+    color: css-var(ellipsis-action-color);
+    line-height: inherit;
+    cursor: pointer;
+    vertical-align: bottom;
+    white-space: nowrap;
+  }
+
+  @include e(measure) {
+    position: absolute;
+    display: block;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    white-space: pre-wrap;
+    word-break: break-all;
+
+    @include m(line) {
+      white-space: nowrap;
+    }
+  }
+}

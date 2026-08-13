@@ -1,0 +1,264 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(steps-step-font-size)}: css-var(font-size);
+  #{css-var-name(steps-step-opacity-active)}: css-var(opacity-active);
+  #{css-var-name(steps-step-min-height)}: 36px;
+
+  #{css-var-name(steps-icon-color-finish)}: css-var(color-primary);
+  #{css-var-name(steps-icon-color-process)}: css-var(color-primary);
+  #{css-var-name(steps-icon-color-wait)}: css-var(text-color-tertiary);
+  #{css-var-name(steps-icon-color-error)}: css-var(color-danger);
+
+  #{css-var-name(steps-text-color-finish)}: css-var(text-color-primary);
+  #{css-var-name(steps-text-color-process)}: css-var(color-primary);
+  #{css-var-name(steps-text-color-wait)}: css-var(text-color-tertiary);
+  #{css-var-name(steps-text-color-error)}: css-var(color-danger);
+
+  #{css-var-name(steps-header-padding-y)}: css-var(size-2xs);
+  #{css-var-name(steps-header-padding-x)}: css-var(size-sm);
+  #{css-var-name(steps-header-top-vertical)}: 4px;
+
+  #{css-var-name(steps-line-thickness)}: 1px;
+  #{css-var-name(steps-line-margin)}: 3px;
+  #{css-var-name(steps-line-color)}: css-var(border-color);
+  #{css-var-name(steps-line-color-active)}: css-var(color-primary);
+
+  #{css-var-name(steps-icon-font-size)}: css-var(font-size);
+
+  #{css-var-name(steps-body-padding-x)}: css-var(size-xs);
+  #{css-var-name(steps-body-padding-y)}: css-var(size-2xs);
+
+  #{css-var-name(steps-name-font-size)}: css-var(font-size);
+
+  #{css-var-name(steps-description-margin-top)}: css-var(size-2xs);
+  #{css-var-name(steps-description-font-size)}: css-var(font-size-sm);
+  #{css-var-name(steps-description-color)}: css-var(text-color-tertiary);
+}
+// #endregion variables
+
+@include b(steps) {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+
+  @include m(vertical) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@include b(step) {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  font-size: css-var(steps-step-font-size);
+
+  &:first-child {
+    @include e(line-before) {
+      opacity: 0;
+    }
+  }
+
+  &:last-child {
+    flex: none;
+    white-space: nowrap;
+
+    @include e(line) {
+      display: none;
+    }
+
+    @include e(line-after) {
+      opacity: 0;
+    }
+  }
+
+  @include m(behind) {
+    @include e(line) {
+      background: css-var(steps-line-color-active);
+    }
+  }
+
+  @include m(self) {
+    @include e(line-before) {
+      background: css-var(steps-line-color-active);
+    }
+  }
+
+  @include m(finish) {
+    @include e(icon) {
+      color: css-var(steps-icon-color-finish);
+    }
+
+    @include e(body) {
+      color: css-var(steps-text-color-finish);
+    }
+  }
+
+  @include m(process) {
+    @include e(icon) {
+      color: css-var(steps-icon-color-process);
+    }
+
+    @include e(body) {
+      color: css-var(steps-text-color-process);
+    }
+  }
+
+  @include m(wait) {
+    @include e(icon) {
+      color: css-var(steps-icon-color-wait);
+    }
+
+    @include e(body) {
+      color: css-var(steps-text-color-wait);
+    }
+  }
+
+  @include m(error) {
+    @include e(icon) {
+      color: css-var(steps-icon-color-error);
+    }
+
+    @include e(body) {
+      color: css-var(steps-text-color-error);
+    }
+  }
+
+  @include e(header) {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-top: css-var(steps-header-padding-y);
+    padding-bottom: css-var(steps-header-padding-y);
+  }
+
+  @include e(line) {
+    height: css-var(steps-line-thickness);
+    width: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    margin-inline-start: css-var(steps-line-margin);
+    margin-inline-end: css-var(steps-line-margin);
+    background: css-var(steps-line-color);
+  }
+
+  @include e(line-before) {
+    display: none;
+  }
+
+  @include e(icon) {
+    font-size: css-var(steps-icon-font-size);
+  }
+
+  @include e(body) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @include e(name) {
+    font-size: css-var(steps-name-font-size);
+  }
+
+  @include e(description) {
+    margin-top: css-var(steps-description-margin-top);
+    font-size: css-var(steps-description-font-size);
+    color: css-var(steps-description-color);
+  }
+
+  @include m(vertical) {
+    flex-direction: row;
+    min-height: css-var(steps-step-min-height);
+
+    &:last-child {
+      @include e(line) {
+        white-space: unset;
+      }
+    }
+
+    @include e(header) {
+      top: calc(css-var(steps-header-top-vertical) + css-var(steps-body-padding-y));
+      flex: none;
+      flex-direction: column;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-inline-start: css-var(steps-header-padding-x);
+      padding-inline-end: css-var(steps-header-padding-x);
+    }
+
+    @include e(line) {
+      width: css-var(steps-line-thickness);
+      height: 0;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      margin-top: css-var(steps-line-margin);
+      margin-bottom: css-var(steps-line-margin);
+    }
+
+    @include e(body) {
+      flex: 1;
+      padding-top: css-var(steps-body-padding-y);
+      padding-bottom: css-var(steps-body-padding-y);
+    }
+  }
+
+  @include m(center) {
+    justify-content: center;
+
+    &:last-child {
+      flex: 1;
+      white-space: unset;
+
+      @include e(line) {
+        display: flex;
+      }
+    }
+
+    @include e(line-before) {
+      display: flex;
+      margin-inline-start: 0;
+    }
+
+    @include e(line-after) {
+      margin-inline-end: 0;
+    }
+
+    @include e(body) {
+      align-items: center;
+    }
+  }
+
+  @include m-intersect(center, vertical) {
+    justify-content: center;
+    align-items: center;
+
+    &:last-child {
+      flex: 1;
+      white-space: unset;
+    }
+
+    @include e(header) {
+      top: 0;
+      align-self: stretch;
+    }
+
+    @include e(line-before) {
+      margin-top: 0;
+    }
+
+    @include e(line-after) {
+      margin-bottom: 0;
+    }
+
+    @include e(body) {
+      justify-content: center;
+      align-items: flex-start;
+    }
+  }
+
+  @include m-intersect(horizontal, reverse) {
+    flex-direction: column-reverse;
+  }
+}

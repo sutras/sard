@@ -1,0 +1,54 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(popout-input-arrow-font-size)}: css-var(font-size);
+  #{css-var-name(popout-input-arrow-color)}: css-var(border-color);
+  #{css-var-name(popout-input-opacity-active)}: css-var(opacity-active);
+  #{css-var-name(popout-input-append-gap)}: css-var(size-2xs);
+  #{css-var-name(popout-input-loading-size)}: css-var(font-size-lg);
+  #{css-var-name(popout-input-loading-color)}: css-var(text-color-fourth);
+}
+// #endregion variables
+
+@include b(popout-input) {
+  @include m(down) {
+    opacity: css-var(popout-input-opacity-active);
+  }
+
+  @include m(readonly, loading) {
+    cursor: unset;
+  }
+
+  @include m(disabled) {
+    cursor: not-allowed;
+  }
+
+  @include e(append) {
+    display: flex;
+    align-items: center;
+    gap: css-var(popout-input-append-gap);
+  }
+
+  @include e(loading) {
+    font-size: css-var(popout-input-loading-size);
+    color: css-var(popout-input-loading-color);
+  }
+
+  @include e(seal) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    cursor: pointer;
+  }
+
+  @include e(arrow) {
+    font-size: css-var(popout-input-arrow-font-size);
+    color: css-var(popout-input-arrow-color);
+
+    @include rtl-flip;
+  }
+}

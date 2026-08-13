@@ -1,0 +1,112 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(accordion-bg)}: css-var(bg-color-container);
+  #{css-var-name(accordion-bg-active)}: css-var(bg-color-active);
+  #{css-var-name(accordion-border-color)}: css-var(border-color);
+
+  #{css-var-name(accordion-item-header-padding-x)}: css-var(size);
+  #{css-var-name(accordion-item-header-padding-y)}: css-var(size-sm);
+
+  #{css-var-name(accordion-item-title-font-size)}: css-var(font-size);
+
+  #{css-var-name(accordion-item-body-padding-x)}: css-var(size);
+  #{css-var-name(accordion-item-body-padding-y)}: css-var(size);
+}
+// #endregion variables
+
+@include b(accordion) {
+  position: relative;
+
+  &::before {
+    @include border-vertical(css-var(accordion-border-color));
+  }
+
+  @include m(borderless) {
+    &::before {
+      display: none;
+    }
+  }
+}
+
+@include b(accordion-item) {
+  position: relative;
+  background: css-var(accordion-bg);
+
+  &::before {
+    @include border-top(css-var(accordion-border-color));
+    left: css-var(accordion-item-header-padding-x);
+    right: css-var(accordion-item-header-padding-x);
+  }
+
+  &:first-child::before {
+    display: none;
+  }
+
+  @include e(header) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: css-var(accordion-item-header-padding-y) css-var(accordion-item-header-padding-x);
+    cursor: pointer;
+  }
+
+  @include e(title) {
+    font-size: css-var(accordion-item-title-font-size);
+    line-height: css-var(line-height-snug);
+  }
+
+  @include e(extra) {
+    margin-inline-start: auto;
+  }
+
+  @include e(arrow) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-inline-start: css-var(size-xs);
+    font-size: css-var(font-size-lg);
+    color: css-var(text-color-tertiary);
+  }
+
+  @include e(body) {
+    position: relative;
+    padding: css-var(accordion-item-body-padding-y) css-var(accordion-item-body-padding-x);
+
+    &::before {
+      @include border-top(css-var(accordion-border-color));
+      left: css-var(accordion-item-body-padding-x);
+      right: css-var(accordion-item-body-padding-x);
+    }
+  }
+
+  @include is(disabled) {
+    @include e(header) {
+      cursor: not-allowed;
+    }
+    @include e(title, arrow) {
+      color: css-var(text-color-disabled);
+    }
+  }
+
+  @include is-not(disabled) {
+    @include e(header) {
+      &:active {
+        background: css-var(accordion-bg-active);
+      }
+    }
+  }
+
+  @include m(borderless) {
+    &::before {
+      display: none;
+    }
+
+    @include e(body) {
+      &::before {
+        display: none;
+      }
+    }
+  }
+}

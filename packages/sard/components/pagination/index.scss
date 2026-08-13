@@ -1,0 +1,140 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(pagination-radius)}: css-var(border-radius);
+  #{css-var-name(pagination-border-color)}: css-var(border-color);
+
+  #{css-var-name(pagination-item-height)}: css-var(content-height-sm);
+  #{css-var-name(pagination-item-min-width)}: css-var(content-height-sm);
+  #{css-var-name(pagination-item-padding-x)}: css-var(size-xs);
+  #{css-var-name(pagination-item-font-size)}: css-var(font-size);
+  #{css-var-name(pagination-item-color)}: css-var(color-primary);
+  #{css-var-name(pagination-item-bg-active)}: css-var(bg-color-active);
+
+  #{css-var-name(pagination-item-color-current)}: css-var(white);
+  #{css-var-name(pagination-border-color-current)}: css-var(color-primary);
+  #{css-var-name(pagination-item-bg-current)}: css-var(color-primary);
+
+  #{css-var-name(pagination-ratio-height)}: css-var(content-height-sm);
+  #{css-var-name(pagination-ratio-font-size)}: css-var(font-size);
+}
+// #endregion variables
+
+@include b(pagination) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  @include e(item) {
+    position: relative;
+    display: flex;
+    flex: none;
+    justify-content: center;
+    align-items: center;
+    height: css-var(pagination-item-height);
+    min-width: css-var(pagination-item-min-width);
+    padding: 0 css-var(pagination-item-padding-x);
+    font-size: css-var(pagination-item-font-size);
+    color: css-var(pagination-item-color);
+    cursor: pointer;
+
+    &::after {
+      @include border-surround(css-var(pagination-border-color));
+    }
+
+    @include is(current) {
+      z-index: 3;
+      color: css-var(pagination-item-color-current);
+      background: css-var(pagination-item-bg-current);
+      border-color: css-var(pagination-border-color-current);
+    }
+
+    @include is(disabled) {
+      @include disabled-text;
+    }
+
+    @include is-not(disabled, current) {
+      &:active {
+        background: css-var(pagination-item-bg-active);
+      }
+    }
+  }
+
+  @include e(prev, next) {
+    display: flex;
+    flex: 1 0 auto;
+  }
+
+  @include e(ratio) {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: css-var(pagination-ratio-height);
+    font-size: css-var(pagination-ratio-font-size);
+  }
+
+  @include m(multi) {
+    @include e(item) {
+      &:not(:first-child) {
+        &::after {
+          border-inline-start-width: 0;
+        }
+      }
+
+      &:first-child {
+        @include not-rtl {
+          border-top-left-radius: css-var(pagination-radius);
+          border-bottom-left-radius: css-var(pagination-radius);
+          &::after {
+            border-top-left-radius: calc(css-var(pagination-radius) * 2);
+            border-bottom-left-radius: calc(css-var(pagination-radius) * 2);
+          }
+        }
+        @include rtl {
+          border-top-right-radius: css-var(pagination-radius);
+          border-bottom-right-radius: css-var(pagination-radius);
+          &::after {
+            border-top-right-radius: calc(css-var(pagination-radius) * 2);
+            border-bottom-right-radius: calc(css-var(pagination-radius) * 2);
+          }
+        }
+      }
+
+      &:last-child {
+        @include not-rtl {
+          border-top-right-radius: css-var(pagination-radius);
+          border-bottom-right-radius: css-var(pagination-radius);
+          &::after {
+            border-top-right-radius: calc(css-var(pagination-radius) * 2);
+            border-bottom-right-radius: calc(css-var(pagination-radius) * 2);
+          }
+        }
+        @include rtl {
+          border-top-left-radius: css-var(pagination-radius);
+          border-bottom-left-radius: css-var(pagination-radius);
+          &::after {
+            border-top-left-radius: calc(css-var(pagination-radius) * 2);
+            border-bottom-left-radius: calc(css-var(pagination-radius) * 2);
+          }
+        }
+      }
+    }
+  }
+
+  @include m(simple) {
+    @include e(item) {
+      border-radius: css-var(pagination-radius);
+      &::after {
+        border-radius: calc(css-var(pagination-radius) * 2);
+      }
+    }
+
+    @include e(prev, next) {
+      flex: 1;
+      padding: 0;
+      border-radius: css-var(pagination-radius);
+    }
+  }
+}

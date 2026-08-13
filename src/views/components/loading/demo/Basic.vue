@@ -1,0 +1,3 @@
+<template>
+  <s-loading />
+</template>

@@ -1,0 +1,67 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(checkbox-group-column-gap)}: css-var(size-sm);
+  #{css-var-name(checkbox-group-row-gap)}: css-var(size-xs);
+
+  #{css-var-name(checkbox-icon-font-size)}: 20px;
+  #{css-var-name(checkbox-icon-color)}: css-var(text-color-fourth);
+  #{css-var-name(checkbox-icon-color-checked)}: css-var(color-primary);
+  #{css-var-name(checkbox-icon-color-disabled)}: css-var(text-color-disabled);
+
+  #{css-var-name(checkbox-label-margin-start)}: css-var(size-xs);
+}
+// #endregion variables
+
+@include b(checkbox) {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  @include e(icon) {
+    font-size: css-var(checkbox-icon-font-size);
+    line-height: css-var(line-height-none);
+    color: css-var(checkbox-icon-color);
+    transition: color css-var(duration);
+
+    @include m(checked, indeterminate) {
+      color: css-var(checkbox-icon-color-checked);
+    }
+  }
+
+  @include e(label) {
+    margin-inline-start: css-var(checkbox-label-margin-start);
+  }
+
+  @include m(readonly) {
+    cursor: unset;
+  }
+
+  @include m(disabled) {
+    cursor: css-var(cursor-disabled);
+
+    @include e(icon) {
+      color: css-var(checkbox-icon-color-disabled);
+    }
+
+    @include e(label) {
+      @include disabled-text;
+    }
+  }
+}
+
+@include b(checkbox-group) {
+  display: flex;
+  row-gap: css-var(checkbox-group-row-gap);
+  column-gap: css-var(checkbox-group-column-gap);
+
+  @include m(horizontal) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  @include m(vertical) {
+    flex-direction: column;
+  }
+}

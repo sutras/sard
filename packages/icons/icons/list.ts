@@ -1,0 +1,4 @@
+const html: string =
+  '<path d="M1024 288.99328H0V225.28h1024v63.71328zM1024 798.72H0v-63.71328h1024V798.72z m0-255.36512H0v-63.22176h1024v63.22176z" />'
+
+export default html

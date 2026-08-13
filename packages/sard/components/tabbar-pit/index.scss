@@ -1,0 +1,9 @@
+@use '../style/base' as *;
+
+@include b(tabbar-pit) {
+  height: css-var(tabbar-height);
+
+  @include m(safe) {
+    height: calc(css-var(tabbar-height) + css-var(safe-bottom));
+  }
+}

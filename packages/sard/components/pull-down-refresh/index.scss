@@ -1,0 +1,31 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(pull-down-refresh-header-font-size)}: css-var(font-size-sm);
+  #{css-var-name(pull-down-refresh-header-color)}: css-var(text-color-tertiary);
+
+  #{css-var-name(pull-down-refresh-loading-font-size)}: 18px;
+}
+// #endregion variables
+
+@include b(pull-down-refresh) {
+  transition-property: transform;
+
+  @include e(header) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-100%);
+    font-size: css-var(pull-down-refresh-header-font-size);
+    color: css-var(pull-down-refresh-header-color);
+  }
+
+  @include e(loading) {
+    font-size: css-var(pull-down-refresh-loading-font-size);
+  }
+}

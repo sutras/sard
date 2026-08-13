@@ -1,0 +1,163 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(form-bg)}: css-var(bg-color-container);
+  #{css-var-name(form-border-radius-card)}: css-var(border-radius-lg);
+
+  #{css-var-name(form-item-min-height)}: css-var(content-height);
+  #{css-var-name(form-item-padding-x)}: css-var(content-padding-x);
+  #{css-var-name(form-item-padding-y)}: css-var(content-padding-y);
+  #{css-var-name(form-item-border-color)}: css-var(border-color);
+
+  #{css-var-name(form-item-label-width)}: 7em;
+  #{css-var-name(form-item-label-margin-end)}: css-var(size-sm);
+  #{css-var-name(form-item-label-margin-bottom)}: css-var(size-2xs);
+  #{css-var-name(form-item-label-font-size)}: css-var(font-size);
+  #{css-var-name(form-item-label-line-height)}: css-var(line-height-normal);
+
+  #{css-var-name(form-item-star-font-size)}: css-var(font-size);
+  #{css-var-name(form-item-star-line-height)}: css-var(line-height-normal);
+  #{css-var-name(form-item-star-color)}: css-var(color-danger);
+  #{css-var-name(form-item-star-gap)}: css-var(size-2xs);
+
+  #{css-var-name(form-item-error-margin-top)}: css-var(size-2xs);
+  #{css-var-name(form-item-error-font-size)}: css-var(font-size-sm);
+  #{css-var-name(form-item-error-line-height)}: css-var(line-height-tight);
+  #{css-var-name(form-item-error-color)}: css-var(color-danger);
+}
+// #endregion variables
+
+@include b(form) {
+  background: css-var(form-bg);
+
+  @include m(card) {
+    border-radius: css-var(form-border-radius-card);
+  }
+}
+
+@include b(form-item) {
+  position: relative;
+  display: flex;
+  min-height: css-var(form-item-min-height);
+  padding: css-var(form-item-padding-y) css-var(form-item-padding-x);
+
+  &:first-child {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+  }
+
+  &:not(:first-child) {
+    &::before {
+      @include border-top(css-var(form-item-border-color));
+      left: css-var(form-item-padding-x);
+      right: css-var(form-item-padding-x);
+    }
+  }
+
+  @include e(label) {
+    flex: none;
+    display: flex;
+    width: css-var(form-item-label-width);
+    margin-inline-end: css-var(form-item-label-margin-end);
+    font-size: css-var(form-item-label-font-size);
+    line-height: css-var(form-item-label-line-height);
+    word-break: break-all;
+    gap: css-var(form-item-star-gap);
+  }
+
+  @include e(star) {
+    font-size: css-var(form-item-star-font-size);
+    line-height: css-var(form-item-star-line-height);
+    color: css-var(form-item-star-color);
+  }
+
+  @include e(content) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include m(start) {
+      text-align: start;
+    }
+
+    @include m(end) {
+      text-align: end;
+    }
+  }
+
+  @include e(error) {
+    margin-top: css-var(form-item-error-margin-top);
+    font-size: css-var(form-item-error-font-size);
+    line-height: css-var(form-item-error-line-height);
+    color: css-var(form-item-error-color);
+  }
+
+  @include m(vertical) {
+    flex-direction: column;
+
+    @include e(label) {
+      flex: auto;
+      width: auto;
+      margin-inline-end: 0;
+      margin-bottom: css-var(form-item-label-margin-bottom);
+    }
+  }
+
+  @include m(align-start) {
+    @include e(label) {
+      justify-content: flex-start;
+    }
+  }
+
+  @include m(align-center) {
+    @include e(label) {
+      justify-content: center;
+    }
+  }
+
+  @include m(align-end) {
+    @include e(label) {
+      justify-content: flex-end;
+    }
+  }
+
+  @include m(valign-start) {
+    @include e(label) {
+      align-items: flex-start;
+    }
+  }
+
+  @include m(valign-center) {
+    @include e(label) {
+      align-items: center;
+    }
+  }
+
+  @include m(valign-end) {
+    @include e(label) {
+      align-items: flex-end;
+    }
+  }
+
+  @include m(star-end) {
+    @include e(star) {
+      order: 1;
+    }
+  }
+
+  @include m(inlaid) {
+    padding: 0;
+    min-height: auto;
+
+    &::before {
+      display: none;
+    }
+  }
+}

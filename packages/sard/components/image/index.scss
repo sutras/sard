@@ -1,0 +1,83 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(image-bg)}: css-var(fill-color-tertiary);
+  #{css-var-name(image-width)}: 320px;
+  #{css-var-name(image-height)}: 240px;
+  #{css-var-name(image-loading-font-size)}: css-var(size-xl);
+  #{css-var-name(image-loading-color)}: css-var(text-color-fourth);
+  #{css-var-name(image-error-font-size)}: css-var(size-xl);
+  #{css-var-name(image-error-color)}: css-var(text-color-fourth);
+  #{css-var-name(image-duration)}: css-var(duration-slow);
+}
+// #endregion variables
+
+@include b(image) {
+  position: relative;
+  display: inline-block;
+  width: css-var(image-width);
+  height: css-var(image-height);
+  overflow: hidden;
+  background: css-var(image-bg);
+
+  @include m(circle) {
+    border-radius: 9999px;
+  }
+
+  @include e(display) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+  }
+
+  @include m(animated) {
+    @include e(display) {
+      animation: #{bem-ns(image-fade)} css-var(image-duration);
+    }
+  }
+
+  @keyframes #{bem-ns(image-fade)} {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @include e(interaction) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+
+  @include e(loading) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: css-var(image-loading-font-size);
+    color: css-var(image-loading-color);
+  }
+
+  @include e(error) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: css-var(image-error-font-size);
+    color: css-var(image-error-color);
+  }
+}

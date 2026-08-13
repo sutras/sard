@@ -1,0 +1,137 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(segmented-min-height-sm)}: css-var(content-height-2xs);
+  #{css-var-name(segmented-min-height)}: css-var(content-height-xs);
+  #{css-var-name(segmented-min-height-lg)}: css-var(content-height-sm);
+  #{css-var-name(segmented-padding)}: css-var(size-3xs);
+  #{css-var-name(segmented-font-size)}: css-var(font-size);
+  #{css-var-name(segmented-bg)}: css-var(fill-color-secondary);
+  #{css-var-name(segmented-border-radius)}: css-var(border-radius);
+  #{css-var-name(segmented-pointer-bg)}: css-var(bg-color-container);
+  #{css-var-name(segmented-pointer-box-shadow)}: css-var(box-shadow-tertiary);
+  #{css-var-name(segmented-item-padding)}: css-var(size-sm);
+  #{css-var-name(segmented-item-padding-sm)}: css-var(size-xs);
+  #{css-var-name(segmented-item-color)}: css-var(text-color-secondary);
+  #{css-var-name(segmented-item-color-active)}: css-var(text-color-emphasis);
+  #{css-var-name(segmented-item-bg-active)}: css-var(bg-color-active-dark);
+}
+// #endregion variables
+
+@include b(segmented) {
+  display: flex;
+  align-items: stretch;
+  min-height: css-var(segmented-min-height);
+  padding: css-var(segmented-padding);
+  border-radius: css-var(segmented-border-radius);
+  background: css-var(segmented-bg);
+  font-size: css-var(segmented-font-size);
+
+  @include m(vertical) {
+    display: inline-flex;
+
+    @include e(wrapper) {
+      flex-direction: column;
+    }
+
+    @include e(pointer) {
+      width: 100%;
+    }
+  }
+
+  @include m(small) {
+    min-height: css-var(segmented-min-height-sm);
+  }
+
+  @include m(large) {
+    min-height: css-var(segmented-min-height-lg);
+  }
+
+  @include m(round) {
+    border-radius: css-var(border-radius-full);
+
+    @include e(pointer) {
+      border-radius: css-var(border-radius-full);
+    }
+  }
+
+  @include e(pointer) {
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    height: 100%;
+    border-radius: calc(css-var(segmented-border-radius) - 2px);
+    background: css-var(segmented-pointer-bg);
+    box-shadow: css-var(segmented-pointer-box-shadow);
+    transition: transform css-var(duration);
+    --final-offset: var(--offset);
+    transform: translate3d(var(--final-offset), 0, 0);
+  }
+
+  @include m(horizontal) {
+    @include e(pointer) {
+      @include rtl {
+        --final-offset: calc(var(--offset) * -1);
+      }
+    }
+  }
+
+  @include m(vertical) {
+    @include e(pointer) {
+      transform: translate3d(0, var(--final-offset), 0);
+    }
+  }
+
+  @include e(wrapper) {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+  }
+}
+
+@include b(segmented-item) {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  min-height: calc(css-var(segmented-min-height) - css-var(segmented-padding) * 2);
+  padding: 0 css-var(segmented-item-padding);
+  border-radius: calc(css-var(segmented-border-radius) - 2px);
+  color: css-var(segmented-item-color);
+
+  @include m(small) {
+    min-height: calc(css-var(segmented-min-height-sm) - css-var(segmented-padding) * 2);
+  }
+
+  @include m(large) {
+    min-height: calc(css-var(segmented-min-height-lg) - css-var(segmented-padding) * 2);
+  }
+
+  @include m(round) {
+    border-radius: css-var(border-radius-full);
+  }
+
+  @include is-not(disabled, readonly, selected) {
+    cursor: pointer;
+
+    &:active {
+      background: css-var(segmented-item-bg-active);
+    }
+  }
+
+  @include is(selected) {
+    color: css-var(segmented-item-color-active);
+  }
+
+  @include is(disabled) {
+    @include disabled-text;
+  }
+
+  @include m(ellipsis) {
+    @include ellipsis;
+  }
+}

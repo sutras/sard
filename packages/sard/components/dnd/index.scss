@@ -1,0 +1,24 @@
+@use '../style/base' as *;
+
+@include b(dnd-item) {
+  position: relative;
+
+  @include m(active) {
+    z-index: 1;
+    box-shadow: css-var(box-shadow-secondary);
+  }
+
+  @include m(passive) {
+    transition: transform css-var(duration);
+  }
+}
+
+@include b(dnd-handle) {
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+
+  @include m(dragging) {
+    touch-action: none;
+  }
+}

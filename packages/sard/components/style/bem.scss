@@ -1,0 +1,248 @@
+// ============================================================
+// bem Core Mixins
+// 核心 BEM mixins: block, element, modifier, state, action + 高级组合
+// ============================================================
+
+@use 'sass:list';
+@use 'sass:string';
+@use 'sass:selector';
+@use './config' as *;
+@use './functions' as *;
+
+// ============================ 上下文管理 ============================
+
+$-current-block: null !default;
+$-current-element: null !default;
+$-nesting-depth: 0 !default;
+
+$prev-block: null;
+$prev-element: null;
+$prev-depth: null;
+
+// ============================ block ============================
+
+@mixin block($block) {
+  $prev-block: $-current-block !global;
+  $prev-element: $-current-element !global;
+  $prev-depth: $-nesting-depth !global;
+
+  $-current-block: $block !global;
+  $-current-element: null !global;
+  $-nesting-depth: 0 !global;
+
+  .#{bem-name($block)} {
+    @content;
+  }
+
+  // 恢复上下文（支持嵌套 block）
+  $-current-block: $prev-block !global;
+  $-current-element: $prev-element !global;
+  $-nesting-depth: $prev-depth !global;
+}
+
+// 别名
+@mixin b($block) {
+  @include block($block) {
+    @content;
+  }
+}
+
+// ============================ element ============================
+
+@mixin element($elements...) {
+  $parent: &;
+  $selectors: ();
+
+  @each $el in $elements {
+    $selectors: list.append($selectors, bem-selector($-current-block, $el), $separator: comma);
+  }
+
+  @if hit-special-nest-rule($parent) {
+    @at-root {
+      #{$parent} {
+        #{$selectors} {
+          $-current-element: list.nth($elements, 1) !global;
+          $-nesting-depth: $-nesting-depth + 1 !global;
+          @content;
+          $-nesting-depth: $-nesting-depth - 1 !global;
+        }
+      }
+    }
+  } @else {
+    @at-root {
+      #{$selectors} {
+        $-current-element: list.nth($elements, 1) !global;
+        $-nesting-depth: $-nesting-depth + 1 !global;
+        @content;
+        $-nesting-depth: $-nesting-depth - 1 !global;
+      }
+    }
+  }
+}
+
+// 别名
+@mixin e($elements...) {
+  @include element($elements...) {
+    @content;
+  }
+}
+
+// ============================ modifier ============================
+
+@mixin modifier($modifiers...) {
+  $parent: &;
+  $selectors: ();
+
+  @if hit-special-nest-rule($parent) {
+    @each $mod in $modifiers {
+      $selectors: list.append($selectors, '&#{$modifier-separator}#{$mod}', $separator: comma);
+    }
+
+    @at-root {
+      #{$selectors} {
+        @content;
+      }
+    }
+  } @else {
+    @each $mod in $modifiers {
+      $selectors: list.append(
+        $selectors,
+        #{$parent}#{$modifier-separator}#{$mod},
+        $separator: comma
+      );
+    }
+
+    @at-root {
+      #{$selectors} {
+        @content;
+      }
+    }
+  }
+}
+
+// 别名
+@mixin m($modifiers...) {
+  @include modifier($modifiers...) {
+    @content;
+  }
+}
+
+// ============================ state ============================
+
+// state(disabled, readonly) -> &:is(.is-disabled, .is-readonly)
+@mixin state($states...) {
+  $selectors: ();
+
+  @each $state in $states {
+    $selectors: list.append($selectors, #{'.'}#{$state-prefix}#{$state}, $separator: comma);
+  }
+  $selectors: #{'&:is(#{$selectors})'};
+
+  @at-root {
+    #{$selectors} {
+      @content;
+    }
+  }
+}
+
+// 别名
+@mixin is($states...) {
+  @include state($states...) {
+    @content;
+  }
+}
+
+// ============================ state not ============================
+
+// state-not(disabled, readonly) -> &:not(.is-disabled, .is-readonly)
+@mixin state-not($states...) {
+  $selectors: ();
+
+  @each $state in $states {
+    $selectors: list.append($selectors, #{'.'}#{$state-prefix}#{$state}, $separator: comma);
+  }
+  $selectors: #{'&:not(#{$selectors})'};
+
+  @at-root {
+    #{$selectors} {
+      @content;
+    }
+  }
+}
+
+// 别名
+@mixin is-not($states...) {
+  @include state-not($states...) {
+    @content;
+  }
+}
+
+// ============================ action ============================
+
+// action(title, icon) -> &:is(.has-title, .has-icon)
+@mixin action($actions...) {
+  $selectors: ();
+
+  @each $action in $actions {
+    $selectors: list.append($selectors, #{'.'}#{$action-prefix}#{$action}, $separator: comma);
+  }
+  $selectors: #{'&:is(#{$selectors})'};
+
+  @at-root {
+    #{$selectors} {
+      @content;
+    }
+  }
+}
+
+// 别名
+@mixin has($actions...) {
+  @include action($actions...) {
+    @content;
+  }
+}
+
+// ============================ 高级组合 ============================
+
+// modifier-intersect(center, vertical) -> .<block>--center.<block>--vertical
+@mixin modifier-intersect($modifiers...) {
+  $parent: &;
+  $selectors: '';
+
+  @each $mod in $modifiers {
+    $selectors: #{$selectors}#{$parent}#{$modifier-separator}#{$mod};
+  }
+
+  @at-root {
+    #{$selectors} {
+      @content;
+    }
+  }
+}
+
+// 别名
+@mixin m-intersect($modifiers...) {
+  @include modifier-intersect($modifiers...) {
+    @content;
+  }
+}
+
+// ============================ CSS 变量输出 ============================
+
+@mixin set-css-var($name, $value) {
+  #{css-var-name($name)}: #{$value};
+}
+
+@mixin set-component-css-vars($component, $variables) {
+  @each $key, $value in $variables {
+    @if $key == 'default' {
+      #{css-var-name($component)}: #{$value};
+    } @else {
+      #{css-var-name($component, $key)}: #{$value};
+    }
+  }
+}
+
+@mixin css-var-from-global($local, $global) {
+  #{css-var-name($local...)}: var(#{css-var-name($global...)});
+}

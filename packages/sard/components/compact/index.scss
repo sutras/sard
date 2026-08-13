@@ -1,0 +1,14 @@
+@use '../style/base' as *;
+
+@include b(compact) {
+  display: inline-flex;
+  flex-wrap: nowrap;
+
+  @include m(vertical) {
+    flex-direction: column;
+  }
+
+  @include m(block) {
+    display: flex;
+  }
+}

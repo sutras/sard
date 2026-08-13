@@ -1,0 +1,366 @@
+@use 'sass:list';
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(button-height-xs)}: css-var(size-xl);
+  #{css-var-name(button-padding-y-xs)}: 0;
+  #{css-var-name(button-padding-x-xs)}: 6px;
+  #{css-var-name(button-border-radius-xs)}: css-var(border-radius-sm);
+  #{css-var-name(button-font-size-xs)}: css-var(font-size-sm);
+  #{css-var-name(button-icon-size-xs)}: css-var(font-size-sm);
+
+  #{css-var-name(button-height-sm)}: css-var(size-2xl);
+  #{css-var-name(button-padding-y-sm)}: 0;
+  #{css-var-name(button-padding-x-sm)}: 9px;
+  #{css-var-name(button-border-radius-sm)}: css-var(border-radius-sm);
+  #{css-var-name(button-font-size-sm)}: css-var(font-size-sm);
+  #{css-var-name(button-icon-size-sm)}: css-var(font-size);
+
+  #{css-var-name(button-height)}: css-var(size-3xl);
+  #{css-var-name(button-padding-y)}: 0;
+  #{css-var-name(button-padding-x)}: 11px;
+  #{css-var-name(button-border-radius)}: css-var(border-radius);
+  #{css-var-name(button-font-size)}: css-var(font-size);
+  #{css-var-name(button-icon-size)}: 18px;
+
+  #{css-var-name(button-height-lg)}: css-var(size-4xl);
+  #{css-var-name(button-padding-y-lg)}: 0;
+  #{css-var-name(button-padding-x-lg)}: 14px;
+  #{css-var-name(button-border-radius-lg)}: css-var(border-radius);
+  #{css-var-name(button-font-size-lg)}: css-var(font-size-lg);
+  #{css-var-name(button-icon-size-lg)}: 20px;
+
+  #{css-var-name(button-outlined-bg)}: css-var(white);
+  #{css-var-name(button-secondary-color)}: css-var(gray-800);
+}
+
+@include theme-dark {
+  #{css-var-name(button-outlined-bg)}: transparent;
+  #{css-var-name(button-secondary-color)}: css-var(white);
+}
+// #endregion variables
+
+$s-button-theme-colors: (
+  primary: (
+    css-var(color-primary),
+    css-var(color-primary-rgb),
+  ),
+  secondary: (
+    css-var(color-secondary),
+    css-var(color-secondary-rgb),
+    css-var(gray-200),
+    css-var(button-secondary-color),
+  ),
+  success: (
+    css-var(color-success),
+    css-var(color-success-rgb),
+  ),
+  warning: (
+    css-var(color-warning),
+    css-var(color-warning-rgb),
+  ),
+  danger: (
+    css-var(color-danger),
+    css-var(color-danger-rgb),
+  ),
+  black: (
+    css-var(black),
+    css-var(black-rgb),
+  ),
+  white: (
+    css-var(white),
+    css-var(white-rgb),
+  ),
+);
+
+@include b(button) {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  border: none;
+  vertical-align: middle;
+  font-family: inherit;
+  line-height: css-var(line-height-normal);
+  white-space: nowrap;
+  text-align: center;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  overflow: visible;
+  appearance: none;
+  outline: none;
+
+  @include m(block) {
+    display: flex;
+    width: 100%;
+  }
+
+  // shade
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.125);
+    pointer-events: none;
+  }
+
+  // ============================ 尺寸 ============================
+  @include m(xs) {
+    @include button-size(
+      css-var(button-height-xs),
+      css-var(button-padding-y-xs),
+      css-var(button-padding-x-xs),
+      css-var(button-border-radius-xs),
+      css-var(button-font-size-xs)
+    );
+
+    @include e(icon) {
+      font-size: css-var(button-icon-size-xs);
+    }
+  }
+
+  @include m-intersect(xs, iconic) {
+    min-width: css-var(button-height-xs);
+  }
+
+  @include m(small) {
+    @include button-size(
+      css-var(button-height-sm),
+      css-var(button-padding-y-sm),
+      css-var(button-padding-x-sm),
+      css-var(button-border-radius-sm),
+      css-var(button-font-size-sm)
+    );
+
+    @include e(icon) {
+      font-size: css-var(button-icon-size-sm);
+    }
+  }
+
+  @include m-intersect(small, iconic) {
+    min-width: css-var(button-height-sm);
+  }
+
+  @include m(medium) {
+    @include button-size(
+      css-var(button-height),
+      css-var(button-padding-y),
+      css-var(button-padding-x),
+      css-var(button-border-radius),
+      css-var(button-font-size)
+    );
+
+    @include e(icon) {
+      font-size: css-var(button-icon-size);
+    }
+  }
+
+  @include m-intersect(medium, iconic) {
+    min-width: css-var(button-height);
+  }
+
+  @include m(large) {
+    @include button-size(
+      css-var(button-height-lg),
+      css-var(button-padding-y-lg),
+      css-var(button-padding-x-lg),
+      css-var(button-border-radius-lg),
+      css-var(button-font-size-lg)
+    );
+
+    @include e(icon) {
+      font-size: css-var(button-icon-size-lg);
+    }
+  }
+
+  @include m-intersect(large, iconic) {
+    min-width: css-var(button-height-lg);
+  }
+
+  @include m(auto-height) {
+    height: auto;
+  }
+
+  @include m(compact) {
+    padding: 0;
+    height: auto;
+  }
+
+  // ============================ 颜色与变体 ============================
+  @each $color-name, $value in $s-button-theme-colors {
+    $color-value: list.nth($value, 1);
+    $color-value-rgb: list.nth($value, 2);
+
+    $color-border: null;
+    @if list.length($value) >= 3 {
+      $color-border: list.nth($value, 3);
+    }
+
+    $color-text: null;
+    @if list.length($value) >= 4 {
+      $color-text: list.nth($value, 4);
+    }
+
+    // solid
+    @include m(solid-#{$color-name}) {
+      color: ternary($color-name == white, css-var(black), css-var(white));
+      background-color: $color-value;
+    }
+
+    // outlined
+    @include m(outlined-#{$color-name}) {
+      color: coalesce($color-text, $color-value);
+      background-color: ternary($color-name == white, transparent, css-var(button-outlined-bg));
+      border: 1px solid coalesce($color-border, $color-value);
+    }
+
+    // dashed
+    @include m(dashed-#{$color-name}) {
+      color: coalesce($color-text, $color-value);
+      background-color: ternary($color-name == white, transparent, css-var(button-outlined-bg));
+      border: 1px dashed coalesce($color-border, $color-value);
+    }
+
+    // filled
+    @include m(filled-#{$color-name}) {
+      color: $color-value;
+      background-color: rgba($color-value-rgb, css-var(opacity-theme-bg));
+    }
+
+    // text
+    @include m(text-#{$color-name}) {
+      color: $color-value;
+      background-color: transparent;
+    }
+
+    // link
+    @include m(link-#{$color-name}) {
+      color: $color-value;
+      background-color: transparent;
+    }
+  }
+
+  // ============================ 幽灵 ============================
+  @include m(ghost) {
+    background: transparent;
+  }
+
+  // ============================ 圆角 ============================
+  @include m(round) {
+    border-radius: css-var(border-radius-full);
+  }
+
+  // ============================ 方形 ============================
+  @include m(square) {
+    border-radius: 0;
+  }
+
+  // ============================ active 状态 ============================
+  @include m(solid, outlined, dashed, filled, text) {
+    @include is-not(disabled, loading) {
+      &:active::before {
+        opacity: 1;
+      }
+    }
+  }
+
+  @include m(link) {
+    @include is-not(disabled, loading) {
+      &:active {
+        opacity: css-var(opacity-active);
+      }
+    }
+  }
+
+  // ============================ 禁用状态 ============================
+  @include is(disabled) {
+    @include disabled;
+  }
+
+  // ============================ 加载状态 ============================
+  @include is(loading) {
+    opacity: css-var(opacity-loading);
+    cursor: css-var(cursor-loading);
+  }
+
+  // ============================ 图标 ============================
+  @include e(icon) {
+    display: inline-flex;
+
+    @include has(slot) {
+      margin-inline-end: 0.5em;
+    }
+  }
+
+  // ============================ 紧凑模式 ============================
+  @include m(compact-horizontal) {
+    &:not(:first-child) {
+      @include not-rtl {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      @include rtl {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+    &:not(:last-child) {
+      @include not-rtl {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      @include rtl {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+
+    &#{bem-selector($block: button, $modifier: solid)},
+    &#{bem-selector($block: button, $modifier: filled)} {
+      & + #{bem-selector($block: button, $modifier: solid)},
+      & + #{bem-selector($block: button, $modifier: filled)} {
+        border-inline-start: 1px solid css-var(border-color-lighter);
+      }
+    }
+  }
+
+  @include m(compact-vertical) {
+    &:not(:first-child) {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+    &:not(:last-child) {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &#{bem-selector($block: button, $modifier: solid)},
+    &#{bem-selector($block: button, $modifier: filled)} {
+      & + #{bem-selector($block: button, $modifier: solid)},
+      & + #{bem-selector($block: button, $modifier: filled)} {
+        border-top: 1px solid css-var(border-color-lighter);
+      }
+    }
+  }
+
+  @include m-intersect(compact-horizontal, outlined) {
+    & + #{bem-selector($block: button, $modifier: outlined)} {
+      margin-inline-start: -1px;
+    }
+  }
+
+  @include m-intersect(compact-vertical, outlined) {
+    & + #{bem-selector($block: button, $modifier: outlined)} {
+      margin-top: -1px;
+    }
+  }
+}

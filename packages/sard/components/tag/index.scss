@@ -1,0 +1,151 @@
+@use 'sass:list';
+@use 'sass:map';
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(tag-color)}: css-var(white);
+
+  #{css-var-name(tag-height-sm)}: 16px;
+  #{css-var-name(tag-padding-sm)}: 0 4px;
+  #{css-var-name(tag-font-size-sm)}: css-var(font-size-xs);
+  #{css-var-name(tag-border-radius-sm)}: css-var(border-radius-sm);
+
+  #{css-var-name(tag-height)}: 20px;
+  #{css-var-name(tag-padding)}: 0 6px;
+  #{css-var-name(tag-font-size)}: css-var(font-size-sm);
+  #{css-var-name(tag-border-radius)}: css-var(border-radius-sm);
+
+  #{css-var-name(tag-height-lg)}: 24px;
+  #{css-var-name(tag-padding-lg)}: 0 8px;
+  #{css-var-name(tag-font-size-lg)}: css-var(font-size);
+  #{css-var-name(tag-border-radius-lg)}: css-var(border-radius);
+
+  #{css-var-name(tag-close-margin-start)}: css-var(size-2xs);
+}
+// #endregion variables
+
+$s-tag-theme-colors: (
+  default: (
+    css-var(gray-600),
+    css-var(gray-600-rgb),
+  ),
+  primary: (
+    css-var(color-primary),
+    css-var(color-primary-rgb),
+  ),
+  success: (
+    css-var(color-success),
+    css-var(color-success-rgb),
+  ),
+  warning: (
+    css-var(color-warning),
+    css-var(color-warning-rgb),
+  ),
+  danger: (
+    css-var(color-danger),
+    css-var(color-danger-rgb),
+  ),
+);
+
+$s-tag-sizes: (
+  small: (
+    height: css-var(tag-height-sm),
+    padding: css-var(tag-padding-sm),
+    font-size: css-var(tag-font-size-sm),
+    border-radius: css-var(tag-border-radius-sm),
+  ),
+  medium: (
+    height: css-var(tag-height),
+    padding: css-var(tag-padding),
+    font-size: css-var(tag-font-size),
+    border-radius: css-var(tag-border-radius),
+  ),
+  large: (
+    height: css-var(tag-height-lg),
+    padding: css-var(tag-padding-lg),
+    font-size: css-var(tag-font-size-lg),
+    border-radius: css-var(tag-border-radius-lg),
+  ),
+);
+
+@include b(tag) {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  border: 1px solid transparent;
+  color: css-var(tag-color);
+  line-height: css-var(line-height-tight);
+
+  // ============================ 颜色与变体 ============================
+  @each $color-name, $value in $s-tag-theme-colors {
+    $color-value: list.nth($value, 1);
+    $color-value-rgb: list.nth($value, 2);
+
+    // solid
+    @include m(solid-#{$color-name}) {
+      color: css-var(white);
+      background-color: $color-value;
+    }
+
+    // outlined
+    @include m(outlined-#{$color-name}) {
+      color: $color-value;
+      background-color: transparent;
+      border: 1px solid $color-value;
+    }
+
+    // filled
+    @include m(filled-#{$color-name}) {
+      color: $color-value;
+      background-color: rgba($color-value-rgb, css-var(opacity-theme-bg));
+    }
+  }
+
+  // 尺寸
+  @each $size, $value in $s-tag-sizes {
+    @include m($size) {
+      height: map.get($value, height);
+      padding: map.get($value, padding);
+      font-size: map.get($value, font-size);
+      border-radius: map.get($value, border-radius);
+    }
+  }
+
+  // 圆角
+  @include m(round) {
+    border-radius: css-var(border-radius-full);
+  }
+
+  // 标记
+  @include m(mark-left) {
+    @include not-rtl {
+      border-top-left-radius: css-var(border-radius-full);
+      border-bottom-left-radius: css-var(border-radius-full);
+    }
+    @include rtl {
+      border-top-right-radius: css-var(border-radius-full);
+      border-bottom-right-radius: css-var(border-radius-full);
+    }
+  }
+  @include m(mark-right) {
+    @include not-rtl {
+      border-top-right-radius: css-var(border-radius-full);
+      border-bottom-right-radius: css-var(border-radius-full);
+    }
+    @include rtl {
+      border-top-left-radius: css-var(border-radius-full);
+      border-bottom-left-radius: css-var(border-radius-full);
+    }
+  }
+
+  // 可关闭的
+  @include e(close) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline-start: css-var(tag-close-margin-start);
+    cursor: pointer;
+  }
+}

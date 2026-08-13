@@ -1,0 +1,18 @@
+@use '../style/base' as *;
+
+@include b(infinite-list) {
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  @include b(pull-down-refresh) {
+    display: flow-root;
+    min-height: 100%;
+  }
+
+  @include e(load-more) {
+    @include is(hidden) {
+      visibility: hidden;
+      pointer-events: none;
+    }
+  }
+}

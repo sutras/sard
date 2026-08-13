@@ -1,0 +1,70 @@
+@use 'sass:list';
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(alert-padding)}: css-var(content-padding);
+  #{css-var-name(alert-font-size)}: css-var(font-size);
+  #{css-var-name(alert-border-radius)}: css-var(border-radius);
+  #{css-var-name(alert-icon-margin-end)}: css-var(size-xs);
+  #{css-var-name(alert-close-font-size)}: css-var(font-size);
+  #{css-var-name(alert-close-padding)}: css-var(size-xs);
+}
+// #endregion variables
+
+@include b(alert) {
+  display: flex;
+  align-items: center;
+  padding: css-var(alert-padding);
+  font-size: css-var(alert-font-size);
+  border-radius: css-var(alert-border-radius);
+
+  @each $type,
+    $color
+      in (
+        primary: (
+            css-var(color-primary),
+            css-var(color-primary-rgb),
+          ),
+        success: (
+            css-var(color-success),
+            css-var(color-success-rgb),
+          ),
+        warning: (
+            css-var(color-warning),
+            css-var(color-warning-rgb),
+          ),
+        danger: (
+            css-var(color-danger),
+            css-var(color-danger-rgb),
+          )
+      )
+  {
+    @include m($type) {
+      color: list.nth($color, 1);
+      background: rgba(list.nth($color, 2), css-var(opacity-theme-bg));
+    }
+  }
+
+  @include e(icon) {
+    margin-inline-end: css-var(alert-icon-margin-end);
+    line-height: 1;
+  }
+
+  @include e(content) {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  @include e(close) {
+    font-size: css-var(alert-close-font-size);
+    padding: css-var(alert-close-padding);
+    margin: calc(css-var(alert-close-padding) * -1);
+    margin-inline-start: 0;
+    cursor: pointer;
+  }
+
+  @include m(square) {
+    border-radius: 0;
+  }
+}

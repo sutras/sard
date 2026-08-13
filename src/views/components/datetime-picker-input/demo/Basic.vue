@@ -1,0 +1,27 @@
+<template>
+  <s-list card>
+    <s-list-item>
+      <s-datetime-picker-input
+        v-model="value"
+        title="请选择日期"
+        placeholder="请选择日期"
+        clearable
+        type="yMd"
+        @change="onChange"
+      />
+    </s-list-item>
+    <s-list-item title="当前值：" :value="JSON.stringify(value) ?? 'undefined'" />
+    <s-list-item title="设置为当前时间" arrow hover @click="value = new Date()" />
+    <s-list-item title="清空" arrow hover @click="value = undefined" />
+  </s-list>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const value = ref<Date>()
+
+const onChange = (value: any) => {
+  console.log('change', value)
+}
+</script>

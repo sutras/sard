@@ -1,0 +1,46 @@
+@use 'sard/index.scss';
+@use './demo-icons.css' as *;
+@use './cake.css' as *;
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  min-height: 100vh;
+  -webkit-user-select: none;
+  user-select: none;
+  background: #fff;
+
+  .dark & {
+    background: #000;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    'Noto Sans',
+    'Liberation Sans',
+    Arial,
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'Noto Color Emoji',
+    monospace;
+  font-size: var(--s-font-size);
+  line-height: 1.5;
+  color: var(--s-text-color-primary);
+  -webkit-tap-highlight-color: transparent;
+}

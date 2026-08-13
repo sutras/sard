@@ -1,0 +1,189 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(stepper-height)}: css-var(content-height-xs);
+  #{css-var-name(stepper-accent-height)}: css-var(content-height-2xs);
+  #{css-var-name(stepper-gap)}: css-var(size-2xs);
+  #{css-var-name(stepper-bg)}: css-var(fill-color-secondary);
+
+  #{css-var-name(stepper-input-width)}: 40px;
+  #{css-var-name(stepper-input-padding-x)}: css-var(size-2xs);
+  #{css-var-name(stepper-input-font-size)}: css-var(font-size);
+
+  #{css-var-name(stepper-button-font-size)}: css-var(font-size-lg);
+  #{css-var-name(stepper-button-border-radius)}: css-var(border-radius-sm);
+  #{css-var-name(stepper-button-bg-active)}: css-var(bg-color-active-dark);
+
+  #{css-var-name(stepper-height-sm)}: 26px;
+  #{css-var-name(stepper-accent-height-sm)}: 20px;
+  #{css-var-name(stepper-input-width-sm)}: 36px;
+  #{css-var-name(stepper-input-font-size-sm)}: css-var(font-size-sm);
+  #{css-var-name(stepper-button-font-size-sm)}: css-var(font-size);
+}
+// #endregion variables
+
+@include b(stepper) {
+  display: inline-flex;
+  align-items: stretch;
+  height: css-var(stepper-height);
+  color: css-var(text-color-primary);
+
+  @include e(button) {
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: css-var(stepper-height);
+    font-size: css-var(stepper-button-font-size);
+    line-height: css-var(line-height-none);
+    -webkit-user-select: none;
+    user-select: none;
+
+    cursor: pointer;
+
+    @include m(readonly) {
+      cursor: unset;
+    }
+
+    @include is(disabled) {
+      @include disabled;
+    }
+
+    @include m(decrease) {
+      @include not-rtl {
+        border-top-left-radius: css-var(stepper-button-border-radius);
+        border-bottom-left-radius: css-var(stepper-button-border-radius);
+      }
+      @include rtl {
+        border-top-right-radius: css-var(stepper-button-border-radius);
+        border-bottom-right-radius: css-var(stepper-button-border-radius);
+      }
+    }
+
+    @include m(increase) {
+      @include not-rtl {
+        border-top-right-radius: css-var(stepper-button-border-radius);
+        border-bottom-right-radius: css-var(stepper-button-border-radius);
+      }
+      @include rtl {
+        border-top-left-radius: css-var(stepper-button-border-radius);
+        border-bottom-left-radius: css-var(stepper-button-border-radius);
+      }
+    }
+  }
+
+  @include e(input) {
+    flex: none;
+    width: css-var(stepper-input-width);
+    height: 100%;
+    padding: 0 css-var(stepper-input-padding-x);
+    border: 0;
+    border-radius: 0;
+    font-size: css-var(stepper-input-font-size);
+    line-height: css-var(line-height-none);
+    text-align: center;
+  }
+
+  @include m(solid) {
+    gap: css-var(stepper-gap);
+
+    @include e(button) {
+      background: css-var(stepper-bg);
+
+      @include is-not(disabled, readonly) {
+        &:active {
+          background: css-var(stepper-button-bg-active);
+        }
+      }
+    }
+    @include e(input) {
+      background: css-var(stepper-bg);
+    }
+  }
+
+  @include m(outlined) {
+    @include e(button) {
+      color: css-var(color-primary);
+      border: 1px solid css-var(color-primary);
+
+      @include is-not(disabled, readonly) {
+        &:active {
+          background: css-var(bg-color-active);
+        }
+      }
+    }
+    @include e(input) {
+      border-top: 1px solid css-var(color-primary);
+      border-bottom: 1px solid css-var(color-primary);
+    }
+  }
+
+  @include m(accent) {
+    height: css-var(stepper-accent-height);
+    gap: css-var(stepper-gap);
+
+    @include e(button) {
+      border-radius: 50%;
+      width: css-var(stepper-accent-height);
+
+      @include is-not(disabled, readonly) {
+        &:active {
+          opacity: css-var(opacity-active);
+        }
+      }
+
+      @include m(decrease) {
+        color: css-var(color-primary);
+        border: 1px solid css-var(color-primary);
+      }
+
+      @include m(increase) {
+        color: css-var(white);
+        background: css-var(color-primary);
+      }
+    }
+    @include e(input) {
+      padding: 0;
+    }
+  }
+
+  @include m(ghost) {
+    gap: css-var(stepper-gap);
+
+    @include e(button) {
+      @include is-not(disabled, readonly) {
+        &:active {
+          opacity: css-var(opacity-active);
+        }
+      }
+    }
+
+    @include e(input) {
+      border-radius: css-var(stepper-button-border-radius);
+      background: css-var(stepper-bg);
+    }
+  }
+
+  @include m(small) {
+    height: css-var(stepper-height-sm);
+
+    @include e(input) {
+      width: css-var(stepper-input-width-sm);
+      font-size: css-var(stepper-input-font-size-sm);
+    }
+
+    @include e(button) {
+      width: css-var(stepper-height-sm);
+      font-size: css-var(stepper-button-font-size-sm);
+    }
+  }
+
+  @include m-intersect(small, accent) {
+    height: css-var(stepper-accent-height-sm);
+
+    @include e(button) {
+      width: css-var(stepper-accent-height-sm);
+    }
+  }
+}

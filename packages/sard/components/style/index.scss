@@ -1,0 +1,252 @@
+@use './base' as *;
+
+// #region variables
+:root {
+  // # 灰度值
+  #{css-var-name(white)}: $s-white;
+  #{css-var-name(gray-50)}: $s-gray-50;
+  #{css-var-name(gray-100)}: $s-gray-100;
+  #{css-var-name(gray-125)}: $s-gray-125;
+  #{css-var-name(gray-150)}: $s-gray-150;
+  #{css-var-name(gray-200)}: $s-gray-200;
+  #{css-var-name(gray-300)}: $s-gray-300;
+  #{css-var-name(gray-400)}: $s-gray-400;
+  #{css-var-name(gray-500)}: $s-gray-500;
+  #{css-var-name(gray-600)}: $s-gray-600;
+  #{css-var-name(gray-700)}: $s-gray-700;
+  #{css-var-name(gray-800)}: $s-gray-800;
+  #{css-var-name(gray-900)}: $s-gray-900;
+  #{css-var-name(gray-950)}: $s-gray-950;
+  #{css-var-name(black)}: $s-black;
+
+  // # 灰度值 rgb
+  #{css-var-name(white-rgb)}: #{$s-white-rgb};
+  #{css-var-name(gray-50-rgb)}: #{$s-gray-50-rgb};
+  #{css-var-name(gray-100-rgb)}: #{$s-gray-100-rgb};
+  #{css-var-name(gray-125-rgb)}: #{$s-gray-125-rgb};
+  #{css-var-name(gray-150-rgb)}: #{$s-gray-150-rgb};
+  #{css-var-name(gray-200-rgb)}: #{$s-gray-200-rgb};
+  #{css-var-name(gray-300-rgb)}: #{$s-gray-300-rgb};
+  #{css-var-name(gray-400-rgb)}: #{$s-gray-400-rgb};
+  #{css-var-name(gray-500-rgb)}: #{$s-gray-500-rgb};
+  #{css-var-name(gray-600-rgb)}: #{$s-gray-600-rgb};
+  #{css-var-name(gray-700-rgb)}: #{$s-gray-700-rgb};
+  #{css-var-name(gray-800-rgb)}: #{$s-gray-800-rgb};
+  #{css-var-name(gray-900-rgb)}: #{$s-gray-900-rgb};
+  #{css-var-name(gray-950-rgb)}: #{$s-gray-950-rgb};
+  #{css-var-name(black-rgb)}: #{$s-black-rgb};
+
+  // # 主题色
+  #{css-var-name(color-primary)}: $s-blue;
+  #{css-var-name(color-secondary)}: css-var(gray-600);
+  #{css-var-name(color-success)}: $s-green;
+  #{css-var-name(color-warning)}: $s-yellow;
+  #{css-var-name(color-danger)}: $s-red;
+
+  // # 主题色 rgb
+  #{css-var-name(color-primary-rgb)}: #{$s-blue-rgb};
+  #{css-var-name(color-secondary-rgb)}: #{$s-gray-600-rgb};
+  #{css-var-name(color-success-rgb)}: #{$s-green-rgb};
+  #{css-var-name(color-warning-rgb)}: #{$s-yellow-rgb};
+  #{css-var-name(color-danger-rgb)}: #{$s-red-rgb};
+
+  // # 文本颜色
+  #{css-var-name(text-color-emphasis)}: css-var(black);
+  #{css-var-name(text-color-primary)}: css-var(gray-900);
+  #{css-var-name(text-color-secondary)}: css-var(gray-700);
+  #{css-var-name(text-color-tertiary)}: css-var(gray-600);
+  #{css-var-name(text-color-fourth)}: css-var(gray-400);
+  #{css-var-name(text-color-disabled)}: css-var(gray-400);
+
+  // # 背景色
+  #{css-var-name(bg-color-layout)}: css-var(gray-100);
+  #{css-var-name(bg-color-container)}: css-var(white);
+  #{css-var-name(bg-color-container-rgb)}: css-var(white-rgb);
+  #{css-var-name(bg-color-elevated)}: css-var(white);
+  #{css-var-name(bg-color-elevated-rgb)}: css-var(white-rgb);
+  #{css-var-name(bg-color-extreme)}: css-var(white);
+  #{css-var-name(bg-color-disabled)}: css-var(gray-150);
+  #{css-var-name(bg-color-active)}: css-var(gray-125);
+  #{css-var-name(bg-color-active-dark)}: css-var(gray-200);
+  #{css-var-name(fill-color)}: css-var(gray-200);
+  #{css-var-name(fill-color-secondary)}: css-var(gray-150);
+  #{css-var-name(fill-color-tertiary)}: css-var(gray-125);
+  #{css-var-name(fill-color-fourth)}: css-var(gray-100);
+
+  // # 边框
+  #{css-var-name(border-style)}: solid;
+  #{css-var-name(border-width)}: 1px;
+  #{css-var-name(border-color-dark)}: css-var(gray-300);
+  #{css-var-name(border-color)}: css-var(gray-150);
+  #{css-var-name(border-color-light)}: css-var(gray-125);
+  #{css-var-name(border-color-lighter)}: css-var(gray-100);
+  #{css-var-name(border-color-disabled)}: css-var(gray-200);
+
+  // # 圆角
+  #{css-var-name(border-radius-xs)}: 2px;
+  #{css-var-name(border-radius-sm)}: 4px;
+  #{css-var-name(border-radius)}: 6px;
+  #{css-var-name(border-radius-lg)}: 10px;
+  #{css-var-name(border-radius-xl)}: 14px;
+  #{css-var-name(border-radius-full)}: 9999px;
+
+  // # 字体
+  #{css-var-name(font-family)}:
+    -apple-system,
+    blinkmacsystemfont,
+    'Helvetica Neue',
+    helvetica,
+    segoe ui,
+    arial,
+    roboto,
+    'PingFang SC',
+    'miui',
+    'Hiragino Sans GB',
+    'Microsoft Yahei',
+    sans-serif;
+  #{css-var-name(font-family-code)}:
+    SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+
+  // # 字号
+  #{css-var-name(font-size-xs)}: 10px;
+  #{css-var-name(font-size-sm)}: 12px;
+  #{css-var-name(font-size)}: 14px;
+  #{css-var-name(font-size-lg)}: 16px;
+  #{css-var-name(font-size-xl)}: 24px;
+  #{css-var-name(font-size-2xl)}: 32px;
+
+  // # 字重
+  #{css-var-name(font-weight-bold)}: 600;
+  #{css-var-name(font-weight-normal)}: 400;
+  #{css-var-name(font-weight-light)}: 300;
+
+  // # 行高
+  #{css-var-name(line-height-none)}: 1;
+  #{css-var-name(line-height-tight)}: 1.25;
+  #{css-var-name(line-height-snug)}: 1.375;
+  #{css-var-name(line-height-normal)}: 1.5;
+  #{css-var-name(line-height-relaxed)}: 1.625;
+  #{css-var-name(line-height-loose)}: 2;
+
+  // # 尺寸
+  #{css-var-name(size-3xs)}: 2px;
+  #{css-var-name(size-2xs)}: 4px;
+  #{css-var-name(size-xs)}: 8px;
+  #{css-var-name(size-sm)}: 12px;
+  #{css-var-name(size)}: 16px;
+  #{css-var-name(size-lg)}: 20px;
+  #{css-var-name(size-xl)}: 24px;
+  #{css-var-name(size-2xl)}: 32px;
+  #{css-var-name(size-3xl)}: 40px;
+  #{css-var-name(size-4xl)}: 48px;
+  #{css-var-name(size-5xl)}: 56px;
+  #{css-var-name(size-6xl)}: 64px;
+
+  // # content
+  #{css-var-name(content-height-2xs)}: 24px;
+  #{css-var-name(content-height-xs)}: 32px;
+  #{css-var-name(content-height-sm)}: 40px;
+  #{css-var-name(content-height)}: 44px;
+  #{css-var-name(content-height-lg)}: 48px;
+  #{css-var-name(content-padding-y)}: css-var(size-xs);
+  #{css-var-name(content-padding-x)}: css-var(size);
+  #{css-var-name(content-padding)}: css-var(size-xs) css-var(size);
+
+  // # z-index
+  #{css-var-name(z-index)}: 1000;
+  #{css-var-name(z-index-secondary)}: 100;
+  #{css-var-name(z-index-tertiary)}: 10;
+
+  // # 阴影
+  #{css-var-name(box-shadow)}:
+    0 6px 16px 0 rgba(0, 0, 0, 0.08),
+    0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  #{css-var-name(box-shadow-secondary)}:
+    0 6px 16px 0 rgba(0, 0, 0, 0.08),
+    0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  #{css-var-name(box-shadow-tertiary)}:
+    0 1px 2px 0 rgba(0, 0, 0, 0.05),
+    0 1px 6px -1px rgba(0, 0, 0, 0.03),
+    0 2px 4px 0 rgba(0, 0, 0, 0.03);
+  #{css-var-name(box-shadow-side-color)}: rgba(0, 0, 0, 0.15);
+  #{css-var-name(box-shadow-left)}: inset 10px 0 10px -10px css-var(box-shadow-side-color);
+  #{css-var-name(box-shadow-right)}: inset -10px 0 10px -10px css-var(box-shadow-side-color);
+  #{css-var-name(box-shadow-top)}: inset 0 10px 10px -10px css-var(box-shadow-side-color);
+  #{css-var-name(box-shadow-bottom)}: inset 0 -10px 10px -10px css-var(box-shadow-side-color);
+
+  // # 遮罩
+  #{css-var-name(overlay-legible)}: rgba(0, 0, 0, 0.1);
+  #{css-var-name(overlay)}: rgba(0, 0, 0, 0.5);
+  #{css-var-name(overlay-illegible)}: rgba(0, 0, 0, 0.7);
+
+  // # 透明度
+  #{css-var-name(opacity-disabled)}: 0.6;
+  #{css-var-name(opacity-active)}: 0.5;
+  #{css-var-name(opacity-loading)}: 0.6;
+  #{css-var-name(opacity-theme-bg)}: 0.1;
+
+  // # cursor
+  #{css-var-name(cursor-disabled)}: not-allowed;
+  #{css-var-name(cursor-loading)}: wait;
+
+  // # filter
+  #{css-var-name(filter-disabled)}: grayscale(100%);
+
+  // # 过渡时间
+  #{css-var-name(duration-slow)}: 350ms;
+  #{css-var-name(duration)}: 250ms;
+  #{css-var-name(duration-fast)}: 150ms;
+
+  // # 底部安全距离
+  #{css-var-name(safe-bottom)}: env(safe-area-inset-bottom);
+}
+
+@include theme-dark {
+  // # 文本颜色
+  #{css-var-name(text-color-emphasis)}: css-var(white);
+  #{css-var-name(text-color-primary)}: css-var(gray-100);
+  #{css-var-name(text-color-secondary)}: css-var(gray-300);
+  #{css-var-name(text-color-tertiary)}: css-var(gray-500);
+  #{css-var-name(text-color-fourth)}: css-var(gray-600);
+  #{css-var-name(text-color-disabled)}: css-var(gray-600);
+
+  // # 背景色
+  #{css-var-name(bg-color-layout)}: css-var(black);
+  #{css-var-name(bg-color-container)}: css-var(gray-950);
+  #{css-var-name(bg-color-container-rgb)}: css-var(gray-950-rgb);
+  #{css-var-name(bg-color-elevated)}: css-var(gray-950);
+  #{css-var-name(bg-color-elevated-rgb)}: css-var(gray-950-rgb);
+  #{css-var-name(bg-color-extreme)}: css-var(black);
+  #{css-var-name(bg-color-disabled)}: css-var(gray-700);
+  #{css-var-name(bg-color-active)}: css-var(gray-800);
+  #{css-var-name(bg-color-active-dark)}: css-var(gray-600);
+  #{css-var-name(fill-color)}: css-var(gray-600);
+  #{css-var-name(fill-color-secondary)}: css-var(gray-700);
+  #{css-var-name(fill-color-tertiary)}: css-var(gray-800);
+  #{css-var-name(fill-color-fourth)}: css-var(gray-900);
+
+  // # 边框
+  #{css-var-name(border-color-dark)}: css-var(gray-600);
+  #{css-var-name(border-color)}: css-var(gray-700);
+  #{css-var-name(border-color-light)}: css-var(gray-800);
+  #{css-var-name(border-color-lighter)}: css-var(gray-900);
+  #{css-var-name(border-color-disabled)}: css-var(gray-700);
+
+  // # 阴影
+  #{css-var-name(box-shadow)}:
+    0 6px 16px 0 rgba(255, 255, 255, 0.04),
+    0 3px 6px -4px rgba(255, 255, 255, 0.06),
+    0 9px 28px 8px rgba(255, 255, 255, 0.02);
+  #{css-var-name(box-shadow-secondary)}:
+    0 6px 16px 0 rgba(255, 255, 255, 0.04),
+    0 3px 6px -4px rgba(255, 255, 255, 0.06),
+    0 9px 28px 8px rgba(255, 255, 255, 0.02);
+  #{css-var-name(box-shadow-tertiary)}:
+    0 1px 2px 0 rgba(255, 255, 255, 0.05),
+    0 1px 6px -1px rgba(255, 255, 255, 0.03),
+    0 2px 4px 0 rgba(255, 255, 255, 0.03);
+  #{css-var-name(box-shadow-side-color)}: rgba(255, 255, 255, 0.1);
+}
+// #endregion variables

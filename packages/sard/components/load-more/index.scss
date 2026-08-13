@@ -1,0 +1,22 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(load-more-height)}: css-var(size-4xl);
+  #{css-var-name(load-more-font-size)}: css-var(font-size-sm);
+  #{css-var-name(load-more-color)}: css-var(text-color-tertiary);
+}
+// #endregion variables
+
+@include b(load-more) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: css-var(load-more-height);
+  font-size: css-var(load-more-font-size);
+  color: css-var(load-more-color);
+
+  @include m(incomplete, error) {
+    cursor: pointer;
+  }
+}

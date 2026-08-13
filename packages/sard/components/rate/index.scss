@@ -1,0 +1,72 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(rate-gap)}: css-var(size-xs);
+  #{css-var-name(rate-star-font-size)}: css-var(size-lg);
+  #{css-var-name(rate-void-star-color)}: css-var(text-color-fourth);
+  #{css-var-name(rate-star-color)}: css-var(color-warning);
+}
+// #endregion variables
+
+@include b(rate) {
+  display: inline-flex;
+  -webkit-user-select: none;
+  user-select: none;
+
+  @include e(content) {
+    display: flex;
+    gap: css-var(rate-gap);
+    touch-action: pan-y;
+  }
+
+  @include e(item) {
+    position: relative;
+    font-size: css-var(rate-star-font-size);
+    line-height: css-var(line-height-none);
+    cursor: pointer;
+
+    svg {
+      flex: none;
+    }
+  }
+
+  @include e(void-star) {
+    color: css-var(rate-void-star-color);
+  }
+
+  @include e(star) {
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    display: flex;
+    align-items: flex-start;
+    width: 0;
+    overflow: hidden;
+    color: css-var(rate-star-color);
+  }
+
+  @include m(readonly, disabled) {
+    touch-action: auto;
+  }
+
+  @include m(readonly) {
+    @include e(item) {
+      cursor: unset;
+    }
+  }
+
+  @include m(disabled) {
+    @include e(void-star) {
+      color: css-var(border-color-disabled);
+    }
+
+    @include e(star) {
+      color: css-var(text-color-disabled);
+    }
+
+    @include e(item) {
+      cursor: not-allowed;
+    }
+  }
+}

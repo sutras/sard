@@ -1,0 +1,188 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(menu-bg)}: css-var(white);
+  #{css-var-name(menu-item-radius)}: css-var(border-radius);
+  #{css-var-name(menu-item-height)}: css-var(content-height);
+  #{css-var-name(menu-item-padding-x)}: css-var(content-padding-x);
+  #{css-var-name(menu-item-font-size)}: css-var(font-size);
+  #{css-var-name(menu-item-bg-active)}: css-var(bg-color-active);
+  #{css-var-name(menu-border-color)}: css-var(border-color);
+
+  #{css-var-name(menu-item-bg-active-dark)}: css-var(gray-900);
+  #{css-var-name(menu-item-color-dark)}: css-var(white);
+  #{css-var-name(menu-border-color-dark)}: css-var(gray-700);
+  #{css-var-name(menu-bg-dark)}: css-var(gray-800);
+
+  #{css-var-name(menu-item-horizontal-height)}: css-var(content-height-xs);
+
+  #{css-var-name(menu-icon-font-size)}: css-var(font-size);
+  #{css-var-name(menu-icon-gap)}: css-var(size-sm);
+  #{css-var-name(menu-icon-horizontal-gap)}: css-var(size-xs);
+}
+
+@include theme-dark {
+  #{css-var-name(menu-bg)}: css-var(gray-800);
+}
+// #endregion variables
+
+@include b(menu) {
+  display: inline-flex;
+
+  @include m(vertical) {
+    flex-direction: column;
+  }
+
+  @include m(horizontal) {
+    flex-direction: row;
+  }
+
+  @include m(dark) {
+    #{css-var-name(menu-border-color)}: css-var(menu-border-color-dark);
+    #{css-var-name(menu-bg)}: css-var(menu-bg-dark);
+  }
+}
+
+@include b(menu) {
+  @include e(item) {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: css-var(menu-icon-gap);
+    height: css-var(menu-item-height);
+    padding-inline-start: css-var(menu-item-padding-x);
+    padding-inline-end: css-var(menu-item-padding-x);
+    font-size: css-var(menu-item-font-size);
+    background: css-var(menu-bg);
+    cursor: pointer;
+
+    @include is(disabled) {
+      cursor: not-allowed;
+    }
+  }
+
+  @include e(icon) {
+    width: css-var(menu-icon-font-size);
+    font-size: css-var(menu-icon-font-size);
+  }
+
+  @include e(label) {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-grow: 1;
+  }
+
+  @include m(vertical) {
+    @include e(item) {
+      &:first-child {
+        border-top-left-radius: css-var(menu-item-radius);
+        border-top-right-radius: css-var(menu-item-radius);
+      }
+
+      &:last-child {
+        border-bottom-left-radius: css-var(menu-item-radius);
+        border-bottom-right-radius: css-var(menu-item-radius);
+      }
+
+      &:not(:first-child) {
+        @include e(label) {
+          &::before {
+            @include border-top(css-var(menu-border-color));
+          }
+        }
+      }
+    }
+  }
+
+  @include m(horizontal) {
+    @include e(item) {
+      height: css-var(menu-item-horizontal-height);
+      gap: css-var(menu-icon-horizontal-gap);
+
+      &:first-child {
+        @include not-rtl {
+          border-top-left-radius: css-var(menu-item-radius);
+          border-bottom-left-radius: css-var(menu-item-radius);
+        }
+        @include rtl {
+          border-top-right-radius: css-var(menu-item-radius);
+          border-bottom-right-radius: css-var(menu-item-radius);
+        }
+      }
+
+      &:last-child {
+        @include not-rtl {
+          border-top-right-radius: css-var(menu-item-radius);
+          border-bottom-right-radius: css-var(menu-item-radius);
+        }
+        @include rtl {
+          border-top-left-radius: css-var(menu-item-radius);
+          border-bottom-left-radius: css-var(menu-item-radius);
+        }
+      }
+
+      &:not(:first-child) {
+        &::before {
+          @include border-left(css-var(menu-border-color));
+        }
+      }
+    }
+  }
+
+  @include m(light) {
+    @include e(item) {
+      @include is-not(disabled) {
+        &:active {
+          background: css-var(menu-item-bg-active);
+        }
+      }
+
+      @include is(disabled) {
+        color: css-var(text-color-disabled);
+      }
+    }
+  }
+
+  @include m(dark) {
+    #{css-var-name(menu-border-color)}: css-var(menu-border-color-dark);
+
+    @include e(item) {
+      @include is-not(disabled) {
+        &:active {
+          background: css-var(menu-item-bg-active-dark);
+        }
+      }
+
+      @include is(disabled) {
+        @include e(label) {
+          color: css-var(gray-600);
+        }
+      }
+    }
+
+    @include e(icon) {
+      color: css-var(menu-item-color-dark);
+    }
+
+    @include e(label) {
+      color: css-var(menu-item-color-dark);
+    }
+  }
+
+  @include m(vertical) {
+    @include e(label) {
+      justify-content: flex-start;
+    }
+  }
+
+  @include has(icon) {
+    @include e(label) {
+      justify-content: flex-start;
+    }
+  }
+}

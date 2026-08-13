@@ -1,0 +1,141 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(tabs-tab-height)}: css-var(content-height);
+  #{css-var-name(tabs-tab-font-size)}: css-var(font-size);
+  #{css-var-name(tabs-tab-line-height)}: css-var(line-height-snug);
+  #{css-var-name(tabs-tab-color)}: css-var(text-color-secondary);
+  #{css-var-name(tabs-tab-color-active)}: css-var(text-color-emphasis);
+  #{css-var-name(tabs-tab-padding-x)}: css-var(size);
+
+  #{css-var-name(tabs-pill-tab-height)}: 30px;
+  #{css-var-name(tabs-pill-tab-bg-current)}: css-var(color-primary);
+  #{css-var-name(tabs-pill-tab-color-current)}: css-var(white);
+
+  #{css-var-name(tabs-card-tab-height)}: 30px;
+  #{css-var-name(tabs-card-color-primary)}: css-var(color-primary);
+  #{css-var-name(tabs-card-border-radius)}: css-var(border-radius);
+
+  #{css-var-name(tabs-line-width)}: 40px;
+  #{css-var-name(tabs-line-height)}: 3px;
+  #{css-var-name(tabs-line-bg)}: css-var(color-primary);
+  #{css-var-name(tabs-line-duration)}: css-var(duration);
+}
+// #endregion variables
+
+@include b(tabs) {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: auto;
+
+  @include e(wrapper) {
+    position: relative;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    min-width: 100%;
+  }
+
+  @include m(scrollable) {
+    @include e(wrapper) {
+      min-width: auto;
+    }
+  }
+
+  @include e(line) {
+    position: absolute;
+    bottom: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: css-var(tabs-line-width);
+    height: css-var(tabs-line-height);
+    background: css-var(tabs-line-bg);
+    line-height: 1;
+    pointer-events: none;
+    transform: translateX(-50%);
+    transition: left css-var(tabs-line-duration);
+  }
+
+  @include e(tab) {
+    position: relative;
+    display: flex;
+    z-index: 2;
+    flex: 1;
+    height: css-var(tabs-tab-height);
+    justify-content: center;
+    align-items: center;
+    padding: 0 css-var(tabs-tab-padding-x);
+    font-size: css-var(tabs-tab-font-size);
+    line-height: css-var(tabs-tab-line-height);
+    color: css-var(tabs-tab-color);
+    white-space: nowrap;
+    cursor: pointer;
+
+    @include is(active) {
+      font-weight: css-var(font-weight-bold);
+      color: css-var(tabs-tab-color-active);
+      background: css-var(tab-bg-active);
+    }
+
+    @include is(disabled) {
+      @include disabled-text;
+    }
+  }
+
+  @include m(scrollable) {
+    @include e(tab) {
+      flex: 0;
+    }
+  }
+
+  @include m(pill) {
+    @include e(tab) {
+      height: css-var(tabs-pill-tab-height);
+      border-radius: css-var(border-radius-full);
+
+      @include is(active) {
+        color: css-var(tabs-pill-tab-color-current);
+        background: css-var(tabs-pill-tab-bg-current);
+      }
+    }
+  }
+
+  @include m(card) {
+    @include e(tab) {
+      height: css-var(tabs-card-tab-height);
+      border: 1px solid css-var(tabs-card-color-primary);
+      border-inline-start-width: 0;
+      color: css-var(tabs-card-color-primary);
+
+      &:first-child {
+        @include not-rtl {
+          border-top-left-radius: css-var(tabs-card-border-radius);
+          border-bottom-left-radius: css-var(tabs-card-border-radius);
+        }
+        @include rtl {
+          border-top-right-radius: css-var(tabs-card-border-radius);
+          border-bottom-right-radius: css-var(tabs-card-border-radius);
+        }
+        border-inline-start-width: 1px;
+      }
+
+      &:last-child {
+        @include not-rtl {
+          border-top-right-radius: css-var(tabs-card-border-radius);
+          border-bottom-right-radius: css-var(tabs-card-border-radius);
+        }
+        @include rtl {
+          border-top-left-radius: css-var(tabs-card-border-radius);
+          border-bottom-left-radius: css-var(tabs-card-border-radius);
+        }
+      }
+
+      @include is(active) {
+        color: css-var(white);
+        background: css-var(tabs-card-color-primary);
+      }
+    }
+  }
+}

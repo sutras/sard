@@ -1,0 +1,49 @@
+@use './functions.scss' as *;
+
+// # 灰度色
+$s-white: #fff;
+$s-gray-50: #fafafa;
+$s-gray-100: #f3f3f3;
+$s-gray-125: #ececec;
+$s-gray-150: #e5e5e5;
+$s-gray-200: #dedede;
+$s-gray-300: #c4c4c4;
+$s-gray-400: #ababab;
+$s-gray-500: #8f8f8f;
+$s-gray-600: #717171;
+$s-gray-700: #525252;
+$s-gray-800: #353535;
+$s-gray-900: #181818;
+$s-gray-950: #0e0e0e;
+$s-black: #000;
+
+// # 灰度色 rgb
+$s-white-rgb: hex-to-rgb($s-white);
+$s-gray-50-rgb: hex-to-rgb($s-gray-50);
+$s-gray-100-rgb: hex-to-rgb($s-gray-100);
+$s-gray-125-rgb: hex-to-rgb($s-gray-125);
+$s-gray-150-rgb: hex-to-rgb($s-gray-150);
+$s-gray-200-rgb: hex-to-rgb($s-gray-200);
+$s-gray-300-rgb: hex-to-rgb($s-gray-300);
+$s-gray-400-rgb: hex-to-rgb($s-gray-400);
+$s-gray-500-rgb: hex-to-rgb($s-gray-500);
+$s-gray-600-rgb: hex-to-rgb($s-gray-600);
+$s-gray-700-rgb: hex-to-rgb($s-gray-700);
+$s-gray-800-rgb: hex-to-rgb($s-gray-800);
+$s-gray-900-rgb: hex-to-rgb($s-gray-900);
+$s-gray-950-rgb: hex-to-rgb($s-gray-950);
+$s-black-rgb: hex-to-rgb($s-black);
+
+// # 主题色
+$s-blue: #3b82f6;
+$s-red: #ef4444;
+$s-orange: #f97316;
+$s-yellow: #eab308;
+$s-green: #22c55e;
+
+// # 主题色 rgb
+$s-blue-rgb: hex-to-rgb($s-blue);
+$s-red-rgb: hex-to-rgb($s-red);
+$s-orange-rgb: hex-to-rgb($s-orange);
+$s-yellow-rgb: hex-to-rgb($s-yellow);
+$s-green-rgb: hex-to-rgb($s-green);

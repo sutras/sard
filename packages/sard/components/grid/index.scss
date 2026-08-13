@@ -1,0 +1,119 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(grid-bg)}: css-var(bg-color-container);
+  #{css-var-name(grid-bg-active)}: css-var(bg-color-active);
+  #{css-var-name(grid-border-color)}: css-var(border-color);
+
+  #{css-var-name(grid-content-padding-x)}: css-var(size-xs);
+  #{css-var-name(grid-content-padding-y)}: css-var(size);
+  #{css-var-name(grid-content-gap)}: css-var(size-xs);
+
+  #{css-var-name(grid-icon-size)}: css-var(size-xl);
+
+  #{css-var-name(grid-text-font-size)}: css-var(font-size-sm);
+  #{css-var-name(grid-text-line-height)}: css-var(line-height-tight);
+  #{css-var-name(grid-text-color)}: css-var(text-color-primary);
+}
+// #endregion variables
+
+@include b(grid) {
+  position: relative;
+  display: grid;
+
+  @include e(item) {
+    position: relative;
+  }
+
+  // ============================ 方形 ============================
+  @include m(square) {
+    @include e(item) {
+      aspect-ratio: 1 / 1;
+    }
+  }
+
+  // ============================ 边框 ============================
+  @include m(bordered) {
+    &::after {
+      @include border-top-left(css-var(grid-border-color));
+    }
+
+    @include e(item) {
+      &::after {
+        @include border-bottom-right(css-var(grid-border-color));
+      }
+    }
+  }
+
+  @include m(surround) {
+    @include e(item) {
+      &::after {
+        @include border-surround(css-var(grid-border-color));
+      }
+    }
+  }
+
+  // ============================ 点击高亮 ============================
+  @include m(clickable) {
+    @include e(content) {
+      cursor: pointer;
+      &:active {
+        background: css-var(grid-bg-active);
+      }
+    }
+  }
+
+  // ============================ 内容 ============================
+  @include e(content) {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding-top: css-var(grid-content-padding-y);
+    padding-inline-end: css-var(grid-content-padding-x);
+    padding-bottom: css-var(grid-content-padding-y);
+    padding-inline-start: css-var(grid-content-padding-x);
+    gap: css-var(grid-content-gap);
+    background: css-var(grid-bg);
+  }
+
+  @include e(icon) {
+    position: relative;
+    display: flex;
+    font-size: css-var(grid-icon-size);
+    line-height: 1;
+  }
+
+  @include e(text) {
+    font-size: css-var(grid-text-font-size);
+    line-height: css-var(grid-text-line-height);
+    color: css-var(grid-text-color);
+    text-align: center;
+  }
+
+  @include m(vertical) {
+    @include e(content) {
+      flex-direction: column;
+    }
+  }
+
+  @include m(horizontal) {
+    @include e(content) {
+      flex-direction: row;
+    }
+  }
+
+  @include m-intersect(vertical, reverse) {
+    @include e(content) {
+      flex-direction: column-reverse;
+    }
+  }
+
+  @include m-intersect(horizontal, reverse) {
+    @include e(content) {
+      flex-direction: row-reverse;
+    }
+  }
+}

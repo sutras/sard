@@ -1,0 +1,219 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(upload-preview-width)}: 88px;
+  #{css-var-name(upload-preview-height)}: 88px;
+  #{css-var-name(upload-preview-gap)}: css-var(size-xs);
+  #{css-var-name(upload-preview-border-radius)}: css-var(border-radius);
+  #{css-var-name(upload-preview-bg)}: css-var(fill-color-secondary);
+  #{css-var-name(upload-preview-video-bg)}: css-var(black);
+
+  #{css-var-name(upload-file-color)}: css-var(text-color-primary);
+  #{css-var-name(upload-file-icon-font-size)}: css-var(size-lg);
+  #{css-var-name(upload-file-name-margin-top)}: css-var(size-2xs);
+  #{css-var-name(upload-file-name-padding-x)}: css-var(size-2xs);
+  #{css-var-name(upload-file-name-font-size)}: css-var(font-size-sm);
+
+  #{css-var-name(upload-status-color)}: css-var(white);
+  #{css-var-name(upload-status-bg)}: css-var(overlay-illegible);
+  #{css-var-name(upload-status-icon-font-size)}: css-var(size-lg);
+  #{css-var-name(upload-status-message-margin-top)}: css-var(size-2xs);
+  #{css-var-name(upload-status-message-padding-x)}: css-var(size-2xs);
+  #{css-var-name(upload-status-message-font-size)}: css-var(font-size-sm);
+
+  #{css-var-name(upload-close-top)}: 2px;
+  #{css-var-name(upload-close-right)}: 2px;
+  #{css-var-name(upload-close-size)}: css-var(size-lg);
+  #{css-var-name(upload-close-font-size)}: css-var(font-size-sm);
+  #{css-var-name(upload-close-color)}: css-var(white);
+  #{css-var-name(upload-close-bg)}: css-var(overlay-illegible);
+
+  #{css-var-name(upload-select-width)}: 88px;
+  #{css-var-name(upload-select-height)}: 88px;
+  #{css-var-name(upload-select-font-size)}: css-var(size-xl);
+  #{css-var-name(upload-select-color)}: css-var(text-color-secondary);
+  #{css-var-name(upload-select-radius)}: css-var(border-radius);
+  #{css-var-name(upload-select-bg)}: css-var(fill-color-secondary);
+  #{css-var-name(upload-select-bg-active)}: css-var(bg-color-active-dark);
+
+  #{css-var-name(upload-video-play-bg)}: css-var(overlay-legible);
+  #{css-var-name(upload-video-play-color)}: rgba(css-var(white-rgb), 0.8);
+
+  #{css-var-name(upload-loading-size)}: css-var(size-lg);
+}
+// #endregion variables
+
+@include b(upload) {
+  @include e(wrapper) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: css-var(upload-preview-gap);
+  }
+
+  @include e(select) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: css-var(upload-select-width);
+    height: css-var(upload-select-height);
+    color: css-var(upload-select-color);
+    border-radius: css-var(upload-select-radius);
+    background: css-var(upload-select-bg);
+    cursor: pointer;
+  }
+
+  @include e(select-icon) {
+    font-size: css-var(upload-select-font-size);
+    line-height: css-var(line-height-none);
+  }
+
+  @include is-not(disabled, readonly) {
+    @include e(select) {
+      &:active {
+        background: css-var(upload-select-bg-active);
+      }
+    }
+  }
+
+  @include is(disabled) {
+    @include e(select) {
+      @include disabled-text;
+    }
+  }
+
+  @include is(readonly) {
+    @include e(select) {
+      cursor: unset;
+    }
+  }
+}
+
+@include b(upload) {
+  @include e(preview) {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: css-var(upload-preview-width);
+    height: css-var(upload-preview-height);
+    overflow: hidden;
+    border-radius: css-var(upload-preview-border-radius);
+    background: css-var(upload-preview-bg);
+
+    @include m(is-video) {
+      background: css-var(upload-preview-video-bg);
+    }
+  }
+
+  @include e(image) {
+    width: 100%;
+    height: 100%;
+  }
+
+  @include e(video-wrapper) {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
+
+  @include e(video) {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
+
+  @include e(video-play) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    color: css-var(upload-video-play-color);
+    background: css-var(upload-video-play-bg);
+    cursor: pointer;
+  }
+
+  @include e(video-play-icon) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+  }
+
+  @include e(file) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: css-var(upload-file-color);
+  }
+
+  @include e(file-icon) {
+    font-size: css-var(upload-file-icon-font-size);
+  }
+
+  @include e(file-name) {
+    max-width: 100%;
+    padding: 0 css-var(upload-file-name-padding-x);
+    margin-top: css-var(upload-file-name-margin-top);
+    font-size: css-var(upload-file-name-font-size);
+  }
+
+  @include e(status) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: css-var(upload-status-color);
+    background: css-var(upload-status-bg);
+  }
+
+  @include e(status-icon) {
+    font-size: css-var(upload-status-icon-font-size);
+  }
+
+  @include e(status-message) {
+    max-width: 100%;
+    padding: 0 css-var(upload-status-message-padding-x);
+    margin-top: css-var(upload-status-message-margin-top);
+    font-size: css-var(upload-status-message-font-size);
+    text-align: center;
+  }
+
+  @include e(remove) {
+    position: absolute;
+    top: 0;
+    inset-inline-end: 0;
+    z-index: 2;
+    padding-inline-end: css-var(upload-close-right);
+    padding-top: css-var(upload-close-top);
+  }
+
+  @include e(close) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: css-var(upload-close-size);
+    height: css-var(upload-close-size);
+    border-radius: css-var(border-radius-full);
+    font-size: css-var(upload-close-font-size);
+    color: css-var(upload-close-color);
+    background: css-var(upload-close-bg);
+    cursor: pointer;
+  }
+}

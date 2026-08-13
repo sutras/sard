@@ -1,0 +1,219 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(table-border-color)}: css-var(border-color);
+  #{css-var-name(table-bg)}: css-var(bg-color-container);
+  #{css-var-name(table-bg-striped)}: css-var(fill-color-tertiary);
+
+  #{css-var-name(table-header-bg)}: css-var(bg-color-container);
+
+  #{css-var-name(table-cell-padding-sm)}: 4px 6px;
+  #{css-var-name(table-cell-padding)}: 4px 8px;
+  #{css-var-name(table-cell-padding-lg)}: 6px 12px;
+
+  #{css-var-name(table-font-size-sm)}: css-var(font-size-sm);
+  #{css-var-name(table-font-size)}: css-var(font-size);
+  #{css-var-name(table-font-size-lg)}: css-var(font-size);
+}
+// #endregion variables
+
+@mixin border {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  background: css-var(border-color);
+}
+
+@mixin border-bottom {
+  @include border;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+}
+
+@mixin border-top {
+  @include border;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+}
+
+@mixin border-right {
+  @include border;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+}
+
+@mixin border-left {
+  @include border;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+}
+
+@include b(table) {
+  position: relative;
+  min-width: 100%;
+  background: css-var(table-bg);
+  font-size: css-var(table-font-size);
+
+  @include e(wrapper) {
+    height: 100%;
+  }
+
+  @include e(scroll) {
+    height: 100%;
+    overflow: auto;
+  }
+
+  table {
+    box-sizing: border-box;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 100%;
+  }
+
+  @include e(header) {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  @include e(cell) {
+    box-sizing: border-box;
+    position: relative;
+    text-align: start;
+    padding: css-var(table-cell-padding);
+    background: css-var(table-bg);
+
+    &:is(th) {
+      background: css-var(table-header-bg);
+    }
+
+    @include is(fixed) {
+      position: sticky;
+      z-index: 1;
+    }
+  }
+
+  // ============================ border ============================
+
+  @include m(underlined) {
+    @include e(cell) {
+      border-bottom: 1px solid css-var(border-color);
+    }
+
+    &::after {
+      @include border-bottom;
+    }
+  }
+
+  @include m(bordered) {
+    @include e(wrapper) {
+      &::before {
+        @include border-top;
+      }
+      &::after {
+        @include border-left;
+      }
+    }
+
+    table {
+      border-top: 1px solid css-var(border-color);
+      border-left: 1px solid css-var(border-color);
+    }
+
+    @include e(cell) {
+      border-right: 1px solid css-var(border-color);
+      border-bottom: 1px solid css-var(border-color);
+    }
+
+    &::before {
+      @include border-right;
+    }
+    &::after {
+      @include border-bottom;
+    }
+  }
+
+  // ============================ striped ============================
+
+  @include m(striped) {
+    tr:nth-child(2n) {
+      @include e(cell) {
+        background: css-var(table-bg-striped);
+      }
+    }
+  }
+
+  // ========================== side shadow ==========================
+  @include e(cell) {
+    @include is(first, last) {
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 10px;
+        overflow: hidden;
+        pointer-events: none;
+      }
+    }
+  }
+
+  @include m(scroll-none, scroll-start) {
+    @include e(cell) {
+      @include is(first) {
+        &::before {
+          inset-inline-end: 100%;
+          box-shadow: css-var(box-shadow-right);
+
+          @include rtl {
+            box-shadow: css-var(box-shadow-left);
+          }
+        }
+      }
+    }
+  }
+
+  @include m(scroll-none, scroll-end) {
+    @include e(cell) {
+      @include is(last) {
+        border-right: none;
+
+        &::before {
+          inset-inline-start: 100%;
+          box-shadow: css-var(box-shadow-left);
+
+          @include rtl {
+            box-shadow: css-var(box-shadow-right);
+          }
+        }
+      }
+    }
+  }
+
+  // ============================ size ============================
+  @include m(small) {
+    font-size: css-var(table-font-size-sm);
+
+    @include e(cell) {
+      padding: css-var(table-cell-padding-sm);
+    }
+  }
+
+  @include m(large) {
+    font-size: css-var(table-font-size-lg);
+
+    @include e(cell) {
+      padding: css-var(table-cell-padding-lg);
+    }
+  }
+}

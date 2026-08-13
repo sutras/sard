@@ -1,0 +1,83 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(puzzle-verify-image-margin-bottom)}: css-var(size-sm);
+  #{css-var-name(puzzle-verify-piece-width)}: css-var(content-height);
+  #{css-var-name(puzzle-verify-piece-height)}: css-var(content-height);
+  #{css-var-name(puzzle-verify-piece-box-shadow)}: 2px 2px 15px rgb(0 0 0 / 0.8);
+  #{css-var-name(puzzle-verify-hollow-box-shadow)}: inset 2px 2px 5px 0 rgb(0 0 0 / 0.4);
+}
+// #endregion variables
+
+@include b(puzzle-verify) {
+  --valid-y: calc((100% - #{css-var(puzzle-verify-piece-height)}) * var(--y));
+  --valid-target-x: calc((100% - #{css-var(puzzle-verify-piece-width)}) * var(--target-x));
+  --valid-actual-x: calc((100% - #{css-var(puzzle-verify-piece-width)}) * var(--actual-x));
+  --top: var(--valid-y);
+  --right: calc(100% - #{css-var(puzzle-verify-piece-width)} - var(--valid-target-x));
+  --bottom: calc(100% - var(--valid-y) - #{css-var(puzzle-verify-piece-height)});
+  --left: var(--valid-target-x);
+
+  @include rtl {
+    --left: calc(100% - #{css-var(puzzle-verify-piece-width)} - var(--valid-target-x));
+    --right: var(--valid-target-x);
+  }
+
+  @include e(frame) {
+    position: relative;
+    display: flex;
+    padding-top: var(--padding-top);
+    margin-bottom: css-var(puzzle-verify-image-margin-bottom);
+    overflow: hidden;
+  }
+
+  @include e(whole, piece, piece-img) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  @include e(hollow) {
+    position: absolute;
+    background-color: css-var(white);
+    top: var(--top);
+    right: var(--right);
+    bottom: var(--bottom);
+    left: var(--left);
+    box-shadow: css-var(puzzle-verify-hollow-box-shadow);
+  }
+
+  @include e(piece) {
+    inset-inline-start: var(--valid-actual-x);
+    transform: translateX(calc(var(--valid-target-x) * -1));
+    pointer-events: none;
+    transition: css-var(slide-verify-duration);
+
+    @include rtl {
+      transform: translateX(var(--valid-target-x));
+    }
+  }
+
+  @include m(down) {
+    @include e(piece) {
+      transition: none;
+    }
+  }
+
+  @include e(piece-img) {
+    clip-path: inset(var(--top) var(--right) var(--bottom) var(--left));
+  }
+
+  @include e(piece-shadow) {
+    position: absolute;
+    top: var(--top);
+    right: var(--right);
+    bottom: var(--bottom);
+    left: var(--left);
+    box-shadow: css-var(puzzle-verify-piece-box-shadow);
+    pointer-events: auto;
+  }
+}

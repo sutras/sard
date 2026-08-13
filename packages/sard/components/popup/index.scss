@@ -1,0 +1,50 @@
+@use '../style/base' as *;
+
+.s-lock-scroll {
+  overflow: hidden;
+}
+
+@include b(popup) {
+  position: fixed;
+
+  @include m(slide-top) {
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  @include m(slide-right) {
+    top: 0;
+    right: 0;
+    height: 100%;
+  }
+
+  @include m(slide-bottom) {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  @include m(slide-left) {
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+
+  @include m(fade, zoom) {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 5%;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+  }
+
+  @include m(full-fade) {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

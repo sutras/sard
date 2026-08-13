@@ -1,0 +1,192 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use './config' as *;
+
+// ===== 选择器分析函数 =====
+
+@function selector-to-string($selector) {
+  $selector: meta.inspect($selector);
+  @return string.slice($selector, 2, -2);
+}
+
+@function contains-element($selector) {
+  @return string.index(selector-to-string($selector), $element-separator) != null;
+}
+
+@function contains-modifier($selector) {
+  @return string.index(selector-to-string($selector), $modifier-separator) != null;
+}
+
+@function contains-state($selector) {
+  $str: selector-to-string($selector);
+  @return string.index($str, '.' + $state-prefix) != null;
+}
+
+@function contains-action($selector) {
+  $str: selector-to-string($selector);
+  @return string.index($str, '.' + $action-prefix) != null;
+}
+
+@function contains-pseudo-class($selector) {
+  @return string.index(selector-to-string($selector), ':') != null;
+}
+
+@function is-root-level($selector) {
+  @return not contains-modifier($selector) and not contains-state($selector) and not
+    contains-action($selector) and not contains-pseudo-class($selector);
+}
+
+@function hit-special-nest-rule($selector) {
+  @return contains-element($selector) or contains-modifier($selector) or contains-state($selector)
+    or contains-action($selector) or contains-pseudo-class($selector);
+}
+
+// ===== BEM 类名生成函数 =====
+
+@function bem-name($block, $element: '', $modifier: '') {
+  $name: $namespace + $block-separator + $block;
+  @if $element != '' {
+    $name: $name + $element-separator + $element;
+  }
+  @if $modifier != '' {
+    $name: $name + $modifier-separator + $modifier;
+  }
+  @return $name;
+}
+
+@function bem-selector($block, $element: '', $modifier: '') {
+  @return '.' + bem-name($block, $element, $modifier);
+}
+
+@function bem-state($block, $state, $element: '') {
+  $base: bem-selector($block, $element);
+  @return $base + '.' + $state-prefix + $state;
+}
+
+@function bem-action($block, $action, $element: '') {
+  $base: bem-selector($block, $element);
+  @return $base + '.' + $action-prefix + $action;
+}
+
+@function bem-ns($name) {
+  @return $namespace + $block-separator + $name;
+}
+
+// ===== CSS 变量函数 =====
+
+@function css-var-name($args...) {
+  $name: '--' + $namespace;
+  @each $item in $args {
+    @if $item != '' and $item != null {
+      $name: $name + '-' + $item;
+    }
+  }
+  @return $name;
+}
+
+@function css-var($args...) {
+  @return var(#{css-var-name($args...)});
+}
+
+@function css-var-with-default($args, $default) {
+  @return var(#{css-var-name($args...)}, #{$default});
+}
+
+// ===== 字符串工具函数 =====
+
+@function str-split($string, $separator) {
+  $split-arr: ();
+  $index: string.index($string, $separator);
+
+  @while $index != null {
+    $item: string.slice($string, 1, $index - 1);
+    $split-arr: list.append($split-arr, $item);
+    $string: string.slice($string, $index + 1);
+    $index: string.index($string, $separator);
+  }
+
+  $split-arr: list.append($split-arr, $string);
+  @return $split-arr;
+}
+
+@function str-replace($string, $search, $replace) {
+  $index: string.index($string, $search);
+
+  @if $index {
+    @return string.slice($string, 1, $index - 1) + $replace +
+      str-replace(string.slice($string, $index + string.length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+// ===== 颜色工具函数 =====
+
+@function three-to-six($str) {
+  $first: string.slice($str, 1, 1);
+  $second: string.slice($str, 2, 2);
+  $three: string.slice($str, 3, 3);
+  @return $first + $first + $second + $second + $three + $three;
+}
+
+$map-hex-decimal: (
+  '0': 0,
+  '1': 1,
+  '2': 2,
+  '3': 3,
+  '4': 4,
+  '5': 5,
+  '6': 6,
+  '7': 7,
+  '8': 8,
+  '9': 9,
+  'a': 10,
+  'b': 11,
+  'c': 12,
+  'd': 13,
+  'e': 14,
+  'f': 15,
+);
+
+@function hex-to-decimal($hex) {
+  $hex: string.to-lower-case($hex);
+  @return map.get($map-hex-decimal, string.slice($hex, 1, 1)) * 16 +
+    map.get($map-hex-decimal, string.slice($hex, 2, 2));
+}
+
+@function hex-to-rgb($hex) {
+  $hex: str-replace(#{$hex}, '#', '');
+
+  @if string.length($hex) == 3 {
+    $hex: three-to-six($hex);
+  }
+
+  $first: string.slice($hex, 1, 2);
+  $second: string.slice($hex, 3, 4);
+  $three: string.slice($hex, 5, 6);
+
+  @return '#{hex-to-decimal($first)},#{hex-to-decimal($second)},#{hex-to-decimal($three)}';
+}
+
+@function encode-svg($str) {
+  @return str-replace($str, '#', '%23');
+}
+
+@function tofixed($n, $digits: 0) {
+  @return math.div(math.round($n * math.pow(10, $digits)), math.pow(10, $digits));
+}
+
+@function coalesce($value, $another) {
+  @return if(sass($value): $value; else: $another);
+}
+
+@function ternary($condition, $true, $false) {
+  @if $condition {
+    @return $true;
+  } @else {
+    @return $false;
+  }
+}

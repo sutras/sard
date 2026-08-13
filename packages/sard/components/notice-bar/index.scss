@@ -1,0 +1,140 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(notice-bar-min-height)}: css-var(content-height-sm);
+  #{css-var-name(notice-bar-padding-x)}: css-var(content-padding-x);
+  #{css-var-name(notice-bar-padding-y)}: css-var(content-padding-y);
+  #{css-var-name(notice-bar-font-size)}: css-var(font-size);
+  #{css-var-name(notice-bar-color)}: $s-orange;
+  #{css-var-name(notice-bar-bg)}: rgba(css-var(color-warning-rgb), css-var(opacity-theme-bg));
+
+  #{css-var-name(notice-bar-wrap-line-height)}: css-var(line-height-snug);
+
+  #{css-var-name(notice-bar-left-icon-size)}: css-var(size-lg);
+  #{css-var-name(notice-bar-left-icon-margin-end)}: css-var(size-xs);
+  #{css-var-name(notice-bar-right-icon-padding)}: css-var(size-xs);
+  #{css-var-name(notice-bar-right-icon-size)}: css-var(size);
+  #{css-var-name(notice-bar-right-icon-margin-start)}: 0;
+  #{css-var-name(notice-bar-right-icon-margin-end)}: calc(css-var(size-xs) * -1);
+}
+// #endregion variables
+
+@include b(notice-bar) {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  min-height: css-var(notice-bar-min-height);
+  padding: 0 css-var(notice-bar-padding-x);
+  background: css-var(notice-bar-bg);
+  color: css-var(notice-bar-color);
+
+  @include m(wrap) {
+    padding-top: css-var(notice-bar-padding-y);
+    padding-bottom: css-var(notice-bar-padding-y);
+  }
+
+  @include m(linkable) {
+    cursor: pointer;
+  }
+
+  @include e(left-icon) {
+    font-size: css-var(notice-bar-left-icon-size);
+    margin-inline-end: css-var(notice-bar-left-icon-margin-end);
+  }
+
+  @include e(content) {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+  }
+
+  @include e(wrapper) {
+    font-size: css-var(notice-bar-font-size);
+    line-height: css-var(notice-bar-wrap-line-height);
+    white-space: nowrap;
+    animation-duration: var(--duration);
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    transform: translateX(var(--x));
+
+    @include rtl {
+      transform: translateX(calc(var(--x) * -1));
+    }
+  }
+
+  @include e(right-icon) {
+    font-size: css-var(notice-bar-right-icon-size);
+    padding: css-var(notice-bar-right-icon-padding);
+    margin-inline-start: css-var(notice-bar-right-icon-margin-start);
+    margin-inline-end: css-var(notice-bar-right-icon-margin-end);
+    cursor: pointer;
+  }
+
+  @include m(linkable) {
+    cursor: pointer;
+
+    @include e(right-icon) {
+      @include rtl-flip;
+    }
+  }
+
+  @include m(vertical) {
+    @include e(content) {
+      flex-direction: column;
+    }
+  }
+
+  @include m(scrollable) {
+    @include e(wrapper) {
+      animation-name: #{bem-ns(notice-bar-scroll)};
+
+      @include rtl {
+        animation-name: #{bem-ns(notice-bar-scroll-rtl)};
+      }
+    }
+  }
+
+  @include m(infinite) {
+    @include e(wrapper) {
+      animation-name: #{bem-ns(notice-bar-scroll-infinite)};
+      animation-iteration-count: infinite;
+
+      @include rtl {
+        animation-name: #{bem-ns(notice-bar-scroll-infinite-rtl)};
+      }
+    }
+  }
+
+  @keyframes #{bem-ns(notice-bar-scroll)} {
+    100% {
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+
+  @keyframes #{bem-ns(notice-bar-scroll-infinite)} {
+    100% {
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+
+  @keyframes #{bem-ns(notice-bar-scroll-rtl)} {
+    100% {
+      transform: translate3d(100%, 0, 0);
+    }
+  }
+
+  @keyframes #{bem-ns(notice-bar-scroll-infinite-rtl)} {
+    100% {
+      transform: translate3d(100%, 0, 0);
+    }
+  }
+
+  @include m(wrap) {
+    @include e(wrapper) {
+      white-space: normal;
+    }
+  }
+}

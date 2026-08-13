@@ -1,0 +1,13 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(color-picker-popout-padding)}: 0 css-var(content-padding-x)
+    css-var(content-padding-y);
+}
+
+@include b(color-picker-popout) {
+  @include e(content) {
+    padding: css-var(color-picker-popout-padding);
+  }
+}

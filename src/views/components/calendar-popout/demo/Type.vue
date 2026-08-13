@@ -1,0 +1,59 @@
+<template>
+  <s-calendar-popout
+    v-model="singleValue"
+    v-model:visible="singleVisible"
+    title="单个日期"
+    value-format="YYYY-MM-DD"
+  />
+  <s-calendar-popout
+    v-model="mulitpleValue"
+    v-model:visible="mulitpleVisible"
+    type="multiple"
+    title="多个日期"
+    value-format="YYYY-MM-DD"
+  />
+  <s-calendar-popout
+    v-model="rangeValue"
+    v-model:visible="rangeVisible"
+    type="range"
+    title="范围选择"
+    value-format="YYYY-MM-DD"
+    allow-same-day
+  />
+
+  <s-list card>
+    <s-list-item
+      title="单个日期"
+      arrow
+      hover
+      :value="JSON.stringify(singleValue)"
+      @click="singleVisible = true"
+    />
+    <s-list-item
+      title="多个日期"
+      arrow
+      hover
+      :value="JSON.stringify(mulitpleValue)"
+      @click="mulitpleVisible = true"
+    />
+    <s-list-item
+      title="范围选择"
+      arrow
+      hover
+      :value="JSON.stringify(rangeValue)"
+      @click="rangeVisible = true"
+    />
+  </s-list>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const singleValue = ref<string>()
+const mulitpleValue = ref<string[]>()
+const rangeValue = ref<string[]>()
+
+const singleVisible = ref(false)
+const mulitpleVisible = ref(false)
+const rangeVisible = ref(false)
+</script>

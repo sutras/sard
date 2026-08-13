@@ -1,0 +1,20 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(rotate-verify-image-size)}: 128px;
+  #{css-var-name(rotate-verify-image-margin-bottom)}: css-var(size-lg);
+}
+// #endregion variables
+
+@include b(rotate-verify) {
+  @include e(image) {
+    display: flex;
+    width: css-var(rotate-verify-image-size);
+    height: css-var(rotate-verify-image-size);
+    margin: 0 auto css-var(rotate-verify-image-margin-bottom);
+    border-radius: 50%;
+    overflow: hidden;
+    object-fit: cover;
+  }
+}

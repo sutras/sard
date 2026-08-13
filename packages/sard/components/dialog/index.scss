@@ -1,0 +1,157 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(dialog-width)}: 320px;
+  #{css-var-name(dialog-max-width)}: 90%;
+  #{css-var-name(dialog-border-color)}: css-var(border-color);
+  #{css-var-name(dialog-bg)}: css-var(bg-color-elevated);
+  #{css-var-name(dialog-radius)}: css-var(border-radius-xl);
+
+  #{css-var-name(dialog-header-padding-y)}: css-var(size);
+  #{css-var-name(dialog-header-padding-x)}: css-var(size);
+
+  #{css-var-name(dialog-body-padding-x)}: css-var(size);
+  #{css-var-name(dialog-body-padding-y)}: css-var(size-xl);
+  #{css-var-name(dialog-body-gap)}: css-var(size-xs);
+
+  #{css-var-name(dialog-title-font-size)}: css-var(font-size-lg);
+  #{css-var-name(dialog-title-headed-font-size)}: css-var(font-size);
+
+  #{css-var-name(dialog-close-font-size)}: css-var(font-size-lg);
+
+  #{css-var-name(dialog-message-font-size)}: css-var(font-size);
+  #{css-var-name(dialog-message-color)}: css-var(text-color-secondary);
+
+  #{css-var-name(dialog-footer-round-padding-x)}: css-var(size);
+  #{css-var-name(dialog-footer-round-padding-y)}: css-var(size);
+  #{css-var-name(dialog-footer-round-gap)}: css-var(size);
+}
+// #endregion variables
+
+@include b(dialog) {
+  width: css-var(dialog-width);
+  max-width: 100%;
+  background: css-var(dialog-bg);
+  border-radius: css-var(dialog-radius);
+
+  @include e(popup) {
+    max-width: css-var(dialog-max-width);
+  }
+
+  @include e(header) {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: css-var(dialog-header-padding-y) css-var(dialog-header-padding-x);
+
+    &::after {
+      @include border-bottom(css-var(dialog-border-color));
+    }
+  }
+
+  @include e(title) {
+    font-size: css-var(dialog-title-font-size);
+    font-weight: css-var(font-weight-bold);
+    text-align: center;
+  }
+
+  @include e(close) {
+    flex: none;
+    z-index: 1;
+    margin-top: calc(css-var(dialog-header-padding-y) * -1);
+    margin-inline-end: calc(css-var(dialog-header-padding-x) * -1);
+    margin-bottom: calc(css-var(dialog-header-padding-y) * -1);
+    margin-inline-start: auto;
+  }
+
+  @include e(body) {
+    display: flex;
+    flex-direction: column;
+    padding: css-var(dialog-body-padding-y) css-var(dialog-body-padding-x);
+    gap: css-var(dialog-body-gap);
+  }
+
+  @include e(message) {
+    font-size: css-var(dialog-message-font-size);
+    text-align: center;
+    color: css-var(dialog-message-color);
+  }
+
+  @include e(footer) {
+    position: relative;
+    display: flex;
+  }
+
+  @include e(button) {
+    flex: 1;
+  }
+
+  @include e(divider) {
+    position: relative;
+    flex: none;
+    &::before {
+      @include border-left(css-var(dialog-border-color));
+    }
+  }
+
+  @include m(headed) {
+    @include e(title) {
+      font-size: css-var(dialog-title-headed-font-size);
+    }
+  }
+
+  @include m(untitled) {
+    @include e(header) {
+      padding-bottom: 0;
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  @include m-intersect(untitled, headed) {
+    @include e(body) {
+      padding-top: 0;
+    }
+  }
+
+  @include m(round) {
+    @include e(footer) {
+      padding-inline-start: css-var(dialog-footer-round-padding-x);
+      padding-inline-end: css-var(dialog-footer-round-padding-x);
+      padding-bottom: css-var(dialog-footer-round-padding-y);
+      gap: css-var(dialog-footer-round-gap);
+    }
+  }
+
+  @include m(text) {
+    @include e(footer) {
+      &::before {
+        @include border-top(css-var(dialog-border-color));
+      }
+    }
+
+    @include e(button) {
+      border-radius: 0;
+
+      &:first-child {
+        @include not-rtl {
+          border-bottom-left-radius: css-var(dialog-radius);
+        }
+        @include rtl {
+          border-bottom-right-radius: css-var(dialog-radius);
+        }
+      }
+      &:last-child {
+        @include not-rtl {
+          border-bottom-right-radius: css-var(dialog-radius);
+        }
+        @include rtl {
+          border-bottom-left-radius: css-var(dialog-radius);
+        }
+      }
+    }
+  }
+}

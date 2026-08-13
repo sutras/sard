@@ -1,0 +1,12 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(collapse-duration)}: css-var(duration);
+}
+// #endregion variables
+
+@include b(collapse) {
+  overflow: hidden;
+  transition: height css-var(collapse-duration);
+}

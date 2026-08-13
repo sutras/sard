@@ -1,0 +1,226 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(tree-border-color)}: css-var(border-color);
+  #{css-var-name(tree-bg)}: css-var(bg-color-container);
+  #{css-var-name(tree-loading-size)}: css-var(font-size);
+  #{css-var-name(tree-loading-color)}: css-var(text-color-fourth);
+  #{css-var-name(tree-loading-margin-y)}: 10px;
+
+  #{css-var-name(tree-node-height)}: css-var(content-height-sm);
+  #{css-var-name(tree-node-padding-x)}: css-var(content-padding-x);
+  #{css-var-name(tree-node-padding-y)}: css-var(content-padding-y);
+  #{css-var-name(tree-node-bg)}: css-var(bg-color-container);
+  #{css-var-name(tree-node-bg-active)}: css-var(bg-color-active);
+  #{css-var-name(tree-node-box-shadow-dragging)}: css-var(box-shadow-secondary);
+  #{css-var-name(tree-node-loading-margin-end)}: css-var(size-xs);
+
+  #{css-var-name(tree-toolbar-margin-end)}: -12px;
+
+  #{css-var-name(tree-indent-width)}: css-var(size-xl);
+
+  #{css-var-name(tree-arrow-padding-x)}: css-var(size-sm);
+  #{css-var-name(tree-arrow-font-size)}: css-var(font-size-sm);
+  #{css-var-name(tree-arrow-color)}: css-var(text-color-tertiary);
+
+  #{css-var-name(tree-selection-padding-x)}: css-var(size-sm);
+
+  #{css-var-name(tree-edit-padding-x)}: css-var(size-sm);
+  #{css-var-name(tree-edit-font-size)}: 18px;
+  #{css-var-name(tree-edit-color)}: css-var(text-color-fourth);
+  #{css-var-name(tree-edit-opacity-active)}: css-var(opacity-active);
+
+  #{css-var-name(tree-level-btn-padding-x)}: css-var(size-sm);
+  #{css-var-name(tree-level-btn-font-size)}: 18px;
+  #{css-var-name(tree-level-btn-color)}: css-var(text-color-fourth);
+  #{css-var-name(tree-level-btn-opacity-active)}: css-var(opacity-active);
+
+  #{css-var-name(tree-drag-padding-x)}: css-var(size-sm);
+  #{css-var-name(tree-drag-font-size)}: 18px;
+  #{css-var-name(tree-drag-color)}: css-var(text-color-fourth);
+  #{css-var-name(tree-drag-opacity-active)}: css-var(opacity-active);
+}
+// #endregion variables
+
+@include b(tree) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: css-var(tree-bg);
+  transition: height css-var(duration);
+
+  @include e(input-wrapper) {
+    padding: 0 css-var(dialog-body-padding-x) css-var(dialog-body-padding-y);
+  }
+
+  @include e(input-text) {
+    text-align: center;
+  }
+
+  @include e(status) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: css-var(tree-loading-margin-y) 0;
+    font-size: css-var(tree-loading-size);
+    color: css-var(tree-loading-color);
+  }
+
+  @include e(error) {
+    cursor: pointer;
+  }
+
+  @include e(node) {
+    position: relative;
+    display: flex;
+    width: 100%;
+    min-height: css-var(tree-node-height);
+    align-items: center;
+    padding: css-var(tree-node-padding-y) css-var(tree-node-padding-x);
+    background: css-var(tree-node-bg);
+
+    &::after {
+      @include border-bottom(css-var(tree-border-color));
+    }
+
+    @include m(active) {
+      background: css-var(tree-node-bg-active);
+    }
+
+    @include m(draggable) {
+      position: absolute;
+      top: 0;
+      inset-inline-start: 0;
+      height: css-var(tree-node-height);
+      transition:
+        transform css-var(duration),
+        opacity css-var(duration);
+    }
+
+    @include m(dragging) {
+      z-index: 1;
+      box-shadow: css-var(tree-node-box-shadow-dragging);
+      transition: none;
+    }
+
+    @include m(truncated) {
+      @include e(title) {
+        @include ellipsis;
+      }
+    }
+
+    @include m(disallowed) {
+      @include e(drag) {
+        visibility: hidden;
+      }
+    }
+  }
+
+  @include e(arrow) {
+    margin-top: calc(css-var(tree-node-padding-y) * -1);
+    margin-inline-end: 0;
+    margin-bottom: calc(css-var(tree-node-padding-y) * -1);
+    margin-inline-start: calc(css-var(tree-arrow-padding-x) * -1);
+    padding: css-var(tree-node-padding-y) css-var(tree-arrow-padding-x);
+    font-size: css-var(tree-arrow-font-size);
+    color: css-var(tree-arrow-color);
+    transition: transform css-var(duration);
+
+    @include m(expanded) {
+      transform: rotate(-90deg);
+    }
+
+    @include m(is-leaf) {
+      visibility: hidden;
+    }
+  }
+
+  @include e(arrow) {
+    @include m(expanded) {
+      @include rtl {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  @include e(arrow-icon) {
+    @include rtl-flip;
+  }
+
+  @include e(loading) {
+    margin-inline-end: css-var(tree-node-loading-margin-end);
+    font-size: css-var(tree-loading-size);
+    color: css-var(tree-loading-color);
+  }
+
+  @include e(selection) {
+    margin-top: calc(css-var(tree-node-padding-y) * -1);
+    margin-inline-end: 0;
+    margin-bottom: calc(css-var(tree-node-padding-y) * -1);
+    margin-inline-start: calc(css-var(tree-selection-padding-x) * -1);
+    padding: css-var(tree-node-padding-y) css-var(tree-selection-padding-x);
+    cursor: pointer;
+
+    @include m(disabled) {
+      cursor: not-allowed;
+    }
+  }
+
+  @include e(title) {
+    flex: 1;
+    min-width: 0;
+    line-height: css-var(line-height-snug);
+  }
+
+  @include e(toolbar) {
+    display: flex;
+    margin-inline-start: auto;
+    margin-inline-end: css-var(tree-toolbar-margin-end);
+  }
+
+  @include e(edit) {
+    margin: calc(css-var(tree-node-padding-y) * -1) 0;
+    padding: css-var(tree-node-padding-y) css-var(tree-edit-padding-x);
+    font-size: css-var(tree-edit-font-size);
+    color: css-var(tree-edit-color);
+    cursor: pointer;
+
+    &:active {
+      opacity: css-var(tree-edit-opacity-active);
+    }
+  }
+
+  @include e(drag) {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: calc(css-var(tree-node-padding-y) * -1) 0;
+    padding: css-var(tree-node-padding-y) css-var(tree-drag-padding-x);
+    font-size: css-var(tree-drag-font-size);
+    line-height: css-var(line-height-none);
+    color: css-var(tree-drag-color);
+    cursor: pointer;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+
+    &:active {
+      opacity: css-var(tree-drag-opacity-active);
+    }
+  }
+
+  @include e(level-btn) {
+    position: absolute;
+    top: 50%;
+    inset-inline-start: 0;
+    display: flex;
+    flex-direction: column;
+    font-size: css-var(tree-arrow-padding-x);
+    transform: translateY(-50%) scale(0.8);
+  }
+
+  @include e(level-btn-icon) {
+    @include rtl-flip;
+  }
+}

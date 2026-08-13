@@ -1,0 +1,186 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(cool-icon-size)}: 50px;
+  #{css-var-name(cool-icon-icon-size)}: 30px;
+  #{css-var-name(cool-icon-oval-radius)}: 43% 57% / 57% 43%;
+  #{css-var-name(cool-icon-square-radius)}: 25%;
+  #{css-var-name(cool-icon-triangle-radius)}: 68% 32% 40% 60%/44% 34% 66% 56%;
+  #{css-var-name(cool-icon-shadow-opacity)}: 0.4;
+  #{css-var-name(cool-icon-adorn-bg)}: rgba(255, 255, 255, 0.2);
+}
+// #endregion variables
+
+@mixin box-shadow {
+  &::before {
+    content: '';
+    display: block;
+    background: inherit;
+    filter: blur(5px);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 5px;
+    inset-inline-start: 5px;
+    z-index: -1;
+    opacity: css-var(cool-icon-shadow-opacity);
+    transform-origin: 0 0;
+    border-radius: inherit;
+    transform: scale(1);
+  }
+}
+
+@include b(cool-icon) {
+  position: relative;
+  display: inline-block;
+
+  width: css-var(cool-icon-size);
+  height: css-var(cool-icon-size);
+  font-size: css-var(cool-icon-icon-size);
+
+  @include m(square) {
+    border-radius: css-var(cool-icon-square-radius);
+  }
+
+  @include m(oval) {
+    border-radius: css-var(cool-icon-oval-radius);
+
+    @include e(bg) {
+      transform: rotate(-19deg);
+    }
+  }
+
+  @include m(triangle) {
+    border-radius: css-var(cool-icon-triangle-radius);
+  }
+
+  @include m(circle) {
+    border-radius: 50%;
+  }
+
+  @include m(square, oval, triangle, circle) {
+    @include e(bg) {
+      @include box-shadow;
+    }
+  }
+
+  @include m(flower) {
+    border-radius: css-var(cool-icon-oval-radius);
+
+    @include e(bg) {
+      width: 62.5%;
+      margin: auto;
+      border-radius: css-var(border-radius-full);
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        background: inherit;
+        border-radius: inherit;
+        transform-origin: center center;
+        opacity: 0.8;
+      }
+
+      &::before {
+        transform: rotate(60deg);
+      }
+
+      &::after {
+        transform: rotate(-60deg);
+      }
+
+      @include e(adorns) {
+        display: none;
+      }
+    }
+  }
+
+  @include e(bg) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    z-index: 1;
+  }
+
+  @include e(icon) {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: inherit;
+    line-height: 1;
+    z-index: 2;
+    border-radius: inherit;
+  }
+
+  @include e(adorns) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    overflow: hidden;
+  }
+
+  @include e(adorn) {
+    position: absolute;
+    border-radius: 50%;
+    background: css-var(cool-icon-adorn-bg);
+
+    &:nth-child(1) {
+      top: -13.33%;
+      inset-inline-start: -9.46%;
+      width: 45.33%;
+      height: 45.33%;
+    }
+    &:nth-child(2) {
+      top: 8.66%;
+      inset-inline-start: 66.66%;
+      width: 10%;
+      height: 10%;
+    }
+    &:nth-child(3) {
+      top: 79.33%;
+      inset-inline-start: 18%;
+      width: 6.66%;
+      height: 6.66%;
+    }
+    &:nth-child(4) {
+      top: 86%;
+      inset-inline-start: 26.66%;
+      width: 4%;
+      height: 4%;
+    }
+    &:nth-child(5) {
+      top: 72%;
+      inset-inline-start: 44.66%;
+      width: 47.33%;
+      height: 38.66%;
+    }
+    &:nth-child(6) {
+      top: 42%;
+      inset-inline-start: 58.66%;
+      width: 72.66%;
+      height: 66.66%;
+    }
+  }
+}

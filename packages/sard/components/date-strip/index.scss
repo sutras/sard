@@ -1,0 +1,102 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(date-strip-column-gap)}: 8px;
+
+  #{css-var-name(date-strip-item-width)}: 64px;
+  #{css-var-name(date-strip-item-padding-y)}: 9px;
+  #{css-var-name(date-strip-item-padding-x)}: 6px;
+  #{css-var-name(date-strip-item-radius)}: css-var(border-radius);
+  #{css-var-name(date-strip-item-border-color)}: transparent;
+  #{css-var-name(date-strip-item-bg)}: transparent;
+
+  #{css-var-name(date-strip-item-week-font-size)}: css-var(font-size-sm);
+  #{css-var-name(date-strip-item-week-color)}: css-var(text-color-secondary);
+  #{css-var-name(date-strip-item-week-order)}: 1;
+
+  #{css-var-name(date-strip-item-day-font-size)}: css-var(font-size);
+  #{css-var-name(date-strip-item-day-color)}: inherit;
+  #{css-var-name(date-strip-item-day-order)}: 2;
+
+  #{css-var-name(date-strip-item-info-font-size)}: css-var(font-size-xs);
+  #{css-var-name(date-strip-item-info-color)}: css-var(text-color-tertiary);
+  #{css-var-name(date-strip-item-info-order)}: 3;
+
+  #{css-var-name(date-strip-item-color-selected)}: css-var(white);
+  #{css-var-name(date-strip-item-bg-selected)}: css-var(color-primary);
+  #{css-var-name(date-strip-item-bg-middle)}: rgba(css-var(color-primary-rgb), 0.1);
+  #{css-var-name(date-strip-item-color-today)}: css-var(color-primary);
+}
+// #endregion variables
+
+@include b(date-strip) {
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  @include e(content) {
+    display: inline-flex;
+    flex-direction: row;
+    column-gap: css-var(date-strip-column-gap);
+  }
+
+  @include e(item) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex: none;
+    width: css-var(date-strip-item-width);
+    padding: css-var(date-strip-item-padding-y) css-var(date-strip-item-padding-x);
+    text-align: center;
+    border-radius: css-var(date-strip-item-radius);
+    border: 1px solid css-var(date-strip-item-border-color);
+    background: css-var(date-strip-item-bg);
+    cursor: pointer;
+  }
+
+  @include e(item-week) {
+    font-size: css-var(date-strip-item-week-font-size);
+    color: css-var(date-strip-item-week-color);
+    order: css-var(date-strip-item-week-order);
+  }
+
+  @include e(item-day) {
+    font-size: css-var(date-strip-item-day-font-size);
+    color: css-var(date-strip-item-day-color);
+    order: css-var(date-strip-item-day-order);
+  }
+
+  @include e(item-info) {
+    font-size: css-var(date-strip-item-info-font-size);
+    color: css-var(date-strip-item-info-color);
+    order: css-var(date-strip-item-info-order);
+  }
+
+  @include e(item) {
+    @include m(today) {
+      color: css-var(date-strip-item-color-today);
+    }
+
+    @include m(selected, start, end, same) {
+      color: css-var(date-strip-item-color-selected);
+      border-color: transparent;
+      background: css-var(date-strip-item-bg-selected);
+    }
+
+    @include m(middle) {
+      border-color: transparent;
+      background: css-var(date-strip-item-bg-middle);
+    }
+
+    @include m(disabled) {
+      @include disabled-text;
+    }
+
+    @include m(selected, start, end, same, disabled, today) {
+      @include e(item-week, item-info, item-day) {
+        color: inherit;
+      }
+    }
+  }
+}

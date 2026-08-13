@@ -1,0 +1,58 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(search-padding-x)}: css-var(size-sm);
+  #{css-var-name(search-padding-y)}: css-var(size-xs);
+  #{css-var-name(search-bg)}: css-var(bg-color-container);
+
+  #{css-var-name(search-input-bg)}: css-var(fill-color-tertiary);
+  #{css-var-name(search-input-bg-disabled)}: css-var(bg-color-disabled);
+  #{css-var-name(search-icon-color)}: css-var(text-color-fourth);
+  #{css-var-name(search-icon-font-size)}: css-var(font-size);
+}
+// #endregion variables
+
+@include b(search) {
+  display: flex;
+  align-items: stretch;
+  padding: css-var(search-padding-y) css-var(search-padding-x);
+  background: css-var(search-bg);
+
+  @include m(show-action) {
+    padding-inline-end: 0;
+  }
+
+  @include e(input-wrapper) {
+    flex: 1;
+  }
+
+  @include e(input) {
+    background: css-var(search-input-bg);
+
+    @include m(round) {
+      border-radius: css-var(border-radius-full);
+    }
+  }
+
+  @include e(prepend, append) {
+    display: flex;
+    align-items: center;
+    flex: none;
+
+    @include b(button) {
+      height: 100%;
+    }
+  }
+
+  @include e(icon) {
+    font-size: css-var(search-icon-font-size);
+    color: css-var(search-icon-color);
+  }
+
+  @include m(disabled) {
+    @include e(input) {
+      background: css-var(search-input-bg-disabled);
+    }
+  }
+}

@@ -1,0 +1,325 @@
+<template>
+  <div :class="uploadClass">
+    <slot
+      :list="innerValue"
+      :on-select="onSelect"
+      :on-remove="onRemove"
+      :on-image-click="onImageClick"
+    >
+      <div :class="bem.e('wrapper')">
+        <UploadPreview
+          v-for="(item, index) in innerValue"
+          :key="index"
+          :file="item.file"
+          :url="item.url"
+          :is-image="item.isImage"
+          :is-video="item.isVideo"
+          :status="item.status"
+          :name="item.name"
+          :message="item.message"
+          :removable="removable"
+          :index="index"
+          :disabled="isDisabled"
+          :readonly="isReadonly"
+          @remove="onRemove(index, item)"
+          @image-click="onImageClick(index)"
+          @click="onItemClick(index, item)"
+        />
+        <div
+          v-if="innerValue.length < maxCount && !isReadonly"
+          :class="bem.e('select')"
+          @click="onSelect"
+        >
+          <slot name="select">
+            <div :class="bem.e('select-icon')">
+              <Plus />
+            </div>
+          </slot>
+        </div>
+      </div>
+    </slot>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed, reactive, ref, watch } from 'vue'
+import { createBem, isImageUrl, toArray, isFunction, chooseFile, isImageFile } from '../../utils'
+import UploadPreview from './upload-preview.vue'
+import {
+  type UploadProps,
+  type UploadSlots,
+  type UploadEmits,
+  type UploadExpose,
+  type UploadFileItem,
+  type UploadSelectOptions,
+  type ChainNode,
+  defaultUploadProps,
+} from './common'
+import { useFormContext, useFormItemContext } from '../form/common'
+import { previewImage } from '../preview-image/imperative'
+import { Plus } from '@sard/icons'
+
+const props = withDefaults(defineProps<UploadProps>(), defaultUploadProps)
+
+defineSlots<UploadSlots>()
+
+const emit = defineEmits<UploadEmits>()
+
+const bem = createBem('upload')
+
+// main
+const formContext = useFormContext()
+const formItemContext = useFormItemContext()
+
+const isDisabled = computed(() => {
+  return formContext?.disabled || props.disabled
+})
+
+const isReadonly = computed(() => {
+  return formContext?.readonly || props.readonly
+})
+
+const innerValue = ref(props.modelValue || [])
+
+watch(
+  () => props.modelValue,
+  () => {
+    innerValue.value = props.modelValue || []
+
+    if (props.validateEvent) {
+      formItemContext?.onChange()
+    }
+  },
+)
+
+const limitCountNode: ChainNode = (files: File[], next) => {
+  const remainCount = props.maxCount - innerValue.value.length
+  if (files.length > remainCount) {
+    files = files.slice(0, remainCount)
+  }
+  next(files)
+}
+
+const beforeReadNode: ChainNode = (files: File[], next) => {
+  Promise.allSettled<File>(
+    files.map(
+      (file) =>
+        new Promise((resolve, reject) => {
+          if (props.beforeRead) {
+            const ret = props.beforeRead(file)
+            if (!ret) {
+              reject()
+              return
+            }
+            if (ret instanceof Promise) {
+              ret
+                .then((mayNewFile) => {
+                  resolve(mayNewFile ?? file)
+                })
+                .catch(() => {
+                  reject()
+                })
+              return
+            }
+          }
+          resolve(file)
+        }),
+    ),
+  ).then((results) => {
+    const fileList: File[] = []
+    results.forEach((result) => {
+      if (result.status === 'fulfilled') {
+        fileList.push(result.value)
+      }
+    })
+    next(fileList)
+  })
+}
+
+const toUploadFileNode: ChainNode = (files: File[], next) => {
+  const fileList = files.map((file) => {
+    return reactive({
+      file,
+      name: file.name,
+    })
+  })
+
+  next(fileList)
+}
+const limitSizeNode: ChainNode = (fileList: UploadFileItem[], next) => {
+  const valid: UploadFileItem[] = []
+  const invalid: UploadFileItem[] = []
+
+  fileList.forEach((item) => {
+    const file = item.file
+    if (
+      file &&
+      ((isFunction(props.maxSize) && props.maxSize(file)) ||
+        (file.size && typeof props.maxSize === 'number' && file.size > props.maxSize))
+    ) {
+      invalid.push(item)
+    } else {
+      valid.push(item)
+    }
+  })
+
+  if (invalid.length) {
+    props.overSize?.(invalid)
+  }
+  if (valid.length) {
+    innerValue.value = [...innerValue.value, ...valid]
+    emit('update:modelValue', innerValue.value)
+    emit('change', innerValue.value)
+    next(valid)
+  }
+}
+
+const afterReadNode: ChainNode = (fileList: UploadFileItem[]) => {
+  toArray(fileList).forEach((fileItem) => {
+    props.afterRead?.(fileItem)
+  })
+}
+
+function toChain(files: File[]) {
+  const chain = [
+    limitCountNode,
+    beforeReadNode,
+    toUploadFileNode,
+    limitSizeNode,
+    afterReadNode,
+  ].reduceRight<(...args: any[]) => any>(
+    (next, node) => (data: unknown) => {
+      node(data, next)
+    },
+    () => {
+      void 0
+    },
+  )
+
+  chain(files)
+}
+
+let isSelectPending = false
+
+const select = () => {
+  if (
+    isSelectPending ||
+    isDisabled.value ||
+    isReadonly.value ||
+    innerValue.value.length >= props.maxCount
+  ) {
+    return
+  }
+
+  const next = (options: UploadSelectOptions = {}) => {
+    const arrayMediaType = toArray(props.mediaType)
+    const hasImage = arrayMediaType.includes('image')
+    const hasVideo = arrayMediaType.includes('video')
+    const accept: string[] = []
+    if (hasImage) {
+      accept.push('image/*')
+    }
+    if (hasVideo) {
+      accept.push('video/*')
+    }
+
+    chooseFile({
+      accept,
+      multiple: props.multiple,
+      capture: options.capture || props.capture,
+    }).then(toChain)
+  }
+
+  if (props.beforeChoose) {
+    isSelectPending = true
+    props.beforeChoose?.(innerValue.value, (allowed) => {
+      isSelectPending = false
+      if (allowed) {
+        next(typeof allowed === 'object' ? allowed : undefined)
+      }
+    })
+  } else {
+    next()
+  }
+}
+
+const onSelect = () => {
+  select()
+}
+
+// # remove
+
+const removingSet = new WeakSet<UploadFileItem>()
+
+const onRemove = (index: number, item: UploadFileItem) => {
+  if (!props.removable || isDisabled.value || isReadonly.value) return
+
+  if (removingSet.has(item)) {
+    return
+  }
+
+  function remove() {
+    const list = innerValue.value.filter((_, i) => i !== index)
+    innerValue.value = list
+    emit('update:modelValue', list)
+    emit('change', list)
+    emit('remove', index, item)
+  }
+
+  if (props.beforeRemove) {
+    const ret = props.beforeRemove(index, item)
+    if (ret === false) {
+      return
+    }
+    if (ret instanceof Promise) {
+      removingSet.add(item)
+      ret
+        .then(() => {
+          remove()
+        })
+        .catch(() => {
+          void 0
+        })
+        .finally(() => {
+          removingSet.delete(item)
+        })
+      return
+    }
+  }
+  remove()
+}
+
+// # preview
+
+const onImageClick = (index: number) => {
+  const currentFileItem = innerValue.value[index]
+
+  const fileList = innerValue.value.filter(
+    (item) =>
+      item.isImage ||
+      (item.file ? isImageFile(item.file) : item.url ? isImageUrl(item.url) : false),
+  )
+
+  const currentIndex = fileList.findIndex((item) => item === currentFileItem)
+  const urls = fileList.map((item) => item.url || URL.createObjectURL(item.file!))
+
+  previewImage({
+    urls,
+    current: currentIndex || 0,
+  })
+}
+
+const onItemClick = (index: number, fileItem: UploadFileItem) => {
+  emit('item-click', fileItem, index)
+}
+
+defineExpose<UploadExpose>({
+  select,
+})
+
+// # others
+
+const uploadClass = computed(() => {
+  return [bem.b(), bem.is('disabled', isDisabled.value), bem.is('readonly', isReadonly.value)]
+})
+</script>

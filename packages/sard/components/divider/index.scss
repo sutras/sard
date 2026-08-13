@@ -1,0 +1,82 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(divider-margin-y)}: css-var(size);
+  #{css-var-name(divider-margin-x)}: css-var(size-xs);
+  #{css-var-name(divider-gap)}: css-var(size);
+
+  #{css-var-name(divider-color)}: css-var(text-color-tertiary);
+  #{css-var-name(divider-border-color)}: css-var(border-color);
+  #{css-var-name(divider-left-width)}: 10%;
+  #{css-var-name(divider-right-width)}: 10%;
+
+  #{css-var-name(divider-vertical-height)}: 1em;
+}
+// #endregion variables
+
+@include b(divider) {
+  display: flex;
+  align-items: center;
+  margin: css-var(divider-margin-y) 0;
+  gap: css-var(divider-gap);
+  border-width: 0;
+  border-color: css-var(divider-border-color);
+  color: css-var(divider-color);
+
+  &::before,
+  &::after {
+    display: block;
+    flex: 1;
+    border-color: inherit;
+    border-style: inherit;
+    border-width: 1px 0 0;
+    content: '';
+  }
+
+  @include m(only-line) {
+    &::after {
+      display: none;
+    }
+  }
+
+  @include m(left) {
+    &::before {
+      max-width: css-var(divider-left-width);
+    }
+  }
+
+  @include m(right) {
+    &::after {
+      max-width: css-var(divider-right-width);
+    }
+  }
+
+  @include m(vertical) {
+    display: inline-block;
+    height: css-var(divider-vertical-height);
+    margin: 0 css-var(divider-margin-x);
+    vertical-align: middle;
+
+    &::before {
+      height: 100%;
+      border-width: 0 0 0 1px;
+    }
+    &::after {
+      display: none;
+    }
+  }
+
+  @include m(hairline) {
+    &::before,
+    &::after {
+      transform: scaleY(0.5);
+    }
+  }
+
+  @include m-intersect(vertical, hairline) {
+    &::before {
+      transform: scaleX(0.5);
+    }
+  }
+}

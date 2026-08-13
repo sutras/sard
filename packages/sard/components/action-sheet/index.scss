@@ -1,0 +1,144 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(action-sheet-border-radius)}: css-var(border-radius-xl);
+  #{css-var-name(action-sheet-border-color)}: css-var(border-color);
+  #{css-var-name(action-sheet-bg)}: css-var(bg-color-elevated);
+  #{css-var-name(action-sheet-bg-active)}: css-var(bg-color-active);
+
+  #{css-var-name(action-sheet-description-padding)}: css-var(size);
+  #{css-var-name(action-sheet-description-font-size)}: css-var(font-size);
+  #{css-var-name(action-sheet-description-color)}: css-var(text-color-tertiary);
+
+  #{css-var-name(action-sheet-gap-height)}: css-var(size-xs);
+  #{css-var-name(action-sheet-gap-bg)}: css-var(fill-color-fourth);
+
+  #{css-var-name(action-sheet-item-min-height)}: css-var(content-height-lg);
+  #{css-var-name(action-sheet-item-padding)}: css-var(content-padding);
+  #{css-var-name(action-sheet-item-color-disabled)}: css-var(text-color-disabled);
+
+  #{css-var-name(action-sheet-item-label-font-size)}: css-var(font-size-lg);
+  #{css-var-name(action-sheet-item-label-line-height)}: css-var(line-height-normal);
+  #{css-var-name(action-sheet-item-label-color)}: css-var(text-color-primary);
+
+  #{css-var-name(action-sheet-item-description-margin-top)}: css-var(size-2xs);
+  #{css-var-name(action-sheet-item-description-font-size)}: css-var(font-size-sm);
+  #{css-var-name(action-sheet-item-description-line-height)}: css-var(line-height-normal);
+  #{css-var-name(action-sheet-item-description-color)}: css-var(text-color-tertiary);
+
+  #{css-var-name(action-sheet-loading-font-size)}: css-var(size-lg);
+  #{css-var-name(action-sheet-loading-color)}: css-var(text-color-fourth);
+
+  #{css-var-name(action-sheet-cancel-min-height)}: css-var(content-height-lg);
+  #{css-var-name(action-sheet-cancel-padding)}: css-var(content-padding);
+  #{css-var-name(action-sheet-cancel-font-size)}: css-var(font-size-lg);
+  #{css-var-name(action-sheet-cancel-line-height)}: css-var(line-height-normal);
+  #{css-var-name(action-sheet-cancel-color)}: css-var(text-color-primary);
+}
+// #endregion variables
+
+@include b(action-sheet) {
+  padding-bottom: css-var(safe-bottom);
+  border-top-left-radius: css-var(action-sheet-border-radius);
+  border-top-right-radius: css-var(action-sheet-border-radius);
+  background: css-var(action-sheet-bg);
+  touch-action: none;
+
+  @include e(description) {
+    position: relative;
+    padding: css-var(action-sheet-description-padding);
+    font-size: css-var(action-sheet-description-font-size);
+    text-align: center;
+    color: css-var(action-sheet-description-color);
+
+    &:after {
+      @include border-bottom(css-var(action-sheet-border-color));
+    }
+  }
+
+  @include e(gap) {
+    height: css-var(action-sheet-gap-height);
+    background: css-var(action-sheet-gap-bg);
+  }
+
+  @include e(content) {
+  }
+
+  @include e(item) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: css-var(action-sheet-item-min-height);
+    padding: css-var(action-sheet-item-padding);
+    cursor: pointer;
+
+    &:not(:first-child) {
+      &::before {
+        @include border-top(css-var(action-sheet-border-color));
+      }
+    }
+
+    @include is(disabled) {
+      @include e(item-label) {
+        color: css-var(action-sheet-item-color-disabled);
+      }
+    }
+
+    @include is(disabled, loading) {
+      cursor: not-allowed;
+    }
+
+    @include is-not(disabled, loading) {
+      &:active {
+        background: css-var(action-sheet-bg-active);
+      }
+    }
+  }
+
+  @include e(item-label) {
+    font-size: css-var(action-sheet-item-label-font-size);
+    line-height: css-var(action-sheet-item-label-line-height);
+    color: css-var(action-sheet-item-label-color);
+  }
+
+  @include e(item-description) {
+    margin-top: css-var(action-sheet-item-description-margin-top);
+    font-size: css-var(action-sheet-item-description-font-size);
+    line-height: css-var(action-sheet-item-description-line-height);
+    color: css-var(action-sheet-item-description-color);
+  }
+
+  @include e(loading) {
+    display: flex;
+    font-size: css-var(action-sheet-loading-font-size);
+    color: css-var(action-sheet-loading-color);
+  }
+
+  @include e(cancel) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: css-var(action-sheet-cancel-min-height);
+    padding: css-var(action-sheet-cancel-padding);
+    font-size: css-var(action-sheet-cancel-font-size);
+    line-height: css-var(action-sheet-cancel-line-height);
+    color: css-var(action-sheet-cancel-color);
+    cursor: pointer;
+
+    &:active {
+      background: css-var(action-sheet-bg-active);
+    }
+  }
+
+  @include m(headless) {
+    @include e(item) {
+      &:first-child {
+        border-top-left-radius: css-var(action-sheet-border-radius);
+        border-top-right-radius: css-var(action-sheet-border-radius);
+      }
+    }
+  }
+}

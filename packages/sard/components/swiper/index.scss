@@ -1,0 +1,133 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(swiper-height)}: 150px;
+
+  #{css-var-name(swiper-dots-margin)}: 10px;
+  #{css-var-name(swiper-dots-gap)}: 6px;
+
+  #{css-var-name(swiper-dot-bg)}: rgba(255, 255, 255, 0.3);
+  #{css-var-name(swiper-dot-width)}: 6px;
+  #{css-var-name(swiper-dot-width-active)}: 6px;
+  #{css-var-name(swiper-dot-height)}: 6px;
+  #{css-var-name(swiper-dot-height-active)}: 6px;
+  #{css-var-name(swiper-dot-border-radius)}: css-var(border-radius-full);
+  #{css-var-name(swiper-dot-bg-active)}: css-var(white);
+}
+// #endregion variables
+
+@include b(swiper) {
+  position: relative;
+  height: css-var(swiper-height);
+  overflow: hidden;
+
+  @include is-not(vertical) {
+    @include is(auto-height) {
+      height: var(--swiper-height);
+    }
+  }
+
+  @include e(wrapper) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+
+    --swiper-offset: var(--swiper-offset-raw, 0);
+
+    @include is-not(vertical) {
+      @include rtl {
+        --swiper-offset: calc(var(--swiper-offset-raw) * -1);
+      }
+
+      transform: translate3d(var(--swiper-offset), 0, 0);
+    }
+
+    @include is(vertical) {
+      flex-direction: column;
+      transform: translate3d(0, var(--swiper-offset), 0);
+    }
+  }
+
+  @include e(item) {
+    --swiper-item-offset: var(--swiper-item-offset-raw, 0);
+    --swiper-item-size: 0;
+    --swiper-item-margin: 0;
+
+    position: relative;
+    flex: none;
+    width: 100%;
+    height: 100%;
+
+    @include is-not(vertical) {
+      @include rtl {
+        --swiper-item-offset: calc(var(--swiper-item-offset-raw) * -1);
+      }
+
+      width: var(--swiper-item-size);
+      margin-inline-end: var(--swiper-item-margin);
+      transform: translate3d(var(--swiper-item-offset), 0, 0);
+
+      @include is(auto-height) {
+        height: fit-content;
+      }
+    }
+
+    @include is(vertical) {
+      height: var(--swiper-item-size);
+      margin-bottom: var(--swiper-item-margin);
+      transform: translate3d(0, var(--swiper-item-offset), 0);
+    }
+  }
+
+  @include e(dots) {
+    position: absolute;
+    display: flex;
+    gap: css-var(swiper-dots-gap);
+    font-size: 0;
+    pointer-events: none;
+
+    @include is-not(vertical) {
+      left: 50%;
+      bottom: css-var(swiper-dots-margin);
+      transform: translate(-50%, 0);
+    }
+
+    @include is(vertical) {
+      inset-inline-end: css-var(swiper-dots-margin);
+      top: 50%;
+      flex-direction: column;
+      transform: translate(0, -50%);
+
+      @include e(dot) {
+        width: css-var(swiper-dot-height);
+        height: css-var(swiper-dot-width);
+
+        @include is(active) {
+          width: css-var(swiper-dot-height-active);
+          height: css-var(swiper-dot-width-active);
+        }
+      }
+    }
+  }
+
+  @include e(dot) {
+    display: inline-block;
+    width: css-var(swiper-dot-width);
+    height: css-var(swiper-dot-height);
+    background: css-var(swiper-dot-bg);
+    border-radius: css-var(swiper-dot-border-radius);
+    transition-property: background-color, width, height;
+    transition-duration: css-var(duration-fast);
+
+    @include is(active) {
+      width: css-var(swiper-dot-width-active);
+      height: css-var(swiper-dot-height-active);
+      background-color: css-var(swiper-dot-bg-active);
+    }
+  }
+}

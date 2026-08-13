@@ -1,0 +1,11 @@
+@use '../style/base' as *;
+
+@include b(picker) {
+  @include e(item) {
+    line-height: css-var(picker-view-indicator-height);
+    font-size: css-var(picker-view-font-size);
+    color: css-var(picker-view-color);
+    text-align: center;
+    @include ellipsis;
+  }
+}

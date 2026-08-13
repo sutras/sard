@@ -1,0 +1,8 @@
+@forward 'sard/components/style/config' with (
+  $namespace: 'doc',
+  $block-separator: '-',
+  $element-separator: '__',
+  $modifier-separator: '--'
+);
+
+@forward 'sard/components/style/bem';

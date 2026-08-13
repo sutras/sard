@@ -1,0 +1,106 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(sidebar-bg)}: css-var(fill-color-tertiary);
+  #{css-var-name(sidebar-width)}: 92px;
+
+  #{css-var-name(sidebar-item-padding-x)}: 20px;
+  #{css-var-name(sidebar-item-padding-y)}: 14px;
+  #{css-var-name(sidebar-item-font-size)}: css-var(font-size-sm);
+  #{css-var-name(sidebar-item-color)}: css-var(text-color-secondary);
+  #{css-var-name(sidebar-item-bg-active)}: css-var(bg-color-extreme);
+  #{css-var-name(sidebar-item-color-active)}: css-var(text-color-emphasis);
+  #{css-var-name(sidebar-item-font-weight-active)}: css-var(font-weight-normal);
+
+  #{css-var-name(sidebar-line-width)}: 3px;
+  #{css-var-name(sidebar-line-height)}: 12px;
+  #{css-var-name(sidebar-line-bg)}: css-var(color-primary);
+
+  #{css-var-name(sidebar-round-size)}: css-var(border-radius);
+}
+// #endregion variables
+
+@include b(sidebar) {
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: css-var(sidebar-width);
+  background: css-var(sidebar-bg);
+}
+
+@include b(sidebar-item) {
+  position: relative;
+  padding: css-var(sidebar-item-padding-y) css-var(sidebar-item-padding-x);
+  cursor: pointer;
+  font-size: css-var(sidebar-item-font-size);
+  line-height: css-var(line-height-snug);
+  color: css-var(sidebar-item-color);
+  text-align: center;
+
+  @include is(current) {
+    font-weight: css-var(sidebar-item-font-weight-active);
+    color: css-var(sidebar-item-color-active);
+    background: css-var(sidebar-item-bg-active);
+  }
+
+  @include is(disabled) {
+    @include disabled-text;
+  }
+
+  @include e(title) {
+    @include line-clamp(2);
+  }
+
+  @include e(line) {
+    position: absolute;
+    top: 50%;
+    inset-inline-start: 0;
+    width: css-var(sidebar-line-width);
+    height: css-var(sidebar-line-height);
+    transform: translateY(-50%);
+    background: css-var(sidebar-line-bg);
+  }
+
+  @include e(round-top, round-bottom) {
+    position: absolute;
+    inset-inline-end: 0;
+    width: css-var(sidebar-round-size);
+    height: css-var(sidebar-round-size);
+    background: css-var(sidebar-item-bg-active);
+    pointer-events: none;
+
+    &::before {
+      content: '';
+      display: flex;
+      width: 100%;
+      height: 100%;
+      background: css-var(sidebar-bg);
+    }
+  }
+
+  @include e(round-top) {
+    bottom: 100%;
+
+    &::before {
+      @include not-rtl {
+        border-bottom-right-radius: 100%;
+      }
+      @include rtl {
+        border-bottom-left-radius: 100%;
+      }
+    }
+  }
+
+  @include e(round-bottom) {
+    top: 100%;
+
+    &::before {
+      @include not-rtl {
+        border-top-right-radius: 100%;
+      }
+      @include rtl {
+        border-top-left-radius: 100%;
+      }
+    }
+  }
+}

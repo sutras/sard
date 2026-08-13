@@ -1,0 +1,134 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(progress-bar-height)}: 4px;
+  #{css-var-name(progress-bar-border-radius)}: css-var(border-radius-full);
+
+  #{css-var-name(progress-bar-track-bg)}: css-var(fill-color-secondary);
+
+  #{css-var-name(progress-bar-fill-font-size)}: css-var(font-size);
+  #{css-var-name(progress-bar-fill-color)}: css-var(white);
+  #{css-var-name(progress-bar-fill-bg)}: css-var(color-primary);
+
+  #{css-var-name(progress-bar-text-font-size)}: css-var(font-size);
+  #{css-var-name(progress-bar-text-margin-start)}: css-var(size-xs);
+  #{css-var-name(progress-bar-text-margin-end)}: css-var(size-xs);
+
+  #{css-var-name(progress-bar-inside-height)}: css-var(size);
+  #{css-var-name(progress-bar-inside-text-font-size)}: css-var(font-size-sm);
+
+  #{css-var-name(progress-bar-striped-width)}: css-var(size);
+
+  #{css-var-name(progress-bar-status-margin-start)}: css-var(size-xs);
+  #{css-var-name(progress-bar-color-success)}: css-var(color-success);
+  #{css-var-name(progress-bar-color-warning)}: css-var(color-warning);
+  #{css-var-name(progress-bar-color-error)}: css-var(color-danger);
+}
+// #endregion variables
+
+@include b(progress-bar) {
+  display: flex;
+  align-items: center;
+
+  @include e(track) {
+    flex: 1;
+    height: css-var(progress-bar-height);
+    border-radius: css-var(progress-bar-border-radius);
+    background: css-var(progress-bar-track-bg);
+    overflow: hidden;
+  }
+
+  @include e(fill) {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    border-radius: css-var(progress-bar-border-radius);
+    font-size: css-var(progress-bar-fill-font-size);
+    color: css-var(progress-bar-fill-color);
+    background: css-var(progress-bar-fill-bg);
+    transition: width css-var(duration-slow);
+  }
+
+  @include e(text) {
+    flex: none;
+    font-size: css-var(progress-bar-text-font-size);
+    margin-inline-start: css-var(progress-bar-text-margin-start);
+  }
+
+  @include e(status) {
+    margin-inline-start: css-var(progress-bar-status-margin-start);
+    line-height: css-var(line-height-none);
+  }
+
+  @include m(inside) {
+    @include e(track) {
+      height: css-var(progress-bar-inside-height);
+    }
+
+    @include e(text) {
+      margin-inline-start: auto;
+      padding-inline-start: css-var(progress-bar-text-margin-start);
+      margin-inline-end: css-var(progress-bar-text-margin-end);
+      font-size: css-var(progress-bar-inside-text-font-size);
+    }
+  }
+
+  @include m(striped) {
+    @include e(fill) {
+      background-image: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.15) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.15) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: css-var(progress-bar-striped-width) css-var(progress-bar-striped-width);
+    }
+  }
+
+  @include m(animated) {
+    @include e(fill) {
+      animation: 1s linear infinite #{bem-ns(progress-bar-stripes)};
+    }
+  }
+
+  @keyframes #{bem-ns(progress-bar-stripes)} {
+    0% {
+      background-position-x: css-var(progress-bar-striped-width);
+    }
+  }
+
+  @include m(success) {
+    @include e(fill) {
+      background: css-var(progress-bar-color-success);
+    }
+
+    @include e(status) {
+      color: css-var(progress-bar-color-success);
+    }
+  }
+
+  @include m(warning) {
+    @include e(fill) {
+      background: css-var(progress-bar-color-warning);
+    }
+
+    @include e(status) {
+      color: css-var(progress-bar-color-warning);
+    }
+  }
+
+  @include m(error) {
+    @include e(fill) {
+      background: css-var(progress-bar-color-error);
+    }
+
+    @include e(status) {
+      color: css-var(progress-bar-color-error);
+    }
+  }
+}

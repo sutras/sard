@@ -1,0 +1,25 @@
+@use '../style/base' as *;
+
+@include b(datetime-range-picker) {
+  @include e(container) {
+    overflow: hidden;
+  }
+
+  @include e(wrapper) {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    transition: transform css-var(duration);
+    --final-x: var(--x);
+    transform: translate3d(var(--final-x), 0, 0);
+
+    @include rtl {
+      --final-x: calc(var(--x) * -1);
+    }
+  }
+
+  @include e(pane) {
+    width: 100%;
+    flex: none;
+  }
+}

@@ -1,0 +1,96 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(signature-canvas-height)}: 200px;
+  #{css-var-name(signature-canvas-bg)}: css-var(white);
+  #{css-var-name(signature-full-bg)}: css-var(fill-color-tertiary);
+  #{css-var-name(signature-full-gap)}: css-var(size);
+  #{css-var-name(signature-side-width)}: 52px;
+}
+
+@include theme-dark {
+  #{css-var-name(signature-canvas-bg)}: css-var(gray-900);
+}
+// #endregion variables
+
+@include b(signature) {
+  @include e(body) {
+    width: 100%;
+    height: css-var(signature-canvas-height);
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      background: css-var(signature-canvas-bg);
+    }
+  }
+
+  @include e(footer) {
+    margin-top: 10px;
+  }
+
+  @include e(footer-content) {
+    display: flex;
+    flex-direction: row;
+  }
+
+  @include e(button-group) {
+    display: flex;
+    margin-inline-start: auto;
+    gap: 10px;
+
+    @include b(button) {
+      padding: 0 16px;
+    }
+  }
+
+  @include m(full) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: css-var(signature-full-bg);
+    touch-action: none;
+
+    display: flex;
+    flex-direction: row-reverse;
+    direction: ltr;
+
+    @include e(content) {
+      display: flex;
+      flex-direction: row-reverse;
+      flex: 1;
+      min-height: 0;
+      direction: ltr;
+    }
+
+    @include e(body) {
+      width: calc(100vw - css-var(signature-side-width));
+      height: 100%;
+      padding: calc(css-var(signature-full-gap) + css-var(status-bar-height))
+        css-var(signature-full-gap) calc(css-var(signature-full-gap) + css-var(safe-bottom)) 0;
+    }
+
+    @include e(footer) {
+      position: relative;
+      width: css-var(signature-side-width);
+      height: 100%;
+      margin-top: 0;
+    }
+
+    @include e(footer-content) {
+      position: absolute;
+      right: 100%;
+      bottom: 0;
+      width: 100vh;
+      height: css-var(signature-side-width);
+      padding-inline-start: calc(css-var(signature-full-gap) + css-var(status-bar-height));
+      padding-inline-end: calc(css-var(signature-full-gap) + css-var(safe-bottom));
+      align-items: center;
+      transform-origin: right bottom;
+      transform: rotate(90deg);
+    }
+  }
+}

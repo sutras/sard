@@ -1,0 +1,12 @@
+@use '../functions' as *;
+
+@mixin disabled {
+  opacity: css-var(opacity-disabled);
+  cursor: css-var(cursor-disabled);
+  filter: css-var(filter-disabled);
+}
+
+@mixin disabled-text {
+  color: css-var(text-color-disabled);
+  cursor: css-var(cursor-disabled);
+}

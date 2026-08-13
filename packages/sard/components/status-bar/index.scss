@@ -1,0 +1,5 @@
+@use '../style/base' as *;
+
+@include b(statusBar) {
+  flex: none;
+}

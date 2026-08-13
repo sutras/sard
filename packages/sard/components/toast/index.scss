@@ -1,0 +1,86 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(toast-top)}: 10%;
+  #{css-var-name(toast-bottom)}: 10%;
+
+  #{css-var-name(toast-font-size)}: css-var(font-size);
+  #{css-var-name(toast-width)}: 120px;
+  #{css-var-name(toast-min-height-icon-only)}: css-var(toast-width);
+  #{css-var-name(toast-padding-x)}: css-var(size);
+  #{css-var-name(toast-padding-y)}: css-var(size);
+  #{css-var-name(toast-border-radius)}: css-var(border-radius-lg);
+  #{css-var-name(toast-color)}: css-var(white);
+  #{css-var-name(toast-bg)}: css-var(overlay-illegible);
+
+  #{css-var-name(toast-text-max-width)}: 80%;
+  #{css-var-name(toast-text-padding-y)}: 10px;
+
+  #{css-var-name(toast-icon-margin-bottom)}: css-var(size-xs);
+  #{css-var-name(toast-icon-size)}: 36px;
+  #{css-var-name(toast-icon-loading-size)}: 30px;
+
+  #{css-var-name(toast-title-font-size)}: css-var(toast-font-size);
+}
+// #endregion variables
+
+@include b(toast) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: css-var(toast-padding-y) css-var(toast-padding-x);
+  border-radius: css-var(toast-border-radius);
+  background: css-var(toast-bg);
+  touch-action: none;
+
+  @include e(popup) {
+    width: max-content;
+    max-width: css-var(toast-text-max-width);
+
+    @include m(top) {
+      top: css-var(toast-top);
+      bottom: auto;
+    }
+
+    @include m(bottom) {
+      top: auto;
+      bottom: css-var(toast-bottom);
+    }
+  }
+
+  @include e(icon) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: css-var(toast-icon-size);
+    height: css-var(toast-icon-size);
+    margin-bottom: css-var(toast-icon-margin-bottom);
+    text-align: center;
+    font-size: css-var(toast-icon-size);
+    color: css-var(toast-color);
+
+    @include is(loading) {
+      font-size: css-var(toast-icon-loading-size);
+    }
+  }
+
+  @include e(title) {
+    font-size: css-var(toast-title-font-size);
+    line-height: css-var(line-height-normal);
+    text-align: center;
+    color: css-var(toast-color);
+  }
+
+  @include is(text) {
+    padding-top: css-var(toast-text-padding-y);
+    padding-bottom: css-var(toast-text-padding-y);
+    word-break: break-all;
+  }
+
+  @include is-not(text) {
+    width: css-var(toast-width);
+    min-height: css-var(toast-min-height-icon-only);
+  }
+}

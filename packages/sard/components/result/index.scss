@@ -1,0 +1,75 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(result-icon-font-size)}: css-var(size-4xl);
+
+  #{css-var-name(result-color-success)}: css-var(color-success);
+  #{css-var-name(result-color-info)}: css-var(color-primary);
+  #{css-var-name(result-color-warning)}: css-var(color-warning);
+  #{css-var-name(result-color-error)}: css-var(color-danger);
+  #{css-var-name(result-color-question)}: css-var(color-primary);
+
+  #{css-var-name(result-title-margin-top)}: css-var(size);
+  #{css-var-name(result-title-font-size)}: css-var(font-size-xl);
+
+  #{css-var-name(result-description-margin-top)}: css-var(size-2xs);
+  #{css-var-name(result-description-font-size)}: css-var(font-size);
+  #{css-var-name(result-description-color)}: css-var(text-color-tertiary);
+
+  #{css-var-name(result-extra-margin-top)}: css-var(size);
+}
+// #endregion variables
+
+@include b(result) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  @include e(icon) {
+    display: flex;
+    font-size: css-var(result-icon-font-size);
+    line-height: css-var(line-height-none);
+    text-align: center;
+
+    @include m(success) {
+      color: css-var(result-color-success);
+    }
+
+    @include m(info) {
+      color: css-var(result-color-info);
+    }
+
+    @include m(warning) {
+      color: css-var(result-color-warning);
+    }
+
+    @include m(error) {
+      color: css-var(result-color-error);
+    }
+
+    @include m(question) {
+      color: css-var(result-color-question);
+    }
+  }
+
+  @include e(title) {
+    margin-top: css-var(result-title-margin-top);
+    font-size: css-var(result-title-font-size);
+
+    text-align: center;
+  }
+
+  @include e(description) {
+    margin-top: css-var(result-description-margin-top);
+    font-size: css-var(result-description-font-size);
+    color: css-var(result-description-color);
+    text-align: center;
+  }
+
+  @include e(extra) {
+    margin-top: css-var(result-extra-margin-top);
+  }
+}

@@ -1,0 +1,152 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(cascader-wrapper-duration)}: css-var(duration);
+
+  #{css-var-name(cascader-options-height)}: 320px;
+
+  #{css-var-name(cascader-option-min-height)}: css-var(content-height-sm);
+  #{css-var-name(cascader-option-padding-y)}: css-var(content-padding-y);
+  #{css-var-name(cascader-option-padding-x)}: css-var(content-padding-x);
+  #{css-var-name(cascader-option-color-selected)}: css-var(color-primary);
+  #{css-var-name(cascader-option-font-weight-selected)}: css-var(font-weight-bold);
+  #{css-var-name(cascader-option-bg-active)}: css-var(bg-color-active);
+
+  #{css-var-name(cascader-option-loading-margin-end)}: css-var(size-xs);
+  #{css-var-name(cascader-option-loading-font-size)}: css-var(font-size);
+  #{css-var-name(cascader-option-loading-color)}: css-var(text-color-fourth);
+
+  #{css-var-name(cascader-option-label-font-size)}: css-var(font-size);
+  #{css-var-name(cascader-option-label-line-height)}: css-var(line-height-relaxed);
+
+  #{css-var-name(cascader-status-font-size)}: css-var(font-size);
+  #{css-var-name(cascader-status-color)}: css-var(text-color-fourth);
+
+  #{css-var-name(cascader-loading-font-size)}: css-var(font-size-xl);
+}
+// #endregion variables
+
+@include b(cascader) {
+  @include e(container) {
+    overflow: hidden;
+  }
+
+  @include e(wrapper) {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    transition: transform css-var(cascader-wrapper-duration);
+    transform: translate3d(var(--x), 0, 0);
+
+    @include rtl {
+      transform: translate3d(calc(var(--x) * -1), 0, 0);
+    }
+  }
+
+  @include e(pane) {
+    width: 100%;
+    flex: none;
+  }
+
+  @include e(options) {
+    width: 100%;
+    height: css-var(cascader-options-height);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  @include e(option) {
+    display: flex;
+    align-items: center;
+    min-height: css-var(cascader-option-min-height);
+    padding: css-var(cascader-option-padding-y) css-var(cascader-option-padding-x);
+    cursor: pointer;
+
+    @include is(selected) {
+      color: css-var(cascader-option-color-selected);
+      font-weight: css-var(cascader-option-font-weight-selected);
+    }
+
+    @include is-not(selected) {
+      @include e(option-icon) {
+        display: none;
+      }
+    }
+
+    @include is(disabled) {
+      @include disabled-text;
+    }
+
+    @include is-not(disabled) {
+      &:active {
+        background: css-var(cascader-option-bg-active);
+      }
+    }
+  }
+
+  @include e(selection) {
+    display: flex;
+    align-items: center;
+    margin-top: calc(css-var(cascader-option-padding-y) * -1);
+    margin-bottom: calc(css-var(cascader-option-padding-y) * -1);
+    margin-inline-start: calc(css-var(size-sm) * -1);
+    padding: css-var(cascader-option-padding-y) css-var(size-sm);
+    font-weight: normal;
+    cursor: pointer;
+  }
+
+  @include e(option-loading) {
+    display: flex;
+    align-items: center;
+    margin-inline-end: css-var(cascader-option-loading-margin-end);
+    font-size: css-var(cascader-option-loading-font-size);
+    color: css-var(cascader-option-loading-color);
+
+    @include is-not(show) {
+      display: none;
+    }
+  }
+
+  @include e(option-label) {
+    font-size: css-var(cascader-option-label-font-size);
+    line-height: css-var(cascader-option-label-line-height);
+  }
+
+  @include e(option-icon) {
+    margin-inline-start: auto;
+  }
+
+  @include e(status-wrapper) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity css-var(duration);
+    pointer-events: none;
+
+    @include m(show) {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  @include e(status) {
+    font-size: css-var(cascader-status-font-size);
+    color: css-var(cascader-status-color);
+  }
+
+  @include e(error, empty) {
+    cursor: pointer;
+  }
+
+  @include e(loading) {
+    font-size: css-var(cascader-loading-font-size);
+  }
+}

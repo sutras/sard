@@ -1,0 +1,112 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(keyboard-bg)}: css-var(gray-200);
+  #{css-var-name(keyboard-padding)}: 6px;
+
+  #{css-var-name(keyboard-key-gap)}: 6px;
+  #{css-var-name(keyboard-key-color)}: css-var(text-color-primary);
+  #{css-var-name(keyboard-key-bg)}: css-var(white);
+  #{css-var-name(keyboard-key-bg-active)}: css-var(gray-300);
+
+  #{css-var-name(keyboard-key-height)}: css-var(size-4xl);
+  #{css-var-name(keyboard-key-radius)}: css-var(border-radius);
+  #{css-var-name(keyboard-key-font-size)}: css-var(font-size-xl);
+
+  #{css-var-name(keyboard-key-plate-height)}: css-var(size-3xl);
+  #{css-var-name(keyboard-key-plate-radius)}: css-var(border-radius-sm);
+  #{css-var-name(keyboard-key-plate-font-size)}: css-var(font-size);
+  #{css-var-name(keyboard-key-plate-backspace-font-size)}: css-var(size);
+  #{css-var-name(keyboard-key-plate-bg)}: css-var(gray-300);
+  #{css-var-name(keyboard-key-plate-bg-active)}: css-var(gray-400);
+}
+
+@include theme-dark {
+  #{css-var-name(keyboard-bg)}: css-var(gray-800);
+  #{css-var-name(keyboard-key-color)}: css-var(white);
+  #{css-var-name(keyboard-key-bg)}: css-var(gray-600);
+  #{css-var-name(keyboard-key-bg-active)}: css-var(gray-500);
+  #{css-var-name(keyboard-key-plate-bg)}: css-var(gray-600);
+  #{css-var-name(keyboard-key-plate-bg-active)}: css-var(gray-500);
+}
+// #endregion variables
+
+@include b(keyboard) {
+  display: grid;
+  gap: css-var(keyboard-key-gap);
+  padding: css-var(keyboard-padding);
+  background: css-var(keyboard-bg);
+
+  @include m(number, digit, idcard, random) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include m(number, random) {
+    @include e(key) {
+      &:nth-child(10) {
+        grid-column: 1/3;
+      }
+    }
+  }
+
+  @include e(key) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: css-var(keyboard-key-height);
+    border-radius: css-var(keyboard-key-radius);
+    font-size: css-var(keyboard-key-font-size);
+    color: css-var(keyboard-key-color);
+    background: css-var(keyboard-key-bg);
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+
+    &:active {
+      background: css-var(keyboard-key-bg-active);
+    }
+
+    @include is(disabled) {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  }
+
+  @include m(plate) {
+    grid-template-columns: repeat(20, 1fr);
+
+    @include e(key) {
+      grid-column: span 2;
+      height: css-var(keyboard-key-plate-height);
+      border-radius: css-var(keyboard-key-plate-radius);
+      font-size: css-var(keyboard-key-plate-font-size);
+
+      @include m(A) {
+        grid-column: 2/4;
+      }
+
+      @include m(I, O) {
+        opacity: 0.4;
+        pointer-events: none;
+      }
+
+      @include m(backspace, toggle) {
+        grid-column: span 3;
+        background: css-var(keyboard-key-plate-bg);
+
+        &:active {
+          background: css-var(keyboard-key-plate-bg-active);
+        }
+      }
+
+      @include m(backspace) {
+        font-size: css-var(keyboard-key-plate-backspace-font-size);
+      }
+    }
+  }
+
+  @include e(delete-icon) {
+    @include rtl-flip;
+  }
+}

@@ -1,0 +1,132 @@
+import consola from 'consola'
+import inquirer from 'inquirer'
+import { camelCase, kebabCase, upperFirst } from 'lodash-es'
+import path from 'node:path'
+import {
+  addDemoMenu,
+  addDemoRoute,
+  createComponentCommon,
+  createComponentIndex,
+  createComponentIndexScss,
+  createComponentReadme,
+  createComponentVue,
+  createDemo,
+  declareGlobalComponent,
+  exportComponent,
+  exportStyle,
+} from './utils/comp-skeleton'
+import fs from 'node:fs/promises'
+import { docsRootDir, libRootDir } from './config'
+import { runSteps } from './utils/utils'
+
+async function createComponent(
+  compDir: string,
+  kebabCaseName: string,
+  camelCaseName: string,
+  pascalCaseName: string,
+  cnName: string,
+  groupCnName: string,
+  compReadmePath: string,
+) {
+  await createComponentVue(compDir, kebabCaseName, pascalCaseName)
+
+  await createComponentCommon(compDir, pascalCaseName)
+
+  await createComponentIndexScss(compDir, kebabCaseName)
+
+  await createComponentIndex(compDir, kebabCaseName, pascalCaseName)
+
+  await createComponentReadme(compReadmePath, kebabCaseName, pascalCaseName, cnName, groupCnName)
+}
+
+async function newComponent() {
+  const compForm = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'enName',
+      message: '请输入新增的组件英文名',
+    },
+    {
+      type: 'input',
+      name: 'cnName',
+      message: '请输入新增的组件中文名',
+    },
+    {
+      type: 'input',
+      name: 'groupCnName',
+      message: '请输入中文组名',
+    },
+  ])
+
+  for (const [name, value] of Object.entries(compForm)) {
+    if (!value) {
+      consola.error(`${name}不能为空`)
+      process.exit(1)
+    }
+  }
+
+  for (const k in compForm) {
+    compForm[k] = compForm[k].trim()
+  }
+
+  consola.info(compForm)
+
+  const confirmForm = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'confirm',
+      message: '确定新增组件？',
+      default: false,
+    },
+  ])
+
+  if (!confirmForm.confirm) {
+    consola.error('已取消新增组件')
+    process.exit(1)
+  }
+
+  const groupCnName = compForm.groupCnName
+
+  const kebabCaseName = kebabCase(compForm.enName)
+  const camelCaseName = camelCase(compForm.enName)
+  const pascalCaseName = upperFirst(camelCaseName)
+  const cnName = compForm.cnName
+
+  const compDir = path.resolve(libRootDir, `components/${kebabCaseName}`)
+
+  const compReadmePath = path.resolve(docsRootDir, `components/${kebabCaseName}.md`)
+
+  try {
+    await fs.access(compDir)
+    consola.error(`目录已存在: ${compDir}`)
+    process.exit(1)
+  } catch {
+    void 0
+  }
+
+  await runSteps([
+    [
+      '创建组件源码等相关文件',
+      () =>
+        createComponent(
+          compDir,
+          kebabCaseName,
+          camelCaseName,
+          pascalCaseName,
+          cnName,
+          groupCnName,
+          compReadmePath,
+        ),
+    ],
+    ['创建案例相关文件', () => createDemo(kebabCaseName, pascalCaseName, cnName)],
+    ['导出样式模块', () => exportStyle(kebabCaseName)],
+    ['导出组件模块', () => exportComponent(kebabCaseName, pascalCaseName)],
+    ['声明全局组件', () => declareGlobalComponent(kebabCaseName, pascalCaseName)],
+    ['添加案例路由', () => addDemoRoute(kebabCaseName)],
+    ['添加案例菜单', () => addDemoMenu(groupCnName, kebabCaseName, pascalCaseName, cnName)],
+  ])
+
+  consola.success('成功新增组件')
+}
+
+newComponent()

@@ -1,0 +1,18 @@
+<template>
+  <s-avatar-group :total="avatarList.length" :max="max" :coverage="0.2">
+    <s-avatar v-for="(item, index) in avatarList.slice(0, max)" :key="index" :index="index">
+      {{ item.text }}
+    </s-avatar>
+  </s-avatar-group>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const avatarList = ref(
+  Array(10)
+    .fill(0)
+    .map((_, i) => ({ text: i + 1 })),
+)
+const max = 5
+</script>

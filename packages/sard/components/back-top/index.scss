@@ -1,0 +1,32 @@
+@use '../style/base' as *;
+
+@include b(back-top) {
+  position: fixed;
+  inset-inline-end: css-var(size-xl);
+  bottom: css-var(size-4xl);
+  z-index: css-var(z-index-secondary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: css-var(size-4xl);
+  height: css-var(size-4xl);
+  padding: 0 css-var(size-sm);
+  border-radius: css-var(border-radius-full);
+  font-size: css-var(font-size-xl);
+  color: css-var(white);
+  background: css-var(color-primary);
+  box-shadow: css-var(box-shadow-secondary);
+  cursor: pointer;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity css-var(duration);
+
+  &:active {
+    opacity: css-var(opacity-active);
+  }
+
+  @include m(visible) {
+    pointer-events: auto;
+    opacity: 1;
+  }
+}

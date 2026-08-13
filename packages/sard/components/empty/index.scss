@@ -1,0 +1,58 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(empty-icon-font-size)}: css-var(size-4xl);
+  #{css-var-name(empty-icon-color)}: css-var(gray-300);
+  #{css-var-name(empty-icon-line-height)}: css-var(line-height-none);
+
+  #{css-var-name(empty-description-margin-top)}: css-var(size);
+  #{css-var-name(empty-description-font-size)}: css-var(font-size);
+  #{css-var-name(empty-description-color)}: css-var(text-color-fourth);
+  #{css-var-name(empty-extra-margin-top)}: css-var(size-lg);
+
+  #{css-var-name(empty-small-icon-font-size)}: css-var(size-3xl);
+  #{css-var-name(empty-small-description-margin-top)}: css-var(size-sm);
+  #{css-var-name(empty-small-description-font-size)}: css-var(font-size-sm);
+}
+// #endregion variables
+
+@include b(empty) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  @include e(icon-wrapper) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @include e(icon) {
+    font-size: css-var(empty-icon-font-size);
+    line-height: css-var(empty-icon-line-height);
+    color: css-var(empty-icon-color);
+  }
+
+  @include e(description) {
+    margin-top: css-var(empty-description-margin-top);
+    font-size: css-var(empty-description-font-size);
+    color: css-var(empty-description-color);
+  }
+
+  @include e(extra) {
+    margin-top: css-var(empty-extra-margin-top);
+  }
+
+  @include m(small) {
+    @include e(icon) {
+      font-size: css-var(empty-small-icon-font-size);
+    }
+    @include e(description) {
+      margin-top: css-var(empty-small-description-margin-top);
+      font-size: css-var(empty-small-description-font-size);
+    }
+  }
+}

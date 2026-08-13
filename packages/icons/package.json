@@ -1,0 +1,20 @@
+{
+  "name": "@sard/icons",
+  "version": "0.1.0",
+  "description": "用于 Sard 组件库的图标集",
+  "keywords": [
+    "icons",
+    "sard",
+    "vue"
+  ],
+  "license": "MIT",
+  "author": "wuzhitao",
+  "main": "index.tsx",
+  "devDependencies": {
+    "vue": "^3.0.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "packageManager": "pnpm@10.32.1"
+}

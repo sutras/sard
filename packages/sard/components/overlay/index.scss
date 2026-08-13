@@ -1,0 +1,15 @@
+@use '../style/base' as *;
+
+@include b(overlay) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: css-var(overlay);
+  touch-action: none;
+
+  @include m(transparent) {
+    background-color: transparent;
+  }
+}

@@ -1,0 +1,118 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(timeline-item-header-width)}: 48px;
+
+  #{css-var-name(timeline-item-line-width)}: 1px;
+  #{css-var-name(timeline-item-line-dotted-before-height)}: 7px;
+  #{css-var-name(timeline-item-line-color)}: css-var(border-color);
+
+  #{css-var-name(timeline-item-icon-wrapper-margin-y)}: 3px;
+
+  #{css-var-name(timeline-item-icon-font-size)}: 24px;
+  #{css-var-name(timeline-item-icon-color)}: css-var(fill-color);
+
+  #{css-var-name(timeline-item-dot-size)}: 8px;
+  #{css-var-name(timeline-item-dot-bg)}: css-var(fill-color-secondary);
+
+  #{css-var-name(timeline-item-body-padding-top)}: 3px;
+  #{css-var-name(timeline-item-body-padding-bottom)}: 24px;
+
+  #{css-var-name(timeline-item-title-margin-bottom)}: 6px;
+  #{css-var-name(timeline-item-title-font-size)}: css-var(font-size-lg);
+
+  #{css-var-name(timeline-item-description-margin-bottom)}: 6px;
+  #{css-var-name(timeline-item-description-font-size)}: css-var(font-size);
+
+  #{css-var-name(timeline-item-time-font-size)}: css-var(font-size-sm);
+  #{css-var-name(timeline-item-time-color)}: css-var(text-color-tertiary);
+}
+// #endregion variables
+
+@include b(timeline) {
+}
+
+@include b(timeline-item) {
+  display: flex;
+
+  &:first-child {
+    @include e(line) {
+      @include m(before) {
+        opacity: 0;
+      }
+    }
+  }
+
+  &:last-child {
+    @include e(line) {
+      @include m(after) {
+        opacity: 0;
+      }
+    }
+  }
+
+  @include e(header) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: none;
+    width: css-var(timeline-item-header-width);
+  }
+
+  @include e(icon-wrapper) {
+    margin: css-var(timeline-item-icon-wrapper-margin-y) 0;
+  }
+
+  @include e(icon) {
+    font-size: css-var(timeline-item-icon-font-size);
+    line-height: css-var(line-height-none);
+    color: css-var(timeline-item-icon-color);
+  }
+
+  @include e(dot) {
+    width: css-var(timeline-item-dot-size);
+    height: css-var(timeline-item-dot-size);
+    border-radius: 50%;
+    background: css-var(timeline-item-dot-bg);
+  }
+
+  @include e(line) {
+    width: css-var(timeline-item-line-width);
+    background: css-var(timeline-item-line-color);
+
+    @include m(after) {
+      flex: 1;
+    }
+  }
+
+  @include m(dotted) {
+    @include e(line) {
+      @include m(before) {
+        height: css-var(timeline-item-line-dotted-before-height);
+      }
+    }
+  }
+
+  @include e(body) {
+    flex: 1;
+    padding-top: css-var(timeline-item-body-padding-top);
+    padding-bottom: css-var(timeline-item-body-padding-bottom);
+  }
+
+  @include e(title) {
+    margin-bottom: css-var(timeline-item-title-margin-bottom);
+    font-size: css-var(timeline-item-title-font-size);
+    font-weight: css-var(font-weight-bold);
+  }
+
+  @include e(description) {
+    margin-bottom: css-var(timeline-item-description-margin-bottom);
+    font-size: css-var(timeline-item-description-font-size);
+  }
+
+  @include e(time) {
+    font-size: css-var(timeline-item-time-font-size);
+    color: css-var(timeline-item-time-color);
+  }
+}

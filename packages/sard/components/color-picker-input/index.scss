@@ -1,0 +1,19 @@
+@use '../style/base' as *;
+
+@include b(color-picker-input) {
+  text-align: left;
+
+  @include e(preview) {
+    flex: none;
+    width: css-var(size-xl);
+    height: css-var(size-xl);
+    border-radius: css-var(border-radius-sm);
+    background: css-var(color-picker-checker-bg);
+    overflow: hidden;
+  }
+
+  @include e(preview-fill) {
+    width: 100%;
+    height: 100%;
+  }
+}

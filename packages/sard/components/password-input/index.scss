@@ -1,0 +1,155 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(password-input-gap)}: 10px;
+  #{css-var-name(password-input-border-color)}: css-var(border-color);
+  #{css-var-name(password-input-border-radius)}: css-var(border-radius);
+  #{css-var-name(password-input-border-color-active)}: css-var(color-primary);
+
+  #{css-var-name(password-input-height)}: css-var(content-height-lg);
+  #{css-var-name(password-input-ciphertext-size)}: 10px;
+  #{css-var-name(password-input-ciphertext-bg)}: css-var(text-color-primary);
+
+  #{css-var-name(password-input-plaintext-font-size)}: 20px;
+
+  #{css-var-name(password-input-cursor-width)}: 1px;
+  #{css-var-name(password-input-cursor-height)}: 20px;
+  #{css-var-name(password-input-cursor-color)}: css-var(text-color-primary);
+}
+// #endregion variables
+
+@include b(password-input) {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: css-var(password-input-height);
+  gap: css-var(password-input-gap);
+  -webkit-user-select: none;
+  user-select: none;
+
+  @include e(item) {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 100%;
+  }
+
+  @include e(plaintext) {
+    font-size: css-var(password-input-plaintext-font-size);
+  }
+
+  @include e(ciphertext) {
+    width: css-var(password-input-ciphertext-size);
+    height: css-var(password-input-ciphertext-size);
+    border-radius: css-var(border-radius-full);
+    background: css-var(password-input-ciphertext-bg);
+  }
+
+  @include e(cursor) {
+    width: css-var(password-input-cursor-width);
+    height: css-var(password-input-cursor-height);
+    background: css-var(password-input-cursor-color);
+    animation: 1s #{bem-ns(password-input-cursor-flicker)} infinite;
+  }
+
+  @keyframes #{bem-ns(password-input-cursor-flicker)} {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @include e(input-wrapper) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    overflow: hidden;
+  }
+
+  @include e(input) {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    opacity: 0;
+  }
+
+  @include m(bordered) {
+    @include e(item) {
+      border-radius: css-var(password-input-border-radius);
+
+      &::after {
+        @include border-surround(css-var(password-input-border-color));
+        border-radius: calc(css-var(password-input-border-radius) * 2);
+      }
+    }
+  }
+
+  @include m(underlined) {
+    @include e(item) {
+      &::after {
+        @include border-bottom(css-var(password-input-border-color));
+      }
+    }
+  }
+
+  @include m(tight-bordered) {
+    @include e(item) {
+      &::after {
+        @include border-surround(css-var(password-input-border-color));
+        border-inline-start-color: transparent;
+      }
+      &:first-child::after {
+        border-inline-start-color: css-var(password-input-border-color);
+      }
+    }
+  }
+
+  @include m(bordered, underlined, tight-bordered) {
+    @include e(item) {
+      @include m(active) {
+        &::after {
+          border-color: css-var(password-input-border-color-active);
+        }
+      }
+    }
+  }
+
+  @include m(tight-bordered) {
+    @include e(item) {
+      @include m(active) {
+        &:first-child::after {
+          border-inline-start-color: css-var(password-input-border-color-active);
+        }
+      }
+    }
+  }
+
+  @include m(disabled) {
+    color: css-var(text-color-disabled);
+
+    @include e(item) {
+      background: css-var(bg-color-disabled);
+    }
+
+    @include e(ciphertext) {
+      background: css-var(text-color-disabled);
+    }
+  }
+}

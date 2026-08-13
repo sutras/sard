@@ -1,0 +1,43 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(scroll-list-scrollbar-width)}: 50px;
+  #{css-var-name(scroll-list-scrollbar-height)}: 4px;
+  #{css-var-name(scroll-list-scrollbar-margin-top)}: css-var(size);
+  #{css-var-name(scroll-list-scrollbar-bg)}: css-var(fill-color-secondary);
+  #{css-var-name(scroll-list-scrollbar-thumb-bg)}: css-var(color-primary);
+}
+// #endregion variables
+
+@include b(scroll-list) {
+  @include e(scroll) {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  @include e(wrapper) {
+    display: inline-flex;
+  }
+
+  @include e(scrollbar) {
+    position: relative;
+    width: css-var(scroll-list-scrollbar-width);
+    height: css-var(scroll-list-scrollbar-height);
+    margin-top: css-var(scroll-list-scrollbar-margin-top);
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    border-radius: css-var(border-radius-full);
+    background: css-var(scroll-list-scrollbar-bg);
+  }
+
+  @include e(scrollbar-thumb) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    border-radius: css-var(border-radius-full);
+    background: css-var(scroll-list-scrollbar-thumb-bg);
+  }
+}

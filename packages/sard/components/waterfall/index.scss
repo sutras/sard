@@ -1,0 +1,39 @@
+@use '../style/base' as *;
+
+@include b(waterfall) {
+  position: relative;
+}
+
+@include b(waterfall-item) {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity css-var(duration),
+    transform css-var(duration);
+  transform: translate3d(var(--x), var(--y), 0);
+
+  @include rtl {
+    transform: translate3d(calc(var(--x) * -1), var(--y), 0);
+  }
+
+  @include is(entering) {
+    transition: opacity css-var(duration);
+  }
+
+  @include m(show) {
+    pointer-events: auto;
+    opacity: 1;
+  }
+}
+
+@include b(waterfall-load) {
+  position: relative;
+  @include e(content) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}

@@ -1,0 +1,171 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(slide-verify-height)}: css-var(content-height-sm);
+  #{css-var-name(slide-verify-bg)}: css-var(fill-color-secondary);
+  #{css-var-name(slide-verify-theme-color)}: css-var(color-success);
+  #{css-var-name(slide-verify-border-radius)}: css-var(border-radius-sm);
+  #{css-var-name(slide-verify-border-color)}: css-var(text-color-fourth);
+  #{css-var-name(slide-verify-font-size)}: css-var(font-size);
+  #{css-var-name(slide-verify-icon-size)}: css-var(size-xl);
+}
+// #endregion variables
+
+@include b(slide-verify) {
+  position: relative;
+  height: css-var(slide-verify-height);
+  border-radius: css-var(slide-verify-border-radius);
+  background: css-var(slide-verify-bg);
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+
+  @include e(track) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @include e(track-text) {
+    background-image: linear-gradient(
+      90deg,
+      css-var(gray-800) 45%,
+      css-var(white) 50%,
+      css-var(gray-800) 55%
+    );
+    background-size: 200% 100%;
+    -webkit-bg-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: #{bem-ns(slide-verify-light)} 2s infinite;
+  }
+
+  @keyframes #{bem-ns(slide-verify-light)} {
+    0% {
+      background-position-x: 100%;
+    }
+    100% {
+      background-position-x: 0%;
+    }
+  }
+
+  @include e(valid-track) {
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    bottom: 0;
+    width: calc(100% - css-var(slide-verify-height));
+  }
+
+  @include e(fill) {
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--valid-track-x);
+    white-space: nowrap;
+    color: css-var(white);
+    background: css-var(slide-verify-theme-color);
+    transition: width css-var(duration);
+  }
+
+  @include e(fulfill) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: css-var(white);
+    clip-path: inset(0 calc(100% - var(--track-x)) 0 0);
+    transition: clip-path css-var(duration);
+
+    @include rtl {
+      clip-path: inset(0 0 0 calc(100% - var(--track-x)));
+    }
+  }
+
+  @include e(target) {
+    position: absolute;
+    top: 0;
+    inset-inline-start: var(--target-x);
+    width: css-var(slide-verify-height);
+    height: css-var(slide-verify-height);
+    border: 1px dashed css-var(slide-verify-border-color);
+    pointer-events: none;
+  }
+
+  @include e(thumb) {
+    position: absolute;
+    top: 0;
+    inset-inline-start: var(--valid-track-x);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: css-var(slide-verify-height);
+    height: css-var(slide-verify-height);
+    font-size: css-var(font-size-lg);
+    background-color: css-var(bg-color-container);
+    cursor: move;
+    transition: css-var(duration);
+    touch-action: none;
+    box-shadow: inset 0 0 0 2px css-var(slide-verify-bg);
+    border-radius: css-var(border-radius);
+  }
+
+  @include e(arrow) {
+    @include rtl-flip;
+  }
+
+  @include m(down) {
+    @include e(thumb, fill, fulfill) {
+      transition: none;
+    }
+  }
+
+  @include m(success) {
+    @include e(thumb) {
+      color: css-var(slide-verify-theme-color);
+    }
+  }
+
+  @include m(error) {
+    @include e(thumb) {
+      color: css-var(color-danger);
+    }
+
+    @include e(fill) {
+      background: css-var(color-danger);
+    }
+  }
+
+  @include m(success, error) {
+    @include e(track, fulfill, target) {
+      display: none;
+    }
+  }
+
+  @include m(success, error, loading) {
+    @include e(track-text) {
+      animation: none;
+      background: none;
+      -webkit-bg-clip: unset;
+      background-clip: unset;
+      -webkit-text-fill-color: unset;
+    }
+    @include e(thumb) {
+      cursor: unset;
+    }
+  }
+}

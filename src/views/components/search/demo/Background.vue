@@ -1,0 +1,9 @@
+<template>
+  <s-search
+    placeholder="请输入关键词"
+    background="var(--s-color-danger)"
+    input-background="var(--s-white)"
+    input-color="var(--s-black)"
+    shape="round"
+  />
+</template>

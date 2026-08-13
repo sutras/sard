@@ -1,0 +1,17 @@
+@mixin rtl {
+  :root[dir='rtl'] & {
+    @content;
+  }
+}
+
+@mixin not-rtl {
+  :root:not([dir='rtl']) & {
+    @content;
+  }
+}
+
+@mixin rtl-flip {
+  @include rtl {
+    transform: rotateY(180deg);
+  }
+}

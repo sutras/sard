@@ -1,0 +1,39 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(check-icon-size)}: 1em;
+  #{css-var-name(check-icon-square-radius)}: 0.15em;
+  #{css-var-name(check-icon-border-color)}: css-var(border-color-dark);
+  #{css-var-name(check-icon-border-color-disabled)}: css-var(border-color-dark);
+  #{css-var-name(check-icon-color-disabled)}: css-var(text-color-disabled);
+  #{css-var-name(check-icon-bg-disabled)}: css-var(bg-color-disabled);
+}
+// #endregion variables
+
+@include b(check-icon) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: css-var(check-icon-size);
+  height: css-var(check-icon-size);
+  border: 1px solid css-var(check-icon-border-color);
+
+  @include m(square) {
+    border-radius: css-var(check-icon-square-radius);
+  }
+
+  @include m(circle) {
+    border-radius: 50%;
+  }
+
+  @include m(check, dot, dash) {
+    border-color: transparent;
+  }
+
+  @include is(disabled) {
+    color: css-var(check-icon-color-disabled);
+    background: css-var(check-icon-bg-disabled);
+    border-color: css-var(check-icon-border-color-disabled);
+  }
+}

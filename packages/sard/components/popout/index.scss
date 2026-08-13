@@ -1,0 +1,107 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(popout-border-radius)}: css-var(border-radius-xl);
+  #{css-var-name(popout-bg)}: css-var(bg-color-elevated);
+
+  #{css-var-name(popout-close-padding)}: css-var(size);
+  #{css-var-name(popout-close-font-size)}: css-var(font-size-lg);
+  #{css-var-name(popout-close-color)}: css-var(text-color-secondary);
+
+  #{css-var-name(popout-header-compact-height)}: css-var(content-height);
+  #{css-var-name(popout-header-loose-height)}: css-var(content-height);
+  #{css-var-name(popout-header-loose-padding-x)}: 60px;
+
+  #{css-var-name(popout-title-font-size)}: css-var(font-size-lg);
+  #{css-var-name(popout-title-color)}: css-var(text-color-emphasis);
+
+  #{css-var-name(popout-footer-padding-y)}: css-var(content-padding-y);
+  #{css-var-name(popout-footer-padding-x)}: css-var(content-padding-x);
+
+  #{css-var-name(popout-button-gap)}: css-var(size);
+}
+// #endregion variables
+
+@include b(popout) {
+  max-height: 100%;
+  padding-bottom: css-var(safe-bottom);
+  border-top-left-radius: css-var(popout-border-radius);
+  border-top-right-radius: css-var(popout-border-radius);
+  background: css-var(popout-bg);
+
+  @include m(divided) {
+    box-shadow: css-var(box-shadow);
+  }
+
+  @include e(header) {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    @include m(compact) {
+      height: css-var(popout-header-compact-height);
+    }
+
+    @include m(loose) {
+      height: css-var(popout-header-loose-height);
+      padding-inline-start: css-var(popout-header-loose-padding-x);
+      padding-inline-end: css-var(popout-header-loose-padding-x);
+    }
+  }
+
+  @include e(button-wrap) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    height: 100%;
+
+    @include m(end) {
+      margin-inline-start: auto;
+    }
+  }
+
+  @include e(title) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: 100%;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    text-align: center;
+    font-size: css-var(popout-title-font-size);
+    font-weight: css-var(font-weight-bold);
+    color: css-var(popout-title-color);
+    overflow: hidden;
+  }
+
+  @include e(title-text) {
+    @include ellipsis;
+  }
+
+  @include e(close) {
+    position: absolute;
+    top: 0;
+    inset-inline-end: 0;
+    height: 100%;
+    border-width: 0;
+    font-size: css-var(popout-close-font-size);
+    color: css-var(popout-close-color);
+  }
+
+  @include e(footer) {
+    display: flex;
+    align-items: center;
+    gap: css-var(popout-button-gap);
+    padding: css-var(popout-footer-padding-y) css-var(popout-footer-padding-x);
+  }
+
+  @include e(footer-button) {
+    flex: 1 1 0;
+  }
+}

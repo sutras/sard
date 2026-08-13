@@ -1,0 +1,132 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(card-border-radius)}: css-var(border-radius-lg);
+  #{css-var-name(card-bg)}: css-var(bg-color-container);
+  #{css-var-name(card-bg-active)}: css-var(bg-color-active);
+
+  #{css-var-name(card-icon-padding-y)}: css-var(size-sm);
+  #{css-var-name(card-icon-padding-x)}: css-var(size);
+
+  #{css-var-name(card-header-padding-y)}: css-var(size-sm);
+  #{css-var-name(card-header-padding-x)}: css-var(size);
+
+  #{css-var-name(card-title-font-size)}: css-var(font-size-lg);
+
+  #{css-var-name(card-body-padding-y)}: css-var(size-sm);
+  #{css-var-name(card-body-padding-x)}: css-var(size);
+
+  #{css-var-name(card-footer-padding-y)}: css-var(size-sm);
+  #{css-var-name(card-footer-padding-x)}: css-var(size);
+
+  #{css-var-name(card-border-color)}: css-var(border-color);
+
+  #{css-var-name(card-border-style)}: css-var(border-style);
+  #{css-var-name(card-border-width)}: css-var(border-width);
+  #{css-var-name(card-border-left)}: 0px;
+  #{css-var-name(card-border-right)}: 0px;
+
+  #{css-var-name(card-header-border-color)}: css-var(card-border-color);
+  #{css-var-name(card-header-border-style)}: css-var(card-border-style);
+  #{css-var-name(card-header-border-width)}: css-var(card-border-width);
+  #{css-var-name(card-footer-border-color)}: css-var(card-border-color);
+  #{css-var-name(card-footer-border-style)}: css-var(card-border-style);
+  #{css-var-name(card-footer-border-width)}: css-var(card-border-width);
+}
+// #endregion variables
+
+@include b(card) {
+  display: flex;
+  background: css-var(card-bg);
+  border-radius: css-var(card-border-radius);
+
+  @include m(hover) {
+    cursor: pointer;
+
+    &:active {
+      background: css-var(card-bg-active);
+    }
+  }
+
+  @include e(icon) {
+    flex: none;
+    padding: css-var(card-icon-padding-y) css-var(card-icon-padding-x);
+  }
+
+  @include e(content) {
+    flex: 1;
+    min-width: 0;
+  }
+
+  @include e(header) {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: css-var(card-header-padding-y) css-var(card-header-padding-x);
+
+    &::after {
+      @include border-bottom(
+        css-var-with-default(card-header-border-color, css-var(card-border-color)),
+        css-var-with-default(card-header-border-style, css-var(card-border-style)),
+        css-var-with-default(card-header-border-width, css-var(card-border-width))
+      );
+      inset-inline-start: css-var(card-border-left);
+      inset-inline-end: css-var(card-border-right);
+    }
+  }
+
+  @include e(title) {
+    font-size: css-var(card-title-font-size);
+    line-height: css-var(line-height-snug);
+    flex: 1;
+    min-width: 0;
+  }
+
+  @include e(extra) {
+    display: flex;
+    align-items: center;
+  }
+
+  @include e(body) {
+    padding: css-var(card-body-padding-y) css-var(card-body-padding-x);
+  }
+
+  @include e(footer) {
+    position: relative;
+    padding: css-var(card-footer-padding-y) css-var(card-footer-padding-x);
+    &::before {
+      @include border-top(
+        css-var-with-default(card-footer-border-color, css-var(card-border-color)),
+        css-var-with-default(card-footer-border-style, css-var(card-border-style)),
+        css-var-with-default(card-footer-border-width, css-var(card-border-width))
+      );
+      inset-inline-start: css-var(card-border-left);
+      inset-inline-end: css-var(card-border-right);
+    }
+  }
+
+  @include m(head-borderless, collapsed) {
+    @include e(header) {
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  @include m(foot-borderless) {
+    @include e(footer) {
+      &::before {
+        display: none;
+      }
+    }
+  }
+
+  @include has(icon) {
+    @include e(header, body, footer) {
+      padding-inline-start: 0;
+    }
+    #{css-var-name(card-border-right)}: css-var(card-header-padding-x);
+  }
+}

@@ -1,0 +1,47 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(floating-bubble-z-index)}: css-var(z-index-secondary);
+  #{css-var-name(floating-bubble-size)}: css-var(size-4xl);
+  #{css-var-name(floating-bubble-color)}: css-var(white);
+  #{css-var-name(floating-bubble-bg)}: css-var(color-primary);
+  #{css-var-name(floating-bubble-opacity-active)}: css-var(opacity-active);
+  #{css-var-name(floating-bubble-duration)}: css-var(duration);
+  #{css-var-name(floating-bubble-box-shadow)}: css-var(box-shadow-secondary);
+}
+// #endregion variables
+
+@include b(floating-bubble) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: css-var(floating-bubble-z-index);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: css-var(floating-bubble-size);
+  height: css-var(floating-bubble-size);
+  border-radius: css-var(border-radius-full);
+  color: css-var(floating-bubble-color);
+  background: css-var(floating-bubble-bg);
+  box-shadow: css-var(floating-bubble-box-shadow);
+  opacity: 0;
+  cursor: pointer;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+
+  &:active {
+    opacity: css-var(floating-bubble-opacity-active);
+    transition: none;
+  }
+
+  @include m(initialized) {
+    opacity: 1;
+  }
+
+  @include m(animated) {
+    transition: transform css-var(floating-bubble-duration);
+  }
+}

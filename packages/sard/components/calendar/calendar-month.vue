@@ -1,0 +1,188 @@
+<template>
+  <div :class="bem.e('month')">
+    <div v-if="severalMonths" :class="bem.e('month-title')">
+      {{
+        t('monthTitle', {
+          year,
+          month: month + 1,
+        })
+      }}
+    </div>
+    <div :class="bem.e('days')">
+      <div
+        v-for="(item, i) in daysInfo"
+        :key="i"
+        :class="item.className"
+        :style="item.style"
+        @click="onDayClick(item.day)"
+      >
+        <div v-if="item.day.top" :class="bem.e('day-top')">
+          {{ item.day.top }}
+        </div>
+        {{ item.day.text }}
+        <div v-if="item.day.bottom" :class="bem.e('day-bottom')">
+          {{ item.day.bottom }}
+        </div>
+      </div>
+
+      <div :class="bem.e('mark')">{{ month + 1 }}</div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue'
+import {
+  getDaysInMonth,
+  getDaysBeforeFirstDay,
+  getPrevMonthTailDays,
+  getNextMonthHeadDays,
+  toDateNumber,
+} from '../../utils'
+import { type CalendarMonthProps, type CalendarMonthEmits, type CalendarDay } from './common'
+
+const props = withDefaults(defineProps<CalendarMonthProps>(), {})
+
+const emit = defineEmits<CalendarMonthEmits>()
+
+// main
+const days = computed(() => {
+  return getDaysInMonth(props.year, props.month)
+})
+
+const daysBefore = computed(() => {
+  return getDaysBeforeFirstDay(props.year, props.month, props.weekStartsOn)
+})
+
+const allDays = computed(() => {
+  const currentDays = Array(days.value)
+    .fill(0)
+    .map((_, i) => new Date(props.year, props.month, i + 1))
+
+  if (props.severalMonths) {
+    return currentDays
+  }
+
+  const prevMonthTailDays = getPrevMonthTailDays(props.year, props.month, props.weekStartsOn)
+
+  const nextMonthHeadDays = getNextMonthHeadDays(props.year, props.month, props.weekStartsOn)
+
+  return [...prevMonthTailDays, ...currentDays, ...nextMonthHeadDays]
+})
+
+function withinMonth(i: number) {
+  return props.severalMonths ? true : i >= daysBefore.value && i < daysBefore.value + days.value
+}
+
+const types = {
+  same: 'same',
+  start: 'start',
+  middle: 'middle',
+  end: 'end',
+  selected: 'selected',
+  normal: 'normal',
+}
+
+const daysInfo = computed(() => {
+  return allDays.value.map((date, i) => {
+    const dateNumber = toDateNumber(date)
+    const within = withinMonth(i)
+
+    let disabled = false
+
+    if (!within) {
+      disabled = true
+    } else {
+      if (props.disabledDate) {
+        disabled = props.disabledDate(date)
+      }
+
+      if (dateNumber < toDateNumber(props.minDate) || dateNumber > toDateNumber(props.maxDate)) {
+        disabled = true
+      }
+    }
+
+    const selected =
+      within &&
+      props.type !== 'range' &&
+      props.currentDates.some((d) => toDateNumber(d) === dateNumber)
+
+    const isStart =
+      within &&
+      props.type === 'range' &&
+      props.currentDates[0] &&
+      toDateNumber(props.currentDates[0]) === dateNumber
+
+    const isEnd =
+      within &&
+      props.type === 'range' &&
+      props.currentDates[1] &&
+      toDateNumber(props.currentDates[1]) === dateNumber
+
+    const isMiddle =
+      within &&
+      props.type === 'range' &&
+      props.currentDates.length === 2 &&
+      dateNumber > toDateNumber(props.currentDates[0]) &&
+      dateNumber < toDateNumber(props.currentDates[1])
+
+    const day: CalendarDay = {
+      date,
+      disabled,
+      top: '',
+      text: date.getDate() + '',
+      bottom:
+        isStart && isEnd
+          ? props.sameDateText || `${props.t('start')}/${props.t('end')}`
+          : isStart
+            ? props.startDateText || props.t('start')
+            : isEnd
+              ? props.endDateText || props.t('end')
+              : '',
+      type:
+        isStart && isEnd
+          ? 'same'
+          : isStart
+            ? 'start'
+            : isMiddle
+              ? 'middle'
+              : isEnd
+                ? 'end'
+                : selected
+                  ? 'selected'
+                  : 'normal',
+      today: props.todayNumber === dateNumber,
+    }
+
+    if (within && props.formatter) {
+      props.formatter(day)
+    }
+
+    const type = types[day.type]
+
+    return {
+      day,
+      style: [
+        day.style,
+        {
+          marginLeft: props.severalMonths && i === 0 ? (daysBefore.value / 7) * 100 + '%' : '',
+        },
+      ],
+      className: [
+        props.bem.e('day'),
+        props.bem.em('day', type, type !== 'normal'),
+        props.bem.em('day', 'without', !within),
+        props.bem.em('day', 'disabled', disabled),
+        props.bem.em('day', 'today', day.today),
+        day.className,
+      ],
+    }
+  })
+})
+
+const onDayClick = (day: CalendarDay) => {
+  if (!day.disabled) {
+    emit('day-click', day.date)
+  }
+}
+</script>

@@ -1,0 +1,59 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(badge-height)}: 18px;
+  #{css-var-name(badge-font-size)}: css-var(font-size-sm);
+  #{css-var-name(badge-bg)}: css-var(color-danger);
+  #{css-var-name(badge-color)}: css-var(white);
+  #{css-var-name(badge-border-color)}: css-var(border-color-lighter);
+  #{css-var-name(badge-dot-size)}: 10px;
+}
+// #endregion variables
+
+@include b(badge) {
+  flex: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: css-var(badge-height);
+  height: css-var(badge-height);
+  padding-inline-start: css-var(size-2xs);
+  padding-inline-end: css-var(size-2xs);
+  font-size: css-var(badge-font-size);
+  line-height: css-var(line-height-none);
+  text-align: center;
+  border: 1px solid css-var(badge-border-color);
+  border-radius: css-var(border-radius-full);
+  color: css-var(badge-color);
+  background: css-var(badge-bg);
+
+  @include m(fixed) {
+    position: absolute;
+    top: 0;
+    inset-inline-end: 0;
+    transform: translate(50%, -50%);
+    z-index: 10;
+
+    @include rtl {
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  @include m(dot) {
+    width: css-var(badge-dot-size);
+    height: css-var(badge-dot-size);
+    min-width: css-var(badge-dot-size);
+    padding: 0;
+    border-radius: css-var(border-radius-full);
+  }
+
+  @include m(zero-hide) {
+    display: none;
+  }
+
+  @include e(wrapper) {
+    position: relative;
+    display: inline-flex;
+  }
+}

@@ -1,0 +1,41 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(checkbox-popout-max-height)}: 320px;
+  #{css-var-name(checkbox-popout-toolbar-gap)}: css-var(size-xs);
+  #{css-var-name(checkbox-popout-toolbar-padding)}: css-var(size-xs) css-var(size);
+  #{css-var-name(checkbox-popout-check-all-font-size)}: css-var(font-size-sm);
+  #{css-var-name(checkbox-popout-check-all-color)}: css-var(text-color-tertiary);
+}
+// #endregion variables
+
+@include b(checkbox-popout) {
+  @include e(container) {
+    @include scroll-shadow;
+  }
+
+  @include e(scroll) {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: css-var(checkbox-popout-max-height);
+
+    @include m(searchable) {
+      height: css-var(checkbox-popout-max-height);
+    }
+  }
+
+  @include e(toolbar) {
+    display: flex;
+    flex-direction: column;
+    gap: css-var(checkbox-popout-toolbar-gap);
+    padding: css-var(checkbox-popout-toolbar-padding);
+  }
+
+  @include e(check-all) {
+    display: flex;
+    align-items: center;
+    font-size: css-var(checkbox-popout-check-all-font-size);
+    color: css-var(checkbox-popout-check-all-color);
+  }
+}

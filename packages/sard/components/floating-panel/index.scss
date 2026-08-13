@@ -1,0 +1,68 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(floating-panel-z-index)}: css-var(z-index-secondary);
+  #{css-var-name(floating-panel-bg)}: css-var(bg-color-elevated);
+  #{css-var-name(floating-panel-radius)}: css-var(border-radius-xl);
+
+  #{css-var-name(floating-panel-header-height)}: css-var(size-2xl);
+  #{css-var-name(floating-panel-bar-width)}: css-var(size-lg);
+  #{css-var-name(floating-panel-bar-height)}: 3px;
+  #{css-var-name(floating-panel-bar-color)}: css-var(fill-color-secondary);
+}
+// #endregion variables
+
+@include b(floating-panel) {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: css-var(floating-panel-z-index);
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  border-top-left-radius: css-var(floating-panel-radius);
+  border-top-right-radius: css-var(floating-panel-radius);
+  background: css-var(floating-panel-bg);
+  will-change: transform;
+  touch-action: none;
+  transition-property: transform;
+
+  &::after {
+    position: absolute;
+    bottom: -100vh;
+    width: 100vw;
+    height: 100vh;
+    content: '';
+    background-color: inherit;
+  }
+
+  @include m(safe) {
+    padding-bottom: css-var(safe-bottom);
+  }
+
+  @include e(header) {
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: css-var(floating-panel-header-height);
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: grab;
+  }
+
+  @include e(header-bar) {
+    width: css-var(floating-panel-bar-width);
+    height: css-var(floating-panel-bar-height);
+    background: css-var(floating-panel-bar-color);
+    border-radius: css-var(border-radius-full);
+  }
+
+  @include e(body) {
+    min-height: 0;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}

@@ -1,0 +1,167 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(share-sheet-border-radius)}: css-var(border-radius-xl);
+  #{css-var-name(share-sheet-border-color)}: css-var(border-color);
+  #{css-var-name(share-sheet-bg)}: css-var(bg-color-elevated);
+
+  #{css-var-name(share-sheet-header-padding)}: css-var(size);
+
+  #{css-var-name(share-sheet-title-font-size)}: css-var(font-size-lg);
+
+  #{css-var-name(share-sheet-description-font-size)}: css-var(font-size);
+  #{css-var-name(share-sheet-description-color)}: css-var(text-color-tertiary);
+
+  #{css-var-name(share-sheet-row-padding-y)}: css-var(size);
+  #{css-var-name(share-sheet-row-padding-x)}: css-var(size-xs);
+
+  #{css-var-name(share-sheet-item-width)}: 80px;
+  #{css-var-name(share-sheet-item-opacity-active)}: css-var(opacity-active);
+
+  #{css-var-name(share-sheet-icon-size)}: css-var(size-4xl);
+  #{css-var-name(share-sheet-icon-radius)}: css-var(border-radius-full);
+  #{css-var-name(share-sheet-icon-font-size)}: css-var(size-xl);
+  #{css-var-name(share-sheet-icon-color)}: css-var(text-color-tertiary);
+  #{css-var-name(share-sheet-icon-bg)}: css-var(fill-color);
+
+  #{css-var-name(share-sheet-label-margin-top)}: css-var(size-xs);
+  #{css-var-name(share-sheet-label-padding-x)}: css-var(size-2xs);
+  #{css-var-name(share-sheet-label-font-size)}: css-var(font-size);
+  #{css-var-name(share-sheet-label-color)}: css-var(text-color-tertiary);
+
+  #{css-var-name(share-sheet-item-description-margin-top)}: 0;
+  #{css-var-name(share-sheet-item-description-padding-x)}: css-var(size-2xs);
+  #{css-var-name(share-sheet-item-description-font-size)}: css-var(font-size-sm);
+  #{css-var-name(share-sheet-item-description-color)}: css-var(text-color-fourth);
+
+  #{css-var-name(share-sheet-gap-bg)}: css-var(fill-color-tertiary);
+  #{css-var-name(share-sheet-gap-height)}: css-var(size-xs);
+
+  #{css-var-name(share-sheet-cancel-min-height)}: css-var(content-height-lg);
+  #{css-var-name(share-sheet-cancel-padding)}: css-var(size-xs) css-var(size);
+  #{css-var-name(share-sheet-cancel-font-size)}: css-var(font-size-lg);
+  #{css-var-name(share-sheet-cancel-bg-active)}: css-var(bg-color-active);
+}
+// #endregion variables
+
+@include b(share-sheet) {
+  padding-bottom: css-var(safe-bottom);
+  border-top-left-radius: css-var(share-sheet-border-radius);
+  border-top-right-radius: css-var(share-sheet-border-radius);
+  background: css-var(share-sheet-bg);
+  touch-action: pan-x;
+
+  @include e(header) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: css-var(size-2xs);
+    padding: css-var(share-sheet-header-padding);
+
+    &::after {
+      @include border-bottom(css-var(share-sheet-border-color));
+    }
+  }
+
+  @include e(title) {
+    font-size: css-var(share-sheet-title-font-size);
+    font-weight: css-var(font-weight-bold);
+    text-align: center;
+  }
+
+  @include e(description) {
+    font-size: css-var(share-sheet-description-font-size);
+    text-align: center;
+    color: css-var(share-sheet-description-color);
+  }
+
+  @include e(gap) {
+    height: css-var(share-sheet-gap-height);
+    background: css-var(share-sheet-gap-bg);
+  }
+
+  @include e(cancel) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: css-var(share-sheet-cancel-min-height);
+    padding: css-var(share-sheet-cancel-padding);
+    font-size: css-var(share-sheet-cancel-font-size);
+    cursor: pointer;
+
+    &:active {
+      background: css-var(share-sheet-cancel-bg-active);
+    }
+  }
+}
+
+@include b(share-sheet-item) {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: css-var(share-sheet-item-width);
+  flex: none;
+  cursor: pointer;
+
+  @include is-not(disabled) {
+    &:active {
+      opacity: css-var(share-sheet-item-opacity-active);
+    }
+  }
+
+  @include is(disabled) {
+    @include disabled;
+  }
+
+  @include e(label) {
+    margin-top: css-var(share-sheet-label-margin-top);
+    padding: 0 css-var(share-sheet-label-padding-x);
+    font-size: css-var(share-sheet-label-font-size);
+    color: css-var(share-sheet-label-color);
+  }
+
+  @include e(description) {
+    margin-top: css-var(share-sheet-item-description-margin-top);
+    padding: 0 css-var(share-sheet-item-description-padding-x);
+    font-size: css-var(share-sheet-item-description-font-size);
+    color: css-var(share-sheet-item-description-color);
+  }
+}
+
+@include b(share-sheet-row) {
+  position: relative;
+
+  &:not(:first-child) {
+    &::before {
+      @include border-top(css-var(share-sheet-border-color));
+    }
+  }
+
+  @include e(scroll) {
+    display: flex;
+    padding: css-var(share-sheet-row-padding-y) css-var(share-sheet-row-padding-x);
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+
+@include b(share-sheet-icon) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: css-var(share-sheet-icon-size);
+  height: css-var(share-sheet-icon-size);
+  border-radius: css-var(share-sheet-icon-radius);
+  font-size: css-var(share-sheet-icon-font-size);
+  color: css-var(share-sheet-icon-color);
+  background: css-var(share-sheet-icon-bg);
+
+  @include e(image) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: css-var(share-sheet-icon-radius);
+  }
+}

@@ -1,0 +1,188 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(dropdown-z-index)}: css-var(z-index-tertiary);
+  #{css-var-name(dropdown-height)}: css-var(content-height);
+  #{css-var-name(dropdown-bg)}: css-var(bg-color-elevated);
+  #{css-var-name(dropdown-box-shadow)}: css-var(box-shadow-tertiary);
+  #{css-var-name(dropdown-line-color)}: css-var(border-color);
+
+  #{css-var-name(dropdown-item-padding-x)}: css-var(size-xs);
+  #{css-var-name(dropdown-item-opacity-active)}: css-var(opacity-active);
+  #{css-var-name(dropdown-item-show-color)}: css-var(color-primary);
+
+  #{css-var-name(dropdown-value-font-size)}: css-var(font-size);
+
+  #{css-var-name(dropdown-label-font-size)}: css-var(font-size);
+  #{css-var-name(dropdown-label-color)}: css-var(text-color-tertiary);
+  #{css-var-name(dropdown-label-margin-end)}: css-var(size-xs);
+
+  #{css-var-name(dropdown-placeholder-color)}: css-var(text-color-fourth);
+
+  #{css-var-name(dropdown-arrow-margin-start)}: css-var(size-2xs);
+  #{css-var-name(dropdown-arrow-color)}: css-var(border-color);
+  #{css-var-name(dropdown-arrow-font-size)}: css-var(font-size-sm);
+
+  #{css-var-name(dropdown-option-color-active)}: css-var(color-primary);
+  #{css-var-name(dropdown-option-icon-font-size)}: css-var(font-size);
+}
+// #endregion variables
+
+@include b(dropdown) {
+  position: relative;
+  display: flex;
+  height: css-var(dropdown-height);
+  background: css-var(dropdown-bg);
+
+  @include e(shadow) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: css-var(dropdown-box-shadow);
+    pointer-events: none;
+  }
+
+  @include e(line) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: css-var(border-width);
+    background: css-var(dropdown-line-color);
+    pointer-events: none;
+    transform: scaleY(0.5);
+  }
+
+  @include m(up) {
+    @include e(shadow) {
+      transform: rotateX(180deg);
+    }
+    @include e(line) {
+      top: 0;
+      bottom: auto;
+    }
+  }
+
+  @include m(down) {
+    @include e(line) {
+      top: auto;
+      bottom: 0;
+    }
+  }
+
+  @include is(show) {
+    @include e(shadow, line) {
+      z-index: css-var(dropdown-z-index);
+    }
+  }
+}
+
+@include b(dropdown-item) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 0 css-var(dropdown-item-padding-x);
+  overflow: hidden;
+  cursor: pointer;
+
+  @include e(label) {
+    margin-inline-end: css-var(dropdown-label-margin-end);
+    font-size: css-var(dropdown-label-font-size);
+    color: css-var(dropdown-label-color);
+  }
+
+  @include e(title, value) {
+    font-size: css-var(dropdown-value-font-size);
+  }
+
+  @include e(placeholder) {
+    color: css-var(dropdown-placeholder-color);
+    font-size: css-var(dropdown-value-font-size);
+  }
+
+  @include e(arrow) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline-start: css-var(dropdown-arrow-margin-start);
+    color: css-var(dropdown-arrow-color);
+    font-size: css-var(dropdown-arrow-font-size);
+  }
+
+  @include e(popover) {
+    position: fixed;
+    z-index: css-var(dropdown-z-index);
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  @include e(popup) {
+    position: absolute;
+    width: 100%;
+
+    @include m(slide-top) {
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    @include m(slide-bottom) {
+      left: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  }
+
+  @include e(option) {
+    @include is(active) {
+      color: css-var(dropdown-option-color-active);
+    }
+
+    @include is-not(active) {
+      @include e(option-icon) {
+        display: none;
+      }
+    }
+  }
+
+  @include e(option-icon) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-inline-start: auto;
+    font-size: css-var(dropdown-option-icon-font-size);
+  }
+
+  @include is(displayed) {
+    touch-action: none;
+    color: css-var(dropdown-item-show-color);
+
+    @include e(arrow) {
+      color: css-var(dropdown-option-color-active);
+    }
+  }
+
+  @include is-not(disabled) {
+    &:active {
+      opacity: css-var(dropdown-item-opacity-active);
+    }
+  }
+
+  @include is(disabled) {
+    cursor: not-allowed;
+
+    @include e(title, value, label) {
+      color: css-var(text-color-disabled);
+    }
+  }
+
+  @include m(up) {
+    @include e(arrow) {
+      transform: rotate(180deg);
+    }
+  }
+}

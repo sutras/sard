@@ -1,0 +1,147 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(select-max-height)}: 320px;
+  #{css-var-name(select-bg)}: css-var(bg-color-container);
+
+  #{css-var-name(select-search-padding-x)}: css-var(content-padding-x);
+  #{css-var-name(select-search-padding-y)}: css-var(content-padding-y);
+
+  #{css-var-name(select-option-min-height)}: css-var(content-height-sm);
+  #{css-var-name(select-option-padding-x)}: css-var(content-padding-x);
+  #{css-var-name(select-option-padding-y)}: css-var(content-padding-y);
+  #{css-var-name(select-option-bg-active)}: css-var(bg-color-active);
+  #{css-var-name(select-option-opacity-disabled)}: css-var(opacity-disabled);
+  #{css-var-name(select-option-color-selected)}: css-var(color-primary);
+
+  #{css-var-name(select-option-label-font-size)}: css-var(font-size);
+
+  #{css-var-name(select-option-group-label-padding-x)}: css-var(content-padding-x);
+  #{css-var-name(select-option-group-label-padding-y)}: css-var(content-padding-y);
+  #{css-var-name(select-option-group-label-font-size)}: css-var(font-size-sm);
+  #{css-var-name(select-option-group-label-color)}: css-var(text-color-tertiary);
+  #{css-var-name(select-option-group-label-bg)}: css-var(fill-color-fourth);
+
+  #{css-var-name(select-toolbar-padding-x)}: css-var(content-padding-x);
+  #{css-var-name(select-toolbar-padding-y)}: 0;
+
+  #{css-var-name(select-empty-margin-top)}: css-var(size);
+}
+// #endregion variables
+
+@include b(select) {
+  background: css-var(select-bg);
+
+  @include e(container) {
+    @include scroll-shadow;
+  }
+
+  @include e(search) {
+    padding: css-var(select-search-padding-y) css-var(select-search-padding-x);
+  }
+
+  @include e(loading) {
+    color: css-var(text-color-fourth);
+  }
+
+  @include e(scroll) {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: css-var(select-max-height);
+
+    @include m(filterable) {
+      height: css-var(select-max-height);
+    }
+  }
+
+  @include e(toolbar) {
+    display: flex;
+    align-items: center;
+    padding: css-var(select-toolbar-padding-y) css-var(select-toolbar-padding-x);
+  }
+
+  @include e(num) {
+    font-size: css-var(font-size);
+    color: css-var(color-primary);
+    margin-inline-end: auto;
+  }
+
+  @include e(empty) {
+    padding-top: css-var(select-empty-margin-top);
+  }
+}
+
+@include b(select-option) {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  @include is-not(plain) {
+    min-height: css-var(select-option-min-height);
+    padding: css-var(select-option-padding-y) css-var(select-option-padding-x);
+
+    &::before {
+      @include border-top(css-var(border-color));
+      left: css-var(select-option-padding-x);
+      right: css-var(select-option-padding-x);
+    }
+
+    &:first-child::before {
+      display: none;
+    }
+  }
+
+  @include is(selected) {
+    color: css-var(select-option-color-selected);
+    font-weight: css-var(font-weight-bold);
+
+    @include e(icon) {
+      display: flex;
+    }
+  }
+
+  @include is(disabled) {
+    @include disabled-text;
+  }
+
+  @include is-not(disabled, plain) {
+    &:active {
+      background: css-var(select-option-bg-active);
+    }
+  }
+
+  @include e(label) {
+    flex: 1;
+    min-width: 0;
+    word-break: break-all;
+    font-size: css-var(select-option-label-font-size);
+    line-height: css-var(line-height-normal);
+  }
+
+  @include e(icon) {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    margin-inline-start: 8px;
+  }
+}
+
+@include b(select-option-group) {
+  @include e(label) {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: css-var(select-option-group-label-padding-y)
+      css-var(select-option-group-label-padding-x);
+    font-size: css-var(select-option-group-label-font-size);
+    line-height: css-var(line-height-snug);
+    color: css-var(select-option-group-label-color);
+    background: css-var(select-option-group-label-bg);
+  }
+
+  @include e(content) {
+    position: relative;
+  }
+}

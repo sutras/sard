@@ -1,0 +1,37 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(space-gap-sm)}: css-var(size-xs);
+  #{css-var-name(space-gap)}: css-var(size-sm);
+  #{css-var-name(space-gap-lg)}: css-var(size);
+}
+// #endregion variables
+
+@include b(space) {
+  display: flex;
+
+  @include m(vertical) {
+    flex-direction: column;
+  }
+
+  @include m(horizontal) {
+    flex-direction: row;
+  }
+
+  @include m(small) {
+    gap: css-var(space-gap-sm);
+  }
+
+  @include m(medium) {
+    gap: css-var(space-gap);
+  }
+
+  @include m(large) {
+    gap: css-var(space-gap-lg);
+  }
+
+  @include m(wrap) {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,39 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(notify-padding-x)}: css-var(content-padding-x);
+  #{css-var-name(notify-padding-y)}: css-var(content-padding-y);
+  #{css-var-name(notify-font-size)}: css-var(font-size);
+  #{css-var-name(notify-color)}: css-var(white);
+}
+// #endregion variables
+
+@include b(notify) {
+  @each $type,
+    $color
+      in (
+        primary: css-var(color-primary),
+        success: css-var(color-success),
+        warning: css-var(color-warning),
+        error: css-var(color-danger)
+      )
+  {
+    @include m($type) {
+      background-color: $color;
+    }
+  }
+
+  @include e(content) {
+    padding: css-var(notify-padding-y) css-var(notify-padding-x);
+    font-size: css-var(notify-font-size);
+    text-align: center;
+    color: css-var(white);
+  }
+
+  @include m(bottom) {
+    @include e(content) {
+      padding-bottom: calc(css-var(notify-padding-y) + css-var(safe-bottom));
+    }
+  }
+}

@@ -1,0 +1,14 @@
+@use '../style/base' as *;
+
+@include b(sticky) {
+  display: block;
+
+  @include e(fixation) {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@include b(sticky-box) {
+  position: relative;
+}
