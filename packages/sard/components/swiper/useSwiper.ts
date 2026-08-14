@@ -96,13 +96,14 @@ export function useSwiper(props: SwiperPrivateProps, emit: SwiperEmits) {
     centeredSlides,
     pageCount,
     loop,
+    slides,
     setSlides,
-    getOffsetByIndex,
     getNearestOffset,
     getPreviousNearestOffset,
     getNextNearestOffset,
     getNextIndexOffset,
     normalizeLoopOffset,
+    snapTo,
   } = useSwiperData()
 
   watchSyncEffect(() => {
@@ -112,7 +113,7 @@ export function useSwiper(props: SwiperPrivateProps, emit: SwiperEmits) {
       Math.max(Math.min(props.slidesPerGroup, props.slidesPerView), 1),
     )
     centeredSlides.value = props.centeredSlides
-    loop.value = props.loop
+    loop.value = props.loop && slides.value.length > 1
   })
 
   watchPostEffect(() => {
@@ -158,6 +159,9 @@ export function useSwiper(props: SwiperPrivateProps, emit: SwiperEmits) {
     }
   }
 
+  // ============================ outside change ============================
+  activeIndex.value = Number(props.modelValue) || 0
+
   watch(
     () => props.modelValue,
     (index) => {
@@ -165,17 +169,19 @@ export function useSwiper(props: SwiperPrivateProps, emit: SwiperEmits) {
         index = clamp(~~index, 0, pageCount.value - 1)
 
         if (index !== activeIndex.value) {
-          slideTo(
-            {
-              offset: getOffsetByIndex(index),
-              index,
-            },
-            false,
-          )
+          activeIndex.value = index
+          snapTo(index)
         }
       }
     },
+    {
+      flush: 'post',
+    },
   )
+
+  onMounted(() => {
+    snapTo(props.modelValue)
+  })
 
   // ============================ interaction ============================
   let startX = 0

@@ -16,7 +16,7 @@
     >
       <Swiper
         v-model="current"
-        loop
+        :loop="loop"
         :duration="visibleSwitching ? 0 : 300"
         :space-between="20"
         :class="[bem.e('swiper'), bem.is('preview-image')]"
@@ -27,7 +27,9 @@
       </Swiper>
     </div>
     <div :class="bem.e('toolbar')">
-      <div :class="bem.e('indicator')">{{ current + 1 }} / {{ urls.length }}</div>
+      <div v-if="showIndicator" :class="bem.e('indicator')">
+        {{ current + 1 }} / {{ urls.length }}
+      </div>
     </div>
   </Popup>
 </template>

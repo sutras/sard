@@ -338,6 +338,7 @@ export function useSwiperData() {
     centeredSlides,
     loop,
     pageCount,
+    slides,
     setSlides,
     getOffsetByIndex,
     getNearestOffset,
@@ -353,5 +354,6 @@ export function useSwiperData() {
     getNextIndexOffset,
     getPreviousIndexOffset,
     normalizeLoopOffset,
+    snapTo,
   }
 }

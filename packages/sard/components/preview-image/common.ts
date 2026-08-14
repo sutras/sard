@@ -3,13 +3,17 @@ import { type DefaultProps } from '../config'
 import type { MotionEmits } from '../motion'
 
 export interface PreviewImageProps {
+  urls?: string[]
   visible?: boolean
   current?: number
-  urls?: string[]
+  showIndicator?: boolean
+  loop?: boolean
 }
 
 export const defaultPreviewImageProps: DefaultProps<PreviewImageProps> = {
   current: 0,
+  showIndicator: true,
+  loop: true,
   urls: () => [],
 }
 

@@ -20,11 +20,13 @@ group: 数据展示
 
 ### PreviewImageProps
 
-| 属性    | 描述           | 类型     | 默认值 |
-| ------- | -------------- | -------- | ------ |
-| visible | 是否显示预览框 | boolean  | -      |
-| current | 当前图片索引   | number   | 0      |
-| urls    | 图片地址数组   | string[] | []     |
+| 属性           | 描述               | 类型     | 默认值 |
+| -------------- | ------------------ | -------- | ------ |
+| visible        | 是否显示预览框     | boolean  | -      |
+| current        | 当前图片索引       | number   | 0      |
+| urls           | 图片地址数组       | string[] | []     |
+| show-indicator | 是否显示分页指示器 | boolean  | true   |
+| loop           | 是否启用循环滑动   | boolean  | true   |
 
 ### PreviewImageEmits
 
