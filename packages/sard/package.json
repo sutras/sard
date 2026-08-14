@@ -1,6 +1,6 @@
 {
   "name": "sard",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "sard 是基于 Vue3 的 Web 移动端 UI 组件库",
   "keywords": [
     "UI",
@@ -17,6 +17,7 @@
     "*"
   ],
   "main": "index.js",
+  "sideEffects": false,
   "devDependencies": {
     "@sard/icons": "workspace:*",
     "lwa": "^0.2.3",

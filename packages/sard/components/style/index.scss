@@ -201,6 +201,7 @@
 
   // # 底部安全距离
   #{css-var-name(safe-bottom)}: env(safe-area-inset-bottom);
+  #{css-var-name(status-bar-height)}: 0;
 }
 
 @include theme-dark {

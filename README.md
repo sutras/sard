@@ -61,7 +61,7 @@ git clone https://github.com/sutras/sard.git
 ### 安装依赖
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### 运行开发环境

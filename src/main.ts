@@ -3,7 +3,13 @@ import './style/index.scss'
 
 import { createApp, type App } from 'vue'
 import { createPinia } from 'pinia'
-import { provideColorScheme, provideLocale, installer, windowInfo } from 'sard'
+import {
+  provideColorScheme,
+  provideLocale,
+  installer,
+  windowInfo,
+  prepareEnvironment as sardPrepareEnvironment,
+} from 'sard'
 
 import AppComponent from './App.vue'
 import router from './router'
@@ -17,6 +23,8 @@ import { registerDemoComponents } from './components'
 import { isMobileDevices } from './utils/index'
 
 function prepareEnvironment() {
+  sardPrepareEnvironment()
+
   if (!isMobileDevices()) {
     windowInfo.statusBarHeight = 54
     document.documentElement.style.setProperty('--s-safe-bottom', '34px')

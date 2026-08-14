@@ -26,10 +26,8 @@ function prepareEnvironment() {
   })
 }
 
-prepareEnvironment()
-
 export * from './components'
 export * from './use'
 export * from './utils'
 export * from './locale'
-export { installer }
+export { installer, prepareEnvironment }
