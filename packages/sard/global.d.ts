@@ -141,7 +141,6 @@ declare module 'vue' {
     SSticky: typeof import('./components/sticky/sticky.vue').default
     SStickyBox: typeof import('./components/sticky/sticky-box.vue').default
     SSwipeAction: typeof import('./components/swipe-action/swipe-action.vue').default
-    SSwipeActionGroup: typeof import('./components/swipe-action/swipe-action-group.vue').default
     SSwiper: typeof import('./components/swiper/swiper.tsx').default
     SSwiperItem: typeof import('./components/swiper/swiper-item.tsx').default
     SSwitch: typeof import('./components/switch/switch.vue').default

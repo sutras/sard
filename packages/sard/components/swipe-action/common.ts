@@ -1,17 +1,25 @@
-import type { InjectionKey } from 'vue'
 import type { DefaultProps } from '../config'
 
 export type SwipeActionVisible = 'left' | 'right' | false
 
+export type SwipeActionAsyncHide = (
+  callback: (resolve: () => void, reject: () => void) => void,
+) => void
+
 export interface SwipeActionProps {
   disabled?: boolean
   visible?: SwipeActionVisible
+  outsideClosable?: boolean
+}
+
+export const defaultSwipeActionProps: DefaultProps<SwipeActionProps> = {
+  outsideClosable: true,
 }
 
 export interface SwipeActionSlots {
   default?(props: Record<string, never>): any
-  left?(props: { hide: () => void }): any
-  right?(props: { hide: () => void }): any
+  left?(props: { hide: () => void; asyncHide: SwipeActionAsyncHide }): any
+  right?(props: { hide: () => void; asyncHide: SwipeActionAsyncHide }): any
 }
 
 export interface SwipeActionEmits {
@@ -21,30 +29,3 @@ export interface SwipeActionEmits {
 export interface SwipeActionExpose {
   hide: () => void
 }
-
-export interface SwipeActionGroupProps {
-  multiple?: boolean
-}
-
-export const defaultSwipeActionGroupProps: DefaultProps<SwipeActionGroupProps> = {
-  multiple: false,
-}
-
-export interface SwipeActionGroupSlots {
-  default?(props: Record<string, never>): any
-}
-
-export interface SwipeActionGroupExpose {
-  closeAll: () => void
-}
-
-export interface SwipeActionGroupContext {
-  multiple: SwipeActionGroupProps['multiple']
-  register: (id: string, expose: SwipeActionExpose) => void
-  unregister: (id: string) => void
-  closeAll: (exceptId?: string) => void
-}
-
-export const swipeActionGroupContextKey = Symbol(
-  'swipeActionGroupContext',
-) as InjectionKey<SwipeActionGroupContext>

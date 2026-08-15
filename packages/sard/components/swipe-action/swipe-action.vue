@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="root"
     :class="bem.b()"
     @touchstart="onTouchStart"
     @touchmove="onTouchMove"
@@ -17,17 +18,17 @@
     >
       <slot></slot>
       <div v-if="slots.left" ref="left" :class="bem.e('left')" @click.stop>
-        <slot name="left" :hide="hide"></slot>
+        <slot name="left" :hide="hide" :async-hide="asyncHide"></slot>
       </div>
       <div v-if="slots.right" ref="right" :class="bem.e('right')" @click.stop>
-        <slot name="right" :hide="hide"></slot>
+        <slot name="right" :hide="hide" :async-hide="asyncHide"></slot>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue'
+import { computed, onMounted, ref, useTemplateRef, watch } from 'vue'
 import { createBem, uniqid } from '../../utils'
 import {
   type SwipeActionProps,
@@ -35,18 +36,24 @@ import {
   type SwipeActionEmits,
   type SwipeActionExpose,
   type SwipeActionVisible,
-  swipeActionGroupContextKey,
+  type SwipeActionAsyncHide,
+  defaultSwipeActionProps,
 } from './common'
-import { usePointerDown, useInitialVelocity, useStopMovedClick, useRtl } from '../../use'
+import {
+  usePointerDown,
+  useInitialVelocity,
+  useStopMovedClick,
+  useRtl,
+  useClickOutside,
+} from '../../use'
 
-const props = withDefaults(defineProps<SwipeActionProps>(), {})
+const props = withDefaults(defineProps<SwipeActionProps>(), defaultSwipeActionProps)
 
 const slots = defineSlots<SwipeActionSlots>()
 
 const emit = defineEmits<SwipeActionEmits>()
 
 const bem = createBem('swipe-action')
-const groupContext = inject(swipeActionGroupContextKey, null)
 
 // main
 const swipeActionId = uniqid()
@@ -71,9 +78,27 @@ const triggerVisible = (visible: SwipeActionVisible) => {
   }
 }
 
+let closeDisabled = false
+
 const hide = () => {
+  if (closeDisabled) return
   triggerVisible(false)
   setTranslateXByVisible(false)
+}
+
+const asyncHide: SwipeActionAsyncHide = (callback) => {
+  closeDisabled = true
+
+  const resolve = () => {
+    closeDisabled = false
+    hide()
+  }
+
+  const reject = () => {
+    closeDisabled = false
+  }
+
+  callback(resolve, reject)
 }
 
 const onContentClick = () => {
@@ -88,6 +113,15 @@ const {
   onPointerMove,
   onPointerUp,
 } = useStopMovedClick()
+
+useClickOutside(
+  useTemplateRef('root'),
+  () => {
+    hide()
+  },
+  () => props.outsideClosable,
+  'touchstart',
+)
 
 // swipe
 const leftRef = useTemplateRef('left')
@@ -120,10 +154,6 @@ const setTranslateXByVisible = (visible: SwipeActionVisible) => {
 }
 
 onMounted(() => {
-  groupContext?.register(swipeActionId, {
-    hide,
-  })
-
   getWidth()
 
   if (innerVisible.value) {
@@ -131,16 +161,13 @@ onMounted(() => {
   }
 })
 
-onBeforeUnmount(() => {
-  groupContext?.unregister(swipeActionId)
-})
-
 const onTouchStart = (event: TouchEvent) => {
+  // NOTE: 避免用户忘记调用 asyncHide reject
+  closeDisabled = false
+
   if (props.disabled || (!slots.left && !slots.right)) {
     return
   }
-
-  groupContext?.closeAll(swipeActionId)
 
   const { clientX, clientY } = event.touches[0]
   startX = clientX

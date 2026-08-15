@@ -5,7 +5,7 @@
     </s-list-item>
 
     <s-list-item style="padding: 1px 0 0 0">
-      <s-swipe-action v-model:visible="visible">
+      <s-swipe-action v-model:visible="visible" :outside-closable="false">
         <s-list-item title="两边插槽" value="内容" />
         <template #left="{ hide }">
           <s-button color="danger" square auto-height @click="onClick('点赞', hide)">点赞</s-button>

@@ -1,43 +1,41 @@
 <template>
   <s-form ref="formRef" :model="dynamicValidateForm" card>
-    <s-swipe-action-group>
-      <s-form-item
-        v-for="(user, index) in dynamicValidateForm.users"
-        :key="user.id"
-        style="padding: 1px 0 0"
-      >
-        <s-swipe-action>
-          <s-form-item>
-            <s-space align="center">
-              <s-form-item
-                :name="['users', index, 'first']"
-                :rules="{
-                  required: true,
-                  message: 'Missing first name',
-                }"
-                inlaid
-              >
-                <s-input inlaid v-model="user.first" placeholder="First Name" />
-              </s-form-item>
-              <s-form-item
-                :name="['users', index, 'last']"
-                :rules="{
-                  required: true,
-                  message: 'Missing last name',
-                }"
-                inlaid
-              >
-                <s-input inlaid v-model="user.last" placeholder="Last Name" />
-              </s-form-item>
-            </s-space>
-          </s-form-item>
+    <s-form-item
+      v-for="(user, index) in dynamicValidateForm.users"
+      :key="user.id"
+      style="padding: 1px 0 0"
+    >
+      <s-swipe-action>
+        <s-form-item>
+          <s-space align="center">
+            <s-form-item
+              :name="['users', index, 'first']"
+              :rules="{
+                required: true,
+                message: 'Missing first name',
+              }"
+              inlaid
+            >
+              <s-input inlaid v-model="user.first" placeholder="First Name" />
+            </s-form-item>
+            <s-form-item
+              :name="['users', index, 'last']"
+              :rules="{
+                required: true,
+                message: 'Missing last name',
+              }"
+              inlaid
+            >
+              <s-input inlaid v-model="user.last" placeholder="Last Name" />
+            </s-form-item>
+          </s-space>
+        </s-form-item>
 
-          <template #right>
-            <s-button color="danger" square auto-height @click="removeUser(user)">删除</s-button>
-          </template>
-        </s-swipe-action>
-      </s-form-item>
-    </s-swipe-action-group>
+        <template #right>
+          <s-button color="danger" square auto-height @click="removeUser(user)">删除</s-button>
+        </template>
+      </s-swipe-action>
+    </s-form-item>
 
     <s-form-item>
       <s-button variant="outlined" @click="addUser()">

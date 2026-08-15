@@ -70,7 +70,7 @@ useClickOutside(
   () => {
     innerVisible.value = false
   },
-  computed(() => innerVisible.value && props.outsideClosable),
+  () => innerVisible.value && props.outsideClosable,
 )
 
 // ============================ position ============================

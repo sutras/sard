@@ -8,10 +8,6 @@
       <Visible />
     </doc-demo>
 
-    <doc-demo title="手风琴">
-      <Accordion />
-    </doc-demo>
-
     <doc-demo title="禁止滑动">
       <Disabled />
     </doc-demo>
@@ -29,7 +25,6 @@
 <script setup lang="ts">
 import Basic from './demo/Basic.vue'
 import Visible from './demo/Visible.vue'
-import Accordion from './demo/Accordion.vue'
 import Disabled from './demo/Disabled.vue'
 import Async from './demo/Async.vue'
 import Form from './demo/Form.vue'

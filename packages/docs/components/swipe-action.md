@@ -24,12 +24,6 @@ group: 反馈组件
 
 <<< @demo/swipe-action/demo/Visible.vue
 
-### 手风琴
-
-使用 `SwipeActionGroup` 管理一组 `SwipeAction`。默认只允许同时展示一个组件的操作按钮，也可以通过 `closeAll` 方法关闭全部操作按钮。
-
-<<< @demo/swipe-action/demo/Accordion.vue
-
 ### 禁止滑动
 
 使用 `disabled` 属性来禁用滑动，同时也会禁用点击内容区域隐藏。
@@ -52,18 +46,19 @@ group: 反馈组件
 
 ### SwipeActionProps
 
-| 属性     | 描述         | 类型                       | 默认值 |
-| -------- | ------------ | -------------------------- | ------ |
-| disabled | 是否禁用滑动 | boolean                    | false  |
-| visible  | 控制显隐     | 'left' \| 'right' \| false | false  |
+| 属性             | 描述                       | 类型                       | 默认值 |
+| ---------------- | -------------------------- | -------------------------- | ------ |
+| disabled         | 是否禁用滑动               | boolean                    | false  |
+| visible          | 控制显隐                   | 'left' \| 'right' \| false | false  |
+| outside-closable | 点击外部时是否隐藏操作按钮 | boolean                    | true   |
 
 ### SwipeActionSlots
 
-| 插槽    | 描述               | 属性                   |
-| ------- | ------------------ | ---------------------- |
-| default | 自定义默认内容     | -                      |
-| left    | 自定义左边操作按钮 | `{ hide: () => void }` |
-| right   | 自定义右边操作按钮 | `{ hide: () => void }` |
+| 插槽    | 描述               | 属性                                                    |
+| ------- | ------------------ | ------------------------------------------------------- |
+| default | 自定义默认内容     | -                                                       |
+| left    | 自定义左边操作按钮 | `{ hide: () => void; asyncHide: SwipeActionAsyncHide }` |
+| right   | 自定义右边操作按钮 | `{ hide: () => void; asyncHide: SwipeActionAsyncHide }` |
 
 ### SwipeActionEmits
 
@@ -77,20 +72,8 @@ group: 反馈组件
 | ---- | ------------ | ------------ |
 | hide | 隐藏操作按钮 | `() => void` |
 
-### SwipeActionGroupProps
+### SwipeActionAsyncHide
 
-| 属性     | 描述                         | 类型    | 默认值 |
-| -------- | ---------------------------- | ------- | ------ |
-| multiple | 是否允许同时展示多个操作按钮 | boolean | false  |
-
-### SwipeActionGroupSlots
-
-| 插槽    | 描述         | 属性 |
-| ------- | ------------ | ---- |
-| default | 放置默认内容 | -    |
-
-### SwipeActionGroupExpose
-
-| 属性     | 描述             | 类型         |
-| -------- | ---------------- | ------------ |
-| closeAll | 关闭所有操作按钮 | `() => void` |
+```ts
+type SwipeActionAsyncHide = (callback: (resolve: () => void, reject: () => void) => void) => void
+```

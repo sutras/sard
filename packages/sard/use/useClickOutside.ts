@@ -1,10 +1,10 @@
-import { onUnmounted, watch, type Ref } from 'vue'
+import { onUnmounted, toValue, watch, type MaybeRefOrGetter, type Ref } from 'vue'
 import { useTimeout } from './useTimeout'
 
 export function useClickOutside(
   elRef: Ref<Element | null>,
   callback: (event: Event) => void,
-  enabled: Ref<boolean>,
+  enabled: MaybeRefOrGetter<boolean>,
   type: 'click' | 'touchstart' = 'click',
 ) {
   const mapTypeEvents = {
@@ -45,7 +45,7 @@ export function useClickOutside(
   }
 
   watch(
-    enabled,
+    () => toValue(enabled),
     (enabled) => {
       bindTimer.clear()
 
