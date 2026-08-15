@@ -30,7 +30,7 @@ describe('Sticky', () => {
 
     expect(wrapper.classes()).toContain('s-sticky')
     expect(wrapper.find('.s-sticky__fixation').exists()).toBe(true)
-    expect(wrapper.find('.s-sticky__bound').text()).toBe('内容')
+    expect(wrapper.find('.s-sticky__fixation').text()).toBe('内容')
   })
 
   test('zIndex', async () => {
@@ -48,6 +48,6 @@ describe('Sticky', () => {
 
     expect(wrapper.find('.s-sticky-box').exists()).toBe(true)
     expect(wrapper.find('.s-sticky').exists()).toBe(true)
-    expect(wrapper.find('.s-sticky__bound').text()).toBe('内容')
+    expect(wrapper.find('.s-sticky__fixation').text()).toBe('内容')
   })
 })

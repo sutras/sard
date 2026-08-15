@@ -6,6 +6,8 @@
   @include e(fixation) {
     position: relative;
     z-index: 1;
+    width: fit-content;
+    height: fit-content;
   }
 }
 

@@ -1,9 +1,7 @@
 <template>
   <div ref="target" :class="bem.b()" :style="stickyStyle">
-    <div :class="bem.e('fixation')" :style="fixationStyle">
-      <div ref="bound" :class="bem.e('bound')">
-        <slot></slot>
-      </div>
+    <div ref="fixation" :class="bem.e('fixation')" :style="fixationStyle">
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -12,6 +10,7 @@
 import {
   computed,
   inject,
+  onMounted,
   reactive,
   ref,
   toValue,
@@ -20,7 +19,12 @@ import {
   type StyleValue,
 } from 'vue'
 import { createBem, isNumber } from '../../utils'
-import { useIntersectionObserver, useResizeObserver } from '../../use'
+import {
+  useIntersectionObserver,
+  usePageScroll,
+  useResizeObserver,
+  useWindowResize,
+} from '../../use'
 import {
   type StickyProps,
   type StickySlots,
@@ -52,19 +56,36 @@ const positionStyle = reactive<{
 
 const boundingBox = ref<'top' | 'bottom' | 'none'>('none')
 
-const boundRef = useTemplateRef('bound')
-const boundSize = useResizeObserver(boundRef)
+const fixationRef = useTemplateRef('fixation')
+const fixationSize = useResizeObserver(fixationRef)
 
 const context = inject(stickyContextKey, null)
 
-const size = computed(() => {
-  return {
-    width: boundSize.width + 'px',
-    height: boundSize.height + 'px',
-  }
-})
-
 // 粘性元素与视口相交
+const updatePosition = () => {
+  const target = targetRef.value
+  if (!target) return
+
+  let position: 'relative' | 'fixed' = 'relative'
+  let top = ''
+  let bottom = ''
+
+  const targetRect = target.getBoundingClientRect()
+
+  if (isNumber(props.marginTop) && targetRect.top < -props.marginTop) {
+    position = 'fixed'
+    top = -props.marginTop + 'px'
+  } else if (
+    isNumber(props.marginBottom) &&
+    targetRect.bottom > window.innerHeight + props.marginBottom
+  ) {
+    position = 'fixed'
+    bottom = -props.marginBottom + 'px'
+  }
+
+  Object.assign(positionStyle, { position, top, bottom })
+}
+
 const { intersectionRatio } = useIntersectionObserver({
   target: targetRef,
   threshold: [1],
@@ -73,36 +94,15 @@ const { intersectionRatio } = useIntersectionObserver({
 
 watch(
   [intersectionRatio, targetRef, () => props.marginTop, () => props.marginBottom],
-  () => {
-    const target = targetRef.value
-    if (!target) return
-
-    Object.assign(positionStyle, {
-      position: 'relative',
-      top: '',
-      bottom: '',
-    })
-
-    const targetRect = target.getBoundingClientRect()
-
-    if (intersectionRatio.value < 1) {
-      if (isNumber(props.marginTop) && targetRect.top < -props.marginTop) {
-        positionStyle.position = 'fixed'
-        positionStyle.top = -props.marginTop + 'px'
-      } else if (
-        isNumber(props.marginBottom) &&
-        targetRect.bottom > window.innerHeight + props.marginBottom
-      ) {
-        positionStyle.position = 'fixed'
-        positionStyle.bottom = -props.marginBottom + 'px'
-      }
-    }
-  },
+  updatePosition,
   {
     immediate: true,
     flush: 'post',
   },
 )
+
+usePageScroll(updatePosition)
+useWindowResize(updatePosition)
 
 // 父容器与视口相交
 if (context) {
@@ -110,37 +110,46 @@ if (context) {
     target: context.box,
     threshold: [0],
     rootMargin: computed(() => {
-      const marginTop = (props.marginTop || 0) - boundSize.height
-      const marginBottom = (props.marginBottom || 0) - boundSize.height
+      const marginTop = (props.marginTop || 0) - fixationSize.height
+      const marginBottom = (props.marginBottom || 0) - fixationSize.height
       return `${marginTop}px 0px ${marginBottom}px`
     }),
   })
 
-  watch([isIntersecting, targetRef, context.box], () => {
+  const updateBoundingBox = () => {
     const box = toValue(context.box)
     if (!box) return
 
     const boxRect = box.getBoundingClientRect()
 
-    if (boxRect.top > window.innerHeight - boundSize.height + (props.marginBottom || 0)) {
+    if (boxRect.top > window.innerHeight - fixationSize.height + (props.marginBottom || 0)) {
       boundingBox.value = 'top'
-    } else if (boxRect.bottom < boundSize.height - (props.marginTop || 0)) {
+    } else if (boxRect.bottom < fixationSize.height - (props.marginTop || 0)) {
       boundingBox.value = 'bottom'
     } else {
       boundingBox.value = 'none'
     }
+  }
+
+  watch([isIntersecting, targetRef, context.box], updateBoundingBox, {
+    immediate: true,
+    flush: 'post',
   })
+
+  usePageScroll(updateBoundingBox)
+  useWindowResize(updateBoundingBox)
 }
 
-defineExpose<StickyExpose>({})
-
 const stickyStyle = computed(() => {
-  return size.value
+  const { width, height } = fixationSize
+  return {
+    width: width ? width + 'px' : 'auto',
+    height: height ? height + 'px' : 'auto',
+  }
 })
 
 const fixationStyle = computed<StyleValue>(() => {
   return [
-    size.value,
     {
       zIndex: props.zIndex,
     },
@@ -153,4 +162,6 @@ const fixationStyle = computed<StyleValue>(() => {
         },
   ]
 })
+
+defineExpose<StickyExpose>({})
 </script>
