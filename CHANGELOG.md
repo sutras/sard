@@ -1,4 +1,8 @@
 
+## <small>1.0.5 (2026-08-22)</small>
+
+* Bug Fixes: 修复picker-view 溢出问题 ([a3e9f05](https://github.com/sutras/sard/commit/a3e9f05))
+
 ## <small>1.0.4 (2026-08-15)</small>
 
 * Code Refactoring: 重构 swipe-action ([51e349a](https://github.com/sutras/sard/commit/51e349a))
