@@ -68,7 +68,7 @@ export class Scroll {
         this.springing = false
       }
     }
-    this.startTime = new Date().getTime()
+    this.startTime = Date.now()
   }
 
   /**
@@ -79,7 +79,7 @@ export class Scroll {
       return 0
     }
     if (!e) {
-      e = (new Date().getTime() - this.startTime) / 1e3
+      e = (Date.now() - this.startTime) / 1e3
     }
     if (this.springing) {
       return this.spring.position() + this.springOffset

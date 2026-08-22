@@ -1,5 +1,5 @@
 <template>
-  <div :class="bem.b()">
+  <div :class="pickerClass">
     <PickerView
       :class="pickerViewClass"
       :indicator-class="indicatorClass"
@@ -9,7 +9,7 @@
       <PickerViewColumn v-for="(column, i) in renderedColumns" :key="i">
         <div v-for="(option, j) in column" :key="j" :class="bem.e('item')">
           <slot name="option" :option="option" :rowIndex="j" :columnIndex="i">
-            {{ getLabel(option) }}
+            {{ optionKeys.getLabel(option) }}
           </slot>
         </div>
       </PickerViewColumn>
@@ -18,15 +18,8 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import { computed, nextTick, ref, watch, type Ref } from 'vue'
-import {
-  createBem,
-  nestedToMulti,
-  toArray,
-  arrayEqual,
-  isEmptyBinding,
-  isEmptyArray,
-} from '../../utils'
+import { computed, ref, watch } from 'vue'
+import { createBem, nestedToMulti, toArray, arrayEqual } from '../../utils'
 import {
   type PickerProps,
   type PickerSlots,
@@ -50,15 +43,9 @@ const emit = defineEmits<PickerEmits<T>>()
 
 const bem = createBem('picker')
 
-// main
-const useOptionKeysReturn = useOptionKeys(props)
+const optionKeys = useOptionKeys(props)
 
-const { aliasProps, getLabel } = useOptionKeysReturn
-
-const columnsType = computed(() => {
-  return getColumnsType(props.columns, useOptionKeysReturn)
-})
-
+// ============================ value ============================
 const innerValue = ref(props.modelValue)
 
 watch(
@@ -68,41 +55,46 @@ watch(
   },
 )
 
-// columnIndexes
+// ============================ columns ============================
+const columnsType = computed(() => {
+  return getColumnsType(props.columns, optionKeys)
+})
+
 const columnIndexes = ref<number[]>([])
 
-const updateColumnIndexes = () => {
-  const indexes = getIndexesByValue(toArray(innerValue.value), props.columns, useOptionKeysReturn)
-  if (!arrayEqual(indexes, columnIndexes.value)) {
-    columnIndexes.value = indexes
-  }
-}
+watch(
+  [innerValue, () => props.columns, optionKeys.aliasProps],
+  () => {
+    const indexes = getIndexesByValue(toArray(innerValue.value), props.columns, optionKeys)
+    if (!arrayEqual(indexes, columnIndexes.value)) {
+      columnIndexes.value = indexes
+    }
+  },
+  {
+    immediate: true,
+  },
+)
 
-updateColumnIndexes()
-
-watch([innerValue, () => props.columns, aliasProps], () => {
-  if (!isEmptyBinding(innerValue.value) && !isEmptyArray(innerValue.value)) {
-    updateColumnIndexes()
+const renderedColumns = computed<any[][]>(() => {
+  switch (columnsType.value) {
+    case 'single':
+      return [props.columns as any[]]
+    case 'multi':
+      return props.columns as any[][]
+    case 'cascader':
+      return nestedToMulti(props.columns, toArray(innerValue.value), optionKeys)
+    default:
+      return []
   }
 })
 
+// ============================ change ============================
 const onChange = (value: number[]) => {
   if (!props.columns || props.columns.length === 0) {
     return
   }
 
   let indexes = value as number[]
-
-  // 在H5弹出框中使用时，在初始化会触发change，值中会携带Infinity的下标。
-  if (indexes.some((index) => index === Infinity)) {
-    nextTick(() => {
-      columnIndexes.value =
-        isEmptyBinding(innerValue.value) || isEmptyArray(innerValue.value)
-          ? columnIndexes.value.map(() => 0)
-          : [...columnIndexes.value]
-    })
-    return
-  }
 
   indexes = renderedColumns.value.map((_, index) => indexes[index] || 0)
 
@@ -119,68 +111,27 @@ const onChange = (value: number[]) => {
 
     // 多列同时滚动时下标可能会超过当前列的长度，这里要做一个限制
     {
-      const validIndexes = getCascaderValidIndexes(indexes, props.columns, useOptionKeysReturn)
+      const validIndexes = getCascaderValidIndexes(indexes, props.columns, optionKeys)
       if (!arrayEqual(indexes, validIndexes)) {
         indexes = validIndexes
       }
     }
   }
 
-  const selectedOptions = getOptionsByIndexes(indexes, props.columns, useOptionKeysReturn)
+  const selectedOptions = getOptionsByIndexes(indexes, props.columns, optionKeys)
 
   if (!arrayEqual(indexes, columnIndexes.value)) {
     columnIndexes.value = indexes
   }
 
-  const nextValue = getMaySingleValueByOptions(selectedOptions, useOptionKeysReturn, props.columns)
+  const nextValue = getMaySingleValueByOptions(selectedOptions, optionKeys, props.columns)
 
   innerValue.value = nextValue
   emit('update:modelValue', nextValue, selectedOptions, indexes)
   emit('change', nextValue, selectedOptions, indexes)
 }
 
-// renderedColumns
-const getRenderedColumns = (): T[][] => {
-  switch (columnsType.value) {
-    case 'single':
-      return [props.columns as T[]]
-    case 'multi':
-      return props.columns as T[][]
-    case 'cascader':
-      return nestedToMulti(props.columns, toArray(innerValue.value), useOptionKeysReturn)
-    default:
-      return []
-  }
-}
-
-const renderedColumns = ref(getRenderedColumns()) as Ref<T[][]>
-
-const updateRenderedColumns = () => {
-  renderedColumns.value = getRenderedColumns()
-}
-
-watch([() => props.columns, innerValue], ([newColumns, newValue], [oldColumns, oldValue]) => {
-  if (
-    newColumns !== oldColumns ||
-    (newValue !== oldValue &&
-      columnsType.value === 'cascader' &&
-      !isEmptyBinding(newValue) &&
-      !isEmptyArray(newValue))
-  ) {
-    updateRenderedColumns()
-  }
-})
-
-watch(
-  () => props.modelValue,
-  () => {
-    if (isEmptyBinding(props.modelValue) || isEmptyArray(props.modelValue)) {
-      updateColumnIndexes()
-      updateRenderedColumns()
-    }
-  },
-)
-
+const pickerClass = bem.b()
 const pickerViewClass = bem.e('picker-view')
 const indicatorClass = bem.e('indicator')
 </script>

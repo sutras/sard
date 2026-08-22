@@ -7,7 +7,6 @@ import {
   reactive,
   ref,
   toRef,
-  useTemplateRef,
   watch,
 } from 'vue'
 import { createBem, defineSetupFnComponent, flatVNode } from '../../utils'
@@ -17,12 +16,10 @@ import {
   type PickerViewEmits,
   type PickerViewSlots,
 } from './common'
-import { useResizeObserver } from '../../use'
 
 export default defineSetupFnComponent(
   (props, { slots, emit }) => {
     const bem = createBem('picker-view')
-    const rootRef = useTemplateRef<HTMLElement>('root')
 
     // ============================ value ============================
     const innerValue = reactive([...props.value])
@@ -61,7 +58,7 @@ export default defineSetupFnComponent(
           if (oldCurrent !== current) {
             innerValue[index] = current
             // 避免外部直接对此值进行修改
-            const value = innerValue.map((val) => val)
+            const value = [...innerValue]
             emit('update:value', value)
             emit('change', value)
           }
@@ -69,20 +66,12 @@ export default defineSetupFnComponent(
       })
     }
 
-    // ============================ height ============================
-    const height = ref(48)
-
-    useResizeObserver(rootRef, (size) => {
-      height.value = size.height
-    })
-
     // ============================ context ============================
     const context = reactive({
       maskStyle: toRef(() => props.maskStyle),
       maskClass: toRef(() => props.maskClass),
       indicatorClass: toRef(() => props.indicatorClass),
       indicatorStyle: toRef(() => props.indicatorStyle),
-      height,
       getColumnValue,
     })
 
@@ -93,7 +82,7 @@ export default defineSetupFnComponent(
       columnsRef.value = flatVNode(defaultSlots)
 
       return (
-        <div ref="root" class={bem.b()}>
+        <div class={bem.b()}>
           <div class={bem.e('wrapper')}>{defaultSlots}</div>
         </div>
       )

@@ -30,10 +30,8 @@ const statusBarHeight = computed(() => {
 defineExpose<StatusBarExpose>()
 
 const statusBarStyle = computed(() => {
-  return [
-    {
-      [props.reverse ? 'width' : 'height']: statusBarHeight.value,
-    },
-  ]
+  return {
+    height: statusBarHeight.value,
+  }
 })
 </script>

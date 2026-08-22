@@ -6,7 +6,8 @@
   #{css-var-name(divider-margin-x)}: css-var(size-xs);
   #{css-var-name(divider-gap)}: css-var(size);
 
-  #{css-var-name(divider-color)}: css-var(text-color-tertiary);
+  #{css-var-name(divider-color)}: css-var(text-color-fourth);
+  #{css-var-name(divider-font-size)}: css-var(font-size-sm);
   #{css-var-name(divider-border-color)}: css-var(border-color);
   #{css-var-name(divider-left-width)}: 10%;
   #{css-var-name(divider-right-width)}: 10%;
@@ -23,6 +24,7 @@
   border-width: 0;
   border-color: css-var(divider-border-color);
   color: css-var(divider-color);
+  font-size: css-var(divider-font-size);
 
   &::before,
   &::after {

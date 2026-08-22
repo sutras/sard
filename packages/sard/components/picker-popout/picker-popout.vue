@@ -35,7 +35,7 @@ const slots = defineSlots<PickerPopoutSlots<T>>()
 const emit = defineEmits<PickerPopoutEmits>()
 
 // main
-const useOptionKeysReturn = useOptionKeys(props)
+const optionKeys = useOptionKeys(props)
 
 const omittedProps = omitFormPopoutProps(props)
 
@@ -45,7 +45,7 @@ const { innerVisible, innerValue, draftValue, onChange, onConfirm, onVisibleHook
   {
     onConfirmBefore() {
       if (isEmptyBinding(draftValue.value) || isEmptyArray(draftValue.value)) {
-        const [initialValue, selectedOptions] = getInitialValue(props.columns, useOptionKeysReturn)
+        const [initialValue, selectedOptions] = getInitialValue(props.columns, optionKeys)
         draftValue.value = initialValue
         return [selectedOptions]
       }

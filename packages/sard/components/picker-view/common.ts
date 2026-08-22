@@ -69,7 +69,6 @@ export interface PickerViewContext {
   maskClass: any
   indicatorClass: any
   indicatorStyle: any
-  height: number
   getColumnValue: (ins: ComponentInternalInstance) => WritableComputedRef<number>
 }
 

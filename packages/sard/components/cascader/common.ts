@@ -67,16 +67,16 @@ export interface CascaderPanel {
 export function getSelectedOptionsByValue(
   options: CascaderOption[],
   value: CascaderValue,
-  useOptionKeysReturn: UseOptionKeysReturn,
+  optionKeys: UseOptionKeysReturn,
   multiple?: boolean,
 ): CascaderOption[] | CascaderOption[][] | undefined {
-  const { getValue, getChildren } = useOptionKeysReturn
+  const { getValue, getChildren } = optionKeys
 
   // 多选
   if (multiple) {
     if (Array.isArray(value)) {
       return value
-        .map((item) => getSelectedOptionsByValue(options, item, useOptionKeysReturn))
+        .map((item) => getSelectedOptionsByValue(options, item, optionKeys))
         .filter((item) =>
           Array.isArray(item) ? item.length !== 0 : !isNullish(item),
         ) as CascaderOption[][]
@@ -108,7 +108,7 @@ export function getSelectedOptionsByValue(
           const selectedOptions = getSelectedOptionsByValue(
             getChildren(option),
             value,
-            useOptionKeysReturn,
+            optionKeys,
             multiple,
           )
           if (selectedOptions) {

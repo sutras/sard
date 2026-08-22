@@ -13,7 +13,7 @@ class ResizeObserverMock {
       [
         {
           target,
-          contentBoxSize: [{ inlineSize: 200, blockSize: 20 }],
+          contentRect: { width: 200, height: 20 },
         } as unknown as ResizeObserverEntry,
       ],
       this as unknown as ResizeObserver,

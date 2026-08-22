@@ -34,9 +34,9 @@ export function getColumnsType<T>(columns: T[] | T[][], { getChildren }: UseOpti
 export function getOptionsByIndexes<T>(
   indexes: number[],
   columns: T[] | T[][],
-  useOptionKeysReturn: UseOptionKeysReturn,
+  optionKeys: UseOptionKeysReturn,
 ): T[] {
-  const { getChildren } = useOptionKeysReturn
+  const { getChildren } = optionKeys
 
   function recurse(columns: T[], i = 0): T[] {
     const index = Math.min(indexes[i], columns.length - 1)
@@ -49,7 +49,7 @@ export function getOptionsByIndexes<T>(
     return [option]
   }
 
-  switch (getColumnsType(columns, useOptionKeysReturn)) {
+  switch (getColumnsType(columns, optionKeys)) {
     case 'single':
       return [columns[indexes[0]] as T]
     case 'multi':
@@ -82,23 +82,23 @@ export function getCascaderValidIndexes<T>(
 
 export function getMaySingleValueByOptions<T>(
   options: T[],
-  useOptionKeysReturn: UseOptionKeysReturn,
+  optionKeys: UseOptionKeysReturn,
   columns: T[] | T[][],
 ) {
-  const { getValue } = useOptionKeysReturn
+  const { getValue } = optionKeys
 
   const values = options.map((option) => getValue(option))
 
-  return getColumnsType(columns, useOptionKeysReturn) === 'single' ? values[0] : values
+  return getColumnsType(columns, optionKeys) === 'single' ? values[0] : values
 }
 
 export function getIndexesByValue<T>(
   value: any[],
   columns: T[] | T[][],
-  useOptionKeysReturn: UseOptionKeysReturn,
+  optionKeys: UseOptionKeysReturn,
 ) {
-  const { getValue, getChildren } = useOptionKeysReturn
-  const type = getColumnsType(columns, useOptionKeysReturn)
+  const { getValue, getChildren } = optionKeys
+  const type = getColumnsType(columns, optionKeys)
 
   function recurse(columns: T[], i = 0): number[] {
     let index = columns.findIndex((option) => getValue(option) === value[i])
@@ -129,8 +129,8 @@ export function getIndexesByValue<T>(
   })
 }
 
-export function getInitialValue<T>(columns: T[] | T[][], useOptionKeysReturn: UseOptionKeysReturn) {
-  const { getChildren, getValue } = useOptionKeysReturn
+export function getInitialValue<T>(columns: T[] | T[][], optionKeys: UseOptionKeysReturn) {
+  const { getChildren, getValue } = optionKeys
 
   function recurse(columns: T[], options: T[]): T {
     const option = columns[0] as T
@@ -143,7 +143,7 @@ export function getInitialValue<T>(columns: T[] | T[][], useOptionKeysReturn: Us
     return option
   }
 
-  switch (getColumnsType(columns, useOptionKeysReturn)) {
+  switch (getColumnsType(columns, optionKeys)) {
     case 'single':
       return [getValue(columns[0]), [columns[0]]]
     case 'multi':

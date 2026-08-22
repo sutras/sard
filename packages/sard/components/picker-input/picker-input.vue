@@ -46,14 +46,14 @@ const slots = defineSlots<PickerInputSlots<T>>()
 const emit = defineEmits<PickerInputEmits>()
 
 // main
-const useOptionKeysReturn = useOptionKeys(props)
+const optionKeys = useOptionKeys(props)
 
 const partitionedProps = partitionPopoutInputProps(props)
 
 const { innerVisible, innerValue, inputValue, show, onChange, onClear, onVisibleHook } =
   usePopoutInput(props, emit)
 
-const { getLabel } = useOptionKeysReturn
+const { getLabel } = optionKeys
 
 const onClick = () => {
   if (props.columns && props.columns.length > 0) {
@@ -62,8 +62,8 @@ const onClick = () => {
 }
 
 function getOutletText<T>(columns: T[] | T[][], value: string | number) {
-  const indexes = getIndexesByValue(toArray(value), columns || [], useOptionKeysReturn)
-  const options = getOptionsByIndexes(indexes, columns || [], useOptionKeysReturn)
+  const indexes = getIndexesByValue(toArray(value), columns || [], optionKeys)
+  const options = getOptionsByIndexes(indexes, columns || [], optionKeys)
 
   const labels = options.map((option) => getLabel(option))
 

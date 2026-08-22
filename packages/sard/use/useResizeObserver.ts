@@ -25,10 +25,10 @@ export function useResizeObserver(
 
   const observer = new ResizeObserver((entries) => {
     for (const entry of entries) {
-      const contentSize = entry.contentBoxSize[0]
+      const contentSize = entry.contentRect
       Object.assign(size, {
-        width: contentSize.inlineSize,
-        height: contentSize.blockSize,
+        width: contentSize.width,
+        height: contentSize.height,
       })
       callback?.(size)
     }

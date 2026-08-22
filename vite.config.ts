@@ -4,7 +4,6 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import legacy from '@vitejs/plugin-legacy'
 import tailwindcss from '@tailwindcss/vite'
-import { transformIndexHtmlPlugin } from './transformIndexHtmlPlugin'
 // import { visualizer } from 'rollup-plugin-visualizer'
 
 import postcssPresetEnv from 'postcss-preset-env'
@@ -33,12 +32,11 @@ export default defineConfig({
     }),
     vueJsx(),
     tailwindcss(),
-    transformIndexHtmlPlugin(),
     // visualizer(),
     legacy({
       renderLegacyChunks: false,
       modernPolyfills: true,
-      // AbortController, ResizeObserver, flex gap, inset, css logical
+      // AbortController, flex gap, inset, css logical
       modernTargets: browsers,
     }),
   ],

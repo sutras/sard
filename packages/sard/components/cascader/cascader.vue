@@ -91,7 +91,7 @@ const bem = createBem('cascader')
 const { t } = useTranslateWithPrefix('cascader')
 
 // main
-const useOptionKeysReturn = useOptionKeys(props)
+const optionKeys = useOptionKeys(props)
 
 const innerValue = ref<typeof props.modelValue>()
 
@@ -110,7 +110,7 @@ const {
   initialize,
 } = useCascaderTree(props, {
   innerValue,
-  useOptionKeysReturn,
+  optionKeys,
 })
 
 initialize()

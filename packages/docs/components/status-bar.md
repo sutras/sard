@@ -22,11 +22,3 @@ windowInfo.statusBarHeight = window.getStatusBarHeight()
 ### 基础使用
 
 <<< @demo/status-bar/demo/Basic.vue
-
-## API
-
-### StatusBarProps
-
-| 属性    | 描述               | 类型    | 默认值 |
-| ------- | ------------------ | ------- | ------ |
-| reverse | 设置宽度而不是高度 | boolean | false  |

@@ -1,8 +1,6 @@
 import type { DefaultProps } from '../config'
 
-export interface StatusBarProps {
-  reverse?: boolean
-}
+export interface StatusBarProps {}
 
 export const defaultStatusBarProps: DefaultProps<StatusBarProps> = {}
 

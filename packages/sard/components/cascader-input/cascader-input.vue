@@ -58,7 +58,7 @@ const slots = defineSlots<CascaderInputSlots>()
 const emit = defineEmits<CascaderInputEmits>()
 
 // main
-const useOptionKeysReturn = useOptionKeys(props)
+const optionKeys = useOptionKeys(props)
 
 const partitionedProps = partitionPopoutInputProps(props)
 
@@ -70,7 +70,7 @@ const { innerVisible, innerValue, inputValue, show, onChange, onClear, onVisible
     },
   })
 
-const { getLabel } = useOptionKeysReturn
+const { getLabel } = optionKeys
 
 const lazyOptions = shallowRef<CascaderOption[]>([])
 
@@ -85,12 +85,7 @@ const renderedOptions = computed(() => {
 })
 
 function getOutletText(options: CascaderOption[], value: CascaderValue): string | string[] {
-  const selectedOptions = getSelectedOptionsByValue(
-    options,
-    value,
-    useOptionKeysReturn,
-    props.multiple,
-  )
+  const selectedOptions = getSelectedOptionsByValue(options, value, optionKeys, props.multiple)
 
   if (!selectedOptions || selectedOptions.length === 0) {
     return getValueDisplay(value)

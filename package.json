@@ -23,7 +23,7 @@
     "test": "run-s test:type test:lint test:unit",
     "test:type": "vue-tsc --noEmit -p tsconfig.vitest.json",
     "test:lint": "oxlint",
-    "test:unit": "vitest run",
+    "test:unit": "vitest",
     "prepare": "husky install",
     "new-component": "tsx ./scripts/new-component.ts",
     "nc": "npm run new-component",

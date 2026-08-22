@@ -12,12 +12,12 @@ import { type UseOptionKeysReturn } from '../../use'
 export function useCascaderTree(
   props: CascaderProps,
   config: {
-    useOptionKeysReturn: UseOptionKeysReturn
+    optionKeys: UseOptionKeysReturn
     innerValue: Ref<CascaderValue | undefined>
   },
 ) {
   const {
-    useOptionKeysReturn: { getValue, getLabel, getDisabled, getIsLeaf, getChildren },
+    optionKeys: { getValue, getLabel, getDisabled, getIsLeaf, getChildren },
     innerValue,
   } = config
   const options = computed(() => props.options || [])
