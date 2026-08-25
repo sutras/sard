@@ -41,7 +41,6 @@ const emit = defineEmits<SelectOptionEmits>()
 
 const bem = createBem('select-option')
 
-// main
 const optionRef = useTemplateRef('option')
 
 const context = inject(selectContextKey)!
@@ -93,8 +92,7 @@ onUnmounted(() => {
   removeMember(member)
 })
 
-// others
-defineExpose<SelectOptionExpose>({})
+// ============================ style ============================
 
 const selectOptionClass = computed(() => {
   return [
@@ -104,4 +102,6 @@ const selectOptionClass = computed(() => {
     bem.is('plain', props.plain),
   ]
 })
+
+defineExpose<SelectOptionExpose>({})
 </script>

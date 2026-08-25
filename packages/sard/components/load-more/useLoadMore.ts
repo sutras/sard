@@ -29,7 +29,7 @@ export interface UseLoadMoreReturn {
   onLoadMore: () => void
   onReload: () => void
   currentPage: Ref<number, number>
-  refresh: () => Promise<void | null>
+  refresh: (force?: boolean) => Promise<void | null>
 }
 
 export function useLoadMore(options: UseLoadMoreOptions): UseLoadMoreReturn {
@@ -75,9 +75,9 @@ export function useLoadMore(options: UseLoadMoreOptions): UseLoadMoreReturn {
       }))
   }
 
-  const refresh = async () => {
+  const refresh = async (force?: boolean) => {
     if (!disabled.value) {
-      if (status.value !== 'loading') {
+      if (force || status.value !== 'loading') {
         isRefreshing.value = true
         return loadMoreFetch(1)
       }

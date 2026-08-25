@@ -48,12 +48,11 @@ const emit = defineEmits<DatetimeRangePickerEmits>()
 
 const bem = createBem('datetime-range-picker')
 
-// main
 const datetimePickerProps = computed(() => {
   return omit(props, ['modelValue', 'tabs'])
 })
 
-// tabs
+// ============================ tabs ============================
 const tabsOptions = computed(() => {
   return [
     {
@@ -69,7 +68,7 @@ const tabsOptions = computed(() => {
 
 const tabsCurrent = ref(0)
 
-// value
+// ============================ value ============================
 const minDate = computed(() => toDate(props.min || getMinDate(), props.valueFormat))
 
 const maxDate = computed(() => {

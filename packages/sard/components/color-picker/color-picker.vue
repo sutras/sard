@@ -116,7 +116,6 @@ const emit = defineEmits<ColorPickerEmits>()
 
 const bem = createBem('color-picker')
 
-// main
 const formContext = useFormContext()
 const formItemContext = useFormItemContext()
 
@@ -427,7 +426,7 @@ const onPresetSelect = (value: string) => {
   emitColor()
 }
 
-// ============================ others ============================
+// ============================ style ============================
 const colorPickerClass = computed(() => {
   return [bem.b(), bem.m('disabled', isDisabled.value), bem.m('readonly', isReadonly.value)]
 })

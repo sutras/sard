@@ -30,13 +30,11 @@ const emit = defineEmits<CoolIconEmits>()
 
 const bem = createBem('cool-icon')
 
-// main
-
 const onClick = (event: any) => {
   emit('click', event)
 }
 
-defineExpose<CoolIconExpose>({})
+// ============================ style ============================
 
 const coolIconClass = computed(() => {
   return [bem.b(), bem.m(props.shape)]
@@ -56,4 +54,6 @@ const bgStyle = computed(() => {
     background: props.background,
   }
 })
+
+defineExpose<CoolIconExpose>({})
 </script>

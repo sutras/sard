@@ -39,7 +39,6 @@ const emit = defineEmits<NotifyEmits>()
 
 const bem = createBem('notify')
 
-// main
 const effect = computed(() => {
   return {
     top: 'slide-top',
@@ -87,14 +86,7 @@ const onClick = (event: any) => {
   emit('click', event)
 }
 
-defineExpose<NotifyExpose>({
-  reHideLater,
-  cancelHide: () => {
-    hideTimer.clear()
-  },
-})
-
-// others
+// ============================ style ============================
 const notifyClass = computed(() => {
   return [bem.b(), bem.m(props.type), bem.m(props.position)]
 })
@@ -104,5 +96,12 @@ const notifyStyle = computed(() => {
     backgroundColor: props.background,
     color: props.color,
   }
+})
+
+defineExpose<NotifyExpose>({
+  reHideLater,
+  cancelHide: () => {
+    hideTimer.clear()
+  },
 })
 </script>

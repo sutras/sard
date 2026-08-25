@@ -6,7 +6,7 @@
       </slot>
       <template v-else-if="type === 'clock'">
         <div
-          v-for="i in 12"
+          v-for="i in 8"
           :key="i"
           :class="[
             bem.e('scale'),
@@ -44,12 +44,12 @@ const slots = defineSlots<LoadingSlots>()
 
 const bem = createBem('loading')
 
-// main
 const scaleShowNum = computed(() => {
-  return Math.max(Math.floor(props.progress * 12), 1)
+  return Math.max(Math.floor(props.progress * 8), 1)
 })
 
-// others
+// ============================ style ============================
+
 const loadingClass = computed(() => {
   return [bem.b(), bem.m('vertical', props.vertical)]
 })

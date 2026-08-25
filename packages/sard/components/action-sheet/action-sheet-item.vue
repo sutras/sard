@@ -1,13 +1,12 @@
 <template>
   <div
     :class="[bem.e('item'), bem.is('disabled', props.disabled), bem.is('loading', props.loading)]"
-    :style="itemStyle"
     @click="onClick"
   >
     <template v-if="!props.loading">
       <slot v-if="slots.default"></slot>
       <template v-else>
-        <div :class="bem.e('item-label')">
+        <div :class="bem.e('item-label')" :style="labelStyle">
           <slot name="label">{{ props.label }}</slot>
         </div>
         <div v-if="props.description || slots.description" :class="bem.e('item-description')">
@@ -45,7 +44,7 @@ const bem = createBem('action-sheet')
 
 const { select } = useActionSheetItem(props)
 
-const itemStyle = computed(() => {
+const labelStyle = computed(() => {
   return { color: props.color }
 })
 

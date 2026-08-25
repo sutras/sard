@@ -35,9 +35,7 @@ const slots = defineSlots<TimelineItemSlots>()
 
 const bem = createBem('timeline-item')
 
-// main
-
-// others
+// ============================ style ============================
 const itemClass = computed(() => {
   return [bem.b(), bem.m('dotted', !slots.icon)]
 })

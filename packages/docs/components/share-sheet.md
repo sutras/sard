@@ -12,7 +12,7 @@ group: 反馈组件
 
 ### 基础使用
 
-使用 `v-model:visible` 属性控制显隐，使用 `itemList` 属性配置分享项。
+使用 `v-model:visible` 属性控制显隐，选择时触发 `select`。
 
 <<< @demo/share-sheet/demo/Basic.vue
 
@@ -24,7 +24,7 @@ group: 反馈组件
 
 ### 多行
 
-`itemList` 属性值如果是二维数组则渲染成多行。
+可以使用多个 `share-sheet-row` 展示多行。
 
 <<< @demo/share-sheet/demo/MultipleRow.vue
 

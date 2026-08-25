@@ -21,9 +21,7 @@ defineEmits<TagEmits>()
 
 const bem = createBem('tag')
 
-// main
-
-// others
+// ============================ style ============================
 const tagClass = computed(() => {
   return [
     bem.b(),

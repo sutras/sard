@@ -11,9 +11,7 @@ const props = withDefaults(defineProps<SkeletonBlockProps>(), {})
 
 const bem = createBem('skeleton')
 
-// main
-
-// others
+// ============================ style ============================
 const skeletonBlockClass = computed(() => {
   return [bem.e('block'), bem.m('animated', props.animated), bem.m('round', props.round)]
 })

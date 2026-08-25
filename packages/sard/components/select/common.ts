@@ -9,6 +9,7 @@ export interface SelectProps {
   filterable?: boolean
   filterPlaceholder?: string
   filterMethod?: (query: string) => void
+  filterValue?: string
   remote?: boolean
   remoteMethod?: (query: string, page: number, isRefresh: boolean) => Promise<boolean>
   threshold?: number
@@ -39,6 +40,7 @@ export interface SelectEmits {
   (e: 'update:modelValue', value: any): void
   (e: 'change', value: any): void
   (e: 'select', value: any): void
+  (e: 'update:filter-value', value: string): void
 }
 
 export interface SelectExpose {}

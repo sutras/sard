@@ -30,7 +30,6 @@ const emit = defineEmits<ScrollListEmits>()
 
 const bem = createBem('scroll-list')
 
-// main
 const scrollRef = useTemplateRef('scroll')
 const wrapperRef = useTemplateRef('wrapper')
 

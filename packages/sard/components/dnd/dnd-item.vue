@@ -33,14 +33,14 @@ defineEmits<DndItemEmits>()
 
 const bem = createBem('dnd-item')
 
-// context
+// ============================ context ============================
 const dndContext = inject(dndContextKey)
 
 if (!dndContext) {
   throw new Error('DndItem must be included in Dnd.')
 }
 
-// drag
+// ============================ drag ============================
 
 const elRef = shallowRef<HTMLElement | null>(null)
 const onUpdate = (el: HTMLElement | null) => {
@@ -165,8 +165,7 @@ provide(dndItemContextKey, {
   end,
 })
 
-// others
-defineExpose<DndItemExpose>({})
+// ============================ style ============================
 
 const dndItemClass = computed(() => {
   return [
@@ -185,4 +184,6 @@ watchPostEffect(() => {
     : dndContext.currentHeight * props.itemInfo.offset
   el.style.setProperty('transform', `translate3d(0,${y}px,0)`)
 })
+
+defineExpose<DndItemExpose>({})
 </script>

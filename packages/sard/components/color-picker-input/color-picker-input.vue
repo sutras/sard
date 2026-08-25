@@ -52,7 +52,6 @@ const emit = defineEmits<ColorPickerInputEmits>()
 
 const bem = createBem('color-picker-input')
 
-// main
 const partitionedProps = partitionPopoutInputProps(props)
 
 const { innerVisible, innerValue, inputValue, show, onChange, onClear, onVisibleHook } =

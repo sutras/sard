@@ -47,9 +47,7 @@ const {
   contentPosition,
 } = useFormItem(props)
 
-defineExpose<FormItemExpose>(expose)
-
-// others
+// ============================ style ============================
 
 const formItemClass = computed(() => {
   return [
@@ -71,4 +69,6 @@ const labelStyle = computed(() => {
 const contentClass = computed(() => {
   return [bem.e('content'), bem.em('content', contentPosition.value)]
 })
+
+defineExpose<FormItemExpose>(expose)
 </script>

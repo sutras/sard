@@ -480,7 +480,7 @@ const [onTouchStart, onTouchMove, onTouchEnd] = useDragPinch({
 })
 const onPointerDown = usePointerDown(onTouchStart, onTouchMove, onTouchEnd)
 
-// canvas
+// ============================ canvas ============================
 let canvas: HTMLCanvasElement | null = null
 let context: CanvasRenderingContext2D | null = null
 
@@ -568,7 +568,7 @@ const cropImage = async () => {
   })
 }
 
-// toolbar
+// ============================ toolbar ============================
 const onCancel = () => {
   props.cancel?.()
   close()
@@ -609,7 +609,8 @@ const onConfirm = () => {
     })
 }
 
-// others
+// ============================ style ============================
+
 const cropImageClass = computed(() => {
   return [bem.b()]
 })

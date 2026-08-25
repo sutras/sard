@@ -35,7 +35,6 @@ const slots = defineSlots<CalendarPopoutSlots>()
 
 const emit = defineEmits<CalendarPopoutEmits>()
 
-// main
 const omittedProps = omitFormPopoutProps(props)
 
 const { innerVisible, draftValue, onChange, onConfirm, onVisibleHook } = useFormPopout(

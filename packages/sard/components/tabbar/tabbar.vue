@@ -24,7 +24,6 @@ const emit = defineEmits<TabbarEmits>()
 
 const bem = createBem('tabbar')
 
-// main
 const innerCurrent = ref(props.current)
 watch(
   () => props.current,
@@ -51,7 +50,7 @@ provide(
   }),
 )
 
-// others
+// ============================ style ============================
 const tabbarClass = computed(() => {
   return [
     bem.b(),

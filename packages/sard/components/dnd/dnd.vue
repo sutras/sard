@@ -20,7 +20,6 @@ defineSlots<DndSlots<T>>()
 
 const emit = defineEmits<DndEmits<T>>()
 
-// main
 const keyMap = new WeakMap<any, string>()
 
 const innerList = ref(props.list || [])
@@ -95,6 +94,5 @@ provide(
   }),
 )
 
-// others
 defineExpose<DndExpose>({})
 </script>

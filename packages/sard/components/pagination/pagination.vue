@@ -54,7 +54,6 @@ const emit = defineEmits<PaginationEmits>()
 
 const bem = createBem('pagination')
 
-// main
 const innerPageCount = computed(() => {
   return (props.pageCount ?? Math.ceil(props.total / props.pageSize)) || 1
 })
@@ -125,7 +124,7 @@ const multiItems = computed(() => {
     })
 })
 
-// others
+// ============================ style ============================
 const paginationClass = computed(() => {
   return [bem.b(), bem.m(props.type)]
 })

@@ -85,8 +85,6 @@ const emit = defineEmits<DropdownItemEmits>()
 
 const bem = createBem('dropdown-item')
 
-// main
-
 const context = inject(dropdownContextKey)
 
 if (!context) {
@@ -274,7 +272,8 @@ onUnmounted(() => {
   context.unregister(member)
 })
 
-// others
+// ============================ style ============================
+
 const dropdownItemClass = computed(() => {
   return [
     bem.b(),

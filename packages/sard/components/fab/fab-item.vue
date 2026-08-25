@@ -31,7 +31,6 @@ const emit = defineEmits<FabItemEmits>()
 
 const bem = createBem('fab-item')
 
-// main
 const context = inject(fabContextKey)!
 
 const onClick = (event: MouseEvent) => {
@@ -41,10 +40,11 @@ const onClick = (event: MouseEvent) => {
   emit('click', event)
 }
 
-// others
-defineExpose<FabItemExpose>({})
+// ============================ style ============================
 
 const fabItemClass = computed(() => {
   return [bem.b(), bem.m('left', context.isLeft), bem.m('entry', props.isEntry)]
 })
+
+defineExpose<FabItemExpose>({})
 </script>

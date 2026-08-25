@@ -1,5 +1,5 @@
 <template>
-  <doc-page title="Grid 宫格">
+  <doc-page title="Grid 宫格" gray>
     <doc-demo title="基础使用">
       <Basic />
     </doc-demo>

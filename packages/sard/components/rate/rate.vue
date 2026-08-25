@@ -63,7 +63,6 @@ const emit = defineEmits<RateEmits>()
 
 const bem = createBem('rate')
 
-// main
 const formContext = useFormContext()
 const formItemContext = useFormItemContext()
 
@@ -201,7 +200,7 @@ const onTouchMove = (event: TouchEvent) => {
 
 const onPointerDown = usePointerDown(onTouchStart, onTouchMove)
 
-// others
+// ============================ style ============================
 const rateClass = computed(() => {
   return [bem.b(), bem.m('disabled', isDisabled.value), bem.m('readonly', isReadonly.value)]
 })

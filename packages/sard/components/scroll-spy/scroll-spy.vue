@@ -24,7 +24,6 @@ const emit = defineEmits<ScrollSpyEmits>()
 
 const bem = createBem('scroll-spy')
 
-// main
 const scrollRef = useTemplateRef('scroll')
 
 const { innerCurrent, anchorRectList, register, unregister, scrollTo, update } = useScrollSpy(

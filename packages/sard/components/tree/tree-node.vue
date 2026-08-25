@@ -136,7 +136,6 @@ const props = withDefaults(defineProps<TreeNodeProps>(), {})
 
 const bem = createBem('tree')
 
-// main
 const treeContext = inject(treeContextKey)!
 
 const level = computed(() => {
@@ -151,7 +150,7 @@ onMounted(() => {
   }, 30)
 })
 
-// drag
+// ============================ drag ============================
 const nodeRef = useTemplateRef('node')
 const dragRef = useTemplateRef('drag')
 
@@ -292,7 +291,7 @@ const onDragTouchEnd = (event: TouchEvent) => {
 
 const onDragPointerDown = usePointerDown(onDragTouchStart, onDragTouchMove, onDragTouchEnd)
 
-// level
+// ============================ level ============================
 
 const isLastNode = computed(() => {
   return props.node.parent && props.node.parent.children!.length - 1 === props.index
@@ -328,7 +327,8 @@ const onPopoverSelect = async (value: TreeDragIndent) => {
   }
 }
 
-// expand
+// ============================ expand ============================
+
 const isMergedLeaf = computed(() => {
   const { children, isLeaf } = props.node
   return treeContext.lazy && treeContext.load ? isLeaf : !children || children.length === 0
@@ -391,7 +391,8 @@ const onNodeTouchEnd = () => {
 
 const onNodePointerDown = usePointerDown(onNodeTouchStart, undefined, onNodeTouchEnd)
 
-// select
+// ============================ select ============================
+
 const canSingleSelectable = computed(() => {
   return treeContext.singleSelectable && (!treeContext.leafOnly || isMergedLeaf.value)
 })
@@ -413,7 +414,8 @@ const [onSelectionTouchStart, onSelectionTouchEnd] = useSimulatedClick({
 
 const onSelectionPointerDown = usePointerDown(onSelectionTouchStart, undefined, onSelectionTouchEnd)
 
-// edit
+// ============================ edit ============================
+
 const editRef = useTemplateRef('edit')
 const getEditRect = () => {
   return editRef.value!.getBoundingClientRect()
@@ -429,7 +431,7 @@ const [onEditTouchStart, onEditTouchEnd] = useSimulatedClick({
 
 const onEditPointerDown = usePointerDown(onEditTouchStart, undefined, onEditTouchEnd)
 
-// others
+// ============================ style ============================
 const nodeClass = computed(() => {
   return [
     bem.e('node'),

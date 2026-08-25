@@ -71,7 +71,6 @@ const attrs = useAttrs()
 
 const bem = createBem('popout-input')
 
-// main
 const mergedProps = computed(() => {
   return {
     ...props.inputProps,
@@ -89,7 +88,7 @@ const isReadonly = computed(() => {
   return formContext?.readonly || props.readonly
 })
 
-// value
+// ============================ value ============================
 const innerValue = ref(props.modelValue)
 
 watch(
@@ -116,7 +115,7 @@ const onClear = () => {
   emit('clear')
 }
 
-// seal
+// ============================ seal ============================
 const isSealDown = ref(false)
 const operable = computed(() => {
   return !isDisabled.value && !isReadonly.value && !props.loading
@@ -142,7 +141,7 @@ const onSealClick = (event: MouseEvent) => {
   }
 }
 
-// others
+// ============================ style ============================
 const popoutInputClass = computed(() => {
   return [
     bem.b(),

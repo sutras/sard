@@ -36,11 +36,8 @@ defineSlots<StepSlots>()
 
 defineEmits<StepEmits>()
 
-defineExpose<StepExpose>({})
-
 const bem = createBem('step')
 
-// main
 const context = inject(stepsContextKey)!
 
 if (!context) {
@@ -66,7 +63,7 @@ const position = computed(() => {
       : 'front'
 })
 
-// others
+// ============================ style ============================
 const stepClass = computed(() => {
   return [
     bem.b(),
@@ -77,4 +74,6 @@ const stepClass = computed(() => {
     bem.m('reverse', context.reverse),
   ]
 })
+
+defineExpose<StepExpose>({})
 </script>

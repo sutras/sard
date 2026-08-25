@@ -30,7 +30,6 @@ const emit = defineEmits<ButtonEmits>()
 
 const bem = createBem('button')
 
-// main
 const formContext = useFormContext()
 
 const compactContext = inject(compactContextKey, null)
@@ -42,6 +41,8 @@ const isDisabled = computed(() => {
 const onClick = (event: any) => {
   emit('click', event)
 }
+
+// ============================ style ============================
 
 const buttonClass = computed(() => {
   return [

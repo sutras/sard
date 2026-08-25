@@ -58,7 +58,6 @@ const slots = defineSlots<SelectInputSlots>()
 
 const emit = defineEmits<SelectInputEmits>()
 
-// main
 const { getLabel, getValue, getChildren } = useOptionKeys(props)
 
 const partitionedProps = partitionPopoutInputProps(props)
@@ -143,6 +142,5 @@ const onConfirm = () => {
   emit('confirm')
 }
 
-// others
 defineExpose<SelectInputExpose>({})
 </script>

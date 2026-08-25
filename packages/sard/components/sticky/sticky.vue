@@ -41,7 +41,6 @@ defineEmits<StickyEmits>()
 
 const bem = createBem('sticky')
 
-// main
 const targetRef = useTemplateRef('target')
 
 const positionStyle = reactive<{
@@ -61,7 +60,7 @@ const fixationSize = useResizeObserver(fixationRef)
 
 const context = inject(stickyContextKey, null)
 
-// 粘性元素与视口相交
+// ============================ 粘性元素与视口相交 ============================
 const updatePosition = () => {
   const target = targetRef.value
   if (!target) return
@@ -104,7 +103,7 @@ watch(
 usePageScroll(updatePosition)
 useWindowResize(updatePosition)
 
-// 父容器与视口相交
+// ============================ 父容器与视口相交 ============================
 if (context) {
   const { isIntersecting } = useIntersectionObserver({
     target: context.box,

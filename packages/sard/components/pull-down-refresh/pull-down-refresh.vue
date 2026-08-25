@@ -46,7 +46,6 @@ const emit = defineEmits<PullDownRefreshEmits>()
 
 const bem = createBem('pull-down-refresh')
 
-// main
 const status = ref<PullDownRefreshStatus>('initial')
 const translateY = ref(0)
 const progress = computed(() => {
@@ -159,11 +158,7 @@ const enableToRefresh = (can: boolean) => {
   canRefresh.value = can
 }
 
-defineExpose<PullDownRefreshExpose>({
-  enableToRefresh,
-})
-
-// others
+// ============================ style ============================
 
 const pullDownRefreshStyle = computed(() => {
   return {
@@ -176,5 +171,9 @@ const headerStyle = computed(() => {
   return {
     height: props.headerHeight + 'px',
   }
+})
+
+defineExpose<PullDownRefreshExpose>({
+  enableToRefresh,
 })
 </script>

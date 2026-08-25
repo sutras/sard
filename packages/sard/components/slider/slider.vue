@@ -73,7 +73,6 @@ const emit = defineEmits<SliderEmits>()
 
 const bem = createBem('slider')
 
-// main
 const formContext = useFormContext()
 const formItemContext = useFormItemContext()
 
@@ -322,7 +321,7 @@ const scales = computed(() => {
   return scales
 })
 
-// others
+// ============================ style ============================
 const sliderClass = computed(() => {
   return [
     bem.b(),

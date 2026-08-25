@@ -64,7 +64,6 @@ const emit = defineEmits<StepperEmits>()
 
 const bem = createBem('stepper')
 
-// main
 const formContext = useFormContext()
 
 const isDisabled = computed(() => {
@@ -75,7 +74,7 @@ const isReadonly = computed(() => {
   return formContext?.readonly || props.readonly
 })
 
-// 输入框
+// ============================ 输入框 ============================
 const inputValue = ref(props.modelValue)
 
 watch(
@@ -130,7 +129,7 @@ const onFocus = (event: FocusEvent) => {
   emit('focus', event)
 }
 
-// 按钮
+// ============================ 按钮 ============================
 const isMin = computed(() => {
   return !isNullish(innerValue.value) && Number(innerValue.value) <= props.min
 })
@@ -176,7 +175,7 @@ const onPressEnd = () => {
   pressDelta = 0
 }
 
-// decrease
+// ============================ decrease ============================
 const onDecTouchStart = (event: TouchEvent) => {
   onDecSimulatedPressTouchStart(event)
 }
@@ -200,7 +199,7 @@ const [onDecSimulatedPressTouchStart, onDecSimulatedPressTouchMove, onDecSimulat
     duration: props.pressTime,
   })
 
-// increase
+// ============================ increase ============================
 const onIncTouchStart = (event: TouchEvent) => {
   onIncSimulatedPressTouchStart(event)
 }
@@ -224,7 +223,7 @@ const [onIncSimulatedPressTouchStart, onIncSimulatedPressTouchMove, onIncSimulat
     duration: props.pressTime,
   })
 
-// others
+// ============================ style ============================
 const stepperClass = computed(() => {
   return [
     bem.b(),

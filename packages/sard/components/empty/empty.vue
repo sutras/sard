@@ -31,9 +31,8 @@ const slots = defineSlots<EmptySlots>()
 
 const bem = createBem('empty')
 
-// main
+// ============================ style ============================
 
-// others
 const emptyClass = computed(() => {
   return [bem.b(), bem.m(props.size)]
 })

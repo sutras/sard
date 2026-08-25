@@ -38,7 +38,6 @@ const slots = defineSlots<SelectPopoutSlots>()
 
 const emit = defineEmits<SelectPopoutEmits>()
 
-// main
 const omittedProps = omitFormPopoutProps(props)
 
 const { innerVisible, draftValue, onChange, onConfirm, onVisibleHook } = useFormPopout(props, emit)

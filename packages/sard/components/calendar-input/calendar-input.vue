@@ -41,7 +41,6 @@ const slots = defineSlots<CalendarInputSlots>()
 
 const emit = defineEmits<CalendarInputEmits>()
 
-// main
 const partitionedProps = partitionPopoutInputProps(props)
 
 const { innerVisible, innerValue, inputValue, show, onChange, onClear, onVisibleHook } =

@@ -26,7 +26,6 @@ const emit = defineEmits<RadioEmits>()
 
 const bem = createBem('radio')
 
-// main
 const groupContext = inject(radioContextKey, null)
 const formContext = useFormContext()
 
@@ -69,7 +68,7 @@ const onClick = (event: any) => {
 
 provide(radioContextKey, null as any)
 
-// others
+// ============================ style ============================
 const radioClass = computed(() => {
   return [
     bem.b(),

@@ -25,7 +25,6 @@ defineSlots<StepsSlots>()
 
 const bem = createBem('steps')
 
-// main
 provide(
   stepsContextKey,
   reactive({
@@ -37,7 +36,7 @@ provide(
   }),
 )
 
-// others
+// ============================ style ============================
 const stepsClass = computed(() => {
   return [bem.b(), bem.m(props.direction)]
 })

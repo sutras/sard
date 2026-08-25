@@ -40,7 +40,6 @@ defineSlots<DatetimeRangePickerPopoutSlots>()
 
 const emit = defineEmits<DatetimeRangePickerPopoutEmits>()
 
-// main
 const omittedProps = omitFormPopoutProps(props)
 
 const minDate = computed(() => toDate(props.min || getMinDate(), props.valueFormat))

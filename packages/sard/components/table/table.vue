@@ -425,7 +425,7 @@ const scrollSide = useScrollSide(scrollRef, {
   direction: 'horizontal',
 })
 
-// others
+// ============================ style ============================
 const tableClass = computed(() => {
   return [
     bem.b(),

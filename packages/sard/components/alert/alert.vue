@@ -29,7 +29,7 @@ const emit = defineEmits<AlertEmits>()
 
 const bem = createBem('alert')
 
-// main
+// ============================ visible ============================
 
 const visible = ref(true)
 
@@ -38,7 +38,7 @@ const onClose = () => {
   emit('close')
 }
 
-// others
+// ============================ style ============================
 const alertClass = computed(() => {
   return [bem.b(), bem.m(props.type), bem.m('square', props.square)]
 })

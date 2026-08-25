@@ -59,7 +59,7 @@ const bem = createBem('signature')
 
 const { t } = useTranslateWithPrefix('signature')
 
-// visible
+// ============================ visible ============================
 const innerVisible = useModel(props, 'visible')
 
 const [zIndex, increaseZIndex] = useZIndex()
@@ -68,7 +68,7 @@ const onBeforeEnter = () => {
   increaseZIndex()
 }
 
-// canvas
+// ============================ canvas ============================
 const dpr = window.devicePixelRatio
 
 const canvasRef = useTemplateRef('canvas')
@@ -214,7 +214,7 @@ const cancel = () => {
   emit('cancel')
 }
 
-// footer content size
+// ============================ footer content size ============================
 const footerRef = useTemplateRef('footer')
 const footerSize = useResizeObserver(footerRef, undefined, () => !props.fullScreen)
 const footerContentStyle = computed(() => {
@@ -226,6 +226,8 @@ const footerContentStyle = computed(() => {
   }
   return null
 })
+
+// ============================ style ============================
 
 const signatureClass = computed(() => {
   return [bem.b(), bem.m('full', props.fullScreen)]

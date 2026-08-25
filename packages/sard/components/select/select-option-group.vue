@@ -29,7 +29,6 @@ defineEmits<SelectOptionGroupEmits>()
 
 const bem = createBem('select-option-group')
 
-// main
 provide(
   selectOptionGroupContextKey,
   reactive({
@@ -37,6 +36,5 @@ provide(
   }),
 )
 
-// others
 defineExpose<SelectOptionGroupExpose>({})
 </script>

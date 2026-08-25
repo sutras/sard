@@ -23,9 +23,7 @@ defineEmits<TextEmits>()
 
 const bem = createBem('text')
 
-// main
-
-// others
+// ============================ style ============================
 const textClass = computed(() => {
   return [
     bem.b(),

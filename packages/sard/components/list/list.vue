@@ -23,7 +23,6 @@ const slots = defineSlots<ListSlots>()
 
 const bem = createBem('list')
 
-// main
 provide(
   listContextKey,
   reactive({
@@ -31,7 +30,8 @@ provide(
   }),
 )
 
-// others
+// ============================ style ============================
+
 const listClass = computed(() => {
   return [
     bem.b(),

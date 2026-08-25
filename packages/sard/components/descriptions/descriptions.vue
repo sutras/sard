@@ -27,7 +27,6 @@ defineEmits<DescriptionsEmits>()
 
 const bem = createBem('descriptions')
 
-// main
 provide(
   descriptionsContextKey,
   reactive({
@@ -108,7 +107,8 @@ const rows = computed(() => {
   return result
 })
 
-// others
+// ============================ style ============================
+
 const descriptionsClass = computed(() => {
   return [bem.b(), bem.is('bordered', props.bordered), bem.has('colon', props.colon)]
 })

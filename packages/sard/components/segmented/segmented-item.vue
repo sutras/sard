@@ -25,7 +25,6 @@ const emit = defineEmits<SegmentedItemEmits>()
 
 const bem = createBem('segmented-item')
 
-// main
 const context = inject(segmentedContextKey)
 
 if (!context) {
@@ -53,8 +52,7 @@ const onClick = (event: any) => {
   emit('click', event)
 }
 
-// others
-defineExpose<SegmentedItemExpose>({})
+// ============================ style ============================
 
 const segmentedItemClass = computed(() => {
   return [
@@ -67,4 +65,6 @@ const segmentedItemClass = computed(() => {
     bem.m(context.shape),
   ]
 })
+
+defineExpose<SegmentedItemExpose>({})
 </script>

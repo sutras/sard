@@ -22,7 +22,6 @@ defineEmits<WatermarkEmits>()
 
 const bem = createBem('watermark')
 
-// main
 const offset = computed(() => {
   const [offsetX = props.gap[0] / 2, offsetY = props.gap[1] / 2] = props.offset || []
   return [offsetX, offsetY]
@@ -197,9 +196,7 @@ watch(
   },
 )
 
-// others
-defineExpose<WatermarkExpose>({})
-
+// ============================ style ============================
 const watermarkClass = computed(() => {
   return [bem.b()]
 })
@@ -219,4 +216,6 @@ const watermarkStyle = computed(() => {
     },
   ]
 })
+
+defineExpose<WatermarkExpose>({})
 </script>

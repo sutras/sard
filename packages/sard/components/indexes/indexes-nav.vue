@@ -47,8 +47,6 @@ const emit = defineEmits<IndexesNavEmits>()
 
 const bem = createBem('indexes')
 
-// main
-
 const itemSize = 20
 const navRef = useTemplateRef('nav')
 const navRect = ref<DOMRect>()

@@ -23,7 +23,6 @@ const emit = defineEmits<TabEmits>()
 
 const bem = createBem('tabs')
 
-// main
 const context = inject(tabContextKey)
 
 if (!context) {
@@ -56,7 +55,7 @@ onUnmounted(() => {
   context.removeMember(member)
 })
 
-// others
+// ============================ style ============================
 const tabClass = computed(() => {
   return [bem.e('tab'), bem.is('active', isActive.value), bem.is('disabled', props.disabled)]
 })

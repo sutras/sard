@@ -23,7 +23,6 @@ defineEmits<StickyBoxEmits>()
 
 const bem = createBem('sticky-box')
 
-// main
 const boxRef = useTemplateRef('box')
 
 provide(stickyContextKey, {

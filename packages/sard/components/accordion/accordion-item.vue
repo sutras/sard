@@ -42,8 +42,6 @@ const emit = defineEmits<AccordionItemEmits>()
 
 const bem = createBem('accordion-item')
 
-// main
-
 const context = inject(accordionContextKey)
 
 if (!context) {

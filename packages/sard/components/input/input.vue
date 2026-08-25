@@ -65,7 +65,6 @@ const emit = defineEmits<InputEmits>()
 
 const bem = createBem('input')
 
-// main
 const formContext = useFormContext()
 const formItemContext = useFormItemContext()
 const compactContext = inject(compactContextKey, null)
@@ -301,24 +300,11 @@ const mergedInputType = computed(() => {
 
 const mergedShowEye = computed(() => props.type === 'password' && props.showEye)
 
-// ============================ others ============================
 const showAppend = computed(() => {
   return !!slots.append || props.clearable || mergedShowEye.value || countVisible.value
 })
 
-const inputClass = computed(() => {
-  return [
-    bem.b(),
-    bem.m(props.type),
-    bem.m('inlaid', props.inlaid),
-    bem.m('borderless', props.borderless),
-    bem.is('disabled', isDisabled.value),
-    bem.is('readonly', isReadonly.value),
-    bem.is('focused', innerFocused.value),
-    bem.m(`compact-${compactContext?.direction}`, compactContext),
-    bem.m('compact-block', compactContext?.block),
-  ]
-})
+// ============================ props ============================
 
 const commonProps = computed(() => {
   return {
@@ -343,6 +329,22 @@ const commonProps = computed(() => {
     autocorrect: props.autocorrect,
     autocapitalize: props.autocapitalize,
   }
+})
+
+// ============================ style ============================
+
+const inputClass = computed(() => {
+  return [
+    bem.b(),
+    bem.m(props.type),
+    bem.m('inlaid', props.inlaid),
+    bem.m('borderless', props.borderless),
+    bem.is('disabled', isDisabled.value),
+    bem.is('readonly', isReadonly.value),
+    bem.is('focused', innerFocused.value),
+    bem.m(`compact-${compactContext?.direction}`, compactContext),
+    bem.m('compact-block', compactContext?.block),
+  ]
 })
 
 defineExpose<InputExpose>({

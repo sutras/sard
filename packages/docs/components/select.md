@@ -30,6 +30,7 @@ group: 表单组件
 | filterable         | 是否允许筛选                                      | boolean                                                                  | false  |
 | filter-placeholder | 筛选输入框的占位文案                              | string                                                                   | -      |
 | filter-method      | 允许筛选时的回调                                  | `(query: string) => void`                                                | -      |
+| filter-value       | 当前筛选输入框的值                                | string                                                                   | -      |
 | remote             | 是否允许远程加载数据                              | boolean                                                                  | false  |
 | remote-method      | 允许远程加载数据时的回调                          | `(query: string, page: number, isRefresh: boolean) => Promise\<boolean>` | -      |
 | threshold          | 触发远程加载回调的阈值，单位ms                    | number                                                                   | 500    |
@@ -56,11 +57,12 @@ interface OptionKeys {
 
 ### SelectEmits
 
-| 事件              | 描述                     | 类型                   |
-| ----------------- | ------------------------ | ---------------------- |
-| update:modelValue | 列表选择组件值改变时触发 | `(value: any) => void` |
-| change            | 列表选择组件值改变时触发 | `(value: any) => void` |
-| select            | 选择列表选择组时触发     | `(value: any) => void` |
+| 事件                | 描述                     | 类型                      |
+| ------------------- | ------------------------ | ------------------------- |
+| update:modelValue   | 列表选择组件值改变时触发 | `(value: any) => void`    |
+| change              | 列表选择组件值改变时触发 | `(value: any) => void`    |
+| select              | 选择列表选择组时触发     | `(value: any) => void`    |
+| update:filter-value | 筛选框值改变时触发       | `(value: string) => void` |
 
 ### SelectOptionGroupProps
 

@@ -34,7 +34,6 @@ const slots = defineSlots<PickerPopoutSlots<T>>()
 
 const emit = defineEmits<PickerPopoutEmits>()
 
-// main
 const optionKeys = useOptionKeys(props)
 
 const omittedProps = omitFormPopoutProps(props)

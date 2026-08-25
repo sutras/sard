@@ -92,7 +92,6 @@ const emit = defineEmits<CheckboxPopoutEmits>()
 
 const bem = createBem('checkbox-popout')
 
-// main
 const { getValue, getLabel, getDisabled } = useOptionKeys(props)
 
 const { innerVisible, draftValue, onChange, onConfirm, onVisibleHook } = useFormPopout(props, emit)
@@ -115,7 +114,7 @@ const select = (option: any, toggle: (value: any) => void) => {
 
 const { allChecked, isIndeterminate, onAllChange } = useIndeterminate(draftValue, objectOptions)
 
-// search
+// ============================ search ============================
 const searchValue = ref('')
 
 const filteredOptions = computed(() => {
@@ -127,17 +126,18 @@ const filteredOptions = computed(() => {
   })
 })
 
-// count
+// ============================ count ============================
 const count = computed(() => {
   return (draftValue.value?.length || 0) + ' / ' + props.options.length
 })
 
-// scroll
+// ============================ scroll ============================
 const scrollRef = useTemplateRef('scroll')
 const scrollSide = useScrollSide(scrollRef, {
   direction: 'vertical',
 })
 
+// ============================ style ============================
 const containerClass = computed(() => {
   return [bem.e('container'), bem.em('container', scrollSide.vertical)]
 })

@@ -36,7 +36,6 @@ const emit = defineEmits<AvatarEmits>()
 
 const bem = createBem('avatar')
 
-// main
 const context = inject(avatarGroupContextKey, null)
 
 const isLast = computed(() => context && context.max - 1 === props.index)
@@ -45,7 +44,7 @@ const onClick = (event: any) => {
   emit('click', event)
 }
 
-// others
+// ============================ style ============================
 const avatarClass = computed(() => {
   return [bem.b(), bem.m(props.shape), bem.m('in-group', !!context)]
 })

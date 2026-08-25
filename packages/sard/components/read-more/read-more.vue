@@ -45,7 +45,7 @@ const bem = createBem('read-more')
 
 const { t } = useTranslateWithPrefix('readMore')
 
-// main
+// ============================ visible ============================
 const innerVisible = ref(props.visible)
 
 watch(
@@ -80,7 +80,7 @@ const hideToggle = computed(() => {
   return innerVisible.value && props.hideClose
 })
 
-// scroll
+// ============================ scroll ============================
 const contentRef = useTemplateRef('content')
 const toggleRef = useTemplateRef('toggle')
 
@@ -112,9 +112,7 @@ const onClose = () => {
   }
 }
 
-defineExpose<ReadMoreExpose>({})
-
-// others
+// ============================ style ============================
 
 const readMoreClass = computed(() => {
   return [bem.b(), bem.m('close', !innerVisible.value)]
@@ -125,4 +123,6 @@ const contentStyle = computed(() => {
     maxHeight: innerVisible.value ? 'none' : props.maxHeight + 'px',
   }
 })
+
+defineExpose<ReadMoreExpose>({})
 </script>

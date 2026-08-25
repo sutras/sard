@@ -59,8 +59,6 @@ const bem = createBem('action-sheet')
 
 const { t } = useTranslateWithPrefix('actionSheet')
 
-// main
-
 const mergedShowCancel = computed(() => {
   return !!(props.showCancel || props.cancel || slots.cancel)
 })
@@ -69,7 +67,7 @@ const showDescription = computed(() => {
   return !!(props.description || slots.description)
 })
 
-// visible
+// ============================ visible ============================
 
 const innerVisible = ref(props.visible)
 
@@ -162,12 +160,12 @@ const onVisibleHook = (name: MotionHookName, el: Element) => {
   emit(name as any, el)
 }
 
-// context
+// ============================ context ============================
 const context = props.internalContext || useActionSheet()
 
 context.setSelectCallback(onSelect)
 
-// others
+// ============================ style ============================
 const actionSheetClass = computed(() => {
   return [bem.b(), bem.m('headless', !showDescription.value)]
 })

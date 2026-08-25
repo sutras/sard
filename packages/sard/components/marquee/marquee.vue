@@ -23,7 +23,6 @@ defineSlots<MarqueeSlots>()
 
 const bem = createBem('marquee')
 
-// main
 const scrollRef = useTemplateRef('scroll')
 const contentRef = useTemplateRef('content')
 
@@ -64,7 +63,7 @@ useResizeObserver(contentRef, () => {
   update()
 })
 
-// others
+// ============================ style ============================
 const marqueeClass = computed(() => {
   return [bem.b(), bem.m(props.direction)]
 })

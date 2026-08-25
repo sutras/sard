@@ -29,7 +29,6 @@ const emit = defineEmits<IndexesEmits>()
 
 const bem = createBem('indexes')
 
-// main
 const scrollRef = useTemplateRef('scroll')
 
 const { innerCurrent, anchorRectList, register, unregister, scrollTo, update } = useScrollSpy(
@@ -64,7 +63,7 @@ watch(
   },
 )
 
-// nav
+// ============================ nav ============================
 const anchorNames = computed(() => {
   return anchorRectList.value.map((item) => item[0])
 })

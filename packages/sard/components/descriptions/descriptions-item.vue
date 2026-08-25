@@ -26,8 +26,7 @@ defineEmits<DescriptionsItemEmits>()
 
 const bem = createBem('descriptions')
 
-// main
-const context = inject(descriptionsContextKey)!
+const context = inject(descriptionsContextKey, null)!
 
 if (!context) {
   throw new Error('DescriptionsItem must be included in Descriptions.')
@@ -43,6 +42,8 @@ const effectiveLabelWidth = computed(() => props.labelWidth ?? context.labelWidt
 
 const effectiveLabelAlign = computed(() => props.labelAlign ?? context.labelAlign)
 
+// ============================ style ============================
+
 const labelStyle = computed(() => {
   const style: Record<string, string> = {}
   if (effectiveLabelWidth.value) {
@@ -54,7 +55,6 @@ const labelStyle = computed(() => {
   return Object.keys(style).length ? style : undefined
 })
 
-// others
 const labelCellClass = computed(() => {
   return [
     bem.e('item-label'),

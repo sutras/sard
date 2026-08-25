@@ -23,11 +23,8 @@ defineEmits<DividerEmits>()
 
 const bem = createBem('divider')
 
-// main
+// ============================ style ============================
 
-defineExpose<DividerExpose>({})
-
-// others
 const dividerClass = computed(() => {
   return [
     bem.b(),
@@ -43,4 +40,6 @@ const dividerStyle = computed(() => {
     borderStyle: props.type,
   }
 })
+
+defineExpose<DividerExpose>({})
 </script>

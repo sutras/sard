@@ -44,7 +44,6 @@ const emit = defineEmits<NoticeBarEmits>()
 
 const bem = createBem('notice-bar')
 
-// main
 const contentRef = useTemplateRef('content')
 const wrapperRef = useTemplateRef('wrapper')
 const shouldScroll = ref(false)
@@ -114,7 +113,7 @@ useResizeObserver(contentRef, () => {
   update()
 })
 
-// visible
+// ============================ visible ============================
 const innerVisible = ref(props.visible)
 const onRightIconClick = () => {
   if (props.closable) {
@@ -123,10 +122,11 @@ const onRightIconClick = () => {
   }
 }
 
-// others
 const onClick = (event: MouseEvent) => {
   emit('click', event)
 }
+
+// ============================ style ============================
 
 const noticeBarClass = computed(() => {
   return [

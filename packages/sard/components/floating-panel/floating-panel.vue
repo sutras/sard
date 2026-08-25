@@ -37,8 +37,6 @@ const emit = defineEmits<FloatingPanelEmits>()
 
 const bem = createBem('floating-panel')
 
-// main
-
 const mergedAnchors = computed(() => {
   return props.anchors || [100, ~~(window.innerHeight * 0.6)]
 })
@@ -196,7 +194,8 @@ const onTouchEnd = () => {
 
 const onPointerDown = usePointerDown(onTouchStart, onTouchMove, onTouchEnd)
 
-// others
+// ============================ style ============================
+
 const floatingPanelClass = computed(() => {
   return [bem.b(), bem.m('safe', props.safeAreaInsetBottom)]
 })

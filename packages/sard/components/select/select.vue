@@ -111,7 +111,6 @@ const bem = createBem('select')
 
 const { t } = useTranslateWithPrefix('select')
 
-// main
 const { getLabel, getValue, getChildren, getKey } = useOptionKeys(props)
 
 const isGroupable = computed(() => {
@@ -149,15 +148,26 @@ const scrollSide = useScrollSide(scrollRef, {
   direction: 'vertical',
 })
 
-// search
+// ============================ search ============================
 const searchValue = ref('')
+
+watch(
+  () => props.filterValue,
+  () => {
+    searchValue.value = String(props.filterValue ?? '')
+  },
+)
 
 watch(searchValue, () => {
   props.filterMethod?.(searchValue.value)
   debouncedRefresh()
+
+  if (searchValue.value !== props.filterValue) {
+    emit('update:filter-value', searchValue.value)
+  }
 })
 
-// remote
+// ============================ remote ============================
 const loadMoreRef = useTemplateRef('load-more')
 
 const { status, isLoading, onLoadMore, onReload, refresh } = useLoadMore({
@@ -184,7 +194,7 @@ const isEmpty = computed(() => {
   return members.length === 0 && (props.remote ? status.value === 'complete' : true)
 })
 
-// toolbar
+// ============================ toolbar ============================
 const onClear = () => {
   if (innerValue.value.length > 0) {
     triggerChange([])
@@ -199,7 +209,7 @@ const showSelectAll = computed(() => {
   return props.multiple && props.multipleLimit <= 0
 })
 
-// scroll into view
+// ============================ scroll into view ============================
 function scrollIntoView() {
   const member = members.find((member) => member.isSelected)
   if (member && member.el) {
@@ -226,9 +236,7 @@ usePopupEnter(() => {
   scrollIntoView()
 })
 
-// others
-
-defineExpose<SelectExpose>({})
+// ============================ style ============================
 
 const containerClass = computed(() => {
   return [bem.e('container'), bem.em('container', scrollSide.vertical)]
@@ -237,4 +245,6 @@ const containerClass = computed(() => {
 const scrollClass = computed(() => {
   return [bem.e('scroll'), bem.em('scroll', 'filterable', props.filterable)]
 })
+
+defineExpose<SelectExpose>({})
 </script>

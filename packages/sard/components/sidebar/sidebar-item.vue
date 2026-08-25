@@ -40,7 +40,6 @@ const emit = defineEmits<SidebarItemEmits>()
 
 const bem = createBem('sidebar-item')
 
-// main
 const context = inject(sidebarContextKey)
 
 if (!context) {
@@ -83,7 +82,7 @@ onUnmounted(() => {
   context.removeMember(member)
 })
 
-// others
+// ============================ style ============================
 const sidebarItemClass = computed(() => {
   return [bem.b(), bem.is('current', isCurrent.value), bem.is('disabled', props.disabled)]
 })

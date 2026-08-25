@@ -40,7 +40,6 @@ const emit = defineEmits<RotateVerifyEmits>()
 
 const bem = createBem('rotate-verify')
 
-// main
 const percent = ref(0)
 const targetDegree = computed(() => ((props.targetPos ?? 100) / 100) * 360)
 const slideDegree = computed(() => (percent.value / 100) * 360)
@@ -56,12 +55,13 @@ const reset = () => {
   slideVerifyRef.value?.reset()
 }
 
-// others
-defineExpose<RotateVerifyExpose>({ reset })
+// ============================ style ============================
 
 const imageStyle = computed(() => {
   return {
     transform: `rotate(${targetDegree.value}deg) rotate(${-slideDegree.value}deg)`,
   }
 })
+
+defineExpose<RotateVerifyExpose>({ reset })
 </script>

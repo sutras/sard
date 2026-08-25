@@ -13,7 +13,6 @@ const props = withDefaults(defineProps<FormPlainProps>(), defaultFormProps)
 
 defineSlots<FormPlainSlots>()
 
-// main
 const { expose } = useForm(props)
 
 defineExpose<FormPlainExpose>(expose)

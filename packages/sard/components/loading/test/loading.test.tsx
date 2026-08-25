@@ -22,7 +22,7 @@ describe('Loading', () => {
     const wrapper = mount(<Loading type="clock" />)
 
     expect(wrapper.find('.s-loading__icon').classes()).toContain('s-loading__icon--clock')
-    expect(wrapper.findAll('.s-loading__scale')).toHaveLength(12)
+    expect(wrapper.findAll('.s-loading__scale')).toHaveLength(8)
     expect(wrapper.find('.s-loading__spinner').exists()).toBe(false)
   })
 
@@ -62,7 +62,7 @@ describe('Loading', () => {
     const wrapper = mount(<Loading type="clock" animated={false} progress={0.25} />)
 
     expect(wrapper.find('.s-loading__icon').classes()).not.toContain('s-loading__icon--animated')
-    expect(wrapper.findAll('.s-loading__scale--hidden')).toHaveLength(9)
+    expect(wrapper.findAll('.s-loading__scale--hidden')).toHaveLength(6)
 
     await wrapper.setProps({ type: 'circular', progress: 0.5 })
 

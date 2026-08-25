@@ -23,7 +23,6 @@ defineSlots<CountDownSlots>()
 
 const emit = defineEmits<CountDownEmits>()
 
-// main
 const { currentTime, start, pause, reset } = useCountDown({
   time: toRef(() => props.time),
   millisecond: toRef(() => props.millisecond),

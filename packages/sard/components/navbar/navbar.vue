@@ -50,7 +50,6 @@ const emit = defineEmits<NavbarEmits>()
 
 const bem = createBem('navbar')
 
-// main
 onMounted(() => {
   if (props.fixed) {
     windowInfo.navBarHeight = 44
@@ -67,7 +66,7 @@ const onBack = (event: any) => {
   emit('back', event)
 }
 
-// others
+// ============================ style ============================
 const navbarClass = computed(() => {
   return [
     bem.b(),

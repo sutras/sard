@@ -69,7 +69,6 @@ const emit = defineEmits<SearchEmits>()
 
 const bem = createBem('search')
 
-// main
 const innerValue = useModel(props, 'modelValue')
 
 const onInput = (value: string | number) => {
@@ -111,7 +110,7 @@ const onBlur = (event: any) => {
   emit('blur', event)
 }
 
-// others
+// ============================ style ============================
 const searchClass = computed(() => {
   return [
     bem.b(),

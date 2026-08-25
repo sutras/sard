@@ -48,7 +48,6 @@ const emit = defineEmits<PuzzleVerifyEmits>()
 
 const bem = createBem('puzzle-verify')
 
-// main
 const defaultAspectRatio = 320 / 240
 const aspectRatio = ref(props.aspectRatio || defaultAspectRatio)
 
@@ -88,8 +87,7 @@ const onEnd = (event: any) => {
   isDown.value = false
 }
 
-// others
-defineExpose<PuzzleVerifyExpose>({ reset })
+// ============================ style ============================
 
 const puzzleVerifyClass = computed(() => {
   return [bem.b(), bem.m('down', isDown.value)]
@@ -103,4 +101,6 @@ const puzzleVerifyStyle = computed(() => {
     '--padding-top': (1 / aspectRatio.value) * 100 + '%',
   }
 })
+
+defineExpose<PuzzleVerifyExpose>({ reset })
 </script>

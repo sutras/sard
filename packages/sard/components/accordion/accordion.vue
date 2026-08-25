@@ -24,7 +24,6 @@ const emit = defineEmits<AccordionEmits>()
 
 const bem = createBem('accordion')
 
-// main
 const innerValue = ref(props.modelValue)
 
 watch(
@@ -64,7 +63,6 @@ provide(
   }),
 )
 
-// others
 const accordionClass = computed(() => {
   return [bem.b(), bem.m('borderless', props.hideBorder)]
 })

@@ -25,7 +25,6 @@ const emit = defineEmits<WaterfallLoadEmits>()
 
 const bem = createBem('waterfall-load')
 
-// main
 let loaded = false
 
 const overtime = ref(false)
@@ -58,12 +57,13 @@ onMounted(() => {
   }, props.maxWait || 0)
 })
 
-// others
-defineExpose<WaterfallLoadExpose>({})
+// ============================ style ============================
 
 const waterfallLoadStyle = computed(() => {
   return {
     paddingTop: paddingTop.value,
   }
 })
+
+defineExpose<WaterfallLoadExpose>({})
 </script>

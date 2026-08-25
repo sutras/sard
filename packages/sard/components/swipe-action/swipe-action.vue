@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, useTemplateRef, watch } from 'vue'
-import { createBem, uniqid } from '../../utils'
+import { createBem } from '../../utils'
 import {
   type SwipeActionProps,
   type SwipeActionSlots,
@@ -55,10 +55,7 @@ const emit = defineEmits<SwipeActionEmits>()
 
 const bem = createBem('swipe-action')
 
-// main
-const swipeActionId = uniqid()
-
-// visible
+// ============================ visible ============================
 const innerVisible = ref<SwipeActionVisible>(props.visible || false)
 
 watch(
@@ -123,7 +120,7 @@ useClickOutside(
   'touchstart',
 )
 
-// swipe
+// ============================ swipe ============================
 const leftRef = useTemplateRef('left')
 const rightRef = useTemplateRef('right')
 
@@ -266,15 +263,16 @@ const onTouchEnd = () => {
 
 const onPointerDown = usePointerDown(onTouchStart, onTouchMove, onTouchEnd)
 
-// others
-defineExpose<SwipeActionExpose>({
-  hide,
-})
+// ============================ style ============================
 
 const translateStyle = computed(() => {
   return {
     '--swipe-action-x-raw': `${translateX.value}px`,
     transition: movable.value ? 'none' : `transform 300ms`,
   }
+})
+
+defineExpose<SwipeActionExpose>({
+  hide,
 })
 </script>

@@ -15,7 +15,6 @@ defineSlots<IndexesAnchorSlots>()
 
 const bem = createBem('indexes')
 
-// main
 const context = inject(indexesContextKey, null)
 
 if (!context) {

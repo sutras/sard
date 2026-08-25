@@ -40,7 +40,6 @@ const slots = defineSlots<DatetimePickerInputSlots>()
 
 const emit = defineEmits<DatetimePickerInputEmits>()
 
-// main
 const partitionedProps = partitionPopoutInputProps(props)
 
 const { innerVisible, innerValue, inputValue, show, onChange, onClear, onVisibleHook } =

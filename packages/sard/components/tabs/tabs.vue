@@ -38,8 +38,6 @@ const emit = defineEmits<TabsEmits>()
 
 const bem = createBem('tabs')
 
-// main
-
 const innerValue = useModel(props, 'modelValue')
 
 const members: TabMember[] = []
@@ -66,7 +64,7 @@ provide(
   }),
 )
 
-// line
+// ============================ line ============================
 
 const lineLeft = ref(0)
 const lineAnimated = ref(false)
@@ -125,7 +123,7 @@ const lineStyle = computed(() => {
   }
 })
 
-// scroll
+// ============================ scroll ============================
 
 const scrollRef = useTemplateRef('scroll')
 
@@ -161,7 +159,7 @@ watch(
   },
 )
 
-// others
+// ============================ style ============================
 const tabsClass = computed(() => {
   return [bem.b(), bem.m(props.type), bem.m('scrollable', props.scrollable)]
 })

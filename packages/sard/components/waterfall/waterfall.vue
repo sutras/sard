@@ -26,7 +26,7 @@ const emit = defineEmits<WaterfallEmits>()
 
 const bem = createBem('waterfall')
 
-// size
+// ============================ size ============================
 const containerRef = useTemplateRef('container')
 
 const containerSize = useResizeObserver(containerRef)
@@ -37,7 +37,7 @@ const columnWidth = computed(() => {
   return (containerSize.width - (props.columns - 1) * props.columnGap) / props.columns
 })
 
-// status
+// ============================ status ============================
 let loadStatus: 'idle' | 'busy' = 'idle'
 
 let loadedHandlers: (() => void)[] = []
@@ -72,7 +72,7 @@ const updateLoadStatus = () => {
   }
 }
 
-// members
+// ============================ members ============================
 const members: WaterfallMember[] = []
 
 const addMember = (member: WaterfallMember) => {
@@ -143,11 +143,7 @@ provide(
   }),
 )
 
-// others
-defineExpose<WaterfallExpose>({
-  reflow,
-  onLoad,
-})
+// ============================ style ============================
 
 const waterfallClass = computed(() => {
   return [bem.b()]
@@ -159,5 +155,10 @@ const waterfallStyle = computed(() => {
       height: containerHeight.value + 'px',
     },
   ]
+})
+
+defineExpose<WaterfallExpose>({
+  reflow,
+  onLoad,
 })
 </script>

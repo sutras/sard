@@ -49,7 +49,6 @@ const emit = defineEmits<ToastEmits>()
 
 const bem = createBem('toast')
 
-// main
 const showIcon = computed(() => {
   return !!(props.type !== 'text' || slots.icon)
 })
@@ -86,14 +85,7 @@ const onVisibleHook = (name: MotionHookName, el: Element) => {
   emit(name as any, el)
 }
 
-defineExpose<ToastExpose>({
-  reHideLater,
-  cancelHide: () => {
-    hideTimer.clear()
-  },
-})
-
-// others
+// ============================ style ============================
 const toastClass = computed(() => {
   return [bem.b(), bem.is('text', props.type === 'text')]
 })
@@ -104,5 +96,12 @@ const popupClass = computed(() => {
 
 const iconClass = computed(() => {
   return [bem.e('icon'), bem.is('loading', props.type === 'loading')]
+})
+
+defineExpose<ToastExpose>({
+  reHideLater,
+  cancelHide: () => {
+    hideTimer.clear()
+  },
 })
 </script>

@@ -82,9 +82,9 @@ const emit = defineEmits<DialogEmits>()
 
 const bem = createBem('dialog')
 
-// main
 const { t } = useTranslateWithPrefix('dialog')
 
+// ============================ visible ============================
 const innerVisible = ref(props.visible)
 
 watch(
@@ -212,7 +212,8 @@ const buttonProps = computed(() => {
   return buttonTypes[props.buttonType]
 })
 
-// others
+// ============================ style ============================
+
 const dialogClass = computed(() => {
   return [
     bem.b(),

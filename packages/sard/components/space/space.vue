@@ -22,13 +22,11 @@ defineSlots<SpaceSlots>()
 
 const bem = createBem('space')
 
-// main
-
 const presetSize = computed(() => {
   return spaceSizes.includes(props.size)
 })
 
-// others
+// ============================ style ============================
 const spaceClass = computed(() => {
   return [
     bem.b(),

@@ -65,7 +65,6 @@ const emit = defineEmits<UploadPreviewEmits>()
 
 const bem = createBem('upload')
 
-// main
 const isImage = computed(() => {
   return (
     props.isImage ||
@@ -86,12 +85,12 @@ const mediaUrl = computed(() => {
   return ''
 })
 
-// image
+// ============================ image ============================
 const onImageClick = () => {
   emit('image-click')
 }
 
-// video
+// ============================ video ============================
 const controlsVisible = ref(false)
 const videoRef = useTemplateRef('video')
 
@@ -117,7 +116,7 @@ const onPlayClick = () => {
   previewVideo()
 }
 
-// remove
+// ============================ remove ============================
 const onRemove = () => {
   if (!props.removable || props.disabled || props.readonly) return
   emit('remove')

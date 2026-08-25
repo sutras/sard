@@ -53,7 +53,6 @@ const emit = defineEmits<CardEmits>()
 
 const bem = createBem('card')
 
-// main
 const headless = computed(() => {
   return isVisibleEmpty(props.title) && !slots.title && isVisibleEmpty(props.extra) && !slots.extra
 })
@@ -66,12 +65,12 @@ const onClick = (event: any) => {
   emit('click', event)
 }
 
-// collapsed
+// ============================ collapsed ============================
 const innerCollapsed = useModel(props, 'collapsed')
 
 const isCollapsed = computed(() => props.collapsible && innerCollapsed.value)
 
-// others
+// ============================ style ============================
 const cardClass = computed(() => {
   return [
     bem.b(),

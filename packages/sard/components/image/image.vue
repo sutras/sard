@@ -50,7 +50,6 @@ const emit = defineEmits<ImageEmits>()
 
 const bem = createBem('image')
 
-// main
 enum STATUS {
   UNSTATED = 0,
   FIRST_LOADING = 1 << 0,
@@ -119,8 +118,7 @@ watch(
   },
 )
 
-// others
-defineExpose<ImageExpose>({})
+// ============================ style ============================
 
 const imageClass = computed(() => {
   return [bem.b(), bem.m(props.shape), bem.m('animated', props.fade && !isAnimationEnd.value)]
@@ -148,4 +146,6 @@ const displayStyle = computed(() => {
     backgroundSize: IMAGE_MODES[props.mode][1],
   }
 })
+
+defineExpose<ImageExpose>({})
 </script>

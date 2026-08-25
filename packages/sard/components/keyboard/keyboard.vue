@@ -85,7 +85,6 @@ const emit = defineEmits<KeyboardEmits>()
 
 const bem = createBem('keyboard')
 
-// main
 const onKeyClick = (key: string) => {
   if (props.type === 'plate') {
     if (key === 'I' || key === 'O') {
@@ -102,7 +101,7 @@ const onBackspace = () => {
   emit('delete')
 }
 
-// random
+// ============================ random ============================
 const randomKeys = ref<string[]>([])
 watch(
   () => props.type,
@@ -116,7 +115,7 @@ watch(
   },
 )
 
-// 车牌号
+// ============================ 车牌号 ============================
 const innerMode = useModel(props, 'mode')
 
 const toggleKey = computed(() => {
@@ -139,13 +138,8 @@ const toggle = () => {
   innerMode.value = nextMode
 }
 
-defineExpose<KeyBoardExpose>({
-  shuffle() {
-    randomKeys.value = getRandomKeys()
-  },
-})
+// ============================ style ============================
 
-// others
 const getKeyClass = (key: string) => {
   return [bem.e('key'), bem.em('key', key), bem.is('disabled', props.disabledKey?.(key))]
 }
@@ -156,5 +150,11 @@ const keyboardClass = computed(() => {
 
 const backspaceClass = computed(() => {
   return [bem.e('key'), bem.em('key', 'backspace')]
+})
+
+defineExpose<KeyBoardExpose>({
+  shuffle() {
+    randomKeys.value = getRandomKeys()
+  },
 })
 </script>

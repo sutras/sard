@@ -34,7 +34,6 @@ defineEmits<WaterfallItemEmits>()
 
 const bem = createBem('waterfall-item')
 
-// main
 const itemRef = useTemplateRef('item')
 
 const member = reactive<WaterfallMember>({
@@ -71,10 +70,7 @@ onBeforeUnmount(() => {
   context.removeMember(member)
 })
 
-// others
-
-defineExpose<WaterfallItemExpose>({})
-
+// ============================ visible ============================
 const laterVisible = ref(false)
 
 const visibleTimer = useTimeout()
@@ -92,6 +88,8 @@ watch(
   },
 )
 
+// ============================ style ============================
+
 const waterfallItemClass = computed(() => {
   return [bem.b(), bem.m('show', member.visible), bem.is('entering', !laterVisible.value)]
 })
@@ -105,4 +103,6 @@ const waterfallItemStyle = computed(() => {
     },
   ]
 })
+
+defineExpose<WaterfallItemExpose>({})
 </script>

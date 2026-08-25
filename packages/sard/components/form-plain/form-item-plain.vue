@@ -26,7 +26,6 @@ import { defaultFormItemProps } from '../form/common'
 const props = withDefaults(defineProps<FormItemPlainProps>(), defaultFormItemProps)
 
 defineSlots<FormItemPlainSlots>()
-// main
 
 const {
   expose,

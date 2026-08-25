@@ -32,7 +32,6 @@ const emit = defineEmits<CheckboxEmits>()
 
 const bem = createBem('checkbox')
 
-// main
 const groupContext = inject(checkboxContextKey, null)
 const formContext = useFormContext()
 const formItemContext = useFormItemContext()
@@ -83,7 +82,8 @@ const onClick = (event: any) => {
 
 provide(checkboxContextKey, null as any)
 
-// others
+// ============================ style ============================
+
 const checkboxClass = computed(() => {
   return [
     bem.b(),

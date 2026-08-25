@@ -24,8 +24,6 @@ const emit = defineEmits<AvatarGroupEmits>()
 
 const bem = createBem('avatar-group')
 
-// main
-
 provide(
   avatarGroupContextKey,
   reactive({
@@ -40,6 +38,5 @@ provide(
   }),
 )
 
-// others
 defineExpose<AvatarGroupExpose>({})
 </script>

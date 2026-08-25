@@ -9,7 +9,7 @@
 // #endregion variables
 
 // # clock
-$s-loading-scale-number: 12;
+$s-loading-scale-number: 8;
 
 @include b(loading) {
   display: inline-flex;

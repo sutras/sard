@@ -65,7 +65,6 @@ const emit = defineEmits<FabEmits>()
 
 const bem = createBem('fab')
 
-// main
 const innerVisible = useModel(props, 'visible')
 
 const [zIndex, increaseZIndex] = useZIndex()
@@ -92,7 +91,7 @@ const onOverlayClick = () => {
   }
 }
 
-// floating bubble
+// ============================ floating bubble ============================
 const {
   onTouchStart,
   onTouchMove,
@@ -134,7 +133,8 @@ provide(
   }),
 )
 
-// others
+// ============================ style ============================
+
 const fabClass = computed(() => {
   return [
     bem.b(),

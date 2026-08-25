@@ -37,7 +37,6 @@ const emit = defineEmits<LoadMoreEmits>()
 
 const bem = createBem('load-more')
 
-// main
 const { t } = useTranslateWithPrefix('loadMore')
 
 const onClick = () => {
@@ -48,7 +47,8 @@ const onClick = () => {
   }
 }
 
-// others
+// ============================ style ============================
+
 const loadMoreClass = computed(() => {
   return [bem.b(), bem.m(props.status)]
 })

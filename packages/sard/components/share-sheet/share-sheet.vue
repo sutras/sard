@@ -58,7 +58,6 @@ const bem = createBem('share-sheet')
 
 const { t } = useTranslateWithPrefix('shareSheet')
 
-// main
 const mergedShowCancel = computed(() => {
   return !!(props.showCancel || props.cancel || !!slots.cancel)
 })
@@ -71,7 +70,7 @@ const showDescription = computed(() => {
   return !!(props.description || slots.description)
 })
 
-// visible
+// ============================ visible ============================
 const innerVisible = ref(props.visible)
 
 watch(
@@ -122,12 +121,12 @@ const onVisibleHook = (name: MotionHookName, el: Element) => {
   emit(name as any, el)
 }
 
-// context
+// ============================ context ============================
 useShareSheet({
   onSelect,
 })
 
-// others
+// ============================ style ============================
 const shareSheetClass = computed(() => {
   return bem.b()
 })

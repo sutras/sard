@@ -57,7 +57,6 @@ const slots = defineSlots<CascaderInputSlots>()
 
 const emit = defineEmits<CascaderInputEmits>()
 
-// main
 const optionKeys = useOptionKeys(props)
 
 const partitionedProps = partitionPopoutInputProps(props)

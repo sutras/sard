@@ -21,9 +21,8 @@ if (!context) {
 
 const bem = createBem('col')
 
-// main
+// ============================ style ============================
 
-// others
 const colClass = computed(() => {
   return [
     bem.b(),

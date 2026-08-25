@@ -67,7 +67,6 @@ const emit = defineEmits<UploadEmits>()
 
 const bem = createBem('upload')
 
-// main
 const formContext = useFormContext()
 const formItemContext = useFormItemContext()
 
@@ -247,7 +246,7 @@ const onSelect = () => {
   select()
 }
 
-// # remove
+// ============================ remove ============================
 
 const removingSet = new WeakSet<UploadFileItem>()
 
@@ -289,7 +288,7 @@ const onRemove = (index: number, item: UploadFileItem) => {
   remove()
 }
 
-// # preview
+// ============================ preview ============================
 
 const onImageClick = (index: number) => {
   const currentFileItem = innerValue.value[index]
@@ -313,13 +312,13 @@ const onItemClick = (index: number, fileItem: UploadFileItem) => {
   emit('item-click', fileItem, index)
 }
 
-defineExpose<UploadExpose>({
-  select,
-})
-
-// # others
+// ============================ style ============================
 
 const uploadClass = computed(() => {
   return [bem.b(), bem.is('disabled', isDisabled.value), bem.is('readonly', isReadonly.value)]
+})
+
+defineExpose<UploadExpose>({
+  select,
 })
 </script>

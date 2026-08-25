@@ -33,7 +33,6 @@ defineSlots<DatetimePickerPopoutSlots>()
 
 const emit = defineEmits<DatetimePickerPopoutEmits>()
 
-// main
 const omittedProps = omitFormPopoutProps(props)
 
 const minDate = computed(() => toDate(props.min || getMinDate(), props.valueFormat))

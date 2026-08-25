@@ -43,7 +43,11 @@ describe('ActionSheet', () => {
     expect(root?.querySelector('.s-action-sheet__description')).not.toBeNull()
     expect(root?.querySelector('.s-action-sheet__cancel')).not.toBeNull()
     expect(
-      (root?.querySelector('.s-action-sheet__item') as HTMLElement | null)?.getAttribute('style'),
+      (
+        root?.querySelector(
+          '.s-action-sheet__item .s-action-sheet__item-label',
+        ) as HTMLElement | null
+      )?.getAttribute('style'),
     ).toContain('color: red;')
     expect(
       (

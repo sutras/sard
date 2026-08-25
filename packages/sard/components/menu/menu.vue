@@ -18,14 +18,13 @@ const emit = defineEmits<MenuEmits>()
 
 const bem = createBem('menu')
 
-// main
 const onSelect = (item: MenuMember) => {
   emit('select', { ...item.props })
 }
 
 const { hasIcon } = useMenu({ props, onSelect })
 
-// others
+// ============================ style ============================
 const menuClass = computed(() => {
   return [bem.b(), bem.m(props.direction), bem.m(props.theme), bem.has('icon', hasIcon.value)]
 })

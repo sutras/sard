@@ -56,7 +56,6 @@ defineSlots<ProgressCircleSlots>()
 
 const bem = createBem('progress-circle')
 
-// main
 const getRingPercent = (percent: number, r: number) => {
   const perimeter = Math.PI * 2 * r
   return (percent / 100) * perimeter + ' ' + perimeter

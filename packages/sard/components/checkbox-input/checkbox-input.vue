@@ -47,7 +47,6 @@ const slots = defineSlots<CheckboxInputSlots>()
 
 const emit = defineEmits<CheckboxInputEmits>()
 
-// main
 const { getLabel, getValue } = useOptionKeys(props)
 
 const partitionedProps = partitionPopoutInputProps(props)

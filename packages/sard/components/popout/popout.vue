@@ -134,14 +134,13 @@ const emit = defineEmits<PopoutEmits>()
 
 const bem = createBem('popout')
 
-// main
 const { t } = useTranslateWithPrefix('popout')
 
 const mergedShowCancel = computed(() => {
   return isBoolean(props.showCancel) ? props.showCancel : props.type === 'loose' ? false : true
 })
 
-// visible
+// ============================ visible ============================
 const innerVisible = useModel(props, 'visible')
 
 const callVisibleHook = usePopupVisibleHookProvide()
@@ -238,7 +237,7 @@ const mergedCancelText = computed(() => {
   return props.cancelText || t('cancel')
 })
 
-// others
+// ============================ style ============================
 const popoutClass = computed(() => {
   return [bem.b(), bem.m('divided', props.showShadow)]
 })

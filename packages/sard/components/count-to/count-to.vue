@@ -10,7 +10,6 @@ import { createAnimation, type Timeline } from 'lwa'
 
 const props = withDefaults(defineProps<CountToProps>(), defaultCountToProps)
 
-// main
 const number = ref(0)
 let tl: undefined | Timeline
 

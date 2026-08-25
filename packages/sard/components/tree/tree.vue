@@ -771,8 +771,17 @@ const context = reactive({
   dragIndent,
 })
 
-// others
 provide(treeContextKey, context)
+
+// ============================ style ============================
+
+const treeStyle = computed(() => {
+  return props.draggable
+    ? {
+        height: `calc(${cssVar('tree-node-height')} * ${totalLevel.value})`,
+      }
+    : null
+})
 
 defineExpose<TreeExpose>({
   setExpanded,
@@ -786,13 +795,5 @@ defineExpose<TreeExpose>({
   filter,
   addRootNode,
   getCleanTreeData,
-})
-
-const treeStyle = computed(() => {
-  return props.draggable
-    ? {
-        height: `calc(${cssVar('tree-node-height')} * ${totalLevel.value})`,
-      }
-    : null
 })
 </script>

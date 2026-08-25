@@ -25,7 +25,6 @@ const emit = defineEmits<BackTopEmits>()
 
 const bem = createBem('back-top')
 
-// main
 const visible = computed(() => {
   return props.scrollTop >= props.visibleHeight
 })
@@ -34,7 +33,7 @@ const onClick = (event: any) => {
   emit('click', event)
 }
 
-// others
+// ============================ style ============================
 const backTopClass = computed(() => {
   return [bem.b(), bem.m('visible', visible.value)]
 })

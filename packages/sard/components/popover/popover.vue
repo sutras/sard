@@ -104,7 +104,7 @@ watch(innerVisible, () => {
   }
 })
 
-// others
+// ============================ style ============================
 const popoverClass = computed(() => {
   return [bem.b(), bem.m(props.theme)]
 })

@@ -17,7 +17,6 @@ defineSlots<CollapseSlots>()
 
 const bem = createBem('collapse')
 
-// main
 const contentRef = useTemplateRef('content')
 
 const getHeight = () => {
@@ -63,6 +62,7 @@ watch(
   },
 )
 
+// ============================ style ============================
 const collapseStyle = computed(() => {
   return {
     height: collapseHeight.value,

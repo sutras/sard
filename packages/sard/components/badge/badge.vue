@@ -25,7 +25,6 @@ const slots = defineSlots<BadgeSlots>()
 
 const bem = createBem('badge')
 
-// main
 const zeroHide = computed(() => {
   return !props.dot && props.value === 0 && !props.showZero && !slots.value
 })
@@ -40,7 +39,7 @@ const innerValue = computed(() => {
         : props.value
 })
 
-// others
+// ============================ style ============================
 const badgeClass = computed(() => {
   return [
     bem.b(),

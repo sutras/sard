@@ -45,7 +45,6 @@ const slots = defineSlots<PickerInputSlots<T>>()
 
 const emit = defineEmits<PickerInputEmits>()
 
-// main
 const optionKeys = useOptionKeys(props)
 
 const partitionedProps = partitionPopoutInputProps(props)

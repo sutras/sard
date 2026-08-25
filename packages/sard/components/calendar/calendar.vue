@@ -110,7 +110,6 @@ const bem = createBem('calendar')
 
 const { t } = useTranslateWithPrefix('calendar')
 
-// main
 const minDate = computed(() => {
   return props.min || getMinDate(props.severalMonths)
 })
@@ -194,7 +193,7 @@ const startDate = ref(
     : undefined,
 )
 
-// toolbar
+// ============================ toolbar ============================
 const onPrevMonthClick = () => {
   innerCurrentDate.value = getPrevMonthDate(innerCurrentDate.value)
 }
@@ -203,7 +202,7 @@ const onNextMonthClick = () => {
   innerCurrentDate.value = getNextMonthDate(innerCurrentDate.value)
 }
 
-// month picker
+// ============================ month picker ============================
 const pickerVisible = ref(false)
 const pickerValue = ref(innerCurrentDate.value)
 
@@ -218,12 +217,12 @@ const onPickerConfirm = () => {
   }
 }
 
-// weeks
+// ============================ weeks ============================
 const weeks = computed(() => {
   return weeksIndex.slice(props.weekStartsOn).concat(weeksIndex.slice(0, props.weekStartsOn))
 })
 
-// month
+// ============================ month ============================
 const months = computed(() => {
   if (!props.severalMonths) {
     return [[innerCurrentDate.value.getFullYear(), innerCurrentDate.value.getMonth()]]
@@ -242,7 +241,7 @@ const months = computed(() => {
     })
 })
 
-// day
+// ============================ day ============================
 const todayNumber = toDateNumber(new Date())
 
 const currentDates = computed(() => {
@@ -328,23 +327,23 @@ const onDayClick = (date: Date) => {
   }
 }
 
-// prevent page scroll
+// ============================ prevent page scroll ============================
 const inPopup = useInPopup()
 const preventPageScroll = computed(() => {
   return inPopup && !props.severalMonths
 })
 
-// scroll
+// ============================ scroll ============================
 const scrollRef = useTemplateRef('scroll')
 const scrollSide = useScrollSide(scrollRef, {
   direction: 'vertical',
 })
 
+// ============================ style ============================
 const bodyClass = computed(() => {
   return [bem.e('body'), bem.em('body', scrollSide.vertical)]
 })
 
-// others
 const calendarClass = computed(() => {
   return [
     bem.b(),

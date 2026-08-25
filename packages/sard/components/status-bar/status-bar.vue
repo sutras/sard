@@ -22,16 +22,15 @@ defineEmits<StatusBarEmits>()
 
 const bem = createBem('status-bar')
 
-// main
 const statusBarHeight = computed(() => {
   return windowInfo.statusBarHeight + 'px'
 })
-
-defineExpose<StatusBarExpose>()
 
 const statusBarStyle = computed(() => {
   return {
     height: statusBarHeight.value,
   }
 })
+
+defineExpose<StatusBarExpose>()
 </script>

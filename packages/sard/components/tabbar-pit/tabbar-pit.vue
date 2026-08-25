@@ -22,9 +22,9 @@ defineEmits<TabbarPitEmits>()
 
 const bem = createBem('tabbar-pit')
 
-defineExpose<TabbarPitExpose>({})
-
 const tabbarPitClass = computed(() => {
   return [bem.b(), bem.m('safe', props.safeAreaInsetBottom)]
 })
+
+defineExpose<TabbarPitExpose>({})
 </script>

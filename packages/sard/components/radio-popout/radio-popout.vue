@@ -74,7 +74,6 @@ const emit = defineEmits<RadioPopoutEmits>()
 
 const bem = createBem('radio-popout')
 
-// main
 const { innerVisible, draftValue, onChange, onConfirm, onVisibleHook } = useFormPopout(props, emit)
 
 const { getLabel, getValue, getDisabled } = useOptionKeys(props)
@@ -95,7 +94,7 @@ const select = (option: any, toggle: (value: any) => void) => {
   }
 }
 
-// search
+// ============================ search ============================
 const searchValue = ref('')
 
 const filteredOptions = computed(() => {
@@ -107,7 +106,7 @@ const filteredOptions = computed(() => {
   })
 })
 
-// scroll
+// ============================ scroll ============================
 const scrollRef = useTemplateRef('scroll')
 const scrollSide = useScrollSide(scrollRef, {
   direction: 'vertical',

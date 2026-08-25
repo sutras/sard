@@ -90,7 +90,6 @@ const bem = createBem('cascader')
 
 const { t } = useTranslateWithPrefix('cascader')
 
-// main
 const optionKeys = useOptionKeys(props)
 
 const innerValue = ref<typeof props.modelValue>()
@@ -235,7 +234,7 @@ watch(
   },
 )
 
-// others
+// ============================ style ============================
 
 const wrapperStyle = computed(() => {
   return {

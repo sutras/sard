@@ -24,7 +24,6 @@ defineSlots<DropdownSlots>()
 
 const bem = createBem('dropdown')
 
-// main
 const items = ref<DropdownItemInstacne[]>([])
 
 const someVisible = computed(() => {

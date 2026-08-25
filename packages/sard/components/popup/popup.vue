@@ -46,7 +46,6 @@ const emit = defineEmits<PopupEmits>()
 
 const bem = createBem('popup')
 
-// main
 const motionName = computed(() => {
   return mapEffectMotion[props.effect]
 })
@@ -82,7 +81,7 @@ const onOverlayClick = (event: MouseEvent) => {
 
 useLockScroll(() => props.visible, props.lockScroll)
 
-// others
+// ============================ style ============================
 const popupClass = computed(() => {
   return [bem.b(), bem.m(props.effect)]
 })

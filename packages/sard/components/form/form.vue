@@ -16,13 +16,13 @@ defineSlots<FormSlots>()
 
 const bem = createBem('form')
 
-// main
 const { expose } = useForm(props)
 
-defineExpose<FormExpose>(expose)
+// ============================ style ============================
 
-// others
 const formClass = computed(() => {
   return [bem.b(), bem.m('card', props.card)]
 })
+
+defineExpose<FormExpose>(expose)
 </script>

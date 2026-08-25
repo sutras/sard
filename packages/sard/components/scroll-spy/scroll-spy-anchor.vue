@@ -12,7 +12,6 @@ const props = withDefaults(defineProps<ScrollSpyAnchorProps>(), {})
 
 defineSlots<ScrollSpyAnchorSlots>()
 
-// main
 const context = inject(scrollSpyContextKey, null)
 
 if (!context) {

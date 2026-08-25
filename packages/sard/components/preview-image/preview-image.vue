@@ -59,8 +59,6 @@ defineSlots<PreviewImageSlots>()
 
 const emit = defineEmits<PreviewImageEmits>()
 
-defineExpose<PreviewImageExpose>({})
-
 const bem = createBem('preview-image')
 
 // ============================ visible ============================
@@ -194,4 +192,6 @@ const immersiveStyle = computed(() => {
 
 // ============================ indicator ============================
 const current = useModel(props, 'current')
+
+defineExpose<PreviewImageExpose>({})
 </script>

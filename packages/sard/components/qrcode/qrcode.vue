@@ -16,7 +16,6 @@ defineEmits<QrcodeEmits>()
 
 const bem = createBem('qrcode')
 
-// main
 const canvasRef = useTemplateRef('canvas')
 const contextRef = computed(() => canvasRef.value?.getContext('2d'))
 const dpr = window.devicePixelRatio
@@ -100,7 +99,7 @@ watch(
   },
 )
 
-// others
+// ============================ style ============================
 const qrcodeClass = computed(() => {
   return [bem.b()]
 })

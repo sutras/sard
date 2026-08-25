@@ -29,7 +29,6 @@ const emit = defineEmits<TabbarItemEmits>()
 
 const bem = createBem('tabbar')
 
-// main
 const context = inject(tabbarContextKey)
 
 if (!context) {
@@ -47,7 +46,7 @@ const onClick = (event: any) => {
   emit('click', event)
 }
 
-// others
+// ============================ style ============================
 const tabbarItemClass = computed(() => {
   return [bem.e('item'), bem.em('item', 'current', isCurrent.value)]
 })

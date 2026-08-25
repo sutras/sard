@@ -31,7 +31,6 @@ defineEmits<DndHandleEmits>()
 
 const bem = createBem('dnd-handle')
 
-// main
 const itemContext = inject(dndItemContextKey)
 
 if (!itemContext) {
@@ -74,10 +73,11 @@ const [
 
 const onDragPointerDown = usePointerDown(onDragTouchStart, onDragTouchMove, onDragTouchEnd)
 
-// others
-defineExpose<DndHandleExpose>({})
+// ============================ style ============================
 
 const dndHandleClass = computed(() => {
   return [bem.b(), bem.m('dragging', dragging)]
 })
+
+defineExpose<DndHandleExpose>({})
 </script>

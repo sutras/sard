@@ -38,7 +38,6 @@ const emit = defineEmits<CheckboxGroupEmits>()
 
 const bem = createBem('checkbox-group')
 
-// main
 const { getLabel, getValue, getKey } = useOptionKeys(props)
 
 const formItemContext = useFormItemContext()

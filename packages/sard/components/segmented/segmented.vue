@@ -39,7 +39,6 @@ const emit = defineEmits<SegmentedEmits>()
 
 const bem = createBem('segmented')
 
-// main
 const { getLabel, getValue, getDisabled } = useOptionKeys(props)
 
 const formItemContext = useFormItemContext()
@@ -99,8 +98,7 @@ provide(
   }),
 )
 
-// others
-defineExpose<SegmentedExpose>({})
+// ============================ style ============================
 
 const segmentedClass = computed(() => {
   return [bem.b(), bem.m(props.size), bem.m(props.direction), bem.m(props.shape)]
@@ -113,4 +111,6 @@ const pointerStyle = computed(() => {
     '--offset': `${currentIndex.value * 100}%`,
   }
 })
+
+defineExpose<SegmentedExpose>({})
 </script>

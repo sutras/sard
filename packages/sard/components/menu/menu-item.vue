@@ -23,8 +23,6 @@ const emit = defineEmits<MenuItemEmits>()
 
 const bem = createBem('menu')
 
-// main
-
 const hasIconSlot = ref(false)
 
 onBeforeMount(() => {
@@ -44,7 +42,7 @@ const onClick = (event: MouseEvent) => {
   }
 }
 
-// others
+// ============================ style ============================
 const menuItemClass = computed(() => {
   return [bem.e('item'), bem.is('disabled', props.disabled)]
 })

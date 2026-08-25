@@ -30,10 +30,9 @@ defineSlots<DatetimePickerSlots>()
 
 const emit = defineEmits<DatetimePickerEmits>()
 
-// main
 const { t } = useTranslateWithPrefix('datetimePicker')
 
-// utils
+// ============================ utils ============================
 const createColumnData = (types: DatetimeLetter[], currentDate: Date) => {
   minValues = getBoundaryValue(props.calendar, false, minDate.value, currentDate)
   maxValues = getBoundaryValue(props.calendar, true, maxDate.value, currentDate)
@@ -170,7 +169,7 @@ const normalizeValue = (value: Date | string | undefined | null) => {
       : date
 }
 
-// main
+// ============================ main ============================
 const innerType = computed(() => {
   return props.type.split('') as DatetimeLetter[]
 })

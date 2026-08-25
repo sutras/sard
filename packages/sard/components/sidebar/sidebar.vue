@@ -24,7 +24,6 @@ const emit = defineEmits<SidebarEmits>()
 
 const bem = createBem('sidebar')
 
-// main
 const innerCurrent = ref(props.modelValue)
 
 const members = reactive<SidebarMember[]>([])

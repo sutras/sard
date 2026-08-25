@@ -40,8 +40,6 @@ group:
 
 使用 `actionSheet` 方法显示动作面板。
 
-如果需要显示多个命令式动作面板，可以给代理组件设置 `id`，在调用 `actionSheet` 方法时传入相同的 `id` 来使用对应的代理组件。
-
 <<< @demo/action-sheet/demo/Imperative.vue
 
 ### 插槽

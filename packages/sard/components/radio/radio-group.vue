@@ -38,7 +38,6 @@ const emit = defineEmits<RadioGroupEmits>()
 
 const bem = createBem('radio-group')
 
-// main
 const { getLabel, getValue, getKey } = useOptionKeys(props)
 
 const formItemContext = useFormItemContext()

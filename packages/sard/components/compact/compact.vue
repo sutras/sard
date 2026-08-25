@@ -24,7 +24,6 @@ defineEmits<CompactEmits>()
 
 const bem = createBem('compact')
 
-// main
 const items = shallowRef<any[]>([])
 
 const addItem = (item: any) => {
@@ -49,10 +48,10 @@ provide(
   }),
 )
 
-// others
-defineExpose<CompactExpose>({})
-
+// ============================ style ============================
 const compactClass = computed(() => {
   return [bem.b(), bem.m('block', props.block), bem.m(props.direction)]
 })
+
+defineExpose<CompactExpose>({})
 </script>

@@ -53,7 +53,6 @@ const emit = defineEmits<SlideVerifyEmits>()
 
 const bem = createBem('slide-verify')
 
-// main
 enum STATUS {
   INITIAL = 1 << 0,
   LOADING = 1 << 1,
@@ -190,8 +189,7 @@ watch(percent, () => {
   emit('change', percent.value)
 })
 
-// others
-defineExpose<SlideVerifyExpose>({ reset })
+// ============================ style ============================
 
 const slideVerifyClass = computed(() => {
   return [
@@ -210,4 +208,6 @@ const slideVerifyStyle = computed(() => {
     '--target-x': targetPos.value + '%',
   }
 })
+
+defineExpose<SlideVerifyExpose>({ reset })
 </script>

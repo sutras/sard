@@ -9,21 +9,21 @@
     >
       <template #unready="slotsProps">
         <slot name="unready" v-bind="slotsProps">
-          <Loading type="clock" size="18px" :animated="false" :progress="slotsProps.progress">
+          <Loading type="clock" size="16px" :animated="false" :progress="slotsProps.progress">
             {{ t('unready') }}
           </Loading>
         </slot>
       </template>
       <template #ready>
         <slot name="ready">
-          <Loading type="clock" size="18px" :animated="false">
+          <Loading type="clock" size="16px" :animated="false">
             {{ t('ready') }}
           </Loading>
         </slot>
       </template>
       <template #loading>
         <slot name="loading">
-          <Loading type="clock" size="18px">
+          <Loading type="clock" size="16px">
             {{ t('loading') }}
           </Loading>
         </slot>
@@ -70,7 +70,7 @@ const bem = createBem('infinite-list')
 
 const { t } = useTranslateWithPrefix('pullDownRefresh')
 
-// 下拉刷新
+// ============================ 下拉刷新 ============================
 const doneText = ref('')
 const scrollRef = useTemplateRef('scroll')
 const pullDownRefresh = useTemplateRef<PullDownRefreshExpose>('pull-down-refresh')
@@ -91,7 +91,7 @@ const onRefresh = () => {
     })
 }
 
-// 加载更多
+// ============================ 加载更多 ============================
 const loadMoreRef = useTemplateRef('load-more')
 
 const { status, isLoading, isRefreshing, onLoadMore, onReload, refresh } = useLoadMore({
@@ -103,7 +103,6 @@ const { status, isLoading, isRefreshing, onLoadMore, onReload, refresh } = useLo
   },
 })
 
-// others
 defineExpose<InfiniteListExpose>({
   refresh,
 })

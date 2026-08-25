@@ -41,7 +41,6 @@ const slots = defineSlots<RadioInputSlots>()
 
 const emit = defineEmits<RadioInputEmits>()
 
-// main
 const { getLabel, getValue } = useOptionKeys(props)
 
 const partitionedProps = partitionPopoutInputProps(props)

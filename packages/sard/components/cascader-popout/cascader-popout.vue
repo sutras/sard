@@ -37,7 +37,6 @@ defineSlots<CascaderPopoutSlots>()
 
 const emit = defineEmits<CascaderPopoutEmits>()
 
-// main
 const omittedProps = omitFormPopoutProps(props)
 
 const { innerVisible, draftValue, onChange, onConfirm, onVisibleHook } = useFormPopout(

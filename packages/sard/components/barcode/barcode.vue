@@ -21,7 +21,6 @@ defineEmits<BarcodeEmits>()
 
 const bem = createBem('barcode')
 
-// main
 const canvasRef = useTemplateRef('canvas')
 const contextRef = computed(() => canvasRef.value?.getContext('2d'))
 const dpr = window.devicePixelRatio
@@ -192,7 +191,7 @@ watch(
   },
 )
 
-// others
+// ============================ style ============================
 const barcodeClass = computed(() => {
   return [bem.b()]
 })

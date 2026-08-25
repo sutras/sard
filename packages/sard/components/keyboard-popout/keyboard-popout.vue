@@ -45,7 +45,6 @@ defineSlots<KeyboardPopoutSlots>()
 
 const emit = defineEmits<KeyboardPopoutEmits>()
 
-// main
 const omittedProps = computed(() =>
   omit(props, ['visible', 'title', 'transparent', 'showConfirm', 'showCancel', 'showShadow']),
 )

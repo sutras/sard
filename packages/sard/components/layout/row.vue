@@ -15,7 +15,6 @@ defineSlots<RowSlots>()
 
 const bem = createBem('row')
 
-// main
 const gutter = computed(() => {
   if (props.gap) {
     const result = splitUnit(props.gap)
@@ -32,7 +31,8 @@ provide(
   }),
 )
 
-// others
+// ============================ style ============================
+
 const rowStyle = computed(() => {
   return [
     {

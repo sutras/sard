@@ -45,7 +45,6 @@ const props = withDefaults(defineProps<CalendarMonthProps>(), {})
 
 const emit = defineEmits<CalendarMonthEmits>()
 
-// main
 const days = computed(() => {
   return getDaysInMonth(props.year, props.month)
 })

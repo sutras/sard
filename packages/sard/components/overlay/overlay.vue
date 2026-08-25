@@ -31,12 +31,11 @@ const emit = defineEmits<OverlayEmits>()
 
 const bem = createBem('overlay')
 
-// main
 const onClick = (event: MouseEvent) => {
   emit('click', event)
 }
 
-// others
+// ============================ style ============================
 const overlayClass = computed(() => {
   return [bem.b(), bem.m('transparent', props.transparent)]
 })

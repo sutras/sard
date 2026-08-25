@@ -52,7 +52,6 @@ const emit = defineEmits<PasswordInputEmits>()
 
 const bem = createBem('password-input')
 
-// main
 const formContext = useFormContext()
 const formItemContext = useFormItemContext()
 
@@ -75,7 +74,7 @@ const toEnd = () => {
   el.setSelectionRange(el.value.length, el.value.length)
 }
 
-// value
+// ============================ value ============================
 const nativeInputValue = computed(() =>
   isNullish(props.modelValue) ? '' : normalizeInputValue(String(props.modelValue)),
 )
@@ -123,7 +122,7 @@ watch(
   },
 )
 
-// focus
+// ============================ focus ============================
 const innerFocused = ref(props.focused)
 
 watch(
@@ -165,7 +164,8 @@ const items = computed(() => {
     })
 })
 
-// others
+// ============================ style ============================
+
 const isTight = computed(() => {
   return props.gap === 0 || (typeof props.gap === 'string' && parseInt(props.gap) === 0)
 })

@@ -45,14 +45,14 @@ const emit = defineEmits<ListItemEmits>()
 
 const bem = createBem('list-item')
 
-// main
 const context = inject(listContextKey, null)
 
 const onClick = (event: any) => {
   emit('click', event)
 }
 
-// others
+// ============================ style ============================
+
 const listItemClass = computed(() => {
   return [
     bem.b(),

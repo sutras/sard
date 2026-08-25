@@ -29,7 +29,6 @@ const emit = defineEmits<SwitchEmits>()
 
 const bem = createBem('switch')
 
-// main
 const formContext = useFormContext()
 const formItemContext = useFormItemContext()
 
