@@ -77,10 +77,8 @@
   #{css-var-name(border-style)}: solid;
   #{css-var-name(border-width)}: 1px;
   #{css-var-name(border-color-dark)}: css-var(gray-300);
-  #{css-var-name(border-color)}: css-var(gray-150);
-  #{css-var-name(border-color-light)}: css-var(gray-125);
-  #{css-var-name(border-color-lighter)}: css-var(gray-100);
-  #{css-var-name(border-color-disabled)}: css-var(gray-200);
+  #{css-var-name(border-color)}: css-var(gray-200);
+  #{css-var-name(border-color-light)}: css-var(gray-100);
 
   // # 圆角
   #{css-var-name(border-radius-xs)}: 2px;
@@ -232,8 +230,6 @@
   #{css-var-name(border-color-dark)}: css-var(gray-600);
   #{css-var-name(border-color)}: css-var(gray-700);
   #{css-var-name(border-color-light)}: css-var(gray-800);
-  #{css-var-name(border-color-lighter)}: css-var(gray-900);
-  #{css-var-name(border-color-disabled)}: css-var(gray-700);
 
   // # 阴影
   #{css-var-name(box-shadow)}:

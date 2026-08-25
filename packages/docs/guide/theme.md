@@ -118,15 +118,13 @@ group:
 
 ### 边框
 
-| CSS 变量                    | 值                  |
-| --------------------------- | ------------------- |
-| `--s-border-style`          | `solid`             |
-| `--s-border-width`          | `1px`               |
-| `--s-border-color-dark`     | `var(--s-gray-300)` |
-| `--s-border-color`          | `var(--s-gray-150)` |
-| `--s-border-color-light`    | `var(--s-gray-125)` |
-| `--s-border-color-lighter`  | `var(--s-gray-100)` |
-| `--s-border-color-disabled` | `var(--s-gray-200)` |
+| CSS 变量                 | 值                  |
+| ------------------------ | ------------------- |
+| `--s-border-style`       | `solid`             |
+| `--s-border-width`       | `1px`               |
+| `--s-border-color-dark`  | `var(--s-gray-300)` |
+| `--s-border-color`       | `var(--s-gray-200)` |
+| `--s-border-color-light` | `var(--s-gray-100)` |
 
 ### 圆角
 

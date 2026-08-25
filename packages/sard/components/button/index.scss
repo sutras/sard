@@ -328,7 +328,7 @@ $s-button-theme-colors: (
     &#{bem-selector($block: button, $modifier: filled)} {
       & + #{bem-selector($block: button, $modifier: solid)},
       & + #{bem-selector($block: button, $modifier: filled)} {
-        border-inline-start: 1px solid css-var(border-color-lighter);
+        border-inline-start: 1px solid css-var(border-color-light);
       }
     }
   }
@@ -347,7 +347,7 @@ $s-button-theme-colors: (
     &#{bem-selector($block: button, $modifier: filled)} {
       & + #{bem-selector($block: button, $modifier: solid)},
       & + #{bem-selector($block: button, $modifier: filled)} {
-        border-top: 1px solid css-var(border-color-lighter);
+        border-top: 1px solid css-var(border-color-light);
       }
     }
   }

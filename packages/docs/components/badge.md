@@ -83,11 +83,11 @@ group: 数据展示
 
 ### 样式变量
 
-| CSS 变量                 | 值                              |
-| ------------------------ | ------------------------------- |
-| `--s-badge-height`       | `18px`                          |
-| `--s-badge-font-size`    | `var(--s-font-size-sm)`         |
-| `--s-badge-bg`           | `var(--s-color-danger)`         |
-| `--s-badge-color`        | `var(--s-white)`                |
-| `--s-badge-border-color` | `var(--s-border-color-lighter)` |
-| `--s-badge-dot-size`     | `10px`                          |
+| CSS 变量                 | 值                            |
+| ------------------------ | ----------------------------- |
+| `--s-badge-height`       | `18px`                        |
+| `--s-badge-font-size`    | `var(--s-font-size-sm)`       |
+| `--s-badge-bg`           | `var(--s-color-danger)`       |
+| `--s-badge-color`        | `var(--s-white)`              |
+| `--s-badge-border-color` | `var(--s-border-color-light)` |
+| `--s-badge-dot-size`     | `10px`                        |

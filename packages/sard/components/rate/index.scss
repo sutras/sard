@@ -58,7 +58,7 @@
 
   @include m(disabled) {
     @include e(void-star) {
-      color: css-var(border-color-disabled);
+      color: css-var(border-color-dark);
     }
 
     @include e(star) {

@@ -4,7 +4,7 @@
 :root {
   #{css-var-name(avatar-size)}: css-var(size-6xl);
   #{css-var-name(avatar-bg)}: css-var(fill-color-secondary);
-  #{css-var-name(avatar-border-color)}: css-var(border-color-lighter);
+  #{css-var-name(avatar-border-color)}: css-var(fill-color-tertiary);
 }
 // #endregion variables
 

@@ -127,4 +127,4 @@ group: 数据展示
 | ------------------------- | ------------------------------- |
 | `--s-avatar-size`         | `var(--s-size-6xl)`             |
 | `--s-avatar-bg`           | `var(--s-fill-color-secondary)` |
-| `--s-avatar-border-color` | `var(--s-border-color-lighter)` |
+| `--s-avatar-border-color` | `var(--s-fill-color-tertiary)`  |
