@@ -1,4 +1,8 @@
 
+## <small>1.0.9 (2026-08-26)</small>
+
+* Code Refactoring: 重构infinite-list,pull-down-refresh组件 ([0b5c0a2](https://github.com/sutras/sard/commit/0b5c0a2))
+
 ## <small>1.0.8 (2026-08-26)</small>
 
 * Features: 透传confirm参数 ([de6e472](https://github.com/sutras/sard/commit/de6e472))
