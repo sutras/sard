@@ -1,4 +1,8 @@
 
+## <small>1.0.7 (2026-08-26)</small>
+
+* Features: 暴露picker-popout参数 ([d0fc91e](https://github.com/sutras/sard/commit/d0fc91e))
+
 ## <small>1.0.6 (2026-08-26)</small>
 
 * Bug Fixes: 优化 infinite-list 布局 ([a586bee](https://github.com/sutras/sard/commit/a586bee))
