@@ -53,10 +53,10 @@ group: 表单组件
 
 | 事件              | 描述                     | 类型                                  |
 | ----------------- | ------------------------ | ------------------------------------- |
+| update:visible    | 弹出框显隐时触发         | `(visible: boolean) => void`          |
 | update:modelValue | 复选输入组件值改变时触发 | `(value: any[] \| undefined) => void` |
 | change            | 复选输入组件值改变时触发 | `(value: any[] \| undefined) => void` |
-| update:visible    | 弹出框显隐时触发         | `(visible: boolean) => void`          |
-| confirm           | 点击确定按钮时触发       | `() => void`                          |
+| confirm           | 点击确定按钮时触发       | `(value: any[] \| undefined) => void` |
 
 ## 主题定制
 

@@ -80,8 +80,8 @@ const previewStyle = computed(() => {
   }
 })
 
-const onConfirm = () => {
-  emit('confirm')
+const onConfirm = (value: string) => {
+  emit('confirm', value)
 }
 
 defineExpose<ColorPickerInputExpose>({})

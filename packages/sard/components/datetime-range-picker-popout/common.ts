@@ -19,7 +19,7 @@ export interface DatetimeRangePickerPopoutEmits extends MotionEmits {
   (e: 'update:visible', visible: boolean): void
   (e: 'update:modelValue', date: (Date | string)[] | undefined): void
   (e: 'change', date: (Date | string)[] | undefined): void
-  (e: 'confirm'): void
+  (e: 'confirm', date: (Date | string)[] | undefined): void
 }
 
 export interface DatetimeRangePickerPopoutExpose {}

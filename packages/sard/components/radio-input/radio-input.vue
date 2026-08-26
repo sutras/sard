@@ -70,7 +70,7 @@ watch(
   },
 )
 
-const onConfirm = () => {
-  emit('confirm')
+const onConfirm = (value: any) => {
+  emit('confirm', value)
 }
 </script>

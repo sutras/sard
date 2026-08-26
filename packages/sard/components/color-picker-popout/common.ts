@@ -20,7 +20,7 @@ export interface ColorPickerPopoutEmits extends MotionEmits {
   (e: 'update:visible', visible: boolean): void
   (e: 'update:modelValue', value: string): void
   (e: 'change', value: string): void
-  (e: 'confirm'): void
+  (e: 'confirm', value: string): void
 }
 
 export interface ColorPickerPopoutExpose {}

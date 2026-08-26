@@ -38,8 +38,8 @@ group: 表单组件
 
 | 事件              | 描述                     | 类型                                                                   |
 | ----------------- | ------------------------ | ---------------------------------------------------------------------- |
+| update:visible    | 弹出框显隐时触发         | `(visible: boolean) => void`                                           |
+| select            | 选择级联选择某一项时触发 | `(option: CascaderOption, tabIndex: number) => void`                   |
 | update:modelValue | 级联输入组件值改变时触发 | `(value: string \| number, selectedOptions: CascaderOption[]) => void` |
 | change            | 级联输入组件值改变时触发 | `(value: string \| number, selectedOptions: CascaderOption[]) => void` |
-| select            | 选择级联选择某一项时触发 | `(option: CascaderOption, tabIndex: number) => void`                   |
-| update:visible    | 弹出框显隐时触发         | `(visible: boolean) => void`                                           |
-| confirm           | 点击确定按钮时触发       | `() => void`                                                           |
+| confirm           | 点击确定按钮时触发       | `(value: string \| number, selectedOptions: CascaderOption[]) => void` |

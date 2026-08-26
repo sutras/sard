@@ -24,7 +24,7 @@ export interface CheckboxPopoutEmits extends MotionEmits {
   (e: 'update:visible', visible: boolean): void
   (e: 'update:modelValue', value: any): void
   (e: 'change', value: any): void
-  (e: 'confirm'): void
+  (e: 'confirm', value: any): void
 }
 
 export interface CheckboxPopoutExpose {}

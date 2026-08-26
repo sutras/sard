@@ -90,7 +90,7 @@ group: 表单组件
 
 | 事件              | 描述               | 类型                         |
 | ----------------- | ------------------ | ---------------------------- |
+| update:visible    | 弹出框显隐时触发   | `(visible: boolean) => void` |
 | update:modelValue | 组件值改变时触发   | `(value: any) => void`       |
 | change            | 组件值改变时触发   | `(value: any) => void`       |
-| update:visible    | 弹出框显隐时触发   | `(visible: boolean) => void` |
-| confirm           | 点击确定按钮时触发 | `() => void`                 |
+| confirm           | 点击确定按钮时触发 | `(value: any) => void`       |

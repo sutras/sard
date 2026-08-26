@@ -80,7 +80,7 @@ group: 表单组件
 
 | 事件              | 描述                 | 类型                                                                 |
 | ----------------- | -------------------- | -------------------------------------------------------------------- |
+| update:visible    | 弹出框显隐时触发     | `(visible: boolean) => void`                                         |
 | update:modelValue | 日历组件值改变时触发 | `(value: Date \| Date[] \| string \| string[] \| undefined) => void` |
 | change            | 日历组件值改变时触发 | `(value: Date \| Date[] \| string \| string[] \| undefined) => void` |
-| update:visible    | 弹出框显隐时触发     | `(visible: boolean) => void`                                         |
-| confirm           | 点击确定按钮时触发   | `() => void`                                                         |
+| confirm           | 点击确定按钮时触发   | `(value: Date \| Date[] \| string \| string[] \| undefined) => void` |

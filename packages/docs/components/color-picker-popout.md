@@ -27,4 +27,4 @@ group: 表单组件
 | update:visible    | 弹出层显隐变化时触发 | `(visible: boolean) => void` |
 | update:modelValue | 确认选择后触发       | `(value: string) => void`    |
 | change            | 确认选择后触发       | `(value: string) => void`    |
-| confirm           | 点击确认按钮时触发   | `() => void`                 |
+| confirm           | 点击确认按钮时触发   | `(value: string) => void`    |

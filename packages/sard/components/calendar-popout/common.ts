@@ -23,7 +23,7 @@ export interface CalendarPopoutEmits extends MotionEmits {
   (e: 'update:visible', visible: boolean): void
   (e: 'update:modelValue', value: Date | Date[] | string | string[] | undefined): void
   (e: 'change', value: Date | Date[] | string | string[] | undefined): void
-  (e: 'confirm'): void
+  (e: 'confirm', value: Date | Date[] | string | string[] | undefined): void
 }
 
 export interface CalendarPopoutExpose {}

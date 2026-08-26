@@ -140,7 +140,7 @@ watch(
   },
 )
 
-const onConfirm = () => {
-  emit('confirm')
+const onConfirm = (value: any, selectedOptions: CascaderOption[]) => {
+  emit('confirm', value, selectedOptions)
 }
 </script>

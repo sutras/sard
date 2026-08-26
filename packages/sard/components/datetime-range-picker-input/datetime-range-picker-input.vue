@@ -92,7 +92,7 @@ watch(
   },
 )
 
-const onConfirm = () => {
-  emit('confirm')
+const onConfirm = (date: (Date | string)[] | undefined) => {
+  emit('confirm', date)
 }
 </script>

@@ -19,7 +19,7 @@ export interface CascaderPopoutEmits extends MotionEmits {
   (e: 'update:modelValue', value: any, selectedOptions: CascaderOption[]): void
   (e: 'change', value: any, selectedOptions: CascaderOption[]): void
   (e: 'select', option: CascaderOption, tabIndex: number): void
-  (e: 'confirm'): void
+  (e: 'confirm', value: any, selectedOptions: CascaderOption[]): void
 }
 
 export interface CascaderPopoutExpose {}
