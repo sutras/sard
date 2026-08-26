@@ -1,4 +1,8 @@
 
+## <small>1.0.8 (2026-08-26)</small>
+
+* Features: 透传confirm参数 ([de6e472](https://github.com/sutras/sard/commit/de6e472))
+
 ## <small>1.0.7 (2026-08-26)</small>
 
 * Features: 暴露picker-popout参数 ([d0fc91e](https://github.com/sutras/sard/commit/d0fc91e))
