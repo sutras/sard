@@ -1,4 +1,8 @@
 
+## <small>1.0.6 (2026-08-26)</small>
+
+* Bug Fixes: 优化 infinite-list 布局 ([a586bee](https://github.com/sutras/sard/commit/a586bee))
+
 ## <small>1.0.5 (2026-08-22)</small>
 
 * Bug Fixes: 修复picker-view 溢出问题 ([a3e9f05](https://github.com/sutras/sard/commit/a3e9f05))
