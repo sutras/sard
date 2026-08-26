@@ -38,19 +38,16 @@ const optionKeys = useOptionKeys(props)
 
 const omittedProps = omitFormPopoutProps(props)
 
-const { innerVisible, innerValue, draftValue, onChange, onConfirm, onVisibleHook } = useFormPopout(
-  props,
-  emit,
-  {
+const { hasChange, innerVisible, innerValue, draftValue, onChange, onConfirm, onVisibleHook } =
+  useFormPopout(props, emit, {
     onConfirmBefore() {
-      if (isEmptyBinding(draftValue.value) || isEmptyArray(draftValue.value)) {
-        const [initialValue, selectedOptions] = getInitialValue(props.columns, optionKeys)
+      if (!hasChange.value || isEmptyBinding(draftValue.value) || isEmptyArray(draftValue.value)) {
+        const [initialValue, selectedOptions, indexes] = getInitialValue(props.columns, optionKeys)
         draftValue.value = initialValue
-        return [selectedOptions]
+        return [selectedOptions, indexes]
       }
     },
-  },
-)
+  })
 
 const onEnter = () => {
   if (

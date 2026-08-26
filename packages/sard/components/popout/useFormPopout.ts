@@ -28,7 +28,7 @@ export interface UseFormPopoutEmits extends MotionEmits {
   (e: 'update:visible', visible: boolean): void
   (e: 'update:modelValue', ...args: any[]): void
   (e: 'change', ...args: any[]): void
-  (e: 'confirm'): void
+  (e: 'confirm', ...args: any[]): void
 }
 
 /**
@@ -76,23 +76,26 @@ export function useFormPopout(
 
   let restArgs: any[] = []
 
+  const hasChange = ref(false)
+
   const onChange = (value: any, ...args: any[]) => {
+    hasChange.value = true
     draftValue.value = value
     restArgs = args
     options.onChange?.(value, ...args)
   }
 
   const onConfirm = (showConfirm = true) => {
-    if (showConfirm) {
-      emit('confirm')
-    }
     const extraArgs = options.onConfirmBefore?.()
     if (extraArgs) {
       restArgs = extraArgs
     }
+    const args = [draftValue.value, ...restArgs]
+    if (showConfirm) {
+      emit('confirm', ...args)
+    }
     if (draftValue.value !== innerValue.value) {
       innerValue.value = draftValue.value
-      const args = [innerValue.value, ...restArgs]
       emit('update:modelValue', ...args)
       emit('change', ...args)
     }
@@ -107,6 +110,7 @@ export function useFormPopout(
   }
 
   return {
+    hasChange,
     innerVisible: visible,
     innerValue,
     draftValue,

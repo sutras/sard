@@ -51,7 +51,7 @@ describe('ColorPickerPopout', () => {
     emitOn(wrapper, Popout, 'confirm')
     await nextTick()
 
-    expect(wrapper.emitted('confirm')?.[0]).toEqual([])
+    expect(wrapper.emitted('confirm')?.[0]).toEqual(['#00FF00'])
     expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['#00FF00'])
     expect(wrapper.emitted('change')?.[0]).toEqual(['#00FF00'])
   })

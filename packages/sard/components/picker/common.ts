@@ -145,16 +145,17 @@ export function getInitialValue<T>(columns: T[] | T[][], optionKeys: UseOptionKe
 
   switch (getColumnsType(columns, optionKeys)) {
     case 'single':
-      return [getValue(columns[0]), [columns[0]]]
+      return [getValue(columns[0]), [columns[0]], [0]]
     case 'multi':
       return [
         (columns as T[][]).map((column) => getValue(column[0])),
         (columns as T[][]).map((column) => column[0]),
+        (columns as T[][]).map(() => 0),
       ]
     case 'cascader': {
       const options: T[] = []
       recurse(columns as T[], options)
-      return [options.map((option) => getValue(option)), options]
+      return [options.map((option) => getValue(option)), options, options.map(() => 0)]
     }
   }
 }

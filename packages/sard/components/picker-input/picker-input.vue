@@ -86,7 +86,7 @@ watch(
   },
 )
 
-const onConfirm = () => {
-  emit('confirm')
+const onConfirm = (...args: [any, any[], number[]]) => {
+  emit('confirm', ...args)
 }
 </script>

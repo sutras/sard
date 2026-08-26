@@ -5,6 +5,7 @@
     title="请选择"
     :columns="regionData"
     :option-keys="{ label: 'name', value: 'code' }"
+    @confirm="onConfirm"
   />
 
   <s-list card>
@@ -33,4 +34,8 @@ const regionData = getRegionData()
 const visible = ref(false)
 
 const value = ref<number[] | undefined>([150000, 150500, 150522])
+
+const onConfirm = (...args: any[]) => {
+  console.log('confirm: ', ...args)
+}
 </script>

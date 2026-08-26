@@ -34,9 +34,9 @@ group: 表单组件
 
 继承 [`MotionEmits`](./motion#MotionEmits)。
 
-| 事件              | 描述                       | 类型                         |
-| ----------------- | -------------------------- | ---------------------------- |
-| update:modelValue | 选择器输入组件值改变时触发 | `(value: any) => void`       |
-| change            | 选择器输入组件值改变时触发 | `(value: any) => void`       |
-| update:visible    | 弹出框显隐时触发           | `(visible: boolean) => void` |
-| confirm           | 点击确定按钮时触发         | `() => void`                 |
+| 事件              | 描述                       | 类型                                                              |
+| ----------------- | -------------------------- | ----------------------------------------------------------------- |
+| update:visible    | 弹出框显隐时触发           | `(visible: boolean) => void`                                      |
+| update:modelValue | 选择器输入组件值改变时触发 | `(value: any, selectedOptions: any[], indexes: number[]) => void` |
+| change            | 选择器输入组件值改变时触发 | `(value: any, selectedOptions: any[], indexes: number[]) => void` |
+| confirm           | 点击确定按钮时触发         | `(value: any, selectedOptions: any[], indexes: number[]) => void` |

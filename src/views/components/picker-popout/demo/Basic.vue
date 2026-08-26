@@ -5,6 +5,7 @@
     title="请选择"
     :columns="columns"
     @change="onChange"
+    @confirm="onConfirm"
   />
 
   <s-list card>
@@ -28,5 +29,9 @@ const value = ref<string | undefined>()
 
 const onChange = (value: any) => {
   console.log('change', value)
+}
+
+const onConfirm = (...args: any[]) => {
+  console.log('confirm: ', ...args)
 }
 </script>
