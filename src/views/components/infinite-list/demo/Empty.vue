@@ -5,9 +5,9 @@
     :request="request"
     refreshable
     :hide-load-more="listData.length === 0"
-    style="height: 240px; border: 1px var(--s-border-color) solid"
+    style="height: 240px; overflow-y: auto; border: 1px var(--s-border-color) solid"
   >
-    <s-empty v-if="listData.length === 0" class="my-auto" />
+    <s-empty v-if="listData.length === 0" class="absolute inset-0" />
     <s-list inlaid>
       <s-list-item v-for="item in listData" :key="item.code" :title="item.name" />
     </s-list>

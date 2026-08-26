@@ -23,3 +23,10 @@ export function toTouchEvent(event: MouseEvent | TouchEvent, end?: boolean) {
 export function checkRtl(el: HTMLElement) {
   return el.dir.toLowerCase() === 'rtl' || getComputedStyle(el).direction === 'rtl'
 }
+
+export type ScrollElement = Element | Window
+
+export function getScrollTop(el: ScrollElement): number {
+  const top = 'scrollTop' in el ? el.scrollTop : el.scrollY
+  return Math.max(top, 0)
+}

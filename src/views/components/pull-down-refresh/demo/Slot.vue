@@ -1,17 +1,10 @@
 <template>
   <doc-page title="自定义插槽" padding="10px">
     <div
-      ref="scroll"
       class="overflow-y-auto"
       style="height: 300px; margin: 10px 0; border: 1px solid var(--s-border-color)"
-      @scroll="onScroll"
     >
-      <s-pull-down-refresh
-        ref="pullDownRefresh"
-        :loading="loading"
-        :done-duration="500"
-        @refresh="onRefresh"
-      >
+      <s-pull-down-refresh :loading="loading" :done-duration="500" @refresh="onRefresh">
         <template #unready="{ progress }">
           <s-loading size="24px" :animated="false" :progress="progress">
             <template #circular>
@@ -58,16 +51,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, useTemplateRef } from 'vue'
+import { ref } from 'vue'
 
 const loading = ref(false)
-const pullDownRefresh = ref()
-
-const scrollRef = useTemplateRef('scroll')
-
-const onScroll = () => {
-  pullDownRefresh.value?.enableToRefresh(scrollRef.value!.scrollTop === 0)
-}
 
 const fetchApi = () => {
   return new Promise<void>((resolve) => {

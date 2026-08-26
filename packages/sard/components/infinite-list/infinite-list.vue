@@ -1,7 +1,6 @@
 <template>
-  <div ref="scroll" :class="bem.b()" @scroll="onScroll">
+  <div ref="scroll" :class="bem.b()">
     <PullDownRefresh
-      ref="pull-down-refresh"
       :loading="isRefreshing"
       :disabled="!refreshable || isLoading"
       :done-duration="doneDuration"
@@ -56,9 +55,9 @@ import {
 import PullDownRefresh from '../pull-down-refresh/pull-down-refresh.vue'
 import LoadMore from '../load-more/load-more.vue'
 import { useLoadMore } from '../load-more/useLoadMore'
-import type { PullDownRefreshExpose } from '../pull-down-refresh/common'
 import { useTranslateWithPrefix } from '../../locale'
 import Loading from '../loading/loading.vue'
+import { useScrollParent } from '../../use/useScrollParent'
 
 const props = withDefaults(defineProps<InfiniteListProps>(), defaultInfiniteListProps)
 
@@ -72,12 +71,6 @@ const { t } = useTranslateWithPrefix('pullDownRefresh')
 
 // ============================ 下拉刷新 ============================
 const doneText = ref('')
-const scrollRef = useTemplateRef('scroll')
-const pullDownRefresh = useTemplateRef<PullDownRefreshExpose>('pull-down-refresh')
-
-const onScroll = () => {
-  pullDownRefresh.value?.enableToRefresh(scrollRef.value!.scrollTop === 0)
-}
 
 const onRefresh = () => {
   refresh()
@@ -92,10 +85,12 @@ const onRefresh = () => {
 }
 
 // ============================ 加载更多 ============================
+const scrollRef = useTemplateRef('scroll')
+const scrollParent = useScrollParent(scrollRef)
 const loadMoreRef = useTemplateRef('load-more')
 
 const { status, isLoading, isRefreshing, onLoadMore, onReload, refresh } = useLoadMore({
-  root: scrollRef,
+  root: scrollParent,
   target: loadMoreRef,
   rootMargin: () => props.rootMargin,
   request: async (page, isRefresh) => {

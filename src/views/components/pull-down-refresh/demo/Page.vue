@@ -1,11 +1,6 @@
 <template>
   <doc-page title="基于页面的刷新">
-    <s-pull-down-refresh
-      ref="pullDownRefresh"
-      :loading="loading"
-      style="min-height: 100vh"
-      @refresh="onRefresh"
-    >
+    <s-pull-down-refresh :loading="loading" @refresh="onRefresh">
       <div
         v-for="item in 5"
         :key="item"
@@ -26,15 +21,10 @@
 </template>
 
 <script setup lang="ts">
-import { toast, usePageScroll } from 'sard'
+import { toast } from 'sard'
 import { ref } from 'vue'
 
 const loading = ref(false)
-const pullDownRefresh = ref()
-
-usePageScroll(() => {
-  pullDownRefresh.value?.enableToRefresh(window.scrollY === 0)
-})
 
 const fetchApi = () => {
   return new Promise<void>((resolve) => {

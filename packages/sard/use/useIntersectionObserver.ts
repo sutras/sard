@@ -1,8 +1,8 @@
 import { ref, onUnmounted, watch, type Ref, type MaybeRefOrGetter, toValue, computed } from 'vue'
 
 export interface UseIntersectionObserverOptions {
-  target?: MaybeRefOrGetter<Element | null>
-  root?: MaybeRefOrGetter<Element | Document | null>
+  target?: MaybeRefOrGetter<Element | null | undefined>
+  root?: MaybeRefOrGetter<Element | Document | Window | null | undefined>
   rootMargin?: MaybeRefOrGetter<string>
   threshold?: MaybeRefOrGetter<number | number[]>
 }
@@ -18,7 +18,13 @@ export interface UseIntersectionObserverReturn {
 export function useIntersectionObserver(
   options: UseIntersectionObserverOptions = {},
 ): UseIntersectionObserverReturn {
-  const root = computed(() => toValue(options.root))
+  const root = computed(() => {
+    let result = toValue(options.root)
+    if (result === window) {
+      result = document
+    }
+    return result as Element | Document | null | undefined
+  })
   const rootMargin = computed(() => toValue(options.rootMargin))
   const threshold = computed(() => toValue(options.threshold))
   const target = computed(() => toValue(options.target))

@@ -11,6 +11,10 @@
     <doc-demo title="空数据">
       <Empty />
     </doc-demo>
+
+    <doc-demo title="弹窗滚动">
+      <PopupScroll />
+    </doc-demo>
   </doc-page>
 </template>
 
@@ -18,4 +22,5 @@
 import Basic from './demo/Basic.vue'
 import Empty from './demo/Empty.vue'
 import Refresh from './demo/Refresh.vue'
+import PopupScroll from './demo/PopupScroll.vue'
 </script>

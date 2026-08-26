@@ -17,7 +17,7 @@ import type { LoadMoreStatus } from './common'
 export interface UseLoadMoreOptions {
   request: (page: number, isRefresh: boolean) => Promise<boolean>
   rootMargin?: MaybeRefOrGetter<string>
-  root?: MaybeRefOrGetter<Element | Document | null>
+  root?: MaybeRefOrGetter<Element | Document | Window | null | undefined>
   target?: MaybeRefOrGetter<Element | null>
   disabled?: MaybeRefOrGetter<boolean>
 }

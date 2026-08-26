@@ -21,7 +21,9 @@ describe('PullDownRefresh', () => {
     await nextTick()
 
     expect(wrapper.find('.s-pull-down-refresh__loading').exists()).toBe(true)
-    expect(wrapper.attributes('style') || '').toContain('translate3d(0,50px,0)')
+    expect(wrapper.find('.s-pull-down-refresh__gesture').attributes('style') || '').toContain(
+      'translate3d(0,50px,0)',
+    )
 
     await wrapper.setProps({ loading: false })
 

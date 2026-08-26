@@ -3,14 +3,8 @@
     ref="scroll"
     class="overflow-y-auto rounded-lg"
     style="height: 300px; border: 1px solid var(--s-border-color)"
-    @scroll="onScroll"
   >
-    <s-pull-down-refresh
-      ref="pullDownRefresh"
-      :loading="isRefreshing"
-      :disabled="isLoading"
-      @refresh="onRefresh"
-    >
+    <s-pull-down-refresh :loading="isRefreshing" :disabled="isLoading" @refresh="onRefresh">
       <s-list inlaid>
         <s-list-item v-for="item in listData" :key="item.code" :title="item.name" />
       </s-list>
@@ -29,12 +23,6 @@ import { getCities } from '@/api'
 const listData = ref<{ code: string; name: string }[]>([])
 
 // 下拉刷新
-const pullDownRefresh = ref()
-
-const onScroll = () => {
-  pullDownRefresh.value?.enableToRefresh(scrollRef.value!.scrollTop === 0)
-}
-
 const onRefresh = () => {
   refresh().then(() => {
     toast('刷新成功')

@@ -1,32 +1,34 @@
 <template>
-  <div
-    :class="bem.b()"
-    :style="pullDownRefreshStyle"
-    @touchstart="onTouchStart"
-    @touchmove="onTouchMove"
-    @touchend="onTouchEnd"
-    @touchcancel="onTouchEnd"
-    @pointerdown="onPointerDown"
-  >
-    <div :class="bem.e('header')" :style="headerStyle">
-      <slot v-if="status === 'unready'" name="unready" :progress="progress">
-        <Loading type="clock" :class="bem.e('loading')" :animated="false" :progress="progress" />
-      </slot>
-      <slot v-else-if="status === 'ready'" name="ready">
-        <Loading type="clock" :class="bem.e('loading')" :animated="false" />
-      </slot>
-      <slot v-else-if="status === 'loading'" name="loading">
-        <Loading type="clock" :class="bem.e('loading')" />
-      </slot>
-      <slot v-else-if="status === 'done'" name="done"></slot>
+  <div ref="root" :class="bem.b()">
+    <div
+      :class="bem.e('gesture')"
+      :style="pullDownRefreshStyle"
+      @touchstart="onTouchStart"
+      @touchmove="onTouchMove"
+      @touchend="onTouchEnd"
+      @touchcancel="onTouchEnd"
+      @pointerdown="onPointerDown"
+    >
+      <div :class="bem.e('header')" :style="headerStyle">
+        <slot v-if="status === 'unready'" name="unready" :progress="progress">
+          <Loading type="clock" :class="bem.e('loading')" :animated="false" :progress="progress" />
+        </slot>
+        <slot v-else-if="status === 'ready'" name="ready">
+          <Loading type="clock" :class="bem.e('loading')" :animated="false" />
+        </slot>
+        <slot v-else-if="status === 'loading'" name="loading">
+          <Loading type="clock" :class="bem.e('loading')" />
+        </slot>
+        <slot v-else-if="status === 'done'" name="done"></slot>
+      </div>
+      <slot></slot>
     </div>
-    <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
-import { createBem } from '../../utils'
+import { computed, onMounted, ref, useTemplateRef, watch } from 'vue'
+import { createBem, getScrollTop } from '../../utils'
 import {
   type PullDownRefreshProps,
   type PullDownRefreshSlots,
@@ -37,6 +39,7 @@ import {
 } from './common'
 import { usePointerDown, useTimeout } from '../../use'
 import Loading from '../loading/loading.vue'
+import { useScrollParent } from '../../use/useScrollParent'
 
 const props = withDefaults(defineProps<PullDownRefreshProps>(), defaultPullDownRefreshProps)
 
@@ -45,6 +48,9 @@ defineSlots<PullDownRefreshSlots>()
 const emit = defineEmits<PullDownRefreshEmits>()
 
 const bem = createBem('pull-down-refresh')
+
+const rootRef = useTemplateRef('root')
+const scrollParent = useScrollParent(rootRef)
 
 const status = ref<PullDownRefreshStatus>('initial')
 const translateY = ref(0)
@@ -101,8 +107,12 @@ let movable = false
 let lockDirection = ''
 const isDragging = ref(false)
 
+const checkScrollTop = () => {
+  return getScrollTop(scrollParent.value!) === 0
+}
+
 const onTouchStart = (event: TouchEvent) => {
-  if (props.disabled || status.value !== 'initial' || !canRefresh.value) {
+  if (props.disabled || status.value !== 'initial' || !checkScrollTop()) {
     return
   }
   startX = event.touches[0].clientX
@@ -152,12 +162,6 @@ const onTouchEnd = () => {
 
 const onPointerDown = usePointerDown(onTouchStart, onTouchMove, onTouchEnd)
 
-const canRefresh = ref(true)
-
-const enableToRefresh = (can: boolean) => {
-  canRefresh.value = can
-}
-
 // ============================ style ============================
 
 const pullDownRefreshStyle = computed(() => {
@@ -173,7 +177,5 @@ const headerStyle = computed(() => {
   }
 })
 
-defineExpose<PullDownRefreshExpose>({
-  enableToRefresh,
-})
+defineExpose<PullDownRefreshExpose>({})
 </script>

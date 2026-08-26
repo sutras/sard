@@ -38,6 +38,4 @@ export interface PullDownRefreshEmits {
   (e: 'refresh'): void
 }
 
-export interface PullDownRefreshExpose {
-  enableToRefresh: (canRefresh: boolean) => void
-}
+export interface PullDownRefreshExpose {}

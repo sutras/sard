@@ -2,7 +2,7 @@
   <s-infinite-list
     :request="request"
     refreshable
-    style="height: 240px; border: 1px var(--s-border-color) solid"
+    style="height: 240px; overflow-y: auto; border: 1px var(--s-border-color) solid"
   >
     <s-list inlaid>
       <s-list-item v-for="item in listData" :key="item.code" :title="item.name" />

@@ -2,12 +2,10 @@
   <doc-page title="基于 scroll-view 的刷新" padding="10px">
     <s-button block @click="loading = !loading">toggle loading</s-button>
     <div
-      ref="scroll"
       class="overflow-y-auto"
       style="height: 300px; margin: 10px 0; border: 1px solid var(--s-border-color)"
-      @scroll="onScroll"
     >
-      <s-pull-down-refresh ref="pullDownRefresh" :loading="loading" @refresh="onRefresh">
+      <s-pull-down-refresh :loading="loading" @refresh="onRefresh">
         <div
           v-for="item in 10"
           :key="item"
@@ -30,16 +28,9 @@
 
 <script setup lang="ts">
 import { toast } from 'sard'
-import { ref, useTemplateRef } from 'vue'
+import { ref } from 'vue'
 
 const loading = ref(false)
-const pullDownRefresh = ref()
-
-const scrollRef = useTemplateRef('scroll')
-
-const onScroll = () => {
-  pullDownRefresh.value?.enableToRefresh(scrollRef.value!.scrollTop === 0)
-}
 
 const fetchApi = () => {
   return new Promise<void>((resolve) => {

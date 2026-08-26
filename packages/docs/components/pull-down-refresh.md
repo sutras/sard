@@ -11,25 +11,19 @@ group: 反馈组件
 `PullDownRefresh` 可以在页面或滚动元素中使用，
 当满足下拉刷新条件（滚动到顶部）且进行下拉操作时，会接替容器的滚动行为。
 
-因此当滚动到顶部时调用 `PullDownRefreshExpose['enableToRefresh']` 方法并传递`true`告诉组件可以进行下拉刷新操作。
-
 当用户下拉到指定阈值时会触发 `refresh` 事件，此时要设置 `loading` 属性为 `true` 以便向用户展示加载状态，并发送网络请求。
 
 在获取到数据后设置 `loading` 属性为 `false` 来关闭加载状态。
-
-`PullDownRefresh` 组件被设计为与滚动容器弱关联关系，因此，如果有需要，你可以将此组件与滚动容器以及上拉加载组件组合使用来实现复杂的效果。
 
 ## 代码演示
 
 ### 基于页面的刷新
 
-在页面生命周期 `usePageScroll` 中获取当前 `scrollTop` 的值，当为 0 时启用下拉刷新。
-
 <<< @demo/pull-down-refresh/demo/Page.vue
 
 ### 基于滚动元素的刷新
 
-监听滚动元素的 `scroll` 事件来获取 `scrollTop` 值，当为 0 时启用下拉刷新。
+`PullDownRefresh` 会查找祖先中第一个滚动元素，在其滚动到顶部并下拉时触发事件。
 
 <<< @demo/pull-down-refresh/demo/ScrollView.vue
 
@@ -69,12 +63,6 @@ group: 反馈组件
 | 事件    | 描述                           | 类型         |
 | ------- | ------------------------------ | ------------ |
 | refresh | 下拉到指定阈值并松开手指后触发 | `() => void` |
-
-### PullDownRefreshExpose
-
-| 属性            | 描述                                           | 类型                            |
-| --------------- | ---------------------------------------------- | ------------------------------- |
-| enableToRefresh | 是否启用下拉刷新，通常在容器滚动到顶部时设为真 | `(canRefresh: boolean) => void` |
 
 ## 主题定制
 

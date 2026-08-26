@@ -10,7 +10,15 @@
 // #endregion variables
 
 @include b(pull-down-refresh) {
-  transition-property: transform;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  @include e(gesture) {
+    min-height: 100%;
+    flex-grow: 1;
+    transition-property: transform;
+  }
 
   @include e(header) {
     position: absolute;
