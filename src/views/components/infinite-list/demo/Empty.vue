@@ -7,7 +7,7 @@
     :hide-load-more="listData.length === 0"
     style="height: 240px; border: 1px var(--s-border-color) solid"
   >
-    <s-empty v-if="listData.length === 0" style="margin: 50px 0" />
+    <s-empty v-if="listData.length === 0" class="my-auto" />
     <s-list inlaid>
       <s-list-item v-for="item in listData" :key="item.code" :title="item.name" />
     </s-list>

@@ -1,16 +1,22 @@
 @use '../style/base' as *;
 
 @include b(infinite-list) {
+  display: flex;
+  flex-direction: column;
   overflow-x: hidden;
   overflow-y: auto;
 
   @include b(pull-down-refresh) {
-    display: flow-root;
+    display: flex;
+    flex-direction: column;
     min-height: 100%;
   }
 
   @include e(load-more) {
     @include is(hidden) {
+      // NOTE: 不能设置 none, 需要确保能触发 IntersectionObserver
+      height: 1px;
+      overflow: hidden;
       visibility: hidden;
       pointer-events: none;
     }
