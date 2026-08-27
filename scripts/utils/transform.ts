@@ -97,6 +97,11 @@ export async function compileAllScript(options: {
     dir: outDir,
     preserveModules: true,
     preserveModulesRoot: rootDir,
-    entryFileNames: `[name].js`,
+    entryFileNames(chunkInfo) {
+      if (chunkInfo.facadeModuleId?.replace(/\?.*$/, '').endsWith('.vue')) {
+        return '[name].vue.js'
+      }
+      return '[name].js'
+    },
   })
 }

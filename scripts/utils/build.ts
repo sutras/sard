@@ -1,4 +1,4 @@
-import { glob, readFile, rename, rm } from 'node:fs/promises'
+import { readFile, rm } from 'node:fs/promises'
 import { relative, resolve } from 'node:path'
 import ignore from 'ignore'
 import { existsSync, globSync, readFileSync } from 'node:fs'
@@ -96,14 +96,6 @@ async function generateDeclaration(options: {
       consola.log(data)
     })
   })
-
-  for await (const entry of glob(resolve(outDir, './**/*.vue.js'))) {
-    await rm(entry)
-  }
-
-  for await (const entry of glob(resolve(outDir, './**/*.vue.d.ts'))) {
-    await rename(entry, entry.replace(/\.vue\.d\.ts$/, '.d.ts'))
-  }
 }
 
 export const dependenciesTypes = [
