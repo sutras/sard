@@ -12,7 +12,7 @@
       <Empty />
     </doc-demo>
 
-    <doc-demo title="弹窗滚动">
+    <doc-demo title="弹窗中滚动">
       <PopupScroll />
     </doc-demo>
   </doc-page>

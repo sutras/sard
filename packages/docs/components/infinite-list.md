@@ -28,6 +28,12 @@ group: 数据展示
 
 <<< @demo/infinite-list/demo/Empty.vue
 
+### 弹窗中滚动
+
+演示在弹窗中的使用。
+
+<<< @demo/infinite-list/demo/PopupScroll.vue
+
 ## API
 
 ### InfiniteListProps
