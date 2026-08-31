@@ -1,9 +1,9 @@
 <template>
   <doc-page title="场景1" padding="0">
-    <s-scroll-spy v-model="current" :style="{ height: scrollViewHeight }">
+    <s-scroll-spy v-model="value" :style="{ height: scrollViewHeight }">
       <div style="display: flex">
         <s-sidebar
-          v-model="current"
+          v-model="value"
           round
           :style="{
             position: 'sticky',
@@ -11,7 +11,7 @@
             height: scrollViewHeight,
           }"
         >
-          <s-sidebar-item v-for="(item, i) in list" :key="i" :name="i" :title="item.title" />
+          <s-sidebar-item v-for="(item, i) in list" :key="i" :value="i" :label="item.label" />
 
           <div style="height: var(--s-safe-bottom); flex: none"></div>
         </s-sidebar>
@@ -27,7 +27,7 @@
                 background: 'var(--s-bg-color-container)',
               }"
             >
-              {{ item.title }}
+              {{ item.label }}
             </s-scroll-spy-anchor>
             <div>
               <div
@@ -62,11 +62,11 @@ const list = ref(
     .fill(0)
     .map((_, i) => {
       return {
-        title: '标签' + i,
+        label: '标签' + i,
         children: Array(3).fill(0),
       }
     }),
 )
 
-const current = ref(0)
+const value = ref(0)
 </script>

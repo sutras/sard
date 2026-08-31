@@ -12,7 +12,7 @@ group: 导航组件
 
 ### 基础使用
 
-使用 `current` 属性控制选中的标签。
+使用 `v-model` 绑定当前选中的标签。
 
 <<< @demo/tabbar/demo/Basic.vue
 
@@ -45,14 +45,14 @@ group: 导航组件
 
 ### TabbarProps
 
-| 属性                   | 描述                       | 类型             | 默认值 |
-| ---------------------- | -------------------------- | ---------------- | ------ |
-| current                | 当前选中标签的 `name` 属性 | number \| string | -      |
-| color                  | 未选中标签的颜色           | string           | -      |
-| active-color           | 选中标签的颜色             | string           | -      |
-| bordered               | 是否显示外边框             | boolean          | true   |
-| fixed                  | 是否固定到页面底部         | boolean          | false  |
-| safe-area-inset-bottom | 是否开启底部安全区适配     | boolean          | false  |
+| 属性                   | 描述                        | 类型             | 默认值 |
+| ---------------------- | --------------------------- | ---------------- | ------ |
+| model-value            | 当前选中标签的 `value` 属性 | number \| string | -      |
+| color                  | 未选中标签的颜色            | string           | -      |
+| active-color           | 选中标签的颜色              | string           | -      |
+| bordered               | 是否显示外边框              | boolean          | true   |
+| fixed                  | 是否固定到页面底部          | boolean          | false  |
+| safe-area-inset-bottom | 是否开启底部安全区适配      | boolean          | false  |
 
 ### TabbarSlots
 
@@ -62,17 +62,17 @@ group: 导航组件
 
 ### TabbarEmits
 
-| 事件           | 描述           | 类型                               |
-| -------------- | -------------- | ---------------------------------- |
-| update:current | 切换标签时触发 | `(name: number \| string) => void` |
-| change         | 切换标签时触发 | `(name: number \| string) => void` |
+| 事件              | 描述           | 类型                                |
+| ----------------- | -------------- | ----------------------------------- |
+| update:modelValue | 切换标签时触发 | `(value: number \| string) => void` |
+| change            | 切换标签时触发 | `(value: number \| string) => void` |
 
 ### TabbarItemProps
 
-| 属性 | 描述             | 类型             | 默认值 |
-| ---- | ---------------- | ---------------- | ------ |
-| name | 标签唯一标识符   | string \| number | -      |
-| text | 要显示的标签文本 | string           | -      |
+| 属性  | 描述             | 类型             | 默认值 |
+| ----- | ---------------- | ---------------- | ------ |
+| value | 标签唯一标识符   | string \| number | -      |
+| label | 要显示的标签文本 | string           | -      |
 
 ### TabbarItemSlots
 
@@ -101,4 +101,4 @@ group: 导航组件
 | `--s-tabbar-item-color-active`       | `var(--s-color-primary)`        |
 | `--s-tabbar-item-icon-margin-bottom` | `var(--s-size-2xs)`             |
 | `--s-tabbar-item-icon-font-size`     | `var(--s-size-lg)`              |
-| `--s-tabbar-item-text-font-size`     | `var(--s-font-size-sm)`         |
+| `--s-tabbar-item-label-font-size`    | `var(--s-font-size-sm)`         |

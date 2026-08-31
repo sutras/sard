@@ -12,7 +12,7 @@
   #{css-var-name(tabbar-item-icon-margin-bottom)}: css-var(size-2xs);
   #{css-var-name(tabbar-item-icon-font-size)}: css-var(size-lg);
 
-  #{css-var-name(tabbar-item-text-font-size)}: css-var(font-size-sm);
+  #{css-var-name(tabbar-item-label-font-size)}: css-var(font-size-sm);
 }
 // #endregion variables
 
@@ -52,12 +52,12 @@
     justify-content: center;
     align-items: center;
     flex: 1;
-    font-size: css-var(tabbar-item-text-font-size);
+    font-size: css-var(tabbar-item-label-font-size);
     line-height: css-var(line-height-tight);
     color: css-var(tabbar-color);
     cursor: pointer;
 
-    @include m(current) {
+    @include m(active) {
       color: css-var(tabbar-item-color-active);
     }
   }
@@ -68,6 +68,6 @@
     line-height: css-var(line-height-none);
   }
 
-  @include e(text) {
+  @include e(label) {
   }
 }

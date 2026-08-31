@@ -12,7 +12,7 @@ group: 导航组件
 
 ### 基础使用
 
-使用 `v-model:current` 绑定当前选中项的 `name`，`name` 必须且唯一。
+使用 `v-model` 绑定当前选中项的 `value`，`value` 必须且唯一。
 
 <<< @demo/sidebar/demo/Basic.vue
 
@@ -44,7 +44,7 @@ group: 导航组件
 
 #### 场景 1
 
-此场景结合了 `Sidebar` 和 `ScrollSpy` 组件，绑定了同一个 `current` 属性进行双向联动。
+此场景结合了 `Sidebar` 和 `ScrollSpy` 组件，绑定了同一个值进行双向联动。
 
 <<< @demo/sidebar/demo/Scene1.vue
 
@@ -73,17 +73,17 @@ group: 导航组件
 
 ### SidebarEmits
 
-| 事件              | 描述                 | 类型                               |
-| ----------------- | -------------------- | ---------------------------------- |
-| update:modelValue | 当前导航项改变时触发 | `(name: string \| number) => void` |
-| change            | 当前导航项改变时触发 | `(name: string \| number) => void` |
+| 事件              | 描述                 | 类型                                |
+| ----------------- | -------------------- | ----------------------------------- |
+| update:modelValue | 当前导航项改变时触发 | `(value: string \| number) => void` |
+| change            | 当前导航项改变时触发 | `(value: string \| number) => void` |
 
 ### SidebarItemProps
 
 | 属性     | 描述                 | 类型             | 默认值 |
 | -------- | -------------------- | ---------------- | ------ |
-| title    | 导航项显示的标题内容 | string           | -      |
-| name     | 导航项唯一名称，必需 | string \| number | -      |
+| label    | 导航项显示的标题内容 | string           | -      |
+| value    | 导航项唯一名称，必需 | string \| number | -      |
 | disabled | 是否禁用表单项       | boolean          | false  |
 
 ### SidebarItemSlots

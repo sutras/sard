@@ -3,8 +3,8 @@
     <div v-if="isCurrent && context.round" :class="bem.e('round-top')"></div>
     <div v-if="isCurrent && context.line" :class="bem.e('line')"></div>
     <slot>
-      <div :class="bem.e('title')">
-        {{ title }}
+      <div :class="bem.e('label')">
+        {{ label }}
       </div>
     </slot>
     <div v-if="isCurrent && context.round" :class="bem.e('round-bottom')"></div>
@@ -47,14 +47,14 @@ if (!context) {
 }
 
 const isCurrent = computed(() => {
-  return context.current === props.name
+  return context.value === props.value
 })
 
 const itemRef = useTemplateRef('item')
 
 const member = reactive({
   el: itemRef,
-  name: toRef(() => props.name),
+  value: toRef(() => props.value),
 })
 
 const select = () => {
@@ -84,7 +84,7 @@ onUnmounted(() => {
 
 // ============================ style ============================
 const sidebarItemClass = computed(() => {
-  return [bem.b(), bem.is('current', isCurrent.value), bem.is('disabled', props.disabled)]
+  return [bem.b(), bem.is('active', isCurrent.value), bem.is('disabled', props.disabled)]
 })
 
 defineExpose<SidebarItemExpose>({})

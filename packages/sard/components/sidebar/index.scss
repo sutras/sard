@@ -37,7 +37,7 @@
   color: css-var(sidebar-item-color);
   text-align: center;
 
-  @include is(current) {
+  @include is(active) {
     font-weight: css-var(sidebar-item-font-weight-active);
     color: css-var(sidebar-item-color-active);
     background: css-var(sidebar-item-bg-active);
@@ -47,7 +47,7 @@
     @include disabled-text;
   }
 
-  @include e(title) {
+  @include e(label) {
     @include line-clamp(2);
   }
 

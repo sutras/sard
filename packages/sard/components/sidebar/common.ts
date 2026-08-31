@@ -21,11 +21,11 @@ export interface SidebarExpose {}
 
 export interface SidebarMember {
   el: HTMLElement | null
-  name: string | number
+  value: string | number
 }
 
 export interface SidebarContext {
-  current: any
+  value: any
   select: (member: SidebarMember) => void
   addMember: (member: SidebarMember) => void
   removeMember: (member: SidebarMember) => void
@@ -36,8 +36,8 @@ export interface SidebarContext {
 export const sidebarContextKey = Symbol('sidebarContext') as InjectionKey<SidebarContext>
 
 export interface SidebarItemProps {
-  title?: string
-  name: string | number
+  label?: string
+  value: string | number
   disabled?: boolean
 }
 

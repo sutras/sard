@@ -24,14 +24,14 @@ const emit = defineEmits<SidebarEmits>()
 
 const bem = createBem('sidebar')
 
-const innerCurrent = ref(props.modelValue)
+const innerValue = ref(props.modelValue)
 
 const members = reactive<SidebarMember[]>([])
 
 const scrollRef = useTemplateRef('scroll')
 
-const scrollIntoView = (name: string | number) => {
-  const member = members.find((member) => member.name === name)
+const scrollIntoView = (value: string | number) => {
+  const member = members.find((member) => member.value === value)
 
   if (!member) {
     return
@@ -46,15 +46,15 @@ const scrollIntoView = (name: string | number) => {
 watch(
   () => props.modelValue,
   () => {
-    if (!isNullish(props.modelValue) && props.modelValue !== innerCurrent.value) {
-      innerCurrent.value = props.modelValue
+    if (!isNullish(props.modelValue) && props.modelValue !== innerValue.value) {
+      innerValue.value = props.modelValue
       scrollIntoView(props.modelValue)
     }
   },
 )
 
 const context = reactive({
-  current: innerCurrent,
+  value: innerValue,
   round: toRef(() => props.round),
   line: toRef(() => props.line),
   addMember(member: SidebarMember) {
@@ -69,11 +69,11 @@ const context = reactive({
     }
   },
   select(member: SidebarMember) {
-    const name = member.name
-    if (name !== innerCurrent.value) {
-      innerCurrent.value = name
-      emit('update:modelValue', name)
-      emit('change', name)
+    const value = member.value
+    if (value !== innerValue.value) {
+      innerValue.value = value
+      emit('update:modelValue', value)
+      emit('change', value)
     }
   },
 })

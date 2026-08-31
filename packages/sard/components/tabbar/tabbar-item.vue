@@ -2,10 +2,10 @@
   <div :class="tabbarItemClass" :style="tabbarItemStyle" @click="onClick">
     <slot>
       <div :class="bem.e('icon')">
-        <slot name="icon" :active="isCurrent"></slot>
+        <slot name="icon" :active="isActive"></slot>
       </div>
-      <div :class="bem.e('text')">
-        {{ text }}
+      <div :class="bem.e('label')">
+        {{ label }}
       </div>
     </slot>
   </div>
@@ -35,25 +35,25 @@ if (!context) {
   throw new Error('TabbarItem must be included in Tabbar.')
 }
 
-const isCurrent = computed(() => {
-  return context.current === props.name
+const isActive = computed(() => {
+  return context.value === props.value
 })
 
 const onClick = (event: any) => {
-  if (props.name !== undefined) {
-    context.select(props.name)
+  if (props.value !== undefined) {
+    context.select(props.value)
   }
   emit('click', event)
 }
 
 // ============================ style ============================
 const tabbarItemClass = computed(() => {
-  return [bem.e('item'), bem.em('item', 'current', isCurrent.value)]
+  return [bem.e('item'), bem.em('item', 'active', isActive.value)]
 })
 
 const tabbarItemStyle = computed(() => {
   return {
-    color: isCurrent.value ? context.activeColor : context.color,
+    color: isActive.value ? context.activeColor : context.color,
   }
 })
 </script>

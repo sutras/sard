@@ -2,7 +2,7 @@ import type { InjectionKey } from 'vue'
 import { type DefaultProps } from '../config'
 
 export interface TabbarProps {
-  current?: number | string
+  modelValue?: number | string
   color?: string
   activeColor?: string
   bordered?: boolean
@@ -19,13 +19,13 @@ export interface TabbarSlots {
 }
 
 export interface TabbarEmits {
-  (e: 'update:current', current: number | string): void
-  (e: 'change', current: number | string): void
+  (e: 'update:modelValue', value: number | string): void
+  (e: 'change', value: number | string): void
 }
 
 export interface TabbarItemProps {
-  name?: string | number
-  text?: string
+  value?: string | number
+  label?: string
 }
 
 export interface TabbarItemSlots {
@@ -40,8 +40,8 @@ export interface TabbarItemEmits {
 export interface TabbarContext {
   color: TabbarProps['color']
   activeColor: TabbarProps['activeColor']
-  current: any
-  select: (name: string | number) => void
+  value: any
+  select: (value: string | number) => void
 }
 
 export const tabbarContextKey = Symbol('tabbarContext') as InjectionKey<TabbarContext>

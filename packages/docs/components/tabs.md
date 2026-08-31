@@ -66,10 +66,10 @@ group: 导航组件
 
 ### TabsEmits
 
-| 事件           | 描述                     | 类型                      |
-| -------------- | ------------------------ | ------------------------- |
-| update:current | 当前激活的标签改变时触发 | `(name: unknown) => void` |
-| change         | 当前激活的标签改变时触发 | `(name: unknown) => void` |
+| 事件              | 描述                     | 类型                       |
+| ----------------- | ------------------------ | -------------------------- |
+| update:modelValue | 当前激活的标签改变时触发 | `(value: unknown) => void` |
+| change            | 当前激活的标签改变时触发 | `(value: unknown) => void` |
 
 ### TabProps
 

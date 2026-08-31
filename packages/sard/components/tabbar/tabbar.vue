@@ -24,20 +24,22 @@ const emit = defineEmits<TabbarEmits>()
 
 const bem = createBem('tabbar')
 
-const innerCurrent = ref(props.current)
+const innerValue = ref(props.modelValue)
 watch(
-  () => props.current,
+  () => props.modelValue,
   () => {
-    if (props.current !== innerCurrent.value) {
-      innerCurrent.value = props.current
+    if (props.modelValue !== innerValue.value) {
+      innerValue.value = props.modelValue
     }
   },
 )
 
-const select: TabbarContext['select'] = (name) => {
-  innerCurrent.value = name
-  emit('update:current', name)
-  emit('change', name)
+const select: TabbarContext['select'] = (value) => {
+  if (value !== innerValue.value) {
+    innerValue.value = value
+    emit('update:modelValue', value)
+    emit('change', value)
+  }
 }
 
 provide(
@@ -45,7 +47,7 @@ provide(
   reactive({
     color: toRef(() => props.color),
     activeColor: toRef(() => props.activeColor),
-    current: innerCurrent,
+    value: innerValue,
     select,
   }),
 )
