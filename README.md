@@ -123,13 +123,12 @@ npm run publish
 4. 暂存 `git add .`
 5. 提交 `git commit -m 'fix: '`
 6. 给提交打标签 `npm run tag`
-7. 生成 changelog `npm run changelog`
-8. 暂存、提交 changelog `git commit -a -m 'chore: changelog'`
-9. 打包组件库 `npm run build:sard`
-10. 发布到 npm `npm run publish:sard`
-11. 推送代码和标签 `npm run push`
-12. 打包文档 `npm run build:site`
-13. 部署文档 `npm run deploy`
+7. 生成 changelog 并暂存、提交 `npm run changelog && git commit -a -m 'chore: changelog'`
+8. 打包组件库 `npm run build:sard`
+9. 发布到 npm `npm run publish:sard`
+10. 推送代码和标签 `npm run push`
+11. 打包文档 `npm run build:site`
+12. 部署文档 `npm run deploy`
 
 ## 新增组件流程
 

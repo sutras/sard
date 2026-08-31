@@ -1,3 +1,7 @@
+## <small>1.0.13 (2026-08-31)</small>
+
+- Features: 提供弹框对返回键的支持 ([c3b2636](https://github.com/sutras/sard/commit/c3b2636))
+
 ## <small>1.0.12 (2026-08-31)</small>
 
 - Bug Fixes: 统一属性名称 ([5082b4c](https://github.com/sutras/sard/commit/5082b4c))
