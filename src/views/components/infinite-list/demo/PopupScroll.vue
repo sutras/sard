@@ -17,7 +17,7 @@
 import { getProvinces } from '@/api'
 import { ref } from 'vue'
 
-const visible = ref(true)
+const visible = ref(false)
 
 const listData = ref<{ code: string; name: string }[]>([])
 

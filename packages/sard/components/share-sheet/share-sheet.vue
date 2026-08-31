@@ -2,7 +2,9 @@
   <Popup
     effect="slide-bottom"
     :visible="innerVisible"
+    :close-on-back-press="closeOnBackPress"
     @overlay-click="onOverlayClick"
+    @back-press="onBackPress"
     @visible-hook="onVisibleHook"
   >
     <div :class="shareSheetClass">
@@ -100,10 +102,15 @@ const perhapsClose = (type: 'close' | 'cancel' | 'select') => {
 }
 
 const onOverlayClick = () => {
-  emit('close')
   if (props.overlayClosable) {
+    emit('close')
     perhapsClose('close')
   }
+}
+
+const onBackPress = () => {
+  emit('close')
+  perhapsClose('close')
 }
 
 const onSelect = (item: ShareSheetItemProps) => {

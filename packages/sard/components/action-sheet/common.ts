@@ -32,10 +32,12 @@ export interface ActionSheetProps {
   overlayClosable?: boolean
   beforeClose?: ActionSheetBeforeClose
   internalContext?: UseActionSheetReturn
+  closeOnBackPress?: boolean
 }
 
 export const defaultActionSheetProps: DefaultProps<ActionSheetProps> = {
   overlayClosable: true,
+  closeOnBackPress: true,
 }
 
 export interface ActionSheetEmits extends MotionEmits {

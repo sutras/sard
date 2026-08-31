@@ -31,6 +31,7 @@ export interface PopoutProps {
   showShadow?: boolean
   destroyOnClose?: boolean
   lazy?: boolean
+  closeOnBackPress?: boolean
 }
 
 export const defaultPopoutProps: DefaultProps<PopoutProps> = {
@@ -43,6 +44,7 @@ export const defaultPopoutProps: DefaultProps<PopoutProps> = {
   overlayClosable: true,
   lazy: undefined,
   destroyOnClose: undefined,
+  closeOnBackPress: true,
 }
 
 export interface PopoutSlots {

@@ -14,3 +14,5 @@ export {
   usePopupEnter,
   useInPopup,
 } from './common'
+
+export { type PopupItem, popupManager } from './popup-manager'

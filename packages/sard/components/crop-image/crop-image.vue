@@ -1,5 +1,12 @@
 <template>
-  <Popup effect="full-fade" :visible="visible" :overlay="false" @visible-hook="onVisibleHook">
+  <Popup
+    effect="full-fade"
+    :visible="visible"
+    :overlay="false"
+    :close-on-back-press="closeOnBackPress"
+    @back-press="onBackPress"
+    @visible-hook="onVisibleHook"
+  >
     <div :class="cropImageClass">
       <div
         :class="bem.e('sensor')"
@@ -99,6 +106,10 @@ watch(
 const close = () => {
   innerVisible.value = false
   emit('update:visible', false)
+}
+
+const onBackPress = () => {
+  close()
 }
 
 const onVisibleHook = (name: MotionHookName, el: Element) => {

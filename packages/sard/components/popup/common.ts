@@ -32,6 +32,7 @@ export interface PopupProps {
   lockScroll?: boolean
   destroyOnClose?: boolean
   lazy?: boolean
+  closeOnBackPress?: boolean
 }
 
 export const mapEffectMotion: Record<PopupEffect, MotionName> = {
@@ -70,6 +71,7 @@ export interface TransitionHookCallbacks {
 
 export interface PopupEmits extends MotionEmits {
   (e: 'overlay-click', event: any): void
+  (e: 'back-press'): void
   (e: 'update:visible', visible: boolean): void
 }
 

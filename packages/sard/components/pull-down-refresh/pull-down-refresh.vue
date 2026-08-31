@@ -66,7 +66,9 @@ const toLoading = () => {
   recoveringTimer.clear()
   initialTimer.clear()
   status.value = 'loading'
-  translateY.value = props.headerHeight
+  if (!props.disabled) {
+    translateY.value = props.headerHeight
+  }
 }
 
 const toRecovering = () => {

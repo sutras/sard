@@ -13,10 +13,12 @@ export interface ShareSheetProps {
   visible?: boolean
   overlayClosable?: boolean
   beforeClose?: ShareSheetbeforeClose
+  closeOnBackPress?: boolean
 }
 
 export const defaultShareSheetProps: DefaultProps<ShareSheetProps> = {
   overlayClosable: true,
+  closeOnBackPress: true,
 }
 
 export interface ShareSheetEmits extends MotionEmits {

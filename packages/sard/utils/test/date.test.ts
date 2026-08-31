@@ -20,11 +20,6 @@ describe('Date', () => {
         day: solarDay,
       } = lunarToSolar(lunarYear, lunarMonth, lunarDay)
 
-      // const source = `source: ${year}-${month}-${day}`
-      // const lunar = `lunar: ${lunarYear}-${lunarMonth}-${lunarDay}`
-      // const solar = `solar: ${solarYear}-${solarMonth}-${solarDay}`
-      // console.log(`${source}, ${lunar}, ${solar}`)
-
       expect(`${year}-${month}-${day}`).toBe(`${solarYear}-${solarMonth}-${solarDay}`)
     }
   })

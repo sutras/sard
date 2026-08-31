@@ -3,7 +3,9 @@
     effect="zoom"
     :visible="visible"
     :class="bem.e('popup')"
+    :close-on-back-press="closeOnBackPress"
     @overlay-click="onOverlayClick"
+    @back-press="onBackPress"
     @visible-hook="onVisibleHook"
   >
     <div :class="dialogClass">
@@ -160,6 +162,10 @@ const onOverlayClick = () => {
   if (props.overlayClosable) {
     perhapsClose('close')
   }
+}
+
+const onBackPress = () => {
+  perhapsClose('close')
 }
 
 const onClose = () => {

@@ -25,6 +25,7 @@ export interface DialogProps {
   beforeClose?: DialogBeforeClose
   cancelProps?: ButtonProps
   confirmProps?: ButtonProps
+  closeOnBackPress?: boolean
 }
 
 export const defaultDialogProps: DefaultProps<DialogProps> = {
@@ -33,6 +34,7 @@ export const defaultDialogProps: DefaultProps<DialogProps> = {
   showCancel: true,
   showConfirm: true,
   overlayClosable: true,
+  closeOnBackPress: true,
 }
 
 export interface DialogSlots {

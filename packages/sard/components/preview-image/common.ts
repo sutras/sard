@@ -8,6 +8,7 @@ export interface PreviewImageProps {
   current?: number
   showIndicator?: boolean
   loop?: boolean
+  closeOnBackPress?: boolean
 }
 
 export const defaultPreviewImageProps: DefaultProps<PreviewImageProps> = {
@@ -15,6 +16,7 @@ export const defaultPreviewImageProps: DefaultProps<PreviewImageProps> = {
   showIndicator: true,
   loop: true,
   urls: () => [],
+  closeOnBackPress: true,
 }
 
 export interface PreviewImageSlots {

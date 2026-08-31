@@ -3,6 +3,8 @@
     effect="full-fade"
     :overlay-class="[bem.e('overlay'), bem.is('preview-image'), bem.is('immersive', isImmersive)]"
     :visible="innerVisible"
+    :close-on-back-press="closeOnBackPress"
+    @back-press="onBackPress"
     @visible-hook="onVisibleHook"
   >
     <div
@@ -73,6 +75,10 @@ watch(innerVisible, () => {
     visibleSwitching.value = false
   }, 150)
 })
+
+const onBackPress = () => {
+  close()
+}
 
 const onVisibleHook = (name: MotionHookName, el: Element) => {
   if (name === 'before-enter') {

@@ -14,12 +14,14 @@ export interface CropImageProps {
   beforeCrop?: (width: number, height: number) => number
   cancelText?: string
   confirmText?: string
+  closeOnBackPress?: boolean
 }
 
 export const defaultCropImageProps: DefaultProps<CropImageProps> = {
   cropScale: '1:1',
   type: 'image/png',
   quality: 0.92,
+  closeOnBackPress: true,
 }
 
 export interface CropImageSlots {

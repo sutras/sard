@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onUnmounted, ref } from 'vue'
 import { createBem } from '../../utils'
 import { useLockScroll, useZIndex } from '../../use'
 import Overlay from '../overlay/overlay.vue'
@@ -33,6 +33,7 @@ import {
 } from './common'
 import Motion from '../motion/motion.vue'
 import type { MotionHookName } from '../motion/common'
+import { popupManager, type PopupItem } from './popup-manager.ts'
 
 defineOptions({
   inheritAttrs: false,
@@ -60,10 +61,15 @@ const onVisibleHook = (name: MotionHookName, el: Element) => {
   if (name === 'before-enter') {
     increaseZIndex()
     rendered.value = true
+
+    if (props.closeOnBackPress) {
+      popupManager.push(popupItem)
+    }
   } else if (name === 'after-leave') {
     if (props.destroyOnClose) {
       rendered.value = false
     }
+    popupManager.remove(popupItem)
   }
 
   callVisibleHook(name)
@@ -80,6 +86,18 @@ const onOverlayClick = (event: MouseEvent) => {
 }
 
 useLockScroll(() => props.visible, props.lockScroll)
+
+// ============================ back press ============================
+const popupItem: PopupItem = {
+  close: () => {
+    emit('back-press')
+    emit('update:visible', false)
+  },
+}
+
+onUnmounted(() => {
+  popupManager.remove(popupItem)
+})
 
 // ============================ style ============================
 const popupClass = computed(() => {

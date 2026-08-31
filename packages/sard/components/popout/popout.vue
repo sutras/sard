@@ -9,7 +9,9 @@
     :transparent="transparent"
     :destroy-on-close="destroyOnClose"
     :lazy="lazy"
+    :close-on-back-press="closeOnBackPress"
     @overlay-click="onOverlayClick"
+    @back-press="onBackPress"
     @visible-hook="onVisibleHook"
   >
     <div :class="popoutClass" @transitionend.stop>
@@ -215,6 +217,10 @@ const onOverlayClick = () => {
   if (props.overlayClosable) {
     perhapsClose('close')
   }
+}
+
+const onBackPress = () => {
+  perhapsClose('close')
 }
 
 const onCloseClick = () => {

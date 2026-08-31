@@ -2,7 +2,9 @@
   <Popup
     effect="slide-bottom"
     :visible="innerVisible"
+    :close-on-back-press="closeOnBackPress"
     @overlay-click="onOverlayClick"
+    @back-press="onBackPress"
     @visible-hook="onVisibleHook"
   >
     <div :class="actionSheetClass">
@@ -140,6 +142,11 @@ const onOverlayClick = () => {
     emit('close')
     perhapsClose('close')
   }
+}
+
+const onBackPress = () => {
+  emit('close')
+  perhapsClose('close')
 }
 
 const onSelect = (item: ActionSheetItemProps, index: number) => {
