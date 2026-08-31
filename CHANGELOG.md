@@ -1,3 +1,7 @@
+## <small>1.0.12 (2026-08-31)</small>
+
+- Bug Fixes: 统一属性名称 ([5082b4c](https://github.com/sutras/sard/commit/5082b4c))
+
 ## <small>1.0.11 (2026-08-30)</small>
 
 ## <small>1.0.10 (2026-08-27)</small>
