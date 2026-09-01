@@ -286,10 +286,6 @@
         "name": "empty"
       },
       {
-        "title": "InfiniteList 无限列表",
-        "name": "infinite-list"
-      },
-      {
         "title": "List 列表",
         "name": "list"
       },

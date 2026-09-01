@@ -1,5 +1,11 @@
 import { type DefaultProps } from '../config'
-import { defaultSelectProps, type SelectSlots, type SelectProps } from '../select/common'
+import {
+  defaultSelectProps,
+  type SelectSlots,
+  type SelectProps,
+  type SelectEmits,
+  type SelectExpose,
+} from '../select/common'
 import { type FormPopoutProps } from '../popout/useFormPopout'
 import type { MotionEmits } from '../motion'
 
@@ -13,11 +19,9 @@ export const defaultSelectPopoutProps: DefaultProps<SelectPopoutProps> = {
 
 export interface SelectPopoutSlots extends SelectSlots {}
 
-export interface SelectPopoutEmits extends MotionEmits {
+export interface SelectPopoutEmits extends MotionEmits, SelectEmits {
   (e: 'update:visible', visible: boolean): void
-  (e: 'update:modelValue', value: any): void
-  (e: 'change', value: any): void
   (e: 'confirm', value: any): void
 }
 
-export interface SelectPopoutExpose {}
+export interface SelectPopoutExpose extends SelectExpose {}

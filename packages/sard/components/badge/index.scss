@@ -6,7 +6,6 @@
   #{css-var-name(badge-font-size)}: css-var(font-size-sm);
   #{css-var-name(badge-bg)}: css-var(color-danger);
   #{css-var-name(badge-color)}: css-var(white);
-  #{css-var-name(badge-border-color)}: css-var(border-color-light);
   #{css-var-name(badge-dot-size)}: 10px;
 }
 // #endregion variables
@@ -23,7 +22,6 @@
   font-size: css-var(badge-font-size);
   line-height: css-var(line-height-none);
   text-align: center;
-  border: 1px solid css-var(badge-border-color);
   border-radius: css-var(border-radius-full);
   color: css-var(badge-color);
   background: css-var(badge-bg);

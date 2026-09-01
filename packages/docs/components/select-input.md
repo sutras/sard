@@ -36,11 +36,7 @@ group: 表单组件
 
 ### 远程
 
-远程的使用参考 `SelectPopout` ，不多赘述。
-
-当远程数据没有加载时，输入框会显示对应的 `value` 值。
-值的已加载的标签会被缓存起来，后续筛选清空列表时也能显示缓存的标签。
-回显时如果标签不在列表中，可以通过 `map-label` 属性配置一个映射表来显示标签。
+使用 `v-model:filter-value` 绑定筛选值，从远程获取数据，可以在 `bottom` 插槽或默认插槽（自渲染 option）中放置 `LoadMore` 组件来加载分页数据。
 
 <<< @demo/select-input/demo/Remote.vue
 

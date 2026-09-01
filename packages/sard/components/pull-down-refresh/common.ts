@@ -15,13 +15,14 @@ export interface PullDownRefreshProps {
   transitionDuration?: number
   doneDuration?: number
   disabled?: boolean
+  error?: boolean
 }
 
 export const defaultPullDownRefreshProps: DefaultProps<PullDownRefreshProps> = {
   threshold: 50,
   headerHeight: 50,
   transitionDuration: 300,
-  doneDuration: 0,
+  doneDuration: 500,
   loading: false,
   disabled: false,
 }

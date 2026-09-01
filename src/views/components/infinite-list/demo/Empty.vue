@@ -1,17 +1,16 @@
 <template>
   <p class="mb-4">下拉刷新再次请求数据：</p>
 
-  <s-infinite-list
-    :request="request"
-    refreshable
-    :hide-load-more="listData.length === 0"
+  <s-pull-down-refresh
     style="height: 240px; overflow-y: auto; border: 1px var(--s-border-color) solid"
   >
-    <s-empty v-if="listData.length === 0" class="absolute inset-0" />
-    <s-list inlaid>
-      <s-list-item v-for="item in listData" :key="item.code" :title="item.name" />
-    </s-list>
-  </s-infinite-list>
+    <s-infinite-list :request="request" :hide-load-more="listData.length === 0">
+      <s-empty v-if="listData.length === 0" class="absolute inset-0" />
+      <s-list inlaid>
+        <s-list-item v-for="item in listData" :key="item.code" :title="item.name" />
+      </s-list>
+    </s-infinite-list>
+  </s-pull-down-refresh>
 </template>
 
 <script setup lang="ts">

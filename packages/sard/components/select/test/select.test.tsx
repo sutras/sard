@@ -182,7 +182,7 @@ describe('Select', () => {
 
   test('Remote', async () => {
     const wrapper = mount(
-      <Select filterable filterPlaceholder="请输入过滤关键词" remote>
+      <Select filterable filterPlaceholder="请输入过滤关键词">
         {regionData.slice(0, 5).map((item) => {
           return <SelectOption key={item.code} label={item.name} value={item.code} />
         })}

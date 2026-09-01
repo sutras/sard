@@ -1,31 +1,43 @@
 <template>
-  <div>
-    <doc-page gray title="页面触底加载">
-      <s-list>
-        <s-list-item v-for="item in listData" :key="item.code" :title="item.name" />
-      </s-list>
-      <div ref="load-more">
-        <s-load-more :status="status" @load-more="onLoadMore" @reload="onReload" />
-      </div>
-    </doc-page>
-  </div>
+  <doc-page gray title="页面触底加载">
+    <s-list>
+      <s-list-item v-for="item in listData" :key="item.code" :title="item.name" />
+    </s-list>
+    <s-load-more :status="status" @load="getData" />
+  </doc-page>
 </template>
 
 <script setup lang="ts">
-import { useLoadMore } from 'sard'
-import { ref, useTemplateRef } from 'vue'
+import { LoadMoreStatus } from 'sard'
+import { ref } from 'vue'
 import { getCities } from '@/api'
 
 const listData = ref<{ code: string; name: string }[]>([])
-const loadMoreRef = useTemplateRef('load-more')
 
-const { status, onLoadMore, onReload } = useLoadMore({
-  target: loadMoreRef,
-  request: async (page) => {
-    return getCities({ page }).then(({ list, total }) => {
+const status = ref<LoadMoreStatus>(LoadMoreStatus.INCOMPLETE)
+
+let page = 1
+
+const getData = async () => {
+  // 加载中
+  status.value = LoadMoreStatus.LOADING
+  return getCities({ page })
+    .then(({ list, total }) => {
       listData.value = [...listData.value, ...list]
-      return listData.value.length >= total || list.length === 0
+
+      if (listData.value.length >= total || list.length === 0) {
+        // 已加载所有数据
+        status.value = LoadMoreStatus.COMPLETE
+      } else {
+        // 还可以继续加载数据
+        status.value = LoadMoreStatus.INCOMPLETE
+        // 再次请求会加载下一页数据
+        page++
+      }
     })
-  },
-})
+    .catch(() => {
+      // 加载失败
+      status.value = LoadMoreStatus.ERROR
+    })
+}
 </script>

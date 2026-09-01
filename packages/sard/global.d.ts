@@ -64,7 +64,6 @@ declare module 'vue' {
     SImage: typeof import('./components/image/image.vue').default
     SIndexes: typeof import('./components/indexes/indexes.vue').default
     SIndexesAnchor: typeof import('./components/indexes/indexes-anchor.vue').default
-    SInfiniteList: typeof import('./components/infinite-list/infinite-list.vue').default
     SInput: typeof import('./components/input/input.vue').default
     SKeyboard: typeof import('./components/keyboard/keyboard.vue').default
     SKeyboardPopout: typeof import('./components/keyboard-popout/keyboard-popout.vue').default

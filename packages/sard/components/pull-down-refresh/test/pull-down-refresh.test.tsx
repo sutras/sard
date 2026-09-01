@@ -11,16 +11,16 @@ describe('PullDownRefresh', () => {
 
     expect(wrapper.find('.s-pull-down-refresh').exists()).toBe(true)
     expect(wrapper.find('.s-pull-down-refresh__header').exists()).toBe(true)
-    expect(wrapper.find('.s-pull-down-refresh__loading').exists()).toBe(false)
+    expect(wrapper.find('.s-pull-down-refresh--loading').exists()).toBe(false)
     expect(wrapper.text()).toContain('内容')
   })
 
   test('loading prop switches to loading status', async () => {
     const wrapper = mount(<PullDownRefresh loading />)
 
-    await nextTick()
+    await sleep(10)
 
-    expect(wrapper.find('.s-pull-down-refresh__loading').exists()).toBe(true)
+    expect(wrapper.find('.s-pull-down-refresh--loading').exists()).toBe(true)
     expect(wrapper.find('.s-pull-down-refresh__gesture').attributes('style') || '').toContain(
       'translate3d(0,50px,0)',
     )
@@ -30,7 +30,7 @@ describe('PullDownRefresh', () => {
     await sleep(350)
     await nextTick()
 
-    expect(wrapper.find('.s-pull-down-refresh__loading').exists()).toBe(false)
+    expect(wrapper.find('.s-pull-down-refresh--loading').exists()).toBe(false)
   })
 
   test('disabled prop prevents rendering in loading state', async () => {
@@ -38,6 +38,6 @@ describe('PullDownRefresh', () => {
 
     await nextTick()
 
-    expect(wrapper.find('.s-pull-down-refresh__loading').exists()).toBe(false)
+    expect(wrapper.find('.s-pull-down-refresh--loading').exists()).toBe(false)
   })
 })

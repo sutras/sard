@@ -1,11 +1,11 @@
 <template>
   <doc-page gray title="LoadMore 加载更多">
-    <doc-demo title="基础使用">
-      <Basic />
+    <doc-demo title="状态">
+      <Status />
     </doc-demo>
 
-    <doc-demo title="配合 useLoadMore 钩子函数使用">
-      <Hook />
+    <doc-demo title="基础使用">
+      <Basic />
     </doc-demo>
 
     <doc-demo title="配合 PullDownRefresh 组件使用">
@@ -22,8 +22,8 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import Status from './demo/Status.vue'
 import Basic from './demo/Basic.vue'
-import Hook from './demo/Hook.vue'
 import WithRefresh from './demo/WithRefresh.vue'
 
 const router = useRouter()

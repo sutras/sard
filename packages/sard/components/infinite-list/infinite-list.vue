@@ -1,49 +1,22 @@
 <template>
-  <div ref="scroll" :class="bem.b()">
+  <div :class="bem.b()">
     <PullDownRefresh
-      :loading="isRefreshing"
-      :disabled="!refreshable || isLoading"
-      :done-duration="doneDuration"
+      v-if="refreshable"
+      :loading="refreshing"
+      :disabled="status === LoadMoreStatus.LOADING"
       @refresh="onRefresh"
     >
-      <template #unready="slotsProps">
-        <slot name="unready" v-bind="slotsProps">
-          <Loading type="clock" size="16px" :animated="false" :progress="slotsProps.progress">
-            {{ t('unready') }}
-          </Loading>
-        </slot>
-      </template>
-      <template #ready>
-        <slot name="ready">
-          <Loading type="clock" size="16px" :animated="false">
-            {{ t('ready') }}
-          </Loading>
-        </slot>
-      </template>
-      <template #loading>
-        <slot name="loading">
-          <Loading type="clock" size="16px">
-            {{ t('loading') }}
-          </Loading>
-        </slot>
-      </template>
-      <template #done>
-        <slot name="done">
-          {{ doneText }}
-        </slot>
-      </template>
-
-      <slot :status="status" :refresh="refresh"></slot>
-
-      <div ref="load-more" :class="[bem.e('load-more'), bem.is('hidden', hideLoadMore)]">
-        <LoadMore :status="status" @load-more="onLoadMore" @reload="onReload" />
-      </div>
+      <slot></slot>
+      <LoadMore :status="status" @load="getData" />
     </PullDownRefresh>
+    <template>
+      <slot></slot>
+      <LoadMore :status="status" @load="getData" />
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, useTemplateRef } from 'vue'
 import { createBem } from '../../utils'
 import {
   type InfiniteListProps,
@@ -52,12 +25,10 @@ import {
   type InfiniteListExpose,
   defaultInfiniteListProps,
 } from './common'
-import PullDownRefresh from '../pull-down-refresh/pull-down-refresh.vue'
 import LoadMore from '../load-more/load-more.vue'
-import { useLoadMore } from '../load-more/useLoadMore'
-import { useTranslateWithPrefix } from '../../locale'
-import Loading from '../loading/loading.vue'
-import { useScrollParent } from '../../use/useScrollParent'
+import { LoadMoreStatus } from '../load-more'
+import { ref } from 'vue'
+import PullDownRefresh from '../pull-down-refresh/pull-down-refresh.vue'
 
 const props = withDefaults(defineProps<InfiniteListProps>(), defaultInfiniteListProps)
 
@@ -67,38 +38,40 @@ const emit = defineEmits<InfiniteListEmits>()
 
 const bem = createBem('infinite-list')
 
-const { t } = useTranslateWithPrefix('pullDownRefresh')
+// ============================ 加载更多 ============================
 
-// ============================ 下拉刷新 ============================
-const doneText = ref('')
+const status = ref<LoadMoreStatus>(LoadMoreStatus.INCOMPLETE)
 
-const onRefresh = () => {
-  refresh()
-    .then(() => {
-      doneText.value = t('doneSuccess')
-      emit('refresh-success')
+let page = 1
+
+const getData = async () => {
+  status.value = LoadMoreStatus.LOADING
+
+  return props
+    .request(page)
+    .then((finish) => {
+      if (finish) {
+        status.value = LoadMoreStatus.COMPLETE
+      } else {
+        status.value = LoadMoreStatus.INCOMPLETE
+        page++
+      }
     })
     .catch(() => {
-      doneText.value = t('doneFail')
-      emit('refresh-error')
+      status.value = LoadMoreStatus.ERROR
     })
 }
 
-// ============================ 加载更多 ============================
-const scrollRef = useTemplateRef('scroll')
-const scrollParent = useScrollParent(scrollRef)
-const loadMoreRef = useTemplateRef('load-more')
+// ============================ 下拉刷新 ============================
+const refreshing = ref(false)
 
-const { status, isLoading, isRefreshing, onLoadMore, onReload, refresh } = useLoadMore({
-  root: scrollParent,
-  target: loadMoreRef,
-  rootMargin: () => props.rootMargin,
-  request: async (page, isRefresh) => {
-    return props.request(page, isRefresh)
-  },
-})
+const onRefresh = () => {
+  page = 1
+  refreshing.value = true
+  getData().finally(() => {
+    refreshing.value = false
+  })
+}
 
-defineExpose<InfiniteListExpose>({
-  refresh,
-})
+defineExpose<InfiniteListExpose>({})
 </script>

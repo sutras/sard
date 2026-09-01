@@ -18,7 +18,7 @@ describe('LoadMore', () => {
     expect(wrapper.classes()).toContain('s-load-more--incomplete')
 
     await wrapper.trigger('click')
-    expect(wrapper.emitted()).toHaveProperty('load-more')
+    expect(wrapper.emitted()).toHaveProperty('load')
 
     await wrapper.setProps({
       status: 'loading',
@@ -39,6 +39,6 @@ describe('LoadMore', () => {
     expect(wrapper.classes()).toContain('s-load-more--error')
 
     await wrapper.trigger('click')
-    expect(wrapper.emitted()).toHaveProperty('reload')
+    expect(wrapper.emitted()).toHaveProperty('load')
   })
 })

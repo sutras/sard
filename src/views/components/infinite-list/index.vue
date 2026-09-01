@@ -15,6 +15,10 @@
     <doc-demo title="弹窗中滚动">
       <PopupScroll />
     </doc-demo>
+
+    <doc-demo title="手动控制状态">
+      <Manual />
+    </doc-demo>
   </doc-page>
 </template>
 
@@ -23,4 +27,5 @@ import Basic from './demo/Basic.vue'
 import Empty from './demo/Empty.vue'
 import Refresh from './demo/Refresh.vue'
 import PopupScroll from './demo/PopupScroll.vue'
+import Manual from './demo/Manual.vue'
 </script>

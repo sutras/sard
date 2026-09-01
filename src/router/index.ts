@@ -340,10 +340,6 @@ const router = createRouter({
           component: () => import('@/views/components/indexes/demo/FullPage.vue'),
         },
         {
-          path: 'infinite-list',
-          component: () => import('@/views/components/infinite-list/index.vue'),
-        },
-        {
           path: 'input',
           component: () => import('@/views/components/input/index.vue'),
         },

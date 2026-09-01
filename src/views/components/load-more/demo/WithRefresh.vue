@@ -1,50 +1,68 @@
 <template>
   <div
-    ref="scroll"
     class="overflow-y-auto rounded-lg"
     style="height: 300px; border: 1px solid var(--s-border-color)"
   >
-    <s-pull-down-refresh :loading="isRefreshing" :disabled="isLoading" @refresh="onRefresh">
+    <s-pull-down-refresh
+      :loading="refreshing"
+      :disabled="status === LoadMoreStatus.LOADING"
+      @refresh="onRefresh"
+    >
       <s-list inlaid>
         <s-list-item v-for="item in listData" :key="item.code" :title="item.name" />
       </s-list>
-      <div ref="load-more">
-        <s-load-more :status="status" @load-more="onLoadMore" @reload="onReload" />
-      </div>
+      <s-load-more :status="status" @load="getData" />
     </s-pull-down-refresh>
   </div>
 </template>
 
 <script setup lang="ts">
-import { toast, useLoadMore } from 'sard'
-import { ref, useTemplateRef } from 'vue'
-import { getCities } from '@/api'
+import { toast, LoadMoreStatus } from 'sard'
+import { ref } from 'vue'
+import { getProvinces } from '@/api'
 
 const listData = ref<{ code: string; name: string }[]>([])
 
-// 下拉刷新
-const onRefresh = () => {
-  refresh().then(() => {
-    toast('刷新成功')
-  })
+// ============================ 加载更多 ============================
+const status = ref<LoadMoreStatus>(LoadMoreStatus.INCOMPLETE)
+
+let page = 1
+
+const getData = async () => {
+  // 加载中
+  status.value = LoadMoreStatus.LOADING
+  return getProvinces({ page })
+    .then(({ list, total }) => {
+      listData.value = page === 1 ? list : [...listData.value, ...list]
+
+      if (listData.value.length >= total || list.length === 0) {
+        // 已加载所有数据
+        status.value = LoadMoreStatus.COMPLETE
+      } else {
+        // 还可以继续加载数据
+        status.value = LoadMoreStatus.INCOMPLETE
+        // 再次请求会加载下一页数据
+        page++
+      }
+    })
+    .catch(() => {
+      // 加载失败
+      status.value = LoadMoreStatus.ERROR
+    })
 }
 
-// 加载更多
-const scrollRef = useTemplateRef('scroll')
-const loadMoreRef = useTemplateRef('load-more')
+// ============================ 下拉刷新 ============================
+const refreshing = ref(false)
 
-const { status, isLoading, isRefreshing, onLoadMore, onReload, refresh } = useLoadMore({
-  root: scrollRef,
-  target: loadMoreRef,
-  request: async (page, isRefresh) => {
-    return getCities({ page }).then(({ list, total }) => {
-      if (isRefresh) {
-        listData.value = [...list]
-      } else {
-        listData.value = [...listData.value, ...list]
-      }
-      return listData.value.length >= total || list.length === 0
+const onRefresh = () => {
+  page = 1
+  refreshing.value = true
+  getData()
+    .then(() => {
+      toast('刷新成功')
     })
-  },
-})
+    .finally(() => {
+      refreshing.value = false
+    })
+}
 </script>

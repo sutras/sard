@@ -45,7 +45,7 @@ group: 反馈组件
 | header-height       | 顶部内容高度，单位 px         | number  | 50     |
 | loading             | 是否处于加载中状态            | boolean | false  |
 | transition-duration | 回弹动画时长，单位 ms         | number  | 300    |
-| done-duration       | 加载完成状态持续时长，单位 ms | number  | 0      |
+| done-duration       | 加载完成状态持续时长，单位 ms | number  | 500    |
 | disabled            | 是否禁止用户进行下拉操作      | boolean | false  |
 
 ### PullDownRefreshSlots

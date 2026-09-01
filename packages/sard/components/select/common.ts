@@ -10,23 +10,21 @@ export interface SelectProps {
   filterPlaceholder?: string
   filterMethod?: (query: string) => void
   filterValue?: string
-  remote?: boolean
-  remoteMethod?: (query: string, page: number, isRefresh: boolean) => Promise<boolean>
-  threshold?: number
   showToolbar?: boolean
   options?: any[]
   optionKeys?: OptionKeys
   valueKey?: string
+  filterLoading?: boolean
 }
 
 export const defaultSelectProps: DefaultProps<SelectProps> = {
   multipleLimit: 0,
-  threshold: 500,
   options: () => [],
 }
 
 export interface SelectSlots {
   default?(): any
+  bottom?(): any
   option?(props: { disabled: boolean; selected: boolean; label?: string | number; value: any }): any
   'option-label'?(props: {
     disabled: boolean
@@ -40,10 +38,12 @@ export interface SelectEmits {
   (e: 'update:modelValue', value: any): void
   (e: 'change', value: any): void
   (e: 'select', value: any): void
-  (e: 'update:filter-value', value: string): void
+  (e: 'update:filterValue', value: string): void
 }
 
-export interface SelectExpose {}
+export interface SelectExpose {
+  scrollTop: () => void
+}
 
 export interface SelectMember {
   el: HTMLElement | null

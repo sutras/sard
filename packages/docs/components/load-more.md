@@ -10,38 +10,36 @@ group: 反馈组件
 
 ## 代码演示
 
+### 状态
+
+通过设置 `status` 属性展示不同的状态信息；有四种状态：
+
+- `INCOMPLETE`: 未完成，处于此状态，会在触底或点击时触发 `load` 事件；
+- `LOADING`: 加载中，处于此状态不会有任何交互；
+- `COMPLETE`: 已完成，已经加载完所有数据，处于此状态不会有任何交互；
+- `ERROR`: 加载错误，可以通过点击组件触发 `load` 事件来重试；
+
+<<< @demo/load-more/demo/Status.vue
+
 ### 基础使用
 
-通过设置 `status` 属性展示不同的状态信息；
-组件处于 `incomplete` 状态时点击会触发 `load-more` 事件，通常用于加载的数据不满一屏无法触底加载时使用。
+`LoadMore` 组件会获取最近一个滚动的祖先元素，当 `LoadMore` 出现在此祖先元素中时触发 `load` 事件，可在此事件回调中加载数据。
 
-处于 `error` 状态时点击会触发 `reload` 事件。
+需要处理好加载状态和页码。
 
 <<< @demo/load-more/demo/Basic.vue
 
-### 配合 useLoadMore 钩子函数使用
-
-`LoadMore` 组件仅用于展示，状态管理和接口加载相关逻辑放在 `useLoadMore` 钩子函数里面。
-
-如果在滚动元素中使用触底加载，需要传递 `root` 选项用于获取滚动盒子元素。
-
-`request` 选项是获取数据的函数，接收当前页码作为参数，需要返回是否加载完所有数据的布尔值。
-
-钩子函数返回的 `status, onLoadMore, onReload` 需绑定到 `LoadMore` 组件。
-
-<<< @demo/load-more/demo/Hook.vue
-
 ### 配合 PullDownRefresh 组件使用
 
-下面的案例代码展示了经典的“下拉刷新+上拉加载”功能实现。
+下面的案例代码展示了经典的“下拉刷新+触底加载”。
 
-相比于单独使用 `onLoadMore`，当配合使用 `PullDownRefresh` 组件时，在触发下拉刷新事件时调用 `refresh` 函数，此时 `request` 函数参数二为 `true`，表示这是一个刷新请求，同时 `page` 会被传递为 1，可根据参数二来决定列表数据重置还是拼接。
+在下拉刷新事件回调中重置页码；触底加载中需要禁用下拉刷新。
 
 <<< @demo/load-more/demo/WithRefresh.vue
 
 ### 页面触底加载
 
-页面触底加载比 `scroll-view` 中的触底加载少了一个 `scrollViewSelector` 选项的配置。
+当没有获取到滚动元素时，会以页面窗口作为相交容器。
 
 <<< @demo/load-more/demo/FullPage.vue
 
@@ -49,13 +47,15 @@ group: 反馈组件
 
 ### LoadMoreProps
 
-| 属性            | 描述               | 类型           | 默认值                   |
-| --------------- | ------------------ | -------------- | ------------------------ |
-| status          | 加载的状态         | LoadMoreStatus | 'incomplete'             |
-| incomplete-text | 未加载完的状态文本 | string         | '加载更多'               |
-| loading-text    | 加载中的状态文本   | string         | '加载中...'              |
-| complete-text   | 加载完的状态文本   | string         | '没有更多了'             |
-| error-text      | 加载错误的状态文本 | string         | '请求失败，点击重新加载' |
+| 属性            | 描述                                                               | 类型           | 默认值                    |
+| --------------- | ------------------------------------------------------------------ | -------------- | ------------------------- |
+| status          | 加载的状态                                                         | LoadMoreStatus | LoadMoreStatus.INCOMPLETE |
+| incomplete-text | 未加载完的状态文本                                                 | string         | '加载更多'                |
+| loading-text    | 加载中的状态文本                                                   | string         | '加载中...'               |
+| complete-text   | 加载完的状态文本                                                   | string         | '没有更多了'              |
+| error-text      | 加载错误的状态文本                                                 | string         | '请求失败，点击重新加载'  |
+| root-margin     | 用于 IntersectionObserver 的 rootMargin 配置，控制触底加载的提前量 | `string`       | -                         |
+| disabled        | 禁用触底加载，仅用于演示                                           | boolean        | false                     |
 
 ### LoadMoreSlots
 
@@ -68,36 +68,18 @@ group: 反馈组件
 
 ### LoadMoreEmits
 
-| 事件      | 描述                             | 类型         |
-| --------- | -------------------------------- | ------------ |
-| load-more | 在 `incomplete` 状态下点击时触发 | `() => void` |
-| reload    | 在 `error` 状态下点击时触发      | `() => void` |
+| 事件 | 描述                                              | 类型         |
+| ---- | ------------------------------------------------- | ------------ |
+| load | 在触底或在 `INCOMPLETE \| ERROR` 状态下点击时触发 | `() => void` |
 
 ### LoadMoreStatus
 
 ```ts
-type LoadMoreStatus = 'incomplete' | 'loading' | 'complete' | 'error'
-```
-
-### useLoadMore
-
-```ts
-function useLoadMore(options: UseLoadMoreOptions): {
-  status: Ref<LoadMoreStatus, LoadMoreStatus>
-  isLoading: ComputedRef<boolean>
-  isRefreshing: ComputedRef<boolean>
-  onLoadMore: () => void
-  onReload: () => void
-  currentPage: Ref<number, number>
-  refresh: () => Promise<void | null>
-}
-
-interface UseLoadMoreOptions {
-  request: (page: number, isRefresh: boolean) => Promise<boolean>
-  rootMargin?: MaybeRefOrGetter<string>
-  root?: MaybeRefOrGetter<Element | Document | null>
-  target?: MaybeRefOrGetter<Element | null>
-  disabled?: MaybeRefOrGetter<boolean>
+enum LoadMoreStatus {
+  INCOMPLETE = 'incomplete', // 未完成
+  LOADING = 'loading', // 加载中
+  COMPLETE = 'complete', // 已完成
+  ERROR = 'error', // 加载错误
 }
 ```
 

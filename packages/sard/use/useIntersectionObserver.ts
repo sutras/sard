@@ -5,6 +5,7 @@ export interface UseIntersectionObserverOptions {
   root?: MaybeRefOrGetter<Element | Document | Window | null | undefined>
   rootMargin?: MaybeRefOrGetter<string>
   threshold?: MaybeRefOrGetter<number | number[]>
+  disabled?: MaybeRefOrGetter<boolean | null | undefined>
 }
 
 export interface UseIntersectionObserverReturn {
@@ -28,6 +29,7 @@ export function useIntersectionObserver(
   const rootMargin = computed(() => toValue(options.rootMargin))
   const threshold = computed(() => toValue(options.threshold))
   const target = computed(() => toValue(options.target))
+  const disabled = computed(() => toValue(options.disabled))
 
   const isIntersecting = ref(false)
   const intersectionRatio = ref(0)
@@ -50,6 +52,8 @@ export function useIntersectionObserver(
 
   const createObserver = () => {
     destroyObserver()
+
+    if (disabled.value) return
 
     observer = new IntersectionObserver(callback, {
       root: root.value,
@@ -86,7 +90,7 @@ export function useIntersectionObserver(
   }
 
   watch(
-    [root, rootMargin, threshold],
+    [root, rootMargin, threshold, disabled],
     () => {
       createObserver()
     },

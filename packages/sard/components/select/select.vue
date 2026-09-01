@@ -6,7 +6,7 @@
           <Search />
         </template>
         <template #append>
-          <Loading v-if="isLoading" :class="bem.e('loading')" />
+          <Loading v-if="filterLoading" :class="bem.e('loading')" />
         </template>
       </Input>
     </div>
@@ -54,9 +54,7 @@
         <div v-if="isEmpty" :class="bem.e('empty')">
           <Empty size="small" />
         </div>
-        <div v-if="remote && !isEmpty" ref="load-more">
-          <LoadMore :status="status" @load-more="onLoadMore" @reload="onReload" />
-        </div>
+        <slot name="bottom"></slot>
       </div>
     </div>
     <div v-if="multiple && showToolbar" :class="bem.e('toolbar')">
@@ -78,8 +76,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref, useTemplateRef, watch } from 'vue'
-import { createBem, debounce, scrollToTarget } from '../../utils'
+import { computed, ref, useTemplateRef, watch } from 'vue'
+import { createBem, scrollToTarget } from '../../utils'
 import {
   type SelectProps,
   type SelectSlots,
@@ -93,12 +91,10 @@ import Input from '../input/input.vue'
 import Button from '../button/button.vue'
 import SelectOptionGroup from './select-option-group.vue'
 import SelectOption from './select-option.vue'
-import LoadMore from '../load-more/load-more.vue'
 import Empty from '../empty/empty.vue'
 import { useSelect } from './useSelect'
 import { usePopupEnter } from '../popup'
 import { Search } from '@sard/icons'
-import { useLoadMore } from '../load-more/useLoadMore'
 import Loading from '../loading/loading.vue'
 
 const props = withDefaults(defineProps<SelectProps>(), defaultSelectProps)
@@ -149,7 +145,7 @@ const scrollSide = useScrollSide(scrollRef, {
 })
 
 // ============================ search ============================
-const searchValue = ref('')
+const searchValue = ref(String(props.filterValue ?? ''))
 
 watch(
   () => props.filterValue,
@@ -160,38 +156,14 @@ watch(
 
 watch(searchValue, () => {
   props.filterMethod?.(searchValue.value)
-  debouncedRefresh()
 
   if (searchValue.value !== props.filterValue) {
-    emit('update:filter-value', searchValue.value)
+    emit('update:filterValue', searchValue.value)
   }
 })
 
-// ============================ remote ============================
-const loadMoreRef = useTemplateRef('load-more')
-
-const { status, isLoading, onLoadMore, onReload, refresh } = useLoadMore({
-  root: scrollRef,
-  target: loadMoreRef,
-  disabled: () => !props.remote || !props.remoteMethod,
-  request: async (page, isRefresh) => {
-    return props.remoteMethod(searchValue.value, page, isRefresh).then((loaded) => {
-      if (isRefresh && scrollRef.value) {
-        scrollRef.value.scrollTop = 0
-      }
-      return loaded
-    })
-  },
-})
-
-const debouncedRefresh = debounce(refresh, props.threshold)
-
-onBeforeUnmount(() => {
-  debouncedRefresh.cancel()
-})
-
 const isEmpty = computed(() => {
-  return members.length === 0 && (props.remote ? status.value === 'complete' : true)
+  return members.length === 0
 })
 
 // ============================ toolbar ============================
@@ -246,5 +218,11 @@ const scrollClass = computed(() => {
   return [bem.e('scroll'), bem.em('scroll', 'filterable', props.filterable)]
 })
 
-defineExpose<SelectExpose>({})
+defineExpose<SelectExpose>({
+  scrollTop: () => {
+    if (scrollRef.value) {
+      scrollRef.value.scrollTop = 0
+    }
+  },
+})
 </script>

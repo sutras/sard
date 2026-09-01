@@ -1,17 +1,4 @@
 @use '../style/base' as *;
 
 @include b(infinite-list) {
-  @include b(pull-down-refresh) {
-    min-height: 100%;
-  }
-
-  @include e(load-more) {
-    @include is(hidden) {
-      // NOTE: 不能设置 none, 需要确保能触发 IntersectionObserver
-      height: 0;
-      overflow: hidden;
-      visibility: hidden;
-      pointer-events: none;
-    }
-  }
 }

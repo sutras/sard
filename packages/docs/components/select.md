@@ -22,22 +22,20 @@ group: 表单组件
 
 ### SelectProps
 
-| 属性               | 描述                                              | 类型                                                                     | 默认值 |
-| ------------------ | ------------------------------------------------- | ------------------------------------------------------------------------ | ------ |
-| model-value        | 当前绑定的值                                      | any                                                                      | -      |
-| multiple           | 是否允许多选                                      | boolean                                                                  | false  |
-| multiple-limit     | 多选时允许最多选择的个数，为0则不限制             | number                                                                   | 0      |
-| filterable         | 是否允许筛选                                      | boolean                                                                  | false  |
-| filter-placeholder | 筛选输入框的占位文案                              | string                                                                   | -      |
-| filter-method      | 允许筛选时的回调                                  | `(query: string) => void`                                                | -      |
-| filter-value       | 当前筛选输入框的值                                | string                                                                   | -      |
-| remote             | 是否允许远程加载数据                              | boolean                                                                  | false  |
-| remote-method      | 允许远程加载数据时的回调                          | `(query: string, page: number, isRefresh: boolean) => Promise\<boolean>` | -      |
-| threshold          | 触发远程加载回调的阈值，单位ms                    | number                                                                   | 500    |
-| show-toolbar       | 多选时，是否显示工具栏                            | boolean                                                                  | false  |
-| options            | 选项的数据                                        | Record<string, any>[]                                                    | []     |
-| option-keys        | 自定义 `options` 中的字段                         | OptionKeys                                                               | -      |
-| value-key          | 作为 value 唯一标识的键名，绑定值为对象类型时必填 | string                                                                   | -      |
+| 属性               | 描述                                              | 类型                      | 默认值 |
+| ------------------ | ------------------------------------------------- | ------------------------- | ------ |
+| model-value        | 当前绑定的值                                      | any                       | -      |
+| multiple           | 是否允许多选                                      | boolean                   | false  |
+| multiple-limit     | 多选时允许最多选择的个数，为0则不限制             | number                    | 0      |
+| filterable         | 是否允许筛选                                      | boolean                   | false  |
+| filter-placeholder | 筛选输入框的占位文案                              | string                    | -      |
+| filter-method      | 允许筛选时的回调                                  | `(query: string) => void` | -      |
+| filter-value       | 当前筛选输入框的值                                | string                    | -      |
+| filter-loading     | 筛选输入框是否显示 loading 状态                   | boolean                   | false  |
+| show-toolbar       | 多选时，是否显示工具栏                            | boolean                   | false  |
+| options            | 选项的数据                                        | Record<string, any>[]     | []     |
+| option-keys        | 自定义 `options` 中的字段                         | OptionKeys                | -      |
+| value-key          | 作为 value 唯一标识的键名，绑定值为对象类型时必填 | string                    | -      |
 
 ### OptionKeys
 
@@ -51,18 +49,25 @@ interface OptionKeys {
 
 ### SelectSlots
 
-| 插槽    | 描述           | 属性 |
-| ------- | -------------- | ---- |
-| default | 自定义默认内容 | -    |
+| 插槽    | 描述                   | 属性 |
+| ------- | ---------------------- | ---- |
+| default | 自定义默认内容         | -    |
+| bottom  | 自定义选项列表底部内容 | -    |
 
 ### SelectEmits
 
-| 事件                | 描述                     | 类型                      |
-| ------------------- | ------------------------ | ------------------------- |
-| update:modelValue   | 列表选择组件值改变时触发 | `(value: any) => void`    |
-| change              | 列表选择组件值改变时触发 | `(value: any) => void`    |
-| select              | 选择列表选择组时触发     | `(value: any) => void`    |
-| update:filter-value | 筛选框值改变时触发       | `(value: string) => void` |
+| 事件               | 描述                     | 类型                      |
+| ------------------ | ------------------------ | ------------------------- |
+| update:modelValue  | 列表选择组件值改变时触发 | `(value: any) => void`    |
+| change             | 列表选择组件值改变时触发 | `(value: any) => void`    |
+| select             | 选择列表选择组时触发     | `(value: any) => void`    |
+| update:filterValue | 筛选框值改变时触发       | `(value: string) => void` |
+
+### SelectExpose
+
+| 属性      | 描述       | 类型         |
+| --------- | ---------- | ------------ |
+| scrollTop | 滚动到顶部 | `() => void` |
 
 ### SelectOptionGroupProps
 
@@ -123,4 +128,3 @@ interface OptionKeys {
 | `--s-select-option-group-label-bg`        | `var(--s-fill-color-fourth)`   |
 | `--s-select-toolbar-padding-x`            | `var(--s-content-padding-x)`   |
 | `--s-select-toolbar-padding-y`            | `0`                            |
-| `--s-select-empty-margin-top`             | `var(--s-size)`                |

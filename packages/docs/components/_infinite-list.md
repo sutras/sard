@@ -6,7 +6,7 @@ group: 数据展示
 
 ## 介绍
 
-组合 `pull-down-refresh` 和 `load-more` 组件，滚动到底部自动加载更多数据。
+使用 `load-more` 组件，滚动到底部自动加载更多数据。
 
 ## 代码演示
 
@@ -16,9 +16,9 @@ group: 数据展示
 
 <<< @demo/infinite-list/demo/Basic.vue
 
-### 开启下拉刷新
+### 下拉刷新
 
-设置 `refreshable` 属性可开启下拉刷新功能。刷新时 `request` 的 `isRefresh` 参数为 `true`，此时应将列表数据重置为第一页数据。
+组合 `pull-down-refresh` 组件实现下拉刷新 + 触底加载效果。
 
 <<< @demo/infinite-list/demo/Refresh.vue
 
@@ -43,7 +43,6 @@ group: 数据展示
 | request        | 请求数据的方法，接收页码和是否刷新两个参数，返回 `Promise<boolean>`，`true` 表示数据已全部加载 | `(page: number, isRefresh: boolean) => Promise<boolean>` | -       |
 | hide-load-more | 是否隐藏加载更多组件                                                                           | `boolean`                                                | `false` |
 | refreshable    | 是否开启下拉刷新                                                                               | `boolean`                                                | `false` |
-| done-duration  | 刷新完成后 "完成" 提示的持续时间（ms）                                                         | `number`                                                 | `0`     |
 | root-margin    | 用于 IntersectionObserver 的 rootMargin 配置，控制触底加载的提前量                             | `string`                                                 | -       |
 
 ### InfiniteListSlots
@@ -58,13 +57,10 @@ group: 数据展示
 
 ### InfiniteListEmits
 
-| 事件            | 描述               | 类型         |
-| --------------- | ------------------ | ------------ |
-| refresh-success | 下拉刷新成功时触发 | `() => void` |
-| refresh-error   | 下拉刷新失败时触发 | `() => void` |
+| 事件 | 描述 | 类型 |
+| ---- | ---- | ---- |
 
 ### InfiniteListExpose
 
-| 属性    | 描述         | 类型         |
-| ------- | ------------ | ------------ |
-| refresh | 手动触发刷新 | `() => void` |
+| 属性 | 描述 | 类型 |
+| ---- | ---- | ---- |

@@ -1,5 +1,5 @@
 <template>
-  <div ref="root" :class="bem.b()">
+  <div ref="root" :class="rootClass">
     <div
       :class="bem.e('gesture')"
       :style="pullDownRefreshStyle"
@@ -11,15 +11,23 @@
     >
       <div :class="bem.e('header')" :style="headerStyle">
         <slot v-if="status === 'unready'" name="unready" :progress="progress">
-          <Loading type="clock" :class="bem.e('loading')" :animated="false" :progress="progress" />
+          <Loading type="clock" size="16px" :animated="false" :progress="progress">
+            {{ t('unready') }}
+          </Loading>
         </slot>
         <slot v-else-if="status === 'ready'" name="ready">
-          <Loading type="clock" :class="bem.e('loading')" :animated="false" />
+          <Loading type="clock" size="16px" :animated="false">
+            {{ t('ready') }}
+          </Loading>
         </slot>
         <slot v-else-if="status === 'loading'" name="loading">
-          <Loading type="clock" :class="bem.e('loading')" />
+          <Loading type="clock" size="16px">
+            {{ t('loading') }}
+          </Loading>
         </slot>
-        <slot v-else-if="status === 'done'" name="done"></slot>
+        <slot v-else-if="status === 'done'" name="done">
+          {{ error ? t('doneFail') : t('doneSuccess') }}
+        </slot>
       </div>
       <slot></slot>
     </div>
@@ -40,6 +48,7 @@ import {
 import { usePointerDown, useTimeout } from '../../use'
 import Loading from '../loading/loading.vue'
 import { useScrollParent } from '../../use/useScrollParent'
+import { useTranslateWithPrefix } from '../../locale'
 
 const props = withDefaults(defineProps<PullDownRefreshProps>(), defaultPullDownRefreshProps)
 
@@ -48,6 +57,8 @@ defineSlots<PullDownRefreshSlots>()
 const emit = defineEmits<PullDownRefreshEmits>()
 
 const bem = createBem('pull-down-refresh')
+
+const { t } = useTranslateWithPrefix('pullDownRefresh')
 
 const rootRef = useTemplateRef('root')
 const scrollParent = useScrollParent(rootRef)
@@ -102,6 +113,8 @@ onMounted(() => {
     toLoading()
   }
 })
+
+// ============================ gesture ============================
 
 let startX = 0
 let startY = 0
@@ -165,6 +178,9 @@ const onTouchEnd = () => {
 const onPointerDown = usePointerDown(onTouchStart, onTouchMove, onTouchEnd)
 
 // ============================ style ============================
+const rootClass = computed(() => {
+  return [bem.b(), bem.m(status.value)]
+})
 
 const pullDownRefreshStyle = computed(() => {
   return {

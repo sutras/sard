@@ -161,7 +161,10 @@ function readSectionPages(section: string): DocPage[] {
 
   return fs
     .readdirSync(sectionDir)
-    .filter((fileName) => fileName.endsWith('.md') && fileName !== 'index.md')
+    .filter(
+      (fileName) =>
+        fileName.endsWith('.md') && fileName !== 'index.md' && !fileName.startsWith('_'),
+    )
     .map((fileName) => {
       const fullPath = path.join(sectionDir, fileName)
       const meta = parseFrontmatter(fs.readFileSync(fullPath, 'utf8'))

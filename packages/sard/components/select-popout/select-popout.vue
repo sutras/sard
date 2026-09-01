@@ -6,7 +6,14 @@
     @confirm="onConfirm"
     @visible-hook="onVisibleHook"
   >
-    <Select v-bind="omittedProps" :model-value="draftValue" @change="onChange" @select="onSelect">
+    <Select
+      ref="select"
+      v-bind="omittedProps"
+      :model-value="draftValue"
+      @change="onChange"
+      @select="onSelect"
+      @update:filter-value="onUpdateFilterValue"
+    >
       <template v-if="slots.default" #default>
         <slot></slot>
       </template>
@@ -15,6 +22,9 @@
       </template>
       <template v-if="slots['option-label']" #option-label="labelProps">
         <slot name="option-label" v-bind="labelProps"></slot>
+      </template>
+      <template v-if="slots.bottom" #bottom>
+        <slot name="bottom"></slot>
       </template>
     </Select>
   </Popout>
@@ -31,6 +41,7 @@ import {
 import { omitFormPopoutProps, useFormPopout } from '../popout/useFormPopout'
 import Popout from '../popout/popout.vue'
 import Select from '../select/select.vue'
+import { useTemplateRef } from 'vue'
 
 const props = withDefaults(defineProps<SelectPopoutProps>(), defaultSelectPopoutProps)
 
@@ -42,12 +53,23 @@ const omittedProps = omitFormPopoutProps(props)
 
 const { innerVisible, draftValue, onChange, onConfirm, onVisibleHook } = useFormPopout(props, emit)
 
-const onSelect = () => {
+const onSelect = (value: any) => {
   if (!props.multiple && !props.showConfirm) {
     onConfirm(false)
     innerVisible.value = false
   }
+  emit('select', value)
 }
 
-defineExpose<SelectPopoutExpose>({})
+const onUpdateFilterValue = (value: string) => {
+  emit('update:filterValue', value)
+}
+
+const selectRef = useTemplateRef('select')
+
+defineExpose<SelectPopoutExpose>({
+  scrollTop: () => {
+    selectRef.value?.scrollTop()
+  },
+})
 </script>

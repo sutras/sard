@@ -66,11 +66,7 @@ group: 表单组件
 
 ### 远程
 
-如果需要从远程服务器获取数据，可以设置 `filterable` 显示输入框，设置 `remote` 属性启动远程逻辑，设置 `remote-method` 属性处理远程数据获取逻辑。
-
-`remote-method` 属性是一个回调函数，接收输入框值、当前页码和表示是否刷新的布尔值作为参数，并返回 `Promise<boolean>` 类型值，`Promise` 的布尔类型泛型参数表示是否已获取全部数据。
-
-`Select` 组件远程功能使用到了 `LoadMore` 组件和 `useLoadMore` 钩子函数，会在触底时加载下一页数据。
+使用 `v-model:filter-value` 绑定筛选值，从远程获取数据，可以在 `bottom` 插槽或默认插槽（自渲染 option）中放置 `LoadMore` 组件来加载分页数据。
 
 <<< @demo/select-popout/demo/Remote.vue
 
@@ -86,11 +82,9 @@ group: 表单组件
 
 ### SelectPopoutEmits
 
-继承 [`MotionEmits`](./motion#MotionEmits)。
+继承 [`MotionEmits`](./motion#MotionEmits) 和 [SelectEmits](./select#selectemits)。
 
-| 事件              | 描述               | 类型                         |
-| ----------------- | ------------------ | ---------------------------- |
-| update:visible    | 弹出框显隐时触发   | `(visible: boolean) => void` |
-| update:modelValue | 组件值改变时触发   | `(value: any) => void`       |
-| change            | 组件值改变时触发   | `(value: any) => void`       |
-| confirm           | 点击确定按钮时触发 | `(value: any) => void`       |
+| 事件           | 描述               | 类型                         |
+| -------------- | ------------------ | ---------------------------- |
+| update:visible | 弹出框显隐时触发   | `(visible: boolean) => void` |
+| confirm        | 点击确定按钮时触发 | `(value: any) => void`       |

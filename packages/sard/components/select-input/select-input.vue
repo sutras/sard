@@ -17,12 +17,15 @@
     </template>
 
     <SelectPopout
+      ref="selectPopout"
       v-bind="partitionedProps[1]"
       v-model:visible="innerVisible"
       v-model="innerValue"
       @change="onChange"
       @visible-hook="onVisibleHook"
       @confirm="onConfirm"
+      @select="onSelect"
+      @update:filter-value="onUpdateFilterValue"
     >
       <template v-if="slots.default" #default>
         <slot></slot>
@@ -33,12 +36,15 @@
       <template v-if="slots['option-label']" #option-label="labelProps">
         <slot name="option-label" v-bind="labelProps"></slot>
       </template>
+      <template v-if="slots.bottom" #bottom>
+        <slot name="bottom"></slot>
+      </template>
     </SelectPopout>
   </PopoutInput>
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, useTemplateRef, watch } from 'vue'
 import PopoutInput from '../popout-input/popout-input.vue'
 import SelectPopout from '../select-popout/select-popout.vue'
 import {
@@ -142,5 +148,19 @@ const onConfirm = (value: any) => {
   emit('confirm', value)
 }
 
-defineExpose<SelectInputExpose>({})
+const onSelect = (value: any) => {
+  emit('select', value)
+}
+
+const onUpdateFilterValue = (value: string) => {
+  emit('update:filterValue', value)
+}
+
+const selectPopoutRef = useTemplateRef('selectPopout')
+
+defineExpose<SelectInputExpose>({
+  scrollTop: () => {
+    selectPopoutRef.value?.scrollTop()
+  },
+})
 </script>

@@ -96,7 +96,6 @@ describe('SelectInput', () => {
         filterable
         filterPlaceholder="请输入过滤关键词"
         placeholder="请选择"
-        remote
         visible={true}
       />,
     )

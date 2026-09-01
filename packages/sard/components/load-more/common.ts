@@ -1,6 +1,11 @@
 import { type DefaultProps } from '../config'
 
-export type LoadMoreStatus = 'incomplete' | 'loading' | 'complete' | 'error'
+export enum LoadMoreStatus {
+  INCOMPLETE = 'incomplete',
+  LOADING = 'loading',
+  COMPLETE = 'complete',
+  ERROR = 'error',
+}
 
 export interface LoadMoreProps {
   status?: LoadMoreStatus
@@ -8,10 +13,12 @@ export interface LoadMoreProps {
   loadingText?: string
   completeText?: string
   errorText?: string
+  disabled?: boolean
+  rootMargin?: string
 }
 
 export const defaultLoadMoreProps: DefaultProps<LoadMoreProps> = {
-  status: 'incomplete',
+  status: LoadMoreStatus.INCOMPLETE,
 }
 
 export interface LoadMoreSlots {
@@ -22,6 +29,5 @@ export interface LoadMoreSlots {
 }
 
 export interface LoadMoreEmits {
-  (e: 'load-more'): void
-  (e: 'reload'): void
+  (e: 'load'): void
 }
