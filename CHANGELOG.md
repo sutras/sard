@@ -1,3 +1,7 @@
+## <small>1.0.14 (2026-09-01)</small>
+
+- Code Refactoring: 重构加载更多组件 ([c2dd61b](https://github.com/sutras/sard/commit/c2dd61b))
+
 ## <small>1.0.13 (2026-08-31)</small>
 
 - Features: 提供弹框对返回键的支持 ([c3b2636](https://github.com/sutras/sard/commit/c3b2636))
