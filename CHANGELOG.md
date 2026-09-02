@@ -1,3 +1,7 @@
+## <small>1.0.16 (2026-09-02)</small>
+
+- Bug Fixes: inputmode 不设置默认值 ([dd5a913](https://github.com/sutras/sard/commit/dd5a913))
+
 ## <small>1.0.15 (2026-09-02)</small>
 
 - Features: load-more组件新增 invisible 属性 ([31abf9e](https://github.com/sutras/sard/commit/31abf9e))
