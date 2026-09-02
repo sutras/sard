@@ -37,7 +37,7 @@ const onSubmit = () => {
     })
 }
 
-const checkPrice = (value: { number: number }) => {
+const checkPrice = ({ value }: { value: { number: number } }) => {
   if (value.number > 0) {
     return true
   }

@@ -32,7 +32,7 @@ import { toast, type FormRules, type FormExpose } from 'sard'
 
 const ruleFormRef = ref<FormExpose>()
 
-const checkAge = (value: any) => {
+const checkAge = ({ value }: { value: any }) => {
   return new Promise<void>((resolve, reject) => {
     if (!value) {
       return reject('Please input the age')
@@ -51,7 +51,7 @@ const checkAge = (value: any) => {
   })
 }
 
-const validatePass = (value: any) => {
+const validatePass = ({ value }: { value: any }) => {
   if (value === '') {
     return 'Please input the password'
   } else {
@@ -64,7 +64,7 @@ const validatePass = (value: any) => {
     return true
   }
 }
-const validatePass2 = (value: any) => {
+const validatePass2 = ({ value }: { value: any }) => {
   if (value === '') {
     return 'Please input the password again'
   } else if (value !== ruleForm.pass) {

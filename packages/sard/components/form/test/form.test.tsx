@@ -6,6 +6,7 @@ import Form from '../form.vue'
 import FormItem from '../form-item.vue'
 import Input from '../../input/input.vue'
 import { type FormExpose } from '../common'
+import { CancelError } from '../Validator'
 
 describe('Form', () => {
   test('direction', async () => {
@@ -106,5 +107,49 @@ describe('Form', () => {
           wrapper.find('.s-form-item:nth-child(3) .s-form-item__error').exists(),
         ).not.toBeTruthy()
       })
+  })
+
+  test('cancel superseded async validation', async () => {
+    let aborted = 0
+
+    const wrapper = mount({
+      setup() {
+        const formModel = reactive({
+          name: '',
+        })
+
+        const validator = (context: { value: string; rule: any; signal?: AbortSignal }) => {
+          return new Promise<void>((resolve, reject) => {
+            const timer = setTimeout(resolve, 20)
+
+            context.signal?.addEventListener('abort', () => {
+              clearTimeout(timer)
+              aborted += 1
+              reject(new CancelError())
+            })
+          })
+        }
+
+        return () => (
+          <Form model={formModel} ref="formRef">
+            <FormItem label="Name" name="name" rules={{ validator }}>
+              <Input v-model={formModel.name} />
+            </FormItem>
+          </Form>
+        )
+      },
+    })
+
+    const formRef = wrapper.vm.$refs.formRef as FormExpose
+
+    // 连续两次校验，第二次顶替第一次：第一次应被 abort 且静默结束
+    const first = formRef.validate()
+    const second = formRef.validate()
+
+    await first
+    await second
+
+    expect(aborted).toBe(1)
+    expect(wrapper.find('.s-form-item__error').exists()).not.toBeTruthy()
   })
 })

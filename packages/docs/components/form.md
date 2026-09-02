@@ -275,25 +275,48 @@ type ValidateState = '' | 'success' | 'error' | 'validating'
 
 ### Rule
 
-| 属性       | 描述                                                                             | 类型                                                                           | 默认值   |
-| ---------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | -------- |
-| validator  | 使用函数自定义验证，具体说明如下                                                 | `(value: any, rule: Rule) => Promise\<void> \| boolean \| string \| undefined` | -        |
-| pattern    | 通过正则来进行校验                                                               | RegExp                                                                         | -        |
-| message    | 校验失败的反馈文案                                                               | `string \| (() => string)`                                                     | -        |
-| trigger    | 触发校验的时机                                                                   | string \| string[]                                                             | -        |
-| transform  | 将值转换后再进行校验                                                             | `(value: any) => any`                                                          | -        |
-| type       | 使用内置的校验规则                                                               | ValidatorType                                                                  | 'string' |
-| enum       | 是否匹配枚举中的值（需要将 type 设置为 enum）                                    | `(string \| number)[]`                                                         | -        |
-| len        | 当 `type` 为字符串（字符串长度）、数值（等于数值）、数组（数组长度）时有效       | number                                                                         | -        |
-| min        | 当 `type` 为字符串（字符串最小长度）、数值（最小值）、数组（数组最小长度）时有效 | number                                                                         | -        |
-| max        | 当 `type` 为字符串（字符串最大长度）、数值（最大值）、数组（数组最大长度）时有效 | number                                                                         | -        |
-| required   | 是否为必选字段，当值为空值时 `'', [], false, undefined, null`，校验不通过        | boolean                                                                        | false    |
-| whitespace | `type` 为 `'string'` 时，如果字段仅包含空格则校验不通过                          | boolean                                                                        | false    |
+| 属性       | 描述                                                                             | 类型                                                                             | 默认值   |
+| ---------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------- |
+| validator  | 使用函数自定义验证，具体说明如下                                                 | `(context: ValidateContext) => Promise\<void> \| boolean \| string \| undefined` | -        |
+| pattern    | 通过正则来进行校验                                                               | RegExp                                                                           | -        |
+| message    | 校验失败的反馈文案                                                               | `string \| (() => string)`                                                       | -        |
+| trigger    | 触发校验的时机                                                                   | string \| string[]                                                               | -        |
+| transform  | 将值转换后再进行校验                                                             | `(value: any) => any`                                                            | -        |
+| type       | 使用内置的校验规则                                                               | ValidatorType                                                                    | 'string' |
+| enum       | 是否匹配枚举中的值（需要将 type 设置为 enum）                                    | `(string \| number)[]`                                                           | -        |
+| len        | 当 `type` 为字符串（字符串长度）、数值（等于数值）、数组（数组长度）时有效       | number                                                                           | -        |
+| min        | 当 `type` 为字符串（字符串最小长度）、数值（最小值）、数组（数组最小长度）时有效 | number                                                                           | -        |
+| max        | 当 `type` 为字符串（字符串最大长度）、数值（最大值）、数组（数组最大长度）时有效 | number                                                                           | -        |
+| required   | 是否为必选字段，当值为空值时 `'', [], false, undefined, null`，校验不通过        | boolean                                                                          | false    |
+| whitespace | `type` 为 `'string'` 时，如果字段仅包含空格则校验不通过                          | boolean                                                                          | false    |
 
 #### Rule['validator'] 说明
 
+`validator` 接收一个 `ValidateContext` 对象作为唯一参数，其中包含 `value`、`rule` 与 `signal`。
+
 当函数返回值为 `fulfilled` 状态的 `Promise` 或者 `true` 则验证通过，否则验证不通过；
 `Promise.reject` 的参数或者返回的字符串会作为错误验证信息，如果返回的不是字符串，则取 `Rule['message']` 的配置作为错误信息。
+
+当本次校验被新一轮校验顶替时，`signal` 会触发 `abort`，此时应中止底层请求并
+`reject(new CancelError())`；表单内部会识别该错误并静默结束本次校验（不改变校验状态、不计入错误）。
+
+### ValidateContext
+
+```ts
+interface ValidateContext {
+  value: any
+  rule: Rule
+  signal?: AbortSignal
+}
+```
+
+### CancelError
+
+校验被新一轮校验顶替时用于结束当前校验的错误类型，可由 `sard` 直接导入：
+
+```ts
+import { CancelError } from 'sard'
+```
 
 ### ValidatorType
 

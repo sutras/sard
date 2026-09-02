@@ -58,7 +58,7 @@ export interface ValidateMessages {
 }
 
 export interface Rule {
-  validator?: (value: any, rule: Rule) => Promise<any> | boolean | string | undefined
+  validator?: (context: ValidateContext) => Promise<any> | boolean | string | undefined
   pattern?: RegExp
   message?: string | (() => string)
   trigger?: string | string[]
@@ -72,15 +72,40 @@ export interface Rule {
   whitespace?: boolean
 }
 
+export interface ValidateContext {
+  /** 被校验的值 */
+  value: any
+  /** 当前规则 */
+  rule: Rule
+  /** 本次校验的中止信号：被新一轮校验顶替时触发 abort，可用于中止底层请求 */
+  signal?: AbortSignal
+}
+
 export interface ValidateOptions {
   validateFirst?: boolean
   value?: any
   name?: string | number | (string | number)[]
   label?: string
   trigger?: string | string[]
+  signal?: AbortSignal
 }
 
 export type VdaliteFailResult = string[]
+
+/**
+ * 校验被新一轮校验顶替时，validator 可通过 context.signal 感知并 reject 该错误；
+ * 表单内部识别后静默结束本次校验（不改状态、不计入错误）。
+ */
+export class CancelError extends Error {
+  constructor(message = 'Validation cancelled') {
+    super(message)
+    this.name = 'CancelError'
+  }
+}
+
+export function isCancelError(error: unknown): error is CancelError {
+  return error instanceof CancelError || (error as Error | null | undefined)?.name === 'CancelError'
+}
 
 function getMessage(message: Rule['message']) {
   return isFunction(message) ? message() : message
@@ -211,24 +236,35 @@ export class Validator {
       if (validateFirst) {
         Promise.all(
           rules.map((rule) => {
-            return this.validateRule(value, rule)
+            return this.validateRule(value, rule, options)
           }),
         )
           .then(() => {
             resolve()
           })
-          .catch(({ error, rule }) => {
+          .catch((reason) => {
+            if (isCancelError(reason)) {
+              reject(reason)
+              return
+            }
+            const { error, rule } = reason
             reject([this.replaceSymbol(error, rule, options)])
           })
       } else {
         Promise.allSettled(
           rules.map((rule) => {
-            return this.validateRule(value, rule)
+            return this.validateRule(value, rule, options)
           }),
         ).then((values) => {
           const rejected = values.filter(({ status }) => {
             return status === 'rejected'
           }) as PromiseRejectedResult[]
+
+          const cancel = rejected.find((result) => isCancelError(result.reason))
+          if (cancel) {
+            reject(cancel.reason)
+            return
+          }
 
           if (rejected.length === 0) {
             resolve()
@@ -245,7 +281,7 @@ export class Validator {
     })
   }
 
-  protected validateRule(value: any, rule: Rule) {
+  protected validateRule(value: any, rule: Rule, options: ValidateOptions = {}) {
     if (rule.transform) {
       value = rule.transform(value)
     }
@@ -272,14 +308,18 @@ export class Validator {
 
       // validator
       if (rule.validator) {
-        const result = rule.validator(value, rule)
+        const result = rule.validator({ value, rule, signal: options.signal })
         if (result instanceof Promise) {
           result
             .then(() => {
               resolve()
             })
             .catch((error) => {
-              handleReject(error)
+              if (isCancelError(error)) {
+                reject(error)
+              } else {
+                handleReject(error)
+              }
             })
         } else if (result === true) {
           resolve()

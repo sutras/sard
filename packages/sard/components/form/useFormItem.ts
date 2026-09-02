@@ -19,7 +19,7 @@ import {
   useFormContext,
 } from '../form/common'
 import { chainGet, chainSet, deepClone, isBoolean, noop, toArray } from '../../utils'
-import { type Rule, type VdaliteFailResult } from '../form/Validator'
+import { isCancelError, type Rule, type VdaliteFailResult } from '../form/Validator'
 
 export function useFormItem(props: FormItemProps) {
   const formContext = useFormContext()
@@ -30,6 +30,9 @@ export function useFormItem(props: FormItemProps) {
 
   // 用于阻止验证
   let isResetting = false
+
+  // 中止上一轮校验：新一轮校验开始时 abort，被顶替的校验静默结束
+  let abortController: AbortController | null = null
 
   const fieldValue = computed({
     get() {
@@ -159,6 +162,10 @@ export function useFormItem(props: FormItemProps) {
       return
     }
 
+    // 中止上一轮校验
+    abortController?.abort()
+    abortController = new AbortController()
+
     validateState.value = 'validating'
     try {
       await formContext.validator.validate(mergedRules.value, {
@@ -167,11 +174,17 @@ export function useFormItem(props: FormItemProps) {
         name: props.name,
         label: props.label,
         trigger,
+        signal: abortController.signal,
       })
 
       validateState.value = 'success'
       validateMessage.value = ''
     } catch (messages) {
+      // 被新一轮校验中止：静默结束，不改状态、不报错
+      if (isCancelError(messages)) {
+        return
+      }
+
       validateState.value = 'error'
       validateMessage.value = (messages as VdaliteFailResult)[0]
 
@@ -185,6 +198,8 @@ export function useFormItem(props: FormItemProps) {
   }
 
   const clearValidate = () => {
+    abortController?.abort()
+    abortController = null
     validateState.value = ''
     validateMessage.value = ''
     isResetting = false
@@ -232,6 +247,8 @@ export function useFormItem(props: FormItemProps) {
   })
 
   onBeforeUnmount(() => {
+    abortController?.abort()
+    abortController = null
     formContext.removeField(context)
   })
 
