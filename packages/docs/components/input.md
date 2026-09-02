@@ -112,7 +112,7 @@ group: 表单组件
 | placeholder           | HTML 原生属性，输入框占位符内容                                              | string                                                  | -      |
 | autofocus             | HTML 原生属性，是否自动聚焦                                                  | boolean                                                 | -      |
 | autocomplete          | HTML 原生属性，用于控制自动完成功能                                          | string                                                  | -      |
-| inputmode             | HTML 原生属性，用于指定输入框的输入模式                                      | string                                                  | 'text' |
+| inputmode             | HTML 原生属性，用于指定输入框的输入模式                                      | string                                                  | -      |
 | enterkeyhint          | HTML 原生属性，用于控制回车键样式                                            | string                                                  | -      |
 | spellcheck            | HTML 原生属性，用于检查元素的拼写错误                                        | string                                                  | -      |
 | autocorrect           | HTML 原生属性，用于自动更正输入的文本                                        | string                                                  | -      |

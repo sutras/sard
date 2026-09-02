@@ -53,7 +53,6 @@ export const defaultInputProps: DefaultProps<InputProps> = {
   modelValue: '',
   modelModifiers: () => ({}),
   validateEvent: true,
-  inputmode: 'text',
   type: 'text',
 }
 
