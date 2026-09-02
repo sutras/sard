@@ -297,8 +297,9 @@ type ValidateState = '' | 'success' | 'error' | 'validating'
 当函数返回值为 `fulfilled` 状态的 `Promise` 或者 `true` 则验证通过，否则验证不通过；
 `Promise.reject` 的参数或者返回的字符串会作为错误验证信息，如果返回的不是字符串，则取 `Rule['message']` 的配置作为错误信息。
 
-当本次校验被新一轮校验顶替时，`signal` 会触发 `abort`，此时应中止底层请求并
-`reject(new CancelError())`；表单内部会识别该错误并静默结束本次校验（不改变校验状态、不计入错误）。
+当本次校验被新一轮校验顶替时，`signal` 会触发 `abort`；表单内部会自动以 `CancelError`
+结束本次校验（不改变校验状态、不计入错误）。validator 只需在 `signal` 的 `abort` 回调中清理资源
+（如清除定时器、中止底层请求），无需手动 `reject`。
 
 ### ValidateContext
 

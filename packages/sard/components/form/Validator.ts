@@ -107,6 +107,39 @@ export function isCancelError(error: unknown): error is CancelError {
   return error instanceof CancelError || (error as Error | null | undefined)?.name === 'CancelError'
 }
 
+/**
+ * 将 validator 返回的 promise 与 abort 信号竞速：
+ * 信号一旦 abort 就自动以 CancelError 结束，validator 无需手动 reject。
+ */
+function raceWithAbort<T>(promise: Promise<T>, signal?: AbortSignal): Promise<T> {
+  if (!signal) {
+    return promise
+  }
+
+  if (signal.aborted) {
+    return Promise.reject(new CancelError())
+  }
+
+  return new Promise<T>((resolve, reject) => {
+    const onAbort = () => {
+      reject(new CancelError())
+    }
+
+    signal.addEventListener('abort', onAbort, { once: true })
+
+    promise.then(
+      (value) => {
+        signal.removeEventListener('abort', onAbort)
+        resolve(value)
+      },
+      (error) => {
+        signal.removeEventListener('abort', onAbort)
+        reject(error)
+      },
+    )
+  })
+}
+
 function getMessage(message: Rule['message']) {
   return isFunction(message) ? message() : message
 }
@@ -310,7 +343,7 @@ export class Validator {
       if (rule.validator) {
         const result = rule.validator({ value, rule, signal: options.signal })
         if (result instanceof Promise) {
-          result
+          raceWithAbort(result, options.signal)
             .then(() => {
               resolve()
             })

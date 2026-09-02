@@ -6,7 +6,6 @@ import Form from '../form.vue'
 import FormItem from '../form-item.vue'
 import Input from '../../input/input.vue'
 import { type FormExpose } from '../common'
-import { CancelError } from '../Validator'
 
 describe('Form', () => {
   test('direction', async () => {
@@ -119,13 +118,13 @@ describe('Form', () => {
         })
 
         const validator = (context: { value: string; rule: any; signal?: AbortSignal }) => {
-          return new Promise<void>((resolve, reject) => {
+          // 不手动 reject：abort 时由表单内部自动以 CancelError 结束本次校验
+          return new Promise<void>((resolve) => {
             const timer = setTimeout(resolve, 20)
 
             context.signal?.addEventListener('abort', () => {
               clearTimeout(timer)
               aborted += 1
-              reject(new CancelError())
             })
           })
         }
