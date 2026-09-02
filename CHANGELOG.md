@@ -1,3 +1,7 @@
+## <small>1.0.18 (2026-09-02)</small>
+
+- Bug Fixes: 表单自动终止验证 ([7fab3f7](https://github.com/sutras/sard/commit/7fab3f7))
+
 ## <small>1.0.17 (2026-09-02)</small>
 
 - Bug Fixes: 表单验证允许取消 ([66a32a4](https://github.com/sutras/sard/commit/66a32a4))
