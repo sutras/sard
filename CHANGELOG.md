@@ -1,3 +1,7 @@
+## <small>1.0.17 (2026-09-02)</small>
+
+- Bug Fixes: 表单验证允许取消 ([66a32a4](https://github.com/sutras/sard/commit/66a32a4))
+
 ## <small>1.0.16 (2026-09-02)</small>
 
 - Bug Fixes: inputmode 不设置默认值 ([dd5a913](https://github.com/sutras/sard/commit/dd5a913))
