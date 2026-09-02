@@ -1,3 +1,7 @@
+## <small>1.0.15 (2026-09-02)</small>
+
+- Features: load-more组件新增 invisible 属性 ([31abf9e](https://github.com/sutras/sard/commit/31abf9e))
+
 ## <small>1.0.14 (2026-09-01)</small>
 
 - Code Refactoring: 重构加载更多组件 ([c2dd61b](https://github.com/sutras/sard/commit/c2dd61b))
