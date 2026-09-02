@@ -19,4 +19,9 @@
   @include m(incomplete, error) {
     cursor: pointer;
   }
+
+  @include m(hidden) {
+    height: 0;
+    overflow: hidden;
+  }
 }

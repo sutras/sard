@@ -56,6 +56,7 @@ group: 反馈组件
 | error-text      | 加载错误的状态文本                                                 | string         | '请求失败，点击重新加载'  |
 | root-margin     | 用于 IntersectionObserver 的 rootMargin 配置，控制触底加载的提前量 | `string`       | -                         |
 | disabled        | 禁用触底加载，仅用于演示                                           | boolean        | false                     |
+| invisible       | 隐藏组件，不占地方，但仍然能观察是否相交                           | boolean        | false                     |
 
 ### LoadMoreSlots
 

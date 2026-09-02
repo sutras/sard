@@ -86,6 +86,6 @@ watch(
 // ============================ style ============================
 
 const loadMoreClass = computed(() => {
-  return [bem.b(), bem.m(props.status)]
+  return [bem.b(), bem.m(props.status), bem.m('hidden', props.invisible)]
 })
 </script>

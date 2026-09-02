@@ -41,4 +41,9 @@ describe('LoadMore', () => {
     await wrapper.trigger('click')
     expect(wrapper.emitted()).toHaveProperty('load')
   })
+
+  test('invisible', async () => {
+    const wrapper = mount(<LoadMore invisible />)
+    expect(wrapper.classes()).toContain('s-load-more--hidden')
+  })
 })

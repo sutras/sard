@@ -15,6 +15,7 @@ export interface LoadMoreProps {
   errorText?: string
   disabled?: boolean
   rootMargin?: string
+  invisible?: boolean
 }
 
 export const defaultLoadMoreProps: DefaultProps<LoadMoreProps> = {
