@@ -14,7 +14,7 @@
         class="form-item"
         :rules="[{ required: true, message: '请输入短信验证码!' }]"
       >
-        <s-space>
+        <s-flex gap="medium">
           <s-input
             v-model="formState.password"
             type="password"
@@ -23,7 +23,7 @@
             class="flex-1"
           />
           <s-button variant="link" compact>发送验证码</s-button>
-        </s-space>
+        </s-flex>
       </s-form-item>
 
       <s-form-item class="form-item">

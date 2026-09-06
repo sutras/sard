@@ -2,7 +2,7 @@
   <doc-page gray title="动态增减嵌套字段">
     <s-form ref="formRef" :model="dynamicValidateForm">
       <s-form-item v-for="(user, index) in dynamicValidateForm.users" :key="user.id">
-        <s-space align="center">
+        <s-flex align="center" gap="medium">
           <s-form-item
             :name="['users', index, 'first']"
             :rules="{
@@ -26,7 +26,7 @@
           <s-button variant="text" size="small" color="danger" @click="removeUser(user)" #icon>
             <Trash />
           </s-button>
-        </s-space>
+        </s-flex>
       </s-form-item>
       <s-form-item>
         <s-button variant="outlined" @click="addUser()">

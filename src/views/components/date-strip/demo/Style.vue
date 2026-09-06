@@ -5,7 +5,7 @@
         v-model="value"
         style="
           --s-date-strip-column-gap: 0px;
-          --s-date-strip-item-radius: 0px;
+          --s-date-strip-item-border-radius: 0px;
           --s-date-strip-item-bg-selected: var(--s-color-warning);
           --s-date-strip-item-color-today: var(--s-color-warning);
           --s-date-strip-item-bg-middle: rgba(var(--s-color-warning-rgb), 0.15);

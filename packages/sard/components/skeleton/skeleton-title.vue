@@ -1,11 +1,5 @@
 <template>
-  <SkeletonBlock
-    :class="bem.e('title')"
-    :animated="animated"
-    :round="round"
-    :width="width"
-    :height="height"
-  />
+  <SkeletonBlock :class="bem.e('title')" v-bind="$props" />
 </template>
 
 <script setup lang="ts">

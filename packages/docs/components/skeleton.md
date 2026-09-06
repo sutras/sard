@@ -109,7 +109,7 @@ group: 反馈组件
 | CSS 变量                           | 值                              |
 | ---------------------------------- | ------------------------------- |
 | `--s-skeleton-bg`                  | `var(--s-fill-color-secondary)` |
-| `--s-skeleton-radius`              | `var(--s-border-radius-sm)`     |
+| `--s-skeleton-border-radius`       | `var(--s-border-radius-sm)`     |
 | `--s-skeleton-highlight-color`     | `rgba(0, 0, 0, 0.08)`           |
 | `--s-skeleton-block-height`        | `var(--s-size)`                 |
 | `--s-skeleton-avatar-size`         | `var(--s-size-2xl)`             |

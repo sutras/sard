@@ -11,11 +11,11 @@
   #{css-var-name(keyboard-key-bg-active)}: css-var(gray-300);
 
   #{css-var-name(keyboard-key-height)}: css-var(size-4xl);
-  #{css-var-name(keyboard-key-radius)}: css-var(border-radius);
+  #{css-var-name(keyboard-key-border-radius)}: css-var(border-radius);
   #{css-var-name(keyboard-key-font-size)}: css-var(font-size-xl);
 
   #{css-var-name(keyboard-key-plate-height)}: css-var(size-3xl);
-  #{css-var-name(keyboard-key-plate-radius)}: css-var(border-radius-sm);
+  #{css-var-name(keyboard-key-plate-border-radius)}: css-var(border-radius-sm);
   #{css-var-name(keyboard-key-plate-font-size)}: css-var(font-size);
   #{css-var-name(keyboard-key-plate-backspace-font-size)}: css-var(size);
   #{css-var-name(keyboard-key-plate-bg)}: css-var(gray-300);
@@ -55,7 +55,7 @@
     align-items: center;
     justify-content: center;
     height: css-var(keyboard-key-height);
-    border-radius: css-var(keyboard-key-radius);
+    border-radius: css-var(keyboard-key-border-radius);
     font-size: css-var(keyboard-key-font-size);
     color: css-var(keyboard-key-color);
     background: css-var(keyboard-key-bg);
@@ -79,7 +79,7 @@
     @include e(key) {
       grid-column: span 2;
       height: css-var(keyboard-key-plate-height);
-      border-radius: css-var(keyboard-key-plate-radius);
+      border-radius: css-var(keyboard-key-plate-border-radius);
       font-size: css-var(keyboard-key-plate-font-size);
 
       @include m(A) {

@@ -68,12 +68,12 @@ group: 数据展示
 
 ### 样式变量
 
-| CSS 变量                        | 值                                |
-| ------------------------------- | --------------------------------- |
-| `--s-cool-icon-size`            | `50px`                            |
-| `--s-cool-icon-icon-size`       | `30px`                            |
-| `--s-cool-icon-oval-radius`     | `43% 57% / 57% 43%`               |
-| `--s-cool-icon-square-radius`   | `25%`                             |
-| `--s-cool-icon-triangle-radius` | `68% 32% 40% 60%/44% 34% 66% 56%` |
-| `--s-cool-icon-shadow-opacity`  | `0.4`                             |
-| `--s-cool-icon-adorn-bg`        | `rgba(255, 255, 255, 0.2)`        |
+| CSS 变量                               | 值                                |
+| -------------------------------------- | --------------------------------- |
+| `--s-cool-icon-size`                   | `50px`                            |
+| `--s-cool-icon-icon-size`              | `30px`                            |
+| `--s-cool-icon-oval-border-radius`     | `43% 57% / 57% 43%`               |
+| `--s-cool-icon-square-border-radius`   | `25%`                             |
+| `--s-cool-icon-triangle-border-radius` | `68% 32% 40% 60%/44% 34% 66% 56%` |
+| `--s-cool-icon-shadow-opacity`         | `0.4`                             |
+| `--s-cool-icon-adorn-bg`               | `rgba(255, 255, 255, 0.2)`        |

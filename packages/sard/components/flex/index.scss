@@ -1,0 +1,90 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(flex-gap-sm)}: css-var(size-xs);
+  #{css-var-name(flex-gap)}: css-var(size-sm);
+  #{css-var-name(flex-gap-lg)}: css-var(size);
+}
+// #endregion variables
+
+@include b(flex) {
+  display: flex;
+
+  // ============================ direction ============================
+  @include m(column) {
+    flex-direction: column;
+  }
+
+  @include m(row) {
+    flex-direction: row;
+  }
+
+  @include m(row-reverse) {
+    flex-direction: row-reverse;
+  }
+
+  @include m(column-reverse) {
+    flex-direction: column-reverse;
+  }
+
+  // ============================ gap ============================
+  @include m(small) {
+    gap: css-var(flex-gap-sm);
+  }
+
+  @include m(medium) {
+    gap: css-var(flex-gap);
+  }
+
+  @include m(large) {
+    gap: css-var(flex-gap-lg);
+  }
+
+  // ============================ wrap ============================
+  @include m(wrap) {
+    flex-wrap: wrap;
+  }
+
+  // ============================ justify ============================
+  @include m(justify-start) {
+    justify-content: flex-start;
+  }
+
+  @include m(justify-end) {
+    justify-content: flex-end;
+  }
+
+  @include m(justify-center) {
+    justify-content: center;
+  }
+
+  @include m(justify-between) {
+    justify-content: space-around;
+  }
+
+  @include m(justify-around) {
+    justify-content: space-around;
+  }
+
+  @include m(justify-evenly) {
+    justify-content: space-evenly;
+  }
+
+  // ============================ align ============================
+  @include m(align-start) {
+    align-items: flex-start;
+  }
+
+  @include m(align-end) {
+    align-items: flex-end;
+  }
+
+  @include m(align-center) {
+    align-items: center;
+  }
+
+  @include m(align-baseline) {
+    align-items: baseline;
+  }
+}

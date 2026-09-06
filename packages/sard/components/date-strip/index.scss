@@ -7,7 +7,7 @@
   #{css-var-name(date-strip-item-width)}: 64px;
   #{css-var-name(date-strip-item-padding-y)}: 9px;
   #{css-var-name(date-strip-item-padding-x)}: 6px;
-  #{css-var-name(date-strip-item-radius)}: css-var(border-radius);
+  #{css-var-name(date-strip-item-border-radius)}: css-var(border-radius);
   #{css-var-name(date-strip-item-border-color)}: transparent;
   #{css-var-name(date-strip-item-bg)}: transparent;
 
@@ -49,7 +49,7 @@
     width: css-var(date-strip-item-width);
     padding: css-var(date-strip-item-padding-y) css-var(date-strip-item-padding-x);
     text-align: center;
-    border-radius: css-var(date-strip-item-radius);
+    border-radius: css-var(date-strip-item-border-radius);
     border: 1px solid css-var(date-strip-item-border-color);
     background: css-var(date-strip-item-bg);
     cursor: pointer;

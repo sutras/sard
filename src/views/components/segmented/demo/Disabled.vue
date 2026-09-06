@@ -1,8 +1,8 @@
 <template>
-  <s-space direction="vertical">
+  <s-flex vertical gap="medium">
     <s-segmented v-model="value" :options="options" disabled />
     <s-segmented v-model="value" :options="options" />
-  </s-space>
+  </s-flex>
 </template>
 
 <script setup lang="ts">

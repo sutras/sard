@@ -13,7 +13,6 @@
   #{css-var-name(switch-thumb-gap)}: 3px;
   #{css-var-name(switch-thumb-width)}: calc(css-var(switch-height) - css-var(switch-thumb-gap) * 2);
   #{css-var-name(switch-thumb-height)}: css-var(switch-thumb-width);
-  #{css-var-name(switch-thumb-radius)}: css-var(border-radius-full);
   #{css-var-name(switch-thumb-bg)}: css-var(white);
   #{css-var-name(switch-thumb-color)}: css-var(gray-600);
 

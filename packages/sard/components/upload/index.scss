@@ -33,7 +33,7 @@
   #{css-var-name(upload-select-height)}: 88px;
   #{css-var-name(upload-select-font-size)}: css-var(size-xl);
   #{css-var-name(upload-select-color)}: css-var(text-color-secondary);
-  #{css-var-name(upload-select-radius)}: css-var(border-radius);
+  #{css-var-name(upload-select-border-radius)}: css-var(border-radius);
   #{css-var-name(upload-select-bg)}: css-var(fill-color-secondary);
   #{css-var-name(upload-select-bg-active)}: css-var(bg-color-active-dark);
 
@@ -58,7 +58,7 @@
     width: css-var(upload-select-width);
     height: css-var(upload-select-height);
     color: css-var(upload-select-color);
-    border-radius: css-var(upload-select-radius);
+    border-radius: css-var(upload-select-border-radius);
     background: css-var(upload-select-bg);
     cursor: pointer;
   }

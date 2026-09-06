@@ -18,7 +18,7 @@
   #{css-var-name(list-description-line-height)}: css-var(line-height-snug);
   #{css-var-name(list-description-color)}: css-var(text-color-tertiary);
 
-  #{css-var-name(list-card-radius)}: css-var(border-radius-lg);
+  #{css-var-name(list-card-border-radius)}: css-var(border-radius-lg);
 
   // item
   #{css-var-name(list-item-min-height)}: css-var(content-height);
@@ -89,7 +89,7 @@
 
   @include m(card) {
     @include e(content) {
-      border-radius: css-var(list-card-radius);
+      border-radius: css-var(list-card-border-radius);
     }
   }
 

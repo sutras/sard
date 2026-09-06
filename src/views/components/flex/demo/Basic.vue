@@ -1,7 +1,7 @@
 <template>
-  <s-space direction="vertical">
+  <s-flex gap="medium">
     <s-button>按钮</s-button>
     <s-button>按钮</s-button>
     <s-button>按钮</s-button>
-  </s-space>
+  </s-flex>
 </template>

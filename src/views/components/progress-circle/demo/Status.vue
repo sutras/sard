@@ -1,9 +1,9 @@
 <template>
-  <s-space>
+  <s-flex gap="medium">
     <s-progress-circle :percent="value" status="success" />
     <s-progress-circle :percent="value" status="warning" />
     <s-progress-circle :percent="value" status="error" />
-  </s-space>
+  </s-flex>
 
   <s-stepper v-model="value" :min="0" :max="100" :step="10" class="mt-2" />
 </template>

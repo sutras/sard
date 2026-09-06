@@ -118,7 +118,7 @@ group: 数据展示
 | `--s-list-description-font-size`        | `var(--s-font-size-sm)`        |
 | `--s-list-description-line-height`      | `var(--s-line-height-snug)`    |
 | `--s-list-description-color`            | `var(--s-text-color-tertiary)` |
-| `--s-list-card-radius`                  | `var(--s-border-radius-lg)`    |
+| `--s-list-card-border-radius`           | `var(--s-border-radius-lg)`    |
 | `--s-list-item-min-height`              | `var(--s-content-height)`      |
 | `--s-list-item-padding-x`               | `var(--s-content-padding-x)`   |
 | `--s-list-item-padding-y`               | `var(--s-content-padding-y)`   |

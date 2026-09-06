@@ -89,7 +89,7 @@ group: 导航组件
 | CSS 变量                          | 值                           |
 | --------------------------------- | ---------------------------- |
 | `--s-menu-bg`                     | `var(--s-white)`             |
-| `--s-menu-item-radius`            | `var(--s-border-radius)`     |
+| `--s-menu-item-border-radius`     | `var(--s-border-radius)`     |
 | `--s-menu-item-height`            | `var(--s-content-height)`    |
 | `--s-menu-item-padding-x`         | `var(--s-content-padding-x)` |
 | `--s-menu-item-font-size`         | `var(--s-font-size)`         |

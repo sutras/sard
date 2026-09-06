@@ -1,5 +1,5 @@
 <template>
-  <s-space wrap>
+  <s-flex wrap gap="medium">
     <s-button>按钮</s-button>
     <s-button>按钮</s-button>
     <s-button>按钮</s-button>
@@ -7,5 +7,5 @@
     <s-button>按钮</s-button>
     <s-button>按钮</s-button>
     <s-button>按钮</s-button>
-  </s-space>
+  </s-flex>
 </template>

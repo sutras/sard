@@ -1,12 +1,12 @@
 <template>
   <s-switch v-model="disabled" checked-text="禁用" unchecked-text="启用" class="mb-5" />
 
-  <s-space direction="vertical">
+  <s-flex vertical gap="medium">
     <s-stepper placeholder="数量" :disabled="disabled" variant="solid" />
     <s-stepper placeholder="数量" :disabled="disabled" variant="outlined" />
     <s-stepper placeholder="数量" :disabled="disabled" variant="accent" />
     <s-stepper placeholder="数量" :disabled="disabled" variant="ghost" />
-  </s-space>
+  </s-flex>
 </template>
 
 <script setup lang="ts">

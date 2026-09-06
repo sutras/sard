@@ -1,6 +1,6 @@
 <template>
-  <s-space direction="vertical" size="large">
-    <s-space justify="evenly">
+  <s-flex vertical gap="large">
+    <s-flex justify="evenly" gap="medium">
       <s-cool-icon shape="oval" background="#ffa726" color="#fff">
         <demo-icon name="skype-fill" />
       </s-cool-icon>
@@ -16,9 +16,9 @@
       <s-cool-icon shape="oval" background="linear-gradient(45deg,#ff3181,#ff8331)" color="#fff">
         <demo-icon name="youtube-fill" />
       </s-cool-icon>
-    </s-space>
+    </s-flex>
 
-    <s-space justify="evenly">
+    <s-flex justify="evenly" gap="medium">
       <s-cool-icon shape="oval" background="#ffedd4" color="#ffa726">
         <demo-icon name="skype-fill" />
       </s-cool-icon>
@@ -34,6 +34,6 @@
       <s-cool-icon shape="oval" background="#fad5e8" color="#e72f8c">
         <demo-icon name="youtube-fill" />
       </s-cool-icon>
-    </s-space>
-  </s-space>
+    </s-flex>
+  </s-flex>
 </template>

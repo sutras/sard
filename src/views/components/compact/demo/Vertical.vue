@@ -1,5 +1,5 @@
 <template>
-  <s-space>
+  <s-flex gap="medium">
     <s-compact direction="vertical">
       <s-button #icon>
         <Question />
@@ -23,7 +23,7 @@
         <Search />
       </s-button>
     </s-compact>
-  </s-space>
+  </s-flex>
 </template>
 
 <script setup lang="ts">

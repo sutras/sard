@@ -69,7 +69,7 @@ group: 导航组件
 
 | CSS 变量                              | 值                           |
 | ------------------------------------- | ---------------------------- |
-| `--s-pagination-radius`               | `var(--s-border-radius)`     |
+| `--s-pagination-border-radius`        | `var(--s-border-radius)`     |
 | `--s-pagination-border-color`         | `var(--s-border-color)`      |
 | `--s-pagination-item-height`          | `var(--s-content-height-sm)` |
 | `--s-pagination-item-min-width`       | `var(--s-content-height-sm)` |

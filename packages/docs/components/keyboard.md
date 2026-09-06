@@ -77,10 +77,10 @@ group: 表单组件
 | `--s-keyboard-key-bg`                        | `var(--s-white)`              |
 | `--s-keyboard-key-bg-active`                 | `var(--s-gray-300)`           |
 | `--s-keyboard-key-height`                    | `var(--s-size-4xl)`           |
-| `--s-keyboard-key-radius`                    | `var(--s-border-radius)`      |
+| `--s-keyboard-key-border-radius`             | `var(--s-border-radius)`      |
 | `--s-keyboard-key-font-size`                 | `var(--s-font-size-xl)`       |
 | `--s-keyboard-key-plate-height`              | `var(--s-size-3xl)`           |
-| `--s-keyboard-key-plate-radius`              | `var(--s-border-radius-sm)`   |
+| `--s-keyboard-key-plate-border-radius`       | `var(--s-border-radius-sm)`   |
 | `--s-keyboard-key-plate-font-size`           | `var(--s-font-size)`          |
 | `--s-keyboard-key-plate-backspace-font-size` | `var(--s-size)`               |
 | `--s-keyboard-key-plate-bg`                  | `var(--s-gray-300)`           |

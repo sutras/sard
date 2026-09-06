@@ -5,7 +5,7 @@
         <s-picker-input v-model="dynamicValidateForm.area" placeholder="Area" :columns="areas" />
       </s-form-item>
       <s-form-item v-for="(sight, index) in dynamicValidateForm.sights" :key="sight.id">
-        <s-space align="center">
+        <s-flex align="center" gap="medium">
           <s-form-item
             :name="['sights', index, 'value']"
             label="Sight"
@@ -43,7 +43,7 @@
           <s-button variant="text" size="small" color="danger" @click="removeSight(sight)" #icon>
             <Trash />
           </s-button>
-        </s-space>
+        </s-flex>
       </s-form-item>
       <s-form-item>
         <s-button variant="outlined" @click="addSight()">

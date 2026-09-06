@@ -4,7 +4,7 @@ import type { StyleValue } from 'vue'
 
 export interface GridProps {
   columns?: number
-  gap?: number
+  gap?: number | string
   bordered?: boolean
   square?: boolean
   clickable?: boolean

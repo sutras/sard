@@ -1,5 +1,5 @@
 <template>
-  <s-space direction="vertical" size="large">
+  <s-flex vertical gap="large">
     <s-list card>
       <s-list-item>
         <s-color-picker v-model="hexColor" format="hex" show-alpha />
@@ -20,7 +20,7 @@
       </s-list-item>
       <s-list-item>HSL：{{ hslColor }}</s-list-item>
     </s-list>
-  </s-space>
+  </s-flex>
 </template>
 
 <script setup lang="ts">

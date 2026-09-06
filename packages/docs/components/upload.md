@@ -193,7 +193,7 @@ type UploadStatus = 'pending' | 'uploading' | 'failed' | 'done'
 | `--s-upload-select-height`             | `88px`                          |
 | `--s-upload-select-font-size`          | `var(--s-size-xl)`              |
 | `--s-upload-select-color`              | `var(--s-text-color-secondary)` |
-| `--s-upload-select-radius`             | `var(--s-border-radius)`        |
+| `--s-upload-select-border-radius`      | `var(--s-border-radius)`        |
 | `--s-upload-select-bg`                 | `var(--s-fill-color-secondary)` |
 | `--s-upload-select-bg-active`          | `var(--s-bg-color-active-dark)` |
 | `--s-upload-video-play-bg`             | `var(--s-overlay-legible)`      |

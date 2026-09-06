@@ -158,7 +158,7 @@ const defaultDialogOptions = {
 | `--s-dialog-max-width`              | `90%`                           |
 | `--s-dialog-border-color`           | `var(--s-border-color)`         |
 | `--s-dialog-bg`                     | `var(--s-bg-color-elevated)`    |
-| `--s-dialog-radius`                 | `var(--s-border-radius-xl)`     |
+| `--s-dialog-border-radius`          | `var(--s-border-radius-xl)`     |
 | `--s-dialog-header-padding-y`       | `var(--s-size)`                 |
 | `--s-dialog-header-padding-x`       | `var(--s-size)`                 |
 | `--s-dialog-body-padding-x`         | `var(--s-size)`                 |

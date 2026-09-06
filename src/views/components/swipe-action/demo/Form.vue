@@ -7,7 +7,7 @@
     >
       <s-swipe-action>
         <s-form-item>
-          <s-space align="center">
+          <s-flex align="center" gap="medium">
             <s-form-item
               :name="['users', index, 'first']"
               :rules="{
@@ -28,7 +28,7 @@
             >
               <s-input inlaid v-model="user.last" placeholder="Last Name" />
             </s-form-item>
-          </s-space>
+          </s-flex>
         </s-form-item>
 
         <template #right>

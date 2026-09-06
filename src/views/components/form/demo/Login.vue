@@ -26,22 +26,22 @@
       </s-form-item>
 
       <s-form-item>
-        <s-space justify="between">
+        <s-flex justify="between" gap="medium">
           <s-form-item name="remember" inlaid>
             <s-checkbox v-model:checked="formState.remember" class="my-auto">
               Remember me
             </s-checkbox>
           </s-form-item>
           <s-button variant="link">Forgot password</s-button>
-        </s-space>
+        </s-flex>
       </s-form-item>
 
       <s-form-item>
         <s-button @click="submitForm" :disabled="disabled">Log in</s-button>
-        <s-space align="center" justify="end">
+        <s-flex align="center" justify="end" gap="medium">
           <span>Or</span>
           <s-button variant="link">register now!</s-button>
-        </s-space>
+        </s-flex>
       </s-form-item>
     </s-form>
   </doc-page>

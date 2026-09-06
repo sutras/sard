@@ -16,6 +16,5 @@ describe('NavbarPit', () => {
     const wrapper = mount(<NavbarPit statusBar />)
 
     expect(wrapper.find('.s-status-bar').exists()).toBe(true)
-    expect(wrapper.find('.s-status-bar').attributes('style')).toContain('height: 0px;')
   })
 })

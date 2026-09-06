@@ -4,9 +4,9 @@
 :root {
   #{css-var-name(cool-icon-size)}: 50px;
   #{css-var-name(cool-icon-icon-size)}: 30px;
-  #{css-var-name(cool-icon-oval-radius)}: 43% 57% / 57% 43%;
-  #{css-var-name(cool-icon-square-radius)}: 25%;
-  #{css-var-name(cool-icon-triangle-radius)}: 68% 32% 40% 60%/44% 34% 66% 56%;
+  #{css-var-name(cool-icon-oval-border-radius)}: 43% 57% / 57% 43%;
+  #{css-var-name(cool-icon-square-border-radius)}: 25%;
+  #{css-var-name(cool-icon-triangle-border-radius)}: 68% 32% 40% 60%/44% 34% 66% 56%;
   #{css-var-name(cool-icon-shadow-opacity)}: 0.4;
   #{css-var-name(cool-icon-adorn-bg)}: rgba(255, 255, 255, 0.2);
 }
@@ -40,11 +40,11 @@
   font-size: css-var(cool-icon-icon-size);
 
   @include m(square) {
-    border-radius: css-var(cool-icon-square-radius);
+    border-radius: css-var(cool-icon-square-border-radius);
   }
 
   @include m(oval) {
-    border-radius: css-var(cool-icon-oval-radius);
+    border-radius: css-var(cool-icon-oval-border-radius);
 
     @include e(bg) {
       transform: rotate(-19deg);
@@ -52,7 +52,7 @@
   }
 
   @include m(triangle) {
-    border-radius: css-var(cool-icon-triangle-radius);
+    border-radius: css-var(cool-icon-triangle-border-radius);
   }
 
   @include m(circle) {
@@ -66,7 +66,7 @@
   }
 
   @include m(flower) {
-    border-radius: css-var(cool-icon-oval-radius);
+    border-radius: css-var(cool-icon-oval-border-radius);
 
     @include e(bg) {
       width: 62.5%;

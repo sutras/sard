@@ -152,7 +152,7 @@ interface ShareSheetbeforeClose {
 | `--s-share-sheet-item-width`                  | `80px`                           |
 | `--s-share-sheet-item-opacity-active`         | `var(--s-opacity-active)`        |
 | `--s-share-sheet-icon-size`                   | `var(--s-size-4xl)`              |
-| `--s-share-sheet-icon-radius`                 | `var(--s-border-radius-full)`    |
+| `--s-share-sheet-icon-border-radius`          | `var(--s-border-radius-full)`    |
 | `--s-share-sheet-icon-font-size`              | `var(--s-size-xl)`               |
 | `--s-share-sheet-icon-color`                  | `var(--s-text-color-tertiary)`   |
 | `--s-share-sheet-icon-bg`                     | `var(--s-fill-color)`            |

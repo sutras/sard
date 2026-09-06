@@ -1,6 +1,6 @@
 <template>
   <s-radio-group v-model="value" #default="{ toggle, value }">
-    <s-space>
+    <s-flex gap="medium">
       <s-tag
         v-for="option in options"
         :key="option.value"
@@ -10,7 +10,7 @@
       >
         {{ option.label }}
       </s-tag>
-    </s-space>
+    </s-flex>
   </s-radio-group>
 </template>
 

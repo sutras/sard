@@ -1,5 +1,5 @@
 <template>
-  <s-space>
+  <s-flex gap="medium">
     <s-segmented v-model="value" :options="options" direction="vertical">
       <s-segmented-item v-for="option in options" :value="option.value">
         {{ option.value }}
@@ -11,7 +11,7 @@
         <demo-icon :name="option.icon" />
       </s-segmented-item>
     </s-segmented>
-  </s-space>
+  </s-flex>
 </template>
 
 <script setup lang="ts">

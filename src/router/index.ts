@@ -204,6 +204,10 @@ const router = createRouter({
           component: () => import('@/views/components/fab/index.vue'),
         },
         {
+          path: 'flex',
+          component: () => import('@/views/components/flex/index.vue'),
+        },
+        {
           path: 'floating-bubble',
           component: () => import('@/views/components/floating-bubble/index.vue'),
         },
@@ -566,10 +570,6 @@ const router = createRouter({
         {
           path: 'slider',
           component: () => import('@/views/components/slider/index.vue'),
-        },
-        {
-          path: 'space',
-          component: () => import('@/views/components/space/index.vue'),
         },
         {
           path: 'status-bar',

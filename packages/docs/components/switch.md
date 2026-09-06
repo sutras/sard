@@ -109,7 +109,6 @@ group: 表单组件
 | `--s-switch-thumb-gap`       | `3px`                                                                 |
 | `--s-switch-thumb-width`     | `calc(var(--s-switch-height) - var(--s-switch-thumb-gap) * 2)`        |
 | `--s-switch-thumb-height`    | `var(--s-switch-thumb-width)`                                         |
-| `--s-switch-thumb-radius`    | `var(--s-border-radius-full)`                                         |
 | `--s-switch-thumb-bg`        | `var(--s-white)`                                                      |
 | `--s-switch-thumb-color`     | `var(--s-gray-600)`                                                   |
 | `--s-switch-text-min-margin` | `9px`                                                                 |

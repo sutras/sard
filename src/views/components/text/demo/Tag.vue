@@ -1,5 +1,5 @@
 <template>
-  <s-space direction="vertical">
+  <s-flex vertical gap="medium">
     <s-text>span</s-text>
     <s-text tag="p">This is a paragraph.</s-text>
     <s-text tag="b">Bold</s-text>
@@ -15,5 +15,5 @@
     <s-text tag="ins">Inserted</s-text>
     <s-text tag="del">Deleted</s-text>
     <s-text tag="mark">Marked</s-text>
-  </s-space>
+  </s-flex>
 </template>

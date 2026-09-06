@@ -1,5 +1,5 @@
 <template>
-  <s-space direction="vertical">
+  <s-flex vertical gap="medium">
     <s-compact block>
       <s-input v-model="value" placeholder="请输入" />
       <s-input v-model="value" placeholder="请输入" />
@@ -46,7 +46,7 @@
         </template>
       </s-datetime-picker-input>
     </s-compact>
-  </s-space>
+  </s-flex>
 </template>
 
 <script setup lang="ts">

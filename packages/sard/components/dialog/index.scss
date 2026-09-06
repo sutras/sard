@@ -6,7 +6,7 @@
   #{css-var-name(dialog-max-width)}: 90%;
   #{css-var-name(dialog-border-color)}: css-var(border-color);
   #{css-var-name(dialog-bg)}: css-var(bg-color-elevated);
-  #{css-var-name(dialog-radius)}: css-var(border-radius-xl);
+  #{css-var-name(dialog-border-radius)}: css-var(border-radius-xl);
 
   #{css-var-name(dialog-header-padding-y)}: css-var(size);
   #{css-var-name(dialog-header-padding-x)}: css-var(size);
@@ -33,7 +33,7 @@
   width: css-var(dialog-width);
   max-width: 100%;
   background: css-var(dialog-bg);
-  border-radius: css-var(dialog-radius);
+  border-radius: css-var(dialog-border-radius);
 
   @include e(popup) {
     max-width: css-var(dialog-max-width);
@@ -138,18 +138,18 @@
 
       &:first-child {
         @include not-rtl {
-          border-bottom-left-radius: css-var(dialog-radius);
+          border-bottom-left-radius: css-var(dialog-border-radius);
         }
         @include rtl {
-          border-bottom-right-radius: css-var(dialog-radius);
+          border-bottom-right-radius: css-var(dialog-border-radius);
         }
       }
       &:last-child {
         @include not-rtl {
-          border-bottom-right-radius: css-var(dialog-radius);
+          border-bottom-right-radius: css-var(dialog-border-radius);
         }
         @include rtl {
-          border-bottom-left-radius: css-var(dialog-radius);
+          border-bottom-left-radius: css-var(dialog-border-radius);
         }
       }
     }

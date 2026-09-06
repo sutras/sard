@@ -1,5 +1,5 @@
 <template>
-  <s-space align="center">
+  <s-flex align="center" gap="medium">
     <s-input
       variant="text"
       :model-value="modelValue.number"
@@ -16,7 +16,7 @@
       @update:modelValue="onCurrencyChange"
       :validate-event="false"
     />
-  </s-space>
+  </s-flex>
 </template>
 
 <script setup lang="ts">

@@ -2,8 +2,8 @@
 
 // #region variables
 :root {
-  #{css-var-name(skeleton-bg)}: css-var(fill-color-secondary);
-  #{css-var-name(skeleton-radius)}: css-var(border-radius-sm);
+  #{css-var-name(skeleton-bg)}: css-var(fill-color-tertiary);
+  #{css-var-name(skeleton-border-radius)}: css-var(border-radius-sm);
   #{css-var-name(skeleton-highlight-color)}: rgba(0, 0, 0, 0.08);
 
   #{css-var-name(skeleton-block-height)}: css-var(size);
@@ -12,8 +12,8 @@
   #{css-var-name(skeleton-avatar-margin-end)}: css-var(size);
 
   #{css-var-name(skeleton-title-width)}: 40%;
-  #{css-var-name(skeleton-title-height)}: css-var(size-lg);
-  #{css-var-name(skeleton-title-margin-bottom)}: css-var(size);
+  #{css-var-name(skeleton-title-height)}: css-var(size);
+  #{css-var-name(skeleton-title-margin-bottom)}: css-var(size-sm);
 
   #{css-var-name(skeleton-row-last-width)}: 60%;
   #{css-var-name(skeleton-row-gap)}: css-var(size-sm);
@@ -33,14 +33,14 @@
     width: 100%;
     height: css-var(skeleton-block-height);
     background: css-var(skeleton-bg);
-    border-radius: css-var(skeleton-radius);
+    border-radius: css-var(skeleton-border-radius);
   }
 
   @include e(avatar) {
     flex: none;
     width: css-var(skeleton-avatar-size);
     height: css-var(skeleton-avatar-size);
-    border-radius: css-var(skeleton-radius);
+    border-radius: css-var(skeleton-border-radius);
   }
 
   @include e(title) {

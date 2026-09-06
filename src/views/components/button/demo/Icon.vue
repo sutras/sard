@@ -1,6 +1,6 @@
 <template>
-  <s-space direction="vertical">
-    <s-space align="center">
+  <s-flex vertical gap="medium">
+    <s-flex align="center" gap="medium">
       <s-button :loading="loading" variant="filled" size="xs" #icon>
         <Plus />
       </s-button>
@@ -13,9 +13,9 @@
       <s-button :loading="loading" variant="filled" size="large" #icon>
         <Plus />
       </s-button>
-    </s-space>
+    </s-flex>
 
-    <s-space align="center">
+    <s-flex align="center" gap="medium">
       <s-button :loading="loading" round size="xs" #icon>
         <Plus />
       </s-button>
@@ -28,9 +28,9 @@
       <s-button :loading="loading" round size="large" #icon>
         <Plus />
       </s-button>
-    </s-space>
+    </s-flex>
 
-    <s-space align="center">
+    <s-flex align="center" gap="medium">
       <s-button :loading="loading" variant="outlined" size="xs">
         <template #icon>
           <Plus />
@@ -55,10 +55,10 @@
         </template>
         按钮
       </s-button>
-    </s-space>
+    </s-flex>
 
     <s-button @click="loading = !loading">Toggle loading</s-button>
-  </s-space>
+  </s-flex>
 </template>
 
 <script setup lang="ts">

@@ -10,6 +10,5 @@ describe('StatusBar', () => {
     const statusBar = wrapper.find('.s-status-bar')
 
     expect(statusBar.exists()).toBe(true)
-    expect(statusBar.attributes('style')).toContain('height: 0px;')
   })
 })

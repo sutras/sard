@@ -1,6 +1,6 @@
 <template>
-  <s-space direction="vertical" size="large">
-    <s-space justify="evenly" align="center">
+  <s-flex vertical gap="large">
+    <s-flex justify="evenly" align="center" gap="medium">
       <s-cool-icon size="40px" icon-size="24px" shape="oval" background="#ffa726" color="#fff">
         <demo-icon name="skype-fill" />
       </s-cool-icon>
@@ -25,9 +25,9 @@
       >
         <demo-icon name="youtube-fill" />
       </s-cool-icon>
-    </s-space>
+    </s-flex>
 
-    <s-space justify="evenly" align="center">
+    <s-flex justify="evenly" align="center" gap="medium">
       <s-cool-icon size="40px" icon-size="24px" shape="circle" background="#ffa726" color="#fff">
         <demo-icon name="skype-fill" />
       </s-cool-icon>
@@ -52,9 +52,9 @@
       >
         <demo-icon name="youtube-fill" />
       </s-cool-icon>
-    </s-space>
+    </s-flex>
 
-    <s-space justify="evenly" align="center">
+    <s-flex justify="evenly" align="center" gap="medium">
       <s-cool-icon size="40px" icon-size="24px" shape="square" background="#ffa726" color="#fff">
         <demo-icon name="skype-fill" />
       </s-cool-icon>
@@ -79,9 +79,9 @@
       >
         <demo-icon name="youtube-fill" />
       </s-cool-icon>
-    </s-space>
+    </s-flex>
 
-    <s-space justify="evenly" align="center">
+    <s-flex justify="evenly" align="center" gap="medium">
       <s-cool-icon size="40px" shape="triangle" icon-size="24px" background="#ffa726" color="#fff">
         <demo-icon name="skype-fill" />
       </s-cool-icon>
@@ -106,9 +106,9 @@
       >
         <demo-icon name="youtube-fill" />
       </s-cool-icon>
-    </s-space>
+    </s-flex>
 
-    <s-space justify="evenly" align="center">
+    <s-flex justify="evenly" align="center" gap="medium">
       <s-cool-icon size="40px" icon-size="24px" shape="flower" background="#ffa726" color="#fff">
         <demo-icon name="skype-fill" />
       </s-cool-icon>
@@ -133,6 +133,6 @@
       >
         <demo-icon name="youtube-fill" />
       </s-cool-icon>
-    </s-space>
-  </s-space>
+    </s-flex>
+  </s-flex>
 </template>

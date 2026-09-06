@@ -114,7 +114,7 @@ type CalendarType = 'single' | 'multiple' | 'range'
 | `--s-date-strip-item-width`          | `64px`                                  |
 | `--s-date-strip-item-padding-y`      | `9px`                                   |
 | `--s-date-strip-item-padding-x`      | `6px`                                   |
-| `--s-date-strip-item-radius`         | `var(--s-border-radius)`                |
+| `--s-date-strip-item-border-radius`  | `var(--s-border-radius)`                |
 | `--s-date-strip-item-border-color`   | `transparent`                           |
 | `--s-date-strip-item-bg`             | `transparent`                           |
 | `--s-date-strip-item-week-font-size` | `var(--s-font-size-sm)`                 |

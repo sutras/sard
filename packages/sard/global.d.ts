@@ -52,6 +52,7 @@ declare module 'vue' {
     SEmpty: typeof import('./components/empty/empty.vue').default
     SFab: typeof import('./components/fab/fab.vue').default
     SFabItem: typeof import('./components/fab/fab-item.vue').default
+    SFlex: typeof import('./components/flex/flex.vue').default
     SFloatingBubble: typeof import('./components/floating-bubble/floating-bubble.vue').default
     SFloatingPanel: typeof import('./components/floating-panel/floating-panel.vue').default
     SForm: typeof import('./components/form/form.vue').default
@@ -132,7 +133,6 @@ declare module 'vue' {
     SSkeletonTitle: typeof import('./components/skeleton/skeleton-title.vue').default
     SSlideVerify: typeof import('./components/slide-verify/slide-verify.vue').default
     SSlider: typeof import('./components/slider/slider.vue').default
-    SSpace: typeof import('./components/space/space.vue').default
     SStatusBar: typeof import('./components/status-bar/status-bar.vue').default
     SStep: typeof import('./components/steps/step.vue').default
     SStepper: typeof import('./components/stepper/stepper.vue').default

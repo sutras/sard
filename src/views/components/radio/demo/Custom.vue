@@ -1,9 +1,9 @@
 <template>
-  <s-space direction="vertical" size="large">
+  <s-flex vertical gap="large">
     <Custom1 />
     <Custom2 />
     <Custom3 />
-  </s-space>
+  </s-flex>
 </template>
 
 <script setup lang="ts">

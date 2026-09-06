@@ -63,7 +63,7 @@ group: 反馈组件
 | ---------------------------------- | ------------------------------- |
 | `--s-floating-panel-z-index`       | `var(--s-z-index-secondary)`    |
 | `--s-floating-panel-bg`            | `var(--s-bg-color-elevated)`    |
-| `--s-floating-panel-radius`        | `var(--s-border-radius-xl)`     |
+| `--s-floating-panel-border-radius` | `var(--s-border-radius-xl)`     |
 | `--s-floating-panel-header-height` | `var(--s-size-2xl)`             |
 | `--s-floating-panel-bar-width`     | `var(--s-size-lg)`              |
 | `--s-floating-panel-bar-height`    | `3px`                           |

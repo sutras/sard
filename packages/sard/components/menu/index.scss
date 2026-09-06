@@ -3,7 +3,7 @@
 // #region variables
 :root {
   #{css-var-name(menu-bg)}: css-var(white);
-  #{css-var-name(menu-item-radius)}: css-var(border-radius);
+  #{css-var-name(menu-item-border-radius)}: css-var(border-radius);
   #{css-var-name(menu-item-height)}: css-var(content-height);
   #{css-var-name(menu-item-padding-x)}: css-var(content-padding-x);
   #{css-var-name(menu-item-font-size)}: css-var(font-size);
@@ -80,13 +80,13 @@
   @include m(vertical) {
     @include e(item) {
       &:first-child {
-        border-top-left-radius: css-var(menu-item-radius);
-        border-top-right-radius: css-var(menu-item-radius);
+        border-top-left-radius: css-var(menu-item-border-radius);
+        border-top-right-radius: css-var(menu-item-border-radius);
       }
 
       &:last-child {
-        border-bottom-left-radius: css-var(menu-item-radius);
-        border-bottom-right-radius: css-var(menu-item-radius);
+        border-bottom-left-radius: css-var(menu-item-border-radius);
+        border-bottom-right-radius: css-var(menu-item-border-radius);
       }
 
       &:not(:first-child) {
@@ -106,23 +106,23 @@
 
       &:first-child {
         @include not-rtl {
-          border-top-left-radius: css-var(menu-item-radius);
-          border-bottom-left-radius: css-var(menu-item-radius);
+          border-top-left-radius: css-var(menu-item-border-radius);
+          border-bottom-left-radius: css-var(menu-item-border-radius);
         }
         @include rtl {
-          border-top-right-radius: css-var(menu-item-radius);
-          border-bottom-right-radius: css-var(menu-item-radius);
+          border-top-right-radius: css-var(menu-item-border-radius);
+          border-bottom-right-radius: css-var(menu-item-border-radius);
         }
       }
 
       &:last-child {
         @include not-rtl {
-          border-top-right-radius: css-var(menu-item-radius);
-          border-bottom-right-radius: css-var(menu-item-radius);
+          border-top-right-radius: css-var(menu-item-border-radius);
+          border-bottom-right-radius: css-var(menu-item-border-radius);
         }
         @include rtl {
-          border-top-left-radius: css-var(menu-item-radius);
-          border-bottom-left-radius: css-var(menu-item-radius);
+          border-top-left-radius: css-var(menu-item-border-radius);
+          border-bottom-left-radius: css-var(menu-item-border-radius);
         }
       }
 
