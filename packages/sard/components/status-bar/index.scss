@@ -1,5 +1,6 @@
 @use '../style/base' as *;
 
-@include b(statusBar) {
+@include b(status-bar) {
   flex: none;
+  height: css-var(status-bar-height);
 }
