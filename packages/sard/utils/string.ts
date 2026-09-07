@@ -83,3 +83,16 @@ export function uniqid(): string {
 export function isKorean(text: string) {
   return /([\uAC00-\uD7AF\u3130-\u318F])+/gi.test(text)
 }
+
+/**
+ * 使用 `{key}` 占位符替换模板内容：
+ * `data` 为对象时按名匹配（`{name}`），为数组时按下标匹配（`{0}`）。
+ * 对应值为 `null`/`undefined` 或不存在时保留占位符原样；不传 `data` 时原样返回。
+ */
+export function interpolate(template: string, data?: Record<string, any> | any[]): string {
+  if (data == null) return template
+  return template.replace(/\{([^}]*)\}/g, (match, key) => {
+    const value = Array.isArray(data) ? data[Number(key)] : data[key]
+    return value != null ? String(value) : match
+  })
+}

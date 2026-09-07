@@ -118,6 +118,30 @@ export function extend(...args: any[]) {
   return target
 }
 
+/**
+ * 深度合并多个对象并返回新对象：纯对象会递归合并，数组等其他非纯对象会被整体覆盖。
+ * 与 `extend` 不同，不会修改传入的任何对象。
+ */
+export function assignDeep(...objects: Record<string, any>[]): Record<string, any> {
+  const result: Record<string, any> = {}
+
+  for (const object of objects) {
+    if (object == null) continue
+    Object.keys(object).forEach((key) => {
+      const value = object[key]
+      if (value === undefined) return
+      if (isPlainObject(value)) {
+        const prev = result[key]
+        result[key] = assignDeep(isPlainObject(prev) ? prev : {}, value)
+      } else {
+        result[key] = value
+      }
+    })
+  }
+
+  return result
+}
+
 export function treeToMap(
   tree: AnyObject[],
   keyName: string,

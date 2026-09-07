@@ -72,6 +72,16 @@ function extend(...args: any[]): any
 
 深拷贝其他对象到第一个对象并返回，会修改第一个对象。
 
+### assignDeep
+
+```ts
+function assignDeep(...objects: Record<string, any>[]): Record<string, any>
+```
+
+深度合并多个对象并返回新对象：纯对象会递归合并，数组等其他非纯对象会被整体覆盖。不会修改传入的对象。
+
+与 `extend` 的区别：`extend` 原地修改第一个对象、数组会逐项合并；`assignDeep` 返回新对象、数组整体覆盖。
+
 ### chainGet
 
 ```ts

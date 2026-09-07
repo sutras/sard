@@ -9,7 +9,7 @@ import {
   type Ref,
 } from 'vue'
 import zhCN from './lang/zh-CN'
-import { chainGet } from '../utils'
+import { chainGet, interpolate } from '../utils'
 
 export const currentLocale = shallowRef<Record<string, any>>(zhCN)
 
@@ -34,14 +34,7 @@ export function useTranslate(prefix = '') {
     const result = chainGet(locale.value, chain)
 
     if (typeof result === 'string') {
-      if (data) {
-        return result.replace(/\{([^}]*)\}/g, (match, p1) => {
-          const value = (data as Record<string, string | number>)[p1]
-          return value != null ? String(value) : match
-        })
-      }
-
-      return result
+      return data ? interpolate(result, data) : result
     }
 
     return chain

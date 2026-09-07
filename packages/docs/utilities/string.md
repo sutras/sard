@@ -109,3 +109,16 @@ function uniqid(prefix?: string): string
 参数
 
 - prefix: ID前缀，默认为 `__sar_`
+
+### interpolate
+
+```ts
+function interpolate(template: string, data?: Record<string, any> | any[]): string
+```
+
+使用 `{key}` 占位符替换模板内容：`data` 为对象时按名匹配（`{name}`），为数组时按下标匹配（`{0}`）。占位符对应值为 `null`/`undefined` 或不存在时保留原样；不传 `data` 时原样返回模板。
+
+参数
+
+- `template`: 模板字符串
+- `data`: 插值数据，可为具名对象或列表数组
