@@ -1,3 +1,7 @@
+## <small>1.0.20 (2026-09-07)</small>
+
+- Features: 新增波斯语 ([56552ab](https://github.com/sutras/sard/commit/56552ab))
+
 ## <small>1.0.19 (2026-09-07)</small>
 
 - Code Refactoring: space 改为 flex 组件 ([6ac5433](https://github.com/sutras/sard/commit/6ac5433))
