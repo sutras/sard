@@ -1,3 +1,7 @@
+## <small>1.0.21 (2026-09-07)</small>
+
+- Features: 添加工具函数 ([c2ae50c](https://github.com/sutras/sard/commit/c2ae50c))
+
 ## <small>1.0.20 (2026-09-07)</small>
 
 - Features: 新增波斯语 ([56552ab](https://github.com/sutras/sard/commit/56552ab))
