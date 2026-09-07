@@ -124,7 +124,7 @@
     gap: css-var(stepper-gap);
 
     @include e(button) {
-      border-radius: 50%;
+      border-radius: 50% !important;
       width: css-var(stepper-accent-height);
 
       @include is-not(disabled, readonly) {

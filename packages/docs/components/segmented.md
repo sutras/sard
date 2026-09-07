@@ -137,7 +137,7 @@ export interface OptionKeys {
 | `--s-segmented-min-height-lg`      | `var(--s-content-height-sm)`    |
 | `--s-segmented-padding`            | `var(--s-size-3xs)`             |
 | `--s-segmented-font-size`          | `var(--s-font-size)`            |
-| `--s-segmented-bg`                 | `var(--s-fill-color-secondary)` |
+| `--s-segmented-bg`                 | `var(--s-fill-color-tertiary)`  |
 | `--s-segmented-border-radius`      | `var(--s-border-radius)`        |
 | `--s-segmented-pointer-bg`         | `var(--s-bg-color-container)`   |
 | `--s-segmented-pointer-box-shadow` | `var(--s-box-shadow-tertiary)`  |
