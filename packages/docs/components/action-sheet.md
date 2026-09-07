@@ -143,11 +143,10 @@ interface ActionSheetBeforeClose {
 
 ### 命令式方法
 
-| 名称                | 描述                           | 类型                           |
-| ------------------- | ------------------------------ | ------------------------------ |
-| actionSheet         | 显示动作面板                   | ActionSheetFunction            |
-| actionSheet.hide    | 隐藏指定 `id` 的命令式动作面板 | `(id = 'actionSheet') => void` |
-| actionSheet.hideAll | 隐藏所有命令式动作面板         | `() => void`                   |
+| 名称             | 描述               | 类型                |
+| ---------------- | ------------------ | ------------------- |
+| actionSheet      | 显示动作面板       | ActionSheetFunction |
+| actionSheet.hide | 隐藏命令式动作面板 | `() => void`        |
 
 ### ActionSheetFunction
 

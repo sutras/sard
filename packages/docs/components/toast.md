@@ -32,6 +32,12 @@ group: 反馈组件
 
 <<< @demo/toast/demo/Icon.vue
 
+### 创建独立的提示
+
+默认的 `toast` 是全局唯一的提示实例。当需要同时展示多个提示，或希望为提示预设默认属性时，可以通过 `createToast` 创建彼此独立的提示实例，实例之间互不影响。
+
+<<< @demo/toast/demo/Create.vue
+
 ## API
 
 ### ToastProps
@@ -64,14 +70,13 @@ group: 反馈组件
 
 ### 命令式方法
 
-| 名称          | 描述                       | 类型                     |
-| ------------- | -------------------------- | ------------------------ |
-| toast         | 显示提示                   | ToastFunction            |
-| toast.success | 显示成功类型提示           | ToastSimpleShowFunction  |
-| toast.fail    | 显示失败类型提示           | ToastSimpleShowFunction  |
-| toast.loading | 显示加载类型提示           | ToastSimpleShowFunction  |
-| toast.hide    | 隐藏指定 `id` 的命令式提示 | `(id = 'toast') => void` |
-| toast.hideAll | 隐藏所有命令式提示         | `() => void`             |
+| 名称          | 描述             | 类型                    |
+| ------------- | ---------------- | ----------------------- |
+| toast         | 显示提示         | ToastFunction           |
+| toast.success | 显示成功类型提示 | ToastSimpleShowFunction |
+| toast.fail    | 显示失败类型提示 | ToastSimpleShowFunction |
+| toast.loading | 显示加载类型提示 | ToastSimpleShowFunction |
+| toast.hide    | 隐藏命令式提示   | `() => void`            |
 
 ### ToastFunction
 
@@ -81,7 +86,6 @@ type ToastFunction = ToastSimpleShowFunction & {
   fail: ToastSimpleShowFunction
   loading: ToastSimpleShowFunction
   hide: (id?: string) => void
-  hideAll: () => void
 }
 ```
 
@@ -92,6 +96,32 @@ interface ToastSimpleShowFunction {
   (options: ToastOptions): void
   (title?: string | number, options?: ToastOptions): void
 }
+```
+
+### createToast
+
+默认导出的 `toast` 就是 `createToast()` 创建的一个全局提示实例。当需要同时展示多个提示，或为提示实例预设默认属性时，可以通过 `createToast` 创建独立的实例，不同实例之间相互独立、互不影响。
+
+```ts
+function createToast(defaultOptions?: ToastOptions): ToastFunction
+```
+
+| 参数           | 描述                                             | 类型         |
+| -------------- | ------------------------------------------------ | ------------ |
+| defaultOptions | 该实例的默认属性，展示时传入的属性会覆盖默认属性 | ToastOptions |
+
+#### 示例
+
+```ts
+import { createToast } from 'sard'
+
+// 创建一个固定在顶部显示的独立提示实例
+const topToast = createToast({
+  position: 'top',
+})
+
+topToast('顶部提示')
+topToast.hide()
 ```
 
 ## 主题定制
