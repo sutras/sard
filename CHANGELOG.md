@@ -1,3 +1,7 @@
+## <small>1.0.22 (2026-09-08)</small>
+
+- Code Refactoring: 移除lwa ([e0baa94](https://github.com/sutras/sard/commit/e0baa94))
+
 ## <small>1.0.21 (2026-09-07)</small>
 
 - Features: 添加工具函数 ([c2ae50c](https://github.com/sutras/sard/commit/c2ae50c))
