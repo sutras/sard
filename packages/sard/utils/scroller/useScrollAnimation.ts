@@ -1,4 +1,4 @@
-import { ticker } from 'lwa'
+import { ticker } from '../animation'
 import type { Scroll } from './Scroll'
 
 /**

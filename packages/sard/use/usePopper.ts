@@ -1,6 +1,6 @@
 import { onBeforeUnmount, reactive, watch, type Ref } from 'vue'
 import { clamp, isRectEqual, type Size } from '../utils'
-import { ticker } from 'lwa'
+import { ticker } from '../utils/animation'
 
 export interface PopperTarget {
   getBoundingClientRect: () => DOMRect

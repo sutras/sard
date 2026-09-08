@@ -1,4 +1,4 @@
-import { ticker } from 'lwa'
+import { ticker } from './animation'
 
 const friction = 0.95 // 摩擦系数
 const minVelocity = 0.1 // 最小速度

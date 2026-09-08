@@ -4,14 +4,14 @@
 
 <script setup lang="ts">
 import { computed, onUnmounted, ref, watch } from 'vue'
+import { animateNumber, type Animation } from '../../utils/animation'
 import { addSeparator } from '../../utils'
 import { type CountToProps, defaultCountToProps } from './common'
-import { createAnimation, type Timeline } from 'lwa'
 
 const props = withDefaults(defineProps<CountToProps>(), defaultCountToProps)
 
 const number = ref(0)
-let tl: undefined | Timeline
+let animation: undefined | Animation
 
 const renderedNumer = computed(() => {
   const fixedNum = number.value.toFixed(props.precision)
@@ -21,18 +21,12 @@ const renderedNumer = computed(() => {
 watch(
   () => props.value,
   () => {
-    tl?.pause()
-    tl = createAnimation(
-      number,
-      {
-        value: props.value,
-      },
-      {
-        duration: props.duration,
-        easing: 'easeOutQuint',
-        round: Math.pow(10, props.precision),
-      },
-    )
+    animation?.pause()
+    animation = animateNumber(number, props.value, {
+      duration: props.duration,
+      easing: 'easeOutQuint',
+      round: Math.pow(10, props.precision),
+    })
   },
   {
     flush: 'post',
@@ -41,6 +35,6 @@ watch(
 )
 
 onUnmounted(() => {
-  tl?.pause()
+  animation?.pause()
 })
 </script>

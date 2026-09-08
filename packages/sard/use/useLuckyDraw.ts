@@ -1,6 +1,6 @@
 import { type Ref, computed, onScopeDispose, ref, unref } from 'vue'
 import { random } from '../utils'
-import { ticker } from 'lwa'
+import { ticker } from '../utils/animation'
 
 export interface UseLuckyDrawOptions {
   count: number | Ref<number>

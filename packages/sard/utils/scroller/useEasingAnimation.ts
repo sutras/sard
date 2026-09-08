@@ -1,34 +1,28 @@
-import { createAnimation, type Timeline } from 'lwa'
 import { onUnmounted, type Ref } from 'vue'
+import { animateNumber, type Animation } from '../animation'
 import { withResolvers } from '../polyfill'
 
 export function useEasingAnimation(target: Ref<number>) {
-  let tl: undefined | Timeline
+  let animation: undefined | Animation
   let promiseWithResolvers: PromiseWithResolvers<void>
 
   const play = (value: number, duration: number) => {
-    tl?.pause()
+    animation?.pause()
 
     promiseWithResolvers = withResolvers<void>()
 
-    tl = createAnimation(
-      target,
-      {
-        value,
+    animation = animateNumber(target, value, {
+      duration,
+      easing: 'easeOutCubic',
+      complete() {
+        promiseWithResolvers.resolve()
       },
-      {
-        duration,
-        easing: 'easeOutCubic',
-        complete() {
-          promiseWithResolvers.resolve()
-        },
-      },
-    )
+    })
     return promiseWithResolvers.promise
   }
 
   const pause = () => {
-    tl?.pause()
+    animation?.pause()
   }
 
   onUnmounted(() => {

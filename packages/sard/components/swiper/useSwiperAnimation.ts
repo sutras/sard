@@ -1,35 +1,29 @@
-import { createAnimation, type Timeline } from 'lwa'
 import { onUnmounted, type Ref } from 'vue'
+import { animateNumber, type Animation } from '../../utils/animation'
 import { withResolvers } from '../../utils'
 
 export function useSwiperAnimation(target: Ref<number>) {
-  let tl: undefined | Timeline
+  let animation: undefined | Animation
   let promiseWithResolvers: PromiseWithResolvers<void>
 
   const play = (value: number, duration: number, update: () => void) => {
-    tl?.pause()
+    animation?.pause()
 
     promiseWithResolvers = withResolvers<void>()
 
-    tl = createAnimation(
-      target,
-      {
-        value,
+    animation = animateNumber(target, value, {
+      duration,
+      easing: 'easeOutCubic',
+      update,
+      complete() {
+        promiseWithResolvers.resolve()
       },
-      {
-        duration,
-        easing: 'easeOutCubic',
-        update,
-        complete() {
-          promiseWithResolvers.resolve()
-        },
-      },
-    )
+    })
     return promiseWithResolvers.promise
   }
 
   const pause = () => {
-    tl?.pause()
+    animation?.pause()
   }
 
   onUnmounted(() => {
