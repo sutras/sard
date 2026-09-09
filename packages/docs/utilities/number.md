@@ -75,3 +75,27 @@ function mround(n: number, m: number): number
 ```
 
 把一个数舍入到指定数的倍数。
+
+### truncToFixed
+
+```ts
+function truncToFixed(num: number, decimals?: number): string
+```
+
+trunc 版本的 toFixed，截断而非四舍五入，并保留指定小数位数。
+
+### abbrNumber
+
+```ts
+function abbrNumber(num: number, decimals?: number, keepZero?: boolean): string
+```
+
+通过添加单位缩写数字。例如：`abbrNumber(12000)` 返回 `'12K'`。
+
+### formatThousands
+
+```ts
+function formatThousands(num?: number): string
+```
+
+将数字格式化为千分位格式。例如：`formatThousands(1234567)` 返回 `'1,234,567'`。
