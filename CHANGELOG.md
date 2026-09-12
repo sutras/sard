@@ -1,3 +1,7 @@
+## <small>1.0.28 (2026-09-12)</small>
+
+- Code Refactoring: 提取motion样式变量, popover 允许隐藏箭头 ([561f816](https://github.com/sutras/sard/commit/561f816))
+
 ## <small>1.0.23 (2026-09-09)</small>
 
 - Features: 新增number工具函数 ([c771eff](https://github.com/sutras/sard/commit/c771eff))
