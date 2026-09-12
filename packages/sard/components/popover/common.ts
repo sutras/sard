@@ -9,6 +9,7 @@ export interface PopoverProps {
   viewportGap?: number
   reference?: PopperTarget | Element | null
   outsideClosable?: boolean
+  showArrow?: boolean
 }
 
 export const defaultPopoverProps: DefaultProps<PopoverProps> = {
@@ -17,6 +18,7 @@ export const defaultPopoverProps: DefaultProps<PopoverProps> = {
   refGap: 10,
   viewportGap: 10,
   outsideClosable: true,
+  showArrow: false,
 }
 
 export interface PopoverSlots {

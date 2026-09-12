@@ -90,9 +90,11 @@ export function truncToFixed(num: number, decimals = 0) {
  * @param decimals 小数位数
  * @param keepZero 是否保留为0时的小数部分
  */
-export function abbrNumber(num: number, decimals = 1, keepZero = false) {
+export function compactNumber(num: number | string, decimals = 1, keepZero = false) {
+  num = typeof num === 'string' ? Number.parseFloat(num) : num
+
   // 处理异常情况：非数字、无穷大、NaN
-  if (!isFinite(num)) {
+  if (!Number.isFinite(num)) {
     return '0'
   }
 
@@ -139,11 +141,15 @@ let numberFormat: Intl.NumberFormat
  * 将数字格式化为千分位格式
  * @param  num
  */
-export function formatThousands(num: number = 0) {
+export function formatThousands(num: number | string = 0) {
+  const n = typeof num === 'string' ? Number.parseFloat(num) : num
+  if (!Number.isFinite(n)) {
+    return '0'
+  }
   if (!numberFormat) {
     numberFormat = new Intl.NumberFormat('en-US', {
       style: 'decimal',
     })
   }
-  return numberFormat.format(num)
+  return numberFormat.format(n)
 }

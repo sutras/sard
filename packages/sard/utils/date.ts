@@ -1,3 +1,4 @@
+import { isNumber } from './is'
 import { clamp } from './number'
 import { escapeRegExp } from './regexp'
 
@@ -135,7 +136,12 @@ const dateGetters = {
 /**
  * 根据传入的占位符返回格式化后的日期。
  */
-export function formatDate(date: Date, format = 'YYYY-MM-DD HH:mm:ss') {
+export function formatDate(
+  date: Date | number | string | null | undefined,
+  format = 'YYYY-MM-DD HH:mm:ss',
+) {
+  if (!date) return ''
+  date = toDate(date)
   return format.replace(dateTokensReg, (match) => {
     return dateGetters[match as keyof typeof dateGetters](date)
   })
@@ -205,10 +211,19 @@ export function parseDate(value: string, format?: string) {
   return date
 }
 
-// 确保返回一个Date对象，如果传递字符串，则使用 parseDate 解析。
-export function toDate(date: Date | string, valueFormat?: string) {
+/**
+ * 确保返回一个Date对象，可以传递时间戳（10位或13位，字符串或数字），或者传递特定格式的字符串，则使用 parseDate 解析。
+ */
+export function toDate(date: Date | string | number, valueFormat?: string) {
   if (date instanceof Date) {
     return date
+  }
+  if (isNumber(date)) {
+    const str = String(date)
+    return new Date(str.length === 10 ? date * 1000 : date)
+  }
+  if ((date.length === 10 || date.length === 13) && /^\d+$/.test(date)) {
+    return new Date(date.length === 10 ? +date * 1000 : +date)
   }
   return parseDate(date, valueFormat)
 }

@@ -68,6 +68,7 @@ group: 数据展示
 | viewport-gap     | 气泡弹出框距与视窗的间距，单位 px                            | number                          | 10       |
 | reference        | 触发弹出框的 HTML 元素，或者类似 PopperTarget 的结构类型对象 | PopperTarget \| Element \| null | -        |
 | outside-closable | 点击弹出框外部时是否关闭弹出框                               | boolean                         | true     |
+| show-arrow       | 是否显示箭头                                                 | boolean                         | true     |
 
 ### PopperTarget
 

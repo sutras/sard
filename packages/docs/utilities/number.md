@@ -84,13 +84,13 @@ function truncToFixed(num: number, decimals?: number): string
 
 trunc 版本的 toFixed，截断而非四舍五入，并保留指定小数位数。
 
-### abbrNumber
+### compactNumber
 
 ```ts
-function abbrNumber(num: number, decimals?: number, keepZero?: boolean): string
+function compactNumber(num: number, decimals?: number, keepZero?: boolean): string
 ```
 
-通过添加单位缩写数字。例如：`abbrNumber(12000)` 返回 `'12K'`。
+通过添加单位缩写数字。例如：`compactNumber(12000)` 返回 `'12K'`。
 
 ### formatThousands
 

@@ -58,3 +58,18 @@ type MotionHookName =
   | 'after-leave'
   | 'leave-cancelled'
 ```
+
+## 主题定制
+
+### 样式变量
+
+| CSS 变量                              | 值                       |
+| ------------------------------------- | ------------------------ |
+| `--s-motion-fade-enter-duration`      | `var(--s-duration)`      |
+| `--s-motion-fade-leave-duration`      | `var(--s-duration)`      |
+| `--s-motion-zoom-enter-duration`      | `var(--s-duration)`      |
+| `--s-motion-zoom-leave-duration`      | `var(--s-duration)`      |
+| `--s-motion-wide-zoom-enter-duration` | `var(--s-duration-fast)` |
+| `--s-motion-wide-zoom-leave-duration` | `var(--s-duration-fast)` |
+| `--s-motion-slide-enter-duration`     | `var(--s-duration)`      |
+| `--s-motion-slide-leave-duration`     | `var(--s-duration)`      |

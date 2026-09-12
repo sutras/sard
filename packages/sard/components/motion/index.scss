@@ -1,5 +1,19 @@
 @use '../style/base.scss' as *;
 
+// #region variables
+:root {
+  #{css-var-name(motion-fade-enter-duration)}: css-var(duration);
+  #{css-var-name(motion-fade-leave-duration)}: css-var(duration);
+  #{css-var-name(motion-zoom-enter-duration)}: css-var(duration);
+  #{css-var-name(motion-zoom-leave-duration)}: css-var(duration);
+  #{css-var-name(motion-wide-zoom-enter-duration)}: css-var(duration-fast);
+  #{css-var-name(motion-wide-zoom-leave-duration)}: css-var(duration-fast);
+  #{css-var-name(motion-slide-enter-duration)}: css-var(duration);
+  #{css-var-name(motion-slide-leave-duration)}: css-var(duration);
+}
+
+// #endregion variables
+
 @include b(motion) {
   &-fade {
     &-enter-from,
@@ -12,9 +26,11 @@
       opacity: 1;
     }
 
-    &-enter-active,
+    &-enter-active {
+      transition: opacity css-var(motion-fade-enter-duration) ease-in-out;
+    }
     &-leave-active {
-      transition: opacity css-var(duration) ease-in-out;
+      transition: opacity css-var(motion-fade-leave-duration) ease-in-out;
     }
 
     &-leave-active {
@@ -33,13 +49,13 @@
     }
     &-enter-active {
       transition:
-        transform css-var(duration) ease-out,
-        opacity css-var(duration) ease-out;
+        transform css-var(motion-zoom-enter-duration) ease-out,
+        opacity css-var(motion-zoom-enter-duration) ease-out;
     }
     &-leave-active {
       transition:
-        transform css-var(duration) ease-out,
-        opacity css-var(duration) ease-in;
+        transform css-var(motion-zoom-leave-duration) ease-out,
+        opacity css-var(motion-zoom-leave-duration) ease-in;
       pointer-events: none;
     }
   }
@@ -52,13 +68,13 @@
     }
     &-enter-active {
       transition:
-        transform css-var(duration-fast) ease-out,
-        opacity css-var(duration-fast) ease-out;
+        transform css-var(motion-wide-zoom-enter-duration) ease-out,
+        opacity css-var(motion-wide-zoom-enter-duration) ease-out;
     }
     &-leave-active {
       transition:
-        transform css-var(duration-fast) ease-out,
-        opacity css-var(duration-fast) ease-in;
+        transform css-var(motion-wide-zoom-leave-duration) ease-out,
+        opacity css-var(motion-wide-zoom-leave-duration) ease-in;
       pointer-events: none;
     }
   }
@@ -102,11 +118,11 @@
       }
 
       &-enter-active {
-        transition: transform css-var(duration) ease-out;
+        transition: transform css-var(motion-slide-enter-duration) ease-out;
       }
 
       &-leave-active {
-        transition: transform css-var(duration) ease-in;
+        transition: transform css-var(motion-slide-leave-duration) ease-in;
         pointer-events: none;
       }
     }

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import {
-  abbrNumber,
+  compactNumber,
   clamp,
   formatNumber,
   formatThousands,
@@ -155,35 +155,35 @@ describe('truncToFixed', () => {
   })
 })
 
-describe('abbrNumber', () => {
+describe('compactNumber', () => {
   test('小于 1000 不缩写', () => {
-    expect(abbrNumber(999)).toBe('999')
+    expect(compactNumber(999)).toBe('999')
   })
 
   test('按单位缩写', () => {
-    expect(abbrNumber(12000)).toBe('12K')
-    expect(abbrNumber(1e6)).toBe('1M')
-    expect(abbrNumber(1e9)).toBe('1B')
-    expect(abbrNumber(1e12)).toBe('1T')
+    expect(compactNumber(12000)).toBe('12K')
+    expect(compactNumber(1e6)).toBe('1M')
+    expect(compactNumber(1e9)).toBe('1B')
+    expect(compactNumber(1e12)).toBe('1T')
   })
 
   test('保留指定位数小数', () => {
-    expect(abbrNumber(1234)).toBe('1.2K')
-    expect(abbrNumber(1234, 2)).toBe('1.23K')
-    expect(abbrNumber(1500, 0)).toBe('1K')
+    expect(compactNumber(1234)).toBe('1.2K')
+    expect(compactNumber(1234, 2)).toBe('1.23K')
+    expect(compactNumber(1500, 0)).toBe('1K')
   })
 
   test('keepZero 保留零小数', () => {
-    expect(abbrNumber(1000, 1, true)).toBe('1.0K')
+    expect(compactNumber(1000, 1, true)).toBe('1.0K')
   })
 
   test('负数缩写', () => {
-    expect(abbrNumber(-1200)).toBe('-1.2K')
+    expect(compactNumber(-1200)).toBe('-1.2K')
   })
 
   test('非有限数返回 0', () => {
-    expect(abbrNumber(NaN)).toBe('0')
-    expect(abbrNumber(Infinity)).toBe('0')
+    expect(compactNumber(NaN)).toBe('0')
+    expect(compactNumber(Infinity)).toBe('0')
   })
 })
 
@@ -203,5 +203,11 @@ describe('formatThousands', () => {
 
   test('保留小数部分', () => {
     expect(formatThousands(1234.5)).toBe('1,234.5')
+  })
+
+  test('非数字返回 0', () => {
+    expect(formatThousands(NaN)).toBe('0')
+    expect(formatThousands(Infinity)).toBe('0')
+    expect(formatThousands('abc')).toBe('0')
   })
 })

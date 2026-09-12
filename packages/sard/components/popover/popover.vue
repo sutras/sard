@@ -15,7 +15,7 @@
         <div :class="bem.e('content')">
           <slot></slot>
         </div>
-        <div :class="bem.e('arrow')" :style="arrowStyle"></div>
+        <div v-if="showArrow" :class="bem.e('arrow')" :style="arrowStyle"></div>
       </div>
     </Motion>
   </teleport>

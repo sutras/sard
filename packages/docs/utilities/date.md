@@ -140,6 +140,26 @@ function parseDate(value: string, format?: string): Date
 
 解析日期的字符串表示形式，并返回 Date 实例对象。
 
+::: code-group
+
+```ts [ts]
+import { parseDate } from 'sard'
+
+parseDate('2024/02/25', 'YYYY/MM/DD') // Date: 2024-02-25
+parseDate('25/02/2024', 'DD/MM/YYYY') // Date: 2024-02-25
+parseDate('2024-02-25 10:30:00') // 未传格式时按默认顺序解析
+```
+
+```js [js]
+import { parseDate } from 'sard'
+
+parseDate('2024/02/25', 'YYYY/MM/DD')
+parseDate('25/02/2024', 'DD/MM/YYYY')
+parseDate('2024-02-25 10:30:00')
+```
+
+:::
+
 ### toDate
 
 ```ts
