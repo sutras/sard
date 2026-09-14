@@ -1,3 +1,7 @@
+## <small>1.0.29 (2026-09-14)</small>
+
+- Bug Fixes: 修复翻转在部分iOS系统不可见问题 ([4db678f](https://github.com/sutras/sard/commit/4db678f))
+
 ## <small>1.0.28 (2026-09-12)</small>
 
 - Code Refactoring: 提取motion样式变量, popover 允许隐藏箭头 ([561f816](https://github.com/sutras/sard/commit/561f816))
