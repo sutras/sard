@@ -12,6 +12,6 @@
 
 @mixin rtl-flip {
   @include rtl {
-    transform: rotateY(180deg);
+    transform: scaleX(-1);
   }
 }
