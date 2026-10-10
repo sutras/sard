@@ -127,8 +127,7 @@ npm run publish
 8. 打包组件库 `npm run build:sard`
 9. 发布到 npm `npm run publish:sard`
 10. 推送代码和标签 `npm run push`
-11. 打包文档 `npm run build:site`
-12. 部署文档 `npm run deploy`
+11. 打包&部署文档 `. ./deploy.sh`
 
 ## 新增组件流程
 
