@@ -32,6 +32,7 @@ declare module 'vue' {
     SCountDown: typeof import('./components/count-down/count-down.vue').default
     SCountTo: typeof import('./components/count-to/count-to.vue').default
     SCropImage: typeof import('./components/crop-image/crop-image.vue').default
+    SDanmaku: typeof import('./components/danmaku/danmaku.vue').default
     SDateStrip: typeof import('./components/date-strip/date-strip.vue').default
     SDatetimePicker: typeof import('./components/datetime-picker/datetime-picker.vue').default
     SDatetimePickerInput: typeof import('./components/datetime-picker-input/datetime-picker-input.vue').default

@@ -481,6 +481,10 @@
     "title": "活动组件",
     "children": [
       {
+        "title": "Danmaku 弹幕",
+        "name": "danmaku"
+      },
+      {
         "title": "LuckyDraw 幸运抽奖",
         "name": "lucky-draw"
       },

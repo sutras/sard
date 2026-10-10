@@ -36,12 +36,21 @@ fetcher.useResponse(
     if (error instanceof DOMException && error.name === 'AbortError') {
       throw error
     }
+
+    // 重试：config 是调用方原始配置，直接丢回 request() 即可原样重发。
+    // 必须关掉 dedupe —— 原请求仍在 pendingMap 里（重试就发生在它的处理链上），
+    // 不关就会去重命中自己，重试变成返回自己仍未完成的 Promise，永久挂起。
     const extra = config.extra ?? {}
-    if (extra.retryCount && --extra.retryCount > 0) {
+    const remainingAttempts = (extra.retryCount ?? 1) - 1
+    if (remainingAttempts > 0) {
       await new Promise((r) => setTimeout(r, extra.retryDelay ?? 1000))
-      return fetcher.request(config)
+      return fetcher.request({
+        ...config,
+        extra: { ...extra, retryCount: remainingAttempts, dedupe: false },
+      })
     }
 
+    // 提取错误提示
     let errorText = ''
     if (typeof error === 'string') {
       errorText = error

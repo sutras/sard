@@ -1,17 +1,17 @@
 type RequestExtra = {
-  /** 重试次数，配合响应拦截器 rejected 使用 */
+  /** 最大尝试次数（含首次），大于 1 才会重试 */
   retryCount?: number
   /** 重试间隔(ms) */
   retryDelay?: number
-  /** 是否启用请求去重，相同请求并发时复用第一个 Promise */
+  /** 是否启用请求去重，相同请求并发时复用第一个 Promise（重试时会被强制关闭） */
   dedupe?: boolean
   [key: string]: any
 }
 
-type RequestConfig = RequestInit & {
+export type RequestConfig = RequestInit & {
   url: string
   data?: any
-  params?: Record<string, string | number | boolean>
+  params?: Record<string, any>
   responseType?: 'json' | 'text' | 'blob' | 'arrayBuffer' | 'formData'
   /** 请求超时时间(ms)，传入 0 表示不超时，优先使用请求级配置，否则回退到实例级默认值 */
   timeout?: number
@@ -25,13 +25,26 @@ type RequestErrorInterceptor = (
   config: RequestConfig,
 ) => RequestConfig | Promise<RequestConfig>
 
+/** 响应拦截器：第二个参数是调用方的原始配置，可直接用于重试，详见 doFetch */
 type ResponseInterceptor<T = any, R = T> = (response: T, config: RequestConfig) => R | Promise<R>
 
+/** 响应拦截器的错误处理：同样收到原始配置 */
 type ResponseErrorInterceptor<T = any> = (error: unknown, config: RequestConfig) => T | Promise<T>
+
+type FetcherConfig = {
+  baseURL?: string
+  timeout?: number
+  /**
+   * 在途请求数变化回调：一次逻辑请求（含重试链）开始前 +1，成功/失败结束后 -1。
+   * 由 Fetcher 用 try/finally 保证成对，使用方不需要（也不应该）在拦截器里手动增减。
+   */
+  onPendingChange?: (delta: 1 | -1) => void
+}
 
 export class Fetcher {
   private baseURL = ''
   private defaultTimeout: number | undefined
+  private onPendingChange: ((delta: 1 | -1) => void) | undefined
   private pendingMap = new Map<string, Promise<any>>()
   private requestInterceptors: Array<{
     fulfilled: RequestInterceptor
@@ -42,11 +55,12 @@ export class Fetcher {
     rejected: ResponseErrorInterceptor
   }> = []
 
-  constructor(config?: { baseURL?: string; timeout?: number }) {
+  constructor(config?: FetcherConfig) {
     if (config?.baseURL) {
       this.baseURL = config.baseURL.replace(/\/$/, '')
     }
     this.defaultTimeout = config?.timeout
+    this.onPendingChange = config?.onPendingChange
   }
 
   /** 添加请求拦截器，第二个参数为错误处理，返回移除函数 */
@@ -108,11 +122,24 @@ export class Fetcher {
 
     const { url: finalUrl, params: _1, extra: _2, timeout, ...init } = merged
 
+    void _1
+    void _2
+
+    // 请求去重：相同请求并发时复用已有 Promise。
+    // 命中时直接返回，且不参与在途计数 —— 复用方没有发起真实请求，
+    // 若也计数就会变成"每次复用 +1、共享 Promise 只 -1"，计数只增不减。
+    // 放在超时与 body 处理之前：命中时不会发请求，没必要（也不该）建立超时定时器。
+    if (merged.extra?.dedupe) {
+      const pending = this.pendingMap.get(this.dedupeKey(merged))
+      if (pending) return pending
+    }
+
     // 超时控制：请求级 > 实例级，0 表示不超时
+    let timeoutId: ReturnType<typeof setTimeout> | undefined
     const effectiveTimeout = timeout ?? this.defaultTimeout
     if (effectiveTimeout && effectiveTimeout > 0) {
       const controller = new AbortController()
-      const timeoutId = setTimeout(
+      timeoutId = setTimeout(
         () => controller.abort(new DOMException('Request timeout', 'TimeoutError')),
         effectiveTimeout,
       )
@@ -121,8 +148,6 @@ export class Fetcher {
         init.signal.addEventListener('abort', () => controller.abort(), { once: true })
       }
       init.signal = controller.signal
-      // 请求结束后清理定时器
-      controller.signal.addEventListener('abort', () => clearTimeout(timeoutId), { once: true })
     }
 
     if (!['GET', 'HEAD'].includes(method)) {
@@ -149,25 +174,35 @@ export class Fetcher {
       }
     }
 
-    // 请求去重：相同请求并发时复用已有 Promise
-    if (merged.extra?.dedupe) {
-      const key = this.dedupeKey(merged)
-      const pending = this.pendingMap.get(key)
-      if (pending) return pending
+    // 在途计数：一次逻辑请求（含拦截器里的重试链）只在这里 +/-1。
+    // 用 try/finally 包住整个请求过程，无论成功、抛错、还是拦截器里的任何分支，都不会漏减。
+    this.onPendingChange?.(1)
+    try {
+      // 注意第三个参数传的是调用方的原始 config，不是内部归一化后的 merged：
+      // merged 的 url 已拼接 baseURL、query 已序列化，若拿它去重试会二次拼接（见 doFetch 注释）
+      const promise = this.doFetch(finalUrl || '', init, config)
+
+      if (merged.extra?.dedupe) {
+        const key = this.dedupeKey(merged)
+        this.pendingMap.set(key, promise)
+        const cleanup = () => this.pendingMap.delete(key)
+        // 不用 promise.finally()：它的派生 Promise 在请求失败时无人接管，会产生 unhandledrejection
+        promise.then(cleanup, cleanup)
+      }
+
+      return await promise
+    } finally {
+      // 超时定时器在这里统一清理：只挂在 abort 上的话，请求正常结束后它会继续存活到超时才消失
+      clearTimeout(timeoutId)
+      this.onPendingChange?.(-1)
     }
-
-    const promise = this.doFetch(finalUrl || '', init, merged)
-
-    if (merged.extra?.dedupe) {
-      const key = this.dedupeKey(merged)
-      this.pendingMap.set(key, promise)
-      promise.finally(() => this.pendingMap.delete(key))
-    }
-
-    return promise
   }
 
-  /** 实际发起请求，响应拦截器按 then(onFulfilled, onRejected) 成对执行 */
+  /**
+   * 实际发起请求，响应拦截器按 then(onFulfilled, onRejected) 成对执行。
+   * 传给拦截器的 config 是调用方的原始配置（url 未拼 baseURL、params 未序列化），
+   * 这样 rejected 里想原样重试时，直接把它丢回 request() 即可。
+   */
   private async doFetch(url: string, init: RequestInit, config: RequestConfig): Promise<any> {
     let promise: Promise<any> = fetch(url, init)
 

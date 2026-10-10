@@ -18,7 +18,7 @@ export const defaultPopoverProps: DefaultProps<PopoverProps> = {
   refGap: 10,
   viewportGap: 10,
   outsideClosable: true,
-  showArrow: false,
+  showArrow: true,
 }
 
 export interface PopoverSlots {

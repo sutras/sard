@@ -1,0 +1,30 @@
+@use '../style/base' as *;
+
+// #region variables
+:root {
+  #{css-var-name(danmaku-row-height)}: 34px;
+}
+// #endregion variables
+
+@include b(danmaku) {
+  position: relative;
+  overflow: hidden;
+
+  @include e(track) {
+    position: relative;
+    height: css-var(danmaku-row-height);
+  }
+
+  @include e(item) {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    white-space: nowrap;
+    will-change: transform;
+    transform: translate3d(100vw, -50%, 0);
+
+    @include rtl {
+      transform: translate3d(-100vw, -50%, 0);
+    }
+  }
+}

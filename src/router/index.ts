@@ -144,6 +144,10 @@ const router = createRouter({
           component: () => import('@/views/components/crop-image/index.vue'),
         },
         {
+          path: 'danmaku',
+          component: () => import('@/views/components/danmaku/index.vue'),
+        },
+        {
           path: 'date-strip',
           component: () => import('@/views/components/date-strip/index.vue'),
         },
