@@ -1,3 +1,7 @@
+## 1.1.0 (2026-10-10)
+
+- Features: 新增 danmaku 组件 ([5c9c54b](https://github.com/sutras/sard/commit/5c9c54b))
+
 ## <small>1.0.29 (2026-09-14)</small>
 
 - Bug Fixes: 修复翻转在部分iOS系统不可见问题 ([4db678f](https://github.com/sutras/sard/commit/4db678f))
