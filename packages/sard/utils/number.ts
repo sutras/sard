@@ -1,3 +1,5 @@
+import { isNumber } from './is'
+
 /**
  * 限定数值范围
  */
@@ -84,27 +86,31 @@ export function truncToFixed(num: number, decimals = 0) {
   return (Math.trunc(num * n) / n).toFixed(decimals)
 }
 
+// 定义单位阈值和对应的符号
+const units = [
+  { value: 1e12, symbol: 'T' },
+  { value: 1e9, symbol: 'B' },
+  { value: 1e6, symbol: 'M' },
+  { value: 1e3, symbol: 'K' },
+]
+
 /**
  * 通过添加单位缩写数字
  * @param num
  * @param decimals 小数位数
  * @param keepZero 是否保留为0时的小数部分
  */
-export function compactNumber(num: number | string, decimals = 1, keepZero = false) {
+export function compactNumber(
+  num: number | string | null | undefined,
+  decimals = 1,
+  keepZero = false,
+) {
   num = typeof num === 'string' ? Number.parseFloat(num) : num
 
   // 处理异常情况：非数字、无穷大、NaN
-  if (!Number.isFinite(num)) {
+  if (!isNumber(num) || !Number.isFinite(num)) {
     return '0'
   }
-
-  // 定义单位阈值和对应的符号
-  const units = [
-    { value: 1e12, symbol: 'T' },
-    { value: 1e9, symbol: 'B' },
-    { value: 1e6, symbol: 'M' },
-    { value: 1e3, symbol: 'K' },
-  ]
 
   // 处理负数
   const isNegative = num < 0
