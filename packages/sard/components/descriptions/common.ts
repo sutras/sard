@@ -22,11 +22,20 @@ export interface DescriptionsSlots {
 
 export interface DescriptionsEmits {}
 
+export interface DescriptionsItemMeta {
+  colspan: () => number
+  rowspan: () => number
+}
+
 export interface DescriptionsContext {
   bordered?: boolean
   colon?: boolean
   labelWidth?: string
   labelAlign?: DescriptionsAlign
+  /** 注册一个描述项，返回注销函数 */
+  registerItem: (meta: DescriptionsItemMeta) => () => void
+  /** 获取某个描述项内容格的列跨度 */
+  getContentSpan: (meta: DescriptionsItemMeta) => number | undefined
 }
 
 export const descriptionsContextKey = Symbol(
@@ -37,10 +46,7 @@ export interface DescriptionsItemProps {
   label?: string
   colspan?: number
   rowspan?: number
-  labelWidth?: string
   labelAlign?: DescriptionsAlign
-  /** @internal set by Descriptions for last item in incomplete rows */
-  contentColspan?: number
 }
 
 export const defaultDescriptionsItemProps: DefaultProps<DescriptionsItemProps> = {

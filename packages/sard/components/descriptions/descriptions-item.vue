@@ -1,19 +1,20 @@
 <template>
-  <td :class="labelCellClass" colspan="1" :rowspan="rowspan" :style="labelStyle">
+  <div :class="labelCellClass" :style="labelStyle">
     <slot name="label">{{ label }}</slot>
-  </td>
-  <td :class="contentCellClass" :colspan="contentColspan" :rowspan="rowspan">
+  </div>
+  <div :class="contentCellClass" :style="contentStyle">
     <slot></slot>
-  </td>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from 'vue'
+import { computed, inject, onUnmounted } from 'vue'
 import { createBem } from '../../utils'
 import {
   type DescriptionsItemProps,
   type DescriptionsItemSlots,
   type DescriptionsItemEmits,
+  type DescriptionsItemMeta,
   defaultDescriptionsItemProps,
   descriptionsContextKey,
 } from './common'
@@ -36,9 +37,17 @@ const colspan = computed(() => props.colspan ?? 1)
 
 const rowspan = computed(() => props.rowspan ?? 1)
 
-const contentColspan = computed(() => props.contentColspan ?? colspan.value * 2 - 1)
+// 向 Descriptions 注册自身，以便父级统一计算每项内容格的跨度
+const meta: DescriptionsItemMeta = {
+  colspan: () => colspan.value,
+  rowspan: () => rowspan.value,
+}
 
-const effectiveLabelWidth = computed(() => props.labelWidth ?? context.labelWidth)
+onUnmounted(context.registerItem(meta))
+
+const contentSpan = computed(() => {
+  return context.getContentSpan(meta) ?? colspan.value * 2 - 1
+})
 
 const effectiveLabelAlign = computed(() => props.labelAlign ?? context.labelAlign)
 
@@ -46,13 +55,30 @@ const effectiveLabelAlign = computed(() => props.labelAlign ?? context.labelAlig
 
 const labelStyle = computed(() => {
   const style: Record<string, string> = {}
-  if (effectiveLabelWidth.value) {
-    style.width = effectiveLabelWidth.value
+
+  if (context.labelWidth) {
+    style.width = context.labelWidth
   }
   if (effectiveLabelAlign.value) {
     style.textAlign = effectiveLabelAlign.value
   }
+  if (rowspan.value > 1) {
+    style.gridRow = `span ${rowspan.value}`
+  }
+
   return Object.keys(style).length ? style : undefined
+})
+
+const contentStyle = computed(() => {
+  const style: Record<string, string> = {
+    '--s-descriptions-content-span': String(contentSpan.value),
+  }
+
+  if (rowspan.value > 1) {
+    style.gridRow = `span ${rowspan.value}`
+  }
+
+  return style
 })
 
 const labelCellClass = computed(() => {

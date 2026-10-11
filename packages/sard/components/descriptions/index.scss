@@ -16,20 +16,27 @@
 // #endregion variables
 
 @include b(descriptions) {
+  display: grid;
   width: 100%;
-  table-layout: fixed;
-  border-collapse: collapse;
+  column-gap: css-var(descriptions-item-padding-x);
+  row-gap: css-var(descriptions-item-padding-y);
+
+  @include is(bordered) {
+    column-gap: 0;
+    row-gap: 0;
+    border-block-start: css-var(border-width) solid css-var(descriptions-border-color);
+    border-inline-start: css-var(border-width) solid css-var(descriptions-border-color);
+  }
 
   @include e(item-label) {
-    padding-bottom: css-var(descriptions-item-padding-y);
-    padding-inline-end: css-var(descriptions-item-padding-x);
     color: css-var(descriptions-label-color);
     font-size: css-var(descriptions-label-font-size);
     word-break: break-word;
 
     @include is(bordered) {
       padding: css-var(descriptions-item-padding-y) css-var(descriptions-item-padding-x);
-      border: css-var(border-width) solid css-var(descriptions-border-color);
+      border-inline-end: css-var(border-width) solid css-var(descriptions-border-color);
+      border-block-end: css-var(border-width) solid css-var(descriptions-border-color);
       background: css-var(descriptions-label-bg);
     }
 
@@ -41,25 +48,15 @@
   }
 
   @include e(item-content) {
-    padding-bottom: css-var(descriptions-item-padding-y);
-    &:not(:last-child) {
-      padding-inline-end: css-var(descriptions-item-padding-x);
-    }
+    grid-column: span var(--s-descriptions-content-span, 1);
     color: css-var(descriptions-content-color);
     font-size: css-var(descriptions-content-font-size);
     word-break: break-word;
 
     @include is(bordered) {
       padding: css-var(descriptions-item-padding-y) css-var(descriptions-item-padding-x);
-      border: css-var(border-width) solid css-var(descriptions-border-color);
-    }
-  }
-
-  tr:last-child {
-    @include e(item-label, item-content) {
-      @include is-not(bordered) {
-        padding-bottom: 0;
-      }
+      border-inline-end: css-var(border-width) solid css-var(descriptions-border-color);
+      border-block-end: css-var(border-width) solid css-var(descriptions-border-color);
     }
   }
 }

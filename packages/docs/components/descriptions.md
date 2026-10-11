@@ -6,7 +6,7 @@ group: 数据展示
 
 ## 介绍
 
-以表格形式成组展示多个只读字段，常用于详情页的信息展示。标签和内容分别独占一个单元格。
+以表格样式成组展示多个只读字段，常用于详情页的信息展示。标签和内容分别独占一个单元格，内部使用 CSS Grid 布局。
 
 ## 代码演示
 
@@ -36,7 +36,7 @@ group: 数据展示
 
 ### 多列布局
 
-通过 `columns` 设置每行显示的列数。
+通过 `columns` 设置每行显示的列数，通过 `label-width` 设置标签列的宽度。
 
 <<< @demo/descriptions/demo/Columns.vue
 
@@ -68,7 +68,7 @@ group: 数据展示
 | bordered   | 是否显示边框       | boolean                        | false  |
 | colon      | 标签后是否显示冒号 | boolean                        | false  |
 | columns    | 每行列数           | number                         | 1      |
-| labelWidth | 标签单元格宽度     | string                         | -      |
+| labelWidth | 标签列宽度         | string                         | -      |
 | labelAlign | 标签文本对齐方式   | `'start' \| 'center' \| 'end'` | -      |
 
 ### DescriptionsSlots
@@ -88,7 +88,6 @@ group: 数据展示
 | label      | 标签文本                         | string                         | -      |
 | colspan    | 列跨度                           | number                         | 1      |
 | rowspan    | 行跨度                           | number                         | 1      |
-| labelWidth | 标签单元格宽度，可覆盖上级设置   | string                         | -      |
 | labelAlign | 标签文本对齐方式，可覆盖上级设置 | `'start' \| 'center' \| 'end'` | -      |
 
 ### DescriptionsItemSlots

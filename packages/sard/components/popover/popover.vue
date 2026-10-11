@@ -1,7 +1,12 @@
 <template>
-  <OnlyChild v-if="slots.reference" @update="onUpdate" @click="onReferenceClick">
+  <span
+    v-if="slots.reference"
+    ref="referenceRef"
+    style="display: contents"
+    @click="onReferenceClick"
+  >
     <slot name="reference"></slot>
-  </OnlyChild>
+  </span>
 
   <teleport to="body">
     <Motion name="wide-zoom">
@@ -22,8 +27,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch, useTemplateRef, useAttrs, shallowRef, useModel } from 'vue'
-import { createBem, OnlyChild } from '../../utils'
+import {
+  computed,
+  onMounted,
+  onUpdated,
+  shallowRef,
+  useAttrs,
+  useModel,
+  useTemplateRef,
+  watch,
+} from 'vue'
+import { createBem } from '../../utils'
 import { useClickOutside, usePopper, useZIndex } from '../../use'
 import {
   type PopoverProps,
@@ -48,10 +62,17 @@ const emit = defineEmits<PopoverEmits>()
 const bem = createBem('popover')
 
 // ============================ reference ============================
+const referenceRef = useTemplateRef<HTMLElement>('referenceRef')
 const elRef = shallowRef<Element | null>(null)
-const onUpdate = (el: Element | null) => {
-  elRef.value = el
+
+const syncElRef = () => {
+  // 包裹元素使用 `display: contents`，自身不产生盒子、无法用于定位，
+  // 因此取它的第一个子元素作为真正的参考元素。
+  elRef.value = referenceRef.value?.firstElementChild ?? referenceRef.value
 }
+
+onMounted(syncElRef)
+onUpdated(syncElRef)
 
 const mergedRef = computed(() => {
   return props.reference || elRef.value

@@ -4,6 +4,12 @@ import { mount } from '@vue/test-utils'
 import Descriptions from '../descriptions.vue'
 import DescriptionsItem from '../descriptions-item.vue'
 
+function contentSpan(cell: { attributes: (name: string) => string | undefined }) {
+  const style = cell.attributes('style') ?? ''
+  const match = style.match(/--s-descriptions-content-span:\s*(\d+)/)
+  return match ? match[1] : undefined
+}
+
 describe('Descriptions', () => {
   test('create', async () => {
     const wrapper = mount(
@@ -28,10 +34,9 @@ describe('Descriptions', () => {
     expect(labels[2].text()).toBe('地址')
     expect(contents[2].text()).toBe('北京市')
 
-    // Should render as table structure, each item = 2 cells (label + content)
-    expect(wrapper.find('table').exists()).toBe(true)
-    expect(wrapper.findAll('tr')).toHaveLength(3)
-    expect(wrapper.findAll('td')).toHaveLength(6)
+    // 网格布局：每项渲染 2 格（标签 + 内容）
+    expect(wrapper.find('.s-descriptions').exists()).toBe(true)
+    expect(wrapper.findAll('.s-descriptions > *')).toHaveLength(6)
   })
 
   test('colon', async () => {
@@ -75,11 +80,10 @@ describe('Descriptions', () => {
       </Descriptions>,
     )
 
-    // 3 items with columns=2: first row has 2 items (4 cells), second row has 1 item (2 cells)
-    const rows = wrapper.findAll('tr')
-    expect(rows).toHaveLength(2)
-    expect(rows[0].findAll('td')).toHaveLength(4)
-    expect(rows[1].findAll('td')).toHaveLength(2)
+    // 2 列 → 4 条网格轨道，每项占 2 列，自动每行 2 项
+    expect(wrapper.find('.s-descriptions').attributes('style')).toContain(
+      'grid-template-columns: repeat(4, minmax(0, 1fr))',
+    )
   })
 
   test('default columns is 1', async () => {
@@ -90,9 +94,10 @@ describe('Descriptions', () => {
       </Descriptions>,
     )
 
-    // With columns=1, each item in its own row, each row has 2 cells
-    const rows = wrapper.findAll('tr')
-    expect(rows).toHaveLength(2)
+    // columns=1 → 2 条网格轨道
+    expect(wrapper.find('.s-descriptions').attributes('style')).toContain(
+      'grid-template-columns: repeat(2, minmax(0, 1fr))',
+    )
   })
 
   test('colspan', async () => {
@@ -105,18 +110,10 @@ describe('Descriptions', () => {
       </Descriptions>,
     )
 
-    const tds = wrapper.findAll('td')
-    // Row 1: colspan=2 fills the row → label colspan=1, content colspan=3
-    expect(tds[0].attributes('colspan')).toBe('1')
-    expect(tds[1].attributes('colspan')).toBe('3')
-    // Row 2: colspan=1 alone in row → fills remaining → content colspan=3
-    expect(tds[2].attributes('colspan')).toBe('1')
-    expect(tds[3].attributes('colspan')).toBe('3')
-
-    const rows = wrapper.findAll('tr')
-    expect(rows).toHaveLength(2)
-    expect(rows[0].findAll('td')).toHaveLength(2)
-    expect(rows[1].findAll('td')).toHaveLength(2)
+    const contents = wrapper.findAll('.s-descriptions__item-content')
+    // 内容格跨度 = colspan * 2 - 1；最后一项填满当前行剩余列
+    expect(contentSpan(contents[0])).toBe('3')
+    expect(contentSpan(contents[1])).toBe('3')
   })
 
   test('last row content fills remaining columns', async () => {
@@ -129,16 +126,14 @@ describe('Descriptions', () => {
       </Descriptions>,
     )
 
-    // columns=3, 4 items colspan=1: row1 has 3, row2 has 1 (incomplete)
-    const rows = wrapper.findAll('tr')
-    expect(rows).toHaveLength(2)
+    // columns=3 → 6 条网格轨道
+    expect(wrapper.find('.s-descriptions').attributes('style')).toContain(
+      'grid-template-columns: repeat(6, minmax(0, 1fr))',
+    )
 
-    // Row 2 should have 2 cells (label + content), content fills row
-    const row2Tds = rows[1].findAll('td')
-    expect(row2Tds).toHaveLength(2)
-    expect(row2Tds[0].attributes('colspan')).toBe('1')
-    // Fills remaining: columns*2-1 = 5
-    expect(row2Tds[1].attributes('colspan')).toBe('5')
+    const contents = wrapper.findAll('.s-descriptions__item-content')
+    // 最后一项填满当前行剩余列：columns * 2 - 1 = 5
+    expect(contentSpan(contents[3])).toBe('5')
   })
 
   test('label slot', async () => {
@@ -170,16 +165,16 @@ describe('Descriptions', () => {
     expect(wrapper.find('.s-descriptions__item-content').text()).toBe('内容')
   })
 
-  test('colgroup renders correct columns count', async () => {
+  test('renders as grid with correct tracks', async () => {
     const wrapper = mount(
       <Descriptions columns={3}>
         <DescriptionsItem label="姓名">张三</DescriptionsItem>
       </Descriptions>,
     )
 
-    // table renders with correct structure
-    expect(wrapper.find('table').exists()).toBe(true)
-    expect(wrapper.find('tbody').exists()).toBe(true)
+    expect(wrapper.find('.s-descriptions').attributes('style')).toContain(
+      'grid-template-columns: repeat(6, minmax(0, 1fr))',
+    )
   })
 
   test('labelWidth on descriptions', async () => {
@@ -191,21 +186,6 @@ describe('Descriptions', () => {
 
     const labelCell = wrapper.find('.s-descriptions__item-label')
     expect(labelCell.attributes('style')).toContain('width: 100px')
-  })
-
-  test('labelWidth on item overrides descriptions', async () => {
-    const wrapper = mount(
-      <Descriptions labelWidth="100px">
-        <DescriptionsItem label="姓名" labelWidth="120px">
-          张三
-        </DescriptionsItem>
-        <DescriptionsItem label="年龄">18</DescriptionsItem>
-      </Descriptions>,
-    )
-
-    const labels = wrapper.findAll('.s-descriptions__item-label')
-    expect(labels[0].attributes('style')).toContain('width: 120px')
-    expect(labels[1].attributes('style')).toContain('width: 100px')
   })
 
   test('labelWidth not set by default', async () => {
@@ -262,14 +242,13 @@ describe('Descriptions', () => {
       </Descriptions>,
     )
 
-    const tds = wrapper.findAll('td')
-    expect(tds[0].attributes('rowspan')).toBe('2')
-    expect(tds[1].attributes('rowspan')).toBe('2')
-    expect(tds[2].attributes('rowspan')).toBe('1')
-    expect(tds[3].attributes('rowspan')).toBe('1')
+    const labels = wrapper.findAll('.s-descriptions__item-label')
+    const contents = wrapper.findAll('.s-descriptions__item-content')
 
-    // 3 rows: row0=[A(rowspan=2)], row1=(空，A 的 rowspan 占满), row2=[B]
-    expect(wrapper.findAll('tr')).toHaveLength(3)
+    expect(labels[0].attributes('style')).toContain('grid-row: span 2')
+    expect(contents[0].attributes('style')).toContain('grid-row: span 2')
+    expect(labels[1].attributes('style') ?? '').not.toContain('grid-row')
+    expect(contents[1].attributes('style') ?? '').not.toContain('grid-row')
   })
 
   test('rowspan with columns=2', async () => {
@@ -284,20 +263,11 @@ describe('Descriptions', () => {
       </Descriptions>,
     )
 
-    const rows = wrapper.findAll('tr')
-    const tds = wrapper.findAll('td')
+    const contents = wrapper.findAll('.s-descriptions__item-content')
 
-    // rowspan=2 on first item → A in row1, A's cells rowspan to row2
-    // B also in row1, C in row2 (only 1 position available due to A's rowspan)
-    // D in row3 (no reservations)
-    expect(rows).toHaveLength(3)
-    expect(tds[0].attributes('rowspan')).toBe('2')
-    expect(tds[1].attributes('rowspan')).toBe('2')
-
-    // D fills row3: content colspan = (2-0)*2-1 = 3
-    const row3Tds = rows[2].findAll('td')
-    expect(row3Tds).toHaveLength(2)
-    expect(row3Tds[1].attributes('colspan')).toBe('3')
+    expect(contents[0].attributes('style')).toContain('grid-row: span 2')
+    // 最后一项填满当前行剩余列：(2 - 0) * 2 - 1 = 3
+    expect(contentSpan(contents[3])).toBe('3')
   })
 
   test('default rowspan is 1', async () => {
@@ -307,17 +277,15 @@ describe('Descriptions', () => {
       </Descriptions>,
     )
 
-    const tds = wrapper.findAll('td')
-    expect(tds[0].attributes('rowspan')).toBe('1')
-    expect(tds[1].attributes('rowspan')).toBe('1')
+    const labels = wrapper.findAll('.s-descriptions__item-label')
+    const contents = wrapper.findAll('.s-descriptions__item-content')
+
+    expect(labels[0].attributes('style') ?? '').not.toContain('grid-row')
+    expect(contents[0].attributes('style') ?? '').not.toContain('grid-row')
   })
 
-  test('rowspan larger than items creates empty trailing rows', async () => {
-    // columns=2, A(rowspan=4), B, C, D
-    // Row0: A(rowspan=4) + B → 4 cells
-    // Row1: C (count=1 after rowspan) → 2 cells, contentColspan=1
-    // Row2: D (count=1 after rowspan) → 2 cells, contentColspan=1
-    // Row3: (empty, filtered) A's rowspan occupies 1 position
+  test('rowspan larger than items leaves trailing rows for the span', async () => {
+    // columns=2：A(rowspan=4) 占前两行的两列，B/C/D 依次排布
     const wrapper = mount(
       <Descriptions columns={2}>
         <DescriptionsItem label="头像" rowspan={4}>
@@ -329,21 +297,11 @@ describe('Descriptions', () => {
       </Descriptions>,
     )
 
-    const rows = wrapper.findAll('tr')
-    const tds = wrapper.findAll('td')
+    const contents = wrapper.findAll('.s-descriptions__item-content')
 
-    expect(rows).toHaveLength(3)
-    expect(tds[0].attributes('rowspan')).toBe('4')
-    expect(tds[1].attributes('rowspan')).toBe('4')
-
-    // Row1: C, contentColspan should be 1 (row is full, no fill)
-    const row1Tds = rows[1].findAll('td')
-    expect(row1Tds).toHaveLength(2)
-    expect(row1Tds[1].attributes('colspan')).toBe('1')
-
-    // Row2: D, contentColspan should be 1 (row is full, no fill)
-    const row2Tds = rows[2].findAll('td')
-    expect(row2Tds).toHaveLength(2)
-    expect(row2Tds[1].attributes('colspan')).toBe('1')
+    expect(contents[0].attributes('style')).toContain('grid-row: span 4')
+    expect(contentSpan(contents[1])).toBe('1')
+    expect(contentSpan(contents[2])).toBe('1')
+    expect(contentSpan(contents[3])).toBe('1')
   })
 })
