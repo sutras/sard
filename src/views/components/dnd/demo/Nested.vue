@@ -19,7 +19,13 @@
               >
                 <Trash />
               </s-button>
-              <s-form-item label="活动名称" :name="['activities', i, 'name']" inlaid required>
+              <s-form-item
+                label="活动名称"
+                :name="['activities', i, 'name']"
+                inlaid
+                required
+                class="flex-1"
+              >
                 <s-input v-model="activity.name" inlaid placeholder="请输入活动名称" clearable />
               </s-form-item>
               <s-dnd-handle>
@@ -66,6 +72,7 @@
                       message: '请选择奖品',
                     }"
                     inlaid
+                    class="flex-1"
                   >
                     <s-picker-input
                       v-model="award.name"
