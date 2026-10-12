@@ -31,8 +31,8 @@ import {
   getMaySingleValueByOptions,
   defaultPickerProps,
 } from './common'
-import PickerView from '../picker-view/picker-view'
-import PickerViewColumn from '../picker-view/picker-view-column.tsx'
+import PickerView from '../picker-view/picker-view.vue'
+import PickerViewColumn from '../picker-view/picker-view-column.vue'
 import { useOptionKeys } from '../../use'
 
 const props = withDefaults(defineProps<PickerProps<T>>(), defaultPickerProps)

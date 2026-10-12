@@ -88,8 +88,8 @@ declare module 'vue' {
     SPicker: typeof import('./components/picker/picker.vue').default
     SPickerInput: typeof import('./components/picker-input/picker-input.vue').default
     SPickerPopout: typeof import('./components/picker-popout/picker-popout.vue').default
-    SPickerView: typeof import('./components/picker-view/picker-view.tsx').default
-    SPickerViewColumn: typeof import('./components/picker-view/picker-view-column.tsx').default
+    SPickerView: typeof import('./components/picker-view/picker-view.vue').default
+    SPickerViewColumn: typeof import('./components/picker-view/picker-view-column.vue').default
     SPopout: typeof import('./components/popout/popout.vue').default
     SPopoutInput: typeof import('./components/popout-input/popout-input.vue').default
     SPopover: typeof import('./components/popover/popover.vue').default
@@ -141,8 +141,8 @@ declare module 'vue' {
     SSticky: typeof import('./components/sticky/sticky.vue').default
     SStickyBox: typeof import('./components/sticky/sticky-box.vue').default
     SSwipeAction: typeof import('./components/swipe-action/swipe-action.vue').default
-    SSwiper: typeof import('./components/swiper/swiper.tsx').default
-    SSwiperItem: typeof import('./components/swiper/swiper-item.tsx').default
+    SSwiper: typeof import('./components/swiper/swiper.vue').default
+    SSwiperItem: typeof import('./components/swiper/swiper-item.vue').default
     SSwitch: typeof import('./components/switch/switch.vue').default
     STab: typeof import('./components/tab/tab.vue').default
     STabbar: typeof import('./components/tabbar/tabbar.vue').default

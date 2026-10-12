@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest'
 import { mount } from '@vue/test-utils'
 
-import PickerView from '../picker-view.tsx'
-import PickerViewColumn from '../picker-view-column.tsx'
+import PickerView from '../picker-view.vue'
+import PickerViewColumn from '../picker-view-column.vue'
 
 describe('PickerView', () => {
   test('renders wrapper and columns', () => {

@@ -14,7 +14,6 @@ import {
   watchSyncEffect,
   type InjectionKey,
   type Ref,
-  type VNode,
 } from 'vue'
 import { useSwiperData, type SwiperSlideData } from './useSwiperData'
 import { useInitialVelocity, usePointerDown, useResizeObserver, useRtl } from '../../use'
@@ -47,24 +46,28 @@ export function useSwiper(props: SwiperPrivateProps, emit: SwiperEmits) {
 
   // ============================ members ============================
 
-  let swiperItems: VNode[] | HTMLCollection = []
-
   const members = shallowRef<SwiperMember[]>([])
 
+  // 不使用 VNode 收集子项：SwiperItem 通过 `addMember` 注册自身，
+  // 这里按 DOM 顺序（而非渲染顺序）排列，保证与视觉顺序一致。
   function updateMembers(rawMembers: SwiperMember[]) {
-    const _members: SwiperMember[] = []
+    const uniqueMembers: SwiperMember[] = []
+    const seen = new Set<HTMLElement>()
 
-    for (let i = 0; i < swiperItems.length; i++) {
-      let swiperItem = swiperItems[i]
-      if (!(swiperItem instanceof Element)) {
-        swiperItem = swiperItem.el as HTMLElement
-      }
-      const member = rawMembers.find((member) => swiperItem === member.el)
-      if (member) {
-        _members.push(member)
+    for (const member of rawMembers) {
+      const el = member.el
+      if (el && !seen.has(el)) {
+        seen.add(el)
+        uniqueMembers.push(member)
       }
     }
-    members.value = _members
+
+    uniqueMembers.sort((a, b) => {
+      const position = a.el!.compareDocumentPosition(b.el!)
+      return position & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1
+    })
+
+    members.value = uniqueMembers
   }
 
   provide(swiperContextKey, {
@@ -78,10 +81,6 @@ export function useSwiper(props: SwiperPrivateProps, emit: SwiperEmits) {
       updateMembers(members.value.filter((m) => m !== member))
     },
   })
-
-  const setSwiperItems = (_swiperItems: VNode[]) => {
-    swiperItems = _swiperItems
-  }
 
   // ============================ swiper data ============================
   const {
@@ -319,7 +318,6 @@ export function useSwiper(props: SwiperPrivateProps, emit: SwiperEmits) {
     members,
     activeIndex,
     pageCount,
-    setSwiperItems,
     onTouchStart,
     onTouchMove,
     onTouchEnd,

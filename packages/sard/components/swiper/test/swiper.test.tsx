@@ -2,8 +2,8 @@ import { afterEach, describe, expect, test, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
 
-import Swiper from '../swiper.tsx'
-import SwiperItem from '../swiper-item.tsx'
+import Swiper from '../swiper.vue'
+import SwiperItem from '../swiper-item.vue'
 
 function getActiveDotIndex(wrapper: ReturnType<typeof mount>) {
   return wrapper.findAll('.s-swiper__dot').findIndex((item) => item.classes().includes('is-active'))

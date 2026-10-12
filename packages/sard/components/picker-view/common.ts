@@ -69,6 +69,8 @@ export interface PickerViewContext {
   maskClass: any
   indicatorClass: any
   indicatorStyle: any
+  registerColumn: (instance: ComponentInternalInstance) => void
+  unregisterColumn: (instance: ComponentInternalInstance) => void
   getColumnValue: (ins: ComponentInternalInstance) => WritableComputedRef<number>
 }
 

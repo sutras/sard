@@ -1,6 +1,6 @@
 import { enhanceComponent, type EnhancedComponent } from '../../utils'
-import _PickerView from './picker-view'
-import _PickerViewColumn from './picker-view-column'
+import _PickerView from './picker-view.vue'
+import _PickerViewColumn from './picker-view-column.vue'
 
 export const PickerView: EnhancedComponent<typeof _PickerView> = enhanceComponent(_PickerView)
 export const PickerViewColumn: EnhancedComponent<typeof _PickerViewColumn> =

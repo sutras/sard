@@ -50,8 +50,8 @@ import {
 import Popup from '../popup/popup.vue'
 import { computed, provide, reactive, ref, useModel, watch } from 'vue'
 import { useInitialVelocity, usePointerDown, useTimeout } from '../../use'
-import Swiper from '../swiper/swiper.tsx'
-import SwiperItem from '../swiper/swiper-item.tsx'
+import Swiper from '../swiper/swiper.vue'
+import SwiperItem from '../swiper/swiper-item.vue'
 import PreviewImageItem from './preview-image-item.vue'
 import type { MotionHookName } from '../motion/common'
 
