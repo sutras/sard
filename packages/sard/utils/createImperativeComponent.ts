@@ -1,4 +1,6 @@
-import { type Component, createApp, createVNode, defineComponent, ref } from 'vue'
+import type { Component } from 'vue'
+import ImperativeAgent from './imperative/imperative-agent.vue'
+import { mountAgent } from './imperative/agent-runtime'
 
 interface ImperativeExpose<T> {
   show: (options?: T) => void
@@ -10,65 +12,25 @@ interface ImperativeConfig<Expose> {
   onHide?: (expose: Expose) => void
 }
 
-function createAgent<Options, Expose>(
-  component: Component,
-  defaultOptions?: Options,
-  config?: ImperativeConfig<Expose>,
-) {
-  return defineComponent({
-    setup(_, { expose }) {
-      const compRef = ref<Expose>()
-
-      const innerProps = ref<Options>({} as Options)
-
-      const show = (options: Options) => {
-        innerProps.value = {
-          ...defaultOptions,
-          ...options,
-          visible: true,
-        }
-        config?.onShow?.(compRef.value!)
-      }
-
-      const hide = () => {
-        innerProps.value = {
-          ...innerProps.value,
-          visible: false,
-        }
-        config?.onHide?.(compRef.value!)
-      }
-
-      expose({
-        show,
-        hide,
-      })
-
-      return () => {
-        return createVNode(component, {
-          ref: compRef,
-          ...innerProps.value,
-          'onUpdate:visible': (value: boolean) => {
-            innerProps.value.visible = value
-            innerProps.value['onUpdate:visible']?.(value)
-          },
-        })
-      }
-    },
-  })
-}
-
+/**
+ * 创建一个命令式组件：挂载到 body 上的独立容器里，通过 `show` / `hide` 控制。
+ *
+ * 具体渲染由 `./imperative/imperative-agent.vue` 负责，挂载方式（vdom / vapor）
+ * 由 `./imperative/agent-runtime` 隔离，因此这里不含任何 vdom 专有 API。
+ */
 export function createImperativeComponent<Options, Expose>(
   component: Component,
   defaultOptions?: Options,
   config?: ImperativeConfig<Expose>,
-) {
+): ImperativeExpose<Options> {
   const container = document.createElement('div')
   document.body.appendChild(container)
 
-  const Agent = createAgent(component, defaultOptions, config)
-
-  const app = createApp(Agent)
-  const instance = app.mount(container) as unknown as ImperativeExpose<Options>
+  const instance = mountAgent(ImperativeAgent, container, {
+    component,
+    defaultOptions,
+    config,
+  }) as ImperativeExpose<Options>
 
   function show(options?: Options) {
     instance.show(options)

@@ -1,5 +1,3 @@
-import { isVNode } from 'vue'
-
 /**
  * @description: 判断是否为纯对象
  * @param {any} target
@@ -109,10 +107,13 @@ export function isDate(target: any): target is Date {
 }
 
 /**
- * 判断是否为配置对象（而非 VNode）
+ * 判断是否为配置对象（而非其他类型的值）
+ *
+ * NOTE: 这里不再用 `isVNode` 排除 VNode —— `message` 之类的内容按文本渲染，
+ * 传 VNode 本来就没有意义，且 vapor 下不存在 VNode。
  * @param {any} target
  * @return {boolean}
  */
 export function isConfigObject(target: any): target is Record<PropertyKey, any> {
-  return isPlainObject(target) && !isVNode(target)
+  return isPlainObject(target)
 }
