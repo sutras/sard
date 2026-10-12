@@ -1,15 +1,25 @@
 @use '../style/base' as *;
 
 @include b(dnd-item) {
-  position: relative;
+  // 包裹层为 `display: contents`（不产生盒子），样式需下沉到真实子元素；
+  // `border-radius: inherit` 保持 List 首/末项圆角的继承链不断。
+  border-radius: inherit;
+
+  > * {
+    position: relative;
+  }
 
   @include m(active) {
-    z-index: 1;
-    box-shadow: css-var(box-shadow-secondary);
+    > * {
+      z-index: 1;
+      box-shadow: css-var(box-shadow-secondary);
+    }
   }
 
   @include m(passive) {
-    transition: transform css-var(duration);
+    > * {
+      transition: transform css-var(duration);
+    }
   }
 }
 

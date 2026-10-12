@@ -68,6 +68,31 @@
     &::before {
       @include border-vertical(css-var(list-border-color));
     }
+
+    // 子项被 `display: contents` 包裹时（如 DndItem），`.s-list-item` 会误命中自身的
+    // `:first-child`/`:last-child`（每个都成了包裹层的唯一子元素）；这里把被包裹的场景
+    // 显式纠正回来，包裹层需自行 `border-radius: inherit` 以接续圆角继承链。
+    > :not(.s-list-item) > .s-list-item {
+      border-radius: 0;
+
+      &:not(.s-list-item--borderless)::before {
+        display: block;
+      }
+    }
+
+    > :not(.s-list-item):first-child > .s-list-item {
+      border-top-left-radius: inherit;
+      border-top-right-radius: inherit;
+
+      &::before {
+        display: none;
+      }
+    }
+
+    > :not(.s-list-item):last-child > .s-list-item {
+      border-bottom-left-radius: inherit;
+      border-bottom-right-radius: inherit;
+    }
   }
 
   @include m(borderless) {

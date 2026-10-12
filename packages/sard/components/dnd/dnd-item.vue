@@ -1,21 +1,25 @@
 <template>
-  <OnlyChild :class="dndItemClass" @update="onUpdate">
+  <span ref="wrapperRef" :class="dndItemClass" style="display: contents">
     <slot></slot>
-  </OnlyChild>
+  </span>
 </template>
 
 <script setup lang="ts">
 import {
   computed,
   inject,
+  normalizeClass,
   onBeforeUnmount,
   onMounted,
+  onUpdated,
   provide,
   ref,
   shallowRef,
+  useAttrs,
+  useTemplateRef,
   watchPostEffect,
 } from 'vue'
-import { createBem, OnlyChild } from '../../utils'
+import { createBem } from '../../utils'
 import {
   type DndItemProps,
   type DndItemSlots,
@@ -42,9 +46,32 @@ if (!dndContext) {
 
 // ============================ drag ============================
 
+// 包裹层使用 `display: contents`，自身不产生盒子，无法用于测量/变换，
+// 因此 elRef 指向真正的第一个子元素（保持与旧 OnlyChild 一致的行为）。
+const wrapperRef = useTemplateRef<HTMLElement>('wrapperRef')
 const elRef = shallowRef<HTMLElement | null>(null)
-const onUpdate = (el: HTMLElement | null) => {
+
+const attrs = useAttrs()
+
+// `display: contents` 元素上的 class 无视觉效果，需下移到真实子元素，
+// 保证 `<DndItem class="...">` 与旧行为一致。
+let forwardedClass = ''
+
+const syncElRef = () => {
+  const wrapper = wrapperRef.value
+  const el = (wrapper?.firstElementChild as HTMLElement | null | undefined) ?? wrapper ?? null
   elRef.value = el
+
+  if (!el) return
+
+  const next = normalizeClass(attrs.class)
+  for (const name of forwardedClass.split(' ')) {
+    if (name) el.classList.remove(name)
+  }
+  for (const name of next.split(' ')) {
+    if (name) el.classList.add(name)
+  }
+  forwardedClass = next
 }
 
 let dropItemInfo: DndItemInfo | null = null
@@ -58,8 +85,11 @@ const getNodeRect = () => {
 }
 
 onMounted(() => {
+  syncElRef()
   dndContext.addRectItem(getNodeRect)
 })
+
+onUpdated(syncElRef)
 
 onBeforeUnmount(() => {
   dndContext.removeRectItem(getNodeRect)
