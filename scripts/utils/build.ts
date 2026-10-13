@@ -169,12 +169,16 @@ async function copyResolvedPackageJson(options: { rootDir: string; outDir: strin
   await writeFileWithDirs(resolve(outDir, 'package.json'), result)
 }
 
+function getExclude(rootDir: string) {
+  return ['**/node_modules/', '**/dist/', '**/*.test.*', '**/__tests__/'].map((item) => {
+    return resolve(rootDir, item)
+  })
+}
+
 export async function build(options: { rootDir: string; outDir: string; tasks?: ListrTask[] }) {
   const { rootDir, outDir, tasks: _tasks = [] } = options
 
-  const exclude = ['**/node_modules/', '**/dist/', '**/*.test.*', '**/__tests__/'].map((item) => {
-    return resolve(rootDir, item)
-  })
+  const exclude = getExclude(rootDir)
 
   const tasks = new Listr(
     [
@@ -188,7 +192,9 @@ export async function build(options: { rootDir: string; outDir: string; tasks?: 
           generateDeclaration({
             rootDir,
             outDir,
-            exclude,
+            // `x.vapor.*` 只在 vapor 产物里有实现（且产出同名模块），
+            // 不要为它们生成 `x.vapor.d.ts`
+            exclude: [...exclude, resolve(rootDir, '**/*.vapor.*')],
           }),
       },
       {

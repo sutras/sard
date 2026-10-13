@@ -98,7 +98,8 @@ export async function compileAllScript(options: {
     preserveModules: true,
     preserveModulesRoot: rootDir,
     entryFileNames(chunkInfo) {
-      if (chunkInfo.facadeModuleId?.replace(/\?.*$/, '').endsWith('.vue')) {
+      const id = chunkInfo.facadeModuleId?.replace(/\?.*$/, '') ?? ''
+      if (id.endsWith('.vue')) {
         return '[name].vue.js'
       }
       return '[name].js'
