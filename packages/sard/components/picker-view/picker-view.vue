@@ -7,11 +7,12 @@
 </template>
 
 <script setup lang="ts">
-import { type ComponentInternalInstance, computed, provide, reactive, ref, toRef, watch } from 'vue'
+import { computed, provide, reactive, shallowRef, toRef, watch } from 'vue'
 import { createBem } from '../../utils'
 import {
   pickerViewContextKey,
   pickerViewProps,
+  type PickerViewColumnHandle,
   type PickerViewEmits,
   type PickerViewSlots,
 } from './common'
@@ -40,35 +41,31 @@ watch(
 )
 
 // ============================ columns ============================
-// 不使用 VNode 收集列：每个 PickerViewColumn 在 setup 时注册自身实例，
-// 注册顺序即渲染（DOM）顺序，用实例身份换算出所在列的下标。
-const columnInstances = ref<ComponentInternalInstance[]>([])
+// 不使用 VNode 收集列：每个 PickerViewColumn 在 setup 时登记一个**自建的普通对象**，
+// 登记顺序即渲染（DOM）顺序，用句柄身份换算出所在列的下标。
+// 用 shallowRef：这里只需身份登记、不需要深响应式。
+const columnHandles = shallowRef<PickerViewColumnHandle[]>([])
 
-function registerColumn(instance: ComponentInternalInstance) {
-  if (!columnInstances.value.includes(instance)) {
-    columnInstances.value.push(instance)
+function registerColumn(handle: PickerViewColumnHandle) {
+  if (!columnHandles.value.includes(handle)) {
+    columnHandles.value.push(handle)
   }
 }
 
-function unregisterColumn(instance: ComponentInternalInstance) {
-  const index = columnInstances.value.indexOf(instance)
+function unregisterColumn(handle: PickerViewColumnHandle) {
+  const index = columnHandles.value.indexOf(handle)
   if (index > -1) {
-    columnInstances.value.splice(index, 1)
+    columnHandles.value.splice(index, 1)
   }
 }
 
-function getItemIndex(instance: ComponentInternalInstance): number {
-  return columnInstances.value.indexOf(instance)
-}
-
-const getColumnValue = (columnInstance: ComponentInternalInstance) => {
+const getColumnValue = (handle: PickerViewColumnHandle) => {
   return computed({
     get() {
-      const index = getItemIndex(columnInstance)
-      return innerValue[index] || 0
+      return innerValue[columnHandles.value.indexOf(handle)] || 0
     },
     set(current: number) {
-      const index = getItemIndex(columnInstance)
+      const index = columnHandles.value.indexOf(handle)
       if (index < 0) {
         return
       }

@@ -30,16 +30,32 @@
 </template>
 
 <script setup lang="ts">
-import { computed, getCurrentInstance, inject, onUnmounted, ref, watch, watchPostEffect } from 'vue'
+import { computed, inject, onUnmounted, ref, watch, watchPostEffect } from 'vue'
 import { createBem, Friction, Spring, useScroller } from '../../utils'
 import { usePointerDown, useResizeObserver } from '../../use'
-import { type PickerViewColumnSlots, pickerViewContextKey } from './common'
+import {
+  type PickerViewColumnHandle,
+  type PickerViewColumnSlots,
+  pickerViewContextKey,
+} from './common'
+
+const props = defineProps<{
+  /**
+   * 选项数量。**推荐由知道数据的那一层传入**（如 Picker 会传 `column.length`）：
+   * 不传时回落到观察 DOM 子节点数，但整列重建时 DOM 会有中间态（少到 1 个），
+   * 会被下文的「按列数夹取」误判成 0，导致整列跳回第一行。
+   */
+  itemCount?: number
+}>()
 
 defineSlots<PickerViewColumnSlots>()
 
 const bem = createBem('picker-view-column')
 
-const instance = getCurrentInstance()!
+// 身份句柄：普通对象，仅用于在 PickerView 侧定位「我是第几列」。
+// 不能用 getCurrentInstance()：vapor 渲染子组件期间它返回的是发起本次渲染的组件，
+// 所有列会拿到同一个实例（详见 common.ts 里 PickerViewColumnHandle 的说明）。
+const handle: PickerViewColumnHandle = { __pickerViewColumn: true }
 
 const rootRef = ref<HTMLElement | null>(null)
 const contentRef = ref<HTMLElement | null>(null)
@@ -47,20 +63,23 @@ const indicatorRef = ref<HTMLElement | null>(null)
 
 const context = inject(pickerViewContextKey)!
 
-// 注册自身实例，使 PickerView 能按注册（渲染）顺序定位当前位于第几列
-context.registerColumn(instance)
+// 登记自身句柄，使 PickerView 能按登记（渲染）顺序定位当前位于第几列
+context.registerColumn(handle)
 
 onUnmounted(() => {
-  context.unregisterColumn(instance)
+  context.unregisterColumn(handle)
 })
 
-const columnValue = context.getColumnValue(instance)
+const columnValue = context.getColumnValue(handle)
 
-const itemCount = ref(0)
+const domItemCount = ref(0)
 
-// 选项数量取自渲染后的 DOM（不再依赖 VNode）
+// 优先用父级传进来的数量（反应式、不会有 DOM 中间态）
+const itemCount = computed(() => props.itemCount ?? domItemCount.value)
+
+// 选项数量回落到渲染后的 DOM 子节点数
 const updateItemCount = () => {
-  itemCount.value = contentRef.value?.children.length ?? 0
+  domItemCount.value = contentRef.value?.children.length ?? 0
 }
 
 let contentObserver: MutationObserver | null = null

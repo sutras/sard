@@ -6,7 +6,7 @@
       :value="columnIndexes"
       @change="onChange"
     >
-      <PickerViewColumn v-for="(column, i) in renderedColumns" :key="i">
+      <PickerViewColumn v-for="(column, i) in renderedColumns" :key="i" :item-count="column.length">
         <div v-for="(option, j) in column" :key="j" :class="bem.e('item')">
           <slot name="option" :option="option" :rowIndex="j" :columnIndex="i">
             {{ optionKeys.getLabel(option) }}
