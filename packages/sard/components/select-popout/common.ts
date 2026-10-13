@@ -7,7 +7,7 @@ import {
   type SelectExpose,
 } from '../select/common'
 import { type FormPopoutProps } from '../popout/useFormPopout'
-import type { MotionEmits } from '../motion'
+import type { MotionEmits } from '../motion/common'
 
 export interface SelectPopoutProps extends FormPopoutProps, SelectProps {}
 

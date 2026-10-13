@@ -1,7 +1,7 @@
 import { defaultPickerProps, type PickerSlots, type PickerProps } from '../picker/common'
 import { type DefaultProps } from '../config'
 import { type FormPopoutProps } from '../popout/useFormPopout'
-import type { MotionEmits } from '../motion'
+import type { MotionEmits } from '../motion/common'
 
 export interface PickerPopoutProps<T> extends FormPopoutProps, PickerProps<T> {}
 

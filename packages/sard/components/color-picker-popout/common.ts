@@ -1,7 +1,7 @@
 import { type DefaultProps } from '../config'
 import { type FormPopoutProps } from '../popout/useFormPopout'
 import { defaultColorPickerProps, type ColorPickerProps } from '../color-picker/common'
-import type { MotionEmits } from '../motion'
+import type { MotionEmits } from '../motion/common'
 
 export interface ColorPickerPopoutProps extends FormPopoutProps, ColorPickerProps {}
 

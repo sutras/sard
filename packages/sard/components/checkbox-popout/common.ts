@@ -1,7 +1,7 @@
 import { type CheckboxGroupProps } from '../checkbox/common'
 import { type DefaultProps } from '../config'
 import { type FormPopoutProps } from '../popout/useFormPopout'
-import type { MotionEmits } from '../motion'
+import type { MotionEmits } from '../motion/common'
 
 export interface CheckboxPopoutProps extends FormPopoutProps, CheckboxGroupProps {
   searchable?: boolean

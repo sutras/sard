@@ -1,7 +1,7 @@
 import { type RadioGroupProps } from '../radio/common'
 import { type DefaultProps } from '../config'
 import { type FormPopoutProps } from '../popout/useFormPopout'
-import type { MotionEmits } from '../motion'
+import type { MotionEmits } from '../motion/common'
 
 export interface RadioPopoutProps extends FormPopoutProps, RadioGroupProps {
   searchable?: boolean

@@ -4,7 +4,7 @@ import {
 } from '../datetime-range-picker/common'
 import { type DefaultProps } from '../config'
 import { type FormPopoutProps } from '../popout/useFormPopout'
-import type { MotionEmits } from '../motion'
+import type { MotionEmits } from '../motion/common'
 
 export interface DatetimeRangePickerPopoutProps extends FormPopoutProps, DatetimeRangePickerProps {}
 

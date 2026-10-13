@@ -1,6 +1,6 @@
 import { type DefaultProps } from '../config'
 import { type KeyboardProps, type KeyboardPlateMode, type KeyBoardExpose } from '../keyboard/common'
-import type { MotionEmits } from '../motion'
+import type { MotionEmits } from '../motion/common'
 
 export interface KeyboardPopoutProps extends KeyboardProps {
   visible?: boolean

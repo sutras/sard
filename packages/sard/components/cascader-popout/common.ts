@@ -1,7 +1,7 @@
 import { type CascaderOption, type CascaderProps } from '../cascader/common'
 import { type DefaultProps } from '../config'
 import { type FormPopoutProps } from '../popout/useFormPopout'
-import type { MotionEmits } from '../motion'
+import type { MotionEmits } from '../motion/common'
 
 export interface CascaderPopoutProps extends FormPopoutProps, CascaderProps {}
 

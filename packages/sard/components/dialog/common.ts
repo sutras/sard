@@ -1,6 +1,6 @@
 import { type DefaultProps } from '../config'
 import { type ButtonProps } from '../button'
-import type { MotionEmits } from '../motion'
+import type { MotionEmits } from '../motion/common'
 
 export type DialogBeforeClose = (
   type: 'close' | 'cancel' | 'confirm',

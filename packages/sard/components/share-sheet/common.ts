@@ -1,5 +1,5 @@
 import { type DefaultProps } from '../config'
-import type { MotionEmits } from '../motion'
+import type { MotionEmits } from '../motion/common'
 
 export interface ShareSheetbeforeClose {
   (type: 'close' | 'cancel' | 'select'): boolean | Promise<any>

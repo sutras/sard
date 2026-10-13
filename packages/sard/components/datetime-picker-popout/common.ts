@@ -1,7 +1,7 @@
 import { type DatetimePickerProps, type DatetimePickerSlots } from '../datetime-picker/common'
 import { type DefaultProps } from '../config'
 import { type FormPopoutProps } from '../popout/useFormPopout'
-import type { MotionEmits } from '../motion'
+import type { MotionEmits } from '../motion/common'
 
 export interface DatetimePickerPopoutProps extends FormPopoutProps, DatetimePickerProps {}
 
