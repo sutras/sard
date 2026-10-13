@@ -1,6 +1,13 @@
 packages:
   - 'packages/*'
+
+# pnpm 10+ 已不再读取 package.json 的 `pnpm` 字段，overrides 必须放在这里
+overrides:
+  postcss: ^8.5.25
+
+# pnpm 12 的 supply-chain policy：每个带 build script 的依赖都必须显式表态
+# （占位符 "set this to true or false" 是 pnpm 生成的提示，必须换成真布尔值）
 allowBuilds:
-  '@parcel/watcher': set this to true or false
-  core-js: set this to true or false
-  esbuild: set this to true or false
+  '@parcel/watcher': false
+  core-js: false
+  esbuild: true
