@@ -19,30 +19,6 @@ export const docsMobileBase = `mobile`
 
 export const changelogPath = path.resolve(CWD, 'CHANGELOG.md')
 
-export const gitRepositories = [
-  {
-    name: 'Aliyun',
-    branch: 'gh-pages',
-    docsRepo: 'git@wzt.zone:/home/git/sard-docs.git',
-  },
-  {
-    name: 'Github',
-    icon: 'github',
-    url: 'https://github.com/sutras/sard',
-    branch: 'gh-pages',
-    docsRepo: 'https://github.com/sutras/sard-docs.git',
-    main: true,
-  },
-  {
-    name: 'Gitee',
-    icon: 'gitee',
-    url: 'https://gitee.com/sutras/sard',
-    branch: 'gh-pages',
-    docsRepo: 'https://gitee.com/sutras/sard-docs.git',
-    pages: 'https://gitee.com/sutras/sard/pages',
-  },
-]
-
 export const dependenciesTypes = [
   'dependencies',
   'devDependencies',
