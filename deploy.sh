@@ -22,7 +22,7 @@ echo "▶ 构建站点（npm run build:site）..."
 npm run build:site
 
 echo "▶ 部署到服务器（rsync）..."
-rsync -avzhc --partial --stats --delete --exclude='.user.ini' \
+rsync -avzhc --mkpath --partial --stats --delete --exclude='.user.ini' \
   "$SRC" "$DEPLOY_TARGET"
 
 echo "✓ 部署完成"
