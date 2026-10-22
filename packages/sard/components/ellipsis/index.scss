@@ -33,6 +33,17 @@
     white-space: nowrap;
   }
 
+  // 测量层里的按钮占位：只保留影响换行的部分（外边距、不换行、基线），
+  // 不带 __action 类是为了让那个类在 DOM 里只出现一次（可见层的按钮）
+  @include e(measure-action) {
+    margin-inline-start: css-var(ellipsis-action-margin-start);
+    line-height: inherit;
+    vertical-align: bottom;
+    white-space: nowrap;
+  }
+
+  // 唯一的测量层：绝对定位 + 不可见，只读几何，不参与可见布局。
+  // 内容是 JS 写的两个 span（正文 + 按钮），这里只负责给它一个和正文同宽的盒子。
   @include e(measure) {
     position: absolute;
     display: block;
@@ -44,9 +55,8 @@
     pointer-events: none;
     white-space: pre-wrap;
     word-break: break-all;
-
-    @include m(line) {
-      white-space: nowrap;
-    }
+    // 每轮探测都要改内容并立刻读高度，把布局失效关在自身子树里，
+    // 不让它沿着祖先链传播
+    contain: layout style;
   }
 }

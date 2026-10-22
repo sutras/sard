@@ -2,27 +2,21 @@
   <div ref="root" :class="bem.b()">
     <div :class="contentClass" :style="contentStyle">
       {{ displayContent }}
-      <span v-if="showAction" :class="bem.e('action')" @click="onToggle">
+      <span v-if="showAction" :class="actionClass" @click="onToggle">
         {{ actionText }}
       </span>
     </div>
-    <div ref="full" :class="bem.e('measure')">
-      {{ props.content }}
-    </div>
-    <div ref="line" :class="[bem.e('measure'), bem.em('measure', 'line')]">
-      {{ props.content }}
-    </div>
-    <div ref="calc" :class="bem.e('measure')">
-      {{ measureContent }}
-      <span v-if="hasAction" :class="bem.e('action')">
-        {{ props.expandText }}
-      </span>
-    </div>
+
+    <!-- 唯一的测量层：整段高度、单行高度、二分候选都在这一块里量。
+         内容是空的，两个 span（正文 + 展开按钮）由 JS 建、由 JS 直接改 textContent，
+         每轮探测只有「一次写入 + 一次读取」，不触发组件重渲染。
+         绝对定位 + contain，测量引起的布局失效既不会撑开可见布局，也不会传到祖先链。 -->
+    <div ref="measure" :class="measureClass" aria-hidden="true"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, useModel, useTemplateRef, watch } from 'vue'
+import { computed, onMounted, ref, useModel, useTemplateRef, watch } from 'vue'
 import { createBem } from '../../utils'
 import {
   type EllipsisEmits,
@@ -40,6 +34,11 @@ defineSlots<EllipsisSlots>()
 const emit = defineEmits<EllipsisEmits>()
 
 const bem = createBem('ellipsis')
+
+const measureClass = bem.e('measure')
+const actionClass = bem.e('action')
+/** 测量层里的按钮占位：只负责排版占位，不带 __action 类，避免同一个类名在 DOM 里出现两次 */
+const measureActionClass = bem.e('measure-action')
 
 // ============================ toggle ============================
 const innerExpanded = useModel(props, 'expanded')
@@ -60,33 +59,30 @@ const actionText = computed(() => {
 
 // ============================ calc ============================
 const rootRef = useTemplateRef('root')
-const fullRef = useTemplateRef('full')
-const lineRef = useTemplateRef('line')
-const calcRef = useTemplateRef('calc')
+const measureRef = useTemplateRef('measure')
 
 const isOverflow = ref(false)
 const truncatedContent = ref(props.content)
-const measureContent = ref(props.content)
 const resizeWidth = ref(0)
-const initialized = ref(false)
 const isMeasuring = ref(true)
 
-let updateToken = 0
+/** 一轮探测的判定容差（px） */
+const HEIGHT_TOLERANCE = 0.5
 
 const getCharacters = (content: string) => {
   return Array.from(content)
 }
 
 const buildEllipsisText = (
-  content: string,
+  characters: string[],
   keepCount: number,
   position: EllipsisPosition,
   dots: string,
 ) => {
-  const characters = getCharacters(content)
+  const total = characters.length
 
-  if (keepCount >= characters.length) {
-    return content
+  if (keepCount >= total) {
+    return characters.join('')
   }
 
   if (keepCount <= 0) {
@@ -94,66 +90,93 @@ const buildEllipsisText = (
   }
 
   if (position === 'start') {
-    return dots + characters.slice(characters.length - keepCount).join('')
+    return dots + characters.slice(total - keepCount).join('')
   }
 
   if (position === 'middle') {
     const leftCount = Math.ceil(keepCount / 2)
     const rightCount = Math.floor(keepCount / 2)
     return (
-      characters.slice(0, leftCount).join('') +
-      dots +
-      characters.slice(characters.length - rightCount).join('')
+      characters.slice(0, leftCount).join('') + dots + characters.slice(total - rightCount).join('')
     )
   }
 
   return characters.slice(0, keepCount).join('') + dots
 }
 
-const getHeight = (el: HTMLElement) => {
-  return el.getBoundingClientRect().height
+/**
+ * 测量层里的两个节点，挂载后建一次就复用。
+ * 不用模板声明是因为 `white-space: pre-wrap` 会把模板的换行缩进变成真实空格/空行，
+ * 量高度时全算进去。
+ */
+let measureText: HTMLElement | undefined
+let measureAction: HTMLElement | undefined
+
+function ensureMeasureDom(measure: HTMLElement) {
+  if (measureText?.parentElement === measure) {
+    return
+  }
+
+  measureText = document.createElement('span')
+  measureAction = document.createElement('span')
+  measureAction.className = measureActionClass
+  measure.replaceChildren(measureText, measureAction)
 }
 
-const update = async () => {
-  const token = ++updateToken
+/**
+ * 写入一轮要测量的内容。
+ * withAction 为 false 时把按钮藏起来，用来量「纯正文」到底占几行。
+ */
+function writeMeasure(text: string, withAction: boolean) {
+  if (!measureText || !measureAction) {
+    return
+  }
+
+  measureText.textContent = text
+  // 可见层里正文和按钮之间有一个空格（模板换行折叠而来），这里补上：
+  // 少算这个空格，最后一行就会多塞几个字，按钮被挤到下一行再被 line-clamp 裁掉
+  measureAction.textContent = ` ${props.expandText ?? ''}`
+  measureAction.style.display = withAction && hasAction.value ? '' : 'none'
+}
+
+const measureHeight = () => measureRef.value?.getBoundingClientRect().height ?? 0
+
+const update = () => {
   const content = props.content || ''
+  const measure = measureRef.value
+
+  if (!measure) {
+    return
+  }
+
+  ensureMeasureDom(measure)
   isMeasuring.value = true
 
   if (!content) {
-    truncatedContent.value = content
-    measureContent.value = content
+    truncatedContent.value = ''
     isOverflow.value = false
-    initialized.value = true
-    if (token === updateToken) {
-      isMeasuring.value = false
-    }
+    isMeasuring.value = false
     return
   }
 
-  measureContent.value = content
+  writeMeasure(content, false)
 
-  await nextTick()
-
-  if (token !== updateToken) return
-
-  const fullHeight = getHeight(fullRef.value!)
-  const lineHeight = getHeight(lineRef.value!)
-
-  if (token !== updateToken) return
+  // 单行高度：临时关掉换行量一次。不能用 computed line-height 推算——
+  // `line-height: normal` 拿不到 px，混排字体的行盒高也未必等于 line-height
+  measure.style.whiteSpace = 'nowrap'
+  const lineHeight = measureHeight()
+  measure.style.whiteSpace = ''
 
   const clampHeight = lineHeight * props.rows
-  const overflow = fullHeight - clampHeight > 0.5
 
-  if (!overflow) {
+  if (measureHeight() - clampHeight <= HEIGHT_TOLERANCE) {
     truncatedContent.value = content
     isOverflow.value = false
-    initialized.value = true
-    if (token === updateToken) {
-      isMeasuring.value = false
-    }
+    isMeasuring.value = false
     return
   }
 
+  // 放不下：二分「保留几个字」，每次探测只写一次文本、读一次高度
   const characters = getCharacters(content)
   let low = 0
   let high = characters.length
@@ -161,18 +184,9 @@ const update = async () => {
 
   while (low <= high) {
     const middle = Math.floor((low + high) / 2)
-    const nextText = buildEllipsisText(content, middle, props.position, props.dots)
+    writeMeasure(buildEllipsisText(characters, middle, props.position, props.dots), true)
 
-    measureContent.value = nextText
-    await nextTick()
-
-    if (token !== updateToken) return
-
-    const height = getHeight(calcRef.value!)
-
-    if (token !== updateToken) return
-
-    if (height <= clampHeight + 0.5) {
+    if (measureHeight() <= clampHeight + HEIGHT_TOLERANCE) {
       best = middle
       low = middle + 1
     } else {
@@ -180,16 +194,9 @@ const update = async () => {
     }
   }
 
-  const nextTruncatedContent = buildEllipsisText(content, best, props.position, props.dots)
-
-  if (token !== updateToken) return
-
-  truncatedContent.value = nextTruncatedContent
+  truncatedContent.value = buildEllipsisText(characters, best, props.position, props.dots)
   isOverflow.value = true
-  initialized.value = true
-  if (token === updateToken) {
-    isMeasuring.value = false
-  }
+  isMeasuring.value = false
 }
 
 useResizeObserver(rootRef, (size) => {
@@ -201,9 +208,19 @@ useResizeObserver(rootRef, (size) => {
   update()
 })
 
-watch([() => props.content, () => props.rows, () => props.position, () => props.dots], () => {
-  update()
-})
+watch(
+  [
+    () => props.content,
+    () => props.rows,
+    () => props.position,
+    () => props.dots,
+    // 按钮文案变了，最后一行为它预留的宽度也变了，截断点要跟着重算
+    () => props.expandText,
+  ],
+  () => {
+    update()
+  },
+)
 
 onMounted(() => {
   update()
