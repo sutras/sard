@@ -346,6 +346,10 @@
         "name": "tag"
       },
       {
+        "title": "TextShrink 文本缩放",
+        "name": "text-shrink"
+      },
+      {
         "title": "Timeline 时间轴",
         "name": "timeline"
       },

@@ -152,6 +152,7 @@ declare module 'vue' {
     STabs: typeof import('./components/tabs/tabs.vue').default
     STag: typeof import('./components/tag/tag.vue').default
     SText: typeof import('./components/text/text.vue').default
+    STextShrink: typeof import('./components/text-shrink/text-shrink.vue').default
     STimeline: typeof import('./components/timeline/timeline.vue').default
     STimelineItem: typeof import('./components/timeline/timeline-item.vue').default
     SToast: typeof import('./components/toast/toast.vue').default

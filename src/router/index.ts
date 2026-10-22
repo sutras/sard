@@ -636,6 +636,10 @@ const router = createRouter({
           component: () => import('@/views/components/text/index.vue'),
         },
         {
+          path: 'text-shrink',
+          component: () => import('@/views/components/text-shrink/index.vue'),
+        },
+        {
           path: 'timeline',
           component: () => import('@/views/components/timeline/index.vue'),
         },

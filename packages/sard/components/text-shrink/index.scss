@@ -1,0 +1,57 @@
+@use '../style/base' as *;
+
+// #region variables
+// #endregion variables
+
+@include b(text-shrink) {
+  position: relative;
+  display: block;
+  min-width: 0;
+
+  // 首次适配完成前先隐藏，避免以未缩放的字号闪现
+  @include is(measuring) {
+    visibility: hidden;
+  }
+
+  @include e(text) {
+    // 作为测量层的包含块，让测量层的宽度基准落在文本层的 padding box 上
+    position: relative;
+    display: block;
+    overflow: hidden;
+    word-break: normal;
+    overflow-wrap: break-word;
+
+    // 单行：不换行，超出后省略号兜底
+    @include m(nowrap) {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    // 多行：始终限制在 maxLines 行内，防止极端情况撑破容器
+    @include m(clamp) {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+    }
+  }
+
+  // 隐藏测量层：绝对定位 + 不可见，不占据可见布局，测量不会引起抖动。
+  // 它是文本层的子节点，font-* / letter-spacing / white-space / word-break 等
+  // 可继承属性全部继承自文本层，无需在 JS 里同步；
+  // 宽度取文本层 padding box（width:100% 撑满，再用 padding:inherit 减掉内边距），
+  // 与可见文本的换行宽度一致，换行结果才可比。
+  @include e(measure) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    box-sizing: border-box;
+    width: 100%;
+    padding: inherit;
+    overflow: visible;
+    visibility: hidden;
+    pointer-events: none;
+    // 每次测量都要改字号并立刻读几何，把布局失效限制在自身子树内，
+    // 不再沿着祖先链传播
+    contain: layout style;
+  }
+}
