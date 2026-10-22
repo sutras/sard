@@ -52,3 +52,5 @@ test-results/
 playwright-report/
 
 stats.html
+
+.workbuddy
