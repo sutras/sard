@@ -1,3 +1,18 @@
+## 1.2.0 (2026-10-22)
+
+- Code Refactoring: compactNumber 入参兼容 null/undefined ([bcb4d1f](https://github.com/sutras/sard/commit/bcb4d1f))
+- Code Refactoring: createImperativeComponent 去 vdom，isConfigObject 移除 isVNode ([f294828](https://github.com/sutras/sard/commit/f294828))
+- Code Refactoring: dnd-item 去掉 OnlyChild，删除 utils/vnode ([3202a39](https://github.com/sutras/sard/commit/3202a39))
+- Code Refactoring: motion 类型的 barrel 导入改走直接路径 ([e628ba8](https://github.com/sutras/sard/commit/e628ba8))
+- Code Refactoring: popover/descriptions 去除 VNode 依赖，为 Vapor 做准备 ([2548739](https://github.com/sutras/sard/commit/2548739))
+- Code Refactoring: swiper/picker-view 去除 VNode 依赖并改写为 SFC ([321329c](https://github.com/sutras/sard/commit/321329c))
+- Code Refactoring: 抽离 getExclude，类型生成预先排除 _.vapor._ ([0913227](https://github.com/sutras/sard/commit/0913227))
+- Code Refactoring: 测量层三合一，探测改为同步写入 ([fbc8019](https://github.com/sutras/sard/commit/fbc8019))
+- Features: 新增 TextShrink 文本自适应缩放组件 ([c8bc48a](https://github.com/sutras/sard/commit/c8bc48a))
+- Bug Fixes: dnd 嵌套示例表单项补 flex-1 撑满剩余宽度 ([d711233](https://github.com/sutras/sard/commit/d711233))
+- Bug Fixes: 修正 vapor 下用组件实例定位列下标导致级联回弹 ([b52e1c5](https://github.com/sutras/sard/commit/b52e1c5))
+- Bug Fixes: 蒙层显式接收透传属性，修复 vapor 下 class/style 丢失 ([230f9d2](https://github.com/sutras/sard/commit/230f9d2))
+
 ## 1.1.0 (2026-10-10)
 
 - Features: 新增 danmaku 组件 ([5c9c54b](https://github.com/sutras/sard/commit/5c9c54b))
