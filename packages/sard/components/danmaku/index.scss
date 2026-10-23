@@ -22,9 +22,17 @@
     white-space: nowrap;
     will-change: transform;
     transform: translate3d(100vw, -50%, 0);
+    opacity: 0;
+    animation: #{bem-ns(danmaku-item-reveal)} 0.12s linear 0.15s forwards;
 
     @include rtl {
       transform: translate3d(-100vw, -50%, 0);
+    }
+  }
+
+  @keyframes #{bem-ns(danmaku-item-reveal)} {
+    to {
+      opacity: 1;
     }
   }
 }
