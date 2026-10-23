@@ -1,3 +1,7 @@
+## <small>1.2.1 (2026-10-23)</small>
+
+- Bug Fixes: 修复低版本系统可能出现的闪烁问题 ([3b0dce9](https://github.com/sutras/sard/commit/3b0dce9))
+
 ## 1.2.0 (2026-10-22)
 
 - Code Refactoring: compactNumber 入参兼容 null/undefined ([bcb4d1f](https://github.com/sutras/sard/commit/bcb4d1f))
