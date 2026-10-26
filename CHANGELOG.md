@@ -1,3 +1,7 @@
+## <small>1.2.2 (2026-10-26)</small>
+
+- Features: 支持组件样式按需引入与编译时标识 ([6be4ae0](https://github.com/sutras/sard/commit/6be4ae0))
+
 ## <small>1.2.1 (2026-10-23)</small>
 
 - Bug Fixes: 修复低版本系统可能出现的闪烁问题 ([3b0dce9](https://github.com/sutras/sard/commit/3b0dce9))
