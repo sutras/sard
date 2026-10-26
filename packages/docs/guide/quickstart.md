@@ -31,9 +31,29 @@ bun add sard
 
 ## 引入样式
 
+组件代码与样式是分开的：组件的入口文件（`sard/components/button`）不包含任何样式引入，样式由你按需引入。
+
+每个组件都有一个独立的样式入口 `sard/components/<组件名>/style`，它已经包含该组件**依赖组件**的样式（例如 `Button` 会带上 `Loading`），所以每个用到的组件引一次就够：
+
+```ts
+// main.ts
+import 'sard/components/button/style'
+import 'sard/components/input/style'
+```
+
+没用到的组件，其样式不会被打包。
+
+如果更倾向于一次性引入全部样式（例如使用 `installer` 全量注册组件时）：
+
 ```ts
 import 'sard/index.css'
 ```
+
+::: tip
+`sard/components/<组件名>/index.css` 也存在，但只包含该组件自身的样式，不含依赖组件，一般不建议直接使用。
+:::
+
+如果要自定义主题变量，见[定制主题](./theme)。
 
 ## 按需引入
 

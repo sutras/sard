@@ -242,6 +242,10 @@ export default defineConfig({
     },
   },
   vite: {
+    define: {
+      __SARD_DEFAULT_LANG__: true,
+      __SARD_LUNAR__: true,
+    },
     server: {
       watch: {
         ignored: [

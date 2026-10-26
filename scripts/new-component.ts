@@ -18,6 +18,7 @@ import {
 import fs from 'node:fs/promises'
 import { docsRootDir, libRootDir } from './config'
 import { runSteps } from './utils/utils'
+import { linkStyles } from './link-styles'
 
 async function createComponent(
   compDir: string,
@@ -124,6 +125,7 @@ async function newComponent() {
     ['声明全局组件', () => declareGlobalComponent(kebabCaseName, pascalCaseName)],
     ['添加案例路由', () => addDemoRoute(kebabCaseName)],
     ['添加案例菜单', () => addDemoMenu(groupCnName, kebabCaseName, pascalCaseName, cnName)],
+    ['生成组件样式入口', async () => linkStyles({ entries: [kebabCaseName] })],
   ])
 
   consola.success('成功新增组件')

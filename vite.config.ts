@@ -14,6 +14,10 @@ const browsersRolldown = ['chrome87', 'safari14.1']
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/mobile/',
+  define: {
+    __SARD_DEFAULT_LANG__: true,
+    __SARD_LUNAR__: true,
+  },
   server: {
     watch: {
       ignored: ['!**/sard/**'],
@@ -63,6 +67,14 @@ export default defineConfig({
     // minify: false,
     rolldownOptions: {
       output: {
+        codeSplitting: {
+          groups: [
+            {
+              name: 'vue-vendor',
+              test: /[\\/]node_modules[\\/](?:vue|vue-router|@vue)[\\/]/,
+            },
+          ],
+        },
         // manualChunks(id) {
         //   if (id.includes('node_modules')) {
         //     return 'node_modules'

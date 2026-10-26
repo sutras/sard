@@ -11,7 +11,11 @@ import {
 import zhCN from './lang/zh-CN'
 import { chainGet, interpolate } from '../utils'
 
-export const currentLocale = shallowRef<Record<string, any>>(zhCN)
+// 编译时标识，为 false 时默认语言包为空对象，中文翻译不会被打包
+const defaultLocale: Record<string, any> =
+  typeof __SARD_DEFAULT_LANG__ === 'undefined' || __SARD_DEFAULT_LANG__ ? zhCN : {}
+
+export const currentLocale = shallowRef<Record<string, any>>(defaultLocale)
 
 export interface LocaleTranslate {
   (
@@ -22,7 +26,7 @@ export interface LocaleTranslate {
 
 export function useTranslate(prefix = '') {
   const locale = computed(() => {
-    return currentLocale.value || zhCN
+    return currentLocale.value || defaultLocale
   })
 
   const translate: LocaleTranslate = (chainOrData?, data?) => {

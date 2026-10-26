@@ -11,6 +11,7 @@
     "tag": "tsx ./scripts/tag.ts",
     "changelog": "tsx ./scripts/changelog.ts",
     "build:icons": "tsx ./scripts/build-icons.ts",
+    "link:styles": "tsx ./scripts/link-styles.ts",
     "build:sard": "tsx ./scripts/build-sard.ts",
     "build:all": "pnpm run build:icons && pnpm run build:sard",
     "publish:icons": "tsx ./scripts/publish-icons.ts",

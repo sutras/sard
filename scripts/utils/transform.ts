@@ -40,6 +40,22 @@ export function transformVue(code: string, file: string) {
   return transformJSX(content)
 }
 
+/**
+ * 源码里组件入口通过 `import './index.scss'` 引入样式，
+ * 产物里样式已被编译成同名的 `.css`，这里把引用改成 `.css` 并作为外部依赖保留，
+ * 交给使用方的打包工具处理（按需引入时样式跟着组件一起进包）。
+ */
+export function rewriteStyleImport(code: string) {
+  if (!code.includes('.scss')) return code
+
+  return code.replace(
+    /((?:from|import)\s*\(?\s*)(["'])([^"']+)\.scss\2/g,
+    (_matched, prefix: string, quote: string, specifier: string) => {
+      return `${prefix}${quote}${specifier}.css${quote}`
+    },
+  )
+}
+
 function transformPlugin(): RolldownPluginOption {
   return {
     name: 'transform',
@@ -57,16 +73,16 @@ function transformPlugin(): RolldownPluginOption {
     },
     transform(code, id) {
       if (id.endsWith('.ts')) {
-        return transformTs(id, code)
+        return rewriteStyleImport(transformTs(id, code))
       }
       if (id.endsWith('.tsx')) {
-        return transformJSX(transformTs(id, code, 'tsx'))
+        return rewriteStyleImport(transformJSX(transformTs(id, code, 'tsx')))
       }
       if (id.endsWith('.jsx')) {
-        return transformJSX(code)
+        return rewriteStyleImport(transformJSX(code))
       }
       if (id.endsWith('.vue')) {
-        return transformVue(code, id)
+        return rewriteStyleImport(transformVue(code, id))
       }
     },
   }
@@ -86,7 +102,8 @@ export async function compileAllScript(options: {
 
   const bundle = await rolldown({
     input: files,
-    external: (source) => externals.some((item) => source.startsWith(item)),
+    external: (source) =>
+      source.endsWith('.css') || externals.some((item) => source.startsWith(item)),
     treeshake: {},
     plugins: [transformPlugin()],
     logLevel: 'silent',

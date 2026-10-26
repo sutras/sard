@@ -56,7 +56,7 @@ import xcirclefill from './icons/x-circle-fill'
 import xcircle from './icons/x-circle'
 import xoctagonfill from './icons/x-octagon-fill'
 
-const SvgIcon = defineComponent({
+const SvgIcon = /*#__PURE__*/ defineComponent({
   props: {
     body: String,
   },
@@ -71,222 +71,222 @@ const SvgIcon = defineComponent({
   ),
 })
 
-export const Backspace = defineComponent({
+export const Backspace = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={backspace} />,
 })
 
-export const Backtop = defineComponent({
+export const Backtop = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={backtop} />,
 })
 
-export const CaretDown = defineComponent({
+export const CaretDown = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={caretdown} />,
 })
 
-export const CaretLeft = defineComponent({
+export const CaretLeft = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={caretleft} />,
 })
 
-export const CaretRight = defineComponent({
+export const CaretRight = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={caretright} />,
 })
 
-export const CaretUp = defineComponent({
+export const CaretUp = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={caretup} />,
 })
 
-export const CheckCircleFill = defineComponent({
+export const CheckCircleFill = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={checkcirclefill} />,
 })
 
-export const CheckSquareFill = defineComponent({
+export const CheckSquareFill = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={checksquarefill} />,
 })
 
-export const Check = defineComponent({
+export const Check = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={check} />,
 })
 
-export const Circle = defineComponent({
+export const Circle = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={circle} />,
 })
 
-export const Close = defineComponent({
+export const Close = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={close} />,
 })
 
-export const DashCircleFill = defineComponent({
+export const DashCircleFill = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={dashcirclefill} />,
 })
 
-export const DashSquareFill = defineComponent({
+export const DashSquareFill = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={dashsquarefill} />,
 })
 
-export const Dash = defineComponent({
+export const Dash = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={dash} />,
 })
 
-export const DoubleDown = defineComponent({
+export const DoubleDown = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={doubledown} />,
 })
 
-export const DoubleLeft = defineComponent({
+export const DoubleLeft = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={doubleleft} />,
 })
 
-export const DoubleRight = defineComponent({
+export const DoubleRight = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={doubleright} />,
 })
 
-export const DoubleUp = defineComponent({
+export const DoubleUp = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={doubleup} />,
 })
 
-export const Down = defineComponent({
+export const Down = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={down} />,
 })
 
-export const Empty = defineComponent({
+export const Empty = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={empty} />,
 })
 
-export const EyeSlash = defineComponent({
+export const EyeSlash = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={eyeslash} />,
 })
 
-export const Eye = defineComponent({
+export const Eye = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={eye} />,
 })
 
-export const Fail = defineComponent({
+export const Fail = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={fail} />,
 })
 
-export const File = defineComponent({
+export const File = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={file} />,
 })
 
-export const ImageError = defineComponent({
+export const ImageError = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={imageerror} />,
 })
 
-export const Image = defineComponent({
+export const Image = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={image} />,
 })
 
-export const InfoCircleFill = defineComponent({
+export const InfoCircleFill = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={infocirclefill} />,
 })
 
-export const Info = defineComponent({
+export const Info = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={info} />,
 })
 
-export const Left = defineComponent({
+export const Left = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={left} />,
 })
 
-export const List = defineComponent({
+export const List = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={list} />,
 })
 
-export const Loading = defineComponent({
+export const Loading = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={loading} />,
 })
 
-export const Minus = defineComponent({
+export const Minus = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={minus} />,
 })
 
-export const PencilSquare = defineComponent({
+export const PencilSquare = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={pencilsquare} />,
 })
 
-export const Person = defineComponent({
+export const Person = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={person} />,
 })
 
-export const Play = defineComponent({
+export const Play = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={play} />,
 })
 
-export const PlusCircleFill = defineComponent({
+export const PlusCircleFill = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={pluscirclefill} />,
 })
 
-export const Plus = defineComponent({
+export const Plus = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={plus} />,
 })
 
-export const QuestionCircleFill = defineComponent({
+export const QuestionCircleFill = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={questioncirclefill} />,
 })
 
-export const Question = defineComponent({
+export const Question = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={question} />,
 })
 
-export const RecordCircle = defineComponent({
+export const RecordCircle = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={recordcircle} />,
 })
 
-export const Right = defineComponent({
+export const Right = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={right} />,
 })
 
-export const RotateLeft = defineComponent({
+export const RotateLeft = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={rotateleft} />,
 })
 
-export const Search = defineComponent({
+export const Search = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={search} />,
 })
 
-export const Square = defineComponent({
+export const Square = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={square} />,
 })
 
-export const StarFill = defineComponent({
+export const StarFill = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={starfill} />,
 })
 
-export const Star = defineComponent({
+export const Star = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={star} />,
 })
 
-export const Success = defineComponent({
+export const Success = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={success} />,
 })
 
-export const Trash = defineComponent({
+export const Trash = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={trash} />,
 })
 
-export const Undo = defineComponent({
+export const Undo = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={undo} />,
 })
 
-export const Up = defineComponent({
+export const Up = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={up} />,
 })
 
-export const VolumeUp = defineComponent({
+export const VolumeUp = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={volumeup} />,
 })
 
-export const WarningFill = defineComponent({
+export const WarningFill = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={warningfill} />,
 })
 
-export const XCircleFill = defineComponent({
+export const XCircleFill = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={xcirclefill} />,
 })
 
-export const XCircle = defineComponent({
+export const XCircle = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={xcircle} />,
 })
 
-export const XOctagonFill = defineComponent({
+export const XOctagonFill = /*#__PURE__*/ defineComponent({
   render: () => <SvgIcon body={xoctagonfill} />,
 })

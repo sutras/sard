@@ -247,8 +247,11 @@ export function getNextMonthDate(date: Date) {
  * 农历
  ****************************************************************/
 
+// 编译时标识，为 false 时农历数据与实现会被摇树移除
+const lunarEnabled = typeof __SARD_LUNAR__ === 'undefined' || __SARD_LUNAR__
+
 // prettier-ignore
-export const lunarInfo = [
+export const lunarInfo = lunarEnabled ? [
   0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2, // 1900-1909
   0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0, 0x14977, // 1910-1919
   0x04970, 0x0a4b0, 0x0b4b5, 0x06a50, 0x06d40, 0x1ab54, 0x02b60, 0x09570, 0x052f2, 0x04970, // 1920-1929
@@ -270,11 +273,11 @@ export const lunarInfo = [
   0x0b273, 0x06930, 0x07337, 0x06aa0, 0x0ad50, 0x14b55, 0x04b60, 0x0a570, 0x054e4, 0x0d160, // 2080-2089
   0x0e968, 0x0d520, 0x0daa0, 0x16aa6, 0x056d0, 0x04ae0, 0x0a9d4, 0x0a2d0, 0x0d150, 0x0f252, // 2090-2099
   0x0d520, // 2100
-]
+] : []
 
 // 1900-2100春节对应的公历日期
 // prettier-ignore
-export const springFestivals = [
+export const springFestivals = lunarEnabled ? [
   [1,31], [2,19], [2,8], [1,29], [2,16], [2,4], [1,25], [2,13], [2,2], [1,22], // 1900-1909
   [2,10], [1,30], [2,18], [2,6], [1,26], [2,14], [2,3], [1,23], [2,11], [2,1], // 1910-1919
   [2,20], [2,8], [1,28], [2,16], [2,5], [1,24], [2,13], [2,2], [1,23], [2,10], // 1920-1929
@@ -296,7 +299,7 @@ export const springFestivals = [
   [1,22], [2,9], [1,29], [2,17], [2,6], [1,26], [2,14], [2,3], [1,24], [2,10], // 2080-2089
   [1,30], [2,18], [2,7], [1,27], [2,15], [2,5], [1,25], [2,12], [2,1], [1,21], // 2090-2099
   [2,9], // 2100
-]
+] : []
 
 export const baseLunarYear = 1900
 
@@ -304,6 +307,7 @@ export const baseLunarYear = 1900
  * 获取农历某年闰月的月份，月份从1开始（0表示无闰月）。
  */
 export function getLunarLeapMonth(year: number) {
+  if (!lunarEnabled) return 0
   return lunarInfo[year - baseLunarYear] & 0xf
 }
 
@@ -311,6 +315,7 @@ export function getLunarLeapMonth(year: number) {
  * 获取农历某年闰月的天数。
  */
 export function getLunarLeapMonthDays(year: number): number {
+  if (!lunarEnabled) return 0
   if (getLunarLeapMonth(year)) {
     return lunarInfo[year - baseLunarYear] & 0x10000 ? 30 : 29
   }
@@ -321,6 +326,7 @@ export function getLunarLeapMonthDays(year: number): number {
  * 获取农历某年的总天数。
  */
 export function getLunarYearDays(year: number) {
+  if (!lunarEnabled) return 0
   let sum = 348 // 29天*12个月
   const info = lunarInfo[year - baseLunarYear]
 
@@ -337,6 +343,7 @@ export function getLunarYearDays(year: number) {
  * 获取农历某年某月的天数，月份从1开始。
  */
 export function getLunarMonthDays(year: number, month: number): number {
+  if (!lunarEnabled) return 0
   return lunarInfo[year - baseLunarYear] & (0x10000 >> month) ? 30 : 29
 }
 
@@ -344,6 +351,7 @@ export function getLunarMonthDays(year: number, month: number): number {
  * 公历转农历，月份从1开始（返回的闰月为负数）。
  */
 export function solarToLunar(year: number, month: number, day: number) {
+  if (!lunarEnabled) return { year, month, day }
   // 计算输入日期与基准日期的天数差
   const offsetDays = Math.floor(
     (Date.UTC(year, month - 1, day) - Date.UTC(baseLunarYear, 0, 31)) / (24 * 60 * 60 * 1000),
@@ -406,6 +414,8 @@ export function solarToLunar(year: number, month: number, day: number) {
  * 农历转公历（闰月需传递负数）。
  */
 export function lunarToSolar(year: number, month: number, day: number) {
+  if (!lunarEnabled) return { year, month: Math.abs(month), day }
+
   const springFestival = springFestivals[year - baseLunarYear]
 
   const solarDate = new Date(year, springFestival[0] - 1, springFestival[1])
@@ -441,12 +451,13 @@ export function lunarToSolar(year: number, month: number, day: number) {
 
 // 农历年份的名称
 // prettier-ignore
-export const lunarYearNames = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十']
+export const lunarYearNames = lunarEnabled ? ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'] : []
 
 /**
  * 将阿拉伯数字的年份转为汉字数字年份
  */
 export function getLunarYearName(year: number) {
+  if (!lunarEnabled) return String(year)
   return (
     String(year)
       .split('')
@@ -457,38 +468,42 @@ export function getLunarYearName(year: number) {
 
 // 农历月份的名称
 // prettier-ignore
-export const lunarMonthNames = ['正', '二', '三', '四', '五', '六', '七', '八', '九', '十', '冬', '腊']
+export const lunarMonthNames = lunarEnabled ? ['正', '二', '三', '四', '五', '六', '七', '八', '九', '十', '冬', '腊'] : []
 
 /**
  * 获取农历月份名称，月份从1开始，例如：正月，十月，腊月。
  */
 export function getLunarMonthName(month: number, isLeapMonth?: boolean) {
+  if (!lunarEnabled) return ''
   return (isLeapMonth ? '闰' : '') + lunarMonthNames[month - 1] + '月'
 }
 
 // 农历日期的名称
 // prettier-ignore
-export const lunarDayNames = ['初一', '初二', '初三', '初四', '初五', '初六', '初七', '初八', '初九', '初十', '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十', '廿一', '廿二', '廿三', '廿四', '廿五', '廿六', '廿七', '廿八', '廿九', '三十']
+export const lunarDayNames = lunarEnabled ? ['初一', '初二', '初三', '初四', '初五', '初六', '初七', '初八', '初九', '初十', '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十', '廿一', '廿二', '廿三', '廿四', '廿五', '廿六', '廿七', '廿八', '廿九', '三十'] : []
 
 /**
  * 获取农历日期名称，例如：初一，十二，廿一。
  */
 export function getLunarDayName(day: number) {
+  if (!lunarEnabled) return ''
   return lunarDayNames[day - 1]
 }
 
 // 十天干
 // prettier-ignore
-export const heavenlyStems = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
+export const heavenlyStems = lunarEnabled ? ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'] : []
 
 // 十二地支
 // prettier-ignore
-export const earthlyBranches = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']
+export const earthlyBranches = lunarEnabled ? ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'] : []
 
 /**
  * 获取农历时辰名称，例如：子初、子正、午初，午正。
  */
 export function getLunarHourName(hour: number) {
+  if (!lunarEnabled) return ''
+
   const index = Math.floor(((hour === 23 ? 0 : hour) + 1) / 2) % 12
 
   return earthlyBranches[index] + (hour % 2 === 1 ? '初' : '正')

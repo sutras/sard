@@ -1,3 +1,19 @@
+declare global {
+  /**
+   * 编译时标识：是否默认引入中文翻译，默认为 `true`。
+   *
+   * 设置为 `false` 可移除内置的中文语言包，适用于应用本身不包含中文的场景。
+   */
+  const __SARD_DEFAULT_LANG__: boolean
+
+  /**
+   * 编译时标识：是否引入农历数据，默认为 `true`。
+   *
+   * 设置为 `false` 可移除农历数据及相关实现，适用于不需要农历的场景。
+   */
+  const __SARD_LUNAR__: boolean
+}
+
 declare module 'vue' {
   export interface GlobalComponents {
     SAccordion: typeof import('./components/accordion/accordion.vue').default
