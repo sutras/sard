@@ -24,6 +24,11 @@ export function transformJSX(code: string) {
 export function transformVue(code: string, file: string) {
   const { descriptor } = compiler.parse(code, {
     filename: file,
+    // 注释节点是在解析模板时生成的，只有这里的 comments:false 才真正生效；
+    // 传到 compileScript 的 templateOptions.compilerOptions.comments 无效（AST 已预解析）
+    templateParseOptions: {
+      comments: false,
+    },
   })
 
   const scriptBlock = compiler.compileScript(descriptor, {

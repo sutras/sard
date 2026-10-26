@@ -31,7 +31,9 @@ export default defineConfig({
   plugins: [
     vue({
       template: {
-        compilerOptions: {},
+        compilerOptions: {
+          comments: false,
+        },
       },
     }),
     vueJsx(),
