@@ -1,3 +1,7 @@
+## <small>1.2.3 (2026-10-26)</small>
+
+- Performance Improvements: 构建产物剔除模板注释 ([64e918d](https://github.com/sutras/sard/commit/64e918d))
+
 ## <small>1.2.2 (2026-10-26)</small>
 
 - Features: 支持组件样式按需引入与编译时标识 ([6be4ae0](https://github.com/sutras/sard/commit/6be4ae0))
