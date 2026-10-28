@@ -65,11 +65,12 @@ group: 表单组件
 | step           | 点击按钮时增加或减少的数值            | number                                       | 1                       |
 | precision      | 数值精度，即允许的小数位数            | number                                       | -                       |
 | input-type     | 输入框类型                            | 'number' \| 'digit'                          | 'number'                |
+| input-width    | 输入框宽度                            | string \| number                             | -                       |
 | placeholder    | 输入框占位符                          | string                                       | -                       |
 | disabled       | 禁用状态                              | boolean                                      | false                   |
 | readonly       | 只读状态                              | boolean                                      | false                   |
 | press          | 是否可以通过长按增加/减少按钮改变数值 | boolean                                      | true                    |
-| press-time     | 触发长按事件的时间，单位毫秒          | boolnumberean                                | 350                     |
+| press-time     | 触发长按事件的时间，单位毫秒          | number                                       | 350                     |
 | interval       | 长按改变数值的时间间隔，单位毫秒      | number                                       | 150                     |
 | validate-event | 是否触发表单验证                      | boolean                                      | true                    |
 | size           | 步进器尺寸                            | 'medium' \| 'small'                          | 'medium'                |

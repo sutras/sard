@@ -8,6 +8,7 @@ export interface StepperProps {
   step?: number
   precision?: number
   inputType?: 'number' | 'digit'
+  inputWidth?: string | number
   placeholder?: string
   disabled?: boolean
   readonly?: boolean

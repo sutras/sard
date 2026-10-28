@@ -90,6 +90,15 @@ describe('Stepper', () => {
     expect(wrapper.classes()).toContain('s-stepper--small')
   })
 
+  test('inputWidth', async () => {
+    const wrapper = mount(<Stepper placeholder="数量" inputWidth={80} />)
+
+    expect(wrapper.find('.s-stepper__input').attributes('style')).toContain('width: 80px')
+
+    await wrapper.setProps({ inputWidth: '5rem' })
+    expect(wrapper.find('.s-stepper__input').attributes('style')).toContain('width: 5rem')
+  })
+
   test('variant', async () => {
     const wrapper = mount(<Stepper placeholder="数量" size="small" />)
 

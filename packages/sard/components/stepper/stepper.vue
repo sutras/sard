@@ -19,6 +19,7 @@
     <Input
       v-model="inputValue"
       :class="bem.e('input')"
+      :style="inputStyle"
       :type="inputType"
       :placeholder="placeholder"
       :disabled="isDisabled || isReadonly"
@@ -232,5 +233,14 @@ const stepperClass = computed(() => {
     bem.m('readonly', isReadonly.value),
     bem.m(props.variant),
   ]
+})
+
+const inputStyle = computed(() => {
+  if (isNullish(props.inputWidth)) {
+    return undefined
+  }
+  return {
+    width: typeof props.inputWidth === 'number' ? `${props.inputWidth}px` : props.inputWidth,
+  }
 })
 </script>
