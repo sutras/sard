@@ -126,6 +126,19 @@ export function useSwiper(props: SwiperPrivateProps, emit: SwiperEmits) {
     swiperSize.value = vertical.value ? size.height : size.width
   })
 
+  watch(
+    () => props.vertical,
+    () => {
+      const rect = rootRef.value?.getBoundingClientRect()
+      if (rect) {
+        swiperSize.value = vertical.value ? rect.height : rect.width
+      }
+    },
+    {
+      flush: 'post',
+    },
+  )
+
   watch(members, () => {
     setSlides(members.value)
   })

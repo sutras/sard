@@ -32,12 +32,14 @@
   #{css-var-name(button-icon-size-lg)}: 20px;
 
   #{css-var-name(button-outlined-bg)}: css-var(white);
+  #{css-var-name(button-secondary-border-color)}: css-var(gray-200);
   #{css-var-name(button-secondary-color)}: css-var(gray-800);
 }
 
 @include theme-dark {
   #{css-var-name(button-outlined-bg)}: transparent;
-  #{css-var-name(button-secondary-color)}: css-var(white);
+  #{css-var-name(button-secondary-border-color)}: css-var(gray-200);
+  #{css-var-name(button-secondary-color)}: css-var(gray-200);
 }
 // #endregion variables
 
@@ -49,7 +51,9 @@ $s-button-theme-colors: (
   secondary: (
     css-var(color-secondary),
     css-var(color-secondary-rgb),
-    css-var(gray-200),
+    // border color
+    css-var(button-secondary-border-color),
+    // text color
     css-var(button-secondary-color),
   ),
   success: (
@@ -232,19 +236,19 @@ $s-button-theme-colors: (
 
     // filled
     @include m(filled-#{$color-name}) {
-      color: $color-value;
+      color: coalesce($color-text, $color-value);
       background-color: rgba($color-value-rgb, css-var(opacity-theme-bg));
     }
 
     // text
     @include m(text-#{$color-name}) {
-      color: $color-value;
+      color: coalesce($color-text, $color-value);
       background-color: transparent;
     }
 
     // link
     @include m(link-#{$color-name}) {
-      color: $color-value;
+      color: coalesce($color-text, $color-value);
       background-color: transparent;
     }
   }

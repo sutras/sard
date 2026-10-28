@@ -38,14 +38,14 @@
 
   // # 主题色
   #{css-var-name(color-primary)}: $s-blue;
-  #{css-var-name(color-secondary)}: css-var(gray-600);
+  #{css-var-name(color-secondary)}: css-var(gray-900);
   #{css-var-name(color-success)}: $s-green;
   #{css-var-name(color-warning)}: $s-yellow;
   #{css-var-name(color-danger)}: $s-red;
 
   // # 主题色 rgb
   #{css-var-name(color-primary-rgb)}: #{$s-blue-rgb};
-  #{css-var-name(color-secondary-rgb)}: #{$s-gray-600-rgb};
+  #{css-var-name(color-secondary-rgb)}: #{$s-gray-900-rgb};
   #{css-var-name(color-success-rgb)}: #{$s-green-rgb};
   #{css-var-name(color-warning-rgb)}: #{$s-yellow-rgb};
   #{css-var-name(color-danger-rgb)}: #{$s-red-rgb};
