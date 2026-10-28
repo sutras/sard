@@ -1,10 +1,11 @@
 <template>
+  <!-- 工业语境：安全前置项勾选（光栅自检 / 急停回路）｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-checkbox-input
         v-model="value"
-        title="请选择"
-        placeholder="请选择"
+        title="选择变更项"
+        placeholder="选择变更项（可多选）"
         clearable
         :options="options"
         @change="onChange"
@@ -13,10 +14,10 @@
 
     <s-list-item title="当前值：" :value="JSON.stringify(value) ?? 'undefined'" />
     <s-list-item
-      title="设置为：['option2', 'option3']"
+      title="设置为：['process', 'inspection']"
       arrow
       hover
-      @click="value = ['option2', 'option3']"
+      @click="value = ['process', 'inspection']"
     />
     <s-list-item title="清空" arrow hover @click="value = undefined" />
   </s-list>
@@ -27,14 +28,14 @@ import { ref } from 'vue'
 
 const value = ref<string[]>()
 
-const options = Array(10)
-  .fill(0)
-  .map((_, i) => {
-    return {
-      value: `option${i + 1}`,
-      label: `选项${i + 1}`,
-    }
-  })
+const options = [
+  { value: 'process', label: '工艺参数' },
+  { value: 'fixture', label: '工装夹具' },
+  { value: 'program', label: '程序版本' },
+  { value: 'inspection', label: '检验标准' },
+  { value: 'tooling', label: '刀具补偿' },
+  { value: 'cooling', label: '冷却参数' },
+]
 
 const onChange = (value: any) => {
   console.log('change', value)

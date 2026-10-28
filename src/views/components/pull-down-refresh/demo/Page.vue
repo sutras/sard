@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：实时数据下拉刷新｜Page 用法演示 -->
   <doc-page title="基于页面的刷新">
     <s-pull-down-refresh :loading="loading" @refresh="onRefresh">
       <div
@@ -38,10 +39,10 @@ const onRefresh = () => {
   loading.value = true
   fetchApi()
     .then(() => {
-      toast('刷新成功')
+      toast('刷新已完成')
     })
     .catch(() => {
-      toast('刷新失败')
+      toast('刷新未完成')
     })
     .finally(() => {
       loading.value = false

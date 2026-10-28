@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：设备详情分区（参数 / 报警 / 点检）｜Disabled 用法演示 -->
   <s-tabs v-model="value" :options="options"></s-tabs>
 </template>
 
@@ -8,8 +9,8 @@ import { type TabProps } from 'sard'
 
 const value = ref(1)
 const options = ref<TabProps[]>([
-  { label: '标签1', value: 1 },
-  { label: '标签2', value: 2, disabled: true },
-  { label: '标签3', value: 3 },
+  { label: '运行参数', value: 1 },
+  { label: '报警记录', value: 2, disabled: true },
+  { label: '点检记录', value: 3 },
 ])
 </script>

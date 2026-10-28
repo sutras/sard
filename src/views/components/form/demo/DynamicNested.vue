@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：嵌套字段：设备 → 工位 → 参数 -->
   <doc-page gray title="动态增减嵌套字段">
     <s-form ref="formRef" :model="dynamicValidateForm">
       <s-form-item v-for="(user, index) in dynamicValidateForm.users" :key="user.id">
@@ -7,21 +8,21 @@
             :name="['users', index, 'first']"
             :rules="{
               required: true,
-              message: 'Missing first name',
+              message: '请填写操作员工号',
             }"
             inlaid
           >
-            <s-input inlaid v-model="user.first" placeholder="First Name" />
+            <s-input inlaid v-model="user.first" placeholder="操作员工号" />
           </s-form-item>
           <s-form-item
             :name="['users', index, 'last']"
             :rules="{
               required: true,
-              message: 'Missing last name',
+              message: '请填写班组长授权码',
             }"
             inlaid
           >
-            <s-input inlaid v-model="user.last" placeholder="Last Name" />
+            <s-input inlaid v-model="user.last" placeholder="班组长授权码" />
           </s-form-item>
           <s-button variant="text" size="small" color="danger" @click="removeUser(user)" #icon>
             <Trash />
@@ -33,11 +34,11 @@
           <template #icon>
             <Plus />
           </template>
-          Add user
+          添加协同人
         </s-button>
       </s-form-item>
       <s-form-item>
-        <s-button @click="onSubmit">Submit</s-button>
+        <s-button @click="onSubmit">提交协同人</s-button>
       </s-form-item>
     </s-form>
   </doc-page>
@@ -75,7 +76,7 @@ const onSubmit = () => {
   formRef.value
     ?.validate()
     .then(() => {
-      toast('Success')
+      toast('协同人已保存，工单进入授权队列')
       console.log('Received values of form:', toRaw(dynamicValidateForm))
     })
     .catch(() => {

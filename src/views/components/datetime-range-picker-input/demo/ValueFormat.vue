@@ -1,10 +1,11 @@
 <template>
+  <!-- 工业语境：生产时段区间选择｜ValueFormat 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-datetime-range-picker-input
         v-model="value"
-        title="请选择日期"
-        placeholder="请选择日期"
+        title="选择产线日期"
+        placeholder="选择产线日期"
         :tabs="['开始日期', '结束日期']"
         clearable
         type="yMd"

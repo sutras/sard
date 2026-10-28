@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：设备与报警现场图片｜Fade 用法演示 -->
   <s-segmented v-model="src" :options="options" />
 
   <div style="height: 160px; margin-top: 10px">
@@ -16,6 +17,7 @@
 </template>
 
 <script setup lang="ts">
+import { cncLathePhoto } from '@/data/industrial-images'
 import { ref } from 'vue'
 
 const src = ref('')
@@ -24,7 +26,7 @@ const options = [
   { label: '销毁图片', value: '' },
   {
     label: '加载图片',
-    value: 'https://fastly.jsdelivr.net/npm/@sard/assets/images/cat1.jpg',
+    value: cncLathePhoto,
   },
 ]
 </script>

@@ -1,11 +1,12 @@
 <template>
+  <!-- 工业语境：点检照片与报告上传｜Custom 用法演示 -->
   <s-upload
     v-model="fileList"
     :after-read="afterRead"
     #default="{ list, onSelect, onRemove, onImageClick }"
   >
     <s-list card>
-      <s-list-item title="点击上传" arrow hover @click="onSelect" #icon>
+      <s-list-item title="上传点检照片 / 报告" arrow hover @click="onSelect" #icon>
         <Plus />
       </s-list-item>
       <s-list-item v-for="(item, index) in list" :key="index">
@@ -33,6 +34,7 @@
 </template>
 
 <script setup lang="ts">
+import { firstArticlePhoto, inspectionPhoto, nameplatePhoto } from '@/data/industrial-images'
 import { Plus, Success, Trash, XCircle } from '@sard/icons'
 import type { UploadFileItem } from 'sard'
 import { ref } from 'vue'
@@ -43,21 +45,21 @@ const fileToUrl = (file?: File) => {
 
 const fileList = ref<UploadFileItem[]>([
   {
-    url: 'https://fastly.jsdelivr.net/npm/@sard/assets/pic1.jpg',
-    name: 'pic1.jpg',
+    url: inspectionPhoto,
+    name: 'EQ-2023-204_安全门联锁.jpg',
     status: 'done',
   },
   {
-    url: 'https://fastly.jsdelivr.net/npm/@sard/assets/pic2.jpg',
-    name: 'pic2.jpg',
+    url: firstArticlePhoto,
+    name: '首件检验记录_L20241027-B01.jpg',
     status: 'uploading',
     message: '正在上传',
   },
   {
-    url: 'https://fastly.jsdelivr.net/npm/@sard/assets/pic3.jpg',
-    name: 'pic3.jpg',
+    url: nameplatePhoto,
+    name: '设备铭牌_EQ-2024-017.jpg',
     status: 'failed',
-    message: '上传失败',
+    message: '上传未完成',
   },
 ])
 

@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：厂区 / 产线 / 设备树｜Single 用法演示 -->
   <doc-page gray title="单一选择">
     <s-tree
       :data="treeData"
@@ -13,11 +14,11 @@
 </template>
 
 <script setup lang="ts">
-import { getRegionData } from 'region-data'
+import { plantTree } from '@/data/plant-tree'
 import { type TreeStateNode } from 'sard'
 import { ref } from 'vue'
 
-const regionData = getRegionData()
+const regionData = plantTree
 
 const treeData = regionData.slice(0, 5).map((item, index) => ({
   ...item,
@@ -29,7 +30,7 @@ const treeData = regionData.slice(0, 5).map((item, index) => ({
   })),
 }))
 
-const value = ref(110102)
+const value = ref(1112)
 
 const onSelect = (key: number | string, node: TreeStateNode) => {
   console.log(key, node)

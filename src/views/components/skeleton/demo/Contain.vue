@@ -1,11 +1,12 @@
 <template>
+  <!-- 工业语境：采集数据加载占位｜Contain 用法演示 -->
   <s-switch v-model="loading" style="margin-bottom: 10px" />
 
   <s-skeleton avatar title animated :loading="loading">
     <div style="display: flex; gap: 15px">
-      <demo-icon name="person" size="32px" />
+      <demo-icon name="user" size="32px" />
       <div style="flex: 1">
-        <div style="font-size: var(--s-font-size-lg); margin-bottom: 10px">我是一个标题</div>
+        <div style="font-size: var(--s-font-size-lg); margin-bottom: 10px">我是一个设备参数</div>
         <div>
           我是一个段落我是一个段落我是一个段落我是一个段落我是一个段落我是一个段落我是一个段落我是一个段落
         </div>

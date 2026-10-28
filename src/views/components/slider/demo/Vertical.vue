@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：参数连续调节（转速 / 温度）｜Vertical 用法演示 -->
   <div style="display: flex; flex-direction: row">
     <div>
       <doc-title>单值选择</doc-title>

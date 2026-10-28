@@ -1,10 +1,11 @@
 <template>
+  <!-- 工业语境：参数数字键盘弹层｜Basic 用法演示 -->
   <s-list card>
     <s-list-item title="当前值" :value="value || '暂无输入'" />
     <s-list-item title="打开数字键盘" arrow hover @click="visible = true" />
     <s-keyboard-popout
       v-model:visible="visible"
-      title="请输入数字"
+      title="输入设备位号数字"
       transparent
       show-shadow
       @input="onInput"

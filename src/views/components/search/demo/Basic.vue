@@ -1,10 +1,11 @@
 <template>
+  <!-- 工业语境：设备位号与批次号检索｜Basic 用法演示 -->
   <s-search
     v-model="value"
-    placeholder="请输入关键词"
+    placeholder="输入设备位号 / 批次号"
     @input="onInput"
     @change="onChange"
-    @search="toast($event)"
+    @search="onSearch"
   />
 </template>
 
@@ -20,5 +21,9 @@ const onInput = (value: any) => {
 
 const onChange = (value: any) => {
   console.log('change', value)
+}
+
+const onSearch = (keyword: string) => {
+  toast(keyword ? `按「${keyword}」检索设备台账` : '未输入关键字，显示全部在线设备')
 }
 </script>

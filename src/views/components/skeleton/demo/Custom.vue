@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：采集数据加载占位｜Custom 用法演示 -->
   <s-flex vertical gap="30px">
     <s-grid :columns="4" gap="15px">
       <s-grid-item v-for="i in 8" :key="i">

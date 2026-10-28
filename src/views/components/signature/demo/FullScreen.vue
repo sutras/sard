@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：班组长签字确认｜FullScreen 用法演示 -->
   <s-button @click="visible = true">签名</s-button>
 
   <s-signature v-model:visible="visible" full-screen @confirm="onConfirm">

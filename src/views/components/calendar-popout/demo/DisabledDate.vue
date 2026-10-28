@@ -1,15 +1,16 @@
 <template>
+  <!-- 工业语境：保养计划日期弹层选择｜DisabledDate 用法演示 -->
   <s-calendar-popout
     v-model="value"
     v-model:visible="visible"
-    title="请选择日期"
+    title="选择产线日期"
     :disabled-date="disabledDate"
     value-format="YYYY-MM-DD"
   />
 
   <s-list card>
     <s-list-item
-      title="请选择日期"
+      title="选择产线日期"
       arrow
       hover
       :value="JSON.stringify(value)"

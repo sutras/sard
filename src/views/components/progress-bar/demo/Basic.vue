@@ -1,3 +1,4 @@
 <template>
-  <s-progress-bar :percent="50" />
+  <!-- 工业语境：OEE 与电量进度｜Basic 用法演示 -->
+  <s-progress-bar :percent="87.3" status="success" />
 </template>

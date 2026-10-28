@@ -1,11 +1,12 @@
 <template>
+  <!-- 工业语境：自定义表单控件：备件单价（金额 + 币种），校验单价必须大于 0 -->
   <doc-page gray title="自定义表单控件">
     <s-form :model="formState" ref="formRef">
-      <s-form-item name="price" label="Price" :rules="[{ validator: checkPrice }]">
+      <s-form-item name="price" label="备件单价" :rules="[{ validator: checkPrice }]">
         <price-input v-model="formState.price" />
       </s-form-item>
       <s-form-item>
-        <s-button @click="onSubmit">Submit</s-button>
+        <s-button @click="onSubmit">录入报价</s-button>
       </s-form-item>
     </s-form>
   </doc-page>
@@ -29,11 +30,11 @@ const onSubmit = () => {
   formRef.value
     ?.validate()
     .then(() => {
-      toast('Success')
+      toast('备件单价已录入')
       console.log('Received values from form: ', toRaw(formState))
     })
     .catch(() => {
-      toast('Fail')
+      toast('录入失败，请检查单价')
     })
 }
 
@@ -41,6 +42,6 @@ const checkPrice = ({ value }: { value: { number: number } }) => {
   if (value.number > 0) {
     return true
   }
-  return 'Price must be greater than zero!'
+  return '备件单价必须大于 0'
 }
 </script>

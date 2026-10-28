@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：工单下发与报警处置流程｜Status 用法演示 -->
   <s-list card>
     <s-list-item title="上一步" @click="prevStep" arrow hover />
     <s-list-item title="下一步" @click="nextStep" arrow hover />
@@ -15,9 +16,9 @@ import { type StepsItem } from 'sard'
 const current = ref(1)
 
 const itemList: StepsItem[] = [
-  { name: '订单已提交', description: '01月01日 12:00' },
-  { name: '正在处理中', description: '01月01日 12:05' },
-  { name: '订单已完成', description: '01月01日 12:10' },
+  { name: '工单已下发', description: '10-27 09:00' },
+  { name: '等待授权', description: '10-27 09:06' },
+  { name: '首件已确认', description: '10-27 09:14' },
 ]
 
 const prevStep = () => {

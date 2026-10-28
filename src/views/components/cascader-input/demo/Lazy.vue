@@ -1,10 +1,11 @@
 <template>
+  <!-- 工业语境：厂区 / 车间 / 产线 / 工位四级定位｜Lazy 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-cascader-input
         v-model="value"
-        title="请选择省市区"
-        placeholder="请选择省市区"
+        title="选择厂区 / 车间 / 产线 / 工位"
+        placeholder="选择厂区 / 车间 / 产线 / 工位"
         clearable
         :field-keys="{ label: 'name', value: 'code', isLeaf: 'isLeaf' }"
         lazy
@@ -22,13 +23,13 @@
       </template>
     </s-list-item>
     <s-list-item
-      title="设置为：[[440000, 440100, 440106], [440000, 440100, 440111]] ([天河区, 白云区])"
+      title="设置为：[[1000, 1100, 1110, 1111], [1000, 1100, 1110, 1112]]（ST-01、ST-04）"
       arrow
       hover
       @click="
         value = [
-          [440000, 440100, 440106],
-          [440000, 440100, 440111],
+          [1000, 1100, 1110, 1111],
+          [1000, 1100, 1110, 1112],
         ]
       "
     />
@@ -37,34 +38,14 @@
 </template>
 
 <script setup lang="ts">
-import { mapProvinces, mapCities, mapCounties } from 'region-data'
+import { findPlantNode, plantTree } from '@/data/plant-tree'
 import { type CascaderValue, type CascaderOption, type CascaderStateNode } from 'sard'
 import { ref } from 'vue'
 
 const doGetTreeData = (parentId?: number) => {
-  if (!parentId) {
-    return Object.entries(mapProvinces).map(([code, name]) => ({
-      code: +code,
-      name,
-      isLeaf: false,
-    }))
-  } else {
-    const isProvince = /^\d{2}0{4}/.test(String(parentId))
-    const isCity = !isProvince && /^\d{4}0{2}/.test(String(parentId))
-    const prefixCode = isProvince
-      ? String(parentId).slice(0, 2)
-      : isCity
-        ? String(parentId).slice(0, 4)
-        : ''
-    const map = isProvince ? mapCities : isCity ? mapCounties : {}
-    return Object.entries(map)
-      .filter(([code]) => String(code).startsWith(prefixCode))
-      .map(([code, name]) => ({
-        code: +code,
-        name,
-        isLeaf: isCity,
-      }))
-  }
+  const nodes = parentId ? (findPlantNode(parentId)?.children ?? []) : plantTree
+
+  return nodes.map(({ code, name, children }) => ({ code, name, isLeaf: !children }))
 }
 
 const getTreeData = (parentId?: number) => {
@@ -79,9 +60,10 @@ const getTreeData = (parentId?: number) => {
     }, 500)
   })
 }
+
 const value = ref<CascaderValue | undefined>([
-  [440000, 440100, 440106],
-  [440000, 440100, 440111],
+  [1000, 1100, 1110, 1111],
+  [1000, 1100, 1110, 1112],
 ])
 
 const loadNode = async (node?: CascaderStateNode) => {

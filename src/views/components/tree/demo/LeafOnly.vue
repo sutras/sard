@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：厂区 / 产线 / 设备树｜LeafOnly 用法演示 -->
   <doc-page gray title="仅选择叶子节点">
     <s-tree
       :data="treeData"
@@ -13,10 +14,10 @@
 </template>
 
 <script setup lang="ts">
-import { getRegionData } from 'region-data'
+import { plantTree } from '@/data/plant-tree'
 import { type TreeStateNode } from 'sard'
 
-const regionData = getRegionData()
+const regionData = plantTree
 
 const treeData = regionData.slice(0, 5).map((item) => ({
   ...item,

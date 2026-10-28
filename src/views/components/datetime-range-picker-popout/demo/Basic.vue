@@ -1,8 +1,9 @@
 <template>
+  <!-- 工业语境：生产时段区间弹层｜Basic 用法演示 -->
   <s-datetime-range-picker-popout
     v-model="date"
     v-model:visible="visible"
-    title="请选择"
+    title="选择产线"
     :tabs="['开始日期', '结束日期']"
     type="yMd"
     @change="onChange"
@@ -11,7 +12,7 @@
   <s-list card>
     <s-list-item>
       <s-button @click="visible = true">
-        {{ date ? displayText : '请选择' }}
+        {{ date ? displayText : '选择产线' }}
       </s-button>
     </s-list-item>
     <s-list-item

@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：校验失败时滚动到第一个错误字段 -->
   <doc-page gray title="滚动到第一个错误字段" padding="0">
     <s-form
       :model="formState"
@@ -28,18 +29,18 @@
     <div ref="footer" class="footer">
       <s-row gap="10px">
         <s-col>
-          <s-button block @click="onSubmit">Submit</s-button>
+          <s-button block @click="onSubmit">提交</s-button>
         </s-col>
         <s-col>
-          <s-button block variant="outlined" @click="onReset">reset</s-button>
+          <s-button block variant="outlined" @click="onReset">重置</s-button>
         </s-col>
       </s-row>
       <div style="padding: 10px 0">
         <s-radio-group v-model="position" direction="horizontal">
-          <s-radio value="start">start</s-radio>
-          <s-radio value="center">center</s-radio>
-          <s-radio value="end">end</s-radio>
-          <s-radio value="nearest">nearest</s-radio>
+          <s-radio value="start">顶部（start）</s-radio>
+          <s-radio value="center">居中（center）</s-radio>
+          <s-radio value="end">底部（end）</s-radio>
+          <s-radio value="nearest">就近（nearest）</s-radio>
         </s-radio-group>
       </div>
     </div>
@@ -55,7 +56,7 @@ const formState = ref(
     .fill(0)
     .map((_, i) => {
       return {
-        label: 'Item' + i,
+        label: `点检项 ${i + 1}`,
         name: 'item' + i,
         value: '',
         key: i,
@@ -69,7 +70,7 @@ const onSubmit = () => {
   formRef.value
     ?.validate()
     .then(() => {
-      toast('success')
+      toast('点检记录已提交')
       console.log('formState: ', toRaw(formState))
     })
     .catch((error: FieldValidateError[]) => {

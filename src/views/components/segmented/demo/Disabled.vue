@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：班次与时间粒度切换｜Disabled 用法演示 -->
   <s-flex vertical gap="medium">
     <s-segmented v-model="value" :options="options" disabled />
     <s-segmented v-model="value" :options="options" />
@@ -9,10 +10,10 @@
 import { ref } from 'vue'
 
 const options = [
-  { label: 'Daily', value: 'Daily' },
-  { label: 'Weekly', value: 'Weekly', disabled: true },
-  { label: 'Monthly', value: 'Monthly' },
+  { label: '早班', value: '早班' },
+  { label: '中班', value: '中班', disabled: true },
+  { label: '晚班', value: '晚班' },
 ]
 
-const value = ref('Daily')
+const value = ref('早班')
 </script>

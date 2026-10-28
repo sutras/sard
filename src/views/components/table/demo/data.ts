@@ -1,116 +1,171 @@
 import type { TableColumnProps } from 'sard'
+import { deviceStatusMap, devices } from '@/data/production'
 
+/**
+ * 车间机台表的列定义：设备编号固定首列，状态/联锁列走具名插槽以渲染状态徽标。
+ * 单位与量程与采集网关一致，避免出现无单位裸数值。
+ */
 export const columns: TableColumnProps[] = [
   {
-    label: 'ID',
-    prop: 'id',
-    width: 40,
+    label: '设备编号',
+    prop: 'code',
+    width: 118,
     fixed: 'start',
   },
   {
-    label: '日期',
-    prop: 'date',
+    label: '产线',
+    prop: 'line',
     width: 100,
   },
   {
-    label: '姓名',
-    prop: 'name',
-    width: 80,
+    label: '工位',
+    prop: 'station',
+    width: 84,
   },
   {
-    label: '城市',
-    prop: 'city',
-    width: 80,
+    label: '班次',
+    prop: 'shift',
+    width: 64,
   },
   {
-    label: '电话',
-    prop: 'tel',
-    width: 100,
+    label: '批次号',
+    prop: 'batch',
+    width: 132,
   },
   {
-    label: '地址',
-    prop: 'address',
-    width: 200,
+    label: '状态',
+    prop: 'statusLabel',
+    width: 84,
+    slot: 'status',
+  },
+  {
+    label: '安全联锁',
+    prop: 'interlock',
+    width: 92,
+    slot: 'interlock',
+  },
+  {
+    label: 'OEE',
+    prop: 'oee',
+    width: 72,
+    align: 'end',
+  },
+  {
+    label: '主轴温度',
+    prop: 'spindleTemp',
+    width: 92,
+    align: 'end',
+  },
+  {
+    label: '振动',
+    prop: 'vibration',
+    width: 84,
+    align: 'end',
   },
 ]
 
+/** 多级表头：按「设备 / 工艺参数 / 质量 / 操作」四组归并现场看板字段 */
 export const multiColumns: TableColumnProps[] = [
   {
-    label: 'ID',
-    prop: 'id',
-    width: 40,
+    label: '设备',
     fixed: 'start',
-  },
-  {
-    label: '日期',
-    prop: 'date',
-    width: 100,
-  },
-  {
-    label: '收货地址',
     columns: [
       {
-        label: '姓名',
-        prop: 'name',
-        width: 80,
+        label: '设备编号',
+        prop: 'code',
+        width: 118,
       },
       {
-        label: '地址信息',
-        columns: [
-          {
-            label: '城市',
-            prop: 'city',
-            width: 80,
-          },
-          {
-            label: '电话',
-            prop: 'tel',
-            width: 100,
-          },
-          {
-            label: '地址',
-            prop: 'address',
-            width: 200,
-          },
-        ],
+        label: '产线',
+        prop: 'line',
+        width: 100,
+      },
+    ],
+  },
+  {
+    label: '工艺参数',
+    columns: [
+      {
+        label: '主轴温度',
+        prop: 'spindleTemp',
+        width: 92,
+      },
+      {
+        label: '振动',
+        prop: 'vibration',
+        width: 84,
+      },
+    ],
+  },
+  {
+    label: '质量与合规',
+    columns: [
+      {
+        label: 'OEE',
+        prop: 'oee',
+        width: 72,
+      },
+      {
+        label: '安全联锁',
+        prop: 'interlock',
+        width: 92,
+        slot: 'interlock',
       },
     ],
   },
   {
     label: '操作',
     prop: 'action',
-    width: 80,
+    width: 84,
     fixed: 'end',
     slot: 'action',
   },
 ]
 
-export const partialColumns = [
+export const partialColumns: TableColumnProps[] = [
   {
-    label: 'ID',
-    prop: 'id',
+    label: '设备编号',
+    prop: 'code',
   },
   {
-    label: '姓名',
-    prop: 'name',
+    label: '状态',
+    prop: 'statusLabel',
+    slot: 'status',
   },
   {
-    label: '城市',
-    prop: 'city',
+    label: '安全联锁',
+    prop: 'interlock',
+  },
+  {
+    label: 'OEE',
+    prop: 'oee',
+    align: 'end',
   },
 ]
 
-export const data = Array(20)
-  .fill(0)
-  .map((_, i) => {
-    return {
-      id: i + 1,
-      name: '张三',
-      city: '广州',
-      tel: '138********',
-      address: '广东省广州市**路22号',
-      date: '2024-12-12',
-    }
-  })
+const formatNumber = (value: number | null, unit: string, digits = 1) =>
+  value === null ? '—' : `${value.toFixed(digits)} ${unit}`
+
+export const data = devices.map((device, index) => {
+  const status = deviceStatusMap[device.status]
+
+  return {
+    id: index + 1,
+    code: device.code,
+    name: device.name,
+    line: device.line,
+    station: device.station,
+    shift: device.shift,
+    batch: device.batch,
+    statusCode: status.code,
+    statusLabel: status.label,
+    statusColor: status.color,
+    interlock: device.interlock,
+    oee: device.oee === null ? '—' : `${device.oee.toFixed(1)} %`,
+    spindleTemp: formatNumber(device.spindleTemp, '°C'),
+    vibration: formatNumber(device.vibration, 'mm/s'),
+    workOrder: device.workOrder,
+  }
+})
 
 export const partialData = data.slice(0, 4)

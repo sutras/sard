@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：万级报警记录滚动加载｜PopupScroll 用法演示 -->
   <s-button @click="visible = true">显示弹窗</s-button>
 
   <s-popup v-model:visible="visible" effect="slide-bottom">
@@ -14,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { getProvinces } from '@/api'
+import { getPlants } from '@/api'
 import { ref } from 'vue'
 
 const visible = ref(false)
@@ -22,7 +23,7 @@ const visible = ref(false)
 const listData = ref<{ code: string; name: string }[]>([])
 
 const request = async (page: number, isRefresh: boolean) => {
-  return getProvinces({ page }).then(({ list, total }) => {
+  return getPlants({ page }).then(({ list, total }) => {
     if (isRefresh) {
       listData.value = [...list]
     } else {

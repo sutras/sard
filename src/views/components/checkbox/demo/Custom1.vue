@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：点检项与安全前置勾选｜Custom1 用法演示 -->
   <s-checkbox-group v-model="value" #default="{ toggle, value }">
     <s-flex gap="medium">
       <s-tag
@@ -20,8 +21,8 @@ import { ref } from 'vue'
 const value = ref(['option2'])
 
 const options = [
-  { value: 'option1', label: '选项1' },
-  { value: 'option2', label: '选项2' },
-  { value: 'option3', label: '选项3' },
+  { value: 'option1', label: '早班' },
+  { value: 'option2', label: '中班' },
+  { value: 'option3', label: '晚班' },
 ]
 </script>

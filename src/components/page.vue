@@ -80,7 +80,8 @@ const onBack = () => {
 // ============================ theme ============================
 const themeVisible = ref(false)
 
-const { colorScheme } = useColorScheme()
+// 冷启动时 provide 可能晚于首次渲染，兜底成默认主题避免整页白屏
+const colorScheme = useColorScheme()?.colorScheme ?? ref<ColorScheme>('auto')
 
 const themeOptions: { label: string; value: ColorScheme }[] = [
   { label: '浅色', value: 'light' },
@@ -112,7 +113,7 @@ onUnmounted(() => {
 // ============================ lang ============================
 const langVisible = ref(false)
 
-const locale = useLocale()!
+const locale = useLocale() ?? ref('zhCN')
 
 const langOptions = [
   { label: '中文', value: 'zhCN' },

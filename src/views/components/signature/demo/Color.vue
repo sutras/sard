@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：班组长签字确认｜Color 用法演示 -->
   <s-signature color="red" @confirm="onConfirm"></s-signature>
 
   <img v-if="dataURL" style="width: 100%" mode="widthFix" :src="dataURL" />

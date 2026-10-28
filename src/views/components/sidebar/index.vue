@@ -22,7 +22,7 @@
 
     <doc-demo title="场景应用" full>
       <s-list>
-        <s-list-item title="场景1" arrow hover @click="navigateTo('Scene1')" />
+        <s-list-item title="场景应用" arrow hover @click="navigateTo('Scene1')" />
         <s-list-item title="场景2" arrow hover @click="navigateTo('Scene2')" />
       </s-list>
     </doc-demo>

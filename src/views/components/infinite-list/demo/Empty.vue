@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：万级报警记录滚动加载｜Empty 用法演示 -->
   <p class="mb-4">下拉刷新再次请求数据：</p>
 
   <s-pull-down-refresh
@@ -14,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { getProvinces } from '@/api'
+import { getPlants } from '@/api'
 import { ref } from 'vue'
 
 const listData = ref<{ code: string; name: string }[]>([])
@@ -22,7 +23,7 @@ const listData = ref<{ code: string; name: string }[]>([])
 let time = 0
 
 const request = async (page: number, isRefresh: boolean) => {
-  return getProvinces({ page }).then(({ list, total }) => {
+  return getPlants({ page }).then(({ list, total }) => {
     time++
     if (time === 1) {
       listData.value = []

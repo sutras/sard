@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：点检照片与报告上传｜Mix 用法演示 -->
   <s-upload
     v-model="fileList"
     :media-type="['image', 'video']"
@@ -8,15 +9,17 @@
 </template>
 
 <script setup lang="ts">
+import industrialCncVideo from '@/assets/videos/industrial-cnc.mp4'
+import { firstArticlePhoto } from '@/data/industrial-images'
 import type { UploadFileItem } from 'sard'
 import { ref } from 'vue'
 
 const fileList = ref<UploadFileItem[]>([
   {
-    url: 'https://fastly.jsdelivr.net/npm/@sard/assets/video/video1.mp4',
+    url: industrialCncVideo,
   },
   {
-    url: 'https://fastly.jsdelivr.net/npm/@sard/assets/pic1.jpg',
+    url: firstArticlePhoto,
   },
 ])
 

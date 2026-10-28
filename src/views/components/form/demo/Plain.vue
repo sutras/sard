@@ -1,5 +1,6 @@
 <template>
-  <doc-page title="服务人员满意度评分表" padding-bottom="0">
+  <!-- 工业语境：设备维保验收单，用自定义结构贴合车间大屏｜Plain 用法演示 -->
+  <doc-page title="自定义表单样式和结构" padding-bottom="0">
     <s-form-plain
       ref="formRef"
       :model="formModel"
@@ -11,7 +12,7 @@
       }"
     >
       <div class="form-description">
-        尊敬的客户：感谢您对我们服务的支持！请根据您的真实体验为服务人员评分。
+        维修工单完工后由设备主管验收：按项判定维保质量，结论决定设备能否恢复生产。
       </div>
 
       <div class="section">
@@ -20,49 +21,46 @@
           <span>基本信息</span>
         </div>
         <div class="section-content">
-          <s-form-item-plain name="staff_name" class="form-item" #default="{ shouldShowStar }">
+          <s-form-item-plain name="order_no" class="form-item" #default="{ shouldShowStar }">
             <div class="form-label">
               <span v-if="shouldShowStar" class="form-star">*</span>
-              服务人员姓名/工号：
+              维修工单号：
             </div>
             <div class="form-input">
               <s-input
-                v-model="formModel.staff_name"
-                placeholder="请输入服务人员姓名/工号"
+                v-model="formModel.order_no"
+                placeholder="例 WO-20241027-0085"
                 clearable
                 inlaid
               />
             </div>
           </s-form-item-plain>
 
-          <s-form-item-plain name="service_date" class="form-item" #default="{ shouldShowStar }">
+          <s-form-item-plain name="accept_date" class="form-item" #default="{ shouldShowStar }">
             <div class="form-label">
               <span v-if="shouldShowStar" class="form-star">*</span>
-              服务日期：
+              验收日期：
             </div>
             <div class="form-input">
               <s-datetime-picker-input
-                v-model="formModel.service_date"
-                placeholder="请选择服务日期"
+                v-model="formModel.accept_date"
+                placeholder="请选择验收日期"
                 clearable
               />
             </div>
           </s-form-item-plain>
 
-          <s-form-item-plain name="contact" class="form-item" #default="{ shouldShowStar }">
+          <s-form-item-plain name="inspector" class="form-item" #default="{ shouldShowStar }">
             <div class="form-label">
               <span v-if="shouldShowStar" class="form-star">*</span>
-              您的联系方式（可选）
+              验收人 / 工号：
             </div>
             <div class="form-input">
               <s-input
-                type="textarea"
-                v-model="formModel.contact"
-                placeholder="请输入联系方式"
+                v-model="formModel.inspector"
+                placeholder="例 王海 A-1042（设备主管）"
                 clearable
                 inlaid
-                auto-height
-                min-height="24px"
               />
             </div>
           </s-form-item-plain>
@@ -72,47 +70,51 @@
       <div class="section">
         <div class="section-title">
           <span class="section-index">2</span>
-          <span>服务人员评分</span>
+          <span>维保质量判定</span>
         </div>
         <div class="section-content">
-          <s-form-item-plain name="professionalism" class="form-item" #default="{ shouldShowStar }">
+          <s-form-item-plain name="fault_locate" class="form-item" #default="{ shouldShowStar }">
             <div class="form-label">
               <span v-if="shouldShowStar" class="form-star">*</span>
-              专业能力：是否具备足够的知识和技能？
+              故障定位：是否找到根因并消除，而非仅复位报警？
             </div>
-            <RadioList v-model="formModel.professionalism" :options="ratingOptions" />
+            <RadioList v-model="formModel.fault_locate" :options="qualityOptions" />
           </s-form-item-plain>
 
-          <s-form-item-plain name="attitude" class="form-item" #default="{ shouldShowStar }">
+          <s-form-item-plain name="parts_replace" class="form-item" #default="{ shouldShowStar }">
             <div class="form-label">
               <span v-if="shouldShowStar" class="form-star">*</span>
-              服务态度：是否礼貌、耐心、热情？
+              备件更换：型号与批次是否正确、旧件是否回收？
             </div>
-            <RadioList v-model="formModel.attitude" :options="ratingOptions" />
+            <RadioList v-model="formModel.parts_replace" :options="qualityOptions" />
           </s-form-item-plain>
 
-          <s-form-item-plain name="response_speed" class="form-item" #default="{ shouldShowStar }">
+          <s-form-item-plain
+            name="interlock_restore"
+            class="form-item"
+            #default="{ shouldShowStar }"
+          >
             <div class="form-label">
               <span v-if="shouldShowStar" class="form-star">*</span>
-              响应速度：问题处理是否及时？
+              联锁恢复：安全门、光栅、急停回路是否全部复检通过？
             </div>
-            <RadioList v-model="formModel.response_speed" :options="ratingOptions" />
+            <RadioList v-model="formModel.interlock_restore" :options="qualityOptions" />
           </s-form-item-plain>
 
-          <s-form-item-plain name="communication" class="form-item" #default="{ shouldShowStar }">
+          <s-form-item-plain name="site_clear" class="form-item" #default="{ shouldShowStar }">
             <div class="form-label">
               <span v-if="shouldShowStar" class="form-star">*</span>
-              沟通能力：表达是否清晰、易于理解？
+              现场清理：油污、切屑、临时接线是否清除，检修牌是否摘除？
             </div>
-            <RadioList v-model="formModel.communication" :options="ratingOptions" />
+            <RadioList v-model="formModel.site_clear" :options="qualityOptions" />
           </s-form-item-plain>
 
-          <s-form-item-plain name="problem_solving" class="form-item" #default="{ shouldShowStar }">
+          <s-form-item-plain name="trial_run" class="form-item" #default="{ shouldShowStar }">
             <div class="form-label">
               <span v-if="shouldShowStar" class="form-star">*</span>
-              问题解决：是否有效解决您的需求？
+              试运行：空运行与首件检验是否合格？
             </div>
-            <RadioList v-model="formModel.problem_solving" :options="ratingOptions" />
+            <RadioList v-model="formModel.trial_run" :options="qualityOptions" />
           </s-form-item-plain>
         </div>
       </div>
@@ -120,27 +122,27 @@
       <div class="section">
         <div class="section-title">
           <span class="section-index">3</span>
-          <span>整体评价</span>
+          <span>验收结论</span>
         </div>
         <div class="section-content">
+          <s-form-item-plain name="accept_result" class="form-item" #default="{ shouldShowStar }">
+            <div class="form-label">
+              <span v-if="shouldShowStar" class="form-star">*</span>
+              本次维保验收结论
+            </div>
+            <RadioList v-model="formModel.accept_result" :options="resultOptions" />
+          </s-form-item-plain>
+
           <s-form-item-plain
-            name="overall_satisfaction"
+            name="resume_production"
             class="form-item"
             #default="{ shouldShowStar }"
           >
             <div class="form-label">
               <span v-if="shouldShowStar" class="form-star">*</span>
-              本次服务的整体满意度
+              设备能否恢复生产
             </div>
-            <RadioList v-model="formModel.overall_satisfaction" :options="ratingOptions" />
-          </s-form-item-plain>
-
-          <s-form-item-plain name="would_return" class="form-item" #default="{ shouldShowStar }">
-            <div class="form-label">
-              <span v-if="shouldShowStar" class="form-star">*</span>
-              您是否会再次选择该服务人员？
-            </div>
-            <RadioList v-model="formModel.would_return" :options="returnOptions" />
+            <RadioList v-model="formModel.resume_production" :options="resumeOptions" />
           </s-form-item-plain>
         </div>
       </div>
@@ -148,16 +150,16 @@
       <div class="section">
         <div class="section-title">
           <span class="section-index">4</span>
-          <span>开放式反馈</span>
+          <span>遗留问题与建议</span>
         </div>
         <div class="section-content">
-          <s-form-item-plain name="strengths" class="form-item">
-            <div class="form-label">服务人员的优点（可选）</div>
+          <s-form-item-plain name="issues" class="form-item">
+            <div class="form-label">遗留问题（可选）</div>
             <div class="form-input">
               <s-input
-                v-model="formModel.strengths"
+                v-model="formModel.issues"
                 type="textarea"
-                placeholder="请输入服务人员的优点"
+                placeholder="例 液压单元仍有轻微渗漏，已开单跟踪 WO-20241027-0091"
                 clearable
                 inlaid
                 auto-height
@@ -166,13 +168,13 @@
             </div>
           </s-form-item-plain>
 
-          <s-form-item-plain name="improvements" class="form-item">
-            <div class="form-label">需要改进的方面（可选）</div>
+          <s-form-item-plain name="actions" class="form-item">
+            <div class="form-label">跟踪措施（可选）</div>
             <div class="form-input">
               <s-input
-                v-model="formModel.improvements"
+                v-model="formModel.actions"
                 type="textarea"
-                placeholder="请输入需要改进的方面"
+                placeholder="例 C 周保复查安全门开关行程，责任人 王海"
                 clearable
                 inlaid
                 auto-height
@@ -181,13 +183,13 @@
             </div>
           </s-form-item-plain>
 
-          <s-form-item-plain name="suggestions" class="form-item">
-            <div class="form-label">其他建议（可选）</div>
+          <s-form-item-plain name="others" class="form-item">
+            <div class="form-label">其他说明（可选）</div>
             <div class="form-input">
               <s-input
-                v-model="formModel.suggestions"
+                v-model="formModel.others"
                 type="textarea"
-                placeholder="请输入其他建议"
+                placeholder="例 本次停机 46 min，影响产量 320 件"
                 clearable
                 inlaid
                 auto-height
@@ -199,7 +201,7 @@
       </div>
 
       <div class="footer">
-        <s-button block @click="onSubmit">提交评价</s-button>
+        <s-button block @click="onSubmit">提交验收单</s-button>
       </div>
     </s-form-plain>
   </doc-page>
@@ -211,57 +213,61 @@ import { toast, type FormExpose, type FieldValidateError, type FormRules } from 
 import RadioList from './RadioList.vue'
 
 const formModel = reactive({
-  staff_name: '',
-  service_date: '',
-  contact: '',
-  professionalism: '',
-  attitude: '',
-  response_speed: '',
-  communication: '',
-  problem_solving: '',
-  overall_satisfaction: '',
-  would_return: '',
-  strengths: '',
-  improvements: '',
-  suggestions: '',
+  order_no: '',
+  accept_date: '',
+  inspector: '',
+  fault_locate: '',
+  parts_replace: '',
+  interlock_restore: '',
+  site_clear: '',
+  trial_run: '',
+  accept_result: '',
+  resume_production: '',
+  issues: '',
+  actions: '',
+  others: '',
 })
 
 const formRules: FormRules = {
-  staff_name: {
+  order_no: {
     required: true,
-    message: '请输入服务人员姓名/工号',
+    message: '请输入维修工单号',
   },
-  service_date: {
+  accept_date: {
     required: true,
-    message: '请选择服务日期',
+    message: '请选择验收日期',
   },
-  professionalism: {
+  inspector: {
     required: true,
-    message: '请打分',
+    message: '请输入验收人工号',
   },
-  attitude: {
+  fault_locate: {
     required: true,
-    message: '请打分',
+    message: '请判定故障定位',
   },
-  response_speed: {
+  parts_replace: {
     required: true,
-    message: '请打分',
+    message: '请判定备件更换',
   },
-  communication: {
+  interlock_restore: {
     required: true,
-    message: '请打分',
+    message: '请判定联锁恢复',
   },
-  problem_solving: {
+  site_clear: {
     required: true,
-    message: '请打分',
+    message: '请判定现场清理',
   },
-  overall_satisfaction: {
+  trial_run: {
     required: true,
-    message: '请选择整体满意度',
+    message: '请判定试运行结果',
   },
-  would_return: {
+  accept_result: {
     required: true,
-    message: '请选择',
+    message: '请选择验收结论',
+  },
+  resume_production: {
+    required: true,
+    message: '请选择设备能否恢复生产',
   },
 }
 
@@ -271,25 +277,31 @@ const onSubmit = () => {
   formRef.value
     ?.validate()
     .then(() => {
-      toast('提交成功!')
+      toast('验收单已提交，设备状态同步至 MES')
     })
     .catch((error: FieldValidateError[]) => {
       toast(error[0].message)
-      console.log('error submit!', error)
+      console.log('校验未通过', error)
     })
 }
 
-const ratingOptions = [
-  { value: '1', label: '不满意' },
-  { value: '2', label: '一般' },
-  { value: '3', label: '基本满意' },
-  { value: '4', label: '非常满意' },
+const qualityOptions = [
+  { value: 'good', label: '优' },
+  { value: 'normal', label: '良' },
+  { value: 'pass', label: '合格' },
+  { value: 'fail', label: '不合格' },
 ]
 
-const returnOptions = [
-  { value: 'yes', label: '是' },
-  { value: 'no', label: '否' },
-  { value: 'unsure', label: '不确定' },
+const resultOptions = [
+  { value: 'accepted', label: '通过' },
+  { value: 'conditional', label: '有条件通过' },
+  { value: 'rejected', label: '不通过' },
+]
+
+const resumeOptions = [
+  { value: 'yes', label: '可立即复产' },
+  { value: 'watch', label: '观察一班次后复产' },
+  { value: 'no', label: '不可复产' },
 ]
 </script>
 

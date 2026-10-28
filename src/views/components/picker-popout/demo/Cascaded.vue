@@ -1,8 +1,9 @@
 <template>
+  <!-- 工业语境：产线选择弹层｜Cascaded 用法演示 -->
   <s-picker-popout
     v-model="value"
     v-model:visible="visible"
-    title="请选择"
+    title="选择产线"
     :columns="regionData"
     :option-keys="{ label: 'name', value: 'code' }"
     @confirm="onConfirm"
@@ -11,15 +12,15 @@
   <s-list card>
     <s-list-item>
       <s-button @click="visible = true">
-        {{ value ? value : '请选择' }}
+        {{ value ? value : '选择厂区 / 车间 / 产线 / 工位' }}
       </s-button>
     </s-list-item>
     <s-list-item title="当前值：" :value="JSON.stringify(value) ?? 'undefined'" />
     <s-list-item
-      title="设置为: 广东省/广州市/白云区"
+      title="设置为: 华东厂区/机加车间/机加工一线/ST-04"
       arrow
       hover
-      @click="value = [440000, 440100, 440111]"
+      @click="value = [1000, 1100, 1110, 1112]"
     />
     <s-list-item title="清空" arrow hover @click="value = undefined" />
   </s-list>
@@ -27,13 +28,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getRegionData } from 'region-data'
+import { plantTree } from '@/data/plant-tree'
 
-const regionData = getRegionData()
+const regionData = plantTree
 
 const visible = ref(false)
 
-const value = ref<number[] | undefined>([150000, 150500, 150522])
+const value = ref<number[] | undefined>([3000, 3100, 3112])
 
 const onConfirm = (...args: any[]) => {
   console.log('confirm: ', ...args)

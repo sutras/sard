@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：组织与设备层级级联｜OptionTop 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-cascader
@@ -23,10 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import { getRegionData, type Node } from 'region-data'
+import { plantTree, type PlantNode as Node } from '@/data/plant-tree'
 import { toast } from 'sard'
 
-const regionData = getRegionData()
+const regionData = plantTree
 
 const onChange = (_: any, selectedOptions: Node[]) => {
   toast(selectedOptions.map((option) => option.name).join('/'))

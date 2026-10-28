@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：车间广播与安灯消息滚动｜Rtl 用法演示 -->
   <div class="danmaku-box" dir="rtl">
     <s-danmaku :list="list" loop />
   </div>

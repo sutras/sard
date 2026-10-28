@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：报警照片瀑布流｜MaxWait 用法演示 -->
   <doc-page title="最大等待时间">
     <s-waterfall class="mx-4" @load="onLoad">
       <s-waterfall-item v-for="(item, index) in list" :key="index" #default="{ onLoad }">
@@ -32,6 +33,7 @@
 </template>
 
 <script setup lang="ts">
+import { photoAt } from '@/data/industrial-images'
 import { longText } from '@/data/text'
 import { random, shuffle, toast } from 'sard'
 import { nextTick, onMounted, ref } from 'vue'
@@ -54,7 +56,7 @@ const getData = () => {
         const length = random(min, max)
         return {
           title: longText.slice(startIndex, startIndex + length),
-          url: `https://fastly.jsdelivr.net/npm/@sard/assets/images/cat${(i % 12) + 1}.jpg`,
+          url: photoAt(i).url,
         }
       })
     resolve(data)

@@ -1,8 +1,9 @@
 <template>
-  <s-search placeholder="请输入关键词" shape="round" style="padding-inline-start: 4px">
+  <!-- 工业语境：设备位号与批次号检索｜Slot 用法演示 -->
+  <s-search placeholder="输入设备位号 / 批次号" shape="round" style="padding-inline-start: 4px">
     <template #prepend>
       <s-button variant="link" size="small" color="secondary" style="margin-inline-end: 4px">
-        <demo-icon name="upc-scan" size="16px" />
+        <demo-icon name="scan" size="16px" />
       </s-button>
     </template>
 
@@ -20,7 +21,7 @@
   </s-search>
 
   <s-search
-    placeholder="请输入关键词"
+    placeholder="输入设备位号 / 批次号"
     shape="round"
     style="margin-top: 20px; padding-inline-start: 6px; padding-inline-end: 4px"
   >
@@ -32,7 +33,7 @@
 
     <template #append>
       <s-button variant="link" size="xs" color="secondary" style="margin-inline-start: 6px">
-        <demo-icon name="list-task" size="20px" />
+        <demo-icon name="work-order" size="20px" />
       </s-button>
     </template>
   </s-search>

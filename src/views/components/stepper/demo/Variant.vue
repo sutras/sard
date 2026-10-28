@@ -1,11 +1,12 @@
 <template>
-  <s-switch v-model="disabled" checked-text="禁用" unchecked-text="启用" class="mb-5" />
+  <!-- 工业语境：数量与参数步进输入｜Variant 用法演示 -->
+  <s-switch v-model="disabled" checked-text="禁用输入" unchecked-text="可编辑" class="mb-5" />
 
   <s-flex vertical gap="medium">
-    <s-stepper placeholder="数量" :disabled="disabled" variant="solid" />
-    <s-stepper placeholder="数量" :disabled="disabled" variant="outlined" />
-    <s-stepper placeholder="数量" :disabled="disabled" variant="accent" />
-    <s-stepper placeholder="数量" :disabled="disabled" variant="ghost" />
+    <s-stepper placeholder="数量" input-width="52px" :disabled="disabled" variant="solid" />
+    <s-stepper placeholder="数量" input-width="52px" :disabled="disabled" variant="outlined" />
+    <s-stepper placeholder="数量" input-width="52px" :disabled="disabled" variant="accent" />
+    <s-stepper placeholder="数量" input-width="52px" :disabled="disabled" variant="ghost" />
   </s-flex>
 </template>
 

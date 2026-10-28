@@ -1,21 +1,22 @@
 <template>
+  <!-- 工业语境：动态校验规则：按设备类型切换量程 -->
   <doc-page gray title="动态校验规则">
     <s-form ref="formRef" :model="formState">
       <s-form-item
-        label="Username"
+        label="操作员工号"
         name="username"
-        :rules="[{ required: true, message: 'Please input your username!' }]"
+        :rules="[{ required: true, message: '请输入操作员工号' }]"
       >
         <s-input v-model="formState.username" />
       </s-form-item>
 
       <s-form-item
-        label="Nickname"
+        label="设备位号"
         name="nickname"
         :rules="[
           {
             required: formState.checkNick,
-            message: 'Please input your nickname!',
+            message: '请输入设备位号',
           },
         ]"
       >
@@ -23,11 +24,11 @@
       </s-form-item>
 
       <s-form-item name="checkNick">
-        <s-checkbox v-model:checked="formState.checkNick">Nickname is required</s-checkbox>
+        <s-checkbox v-model:checked="formState.checkNick">设备位号必填</s-checkbox>
       </s-form-item>
 
       <s-form-item>
-        <s-button @click="onCheck">Check</s-button>
+        <s-button @click="onCheck">校验</s-button>
       </s-form-item>
     </s-form>
   </doc-page>
@@ -62,7 +63,7 @@ const onCheck = async () => {
     ?.validate()
     .then(() => {
       console.log('Success:', toRaw(formState))
-      toast('success')
+      toast('校验通过，可提交工单')
     })
     .catch((error: FieldValidateError[]) => {
       console.log('Failed:', error)

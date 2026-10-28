@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：长表格回顶，巡检人员单手操作｜ScrollView 用法演示 -->
   <doc-page gray title="scroll-view 组件滚动">
     <div ref="scroll" class="overflow-y-auto" style="height: 60vh">
       <s-list card style="margin: 0 16px; padding: 16px 0">

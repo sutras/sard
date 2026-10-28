@@ -1,19 +1,8 @@
-export const tigerList = Array(12)
-  .fill(0)
-  .map((_, i) => {
-    return {
-      id: i++,
-      url: `https://fastly.jsdelivr.net/npm/@sard/assets/images/tiger${i}.jpg`,
-    }
-  })
+import { galleryPhotos } from './industrial-images'
 
-export const catList = Array(12)
-  .fill(0)
-  .map((_, i) => {
-    return {
-      id: i++,
-      url: `https://fastly.jsdelivr.net/npm/@sard/assets/images/cat${i}.jpg`,
-    }
-  })
-
-export const tigerAndCatList = [...tigerList, ...catList]
+/** 模拟 MES 附件列表（设备照片 / 报警现场图），字段与 getImages 接口一致 */
+export const devicePhotoList = galleryPhotos.map((item) => ({
+  id: item.id,
+  url: item.url,
+  title: item.title,
+}))

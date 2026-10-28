@@ -1,7 +1,8 @@
 <template>
-  <s-list card>
-    <s-list-item arrow hover title="确定按钮异步关闭" @click="showAlert" />
-    <s-list-item arrow hover title="取消按钮异步关闭" @click="showConfirm" />
+  <!-- 演示等待 MES 回执的异步关闭：下发指令期间按钮 loading 且禁止重复提交与误关闭 -->
+  <s-list card aria-label="异步下发确认列表">
+    <s-list-item arrow hover title="下发工单（等待 MES 回执）" @click="showAlert" />
+    <s-list-item arrow hover title="撤销工单（等待回执）" @click="showConfirm" />
   </s-list>
 </template>
 
@@ -10,8 +11,11 @@ import { dialog } from 'sard'
 
 const showAlert = () => {
   dialog.confirm({
-    title: '提示',
-    message: '点击确定按钮会在一秒钟后关闭',
+    title: '下发工单 · 等待回执',
+    message: '确认后向 MES 提交 WO-20241027-0083，收到回执前按钮保持锁定（约 1 s）。',
+    cancelText: '取消',
+    confirmText: '下发',
+    overlayClosable: false,
     beforeClose: (type, loading) => {
       if (type === 'confirm') {
         return new Promise<void>((resolve) => {
@@ -27,8 +31,11 @@ const showAlert = () => {
 
 const showConfirm = () => {
   dialog.confirm({
-    title: '提示',
-    message: '点击取消按钮会在一秒钟后关闭',
+    title: '撤销工单 · 等待回执',
+    message: '撤销请求提交后约 1 s 返回结果，期间不允许重复点击或关闭弹窗。',
+    cancelText: '继续执行',
+    confirmText: '确认撤销',
+    overlayClosable: false,
     beforeClose: (type, loading) => {
       if (type === 'cancel') {
         return new Promise<void>((resolve) => {

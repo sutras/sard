@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：时段区间选择｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-datetime-range-picker

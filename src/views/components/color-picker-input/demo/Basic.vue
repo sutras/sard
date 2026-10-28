@@ -1,10 +1,11 @@
 <template>
+  <!-- 工业语境：报警灯与趋势线配色（受控）｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-color-picker-input
         v-model="color"
         title="选择颜色"
-        placeholder="请选择颜色"
+        placeholder="选择产线颜色"
         show-alpha
         show-format
         show-presets

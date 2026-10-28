@@ -26,7 +26,7 @@ function prepareEnvironment() {
   sardPrepareEnvironment()
 
   if (!isMobileDevices()) {
-    windowInfo.statusBarHeight = 54
+    windowInfo.statusBarHeight = 36
     document.documentElement.style.setProperty('--s-safe-bottom', '34px')
   }
 

@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：车间广播滚动｜Basic 用法演示 -->
   <s-marquee style="height: 100px">
     <div
       v-for="(item, i) in data"

@@ -1,13 +1,14 @@
 <template>
+  <!-- 工业语境：巡检快捷入口（扫码 / 报修 / 急停）｜BottomLeft 用法演示 -->
   <s-fab left="24px">
-    <s-fab-item name="首页" @click="onClick('首页')">
-      <demo-icon name="house-door" />
+    <s-fab-item name="扫码报修" @click="onClick('扫码报修')">
+      <demo-icon name="scan" />
     </s-fab-item>
-    <s-fab-item name="分享好友" @click="onClick('分享好友')">
+    <s-fab-item name="转派维修" @click="onClick('转派维修')">
       <demo-icon name="share" />
     </s-fab-item>
-    <s-fab-item name="收藏" @click="onClick('收藏')">
-      <demo-icon name="star" />
+    <s-fab-item name="急停呼叫" @click="onClick('急停呼叫')">
+      <demo-icon name="bell" />
     </s-fab-item>
   </s-fab>
 </template>

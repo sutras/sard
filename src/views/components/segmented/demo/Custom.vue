@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：班次与时间粒度切换｜Custom 用法演示 -->
   <s-segmented v-model="value" :options="options">
     <s-segmented-item v-for="option in options" :value="option.value">
       <demo-icon :name="option.icon" class="me-1" />
@@ -12,21 +13,21 @@ import { ref } from 'vue'
 
 const options = [
   {
-    label: '首页',
-    value: 'home',
-    icon: 'house-door-fill',
+    label: '设备',
+    value: 'device',
+    icon: 'warehouse',
   },
   {
-    label: '购物车',
-    value: 'card',
-    icon: 'cart-fill',
+    label: '工单',
+    value: 'order',
+    icon: 'work-order',
   },
   {
-    label: '消息',
-    value: 'message',
-    icon: 'chat-dots-fill',
+    label: '报警',
+    value: 'alarm',
+    icon: 'alarm',
   },
 ]
 
-const value = ref('home')
+const value = ref('device')
 </script>

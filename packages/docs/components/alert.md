@@ -38,6 +38,12 @@ group: 反馈组件
 
 <<< @demo/alert/demo/Square.vue
 
+### 严重级告警
+
+最高等级（L3）告警使用红色脉冲强调，其余等级不使用动画，避免告警疲劳。
+
+<<< @demo/alert/demo/Critical.vue
+
 ## API
 
 ### AlertProps

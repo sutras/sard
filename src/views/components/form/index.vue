@@ -31,7 +31,7 @@
           @click="navigateTo('ScrollToFirstError')"
         />
         <s-list-item
-          title="toast显示验证错误信息"
+          title="toast 显示验证错误信息"
           arrow
           hover
           @click="navigateTo('ToastValidateError')"

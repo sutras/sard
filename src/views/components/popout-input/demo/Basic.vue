@@ -1,16 +1,17 @@
 <template>
+  <!-- 工业语境：下拉选择输入｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-popout-input
         v-model="value"
-        placeholder="请选择"
+        placeholder="选择产线"
         clearable
-        @clear="toast('清除')"
-        @click="toast('点击了')"
+        @clear="toast('已清除产线筛选')"
+        @click="toast('展开产线选择')"
         @change="onChange"
       />
     </s-list-item>
-    <s-list-item title="设置值" hover arrow @click="value = '输入框内容'" />
+    <s-list-item title="设置值" hover arrow @click="value = '输入框参数明细'" />
   </s-list>
 </template>
 

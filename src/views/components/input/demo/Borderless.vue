@@ -1,4 +1,5 @@
 <template>
+  <!-- 占位即属性：去除边框 -->
   <s-input v-model="value" placeholder="去除边框" borderless />
 </template>
 

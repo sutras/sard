@@ -1,7 +1,8 @@
 <template>
-  <s-timeline>
+  <!-- 工业语境：停机处置时间线 —— 从报警触发到恢复生产，每一步都带责任角色与时间戳 -->
+  <s-timeline aria-label="停机处置时间线">
     <s-timeline-item
-      v-for="(item, index) in logistics"
+      v-for="(item, index) in events"
       :key="index"
       :title="item.title"
       :time="item.time"
@@ -28,79 +29,46 @@
 </template>
 
 <script setup lang="ts">
-const logistics = [
+const events = [
   {
-    description: '收货地址：广东广州xxx1号店',
+    description: '设备：EQ-2023-204 注塑机-A2（注塑二线 / ST-11）',
   },
   {
-    icon: 'check',
+    icon: 'quality',
     iconColor: 'var(--s-color-primary)',
-    title: '已签收',
+    title: '恢复生产',
     description:
-      '您的订单已由【xxx（广州xxx1号店）代收。如有疑问您可以联系配送员【xxx，${tel}】确认。感谢您在xxx购物，欢迎再次光临。】',
-    tel: '13800138000',
-    time: '2024-06-17 09:01:47',
+      '设备主管复位并联锁复检通过，首件检验合格。复检人：设备主管，${tel}。批次 L20241027-B01 已重新开工。',
+    tel: '内线 8102',
+    time: '2024-10-27 10:26:04',
   },
   {
-    icon: 'delivery',
-    title: '派送中',
-    description: '您的订单正在配送途中（快递员：xxx，电话${tel}），请你耐心等待。',
-    tel: '13800138000',
-    time: '2024-06-17 08:01:25',
+    icon: 'work-order',
+    title: '维修处置完成',
+    description: '更换安全门双通道开关，联锁旁路单 LK-20241027-02 已核销。',
+    time: '2024-10-27 10:08:37',
   },
   {
-    icon: 'transport',
-    title: '运输中',
-    description: '您的订单已送达【广州xx营业部】',
-    time: '2024-06-17 06:21:23',
+    icon: 'wrench',
+    title: '维修班到达现场',
+    description: '维修班 2 人到场（工单 WO-20241027-0085），到场耗时 8 min。',
+    time: '2024-10-27 09:52:11',
   },
   {
-    description: '您的订单已离开广州xx分拣中心，前往广州xx营业务途中',
-    time: '2024-06-17 06:21:23',
+    icon: 'key',
+    title: '班组长授权停机',
+    description: '班组长授权码校验通过，液压单元泄压，在制批次 1200 件转返修判定。',
+    time: '2024-10-27 09:44:05',
   },
   {
-    description: '您的订单在【广州xx分拣中心】准备送往【广州xx营业部】',
-    time: '2024-06-17 04:27:51',
+    description: '报警确认：值班人员确认 E-1042，处置记录 ALM-20241027-0031 已建立。',
+    time: '2024-10-27 09:42:30',
   },
   {
-    description: '您的订单在【广州xx接货仓】分拣完成',
-    time: '2024-06-16 21:07:28',
-  },
-  {
-    icon: 'warehouse',
-    title: '仓库处理中',
-    description: '打包完成',
-    time: '2024-06-16 20:58:13',
-  },
-  {
-    description: '扫描完成',
-    time: '2024-06-16 20:58:13',
-  },
-  {
-    description: '拣货完成',
-    time: '2024-06-16 19:18:06',
-  },
-  {
-    description: '您的订单已经打印完成',
-    time: '2024-06-16 18:53:15',
-  },
-  {
-    icon: 'order',
-    title: '已下单',
-    description: '温馨提示：您的订单预计6月17日09:00-15:00送达',
-    time: '2024-06-16 18:50:30',
-  },
-  {
-    description: '您的订单已经进入广州仓库准备出库',
-    time: '2024-06-16 18:20:49',
-  },
-  {
-    description: '您的订单预计2024-06-16 18:20开始处理，请您耐心等待',
-    time: '2024-06-16 18:20:48',
-  },
-  {
-    description: '您提交了订单，请等待系统确认',
-    time: '2021-06-16 18:20:30',
+    icon: 'alarm',
+    title: '安全门联锁断开',
+    description: 'E-1042 模具区安全门联锁断开，设备自动进入 STOP 状态。',
+    time: '2024-10-27 09:41:22',
   },
 ]
 </script>

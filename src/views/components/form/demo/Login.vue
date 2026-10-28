@@ -1,22 +1,23 @@
 <template>
+  <!-- 工业语境：受控登录：工号 + 授权码 -->
   <doc-page gray title="登录框">
     <s-form :model="formState" ref="formRef">
       <s-form-item
-        label="Username"
+        label="操作员工号"
         name="username"
-        :rules="[{ required: true, message: 'Please input your username!' }]"
+        :rules="[{ required: true, message: '请输入工号（例 A-1042）' }]"
       >
         <s-input v-model="formState.username">
           <template #prepend>
-            <demo-icon name="person" />
+            <demo-icon name="user" />
           </template>
         </s-input>
       </s-form-item>
 
       <s-form-item
-        label="Password"
+        label="班组长授权码"
         name="password"
-        :rules="[{ required: true, message: 'Please input your password!' }]"
+        :rules="[{ required: true, message: '请输入 6 位动态授权码' }]"
       >
         <s-input type="password" v-model="formState.password">
           <template #prepend>
@@ -29,18 +30,18 @@
         <s-flex justify="between" gap="medium">
           <s-form-item name="remember" inlaid>
             <s-checkbox v-model:checked="formState.remember" class="my-auto">
-              Remember me
+              本班次内免授权
             </s-checkbox>
           </s-form-item>
-          <s-button variant="link">Forgot password</s-button>
+          <s-button variant="link">找回授权码</s-button>
         </s-flex>
       </s-form-item>
 
       <s-form-item>
-        <s-button @click="submitForm" :disabled="disabled">Log in</s-button>
+        <s-button @click="submitForm" :disabled="disabled">受控登录</s-button>
         <s-flex align="center" justify="end" gap="medium">
-          <span>Or</span>
-          <s-button variant="link">register now!</s-button>
+          <span>或</span>
+          <s-button variant="link">申请账号开通</s-button>
         </s-flex>
       </s-form-item>
     </s-form>
@@ -67,7 +68,7 @@ const submitForm = () => {
   formRef.value
     ?.validate()
     .then(() => {
-      toast('Success')
+      toast('授权通过，有效期至本班次结束')
       console.log('Success:', formState)
     })
     .catch((error: FieldValidateError[]) => {

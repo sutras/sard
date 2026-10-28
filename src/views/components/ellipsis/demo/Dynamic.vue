@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：同一段记录在不同行数、位置、展开状态下重新计算截断点 -->
   <s-list card>
     <s-list-item>
       <s-segmented v-model="text" :options="contentOptions" />
@@ -28,18 +29,18 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { contentEn, contentZh } from './shared'
+import { alarmRecord, sopExcerpt } from './shared'
 import { type EllipsisPosition } from 'sard'
 
 const contentOptions = [
-  { label: 'contentEn', value: contentEn },
-  { label: 'contentZh', value: contentZh },
+  { label: '报警处置记录', value: alarmRecord },
+  { label: '换模规程', value: sopExcerpt },
 ]
 
 const positionOptions = [
-  { label: 'start', value: 'start' },
-  { label: 'middle', value: 'middle' },
-  { label: 'end', value: 'end' },
+  { label: '头部', value: 'start' },
+  { label: '中部', value: 'middle' },
+  { label: '尾部', value: 'end' },
 ]
 
 const rowOptions = [
@@ -53,7 +54,7 @@ const expandOptions = [
   { label: '收起', value: false },
 ]
 
-const text = ref(contentEn)
+const text = ref(alarmRecord)
 const rows = ref(2)
 const position = ref<EllipsisPosition>('start')
 

@@ -1,18 +1,19 @@
 <template>
+  <!-- 工业语境：动态增减点检项 -->
   <doc-page gray title="添加/删除表单项">
     <s-form ref="formRef" :model="dynamicValidateForm">
       <s-form-item
         name="email"
-        label="Email"
+        label="报警接收邮箱"
         :rules="[
           {
             required: true,
-            message: 'Please input email address',
+            message: '请输入报警接收邮箱',
             trigger: 'blur',
           },
           {
             type: 'email',
-            message: 'Please input correct email address',
+            message: '邮箱格式不正确',
             trigger: ['blur', 'change'],
           },
         ]"
@@ -22,11 +23,11 @@
       <s-form-item
         v-for="(domain, index) in dynamicValidateForm.domains"
         :key="domain.key"
-        :label="'Domain' + index"
+        :label="`抄送人 ${index + 1}`"
         :name="['domains', index, 'value']"
         :rules="{
           required: true,
-          message: 'domain can not be null',
+          message: '请填写抄送人工号',
         }"
       >
         <div style="display: flex; flex-direction: row; gap: 5px">
@@ -37,12 +38,12 @@
         </div>
       </s-form-item>
       <s-form-item>
-        <s-button @click="submitForm(formRef)">Submit</s-button>
+        <s-button @click="submitForm(formRef)">提交</s-button>
         <s-button variant="outlined" style="margin-top: 10px" @click="addDomain">
-          New domain
+          新增抄送人
         </s-button>
         <s-button variant="outlined" style="margin-top: 10px" @click="resetForm(formRef)">
-          Reset
+          重置
         </s-button>
       </s-form-item>
     </s-form>
@@ -92,7 +93,7 @@ const submitForm = (formEl?: FormExpose) => {
   formEl
     .validate()
     .then(() => {
-      toast('Success!')
+      toast('报警通知配置已保存')
       console.log('Success!')
     })
     .catch(() => {

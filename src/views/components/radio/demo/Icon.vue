@@ -1,8 +1,9 @@
 <template>
+  <!-- 工业语境：班次单选，选中态用实心值班图标 -->
   <s-radio-group v-model="value">
     <s-radio v-for="item in list" :value="item.value" :key="item.value">
       <template #icon="{ checked }">
-        <demo-icon size="20px" :name="checked ? 'heart-fill' : 'heart'" />
+        <demo-icon size="20px" :name="checked ? 'user' : 'user'" />
       </template>
       {{ item.label }}
     </s-radio>
@@ -14,7 +15,7 @@ import { ref } from 'vue'
 
 const value = ref('option1')
 const list = [
-  { label: '选项1', value: 'option1' },
-  { label: '选项2', value: 'option2' },
+  { label: '早班', value: 'option1' },
+  { label: '中班', value: 'option2' },
 ]
 </script>

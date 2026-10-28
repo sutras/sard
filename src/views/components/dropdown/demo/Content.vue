@@ -1,14 +1,15 @@
 <template>
+  <!-- 工业语境：设备按产线筛选与班次切换｜Content 用法演示 -->
   <s-dropdown>
     <s-dropdown-item :options="options1" model-value="1" />
-    <s-dropdown-item title="筛选" v-model:visible="visible">
+    <s-dropdown-item title="按产线筛选" v-model:visible="visible">
       <s-list inlaid>
-        <s-list-item title="包邮">
+        <s-list-item title="仅本班次">
           <template #value>
             <s-switch :model-value="true" />
           </template>
         </s-list-item>
-        <s-list-item title="团购">
+        <s-list-item title="仅报警设备">
           <template #value>
             <s-switch />
           </template>
@@ -26,11 +27,11 @@ import { ref } from 'vue'
 
 const options1 = [
   {
-    label: '距离优先',
+    label: '本班次',
     value: '1',
   },
   {
-    label: '速度优先',
+    label: '主轴转速优先',
     value: '2',
   },
   {

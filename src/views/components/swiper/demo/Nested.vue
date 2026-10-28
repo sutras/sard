@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：车间看板轮播｜Nested 用法演示 -->
   <s-swiper show-indicator style="height: 200px">
     <s-swiper-item v-for="(item, index) in list" :key="index">
       <div

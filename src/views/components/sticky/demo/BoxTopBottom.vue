@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：表头与操作栏吸顶｜BoxTopBottom 用法演示 -->
   <s-sticky-box
     style="
       display: flex;

@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：巡检悬浮面板｜Anchors 用法演示 -->
   <doc-page gray title="自定义锚点">
     <s-floating-panel v-model:height="height" :anchors="anchors">
       <div style="padding: 10px; text-align: center">

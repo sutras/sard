@@ -1,16 +1,17 @@
 <template>
-  <s-button @click="visible = true">显示分享面板</s-button>
+  <!-- 工业语境：报警处置单分享给维修班｜Disabled 用法演示 -->
+  <s-button @click="visible = true">转派处置单</s-button>
 
   <s-share-sheet v-model:visible="visible" show-cancel @select="onSelect">
     <s-share-sheet-row>
-      <s-share-sheet-item value="Wechat" label="Wechat" disabled #icon>
+      <s-share-sheet-item value="wecom" label="企业微信" disabled #icon>
         <s-share-sheet-icon background="#0bc15f" color="#fff">
           <demo-icon name="wechat-fill" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
-      <s-share-sheet-item value="Alipay" label="Alipay" #icon>
-        <s-share-sheet-icon background="#1677ff" color="#fff">
-          <demo-icon name="alipay-fill" />
+      <s-share-sheet-item value="sms" label="短信通知" #icon>
+        <s-share-sheet-icon background="#2b6cb0" color="#fff">
+          <demo-icon name="phone" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
     </s-share-sheet-row>

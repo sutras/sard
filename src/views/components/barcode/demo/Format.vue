@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：设备铭牌与批次条码，扫码枪直读｜Format 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-segmented v-model="format" :options="formatOptions" :ellipsis="false" />
@@ -16,7 +17,7 @@ import { type BarcodeFormat } from 'sard'
 const formatOptions: BarcodeFormat[] = ['CODE128', 'EAN13', 'UPC-A', 'ITF14']
 
 const samples: Record<BarcodeFormat, string> = {
-  CODE128: 'Hello123',
+  CODE128: 'EQ2024017A03',
   EAN13: '590123412345',
   'UPC-A': '12345678901',
   ITF14: '1234567890123',

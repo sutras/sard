@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：车间广播滚动｜Horizontal 用法演示 -->
   <s-marquee direction="horizontal" :speed="100">
     <div v-for="(item, i) in data" :key="i" style="flex: none; margin-inline-end: 8px">
       <div>{{ item }}</div>

@@ -1,10 +1,11 @@
 <template>
+  <!-- 工业语境：产线 / 班次选择｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-picker-input
         v-model="value"
-        title="请选择性别"
-        placeholder="请选择性别"
+        title="选择产线性别"
+        placeholder="选择产线性别"
         clearable
         :columns="columns"
         @change="onChange"

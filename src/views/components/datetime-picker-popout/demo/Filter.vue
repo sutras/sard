@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：计划开工时刻弹层选择｜Filter 用法演示 -->
   <s-datetime-picker-popout
     v-model="date"
     v-model:visible="visible"

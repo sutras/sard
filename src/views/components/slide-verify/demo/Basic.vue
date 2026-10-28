@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：受控操作人机校验｜Basic 用法演示 -->
   <div class="mx-10">
     <s-slide-verify
       ref="verifyRef"

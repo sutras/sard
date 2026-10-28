@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：厂区 / 产线 / 设备树｜Editable 用法演示 -->
   <doc-page gray title="可编辑的">
     <div class="flex m-3 gap-3 justify-center">
       <s-button @click="addRootNode">添加根节点</s-button>
@@ -15,11 +16,11 @@
 </template>
 
 <script setup lang="ts">
-import { getRegionData } from 'region-data'
+import { plantTree } from '@/data/plant-tree'
 import { toast, type TreeExpose } from 'sard'
 import { ref } from 'vue'
 
-const regionData = getRegionData()
+const regionData = plantTree
 
 const treeData = regionData.slice(0, 5).map((item) => ({
   ...item,

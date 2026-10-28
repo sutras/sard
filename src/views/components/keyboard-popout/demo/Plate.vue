@@ -1,11 +1,12 @@
 <template>
+  <!-- 工业语境：参数数字键盘弹层｜Plate 用法演示 -->
   <s-list card>
     <s-list-item title="当前值" :value="value || '暂无输入'" />
     <s-list-item title="打开车牌号键盘" arrow hover @click="visible = true" />
     <s-keyboard-popout
       v-model:visible="visible"
       v-model:mode="mode"
-      title="请输入车牌号"
+      title="输入设备位号车牌号"
       type="plate"
       :disabled-key="disabledKey"
       @input="onInput"

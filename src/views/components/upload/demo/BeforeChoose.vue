@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：点检照片与报告上传｜BeforeChoose 用法演示 -->
   <s-upload :before-choose="beforeChoose" />
 </template>
 

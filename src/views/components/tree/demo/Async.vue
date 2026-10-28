@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：厂区 / 产线 / 设备树｜Async 用法演示 -->
   <doc-page gray title="异步编辑与拖拽">
     <s-tree
       ref="treeRef"
@@ -14,21 +15,21 @@
 
 <script setup lang="ts">
 import { sleep, type TreeProps } from 'sard'
-import { getRegionData } from 'region-data'
+import { plantTree } from '@/data/plant-tree'
 import { toast, type TreeExpose } from 'sard'
 import { ref } from 'vue'
 
 // page
 
 // tree
-const regionData = getRegionData()
+const regionData = plantTree
 
 const treeData = regionData.slice(0, 5).map((item) => ({
   ...item,
-  name: `${item.name} (编辑会失败)`,
+  name: `${item.name} (编辑会未完成)`,
   children: item.children.slice(0, 3).map((item) => ({
     ...item,
-    name: `${item.name} (拖拽会失败)`,
+    name: `${item.name} (拖拽会未完成)`,
     children: item.children.slice(0, 3),
   })),
 }))
@@ -41,7 +42,7 @@ const beforeEdit: TreeProps['beforeEdit'] = async (node, title, type) => {
   await sleep(500)
 
   if (type === 'edit' && /0{4}$/.test(String(node.key))) {
-    toast('编辑失败')
+    toast('编辑未完成')
     return Promise.reject()
   }
 }
@@ -52,7 +53,7 @@ const beforeDrop: TreeProps['beforeDrop'] = async (draggingNode, dropNode, type)
   await sleep(500)
 
   if (/[^0]0{2}$/.test(String(draggingNode.key))) {
-    toast('拖拽失败')
+    toast('拖拽未完成')
     return Promise.reject()
   }
 }

@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：班组长授权码输入｜CustomKeyboard 用法演示 -->
   <s-password-input
     v-model="value"
     type="underlined"

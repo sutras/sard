@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：车间看板轮播｜Vertical 用法演示 -->
   <s-swiper vertical show-indicator>
     <s-swiper-item v-for="(item, index) in list" :key="index">
       <div

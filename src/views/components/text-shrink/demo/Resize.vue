@@ -1,24 +1,26 @@
 <template>
+  <!-- 工业语境：宫格设备名｜Resize 用法演示 -->
   <s-card>
     <s-segmented v-model="columns" :options="columnOptions" />
 
     <div :class="bem.e('grid')" :style="{ '--columns': columns }">
       <div v-for="(name, index) in goodsList" :key="name" :class="bem.e('cell')">
-        <div :class="bem.e('thumb')"></div>
+        <img :class="bem.e('thumb')" :src="goodsPhotos[index]" alt="" />
         <div :class="bem.e('name')">
-          <s-text-shrink v-if="index === 0" ref="first" :text="name" :max-lines="2" />
-          <s-text-shrink v-else :text="name" :max-lines="2" />
+          <s-text-shrink v-if="index === 0" ref="first" :text="name" :max-lines="1" />
+          <s-text-shrink v-else :text="name" :max-lines="1" />
         </div>
       </div>
     </div>
 
-    <div :class="bem.e('meta')">{{ columns }} 列 · 标题上限 13px · 当前 {{ sizeText }}</div>
+    <div :class="bem.e('meta')">{{ columns }} 列 · 当前 {{ sizeText }}</div>
   </s-card>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, useTemplateRef } from 'vue'
 import { createBem } from '@/utils'
+import { galleryPhotos } from '@/data/industrial-images'
 import { goodsList } from './shared'
 
 const bem = createBem('text-shrink-demo-resize')
@@ -27,6 +29,8 @@ const columnOptions = [
   { label: '2 列', value: 2 },
   { label: '3 列', value: 3 },
 ]
+
+const goodsPhotos = goodsList.map((_, index) => galleryPhotos[index].url)
 
 const columns = ref(2)
 
@@ -57,9 +61,12 @@ const sizeText = computed(() => {
   }
 
   @include e(thumb) {
-    aspect-ratio: 1;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
     border-radius: var(--s-border-radius);
-    background: linear-gradient(135deg, var(--s-fill-color-secondary), var(--s-fill-color));
+    background: var(--s-fill-color);
   }
 
   @include e(name) {

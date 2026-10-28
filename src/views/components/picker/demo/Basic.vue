@@ -1,10 +1,11 @@
 <template>
+  <!-- 工业语境：产线与班次选择器｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-picker v-model="value" :columns="columns" @change="onChange" />
     </s-list-item>
     <s-list-item title="当前值：" :value="JSON.stringify(value) ?? 'undefined'" />
-    <s-list-item title="设置为: 天津市" arrow hover @click="value = '天津市'" />
+    <s-list-item title="设置为: 包装五线" arrow hover @click="value = '包装五线'" />
     <s-list-item title="清空" arrow hover @click="value = undefined" />
   </s-list>
 </template>
@@ -12,9 +13,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const columns = ['北京市', '天津市', '河北省', '山东省']
+const columns = ['机加工一线', '注塑二线', '压铸四线', '包装五线']
 
-const value = ref<string | undefined>('河北省')
+const value = ref<string | undefined>('注塑二线')
 
 const onChange = (value: any) => {
   console.log('change', value)

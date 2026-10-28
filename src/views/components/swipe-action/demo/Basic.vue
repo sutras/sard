@@ -1,10 +1,13 @@
 <template>
+  <!-- 工业语境：列表项滑动操作（确认 / 转派）｜Basic 用法演示 -->
   <s-list card>
     <s-list-item style="padding: 1px 0 0 0">
       <s-swipe-action>
-        <s-list-item title="右边插槽" value="内容" />
+        <s-list-item title="右边插槽" value="参数明细" />
         <template #right="{ hide }">
-          <s-button color="danger" square auto-height @click="onClick('删除', hide)">删除</s-button>
+          <s-button color="danger" square auto-height @click="onClick('解除绑定', hide)">
+            解除
+          </s-button>
           <s-button color="primary" square auto-height @click="onClick('取消', hide)">
             取消
           </s-button>
@@ -14,13 +17,15 @@
 
     <s-list-item style="padding: 1px 0 0">
       <s-swipe-action>
-        <s-list-item title="左边插槽" value="内容" />
+        <s-list-item title="左边插槽" value="参数明细" />
         <template #left="{ hide }">
-          <s-button color="danger" square auto-height @click="onClick('点赞', hide)">点赞</s-button>
-          <s-button color="primary" square auto-height @click="onClick('分享', hide)">
+          <s-button color="danger" square auto-height @click="onClick('确认告警', hide)">
+            确认
+          </s-button>
+          <s-button color="primary" square auto-height @click="onClick('转派维修', hide)">
             分享
           </s-button>
-          <s-button color="warning" square auto-height @click="onClick('收藏', hide)">
+          <s-button color="warning" square auto-height @click="onClick('停机', hide)">
             收藏
           </s-button>
         </template>
@@ -29,18 +34,22 @@
 
     <s-list-item style="padding: 1px 0 0">
       <s-swipe-action>
-        <s-list-item title="两边插槽" value="内容" />
+        <s-list-item title="两边插槽" value="参数明细" />
         <template #left="{ hide }">
-          <s-button color="danger" square auto-height @click="onClick('点赞', hide)">点赞</s-button>
-          <s-button color="primary" square auto-height @click="onClick('分享', hide)">
+          <s-button color="danger" square auto-height @click="onClick('确认告警', hide)">
+            确认
+          </s-button>
+          <s-button color="primary" square auto-height @click="onClick('转派维修', hide)">
             分享
           </s-button>
-          <s-button color="warning" square auto-height @click="onClick('收藏', hide)">
+          <s-button color="warning" square auto-height @click="onClick('停机', hide)">
             收藏
           </s-button>
         </template>
         <template #right="{ hide }">
-          <s-button color="danger" square auto-height @click="onClick('删除', hide)">删除</s-button>
+          <s-button color="danger" square auto-height @click="onClick('解除绑定', hide)">
+            解除
+          </s-button>
           <s-button color="primary" square auto-height @click="onClick('取消', hide)">
             取消
           </s-button>
@@ -54,7 +63,7 @@
 import { toast } from 'sard'
 
 const onClick = (content: string, hide: () => void) => {
-  toast(`点击了${content}`)
+  toast(`已执行：${content}`)
   hide()
 }
 </script>

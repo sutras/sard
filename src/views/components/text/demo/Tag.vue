@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：字段文本与单位｜Tag 用法演示 -->
   <s-flex vertical gap="medium">
     <s-text>span</s-text>
     <s-text tag="p">This is a paragraph.</s-text>

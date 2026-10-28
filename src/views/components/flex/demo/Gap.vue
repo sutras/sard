@@ -1,11 +1,12 @@
 <template>
+  <!-- 工业语境：看板栅格排布｜Gap 用法演示 -->
   <s-flex vertical gap="large">
     <s-radio-group v-model="gap" direction="horizontal" :options="flexGap" />
 
     <s-flex :gap="gap">
-      <s-button>按钮</s-button>
-      <s-button>按钮</s-button>
-      <s-button>按钮</s-button>
+      <s-button>下发工单</s-button>
+      <s-button>下发工单</s-button>
+      <s-button>下发工单</s-button>
     </s-flex>
   </s-flex>
 </template>

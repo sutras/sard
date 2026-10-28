@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：设备与报警现场图片｜Loading 用法演示 -->
   <s-segmented v-model="src" :options="options" />
 
   <div style="height: 160px; margin-top: 10px">
@@ -19,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+import { robotArmPhoto } from '@/data/industrial-images'
 import { sleep } from 'sard'
 import { ref } from 'vue'
 
@@ -28,7 +30,7 @@ const options = [
   { label: '销毁图片', value: '' },
   {
     label: '加载图片',
-    value: 'https://fastly.jsdelivr.net/npm/@sard/assets/images/tiger1.jpg',
+    value: robotArmPhoto,
   },
 ]
 

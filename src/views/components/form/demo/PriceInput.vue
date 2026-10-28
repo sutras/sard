@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：备件单价录入（金额 + 币种），供采购报价与备件申领复用 -->
   <s-flex align="center" gap="medium">
     <s-input
       variant="text"
@@ -8,10 +9,10 @@
     />
     <s-picker-input
       :model-value="modelValue.currency"
-      placeholder="currency"
+      placeholder="币种"
       :columns="[
-        { value: 'rmb', label: 'RMB' },
-        { value: 'dollar', label: 'Dollar' },
+        { value: 'rmb', label: '人民币' },
+        { value: 'dollar', label: '美元' },
       ]"
       @update:modelValue="onCurrencyChange"
       :validate-event="false"

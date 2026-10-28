@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：班组长授权码输入｜DisabledReadOnly 用法演示 -->
   <doc-title>只读</doc-title>
   <s-password-input model-value="123456" readonly />
   <s-password-input model-value="123456" plain-text readonly style="margin-top: 10px" />

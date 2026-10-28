@@ -265,7 +265,7 @@ const handleOpenNewWindow = (event: MouseEvent) => {
   display: flex;
   align-items: center;
   width: 100%;
-  height: 54px;
+  height: 48px;
   padding: 0 16px;
   border-radius: 9999px;
   background: rgb(0.139 0.139 0.139);
@@ -294,8 +294,9 @@ const handleOpenNewWindow = (event: MouseEvent) => {
 
   &:is(button) {
     width: 50px;
-    height: 30px;
+    height: 24px;
     font-size: 20px;
+    line-height: 0;
     border: 1px solid rgba(255, 255, 255, 0.3);
     &:first-child {
       border-top-left-radius: 9999px;

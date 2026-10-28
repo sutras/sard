@@ -15,6 +15,9 @@
     <doc-demo title="方形警告框">
       <Square />
     </doc-demo>
+    <doc-demo title="严重级告警">
+      <Critical />
+    </doc-demo>
   </doc-page>
 </template>
 
@@ -24,6 +27,7 @@ import Type from './demo/Type.vue'
 import ShowIcon from './demo/ShowIcon.vue'
 import Closable from './demo/Closable.vue'
 import Square from './demo/Square.vue'
+import Critical from './demo/Critical.vue'
 </script>
 
 <style lang="scss" scoped>

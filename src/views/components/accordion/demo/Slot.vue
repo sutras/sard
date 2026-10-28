@@ -1,29 +1,30 @@
 <template>
+  <!-- 工业语境：按工艺域折叠参数面板，避免大屏首屏信息过载｜Slot 用法演示 -->
   <s-accordion v-model="value">
-    <s-accordion-item name="1" extra="额外内容">
+    <s-accordion-item name="1" extra="自定义扩展">
       <template #title>
         <div class="flex items-center text-(--s-color-primary)">
           <PencilSquare />
-          <span class="ms-2">标题1</span>
+          <span class="ms-2">主轴参数</span>
         </div>
       </template>
-      内容1
+      主轴转速 1200 rpm，振动 1.2 mm/s
     </s-accordion-item>
-    <s-accordion-item title="标题2" name="2">
+    <s-accordion-item title="液压参数" name="2">
       <template #extra>
         <div class="flex items-center text-(--s-color-primary)">
-          <span class="me-2">额外内容</span>
+          <span class="me-2">自定义扩展</span>
           <QuestionCircleFill />
         </div>
       </template>
-      内容2
+      系统压力 12.5 MPa，油温 46 °C
     </s-accordion-item>
-    <s-accordion-item title="标题3" name="3">
+    <s-accordion-item title="冷却参数" name="3">
       <template #arrow="{ visible }">
         <DoubleUp v-if="visible" />
         <DoubleDown v-else />
       </template>
-      内容3
+      冷却水温 21 °C，流量 18 L/min
     </s-accordion-item>
   </s-accordion>
 </template>

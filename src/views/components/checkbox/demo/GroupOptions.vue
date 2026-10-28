@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：点检项与安全前置勾选｜GroupOptions 用法演示 -->
   <s-checkbox-group v-model="value" :options="options"></s-checkbox-group>
 </template>
 
@@ -7,12 +8,8 @@ import { ref } from 'vue'
 
 const value = ref(['option2'])
 
-const options = Array(3)
-  .fill(0)
-  .map((_, i) => {
-    return {
-      value: `option${i + 1}`,
-      label: `选项${i + 1}`,
-    }
-  })
+const options = ['导轨油位', '主轴温度', '振动值'].map((label, i) => ({
+  value: `option${i + 1}`,
+  label,
+}))
 </script>

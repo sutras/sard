@@ -1,8 +1,15 @@
 <template>
+  <!-- 工业语境：自定义内容插槽里放「产线 + OEE」两行结构，而不是只有 icon + text｜Custom 用法演示 -->
   <s-grid>
-    <s-grid-item v-for="i in 4" :key="i">
+    <s-grid-item v-for="item in lineMetrics" :key="item.line">
       <template #content>
-        <div class="grid-box">{{ i }}</div>
+        <div class="metric" :data-status="item.status">
+          <span class="metric__line">{{ item.line }}</span>
+          <span class="metric__value">
+            {{ item.oee }}
+            <span class="metric__unit">%</span>
+          </span>
+        </div>
       </template>
     </s-grid-item>
   </s-grid>
@@ -15,25 +22,48 @@
 </template>
 
 <script setup lang="ts">
-const urls = [
-  'https://fastly.jsdelivr.net/npm/@sard/assets/images/cat1.jpg',
-  'https://fastly.jsdelivr.net/npm/@sard/assets/images/cat2.jpg',
-  'https://fastly.jsdelivr.net/npm/@sard/assets/images/cat3.jpg',
-  'https://fastly.jsdelivr.net/npm/@sard/assets/images/cat4.jpg',
-  'https://fastly.jsdelivr.net/npm/@sard/assets/images/cat5.jpg',
-  'https://fastly.jsdelivr.net/npm/@sard/assets/images/cat6.jpg',
+import { galleryPhotos } from '@/data/industrial-images'
+
+const lineMetrics = [
+  { line: '机加工一线', oee: 87.3, status: 'running' },
+  { line: '注塑二线', oee: 91.4, status: 'running' },
+  { line: '压铸四线', oee: 62.8, status: 'alarm' },
+  { line: '包装五线', oee: 78.5, status: 'stopped' },
 ]
+
+const urls = galleryPhotos.slice(0, 6).map((item) => item.url)
 </script>
 
 <style lang="scss" scoped>
-.grid-box {
+.metric {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  width: 64px;
-  height: 64px;
-  font-size: 24px;
-  background-color: var(--s-fill-color-secondary);
-  border-radius: 50%;
+  gap: 2px;
+}
+
+.metric__line {
+  font-size: var(--s-font-size-sm);
+  color: var(--s-text-color-secondary);
+}
+
+.metric__value {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--s-color-success);
+}
+
+.metric__unit {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.metric[data-status='alarm'] .metric__value {
+  color: var(--s-color-danger);
+}
+
+.metric[data-status='stopped'] .metric__value {
+  color: var(--s-text-color-tertiary);
 }
 </style>

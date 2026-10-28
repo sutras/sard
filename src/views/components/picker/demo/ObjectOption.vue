@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：产线与班次选择器｜ObjectOption 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-picker
@@ -8,7 +9,7 @@
       />
     </s-list-item>
     <s-list-item title="当前值：" :value="JSON.stringify(value) ?? 'undefined'" />
-    <s-list-item title="设置为: 天津市" arrow hover @click="value = 120000" />
+    <s-list-item title="设置为: 包装五线" arrow hover @click="value = 1004" />
     <s-list-item title="清空" arrow hover @click="value = undefined" />
   </s-list>
 </template>
@@ -17,23 +18,11 @@
 import { ref } from 'vue'
 
 const columns = [
-  {
-    code: 110000,
-    name: '北京市',
-  },
-  {
-    code: 120000,
-    name: '天津市',
-  },
-  {
-    code: 130000,
-    name: '河北省',
-  },
-  {
-    code: 140000,
-    name: '山东省',
-  },
+  { code: 1001, name: '机加工一线' },
+  { code: 1002, name: '注塑二线' },
+  { code: 1003, name: '压铸四线' },
+  { code: 1004, name: '包装五线' },
 ]
 
-const value = ref<number | undefined>(130000)
+const value = ref<number | undefined>(1002)
 </script>

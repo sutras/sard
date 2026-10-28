@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：设备卡片副标题｜BaseFontSize 用法演示 -->
   <s-card>
     <div :class="bem.e('item')">
       <div :class="bem.e('head')">
@@ -7,14 +8,14 @@
       </div>
       <div :class="bem.e('member')">
         <div :class="bem.e('row')">
-          <span :class="bem.e('name')">黄金会员</span>
-          <span :class="bem.e('level')">LV.6</span>
+          <span :class="bem.e('name')">CNC-Lathe-01</span>
+          <span :class="bem.e('level')">早班</span>
         </div>
         <div :class="bem.e('subtitle')">
           <s-text-shrink ref="inherit" :text="memberSubtitle" />
         </div>
       </div>
-      <div :class="bem.e('desc')">副标题跟随容器的 26px 起算，和称号一样大，层级被抹平。</div>
+      <div :class="bem.e('desc')">未指定：跟随容器 26px</div>
     </div>
 
     <div :class="[bem.e('item'), bem.e('item', 'last')]">
@@ -24,14 +25,14 @@
       </div>
       <div :class="bem.e('member')">
         <div :class="bem.e('row')">
-          <span :class="bem.e('name')">黄金会员</span>
-          <span :class="bem.e('level')">LV.6</span>
+          <span :class="bem.e('name')">CNC-Lathe-01</span>
+          <span :class="bem.e('level')">早班</span>
         </div>
         <div :class="bem.e('subtitle')">
           <s-text-shrink ref="fixed" :text="memberSubtitle" :base-font-size="12" />
         </div>
       </div>
-      <div :class="bem.e('desc')">显式给副标题一个 12px 上界，称号和副标题各归各位。</div>
+      <div :class="bem.e('desc')">指定 12px：副标题独立</div>
     </div>
   </s-card>
 </template>
@@ -58,7 +59,7 @@ const sizeFixed = computed(() => toText(fixed.value?.fontSize))
 @include b(text-shrink-demo-base) {
   @include e(item) {
     @include m(last) {
-      margin-top: 20px;
+      margin-top: 28px;
     }
   }
 
@@ -79,7 +80,7 @@ const sizeFixed = computed(() => toText(fixed.value?.fontSize))
     font-variant-numeric: tabular-nums;
   }
 
-  // 会员卡：容器字号 26px 是给称号用的，副标题只是同一个容器里的另一段文字
+  // 操作员卡：容器字号 26px 是给称号用的，副设备参数只是同一个容器里的另一段文字
   @include e(member) {
     padding: 16px;
     border-radius: var(--s-border-radius-xl);

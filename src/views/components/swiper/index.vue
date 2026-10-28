@@ -8,6 +8,10 @@
       <Vertical />
     </doc-demo>
 
+    <doc-demo title="动态方向">
+      <DynamicDir />
+    </doc-demo>
+
     <doc-demo title="循环滑动">
       <Loop />
     </doc-demo>
@@ -59,6 +63,7 @@ import Basic from './demo/Basic.vue'
 import AutoPlay from './demo/AutoPlay.vue'
 import Loop from './demo/Loop.vue'
 import Vertical from './demo/Vertical.vue'
+import DynamicDir from './demo/DynamicDir.vue'
 import DotType from './demo/DotType.vue'
 import Title from './demo/Title.vue'
 import Video from './demo/Video.vue'

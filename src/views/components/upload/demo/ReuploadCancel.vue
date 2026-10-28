@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：点检照片与报告上传｜ReuploadCancel 用法演示 -->
   <s-upload
     v-model="fileList"
     :after-read="afterRead"
@@ -8,12 +9,13 @@
 </template>
 
 <script setup lang="ts">
+import { inspectionPhoto } from '@/data/industrial-images'
 import { type UploadFileItem } from 'sard'
 import { ref } from 'vue'
 
 const fileList = ref<UploadFileItem[]>([
   {
-    url: 'https://fastly.jsdelivr.net/npm/@sard/assets/pic1.jpg',
+    url: inspectionPhoto,
   },
 ])
 
@@ -44,11 +46,11 @@ const uploadFile = async (fileItem: UploadFileItem) => {
   })
     .then(() => {
       fileItem.status = 'done'
-      fileItem.message = '上传成功'
+      fileItem.message = '上传已完成'
     })
     .catch(() => {
       fileItem.status = 'failed'
-      fileItem.message = '上传失败，点击重新上传'
+      fileItem.message = '上传未完成，点击重新上传'
     })
 }
 

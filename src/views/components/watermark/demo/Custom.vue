@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：工艺文件水印（受控）｜Custom 用法演示 -->
   <doc-page gray title="自定义绘制">
     <s-watermark
       class="fixed"

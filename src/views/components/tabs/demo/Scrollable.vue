@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：设备详情分区（参数 / 报警 / 点检）｜Scrollable 用法演示 -->
   <s-tabs v-model="value" :options="options" scrollable></s-tabs>
 </template>
 

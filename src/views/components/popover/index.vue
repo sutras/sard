@@ -20,7 +20,7 @@
       <Position />
     </doc-demo>
 
-    <doc-demo title="自定义reference">
+    <doc-demo title="自定义 reference">
       <CustomReference />
     </doc-demo>
 

@@ -1,8 +1,9 @@
 <template>
+  <!-- 工业语境：保养计划日期弹层选择｜MinMax 用法演示 -->
   <s-calendar-popout
     v-model="value"
     v-model:visible="visible"
-    title="请选择日期"
+    title="选择产线日期"
     :min="new Date(2000, 0, 7)"
     :max="new Date(2000, 0, 21)"
     value-format="YYYY-MM-DD"
@@ -10,7 +11,7 @@
 
   <s-list card>
     <s-list-item
-      title="请选择日期"
+      title="选择产线日期"
       arrow
       hover
       :value="JSON.stringify(value)"

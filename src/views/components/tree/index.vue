@@ -2,7 +2,7 @@
   <doc-page gray title="Tree 树形">
     <doc-demo>
       <s-list card>
-        <s-list-item title="基础用法" arrow hover @click="navigateTo('Basic')" />
+        <s-list-item title="基础使用" arrow hover @click="navigateTo('Basic')" />
         <s-list-item title="手风琴" arrow hover @click="navigateTo('Accordion')" />
         <s-list-item title="可选择的" arrow hover @click="navigateTo('Selectable')" />
         <s-list-item title="严格选择" arrow hover @click="navigateTo('CheckStrictly')" />

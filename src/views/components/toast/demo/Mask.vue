@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：回读 MES 参数期间屏蔽操作区，防止二次下发｜Mask 用法演示 -->
   <s-list card>
     <s-list-item hover arrow title="显示背景" @click="showOverlayToast" />
     <s-list-item hover arrow title="透明背景" @click="showTransparentOverlayToast" />
@@ -9,7 +10,7 @@
 import { toast } from 'sard'
 
 const showOverlayToast = () => {
-  toast.loading('加载中', {
+  toast.loading('正在回读 MES 工艺参数…', {
     overlay: true,
   })
 
@@ -19,7 +20,7 @@ const showOverlayToast = () => {
 }
 
 const showTransparentOverlayToast = () => {
-  toast.loading('加载中', {
+  toast.loading('正在同步点检记录…', {
     overlay: true,
     transparent: true,
   })

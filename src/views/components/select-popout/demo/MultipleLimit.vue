@@ -1,8 +1,9 @@
 <template>
+  <!-- 工业语境：设备多选弹层｜MultipleLimit 用法演示 -->
   <s-select-popout
     v-model="value"
     v-model:visible="visible"
-    title="请选择"
+    title="选择产线"
     multiple
     show-toolbar
     :multiple-limit="3"
@@ -19,14 +20,14 @@
   <s-list card>
     <s-list-item arrow hover @click="visible = true">
       <template #title>
-        {{ value ? JSON.stringify(value) : '请选择' }}
+        {{ value ? JSON.stringify(value) : '选择厂区 / 车间 / 产线 / 工位' }}
       </template>
     </s-list-item>
     <s-list-item
-      title="设置为：[440000, 450000] (广东省，广西)"
+      title="设置为：[1000, 2000]（华东厂区、华南厂区）"
       arrow
       hover
-      @click="value = [440000, 450000]"
+      @click="value = [1000, 2000]"
     />
     <s-list-item title="清空" arrow hover @click="value = undefined" />
   </s-list>
@@ -34,9 +35,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getRegionData } from 'region-data'
+import { plantTree } from '@/data/plant-tree'
 
-const regionData = getRegionData()
+const regionData = plantTree
 
 const visible = ref(false)
 const value = ref<number[]>()

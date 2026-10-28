@@ -1,5 +1,6 @@
 <template>
-  <s-popout v-model:visible="innerVisible" title="请选择区号" :show-footer="false">
+  <!-- 工业语境：设备编号索引（EQ-2024-xxx）｜AreaCode 用法演示 -->
+  <s-popout v-model:visible="innerVisible" title="选择产线区号" :show-footer="false">
     <s-search
       style="cursor: pointer"
       placeholder="搜索"

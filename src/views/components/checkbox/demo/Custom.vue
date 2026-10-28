@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：点检项与安全前置勾选｜Custom 用法演示 -->
   <s-flex vertical gap="large">
     <Custom1 />
     <Custom2 />

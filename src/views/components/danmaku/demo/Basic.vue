@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：车间广播与安灯消息滚动｜Basic 用法演示 -->
   <div class="danmaku-box">
     <s-danmaku :list="list" loop />
   </div>
@@ -7,7 +8,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const list = ref(Array.from({ length: 20 }, (_, i) => `用户${i + 1} 进入直播间`))
+const list = ref(Array.from({ length: 20 }, (_, i) => `AGV-0${(i % 9) + 1} 已完成上料交接`))
 </script>
 
 <style lang="scss" scoped>

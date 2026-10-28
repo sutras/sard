@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：班前安全问答抽题｜GridSize 用法演示 -->
   <div class="grid-box">
     <div v-for="item in grids" :key="item" class="grid-item" :style="{ width: 100 / column + '%' }">
       <div
@@ -14,18 +15,18 @@
           </div>
           <div class="prize-name">{{ prizes[item]?.name }}</div>
         </div>
-        <div v-else-if="item === -1" class="play-btn" @click="onPlay()">点我抽奖</div>
+        <div v-else-if="item === -1" class="play-btn" @click="onPlay()">答题抽奖</div>
       </div>
     </div>
   </div>
 
-  <s-dialog v-model:visible="dialogVisible" :show-cancel="false" confirm-text="收下">
+  <s-dialog v-model:visible="dialogVisible" :show-cancel="false" confirm-text="领取奖励">
     <div v-if="winningPrize" class="dialog-prize">
       <div class="dialog-prize-icon">
         <span :class="['cake', `cake-${winningPrize.icon}`]"></span>
       </div>
       <div class="dialog-prize-title">
-        <span>恭喜你抽中</span>
+        <span>答对了，本次抽中</span>
         <span class="dialog-prize-name">“{{ winningPrize.name }}”</span>
       </div>
     </div>

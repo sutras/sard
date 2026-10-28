@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：万级报警记录滚动加载｜Manual 用法演示 -->
   <s-infinite-list
     v-model:status="status"
     style="height: 240px; overflow-y: auto; border: 1px var(--s-border-color) solid"
@@ -11,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { getProvinces } from '@/api'
+import { getPlants } from '@/api'
 import { LoadMoreStatus } from 'sard'
 import { ref } from 'vue'
 
@@ -22,7 +23,7 @@ const status = ref(LoadMoreStatus.INCOMPLETE)
 let page = 1
 
 const onLoad = () => {
-  return getProvinces({ page }).then(({ list, total }) => {
+  return getPlants({ page }).then(({ list, total }) => {
     if (page === 1) {
       listData.value = [...list]
     } else {

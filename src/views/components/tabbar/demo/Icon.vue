@@ -1,20 +1,25 @@
 <template>
-  <s-tabbar v-model="value">
-    <s-tabbar-item :value="0" label="首页" #icon>
-      <demo-icon v-if="value === 0" name="house-door-fill" />
-      <demo-icon v-else name="house-door" />
+  <!-- 工业语境：巡检端底部导航的「选中态包底」写法，用 active 给图标套一层主色圆底 -->
+  <s-tabbar v-model="value" aria-label="移动巡检端主导航">
+    <s-tabbar-item :value="0" label="设备" #icon="{ active }">
+      <span class="nav-icon" :class="{ 'nav-icon--active': active }">
+        <demo-icon name="cnc" />
+      </span>
     </s-tabbar-item>
-    <s-tabbar-item :value="1" label="购物车" #icon>
-      <demo-icon v-if="value === 1" name="cart-fill" />
-      <demo-icon v-else name="cart" />
+    <s-tabbar-item :value="1" label="工单" #icon="{ active }">
+      <span class="nav-icon" :class="{ 'nav-icon--active': active }">
+        <demo-icon name="work-order" />
+      </span>
     </s-tabbar-item>
-    <s-tabbar-item :value="2" label="消息" #icon>
-      <demo-icon v-if="value === 2" name="chat-dots-fill" />
-      <demo-icon v-else name="chat-dots" />
+    <s-tabbar-item :value="2" label="报警" #icon="{ active }">
+      <span class="nav-icon" :class="{ 'nav-icon--active': active }">
+        <demo-icon name="alarm" />
+      </span>
     </s-tabbar-item>
-    <s-tabbar-item :value="3" label="我的" #icon>
-      <demo-icon v-if="value === 3" name="person-fill" />
-      <demo-icon v-else name="person" />
+    <s-tabbar-item :value="3" label="我的" #icon="{ active }">
+      <span class="nav-icon" :class="{ 'nav-icon--active': active }">
+        <demo-icon name="user" />
+      </span>
     </s-tabbar-item>
   </s-tabbar>
 </template>
@@ -24,3 +29,21 @@ import { ref } from 'vue'
 
 const value = ref(0)
 </script>
+
+<style lang="scss" scoped>
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 18px;
+  transition: background-color 0.2s;
+}
+
+.nav-icon--active {
+  background-color: var(--s-color-primary);
+  color: var(--s-white);
+}
+</style>

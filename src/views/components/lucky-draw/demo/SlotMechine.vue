@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：班前安全问答抽题｜SlotMechine 用法演示 -->
   <div class="reels">
     <div v-for="(translateY, index) in offset" :key="index" class="reel-box">
       <div class="reel" :style="{ transform: `translateY(${translateY}%)` }">
@@ -11,9 +12,9 @@
       </div>
     </div>
   </div>
-  <div class="play-btn" @click="onPlay()">点我抽奖</div>
+  <div class="play-btn" @click="onPlay()">答题抽奖</div>
 
-  <s-dialog v-model:visible="dialogVisible" :show-cancel="false" confirm-text="收下">
+  <s-dialog v-model:visible="dialogVisible" :show-cancel="false" confirm-text="领取奖励">
     <div v-if="winningPrize.length > 0" class="dialog-prize">
       <div class="dialog-prize-icon">
         <span
@@ -23,7 +24,7 @@
         ></span>
       </div>
       <div class="dialog-prize-title">
-        <span>恭喜你抽中</span>
+        <span>答对了，本次抽中</span>
         <span class="dialog-prize-name">
           “{{ winningPrize.map((prize) => prize.name).join('、') }}”
         </span>

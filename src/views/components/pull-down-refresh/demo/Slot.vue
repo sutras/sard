@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：实时数据下拉刷新｜Slot 用法演示 -->
   <doc-page title="自定义插槽" padding="10px">
     <div
       class="overflow-y-auto"
@@ -69,10 +70,10 @@ const onRefresh = () => {
   loading.value = true
   fetchApi()
     .then(() => {
-      doneText.value = '刷新成功'
+      doneText.value = '刷新已完成'
     })
     .catch(() => {
-      doneText.value = '刷新失败'
+      doneText.value = '刷新未完成'
     })
     .finally(() => {
       loading.value = false

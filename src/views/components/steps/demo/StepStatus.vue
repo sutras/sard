@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：工单下发与报警处置流程｜StepStatus 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-steps :item-list="itemList" direction="vertical" />
@@ -10,10 +11,10 @@
 import { type StepsItem } from 'sard'
 
 const itemList: StepsItem[] = [
-  { name: '第1节', description: '已学习', status: 'finish' },
-  { name: '第2节', description: '学习中', status: 'process' },
-  { name: '第3节', description: '未学习', status: 'wait' },
-  { name: '第4节', description: '已学习', status: 'finish' },
-  { name: '第5节', description: '出错了', status: 'error' },
+  { name: '参数设定', description: '已完成', status: 'finish' },
+  { name: '空运行', description: '调试中', status: 'process' },
+  { name: '首件检验', description: '未开始', status: 'wait' },
+  { name: '批量生产', description: '已完成', status: 'finish' },
+  { name: '报工入库', description: '联锁未验证', status: 'error' },
 ]
 </script>

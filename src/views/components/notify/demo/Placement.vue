@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：报警与下发结果通知｜Placement 用法演示 -->
   <s-list card>
     <s-list-item arrow hover title="在底部显示通知" @click="showNotice" />
     <s-list-item arrow hover title="隐藏通知" @click="hideNotice" />

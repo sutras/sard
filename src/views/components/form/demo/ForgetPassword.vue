@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：找回授权码（工号 + 短信验证） -->
   <doc-page gray title="忘记密码">
     <s-form ref="formRef" :model="formState" :show-error="false" class="auth-form">
       <s-form-item
@@ -52,14 +53,14 @@
 
       <s-form-item
         name="password"
-        :rules="[{ required: true, message: '请输入新密码' }]"
+        :rules="[{ required: true, message: '请输入新授权码' }]"
         inlaid
         class="auth-form-item"
       >
         <s-input
           v-model="formState.password"
           type="password"
-          placeholder="新密码"
+          placeholder="新授权码"
           inlaid
           class="auth-form-input"
         >

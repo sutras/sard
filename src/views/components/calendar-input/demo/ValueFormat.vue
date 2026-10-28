@@ -1,10 +1,11 @@
 <template>
+  <!-- 工业语境：保养计划日期选择，含停机窗口校验｜ValueFormat 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-calendar-input
         v-model="value"
-        title="请选择日期"
-        placeholder="请选择日期"
+        title="选择产线日期"
+        placeholder="选择产线日期"
         clearable
         value-format="YYYY/MM/DD"
         @change="onChange"

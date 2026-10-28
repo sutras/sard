@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：时间选择器｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-datetime-picker v-model="date" type="yMd" @change="onChange" />

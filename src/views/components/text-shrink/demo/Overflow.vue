@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：定宽单元格的缩放下限｜Overflow 用法演示 -->
   <s-card>
     <div
       v-for="(row, index) in rows"
@@ -9,15 +10,12 @@
         <s-text-shrink :text="row.text" :max-lines="row.lines" />
       </div>
       <div :class="bem.e('info')">
-        <div :class="bem.e('spec')">{{ row.spec }}</div>
+        <div :class="bem.e('spec')">
+          {{ row.width }}px · {{ row.lines }} 行 · {{ row.text.length }} 字
+        </div>
         <div :class="bem.e('result')">{{ row.result }}</div>
       </div>
     </div>
-
-    <p :class="bem.e('tip')">
-      中文在 1px 时每个字只占 1px，只有当字数超过容器像素宽度才会真正截断。缩到这个程度已经
-      失去可读性，它的作用是「不撑破布局」，而不是「让文字还能看」。
-    </p>
   </s-card>
 </template>
 
@@ -28,34 +26,10 @@ import { noticeText } from './shared'
 const bem = createBem('text-shrink-demo-overflow')
 
 const rows = [
-  {
-    spec: '96px · 1 行 · 2 字',
-    result: '保持基准字号 12px',
-    text: '满减',
-    lines: 1,
-    width: 96,
-  },
-  {
-    spec: '96px · 1 行 · 12 字',
-    result: '缩小字号，完整显示',
-    text: '限时特惠全场包邮再送小样',
-    lines: 1,
-    width: 96,
-  },
-  {
-    spec: '96px · 1 行 · 133 字',
-    result: '缩到 1px 仍溢出 → 省略号',
-    text: noticeText,
-    lines: 1,
-    width: 96,
-  },
-  {
-    spec: '96px · 2 行 · 133 字',
-    result: '多一行就放得下（约 1.4px）',
-    text: noticeText,
-    lines: 2,
-    width: 96,
-  },
+  { result: '12px', text: '报警', lines: 1, width: 96 },
+  { result: '缩小后完整', text: '安全门联锁断开待复位', lines: 1, width: 96 },
+  { result: '1px 仍溢出 → 省略', text: noticeText, lines: 1, width: 96 },
+  { result: '2 行可容纳（约 1.4px）', text: noticeText, lines: 2, width: 96 },
 ]
 </script>
 
@@ -73,7 +47,7 @@ const rows = [
     }
   }
 
-  // 容器高度交给内容决定，这里只做最低限度的视觉边界
+  // 容器高度交给参数明细决定，这里只做最低限度的视觉边界
   @include e(box) {
     flex: none;
     min-height: 22px;
@@ -98,13 +72,6 @@ const rows = [
     margin-top: 2px;
     font-size: var(--s-font-size-sm);
     color: var(--s-text-color-secondary);
-  }
-
-  @include e(tip) {
-    margin: 16px 0 0;
-    font-size: var(--s-font-size-sm);
-    line-height: var(--s-line-height-normal);
-    color: var(--s-text-color-tertiary);
   }
 }
 </style>

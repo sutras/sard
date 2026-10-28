@@ -1,26 +1,27 @@
 <template>
-  <s-button @click="visible = true">显示分享面板</s-button>
+  <!-- 工业语境：报警处置单分享给维修班｜Cancel 用法演示 -->
+  <s-button @click="visible = true">转派处置单</s-button>
 
   <s-share-sheet v-model:visible="visible" show-cancel @select="onSelect">
     <s-share-sheet-row>
-      <s-share-sheet-item value="Wechat" label="Wechat" #icon>
+      <s-share-sheet-item value="wecom" label="企业微信" #icon>
         <s-share-sheet-icon background="#0bc15f" color="#fff">
           <demo-icon name="wechat-fill" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
-      <s-share-sheet-item value="Alipay" label="Alipay" #icon>
-        <s-share-sheet-icon background="#1677ff" color="#fff">
-          <demo-icon name="alipay-fill" />
+      <s-share-sheet-item value="sms" label="短信通知" #icon>
+        <s-share-sheet-icon background="#2b6cb0" color="#fff">
+          <demo-icon name="phone" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
-      <s-share-sheet-item value="Wechat" label="Twitter" #icon>
-        <s-share-sheet-icon background="#1d9bf0" color="#fff">
-          <demo-icon name="twitter-fill" />
+      <s-share-sheet-item value="workorder" label="维修工单" #icon>
+        <s-share-sheet-icon background="#4a5568" color="#fff">
+          <demo-icon name="work-order" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
-      <s-share-sheet-item value="Wechat" label="Facebook" #icon>
-        <s-share-sheet-icon background="#1877f2" color="#fff">
-          <demo-icon name="facebook-circle-fill" />
+      <s-share-sheet-item value="alarmgroup" label="报警群" #icon>
+        <s-share-sheet-icon background="#d92b2b" color="#fff">
+          <demo-icon name="bell" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
     </s-share-sheet-row>

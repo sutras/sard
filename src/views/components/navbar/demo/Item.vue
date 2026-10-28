@@ -1,5 +1,6 @@
 <template>
-  <s-navbar title="标题">
+  <!-- 工业语境：车间看板顶部导航与权限入口｜Item 用法演示 -->
+  <s-navbar title="设备参数">
     <template #start>
       <s-navbar-item>返回上一页</s-navbar-item>
     </template>

@@ -8,7 +8,7 @@
       <Type />
     </doc-demo>
 
-    <doc-demo title="自定义日期范围">
+    <doc-demo title="自定义日期时间范围">
       <MinMax />
     </doc-demo>
 

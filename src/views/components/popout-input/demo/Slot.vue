@@ -1,19 +1,20 @@
 <template>
+  <!-- 工业语境：工位选择输入，前缀标注字段、后缀标注数据来源（MES）｜Slot 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-popout-input
         v-model="value"
-        placeholder="请选择"
+        placeholder="选择工位"
         clearable
-        @clear="toast('清除')"
-        @click="toast('点击了')"
+        @clear="toast('已清除工位')"
+        @click="toast('展开工位选择')"
         @change="onChange"
       >
-        <template #prepend>邮箱:</template>
-        <template #append>@outlook.com</template>
+        <template #prepend>工位:</template>
+        <template #append>(MES)</template>
       </s-popout-input>
     </s-list-item>
-    <s-list-item title="设置值" hover arrow @click="value = 'abc'" />
+    <s-list-item title="填入 ST-11" hover arrow @click="value = 'ST-11'" />
   </s-list>
 </template>
 

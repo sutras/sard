@@ -1,14 +1,25 @@
 <template>
-  <div>当前 anchor: {{ value }}</div>
+  <!-- 工业语境：车间清单边加载边追加锚点，新增内容同样可被追踪｜Update 用法演示 -->
+  <div class="mb-1 text-sm">
+    当前锚点：{{ currentName }}
+    <span v-if="value">（{{ value }}）</span>
+  </div>
 
-  <s-button style="margin: 5px 0" @click="value = '120100'">设置当前 anchor 为: 120100</s-button>
+  <s-button v-if="target" style="margin: 5px 0" @click="value = target.code">
+    跳到：{{ labelOf(target.code) }}
+  </s-button>
 
   <s-scroll-spy v-model="value" style="height: 200px; border: 1px solid var(--s-border-color)">
     <template v-for="item in listData" :key="item.code">
       <s-scroll-spy-anchor :name="item.code" />
-      <div class="sticky top-0 p-1 bg-(--s-bg-color-container)">{{ item.code }}</div>
-      <div class="flex justify-center items-center h-20 m-2 bg-(--s-fill-color-secondary)">
-        {{ item.name }}
+      <div class="sticky top-0 flex items-baseline gap-2 p-1 bg-(--s-bg-color-container)">
+        <span>{{ labelOf(item.code) }}</span>
+        <span class="text-xs text-(--s-text-color-tertiary)">{{ item.code }}</span>
+      </div>
+      <div
+        class="flex justify-center items-center h-20 m-2 text-sm text-(--s-text-color-tertiary) bg-(--s-fill-color-secondary)"
+      >
+        {{ item.name }} · 看板
       </div>
     </template>
 
@@ -18,22 +29,33 @@
 
 <script setup lang="ts">
 import { LoadMoreStatus } from 'sard'
-import { ref } from 'vue'
-import { getCities } from '@/api'
+import { computed, ref } from 'vue'
+import { getWorkshops } from '@/api'
+import { plantNamePath } from '@/data/plant-tree'
 
-const value = ref('110000')
+const labelOf = (code: string) => plantNamePath(Number(code))
+
+const value = ref('')
 
 const listData = ref<{ code: string; name: string }[]>([])
 
 const status = ref<LoadMoreStatus>(LoadMoreStatus.INCOMPLETE)
 
+const currentName = computed(() => (value.value ? labelOf(value.value) : '—'))
+
+const target = computed(() => listData.value[4])
+
 let page = 1
 
 const getData = async () => {
   status.value = LoadMoreStatus.LOADING
-  return getCities({ page })
+  return getWorkshops({ page })
     .then(({ list, total }) => {
       listData.value = page === 1 ? list : [...listData.value, ...list]
+
+      if (!value.value) {
+        value.value = listData.value[0]?.code ?? ''
+      }
 
       if (listData.value.length >= total || list.length === 0) {
         status.value = LoadMoreStatus.COMPLETE

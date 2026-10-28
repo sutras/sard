@@ -1,24 +1,29 @@
 <template>
+  <!-- 工业语境：按车间选产线、逐条维护节拍，车间切换后已选产线自动清空 -->
   <doc-page gray title="复杂的动态增减表单项">
     <s-form ref="formRef" :model="dynamicValidateForm">
-      <s-form-item name="area" label="Area" :rules="[{ required: true, message: 'Missing area' }]">
-        <s-picker-input v-model="dynamicValidateForm.area" placeholder="Area" :columns="areas" />
+      <s-form-item name="area" label="车间" :rules="[{ required: true, message: '请选择车间' }]">
+        <s-picker-input
+          v-model="dynamicValidateForm.area"
+          placeholder="选择车间"
+          :columns="areas"
+        />
       </s-form-item>
       <s-form-item v-for="(sight, index) in dynamicValidateForm.sights" :key="sight.id">
         <s-flex align="center" gap="medium">
           <s-form-item
             :name="['sights', index, 'value']"
-            label="Sight"
+            label="产线"
             label-width="50px"
             :rules="{
               required: true,
-              message: 'Missing sight',
+              message: '请选择产线',
             }"
             inlaid
           >
             <s-picker-input
               v-model="sight.value"
-              placeholder="Sight"
+              placeholder="选择产线"
               :disabled="!dynamicValidateForm.area"
               :columns="
                 (sights[dynamicValidateForm.area] || []).map((a) => ({
@@ -30,15 +35,15 @@
           </s-form-item>
           <s-form-item
             :name="['sights', index, 'price']"
-            label="Price"
+            label="节拍"
             label-width="50px"
             :rules="{
               required: true,
-              message: 'Missing price',
+              message: '请填写单件节拍',
             }"
             inlaid
           >
-            <s-input inlaid placeholder="Price" v-model="sight.price" />
+            <s-input inlaid placeholder="例 72（s）" v-model="sight.price" />
           </s-form-item>
           <s-button variant="text" size="small" color="danger" @click="removeSight(sight)" #icon>
             <Trash />
@@ -50,11 +55,11 @@
           <template #icon>
             <Plus />
           </template>
-          Add sights
+          新增产线
         </s-button>
       </s-form-item>
       <s-form-item>
-        <s-button @click="onSubmit">Submit</s-button>
+        <s-button @click="onSubmit">提交工艺路线</s-button>
       </s-form-item>
     </s-form>
   </doc-page>
@@ -71,13 +76,13 @@ interface Sights {
   id: number
 }
 const areas = [
-  { label: 'Beijing', value: 'Beijing' },
-  { label: 'Shanghai', value: 'Shanghai' },
+  { label: '机加车间', value: '机加车间' },
+  { label: '注塑车间', value: '注塑车间' },
 ]
 
 const sights: { [key: string]: string[] } = {
-  Beijing: ['Tiananmen', 'Great Wall'],
-  Shanghai: ['Oriental Pearl', 'The Bund'],
+  机加车间: ['机加工一线', '机加工二线'],
+  注塑车间: ['注塑一线', '注塑二线'],
 }
 
 const formRef = ref<FormExpose>()
@@ -112,7 +117,7 @@ const onSubmit = () => {
     ?.validate()
     .then(() => {
       console.log('Received values of form:', toRaw(dynamicValidateForm))
-      toast('success')
+      toast('工艺路线已保存，等待班组长确认')
     })
     .catch(() => {
       console.log('fail')

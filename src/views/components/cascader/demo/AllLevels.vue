@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：组织与设备层级级联｜AllLevels 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-cascader
@@ -11,10 +12,10 @@
     </s-list-item>
     <s-list-item title="当前值：" :value="JSON.stringify(value) ?? 'undefined'" />
     <s-list-item
-      title="设置为：440111 (广东省/广州市/白云区)"
+      title="设置为：1112（华东厂区 / 机加车间 / 机加工一线 / ST-04）"
       arrow
       hover
-      @click="value = [440000, 440100, 440111]"
+      @click="value = [1000, 1100, 1110, 1112]"
     />
     <s-list-item title="清空" arrow hover @click="value = undefined" />
   </s-list>
@@ -22,11 +23,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getRegionData } from 'region-data'
+import { plantTree } from '@/data/plant-tree'
 import { type CascaderOption } from 'sard'
 
-const regionData = getRegionData()
-const value = ref<number[] | undefined>([440000, 440100, 440111])
+const regionData = plantTree
+const value = ref<number[] | undefined>([3000, 3100, 3110, 3112])
 
 const onChange = (value: any, selectedOptions: CascaderOption[]) => {
   console.log('change', value, selectedOptions)

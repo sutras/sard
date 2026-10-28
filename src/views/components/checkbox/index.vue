@@ -36,7 +36,7 @@
       <GroupOptions />
     </doc-demo>
 
-    <doc-demo title="自定义">
+    <doc-demo title="自定义 UI">
       <Custom />
     </doc-demo>
 

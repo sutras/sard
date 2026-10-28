@@ -1,5 +1,6 @@
 <template>
-  <doc-page title="Indexes 索引">
+  <!-- 工业语境：设备编号索引（EQ-2024-xxx）｜FullPage 用法演示 -->
+  <doc-page title="全屏">
     <s-indexes
       :style="{
         height: indexesHeight,

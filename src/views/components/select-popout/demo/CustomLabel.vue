@@ -1,9 +1,10 @@
 <template>
+  <!-- 工业语境：设备多选弹层｜CustomLabel 用法演示 -->
   <s-select-popout
     v-model="value"
     v-model:visible="visible"
     :options="colors"
-    title="请选择"
+    title="选择产线"
     @change="onChange"
   >
     <template #option-label="{ label, value }">
@@ -17,7 +18,7 @@
   <s-list card>
     <s-list-item arrow hover @click="visible = true">
       <template #title>
-        {{ value ? JSON.stringify(value) : '请选择' }}
+        {{ value ? JSON.stringify(value) : '选择产线' }}
       </template>
     </s-list-item>
     <s-list-item title="设置为：#FFDE0A (yellow)" arrow hover @click="value = '#FFDE0A'" />

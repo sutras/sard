@@ -1,8 +1,9 @@
 <template>
+  <!-- 工业语境：保养计划日期弹层选择｜Formatter 用法演示 -->
   <s-calendar-popout
     v-model="value"
     v-model:visible="visible"
-    title="请选择日期"
+    title="选择产线日期"
     type="range"
     :formatter="formatter"
     :current-date="new Date(new Date().getFullYear(), 4, 1)"
@@ -11,7 +12,7 @@
 
   <s-list card>
     <s-list-item
-      title="请选择日期"
+      title="选择产线日期"
       arrow
       hover
       :value="JSON.stringify(value)"

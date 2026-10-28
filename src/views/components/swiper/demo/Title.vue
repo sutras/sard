@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：车间看板轮播｜Title 用法演示 -->
   <div class="relative">
     <s-swiper v-model="current">
       <s-swiper-item v-for="(item, index) in list" :key="index">
@@ -28,7 +29,7 @@ const list = ref([
   {
     color: 'var(--s-color-danger)',
     text: '1',
-    title: '老夫聊发少年狂，左牵黄，右擎苍，锦帽貂裘，千骑卷平冈。',
+    title: '注塑二线 09:41 安全门联锁断开，液压单元已泄压，等待设备主管复位',
   },
   {
     color: 'var(--s-color-success)',

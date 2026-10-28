@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：看板布局｜Offset 用法演示 -->
   <s-row>
     <s-col>
       <div class="layout-box">span</div>

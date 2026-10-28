@@ -1,5 +1,6 @@
 <template>
-  <doc-page gray title="toast显示验证错误信息">
+  <!-- 工业语境：用 toast 提示校验错误（大屏无内联空间） -->
+  <doc-page gray title="toast 显示验证错误信息">
     <s-form ref="formRef" :model="formState" class="form" :show-error="false">
       <s-form-item
         name="username"
@@ -27,7 +28,7 @@
       </s-form-item>
 
       <s-form-item class="form-item">
-        <s-button @click="submitForm" round>登录</s-button>
+        <s-button @click="submitForm" round>受控登录</s-button>
       </s-form-item>
     </s-form>
   </doc-page>

@@ -1,8 +1,11 @@
 <template>
+  <!-- 工业语境：按工艺域折叠参数面板，避免大屏首屏信息过载｜Disabled 用法演示 -->
   <s-accordion v-model="value">
-    <s-accordion-item title="标题1" name="1">内容1</s-accordion-item>
-    <s-accordion-item title="标题2" name="2" disabled>内容2</s-accordion-item>
-    <s-accordion-item title="标题3" name="3">内容3</s-accordion-item>
+    <s-accordion-item title="主轴参数" name="1">主轴转速 1200 rpm，振动 1.2 mm/s</s-accordion-item>
+    <s-accordion-item title="液压参数" name="2" disabled>
+      系统压力 12.5 MPa，油温 46 °C
+    </s-accordion-item>
+    <s-accordion-item title="冷却参数" name="3">冷却水温 21 °C，流量 18 L/min</s-accordion-item>
   </s-accordion>
 </template>
 

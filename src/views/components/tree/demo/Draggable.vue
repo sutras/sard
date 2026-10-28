@@ -1,13 +1,14 @@
 <template>
+  <!-- 工业语境：厂区 / 产线 / 设备树｜Draggable 用法演示 -->
   <doc-page gray title="可拖拽的">
     <s-tree :data="treeData" :node-keys="{ title: 'name', key: 'code' }" draggable />
   </doc-page>
 </template>
 
 <script setup lang="ts">
-import { getRegionData } from 'region-data'
+import { plantTree } from '@/data/plant-tree'
 
-const regionData = getRegionData()
+const regionData = plantTree
 
 const treeData = regionData.slice(0, 5).map((item) => ({
   ...item,

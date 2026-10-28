@@ -1,64 +1,65 @@
 <template>
-  <s-button @click="visible = true">显示分享面板</s-button>
+  <!-- 工业语境：报警处置单分享给维修班｜MultipleRow 用法演示 -->
+  <s-button @click="visible = true">转派处置单</s-button>
 
   <s-share-sheet v-model:visible="visible" @select="onSelect">
     <s-share-sheet-row>
-      <s-share-sheet-item value="Wechat" label="Wechat" #icon>
+      <s-share-sheet-item value="wecom" label="企业微信" #icon>
         <s-share-sheet-icon background="#0bc15f" color="#fff">
           <demo-icon name="wechat-fill" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
-      <s-share-sheet-item value="Alipay" label="Alipay" #icon>
-        <s-share-sheet-icon background="#1677ff" color="#fff">
-          <demo-icon name="alipay-fill" />
+      <s-share-sheet-item value="sms" label="短信通知" #icon>
+        <s-share-sheet-icon background="#2b6cb0" color="#fff">
+          <demo-icon name="phone" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
-      <s-share-sheet-item value="Wechat" label="Twitter" #icon>
-        <s-share-sheet-icon background="#1d9bf0" color="#fff">
-          <demo-icon name="twitter-fill" />
+      <s-share-sheet-item value="workorder" label="维修工单" #icon>
+        <s-share-sheet-icon background="#4a5568" color="#fff">
+          <demo-icon name="work-order" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
-      <s-share-sheet-item value="Wechat" label="Facebook" #icon>
-        <s-share-sheet-icon background="#1877f2" color="#fff">
-          <demo-icon name="facebook-circle-fill" />
+      <s-share-sheet-item value="alarmgroup" label="报警群" #icon>
+        <s-share-sheet-icon background="#d92b2b" color="#fff">
+          <demo-icon name="bell" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
     </s-share-sheet-row>
 
     <s-share-sheet-row>
-      <s-share-sheet-item value="Spotify" label="Spotify" #icon>
-        <s-share-sheet-icon background="#1ed760" color="#fff">
-          <demo-icon name="spotify-fill" />
+      <s-share-sheet-item value="spare" label="备件申领" #icon>
+        <s-share-sheet-icon background="#b7791f" color="#fff">
+          <demo-icon name="warehouse" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
-      <s-share-sheet-item value="Skype" label="Skype" #icon>
-        <s-share-sheet-icon background="#0b64a4" color="#fff">
-          <demo-icon name="skype-fill" />
+      <s-share-sheet-item value="print" label="打印凭证" #icon>
+        <s-share-sheet-icon background="#4a5568" color="#fff">
+          <demo-icon name="scan" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
-      <s-share-sheet-item value="Youtube" label="Youtube" #icon>
-        <s-share-sheet-icon background="#ff0000" color="#fff">
-          <demo-icon name="youtube-fill" />
+      <s-share-sheet-item value="quality" label="质量群" #icon>
+        <s-share-sheet-icon background="#2f855a" color="#fff">
+          <demo-icon name="work-order" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
-      <s-share-sheet-item value="Paypal" label="Paypal" #icon>
-        <s-share-sheet-icon background="#0070ba" color="#fff">
-          <demo-icon name="paypal-fill" />
+      <s-share-sheet-item value="mes" label="MES 归档" #icon>
+        <s-share-sheet-icon background="#1a365d" color="#fff">
+          <demo-icon name="warehouse" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
-      <s-share-sheet-item value="Whatsapp" label="Whatsapp" #icon>
-        <s-share-sheet-icon background="#128c7e" color="#fff">
-          <demo-icon name="whatsapp-fill" />
+      <s-share-sheet-item value="call" label="电话通知" #icon>
+        <s-share-sheet-icon background="#4a5568" color="#fff">
+          <demo-icon name="phone" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
-      <s-share-sheet-item value="Telegram" label="Telegram" #icon>
-        <s-share-sheet-icon background="#0088cc" color="#fff">
-          <demo-icon name="telegram-fill" />
+      <s-share-sheet-item value="sop" label="工艺规程" #icon>
+        <s-share-sheet-icon background="#553c9a" color="#fff">
+          <demo-icon name="list" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
-      <s-share-sheet-item value="Snapchat" label="Snapchat" #icon>
+      <s-share-sheet-item value="supervisor" label="上报主管" #icon>
         <s-share-sheet-icon background="#fffc00" color="#000">
-          <demo-icon name="snapchat-fill" />
+          <demo-icon name="user" />
         </s-share-sheet-icon>
       </s-share-sheet-item>
     </s-share-sheet-row>

@@ -33,7 +33,7 @@ import Offset from './demo/Offset.vue'
 const currentDemo = ref('Basic')
 
 const demoOptions = [
-  { value: 'Basic', label: '基础用法' },
+  { value: 'Basic', label: '基础使用' },
   { value: 'Magnet', label: '自由拖拽和磁吸' },
   { value: 'Offset', label: '双向绑定' },
 ]

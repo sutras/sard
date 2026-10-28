@@ -14,7 +14,7 @@ group: 其他
 
 用法同 `transition`，通过 `name` 属性使用不同的内置动画。
 
-<<< @demo/scroll-spy/demo/Basic.vue
+<<< @demo/motion/demo/Basic.vue
 
 ## API
 

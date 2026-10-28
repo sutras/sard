@@ -8,7 +8,7 @@
       <Max />
     </doc-demo>
 
-    <doc-demo title="值为0时不隐藏">
+    <doc-demo title="值为 0 时不隐藏">
       <ShowZero />
     </doc-demo>
 

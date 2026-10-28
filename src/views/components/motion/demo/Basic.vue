@@ -1,9 +1,10 @@
 <template>
+  <!-- 工业语境：界面过渡动效｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <div class="h-25">
         <s-motion :name="name">
-          <div v-show="visible" class="size-25 bg-fuchsia-600 mx-auto"></div>
+          <div v-show="visible" class="size-25 bg-(--s-color-primary) mx-auto"></div>
         </s-motion>
       </div>
     </s-list-item>

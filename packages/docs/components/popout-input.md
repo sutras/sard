@@ -16,6 +16,12 @@ group: 表单组件
 
 <<< @demo/popout-input/demo/Basic.vue
 
+### 插槽
+
+通过 `prepend` / `append` 插槽补充前后缀，例如固定单位或来源标识。
+
+<<< @demo/popout-input/demo/Slot.vue
+
 ## API
 
 ### PopoutInputProps

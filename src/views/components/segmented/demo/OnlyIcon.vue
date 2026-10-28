@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：班次与时间粒度切换｜OnlyIcon 用法演示 -->
   <s-segmented v-model="value" :options="options">
     <s-segmented-item v-for="option in options" :value="option.value">
       <demo-icon :name="option.icon" />
@@ -19,18 +20,18 @@ import { ref } from 'vue'
 
 const options = [
   {
-    value: 'home',
-    icon: 'house-door-fill',
+    value: 'device',
+    icon: 'warehouse',
   },
   {
-    value: 'card',
-    icon: 'cart-fill',
+    value: 'order',
+    icon: 'work-order',
   },
   {
-    value: 'message',
-    icon: 'chat-dots-fill',
+    value: 'alarm',
+    icon: 'alarm',
   },
 ]
 
-const value = ref('home')
+const value = ref('device')
 </script>

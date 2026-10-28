@@ -1,15 +1,16 @@
 <template>
+  <!-- 工业语境：主表填产线、弹窗里逐个添加工位，列表回填到主表 -->
   <doc-page gray title="多表单联动">
     <s-form ref="formRef" :model="formState" label-width="100px">
       <s-form-item
         name="group"
-        label="Group Name"
-        :rules="[{ required: true, message: 'Please input group name!' }]"
+        label="产线名称"
+        :rules="[{ required: true, message: '请输入产线名称' }]"
       >
         <s-input v-model="formState.group" />
       </s-form-item>
 
-      <s-form-item label="User List">
+      <s-form-item label="工位列表">
         <template v-if="formState.users.length">
           <s-list inlaid>
             <template v-for="user in formState.users" :key="user.key">
@@ -20,24 +21,24 @@
           </s-list>
         </template>
         <template v-else>
-          <span>( No user yet. )</span>
+          <span>（暂未配置工位）</span>
         </template>
       </s-form-item>
 
       <s-form-item>
-        <s-button @click="onSubmit">Submit</s-button>
+        <s-button @click="onSubmit">提交配置</s-button>
         <s-button variant="outlined" style="margin-top: 10px" @click="visible = true">
-          Add User
+          新增工位
         </s-button>
       </s-form-item>
     </s-form>
 
-    <s-dialog v-model:visible="visible" title="Basic Drawer" :before-close="beforeClose">
+    <s-dialog v-model:visible="visible" title="新增工位" :before-close="beforeClose">
       <s-form ref="modalFormRef" :model="modalFormState">
-        <s-form-item name="name" label="User Name" :rules="[{ required: true }]">
-          <s-input v-model="modalFormState.name" inlaid placeholder="Input User Name" />
+        <s-form-item name="name" label="工位编号" :rules="[{ required: true }]">
+          <s-input v-model="modalFormState.name" inlaid placeholder="例 ST-04" />
         </s-form-item>
-        <s-form-item name="age" label="User Age" :rules="[{ required: true }]">
+        <s-form-item name="age" label="单件节拍" :rules="[{ required: true }]">
           <s-stepper v-model="modalFormState.age" />
         </s-form-item>
       </s-form>
@@ -82,7 +83,7 @@ const onSubmit = () => {
     ?.validate()
     .then(() => {
       console.log('Finish:', toRaw(formState))
-      toast('Success')
+      toast('产线工位配置已保存')
     })
     .catch((error: FieldValidateError[]) => {
       console.log('error', error)

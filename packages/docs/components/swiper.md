@@ -22,6 +22,12 @@ group: 数据展示
 
 <<< @demo/swiper/demo/Vertical.vue
 
+### 动态方向
+
+通过 `vertical` 动态切换滚动方向，常用于同一块看板在横屏与竖屏之间切换。
+
+<<< @demo/swiper/demo/DynamicDir.vue
+
 ### 循环滑动
 
 使用 `loop` 开启循环滑动，可在首尾之间无缝切换。

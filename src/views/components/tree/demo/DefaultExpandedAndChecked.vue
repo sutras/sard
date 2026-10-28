@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：厂区 / 产线 / 设备树｜DefaultExpandedAndChecked 用法演示 -->
   <doc-page gray title="默认展开以及默认选中">
     <s-tree
       :data="treeData"
@@ -11,9 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import { getRegionData } from 'region-data'
+import { plantTree } from '@/data/plant-tree'
 
-const regionData = getRegionData()
+const regionData = plantTree
 
 const treeData = regionData.slice(0, 5).map((item) => ({
   ...item,
@@ -23,6 +24,6 @@ const treeData = regionData.slice(0, 5).map((item) => ({
   })),
 }))
 
-const defaultCheckedKeys = [110101, 120100]
-const defaultExpandedKeys = [110101, 120100]
+const defaultCheckedKeys = [1111, 1210]
+const defaultExpandedKeys = [1111, 1210]
 </script>

@@ -1,10 +1,11 @@
 <template>
+  <!-- 工业语境：工单计划开工时刻选择｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-datetime-picker-input
         v-model="value"
-        title="请选择日期"
-        placeholder="请选择日期"
+        title="选择产线日期"
+        placeholder="选择产线日期"
         clearable
         type="yMd"
         @change="onChange"

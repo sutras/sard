@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：组织与设备层级级联｜CheckStrictlyAllLevels 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-cascader
@@ -19,13 +20,13 @@
       </template>
     </s-list-item>
     <s-list-item
-      title="设置为：[[440000, 440100, 440106], [440000, 440100, 440111]] ([天河区, 白云区])"
+      title="设置为：[[1000, 1100, 1110, 1111], [1000, 1100, 1110, 1112]]（ST-01、ST-04）"
       arrow
       hover
       @click="
         value = [
-          [440000, 440100, 440106],
-          [440000, 440100, 440111],
+          [1000, 1100, 1110, 1111],
+          [1000, 1100, 1110, 1112],
         ]
       "
     />
@@ -35,13 +36,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getRegionData } from 'region-data'
+import { plantTree } from '@/data/plant-tree'
 import { type CascaderOption, type CascaderValue } from 'sard'
 
-const regionData = getRegionData()
+const regionData = plantTree
 const value = ref<CascaderValue | undefined>([
-  [440000, 440100, 440106],
-  [440000, 440100, 440111],
+  [1000, 1100, 1110, 1111],
+  [1000, 1100, 1110, 1112],
 ])
 
 const onChange = (value: any, selectedOptions: CascaderOption[]) => {

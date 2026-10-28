@@ -1,7 +1,8 @@
 <template>
+  <!-- 工业语境：巡检悬浮面板｜ContentDraggable 用法演示 -->
   <doc-page gray title="仅头部拖拽">
     <s-floating-panel :content-draggable="false">
-      <div style="padding: 10px; text-align: center">内容不可拖拽</div>
+      <div style="padding: 10px; text-align: center">参数明细不可拖拽</div>
       <s-list>
         <s-list-item v-for="i in 26" :key="i" :title="String.fromCharCode(i + 64)"></s-list-item>
       </s-list>

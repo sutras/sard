@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：列表项滑动操作（确认 / 转派）｜Form 用法演示 -->
   <s-form ref="formRef" :model="dynamicValidateForm" card>
     <s-form-item
       v-for="(user, index) in dynamicValidateForm.users"
@@ -16,7 +17,7 @@
               }"
               inlaid
             >
-              <s-input inlaid v-model="user.first" placeholder="First Name" />
+              <s-input inlaid v-model="user.first" placeholder="操作员工号" />
             </s-form-item>
             <s-form-item
               :name="['users', index, 'last']"
@@ -26,13 +27,13 @@
               }"
               inlaid
             >
-              <s-input inlaid v-model="user.last" placeholder="Last Name" />
+              <s-input inlaid v-model="user.last" placeholder="班组长授权码" />
             </s-form-item>
           </s-flex>
         </s-form-item>
 
         <template #right>
-          <s-button color="danger" square auto-height @click="removeUser(user)">删除</s-button>
+          <s-button color="danger" square auto-height @click="removeUser(user)">解除</s-button>
         </template>
       </s-swipe-action>
     </s-form-item>
@@ -42,12 +43,12 @@
         <template #icon>
           <Plus />
         </template>
-        Add user
+        添加协同人
       </s-button>
     </s-form-item>
 
     <s-form-item>
-      <s-button @click="onSubmit">Submit</s-button>
+      <s-button @click="on提交工单">提交工单</s-button>
     </s-form-item>
   </s-form>
 </template>
@@ -87,7 +88,7 @@ const addUser = () => {
   })
 }
 
-const onSubmit = () => {
+const on提交工单 = () => {
   formRef.value
     ?.validate()
     .then(() => {

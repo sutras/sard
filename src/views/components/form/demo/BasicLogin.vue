@@ -1,28 +1,29 @@
 <template>
+  <!-- 工业语境：操作工工号 + 动态授权码登录 -->
   <doc-page gray title="简单登录框">
     <s-form :model="formState" ref="formRef">
       <s-form-item
-        label="Username"
+        label="操作员工号"
         name="username"
-        :rules="[{ required: true, message: 'Please input your username!' }]"
+        :rules="[{ required: true, message: '请输入操作员工号' }]"
       >
         <s-input v-model="formState.username" />
       </s-form-item>
 
       <s-form-item
-        label="Password"
+        label="班组长授权码"
         name="password"
-        :rules="[{ required: true, message: 'Please input your password!' }]"
+        :rules="[{ required: true, message: '请输入 6 位班组长授权码' }]"
       >
         <s-input type="password" v-model="formState.password" />
       </s-form-item>
 
       <s-form-item label="" name="remember">
-        <s-checkbox v-model:checked="formState.remember">Remember me</s-checkbox>
+        <s-checkbox v-model:checked="formState.remember">本班次内免重复授权</s-checkbox>
       </s-form-item>
 
       <s-form-item>
-        <s-button @click="submitForm">Submit</s-button>
+        <s-button @click="submitForm">受控登录</s-button>
       </s-form-item>
     </s-form>
   </doc-page>
@@ -50,7 +51,7 @@ const submitForm = () => {
   formRef.value
     ?.validate()
     .then(() => {
-      toast('Success!')
+      toast('授权通过，有效期至本班次结束')
       console.log('Success:', toRaw(formState))
     })
     .catch((error: FieldValidateError[]) => {

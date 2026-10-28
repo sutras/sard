@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：设备详情分区（参数 / 报警 / 点检）｜Pill 用法演示 -->
   <s-tabs v-model="value" :options="options" type="pill" scrollable></s-tabs>
 </template>
 

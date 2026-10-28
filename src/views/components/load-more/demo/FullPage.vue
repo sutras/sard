@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：报警记录分页加载｜FullPage 用法演示 -->
   <doc-page gray title="页面触底加载">
     <s-list>
       <s-list-item v-for="item in listData" :key="item.code" :title="item.name" />
@@ -10,7 +11,7 @@
 <script setup lang="ts">
 import { LoadMoreStatus } from 'sard'
 import { ref } from 'vue'
-import { getCities } from '@/api'
+import { getWorkshops } from '@/api'
 
 const listData = ref<{ code: string; name: string }[]>([])
 
@@ -21,7 +22,7 @@ let page = 1
 const getData = async () => {
   // 加载中
   status.value = LoadMoreStatus.LOADING
-  return getCities({ page })
+  return getWorkshops({ page })
     .then(({ list, total }) => {
       listData.value = [...listData.value, ...list]
 
@@ -36,7 +37,7 @@ const getData = async () => {
       }
     })
     .catch(() => {
-      // 加载失败
+      // 加载未完成
       status.value = LoadMoreStatus.ERROR
     })
 }

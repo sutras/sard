@@ -1,20 +1,21 @@
 <template>
+  <!-- 工业语境：设备参数卡｜Basic 用法演示 -->
   <s-card>
     <div :class="bem.e('group')">
       <div :class="bem.e('caption')">
         普通文本
-        <span :class="bem.e('note')">标题超出宽度，只能省略</span>
+        <span :class="bem.e('note')">超出即省略</span>
       </div>
       <div :class="bem.e('coupon')">
         <div :class="bem.e('amount')">
-          <span :class="bem.e('symbol')">¥</span>
-          <span :class="bem.e('value')">20</span>
+          <span :class="bem.e('symbol')">OEE</span>
+          <span :class="bem.e('value')">87.3</span>
         </div>
         <div :class="bem.e('info')">
           <div :class="bem.e('title')">
             <s-ellipsis :content="couponLong" />
           </div>
-          <div :class="bem.e('desc')">满 199 可用 · 有效期至 10-31</div>
+          <div :class="bem.e('desc')">机加工一线 · ST-04</div>
         </div>
       </div>
     </div>
@@ -22,25 +23,21 @@
     <div :class="[bem.e('group'), bem.e('group', 'last')]">
       <div :class="bem.e('caption')">
         TextShrink
-        <span :class="bem.e('note')">缩到 {{ sizeText }}，标题完整显示</span>
+        <span :class="bem.e('note')">缩到 {{ sizeText }} 完整显示</span>
       </div>
       <div :class="bem.e('coupon')">
         <div :class="bem.e('amount')">
-          <span :class="bem.e('symbol')">¥</span>
-          <span :class="bem.e('value')">20</span>
+          <span :class="bem.e('symbol')">OEE</span>
+          <span :class="bem.e('value')">87.3</span>
         </div>
         <div :class="bem.e('info')">
           <div :class="bem.e('title')">
             <s-text-shrink ref="shrink" :text="couponLong" />
           </div>
-          <div :class="bem.e('desc')">满 199 可用 · 有效期至 10-31</div>
+          <div :class="bem.e('desc')">机加工一线 · ST-04</div>
         </div>
       </div>
     </div>
-
-    <p :class="bem.e('tip')">
-      标题放得下时不会做任何缩放，与上方的普通文本完全一致；只有放不下才缩字号。
-    </p>
   </s-card>
 </template>
 
@@ -84,7 +81,7 @@ const sizeText = computed(() => {
     color: var(--s-text-color-tertiary);
   }
 
-  // 优惠券卡片：这就是组件的真实宿主，宽度完全由布局决定
+  // 工艺文件卡片：这就是组件的真实宿主，宽度完全由布局决定
   @include e(coupon) {
     display: flex;
     align-items: center;
@@ -99,6 +96,8 @@ const sizeText = computed(() => {
   @include e(amount) {
     display: flex;
     flex: none;
+    flex-direction: column;
+    gap: 2px;
     align-items: center;
     justify-content: center;
     width: 64px;
@@ -110,16 +109,17 @@ const sizeText = computed(() => {
   }
 
   @include e(symbol) {
-    margin-right: 1px;
-    font-size: var(--s-font-size-sm);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    opacity: 0.75;
   }
 
   @include e(value) {
-    font-size: var(--s-font-size-xl);
+    font-size: var(--s-font-size-lg);
     font-variant-numeric: tabular-nums;
   }
 
-  // 标题区只负责撑满剩余宽度，min-width: 0 让它能被压缩
+  // 设备参数区只负责撑满剩余宽度，min-width: 0 让它能被压缩
   @include e(info) {
     min-width: 0;
     flex: 1;
@@ -132,13 +132,6 @@ const sizeText = computed(() => {
   @include e(desc) {
     margin-top: 2px;
     font-size: var(--s-font-size-sm);
-    color: var(--s-text-color-tertiary);
-  }
-
-  @include e(tip) {
-    margin: 16px 0 0;
-    font-size: var(--s-font-size-sm);
-    line-height: var(--s-line-height-normal);
     color: var(--s-text-color-tertiary);
   }
 }

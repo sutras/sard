@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：组织与设备层级级联｜Multiple 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-cascader
@@ -17,10 +18,10 @@
       </template>
     </s-list-item>
     <s-list-item
-      title="设置为：[440106, 440111] ([天河区, 白云区])"
+      title="设置为：[1111, 1112]（机加工一线 · ST-01、ST-04）"
       arrow
       hover
-      @click="value = [440106, 440111]"
+      @click="value = [1111, 1112]"
     />
     <s-list-item title="清空" arrow hover @click="value = undefined" />
   </s-list>
@@ -28,11 +29,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getRegionData } from 'region-data'
+import { plantTree } from '@/data/plant-tree'
 import { type CascaderOption, type CascaderValue } from 'sard'
 
-const regionData = getRegionData()
-const value = ref<CascaderValue | undefined>([440106, 440111])
+const regionData = plantTree
+const value = ref<CascaderValue | undefined>([1111, 1112])
 
 const onChange = (value: any, selectedOptions: CascaderOption[]) => {
   console.log('change', value, selectedOptions)

@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：报警推送走上提示、归档回执走底部提示，避免遮挡操作按钮｜Placement 用法演示 -->
   <s-list card>
     <s-list-item hover arrow title="顶部位置" @click="onTopToast" />
     <s-list-item hover arrow title="底部位置" @click="onBottomToast" />
@@ -9,13 +10,13 @@
 import { toast } from 'sard'
 
 const onTopToast = () => {
-  toast('顶部位置', {
+  toast('E-1042 报警已推送至班组看板', {
     position: 'top',
   })
 }
 
 const onBottomToast = () => {
-  toast('底部位置', {
+  toast('班前点检记录已归档', {
     position: 'bottom',
   })
 }

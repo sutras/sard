@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：报警记录分页加载｜Basic 用法演示 -->
   <div
     ref="scroll"
     class="overflow-y-auto rounded-lg"
@@ -14,7 +15,7 @@
 <script setup lang="ts">
 import { LoadMoreStatus } from 'sard'
 import { ref } from 'vue'
-import { getProvinces } from '@/api'
+import { getPlants } from '@/api'
 
 const listData = ref<{ code: string; name: string }[]>([])
 
@@ -25,7 +26,7 @@ let page = 1
 const getData = async () => {
   // 加载中
   status.value = LoadMoreStatus.LOADING
-  return getProvinces({ page })
+  return getPlants({ page })
     .then(({ list, total }) => {
       listData.value = [...listData.value, ...list]
 
@@ -40,7 +41,7 @@ const getData = async () => {
       }
     })
     .catch(() => {
-      // 加载失败
+      // 加载未完成
       status.value = LoadMoreStatus.ERROR
     })
 }

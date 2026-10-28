@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：工单下发与报警处置流程｜Basic 用法演示 -->
   <s-list card>
     <s-list-item title="上一步" @click="prevStep" arrow hover />
     <s-list-item title="下一步" @click="nextStep" arrow hover />
@@ -14,7 +15,7 @@ import { type StepsItem } from 'sard'
 
 const current = ref(1)
 
-const itemList: StepsItem[] = [{ name: '步骤1' }, { name: '步骤2' }, { name: '步骤3' }]
+const itemList: StepsItem[] = [{ name: '下发工单' }, { name: '班组长授权' }, { name: '设备启动' }]
 
 const prevStep = () => {
   current.value = current.value <= 0 ? 3 : current.value - 1

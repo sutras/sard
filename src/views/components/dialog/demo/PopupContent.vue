@@ -1,85 +1,88 @@
 <template>
-  <s-list card>
-    <s-list-item arrow hover title="显示复杂的对话框" @click="visible = true" />
+  <!-- 演示工艺参数变更申请：长表单在弹窗内滚动，含量程校验与审批流说明 -->
+  <s-list card aria-label="工艺参数变更入口">
+    <s-list-item arrow hover title="提交工艺参数变更申请" @click="visible = true" />
   </s-list>
 
   <s-dialog
     v-model:visible="visible"
-    title="复杂的对话框"
+    title="工艺参数变更申请"
+    :overlay-closable="false"
+    cancel-text="取消"
+    confirm-text="提交审批"
     :before-close="beforeClose"
     popup-style="top: 50%"
   >
     <div class="overflow-y-auto" style="height: 60vh; margin-top: 1px; margin-bottom: 8px">
       <s-form ref="formRef" :model="formModel">
-        <s-form-item name="name" label="Activity name" :rules="[{ required: true }]">
-          <s-input inlaid v-model="formModel.name" placeholder="Please input Activity name" />
-        </s-form-item>
-        <s-form-item name="region" label="Activity zone">
+        <s-form-item
+          name="device"
+          label="设备编号"
+          :rules="[{ required: true, message: '请选择设备' }]"
+        >
           <s-picker-input
-            v-model="formModel.region"
-            placeholder="please select your zone"
-            title="please select your zone"
+            v-model="formModel.device"
+            placeholder="选择设备"
+            title="选择设备"
             :columns="[
-              {
-                label: 'Zone one',
-                value: 'shanghai',
-              },
-              {
-                label: 'Zone two',
-                value: 'beijing',
-              },
+              { label: 'EQ-2023-204 注塑机-A2', value: 'EQ-2023-204' },
+              { label: 'EQ-2024-017 CNC-Lathe-01', value: 'EQ-2024-017' },
+              { label: 'EQ-2022-087 热处理炉-H02', value: 'EQ-2022-087' },
             ]"
           />
         </s-form-item>
-        <s-form-item name="date1" label="Activity time">
-          <s-datetime-picker-input v-model="formModel.date1" type="yMd" placeholder="Pick a date" />
-        </s-form-item>
-        <s-form-item name="date2" label="">
-          <s-datetime-picker-input v-model="formModel.date2" type="hms" placeholder="Pick a time" />
-        </s-form-item>
-        <s-form-item name="date3" label="Active date range">
-          <s-datetime-range-picker-input
-            v-model="formModel.date3"
-            type="hms"
-            :tabs="['start', 'end']"
-            placeholder="Pick a time"
+        <s-form-item name="effectiveAt" label="生效时间">
+          <s-datetime-picker-input
+            v-model="formModel.effectiveAt"
+            type="yMd"
+            placeholder="选择生效日期"
           />
         </s-form-item>
-        <s-form-item name="delivery" label="Instant delivery">
-          <s-switch v-model="formModel.delivery" />
+        <s-form-item name="shift" label="生效班次">
+          <s-picker-input
+            v-model="formModel.shift"
+            placeholder="选择班次"
+            title="选择班次"
+            :columns="[
+              { label: '早班 08:00-16:00', value: '早班' },
+              { label: '中班 16:00-24:00', value: '中班' },
+              { label: '晚班 00:00-08:00', value: '晚班' },
+            ]"
+          />
         </s-form-item>
-        <s-form-item name="type" label="Activity type">
+        <s-form-item name="lockInterlock" label="变更期间锁定联锁">
+          <s-switch v-model="formModel.lockInterlock" />
+        </s-form-item>
+        <s-form-item name="scopes" label="变更项">
           <s-checkbox-input
-            v-model="formModel.type"
-            placeholder="Pick Activity type"
+            v-model="formModel.scopes"
+            placeholder="选择变更项"
             :options="[
-              { label: 'Online activities', value: 'Online activities' },
-              { label: 'Promotion activities', value: 'Promotion activities' },
-              { label: 'Offline activities', value: 'Offline activities' },
-              {
-                label: 'Simple brand exposure',
-                value: 'Simple brand exposure',
-              },
+              { label: '设定温度（°C）', value: 'temp' },
+              { label: '保压压力（MPa）', value: 'pressure' },
+              { label: '螺杆转速（rpm）', value: 'rpm' },
+              { label: '冷却时间（s）', value: 'cooling' },
             ]"
           />
         </s-form-item>
-        <s-form-item name="resource" label="Resources">
+        <s-form-item name="risk" label="风险等级">
           <s-radio-input
-            v-model="formModel.resource"
-            placeholder="Pick Resources"
+            v-model="formModel.risk"
+            placeholder="选择风险等级"
             :options="[
-              { label: 'Sponsor', value: 'Sponsor' },
-              { label: 'Venue', value: 'Venue' },
+              { label: 'L1 可回退', value: 'L1' },
+              { label: 'L2 需审批', value: 'L2' },
             ]"
           />
         </s-form-item>
-        <s-form-item name="desc" label="Activity form" label-valign="start">
+        <s-form-item name="reason" label="变更原因" label-valign="start">
           <s-input
             inlaid
-            v-model="formModel.desc"
+            v-model="formModel.reason"
             type="textarea"
-            placeholder="Please input Activity form"
+            placeholder="例：模温偏低导致缩痕，需 92 °C → 96 °C"
             show-count
+            :maxlength="200"
           />
         </s-form-item>
       </s-form>
@@ -88,30 +91,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { toast } from 'sard'
-import { reactive } from 'vue'
 
 const visible = ref(false)
 
 const formRef = ref()
 
 const formModel = reactive({
-  name: '',
-  region: '',
-  date1: undefined,
-  date2: undefined,
-  date3: undefined,
-  delivery: false,
-  type: [],
-  resource: '',
-  desc: '',
+  device: '',
+  effectiveAt: undefined,
+  shift: '',
+  lockInterlock: true,
+  scopes: [],
+  risk: '',
+  reason: '',
 })
 
 const beforeClose = (type: string) => {
   if (type === 'confirm') {
     return formRef.value?.validate().then(() => {
-      toast('提交成功！')
+      toast('变更申请已提交，等待工艺工程师审批（预计 30 min）')
       formRef.value?.reset()
     })
   }

@@ -1,30 +1,31 @@
 <template>
+  <!-- 工业语境：标签与内容的对齐方式（窄屏巡检端） -->
   <doc-page gray title="方向与对齐">
     <doc-demo>
       <doc-title>排列方向</doc-title>
       <s-radio-group v-model="direction" direction="horizontal">
-        <s-radio value="vertical">vertical</s-radio>
-        <s-radio value="horizontal">horizontal</s-radio>
+        <s-radio value="vertical">垂直（vertical）</s-radio>
+        <s-radio value="horizontal">水平（horizontal）</s-radio>
       </s-radio-group>
 
       <doc-title>水平对齐</doc-title>
       <s-radio-group v-model="labelAlign" direction="horizontal">
-        <s-radio value="start">start</s-radio>
-        <s-radio value="center">center</s-radio>
-        <s-radio value="end">end</s-radio>
+        <s-radio value="start">起始（start）</s-radio>
+        <s-radio value="center">居中（center）</s-radio>
+        <s-radio value="end">末尾（end）</s-radio>
       </s-radio-group>
 
       <doc-title>垂直对齐</doc-title>
       <s-radio-group v-model="labelValign" direction="horizontal">
-        <s-radio value="start">start</s-radio>
-        <s-radio value="center">center</s-radio>
-        <s-radio value="end">end</s-radio>
+        <s-radio value="start">起始（start）</s-radio>
+        <s-radio value="center">居中（center）</s-radio>
+        <s-radio value="end">末尾（end）</s-radio>
       </s-radio-group>
 
       <doc-title>星号位置</doc-title>
       <s-radio-group v-model="starPosition" direction="horizontal">
-        <s-radio value="start">start</s-radio>
-        <s-radio value="end">end</s-radio>
+        <s-radio value="start">标签前（start）</s-radio>
+        <s-radio value="end">标签后（end）</s-radio>
       </s-radio-group>
     </doc-demo>
 
@@ -38,14 +39,18 @@
         :model="formLabelAlign"
         card
       >
-        <s-form-item label="Name" required>
-          <s-input v-model="formLabelAlign.name" />
+        <s-form-item label="设备位号" required>
+          <s-input v-model="formLabelAlign.name" placeholder="例 CNC-Lathe-01" />
         </s-form-item>
-        <s-form-item label="Activity zone" required>
-          <s-input v-model="formLabelAlign.region" />
+        <s-form-item label="所属产线" required>
+          <s-input v-model="formLabelAlign.region" placeholder="例 机加工一线" />
         </s-form-item>
-        <s-form-item label="Activity form" required>
-          <s-input v-model="formLabelAlign.type" type="textarea" />
+        <s-form-item label="报警处置说明" required>
+          <s-input
+            v-model="formLabelAlign.type"
+            type="textarea"
+            placeholder="例 E-1042 安全门联锁断开，已泄压并挂检修牌"
+          />
         </s-form-item>
       </s-form>
     </doc-demo>

@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：定宽按钮文案｜Dynamic 用法演示 -->
   <s-card>
     <s-segmented v-model="index" :options="localeOptions" />
 
@@ -9,9 +10,7 @@
       </div>
     </div>
 
-    <div :class="bem.e('meta')">
-      按钮固定 96px 宽 · 左侧普通文本 · 右侧 TextShrink {{ sizeText }}
-    </div>
+    <div :class="bem.e('meta')">96px 宽 · 左：省略 / 右：{{ sizeText }}</div>
   </s-card>
 </template>
 
@@ -45,7 +44,7 @@ const sizeText = computed(() => {
     margin-top: 16px;
   }
 
-  // 尺寸写死的按钮：文案变长时不能撑大，也不能换行改变按钮高度
+  // 尺寸写死的操作：文案变长时不能撑大，也不能换行改变操作高度
   @include e(btn) {
     box-sizing: border-box;
     width: 96px;

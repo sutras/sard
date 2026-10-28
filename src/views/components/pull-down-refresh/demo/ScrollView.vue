@@ -1,5 +1,6 @@
 <template>
-  <doc-page title="基于 scroll-view 的刷新" padding="10px">
+  <!-- 工业语境：实时数据下拉刷新｜ScrollView 用法演示 -->
+  <doc-page title="基于滚动元素的刷新" padding="10px">
     <s-button block @click="loading = !loading">toggle loading</s-button>
     <div
       class="overflow-y-auto"
@@ -44,10 +45,10 @@ const onRefresh = () => {
   loading.value = true
   fetchApi()
     .then(() => {
-      toast('刷新成功')
+      toast('刷新已完成')
     })
     .catch(() => {
-      toast('刷新失败')
+      toast('刷新未完成')
     })
     .finally(() => {
       loading.value = false

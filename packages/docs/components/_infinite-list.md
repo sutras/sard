@@ -34,6 +34,12 @@ group: 数据展示
 
 <<< @demo/infinite-list/demo/PopupScroll.vue
 
+### 手动控制状态
+
+由外部逻辑维护 `status`，适合「加载中 / 已完成 / 出错重试」需要精确控制的场景。
+
+<<< @demo/infinite-list/demo/Manual.vue
+
 ## API
 
 ### InfiniteListProps

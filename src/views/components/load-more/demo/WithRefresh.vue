@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：报警记录分页加载｜WithRefresh 用法演示 -->
   <div
     class="overflow-y-auto rounded-lg"
     style="height: 300px; border: 1px solid var(--s-border-color)"
@@ -19,7 +20,7 @@
 <script setup lang="ts">
 import { toast, LoadMoreStatus } from 'sard'
 import { ref } from 'vue'
-import { getProvinces } from '@/api'
+import { getPlants } from '@/api'
 
 const listData = ref<{ code: string; name: string }[]>([])
 
@@ -31,7 +32,7 @@ let page = 1
 const getData = async () => {
   // 加载中
   status.value = LoadMoreStatus.LOADING
-  return getProvinces({ page })
+  return getPlants({ page })
     .then(({ list, total }) => {
       listData.value = page === 1 ? list : [...listData.value, ...list]
 
@@ -46,7 +47,7 @@ const getData = async () => {
       }
     })
     .catch(() => {
-      // 加载失败
+      // 加载未完成
       status.value = LoadMoreStatus.ERROR
     })
 }
@@ -59,7 +60,7 @@ const onRefresh = () => {
   refreshing.value = true
   getData()
     .then(() => {
-      toast('刷新成功')
+      toast('刷新已完成')
     })
     .finally(() => {
       refreshing.value = false

@@ -1,8 +1,12 @@
 <template>
-  <s-menu @select="onSelect">
-    <s-menu-item :value="1" label="选项1" />
-    <s-menu-item :value="2" label="选项2" />
-    <s-menu-item :value="3" label="选项3" />
+  <!-- 演示工业系统模块菜单：设备监控 / 生产工单 / 质量管理 / 能源管理 / 维护保养 / 报警中心 -->
+  <s-menu aria-label="工业系统模块菜单" @select="onSelect">
+    <s-menu-item :value="1" label="设备监控" />
+    <s-menu-item :value="2" label="生产工单" />
+    <s-menu-item :value="3" label="质量管理" />
+    <s-menu-item :value="4" label="能源管理" />
+    <s-menu-item :value="5" label="维护保养" />
+    <s-menu-item :value="6" label="报警中心" />
   </s-menu>
 </template>
 
@@ -10,6 +14,6 @@
 import { toast, type MenuItemProps } from 'sard'
 
 const onSelect = (props: MenuItemProps) => {
-  toast(props.label!)
+  toast(`进入模块：${props.label}`)
 }
 </script>

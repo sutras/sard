@@ -1,5 +1,14 @@
 [
   {
+    "title": "工业场景",
+    "children": [
+      {
+        "title": "Industrial 工业场景示例",
+        "name": "industrial"
+      }
+    ]
+  },
+  {
     "title": "基础组件",
     "children": [
       {

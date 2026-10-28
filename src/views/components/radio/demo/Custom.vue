@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：风险等级与班次单选｜Custom 用法演示 -->
   <s-flex vertical gap="large">
     <Custom1 />
     <Custom2 />

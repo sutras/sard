@@ -2,7 +2,7 @@
   <doc-page gray title="BackTop 回到顶部">
     <doc-demo>
       <s-list card>
-        <s-list-item title="基础用法" arrow hover @click="navigateTo('Basic')" />
+        <s-list-item title="基础使用" arrow hover @click="navigateTo('Basic')" />
         <s-list-item title="scroll-view 组件滚动" arrow hover @click="navigateTo('ScrollView')" />
         <s-list-item title="按钮位置" arrow hover @click="navigateTo('Position')" />
         <s-list-item title="滚动时长" arrow hover @click="navigateTo('Duration')" />

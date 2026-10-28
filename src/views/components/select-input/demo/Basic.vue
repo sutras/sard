@@ -1,10 +1,11 @@
 <template>
+  <!-- 工业语境：产线 / 工位选择｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-select-input
         v-model="value"
-        title="请选择"
-        placeholder="请选择"
+        title="选择产线"
+        placeholder="选择产线"
         clearable
         :options="regionData"
         :option-keys="{ label: 'name', value: 'code', children: '' }"
@@ -13,16 +14,16 @@
     </s-list-item>
 
     <s-list-item title="当前值：" :value="JSON.stringify(value) ?? 'undefined'" />
-    <s-list-item title="设置为：440000 (广东省)" arrow hover @click="value = 440000" />
+    <s-list-item title="设置为：1000（华东厂区）" arrow hover @click="value = 1000" />
     <s-list-item title="清空" arrow hover @click="value = undefined" />
   </s-list>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getRegionData } from 'region-data'
+import { plantTree } from '@/data/plant-tree'
 
-const regionData = getRegionData()
+const regionData = plantTree
 
 const value = ref<number>()
 

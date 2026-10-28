@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：车间看板轮播｜Video 用法演示 -->
   <s-swiper v-model="current" show-indicator>
     <s-swiper-item v-for="(item, index) in list" :key="index">
       <img
@@ -18,19 +19,26 @@
 </template>
 
 <script setup lang="ts">
+import industrialCncVideo from '@/assets/videos/industrial-cnc.mp4'
+import {
+  shopfloorPhoto,
+  injectionAlarmPhoto,
+  agvPhoto,
+  cncLathePhoto,
+} from '@/data/industrial-images'
 import { ref } from 'vue'
 import VideoSlide from './VideoSlide.vue'
 
 const list = ref([
   {
-    image: 'https://fastly.jsdelivr.net/npm/@sard/assets/pic1.jpg',
+    image: shopfloorPhoto,
   },
   {
-    video: 'https://fastly.jsdelivr.net/npm/@sard/assets/video/video1.mp4',
-    poster: 'https://fastly.jsdelivr.net/npm/@sard/assets/pic2.jpg',
+    video: industrialCncVideo,
+    poster: cncLathePhoto,
   },
   {
-    image: 'https://fastly.jsdelivr.net/npm/@sard/assets/pic3.jpg',
+    image: agvPhoto,
   },
 ])
 

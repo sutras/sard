@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：报警与工单分页｜Custom 用法演示 -->
   <s-pagination :total="100" :page-size="10" v-model:current="current">
     <template #prev>
       <Right v-if="isRtl" />

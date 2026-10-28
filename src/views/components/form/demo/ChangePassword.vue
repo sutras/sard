@@ -1,16 +1,17 @@
 <template>
+  <!-- 工业语境：修改班组长授权码（需原授权码校验） -->
   <doc-page gray title="修改密码">
     <s-form ref="formRef" :model="formState" class="auth-form" :show-error="false">
       <s-form-item
         name="oldPassword"
-        :rules="[{ required: true, message: '请输入旧密码' }]"
+        :rules="[{ required: true, message: '请输入旧授权码' }]"
         inlaid
         class="auth-form-item"
       >
         <s-input
           v-model="formState.oldPassword"
           type="password"
-          placeholder="旧密码"
+          placeholder="旧授权码"
           inlaid
           class="auth-form-input"
         >
@@ -22,14 +23,14 @@
 
       <s-form-item
         name="newPassword"
-        :rules="[{ required: true, message: '请输入新密码' }]"
+        :rules="[{ required: true, message: '请输入新授权码' }]"
         inlaid
         class="auth-form-item"
       >
         <s-input
           v-model="formState.newPassword"
           type="password"
-          placeholder="新密码"
+          placeholder="新授权码"
           inlaid
           class="auth-form-input"
         >

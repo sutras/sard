@@ -1,10 +1,11 @@
 <template>
+  <!-- 工业语境：厂区 / 车间 / 产线 / 工位四级定位｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-cascader-input
         v-model="value"
-        title="请选择省市区"
-        placeholder="请选择省市区"
+        title="选择厂区 / 车间 / 产线 / 工位"
+        placeholder="选择厂区 / 车间 / 产线 / 工位"
         clearable
         :options="options"
         :option-keys="optionKeys"
@@ -15,10 +16,10 @@
 
     <s-list-item title="当前值：" :value="JSON.stringify(value) ?? 'undefined'" />
     <s-list-item
-      title="设置为：440111 (广东省/广州市/白云区)"
+      title="设置为：1112（华东厂区 / 机加车间 / 机加工一线 / ST-04）"
       arrow
       hover
-      @click="value = 440111"
+      @click="value = 1112"
     />
     <s-list-item title="清空" arrow hover @click="value = undefined" />
   </s-list>
@@ -26,9 +27,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getRegionData, type Node } from 'region-data'
+import { plantTree, type PlantNode as Node } from '@/data/plant-tree'
 
-const regionData = getRegionData()
+const regionData = plantTree
 
 const options = ref<Node[]>([])
 const loading = ref(true)
@@ -38,7 +39,7 @@ setTimeout(() => {
   loading.value = false
 }, 1500)
 
-const value = ref<number | undefined>(440111)
+const value = ref<number | undefined>(3111)
 
 const optionKeys = { label: 'name', value: 'code' }
 

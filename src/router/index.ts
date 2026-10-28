@@ -344,6 +344,10 @@ const router = createRouter({
           component: () => import('@/views/components/indexes/index.vue'),
         },
         {
+          path: 'industrial',
+          component: () => import('@/views/components/industrial/index.vue'),
+        },
+        {
           path: 'indexes/demo/FullPage',
           component: () => import('@/views/components/indexes/demo/FullPage.vue'),
         },

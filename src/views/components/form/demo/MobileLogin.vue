@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：短信验证登录（班组长临时授权） -->
   <doc-page gray title="手机号登录">
     <s-form ref="formRef" :model="formState" :show-error="false" class="auth-form">
       <s-form-item
@@ -16,14 +17,14 @@
 
       <s-form-item
         name="password"
-        :rules="[{ required: true, message: '请输入密码' }]"
+        :rules="[{ required: true, message: '请输入授权码' }]"
         inlaid
         class="auth-form-item"
       >
         <s-input
           v-model="formState.password"
           type="password"
-          placeholder="密码"
+          placeholder="授权码"
           inlaid
           class="auth-form-input"
         >
@@ -34,7 +35,7 @@
       </s-form-item>
 
       <s-form-item inlaid>
-        <s-button round :loading="submitting" @click="submitForm">登录</s-button>
+        <s-button round :loading="submitting" @click="submitForm">受控登录</s-button>
       </s-form-item>
     </s-form>
   </doc-page>
@@ -69,7 +70,7 @@ const submitForm = () => {
     ?.validate()
     .then(async () => {
       await submit()
-      toast('登录成功')
+      toast('受控登录成功')
       console.log('Success:', toRaw(formState))
     })
     .catch((error: FieldValidateError[]) => {

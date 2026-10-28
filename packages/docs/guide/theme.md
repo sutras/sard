@@ -72,20 +72,20 @@ group:
 | CSS 变量              | 值                  |
 | --------------------- | ------------------- |
 | `--s-color-primary`   | `#3b82f6`           |
-| `--s-color-secondary` | `var(--s-gray-600)` |
+| `--s-color-secondary` | `var(--s-gray-900)` |
 | `--s-color-success`   | `#22c55e`           |
 | `--s-color-warning`   | `#eab308`           |
 | `--s-color-danger`    | `#ef4444`           |
 
 ### 主题色 RGB
 
-| CSS 变量                  | 值              |
-| ------------------------- | --------------- |
-| `--s-color-primary-rgb`   | `59, 130, 246`  |
-| `--s-color-secondary-rgb` | `113, 113, 113` |
-| `--s-color-success-rgb`   | `34, 197, 94`   |
-| `--s-color-warning-rgb`   | `234, 179, 8`   |
-| `--s-color-danger-rgb`    | `239, 68, 68`   |
+| CSS 变量                  | 值             |
+| ------------------------- | -------------- |
+| `--s-color-primary-rgb`   | `59, 130, 246` |
+| `--s-color-secondary-rgb` | `24, 24, 24`   |
+| `--s-color-success-rgb`   | `34, 197, 94`  |
+| `--s-color-warning-rgb`   | `234, 179, 8`  |
+| `--s-color-danger-rgb`    | `239, 68, 68`  |
 
 ### 文本颜色
 

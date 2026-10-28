@@ -1,15 +1,6 @@
-import { tigerAndCatList } from '@/data/images'
-import { mapCities, mapCounties, mapProvinces } from 'region-data'
+import { devicePhotoList } from '@/data/images'
+import { plantTree, type PlantNode } from '@/data/plant-tree'
 import { sleep } from 'sard'
-
-function mapToList<T extends Record<number, string>>(map: T) {
-  return Object.entries(map).map((item) => {
-    return {
-      code: item[0],
-      name: item[1],
-    }
-  })
-}
 
 function filter(
   list: {
@@ -40,24 +31,42 @@ interface Query {
   name?: string
 }
 
-// ============================ 省市区 ============================
-export async function getProvinces(query: Query = {}) {
-  await sleep(400)
-  return paginate(filter(mapToList(mapProvinces), query.name), query.page, query.pageSize)
+// ============================ 厂区 / 车间 / 产线 ============================
+const collectLevel = (level: number) => {
+  const result: { code: string; name: string }[] = []
+
+  const walk = (nodes: PlantNode[], depth: number) => {
+    for (const node of nodes) {
+      if (depth === level) {
+        result.push({ code: String(node.code), name: node.name })
+      } else if (node.children) {
+        walk(node.children, depth + 1)
+      }
+    }
+  }
+
+  walk(plantTree, 0)
+
+  return result
 }
 
-export async function getCities(query: Query = {}) {
+export async function getPlants(query: Query = {}) {
   await sleep(400)
-  return paginate(filter(mapToList(mapCities), query.name), query.page, query.pageSize)
+  return paginate(filter(collectLevel(0), query.name), query.page, query.pageSize)
 }
 
-export async function getCounties(query: Query = {}) {
+export async function getWorkshops(query: Query = {}) {
   await sleep(400)
-  return paginate(filter(mapToList(mapCounties), query.name), query.page, query.pageSize)
+  return paginate(filter(collectLevel(1), query.name), query.page, query.pageSize)
+}
+
+export async function getLines(query: Query = {}) {
+  await sleep(400)
+  return paginate(filter(collectLevel(2), query.name), query.page, query.pageSize)
 }
 
 // ============================ 图片 ============================
 export async function getImages(query: Query = {}) {
   await sleep(400)
-  return paginate(tigerAndCatList, query.page, query.pageSize)
+  return paginate(devicePhotoList, query.page, query.pageSize)
 }

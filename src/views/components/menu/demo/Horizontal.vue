@@ -1,12 +1,13 @@
 <template>
-  <s-menu direction="horizontal" @select="onSelect">
-    <s-menu-item :value="1" label="选项1" #icon>
-      <demo-icon name="upc-scan" />
+  <!-- 演示大屏顶部横向模块切换：与移动端竖向菜单共享同一套模块命名 -->
+  <s-menu direction="horizontal" aria-label="大屏顶部模块切换" @select="onSelect">
+    <s-menu-item :value="1" label="设备监控" #icon>
+      <demo-icon name="signal" />
     </s-menu-item>
-    <s-menu-item :value="2" label="选项2" #icon>
-      <demo-icon name="camera" />
+    <s-menu-item :value="2" label="生产工单" #icon>
+      <demo-icon name="work-order" />
     </s-menu-item>
-    <s-menu-item :value="3" label="选项3" />
+    <s-menu-item :value="3" label="报警中心" />
   </s-menu>
 </template>
 
@@ -14,6 +15,6 @@
 import { toast, type MenuItemProps } from 'sard'
 
 const onSelect = (props: MenuItemProps) => {
-  toast(props.label!)
+  toast(`切换到：${props.label}`)
 }
 </script>

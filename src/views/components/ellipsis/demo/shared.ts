@@ -1,4 +1,10 @@
-export const contentEn =
-  'Old friend, you bid farewell to the Yellow Crane Tower in the west; in the third month of spring, you journey to Yangzhou, where the flowers and scents are in the air. The solitary sail fades away into the boundless blue sky, while only the Yangtze River flows on towards the horizon.'
-export const contentZh =
-  '穷愁千万端，美酒三百杯。愁多酒虽少，酒倾愁不来。所以知酒圣，酒酣心自开。辞粟卧首阳，屡空饥颜回。当代不乐饮，虚名安用哉。蟹螯即金液，糟丘是蓬莱。且须饮美酒，乘月醉高台。'
+// 报警中心列表与设备档案里都会出现远超一行长度的记录，这里用两段真实长度的文本做截断样本
+export const alarmRecord =
+  'E-1042 安全门联锁断开（注塑机-A2 / 注塑二线 ST-11），09:41:22 触发，设备自动进入 STOP 状态并泄压。' +
+  '值班人员 09:42:30 到场确认，班组长授权停机后转维修班；10:08 更换安全门双通道开关并核销旁路单 LK-20241027-02。' +
+  '10:26 设备主管复位、联锁复检通过，首件检验合格，在制批次 L20241027-B01 共 1200 件已重新开工。'
+
+export const sopExcerpt =
+  '注塑机换模必须执行三步：一、切断主电源并挂检修牌（LOTO），确认储能电容放电完毕；' +
+  '二、模具吊装前检查吊环螺纹与吊带额定载荷，禁止斜拉；三、合模前手动盘车一周，确认顶针退回、水路快接无渗漏。' +
+  '任一步未确认，禁止启动加热与合模动作。'

@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：安全规程公告｜MaxLines 用法演示 -->
   <s-card>
     <div :class="bem.e('item')">
       <div :class="bem.e('head')">
@@ -19,11 +20,6 @@
         <s-text-shrink ref="threeLines" :text="ruleText" :max-lines="3" />
       </div>
     </div>
-
-    <p :class="bem.e('tip')">
-      同样的文案、同样的宽度，多给一行，能用的字号就从 {{ size2 }} 提到
-      {{ size3 }}。行数越紧，字号让步越多。
-    </p>
   </s-card>
 </template>
 
@@ -49,7 +45,7 @@ const size3 = computed(() => toText(threeLines.value?.fontSize))
 @include b(text-shrink-demo-lines) {
   @include e(item) {
     @include m(last) {
-      margin-top: 16px;
+      margin-top: 24px;
     }
   }
 
@@ -78,13 +74,6 @@ const size3 = computed(() => toText(threeLines.value?.fontSize))
     font-size: var(--s-font-size);
     line-height: var(--s-line-height-normal);
     color: var(--s-text-color-secondary);
-  }
-
-  @include e(tip) {
-    margin: 16px 0 0;
-    font-size: var(--s-font-size-sm);
-    line-height: var(--s-line-height-normal);
-    color: var(--s-text-color-tertiary);
   }
 }
 </style>

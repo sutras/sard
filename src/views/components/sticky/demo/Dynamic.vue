@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：表头与操作栏吸顶｜Dynamic 用法演示 -->
   <div style="margin-inline-start: 60px">
     <s-button @click="visible = true">点击生成</s-button>
     <s-sticky :margin-top="-safeAreaInsets.top" style="margin-top: 10px">

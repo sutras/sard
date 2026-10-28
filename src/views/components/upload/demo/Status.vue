@@ -1,24 +1,26 @@
 <template>
+  <!-- 工业语境：点检照片与报告上传｜Status 用法演示 -->
   <s-upload v-model="fileList" :after-read="afterRead" />
 </template>
 
 <script setup lang="ts">
+import { firstArticlePhoto, inspectionPhoto, nameplatePhoto } from '@/data/industrial-images'
 import type { UploadFileItem } from 'sard'
 import { ref } from 'vue'
 
 const fileList = ref<UploadFileItem[]>([
   {
-    url: 'https://fastly.jsdelivr.net/npm/@sard/assets/pic1.jpg',
+    url: inspectionPhoto,
   },
   {
-    url: 'https://fastly.jsdelivr.net/npm/@sard/assets/pic2.jpg',
+    url: firstArticlePhoto,
     status: 'uploading',
     message: '正在上传',
   },
   {
-    url: 'https://fastly.jsdelivr.net/npm/@sard/assets/pic3.jpg',
+    url: nameplatePhoto,
     status: 'failed',
-    message: '上传失败',
+    message: '上传未完成',
   },
 ])
 

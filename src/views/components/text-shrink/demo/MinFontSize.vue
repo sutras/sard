@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：台账设备名列｜MinFontSize 用法演示 -->
   <s-card>
     <div v-for="goods in orderGoods" :key="goods" :class="bem.e('group')">
       <div :class="bem.e('case')">
@@ -17,10 +18,9 @@
     </div>
 
     <p :class="bem.e('tip')">
-      订单列表的商品名列宽固定 132px，名称长度由商家填写。默认会一路缩到塞得下为止， 长名称经常缩成
-      5px 的灰线；设
+      列宽固定 132px。默认缩到塞下为止，长位号常缩成 5px 灰线；设
       <code>min-font-size="10"</code>
-      后，缩到 10px 就不再缩小， 改为省略号 —— 读不清的字不如直接截断。
+      后到 10px 即改为省略号。
     </p>
   </s-card>
 </template>

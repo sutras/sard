@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：底部弹出层｜BeforeClose 用法演示 -->
   <s-list card>
     <s-list-item hover arrow title="紧凑弹出框" @click="compactVisible = true" />
     <s-list-item hover arrow title="宽松弹出框" @click="looseVisible = true" />
@@ -7,21 +8,26 @@
   <s-popout
     v-model:visible="compactVisible"
     type="compact"
-    title="标题"
+    title="设备参数"
     :before-close="beforeClose"
   >
     <div style="padding-inline-start: 16px; padding-inline-end: 16px">
-      <div>弹出框内容</div>
-      <div>弹出框内容</div>
-      <div>弹出框内容</div>
+      <div>弹出框参数明细</div>
+      <div>弹出框参数明细</div>
+      <div>弹出框参数明细</div>
     </div>
   </s-popout>
 
-  <s-popout v-model:visible="looseVisible" type="loose" title="标题" :before-close="beforeClose">
+  <s-popout
+    v-model:visible="looseVisible"
+    type="loose"
+    title="设备参数"
+    :before-close="beforeClose"
+  >
     <div style="padding-inline-start: 16px; padding-inline-end: 16px">
-      <div>弹出框内容</div>
-      <div>弹出框内容</div>
-      <div>弹出框内容</div>
+      <div>弹出框参数明细</div>
+      <div>弹出框参数明细</div>
+      <div>弹出框参数明细</div>
     </div>
   </s-popout>
 </template>

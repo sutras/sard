@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：厂区 / 产线 / 设备树｜Selectable 用法演示 -->
   <doc-page gray title="可选择的">
     <s-list>
       <s-list-item hover arrow title="设置选中的节点" @click="setCheckedKeys" />
@@ -19,11 +20,11 @@
 </template>
 
 <script setup lang="ts">
-import { getRegionData } from 'region-data'
+import { plantTree } from '@/data/plant-tree'
 import { toast, type TreeExpose } from 'sard'
 import { ref } from 'vue'
 
-const regionData = getRegionData()
+const regionData = plantTree
 
 const treeData = regionData.slice(0, 5).map((item, index) => ({
   ...item,
@@ -38,7 +39,7 @@ const treeData = regionData.slice(0, 5).map((item, index) => ({
 const treeRef = ref<TreeExpose>()
 
 const setCheckedKeys = () => {
-  treeRef.value?.setCheckedKeys([110101, 120100])
+  treeRef.value?.setCheckedKeys([1111, 1210])
 }
 const getCheckedKeys = () => {
   toast(treeRef.value?.getCheckedKeys().join(', '))

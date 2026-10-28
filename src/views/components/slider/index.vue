@@ -40,7 +40,7 @@
       <DisabledReadOnly />
     </doc-demo>
 
-    <doc-demo title="自定义按钮插槽">
+    <doc-demo title="自定义滑块插槽">
       <Slot />
     </doc-demo>
   </doc-page>

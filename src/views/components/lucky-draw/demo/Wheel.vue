@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：班前安全问答抽题｜Wheel 用法演示 -->
   <div class="disc">
     <div
       class="sectors"
@@ -25,18 +26,18 @@
       </div>
     </div>
     <div class="play-btn" @click="onPlay">
-      <span>点我抽奖</span>
+      <span>答题抽奖</span>
       <div class="play-btn-arrow"></div>
     </div>
   </div>
 
-  <s-dialog v-model:visible="dialogVisible" :show-cancel="false" confirm-text="收下">
+  <s-dialog v-model:visible="dialogVisible" :show-cancel="false" confirm-text="领取奖励">
     <div v-if="winningPrize" class="dialog-prize">
       <div class="dialog-prize-icon">
         <span :class="['cake', `cake-${winningPrize.icon}`]"></span>
       </div>
       <div class="dialog-prize-title">
-        <span>恭喜你抽中</span>
+        <span>答对了，本次抽中</span>
         <span class="dialog-prize-name">“{{ winningPrize.name }}”</span>
       </div>
     </div>

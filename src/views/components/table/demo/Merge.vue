@@ -1,75 +1,83 @@
 <template>
-  <s-table bordered :columns="columns" :data="data" :span-method="spanMethod"></s-table>
+  <!-- 演示同一产线多工位合并单元格：产线列纵向合并，避免重复产线名干扰停机原因判读 -->
+  <s-table
+    bordered
+    :columns="columns"
+    :data="data"
+    :span-method="spanMethod"
+    aria-label="按产线合并的停机原因表"
+    data-scene="line-downtime-table"
+  ></s-table>
 </template>
 
 <script setup lang="ts">
 const columns = [
-  { label: 'ID', prop: 'id', width: 60 },
-  { label: '日期', prop: 'date', width: 120 },
-  { label: '姓名', prop: 'name', width: 80 },
-  { label: '城市', prop: 'city', width: 80 },
-  { label: '电话', prop: 'tel', width: 120 },
-  { label: '地址', prop: 'address', width: 180 },
+  { label: '产线', prop: 'line', width: 110 },
+  { label: '工位', prop: 'station', width: 90 },
+  { label: '设备编号', prop: 'code', width: 120 },
+  { label: '班次', prop: 'shift', width: 80 },
+  { label: '点检结果', prop: 'check', width: 100 },
+  { label: '停机原因', prop: 'reason', width: 180 },
 ]
 
 const data = [
   {
-    id: 1,
-    date: '2024-01-01',
-    name: '张三',
-    city: '广州',
-    tel: '13800001111',
-    address: '天河区**路1号',
+    line: '机加工一线',
+    station: 'ST-04',
+    code: 'EQ-2024-017',
+    shift: '早班',
+    check: '合格',
+    reason: '换刀',
   },
   {
-    id: 1,
-    date: '2024-01-01',
-    name: '张三',
-    city: '广州',
-    tel: '13800002222',
-    address: '天河区**路1号',
+    line: '机加工一线',
+    station: 'ST-05',
+    code: 'EQ-2024-018',
+    shift: '早班',
+    check: '合格',
+    reason: '等待来料',
   },
   {
-    id: 2,
-    date: '2024-01-02',
-    name: '李四',
-    city: '深圳',
-    tel: '13900001111',
-    address: '南山区**路2号',
+    line: '注塑二线',
+    station: 'ST-11',
+    code: 'EQ-2023-204',
+    shift: '早班',
+    check: '不合格',
+    reason: '安全门联锁断开',
   },
   {
-    id: 2,
-    date: '2024-01-02',
-    name: '李四',
-    city: '深圳',
-    tel: '13900002222',
-    address: '南山区**路2号',
+    line: '注塑二线',
+    station: 'ST-13',
+    code: 'EQ-2023-133',
+    shift: '中班',
+    check: '合格',
+    reason: '模具升温',
   },
   {
-    id: 3,
-    date: '2024-01-03',
-    name: '王五',
-    city: '北京',
-    tel: '13700001111',
-    address: '朝阳区**路3号',
+    line: '压铸四线',
+    station: 'ST-02',
+    code: 'EQ-2023-076',
+    shift: '早班',
+    check: '待复检',
+    reason: '液压超压报警',
   },
   {
-    id: 4,
-    date: '2024-01-04',
-    name: '赵六',
-    city: '上海',
-    tel: '13600001111',
-    address: '浦东新区**路4号',
+    line: '热处理线',
+    station: 'ST-01',
+    code: 'EQ-2022-087',
+    shift: '晚班',
+    check: '合格',
+    reason: '计划保养',
   },
 ]
 
 const spanMethod = ({ row, rowIndex, columnIndex }: any) => {
-  if (columnIndex === 3) {
-    if (rowIndex > 0 && data[rowIndex - 1].city === row.city) {
+  if (columnIndex === 0) {
+    if (rowIndex > 0 && data[rowIndex - 1].line === row.line) {
       return { rowspan: 0, colspan: 0 }
     }
     let rowspan = 1
-    while (rowIndex + rowspan < data.length && data[rowIndex + rowspan].city === row.city) {
+    while (rowIndex + rowspan < data.length && data[rowIndex + rowspan].line === row.line) {
       rowspan++
     }
     return { rowspan, colspan: 1 }

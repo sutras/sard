@@ -1,25 +1,26 @@
 <template>
+  <!-- 工业语境：中间鼓起的「报修」入口，现场发现异常时一键发起临时工单，需班组长确认后生效 -->
   <s-tabbar v-model="value">
-    <s-tabbar-item :value="0" label="首页" #icon>
-      <demo-icon name="house-door-fill" />
+    <s-tabbar-item :value="0" label="设备" #icon>
+      <demo-icon name="cnc" />
     </s-tabbar-item>
-    <s-tabbar-item :value="1" label="购物车" #icon>
-      <demo-icon name="cart-fill" />
+    <s-tabbar-item :value="1" label="工单" #icon>
+      <demo-icon name="work-order" />
     </s-tabbar-item>
-    <s-tabbar-item @click="toast('点击了添加按钮')">
+    <s-tabbar-item @click="toast('发起临时工单，需班组长确认后生效')">
       <div class="bulge">
         <div class="cover"></div>
         <div class="button">
           <Plus class="text-5xl" />
         </div>
       </div>
-      <span class="text">添加</span>
+      <span class="text">报修</span>
     </s-tabbar-item>
-    <s-tabbar-item :value="2" label="消息" #icon>
-      <demo-icon name="chat-dots-fill" />
+    <s-tabbar-item :value="2" label="报警" #icon>
+      <demo-icon name="alarm" />
     </s-tabbar-item>
     <s-tabbar-item :value="3" label="我的" #icon>
-      <demo-icon name="person-fill" />
+      <demo-icon name="user" />
     </s-tabbar-item>
   </s-tabbar>
 </template>

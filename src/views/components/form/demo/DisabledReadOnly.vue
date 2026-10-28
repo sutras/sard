@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：参数锁定（审批中）与联锁状态只读 -->
   <doc-page gray title="表单只读和禁用">
     <s-list>
       <s-list-item title="只读">
@@ -14,64 +15,64 @@
     </s-list>
 
     <s-form :disabled="formDisabled" :readonly="formReadonly" label-width="100px">
-      <s-form-item label="Checkbox">
+      <s-form-item label="点检项">
         <s-checkbox-group v-model="checkboxValue">
-          <s-checkbox value="apple">Apple</s-checkbox>
-          <s-checkbox value="pear">Pear</s-checkbox>
+          <s-checkbox value="apple">导轨油位</s-checkbox>
+          <s-checkbox value="pear">主轴温度</s-checkbox>
         </s-checkbox-group>
       </s-form-item>
-      <s-form-item label="Radio">
+      <s-form-item label="班次">
         <s-radio-group v-model="radioValue">
-          <s-radio value="apple">Apple</s-radio>
-          <s-radio value="pear">Pear</s-radio>
+          <s-radio value="apple">早班</s-radio>
+          <s-radio value="pear">中班</s-radio>
         </s-radio-group>
       </s-form-item>
-      <s-form-item label="Input">
+      <s-form-item label="设备位号">
         <s-input />
       </s-form-item>
-      <s-form-item label="Picker">
+      <s-form-item label="产线">
         <s-picker-input
-          placeholder="Picker"
+          placeholder="选择产线"
           :columns="[
             {
-              label: 'Demo',
-              value: 'demo',
+              label: '机加工一线',
+              value: 'line-1',
             },
           ]"
         />
       </s-form-item>
-      <s-form-item label="Cascader">
-        <s-cascader-input placeholder="Cascader" :options="options" />
+      <s-form-item label="所属厂区">
+        <s-cascader-input placeholder="选择厂区 / 车间" :options="options" />
       </s-form-item>
-      <s-form-item label="DatetimePicker">
-        <s-datetime-picker-input placeholder="DatetimePicker" />
+      <s-form-item label="点检日期">
+        <s-datetime-picker-input placeholder="选择点检日期" />
       </s-form-item>
-      <s-form-item label="Calendar">
-        <s-calendar-input placeholder="Calendar" type="range" />
+      <s-form-item label="点检区间">
+        <s-calendar-input placeholder="选择点检区间" type="range" />
       </s-form-item>
-      <s-form-item label="Stepper">
+      <s-form-item label="申领数量">
         <s-stepper />
       </s-form-item>
-      <s-form-item label="Input[Textarea]">
+      <s-form-item label="点检备注">
         <s-input type="textarea" />
       </s-form-item>
-      <s-form-item label="PasswordInput">
+      <s-form-item label="授权码输入">
         <s-password-input gap="0" model-value="123" style="height: 40px" />
       </s-form-item>
-      <s-form-item label="Switch">
+      <s-form-item label="联锁使能">
         <s-switch :model-value="true" />
       </s-form-item>
-      <s-form-item label="Rate">
+      <s-form-item label="班组评分">
         <s-rate :model-value="3" />
       </s-form-item>
-      <s-form-item label="Slider">
+      <s-form-item label="负载率">
         <s-slider :model-value="50" />
       </s-form-item>
-      <s-form-item label="Upload">
+      <s-form-item label="现场照片">
         <s-upload />
       </s-form-item>
-      <s-form-item label="Button">
-        <s-button>Button</s-button>
+      <s-form-item label="提交">
+        <s-button>提交点检</s-button>
       </s-form-item>
     </s-form>
   </doc-page>
@@ -86,12 +87,12 @@ const checkboxValue = ref(['apple'])
 const radioValue = ref('apple')
 const options = reactive([
   {
-    value: 'zhejiang',
-    label: 'Zhejiang',
+    value: 'east',
+    label: '华东厂区',
     children: [
       {
-        value: 'hangzhou',
-        label: 'Hangzhou',
+        value: 'machining',
+        label: '机加车间',
       },
     ],
   },

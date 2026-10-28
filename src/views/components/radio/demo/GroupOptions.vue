@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：风险等级与班次单选｜GroupOptions 用法演示 -->
   <s-radio-group v-model="value" :options="options"></s-radio-group>
 </template>
 
@@ -12,7 +13,7 @@ const options = Array(3)
   .map((_, i) => {
     return {
       value: `option${i + 1}`,
-      label: `选项${i + 1}`,
+      label: `工位 ST-0${i + 1}`,
     }
   })
 </script>

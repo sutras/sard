@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：产线侧边索引｜Scene2 用法演示 -->
   <doc-page padding="0" title="场景2">
     <s-scroll-spy v-model="value" :style="{ height: scrollViewHeight }" :offset="44">
       <div
@@ -105,8 +106,8 @@ const list = ref(
 
 const value = ref(0)
 const tabsOptions = [
-  { label: '标签1', value: 1 },
-  { label: '标签2', value: 2 },
-  { label: '标签3', value: 3 },
+  { label: '运行参数', value: 1 },
+  { label: '报警记录', value: 2 },
+  { label: '点检记录', value: 3 },
 ]
 </script>

@@ -1,25 +1,26 @@
 <template>
+  <!-- 工业语境：批量选择设备或工单｜Search 用法演示 -->
   <s-checkbox-popout
     v-model="value"
     v-model:visible="visible"
-    title="请选择"
+    title="选择变更项"
     :options="options"
     searchable
-    filter-placeholder="请输入过滤关键词"
+    filter-placeholder="输入变更项名称过滤"
     @change="onChange"
   />
 
   <s-list card>
     <s-list-item arrow hover @click="visible = true">
       <template #title>
-        {{ value ? JSON.stringify(value) : '请选择' }}
+        {{ value ? JSON.stringify(value) : '选择变更项' }}
       </template>
     </s-list-item>
     <s-list-item
-      title="设置为：['option2', 'option3']"
+      title="设置为：['process', 'inspection']"
       arrow
       hover
-      @click="value = ['option2', 'option3']"
+      @click="value = ['process', 'inspection']"
     />
     <s-list-item title="清空" arrow hover @click="value = undefined" />
   </s-list>
@@ -28,14 +29,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const options = Array(10)
-  .fill(0)
-  .map((_, i) => {
-    return {
-      value: `option${i + 1}`,
-      label: `选项${i + 1}`,
-    }
-  })
+const options = [
+  { value: 'process', label: '工艺参数' },
+  { value: 'fixture', label: '工装夹具' },
+  { value: 'program', label: '程序版本' },
+  { value: 'inspection', label: '检验标准' },
+  { value: 'tooling', label: '刀具补偿' },
+  { value: 'cooling', label: '冷却参数' },
+]
 
 const visible = ref(false)
 const value = ref<string[]>()

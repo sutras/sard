@@ -1,7 +1,8 @@
 <template>
+  <!-- 工业语境：厂区 / 产线 / 设备树｜Filter 用法演示 -->
   <doc-page gray title="树节点过滤">
     <div style="padding: 16px; background: var(--s-bg-color-container)">
-      <s-input v-model="searchString" placeholder="请输入过滤关键词" />
+      <s-input v-model="searchString" placeholder="输入设备位号过滤关键词" />
     </div>
 
     <s-tree ref="treeRef" :data="treeData" :node-keys="{ title: 'name', key: 'code' }" />
@@ -11,7 +12,7 @@
 <script setup lang="ts">
 import { type TreeExpose } from 'sard'
 import { ref, watch } from 'vue'
-import { getRegionData } from 'region-data'
+import { plantTree } from '@/data/plant-tree'
 
 const searchString = ref('')
 
@@ -21,7 +22,7 @@ watch(searchString, () => {
   treeRef.value?.filter(searchString.value)
 })
 
-const regionData = getRegionData()
+const regionData = plantTree
 
 const treeData = regionData.slice(0, 5).map((item) => ({
   ...item,

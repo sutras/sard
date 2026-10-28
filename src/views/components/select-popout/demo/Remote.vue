@@ -1,12 +1,13 @@
 <template>
+  <!-- 工业语境：设备多选弹层｜Remote 用法演示 -->
   <div>
     <s-select-popout
       ref="selectPopout"
       v-model="value"
       v-model:visible="visible"
-      title="请选择"
+      title="选择产线"
       filterable
-      filter-placeholder="请输入过滤关键词"
+      filter-placeholder="输入设备位号过滤关键词"
       v-model:filter-value="filterValue"
       :filter-loading="status === LoadMoreStatus.LOADING"
       @change="onChange"
@@ -27,10 +28,10 @@
     <s-list card>
       <s-list-item arrow hover @click="visible = true">
         <template #title>
-          {{ value ? JSON.stringify(value) : '请选择' }}
+          {{ value ? JSON.stringify(value) : '选择产线' }}
         </template>
       </s-list-item>
-      <s-list-item title="设置为：440100 (广州市)" arrow hover @click="value = '440100'" />
+      <s-list-item title="设置为：1110（机加工一线）" arrow hover @click="value = '1110'" />
       <s-list-item title="清空" arrow hover @click="value = undefined" />
     </s-list>
   </div>
@@ -38,7 +39,7 @@
 
 <script setup lang="ts">
 import { nextTick, ref, useTemplateRef, watch } from 'vue'
-import { getCities } from '@/api'
+import { getLines } from '@/api'
 import { debounce, LoadMoreStatus } from 'sard'
 
 const visible = ref(false)
@@ -57,7 +58,7 @@ const listData = ref<
 
 const selectPopoutRef = useTemplateRef('selectPopout')
 
-const filterValue = ref('州')
+const filterValue = ref('机加工')
 
 const status = ref<LoadMoreStatus>(LoadMoreStatus.INCOMPLETE)
 
@@ -66,7 +67,7 @@ let page = 1
 const getData = async (query: string) => {
   status.value = LoadMoreStatus.LOADING
   console.log(page, query)
-  return getCities({ page, name: query })
+  return getLines({ page, name: query })
     .then(({ list, total }) => {
       listData.value = page === 1 ? list : [...listData.value, ...list]
 

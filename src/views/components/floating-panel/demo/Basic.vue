@@ -1,5 +1,6 @@
 <template>
-  <doc-page gray title="基础用法">
+  <!-- 工业语境：巡检悬浮面板｜Basic 用法演示 -->
+  <doc-page gray title="基础使用">
     <s-floating-panel>
       <s-list>
         <s-list-item v-for="i in 26" :key="i" :title="String.fromCharCode(i + 64)"></s-list-item>

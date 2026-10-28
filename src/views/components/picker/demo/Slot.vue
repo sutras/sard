@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：产线选择，选项用「状态灯 + 产线名 + 状态词」表达，与看板上的信号灯语义一致｜Slot 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-picker
@@ -8,28 +9,66 @@
         @change="onChange"
       >
         <template #option="{ option }">
-          <span :class="['cake', `cake-${option.icon}`]" />
-          <span class="ms-2 font-bold">
-            {{ option.name }}
-          </span>
+          <div class="line-option" :data-status="option.status">
+            <span class="line-option__dot" :style="{ backgroundColor: option.color }"></span>
+            <span class="line-option__name">{{ option.name }}</span>
+            <span class="line-option__status" :style="{ color: option.color }">
+              {{ option.status }}
+            </span>
+          </div>
         </template>
       </s-picker>
     </s-list-item>
     <s-list-item title="当前值：" :value="JSON.stringify(value) ?? 'undefined'" />
-    <s-list-item title="设置为: 泡芙" arrow hover @click="value = '泡芙'" />
+    <s-list-item title="设置为: 包装五线" arrow hover @click="value = '包装五线'" />
     <s-list-item title="清空" arrow hover @click="value = undefined" />
   </s-list>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getPrizes } from '../../lucky-draw/demo/utils'
 
-const columns = getPrizes()
+const columns = [
+  { name: '机加工一线', status: '运行中', color: 'var(--s-color-success)' },
+  { name: '注塑二线', status: '报警', color: 'var(--s-color-danger)' },
+  { name: '压铸四线', status: '停机', color: 'var(--s-text-color-secondary)' },
+  { name: '包装五线', status: '待机', color: 'var(--s-color-warning)' },
+]
 
-const value = ref<string | undefined>('布丁')
+const value = ref<string | undefined>('注塑二线')
 
-const onChange = (value: number[]) => {
-  console.log('change', value)
+const onChange = (value: any) => {
+  console.log('产线切换到', value)
 }
 </script>
+
+<style lang="scss" scoped>
+.line-option {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--s-picker-view-indicator-height);
+  padding: 0 var(--s-size);
+  font-size: var(--s-picker-view-font-size);
+  line-height: 1.2;
+  text-align: start;
+}
+
+.line-option__dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.line-option__name {
+  margin-inline-start: 8px;
+  font-weight: 500;
+  color: var(--s-text-color);
+}
+
+.line-option__status {
+  margin-inline-start: auto;
+  font-size: var(--s-font-size-sm);
+}
+</style>

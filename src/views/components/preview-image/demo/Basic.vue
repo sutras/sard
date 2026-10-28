@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：报警现场大图查看｜Basic 用法演示 -->
   <s-grid :columns="3" square :gap="8">
     <s-grid-item v-for="(url, index) in urls" :key="url">
       <s-image
@@ -14,16 +15,10 @@
 </template>
 
 <script setup lang="ts">
+import { galleryPhotos } from '@/data/industrial-images'
 import { previewImage } from 'sard'
 
-const urls = [
-  'https://fastly.jsdelivr.net/npm/@sard/assets/images/cat1.jpg',
-  'https://fastly.jsdelivr.net/npm/@sard/assets/images/cat2.jpg',
-  'https://fastly.jsdelivr.net/npm/@sard/assets/images/cat3.jpg',
-  'https://fastly.jsdelivr.net/npm/@sard/assets/images/cat4.jpg',
-  'https://fastly.jsdelivr.net/npm/@sard/assets/images/cat5.jpg',
-  'https://fastly.jsdelivr.net/npm/@sard/assets/images/cat6.jpg',
-]
+const urls = galleryPhotos.slice(0, 6).map((item) => item.url)
 
 const onClick = (index: number) => {
   previewImage({

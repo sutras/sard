@@ -1,10 +1,11 @@
 <template>
+  <!-- 工业语境：受控操作人机校验｜ShowError 用法演示 -->
   <div class="mx-10">
     <s-slide-verify
       ref="verifyRef"
       text="拖动滑块至虚线框内"
       success-text="验证通过"
-      error-text="验证失败"
+      error-text="验证未完成"
       show-target
       :target-pos="targetPos"
       :reset-when-error="false"

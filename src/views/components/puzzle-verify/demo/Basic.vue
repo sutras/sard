@@ -1,4 +1,5 @@
 <template>
+  <!-- 工业语境：受控操作人机校验｜Basic 用法演示 -->
   <div class="mx-10">
     <s-puzzle-verify
       ref="verifyRef"
@@ -16,6 +17,7 @@
 </template>
 
 <script setup lang="ts">
+import { photoAt } from '@/data/industrial-images'
 import { random, sleep, type SlideVerifyExpose, type SlideVerifyResult } from 'sard'
 import { ref } from 'vue'
 
@@ -41,7 +43,7 @@ const onReset = () => {
 
 let i = 0
 function update() {
-  src.value = `https://fastly.jsdelivr.net/npm/@sard/assets/images/cat${(i = ++i % 12) || 12}.jpg`
+  src.value = photoAt(++i).url
 }
 update()
 

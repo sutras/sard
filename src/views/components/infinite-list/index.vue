@@ -8,7 +8,7 @@
       <Refresh />
     </doc-demo>
 
-    <doc-demo title="空数据">
+    <doc-demo title="数据为空">
       <Empty />
     </doc-demo>
 

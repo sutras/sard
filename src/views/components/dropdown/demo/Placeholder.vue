@@ -1,18 +1,19 @@
 <template>
+  <!-- 工业语境：设备按产线筛选与班次切换｜Placeholder 用法演示 -->
   <s-dropdown>
-    <s-dropdown-item placeholder="排序" :options="options1" />
-    <s-dropdown-item placeholder="配送时间" :options="options2" />
+    <s-dropdown-item placeholder="按报警时间" :options="options1" />
+    <s-dropdown-item placeholder="班次" :options="options2" />
   </s-dropdown>
 </template>
 
 <script setup lang="ts">
 const options1 = [
   {
-    label: '距离优先',
+    label: '本班次',
     value: '1',
   },
   {
-    label: '速度优先',
+    label: '主轴转速优先',
     value: '2',
   },
   {
@@ -22,11 +23,11 @@ const options1 = [
 ]
 const options2 = [
   {
-    label: '30分钟内',
+    label: '近 1 小时',
     value: '1',
   },
   {
-    label: '40分钟内',
+    label: '近 4 小时',
     value: '2',
   },
   {

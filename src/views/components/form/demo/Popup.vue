@@ -1,11 +1,12 @@
 <template>
+  <!-- 工业语境：弹窗内新建生产工单，滚动到第一个校验失败字段并保持弹窗打开 -->
   <doc-page gray title="弹出框中的表单">
     <div class="mx-4">
-      <s-button block @click="showForm = true">显示表单</s-button>
+      <s-button block @click="showForm = true">新建生产工单</s-button>
     </div>
     <s-popout
       v-model:visible="showForm"
-      title="表单弹出框"
+      title="新建生产工单"
       :beforeClose="beforeClose"
       @confirm="onConfirm"
     >
@@ -20,34 +21,34 @@
             behavior: 'smooth',
           }"
         >
-          <s-form-item label="Activity name" name="name">
-            <s-input v-model="ruleForm.name" clearable inlaid placeholder="Activity name" />
+          <s-form-item label="工单名称" name="name">
+            <s-input v-model="ruleForm.name" clearable inlaid placeholder="例 精车外圆 WO-0083" />
           </s-form-item>
-          <s-form-item label="Activity zone" name="region">
+          <s-form-item label="产线" name="region">
             <s-picker-input
               v-model="ruleForm.region"
               clearable
-              placeholder="Activity zone"
+              placeholder="选择产线"
               :columns="[
-                { label: 'Zone one', value: 'shanghai' },
-                { label: 'Zone two', value: 'beijing' },
+                { label: '机加工一线', value: 'line-machining-1' },
+                { label: '注塑二线', value: 'line-injection-2' },
               ]"
             />
           </s-form-item>
-          <s-form-item label="Activity count" name="count">
+          <s-form-item label="计划数量" name="count">
             <s-picker-input
               v-model="ruleForm.count"
               clearable
-              placeholder="Activity count"
+              placeholder="选择计划数量（件）"
               :columns="options"
             />
           </s-form-item>
-          <s-form-item label="Activity time" required name="date1">
+          <s-form-item label="计划开工日" required name="date1">
             <s-datetime-picker-input
               v-model="ruleForm.date1"
               clearable
               type="yMd"
-              placeholder="Pick a date"
+              placeholder="选择开工日期"
             />
           </s-form-item>
           <s-form-item label="" hide-star name="date2">
@@ -55,49 +56,49 @@
               v-model="ruleForm.date2"
               clearable
               type="hms"
-              placeholder="Pick a time"
+              placeholder="选择开工时刻"
             />
           </s-form-item>
-          <s-form-item label="Instant delivery" name="delivery">
+          <s-form-item label="开工前预热" name="delivery">
             <s-switch v-model="ruleForm.delivery" />
           </s-form-item>
-          <s-form-item label="Activity type" name="type">
+          <s-form-item label="变更项" name="type">
             <s-checkbox-input
               v-model="ruleForm.type"
               clearable
-              placeholder="Pick Activity type"
+              placeholder="选择变更项"
               :options="[
-                { label: 'Online activities', value: 'Online activities' },
+                { label: '工艺参数', value: 'process' },
                 {
-                  label: 'Promotion activities',
-                  value: 'Promotion activities',
+                  label: '工装夹具',
+                  value: 'fixture',
                 },
-                { label: 'Offline activities', value: 'Offline activities' },
+                { label: '程序版本', value: 'program' },
                 {
-                  label: 'Simple brand exposure',
-                  value: 'Simple brand exposure',
+                  label: '检验标准',
+                  value: 'inspection',
                 },
               ]"
             />
           </s-form-item>
-          <s-form-item label="Resources" name="resource">
+          <s-form-item label="责任班组" name="resource">
             <s-radio-input
               v-model="ruleForm.resource"
               clearable
-              placeholder="Pick Resources"
+              placeholder="选择责任班组"
               :options="[
-                { label: 'Sponsor', value: 'Sponsor' },
-                { label: 'Venue', value: 'Venue' },
+                { label: '机加班', value: 'machining' },
+                { label: '注塑班', value: 'injection' },
               ]"
             />
           </s-form-item>
-          <s-form-item label="Activity form" name="desc">
+          <s-form-item label="备注" name="desc">
             <s-input
               v-model="ruleForm.desc"
               clearable
               type="textarea"
               inlaid
-              placeholder="Activity form"
+              placeholder="例 模温 92 °C / 保压 45 MPa / 冷却 18 s"
             />
           </s-form-item>
         </s-form>
@@ -127,7 +128,7 @@ interface RuleForm {
 
 const ruleFormRef = ref<FormExpose>()
 const ruleForm = reactive<RuleForm>({
-  name: 'Hello',
+  name: 'CNC-Lathe-01',
   region: '',
   count: '',
   date1: undefined,
@@ -140,20 +141,20 @@ const ruleForm = reactive<RuleForm>({
 
 const rules = reactive<FormRules>({
   name: [
-    { required: true, message: 'Please input Activity name', trigger: 'blur' },
-    { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
+    { required: true, message: '请输入工单名称', trigger: 'blur' },
+    { min: 3, max: 20, message: '工单名称长度需在 3 到 20 字之间', trigger: 'blur' },
   ],
   region: [
     {
       required: true,
-      message: 'Please select Activity zone',
+      message: '请选择产线',
       trigger: 'change',
     },
   ],
   count: [
     {
       required: true,
-      message: 'Please select Activity count',
+      message: '请选择计划数量',
       trigger: 'change',
     },
   ],
@@ -161,7 +162,7 @@ const rules = reactive<FormRules>({
     {
       type: 'date',
       required: true,
-      message: 'Please pick a date',
+      message: '请选择计划开工日',
       trigger: 'change',
     },
   ],
@@ -169,7 +170,7 @@ const rules = reactive<FormRules>({
     {
       type: 'date',
       required: true,
-      message: 'Please pick a time',
+      message: '请选择开工时刻',
       trigger: 'change',
     },
   ],
@@ -177,18 +178,18 @@ const rules = reactive<FormRules>({
     {
       type: 'array',
       required: true,
-      message: 'Please select at least one activity type',
+      message: '至少选择一个变更项',
       trigger: 'change',
     },
   ],
   resource: [
     {
       required: true,
-      message: 'Please select activity resource',
+      message: '请选择责任班组',
       trigger: 'change',
     },
   ],
-  desc: [{ required: true, message: 'Please input activity form', trigger: 'blur' }],
+  desc: [{ required: true, message: '请填写备注，说明本次变更内容', trigger: 'blur' }],
 })
 
 const submitForm = (formEl?: FormExpose) => {
@@ -199,11 +200,11 @@ const submitForm = (formEl?: FormExpose) => {
   formEl
     .validate()
     .then(() => {
-      toast('Success!')
-      console.log('Success!')
+      toast('工单已提交，等待班组长授权')
+      console.log('工单已提交')
     })
     .catch((error: FieldValidateError[]) => {
-      console.log('error submit!', error)
+      console.log('校验未通过', error)
     })
 }
 

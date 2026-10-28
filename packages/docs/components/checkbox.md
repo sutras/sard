@@ -71,7 +71,7 @@ group: 表单组件
 
 这个插槽接收 `toggle`方法和 `value` 属性作为参数。`toggle` 用于切换指定选项的选中状态，`value` 用于判断选中状态。
 
-<<< @demo/checkbox/demo/Custom1.vue
+<<< @demo/checkbox/demo/Custom.vue
 
 结合 `list` 组件使用：
 

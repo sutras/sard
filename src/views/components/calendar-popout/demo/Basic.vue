@@ -1,15 +1,16 @@
 <template>
+  <!-- 工业语境：保养计划日期弹层选择｜Basic 用法演示 -->
   <s-calendar-popout
     v-model="value"
     v-model:visible="visible"
-    title="请选择日期"
+    title="选择产线日期"
     @change="onChange"
   />
 
   <s-list card>
     <s-list-item>
       <s-button @click="visible = true">
-        {{ value ? formatDate(value, 'YYYY-MM-DD') : '请选择' }}
+        {{ value ? formatDate(value, 'YYYY-MM-DD') : '选择产线' }}
       </s-button>
     </s-list-item>
     <s-list-item title="当前值：" :value="JSON.stringify(value) ?? 'undefined'" />
