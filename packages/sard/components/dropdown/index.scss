@@ -85,6 +85,7 @@
   align-items: center;
   justify-content: center;
   flex: 1;
+  min-width: 0;
   padding: 0 css-var(dropdown-item-padding-x);
   overflow: hidden;
   cursor: pointer;
@@ -93,15 +94,23 @@
     margin-inline-end: css-var(dropdown-label-margin-end);
     font-size: css-var(dropdown-label-font-size);
     color: css-var(dropdown-label-color);
+    white-space: nowrap;
   }
 
   @include e(title, value) {
     font-size: css-var(dropdown-value-font-size);
+    white-space: nowrap;
   }
 
   @include e(placeholder) {
     color: css-var(dropdown-placeholder-color);
     font-size: css-var(dropdown-value-font-size);
+    white-space: nowrap;
+  }
+
+  @include e(value, placeholder) {
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   @include e(arrow) {
