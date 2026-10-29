@@ -515,14 +515,14 @@ const currentEditType = ref<TreeEditType>()
 const currentEditValue = ref('')
 
 const mapEditTypeTitle = {
-  addSibling: t('addSibling'),
-  addChild: t('addChild'),
-  addRoot: t('addRoot'),
-  edit: t('edit'),
-  delete: t('removeNode'),
+  addSibling: 'addSibling',
+  addChild: 'addChild',
+  addRoot: 'addRoot',
+  edit: 'edit',
+  delete: 'removeNode',
 }
 const currentEditTitle = computed(() => {
-  return mapEditTypeTitle[currentEditType.value!]
+  return t(mapEditTypeTitle[currentEditType.value!])
 })
 
 const dialogVisible = ref(false)
