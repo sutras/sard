@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备编号索引（EQ-2024-xxx）｜AreaCodeSearch 用法演示 -->
   <s-popout
     v-model:visible="innerVisible"
     title="搜索区号"

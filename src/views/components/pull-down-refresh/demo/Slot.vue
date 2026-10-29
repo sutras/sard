@@ -1,9 +1,8 @@
 <template>
-  <!-- 工业语境：实时数据下拉刷新｜Slot 用法演示 -->
   <doc-page title="自定义插槽" padding="10px">
     <div
-      class="overflow-y-auto"
-      style="height: 300px; margin: 10px 0; border: 1px solid var(--s-border-color)"
+      class="overflow-y-auto rounded-lg my-3 border border-(--s-border-color)"
+      style="height: 300px"
     >
       <s-pull-down-refresh :loading="loading" :done-duration="500" @refresh="onRefresh">
         <template #unready="{ progress }">

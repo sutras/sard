@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间公告与安灯提示｜Basic 用法演示 -->
   <s-notice-bar>安灯呼叫：注塑二线 ST-11 物料短缺，配送班组请 5 min 内到场。</s-notice-bar>
 
   <s-notice-bar>

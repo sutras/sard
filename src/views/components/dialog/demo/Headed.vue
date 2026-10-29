@@ -1,6 +1,5 @@
 <template>
-  <!-- 演示带头部与圆角按钮的确认框：头部突出风险等级，圆角按钮便于戴手套点击 -->
-  <s-list card aria-label="带头部确认框列表">
+  <s-list card>
     <s-list-item arrow hover title="工艺参数变更审批" @click="showAlert" />
     <s-list-item arrow hover title="解除安全联锁（需双人）" @click="showConfirm" />
     <s-list-item arrow hover title="参数变更审批（无标题）" @click="showAlertNoTitle" />

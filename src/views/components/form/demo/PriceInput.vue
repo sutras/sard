@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：备件单价录入（金额 + 币种），供采购报价与备件申领复用 -->
   <s-flex align="center" gap="medium">
     <s-input
       variant="text"

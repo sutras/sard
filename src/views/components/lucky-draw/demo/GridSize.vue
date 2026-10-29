@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：班前安全问答抽题｜GridSize 用法演示 -->
   <div class="grid-box">
     <div v-for="item in grids" :key="item" class="grid-item" :style="{ width: 100 / column + '%' }">
       <div

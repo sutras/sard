@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备多选弹层｜Group 用法演示 -->
   <s-select-popout v-model="value" v-model:visible="visible" title="选择产线" @change="onChange">
     <s-select-option-group
       v-for="group in regionData"

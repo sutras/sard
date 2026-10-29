@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：看板栅格排布｜Align 用法演示 -->
   <s-segmented v-model="value" :options="alignments" />
   <div class="wrapper">
     <s-flex :align="value" gap="medium">

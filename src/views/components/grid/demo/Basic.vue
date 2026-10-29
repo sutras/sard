@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间模块宫格入口｜Basic 用法演示 -->
   <s-grid>
     <s-grid-item v-for="i in 8" :key="i" text="文字" #icon>
       <Image />

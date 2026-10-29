@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：长标签（「变更期间锁定联锁」）决定 label-width，短标签保持对齐不跳动 -->
   <doc-page gray title="Label 宽度">
     <s-form :model="formState" ref="formRef" label-width="100px">
       <s-form-item label="工单名称">

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间看板轮播｜AutoHeight 用法演示 -->
   <s-swiper auto-height show-indicator>
     <s-swiper-item v-for="(item, index) in list" :key="index">
       <div

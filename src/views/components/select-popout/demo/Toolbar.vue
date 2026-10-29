@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备多选弹层｜Toolbar 用法演示 -->
   <s-select-popout
     v-model="value"
     v-model:visible="visible"

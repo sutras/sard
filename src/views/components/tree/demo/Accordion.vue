@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：厂区 / 产线 / 设备树｜Accordion 用法演示 -->
   <doc-page gray title="手风琴">
     <s-tree :data="treeData" :node-keys="{ title: 'name', key: 'code' }" accordion />
   </doc-page>

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：参数数字键盘弹层｜Type 用法演示 -->
   <s-list card>
     <s-list-item title="当前类型" :value="type" />
     <s-list-item title="当前值" :value="value || '暂无输入'" />

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备运行/待机/维保/停机四态色｜Circle 用法演示 -->
   <s-flex vertical gap="large">
     <s-flex justify="evenly" gap="medium">
       <s-cool-icon shape="circle" background="var(--s-color-success)" color="#fff">

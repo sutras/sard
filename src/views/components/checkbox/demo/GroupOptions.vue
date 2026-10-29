@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：点检项与安全前置勾选｜GroupOptions 用法演示 -->
   <s-checkbox-group v-model="value" :options="options"></s-checkbox-group>
 </template>
 

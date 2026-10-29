@@ -1,6 +1,5 @@
 <template>
-  <!-- 演示可跳转列表：进入设备详情页，或在当前页展开实时参数（向下箭头表示就地展开） -->
-  <s-list aria-label="设备详情入口">
+  <s-list>
     <s-list-item
       hover
       arrow

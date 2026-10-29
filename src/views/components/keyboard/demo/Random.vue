@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：工艺参数数字键盘｜Random 用法演示 -->
   <s-list>
     <s-list-item>
       <s-keyboard ref="keyboard" type="random" />

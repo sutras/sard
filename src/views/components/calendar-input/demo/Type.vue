@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：保养计划日期选择，含停机窗口校验｜Type 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-calendar-input title="选择单个日期" placeholder="选择单个日期" clearable type="single" />

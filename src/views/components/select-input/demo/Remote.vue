@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：产线 / 工位选择｜Remote 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-select-input

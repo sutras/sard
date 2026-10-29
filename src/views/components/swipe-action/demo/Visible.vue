@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：列表项滑动操作（确认 / 转派）｜Visible 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-segmented v-model="visible" :options="options" />

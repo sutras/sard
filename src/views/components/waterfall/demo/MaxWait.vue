@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警照片瀑布流｜MaxWait 用法演示 -->
   <doc-page title="最大等待时间">
     <s-waterfall class="mx-4" @load="onLoad">
       <s-waterfall-item v-for="(item, index) in list" :key="index" #default="{ onLoad }">

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：状态色与看板配色｜Formats 用法演示 -->
   <s-flex vertical gap="large">
     <s-list card>
       <s-list-item>

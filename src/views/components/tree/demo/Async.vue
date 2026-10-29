@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：厂区 / 产线 / 设备树｜Async 用法演示 -->
   <doc-page gray title="异步编辑与拖拽">
     <s-tree
       ref="treeRef"

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：主题色与容器底色，深色看板与浅色巡检端共用同一套令牌 -->
   <s-flex wrap gap="medium">
     <ColorBox v-for="item in colors" :key="item.token" :name="item.name" :token="item.token" />
   </s-flex>

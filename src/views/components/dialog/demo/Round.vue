@@ -1,6 +1,5 @@
 <template>
-  <!-- 演示圆角按钮确认框：车间手套操作场景下扩大触控热区，取消项文案保留设备当前状态 -->
-  <s-list card aria-label="圆角按钮确认列表">
+  <s-list card>
     <s-list-item arrow hover title="点检超时提醒" @click="showAlert" />
     <s-list-item arrow hover title="设备切换至维护模式" @click="showConfirm" />
   </s-list>

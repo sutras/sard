@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：实时数据下拉刷新｜Page 用法演示 -->
   <doc-page title="基于页面的刷新">
     <s-pull-down-refresh :loading="loading" @refresh="onRefresh">
       <div

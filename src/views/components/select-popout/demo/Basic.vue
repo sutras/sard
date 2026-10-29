@@ -1,12 +1,5 @@
 <template>
-  <!-- 工业语境：产线弹层单选 —— 选项来自 MES 产线主数据，选中值即产线编码 -->
-  <s-select-popout
-    v-model="value"
-    v-model:visible="visible"
-    title="选择产线"
-    aria-label="选择产线"
-    @change="onChange"
-  >
+  <s-select-popout v-model="value" v-model:visible="visible" title="选择产线" @change="onChange">
     <s-select-option v-for="item in lines" :key="item.code" :label="item.name" :value="item.code" />
   </s-select-popout>
 

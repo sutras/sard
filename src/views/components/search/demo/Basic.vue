@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备位号与批次号检索｜Basic 用法演示 -->
   <s-search
     v-model="value"
     placeholder="输入设备位号 / 批次号"

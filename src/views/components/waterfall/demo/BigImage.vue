@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警照片瀑布流｜BigImage 用法演示 -->
   <doc-page title="大图">
     <s-waterfall :column-gap="4" :row-gap="4" @load="onLoad">
       <s-waterfall-item v-for="(item, index) in list" :key="index" #default="{ onLoad }">

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：看板布局｜Order 用法演示 -->
   <s-row>
     <s-col>
       <div class="layout-box">col1</div>

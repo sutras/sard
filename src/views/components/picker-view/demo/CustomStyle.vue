@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：自定义选中框样式：改 indicator-style 的边框、圆角与行高，列内内容不变｜CustomStyle 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-picker-view

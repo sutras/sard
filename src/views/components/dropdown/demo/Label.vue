@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备按产线筛选与班次切换｜Label 用法演示 -->
   <s-dropdown>
     <s-dropdown-item label="按报警时间" :options="options1" model-value="1" />
     <s-dropdown-item label="主轴转速" :options="options2" model-value="2" />

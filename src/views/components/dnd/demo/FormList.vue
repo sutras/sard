@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：工单工艺参数录入，参数行可拖拽排序｜FormList 用法演示 -->
   <s-form ref="formRef" :model="formModel" star-position="end" direction="vertical">
     <s-form-item label="工单名称" name="orderNo" required>
       <s-input
@@ -69,7 +68,7 @@
     <s-form-item>
       <s-button variant="outlined" class="mb-2" @click="addParam">新增参数</s-button>
       <s-button class="mb-2" @click="submitForm(formRef)">提交</s-button>
-      <s-button variant="outlined" color="secondary" @click="resetForm(formRef)">重置</s-button>
+      <s-button type="secondary" @click="resetForm(formRef)">重置</s-button>
     </s-form-item>
   </s-form>
 </template>

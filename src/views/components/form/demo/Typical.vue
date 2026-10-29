@@ -1,7 +1,6 @@
 <template>
-  <!-- 演示生产工单表单：工单号 + 产线 + 计划开工时刻 + 变更项，提交即进入班组长授权队列 -->
   <doc-page gray title="典型表单">
-    <s-form :model="form" label-width="120px" aria-label="生产工单表单">
+    <s-form :model="form" label-width="120px">
       <s-form-item label="工单编号">
         <s-input inlaid v-model="form.orderNo" placeholder="例 WO-20241027-0083" />
       </s-form-item>
@@ -66,10 +65,8 @@
         />
       </s-form-item>
       <s-form-item>
-        <s-button @click="onSubmit" aria-label="提交工单，需班组长授权">提交工单</s-button>
-        <s-button style="margin-top: 10px" variant="outlined" aria-label="取消并清空">
-          取消
-        </s-button>
+        <s-button @click="onSubmit">提交工单</s-button>
+        <s-button style="margin-top: 10px" variant="outlined">取消</s-button>
       </s-form-item>
     </s-form>
   </doc-page>

@@ -1,5 +1,4 @@
 <template>
-  <!-- 演示维护到期提醒可关闭：关闭仅表示「已知悉」，不解除维护计划，到期仍会再次推送 -->
   <s-alert
     closable
     type="warning"

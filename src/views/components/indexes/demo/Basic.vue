@@ -1,15 +1,9 @@
 <template>
-  <!-- 工业语境：设备编号索引（EQ-2024-xxx）｜Basic 用法演示 -->
   <s-form :model="model" direction="vertical">
     <s-form-item>
       <s-input v-model="model.phone" inlaid placeholder="输入设备位号手机号">
         <template #prepend>
-          <s-button
-            variant="link"
-            color="secondary"
-            style="padding-inline-start: 0"
-            @click="areaVisible = true"
-          >
+          <s-button type="text" style="padding-inline-start: 0" @click="areaVisible = true">
             +{{ model.areaCode }}
             <CaretDown class="ms-1 mt-1" />
           </s-button>

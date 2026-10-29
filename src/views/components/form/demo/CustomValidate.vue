@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：自定义校验：设备编号必须符合 EQ-年份-序号 -->
   <doc-page gray title="自定义校验规则">
     <s-form ref="ruleFormRef" :model="ruleForm" :rules="rules">
       <s-form-item label="班组长授权码" name="pass">

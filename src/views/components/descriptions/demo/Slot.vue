@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备台账字段展示（编号 / 位号 / 量程 / 联锁）｜Slot 用法演示 -->
   <s-descriptions bordered label-width="6em">
     <s-descriptions-item>
       <template #label>

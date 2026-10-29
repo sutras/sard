@@ -1,6 +1,5 @@
 <template>
-  <!-- 工业语境：移动巡检端主导航，设备 / 工单 / 报警 / 我的四个入口统一用同一套线性图标 -->
-  <s-tabbar v-model="value" aria-label="移动巡检端主导航">
+  <s-tabbar v-model="value">
     <s-tabbar-item :value="0" label="设备" #icon>
       <demo-icon name="cnc" />
     </s-tabbar-item>

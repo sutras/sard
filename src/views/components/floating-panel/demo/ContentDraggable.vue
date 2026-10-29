@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：巡检悬浮面板｜ContentDraggable 用法演示 -->
   <doc-page gray title="仅头部拖拽">
     <s-floating-panel :content-draggable="false">
       <div style="padding: 10px; text-align: center">参数明细不可拖拽</div>

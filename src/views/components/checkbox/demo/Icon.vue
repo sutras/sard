@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：点检项与安全前置勾选｜Icon 用法演示 -->
   <s-checkbox checked>
     <template #icon="{ checked }">
       <demo-icon :name="checked ? 'quality' : 'close'" />

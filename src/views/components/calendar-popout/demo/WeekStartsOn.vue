@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：保养计划日期弹层选择｜WeekStartsOn 用法演示 -->
   <s-calendar-popout
     v-model="value"
     v-model:visible="visible"

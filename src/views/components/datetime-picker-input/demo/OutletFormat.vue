@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：工单计划开工时刻选择｜OutletFormat 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-datetime-picker-input

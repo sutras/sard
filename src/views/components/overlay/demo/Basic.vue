@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：弹层遮罩｜Basic 用法演示 -->
   <s-overlay :visible="visible" :z-index="zIndex" @click="visible = false"></s-overlay>
 
   <s-button @click="onClick">显示遮罩</s-button>

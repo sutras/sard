@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：点检项与安全前置勾选｜DisabledReadOnly 用法演示 -->
   <doc-title>只读</doc-title>
   <s-checkbox readonly>点检项：振动值（已锁定）</s-checkbox>
   <s-checkbox readonly checked style="margin-top: 5px">班前点检已完成（已锁定）</s-checkbox>

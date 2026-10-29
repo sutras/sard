@@ -1,6 +1,5 @@
 <template>
-  <!-- 演示大屏顶部横向模块切换：与移动端竖向菜单共享同一套模块命名 -->
-  <s-menu direction="horizontal" aria-label="大屏顶部模块切换" @select="onSelect">
+  <s-menu direction="horizontal" @select="onSelect">
     <s-menu-item :value="1" label="设备监控" #icon>
       <demo-icon name="signal" />
     </s-menu-item>

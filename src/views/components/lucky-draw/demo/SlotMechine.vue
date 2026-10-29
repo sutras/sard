@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：班前安全问答抽题｜SlotMechine 用法演示 -->
   <div class="reels">
     <div v-for="(translateY, index) in offset" :key="index" class="reel-box">
       <div class="reel" :style="{ transform: `translateY(${translateY}%)` }">

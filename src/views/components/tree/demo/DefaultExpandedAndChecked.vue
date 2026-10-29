@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：厂区 / 产线 / 设备树｜DefaultExpandedAndChecked 用法演示 -->
   <doc-page gray title="默认展开以及默认选中">
     <s-tree
       :data="treeData"

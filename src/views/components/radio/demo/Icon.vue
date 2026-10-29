@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：班次单选，选中态用实心值班图标 -->
   <s-radio-group v-model="value">
     <s-radio v-for="item in list" :value="item.value" :key="item.value">
       <template #icon="{ checked }">

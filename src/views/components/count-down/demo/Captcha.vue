@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：停机窗口与保养倒计时｜Captcha 用法演示 -->
   <s-input v-model="value" placeholder="输入设备位号验证码">
     <template #append>
       <s-button variant="link" compact :loading="loading" :disabled="disabled" @click="onClick">

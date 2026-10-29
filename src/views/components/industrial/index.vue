@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业场景总览：四个场景各演示一组组件协同，覆盖监控、防错、告警处置、实体建模 -->
   <doc-page gray title="工业场景示例">
     <doc-demo title="场景一 · 车间设备监控">
       <ShopfloorMonitor />

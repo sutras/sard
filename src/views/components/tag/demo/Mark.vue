@@ -1,5 +1,4 @@
 <template>
-  <!-- 演示合规半圆标签：左侧标记「安全相关字段」，右侧标记「需授权」，与状态徽标区分开 -->
   <s-flex vertical gap="medium">
     <s-flex wrap gap="medium">
       <s-tag mark="left" variant="solid" color="danger">安全相关</s-tag>

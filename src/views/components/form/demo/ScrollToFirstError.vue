@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：校验失败时滚动到第一个错误字段 -->
   <doc-page gray title="滚动到第一个错误字段" padding="0">
     <s-form
       :model="formState"

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间看板轮播｜VideoSlide 用法演示 -->
   <video ref="video" :src="url" :poster="poster" class="w-full h-full bg-black" controls></video>
 </template>
 

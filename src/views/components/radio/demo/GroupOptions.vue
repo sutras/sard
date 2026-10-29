@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：风险等级与班次单选｜GroupOptions 用法演示 -->
   <s-radio-group v-model="value" :options="options"></s-radio-group>
 </template>
 

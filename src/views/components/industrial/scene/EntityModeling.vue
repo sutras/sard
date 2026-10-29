@@ -1,7 +1,6 @@
 <template>
-  <!-- 演示设备实体建模：拖拽实体图标到画布 → 带出 deviceType/unitCode/量程 → 生成标准化语义描述 -->
   <div class="entity-modeling">
-    <div class="entity-modeling__palette" role="list" aria-label="设备实体图标库">
+    <div class="entity-modeling__palette" role="list">
       <button
         v-for="entity in deviceEntities"
         :key="entity.id"
@@ -9,7 +8,6 @@
         type="button"
         draggable="true"
         role="listitem"
-        :aria-label="`拖动 ${entity.label}（${entity.deviceType}）到右侧建模画布`"
         :data-entity-type="entity.deviceType"
         :data-unit-code="entity.unitCode"
         @dragstart="onDragStart(entity, $event)"
@@ -36,7 +34,6 @@
       class="entity-modeling__canvas"
       :class="{ 'is-over': hovering }"
       role="region"
-      aria-label="语义建模画布，支持拖入设备实体"
       data-drop-target="device-entity"
       @dragover.prevent="hovering = true"
       @dragleave="hovering = false"

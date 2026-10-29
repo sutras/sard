@@ -1,6 +1,5 @@
 <template>
-  <!-- 演示工艺参数变更申请：长表单在弹窗内滚动，含量程校验与审批流说明 -->
-  <s-list card aria-label="工艺参数变更入口">
+  <s-list card>
     <s-list-item arrow hover title="提交工艺参数变更申请" @click="visible = true" />
   </s-list>
 

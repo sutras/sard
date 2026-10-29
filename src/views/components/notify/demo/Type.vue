@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警与下发结果通知｜Type 用法演示 -->
   <s-list card>
     <s-list-item arrow hover title="已完成通知" @click="showSucessNotice" />
     <s-list-item arrow hover title="预警通知" @click="showWarningNotice" />

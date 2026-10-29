@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：自定义内容插槽里放「产线 + OEE」两行结构，而不是只有 icon + text｜Custom 用法演示 -->
   <s-grid>
     <s-grid-item v-for="item in lineMetrics" :key="item.line">
       <template #content>

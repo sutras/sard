@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间看板轮播｜Basic 用法演示 -->
   <s-swiper show-indicator @change="onChange">
     <s-swiper-item v-for="(item, index) in list" :key="index">
       <div

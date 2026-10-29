@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：厂区 / 产线 / 设备树｜LeafOnly 用法演示 -->
   <doc-page gray title="仅选择叶子节点">
     <s-tree
       :data="treeData"

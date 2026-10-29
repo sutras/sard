@@ -1,8 +1,7 @@
 <template>
-  <!-- 演示弹窗内新建工单：弹窗不可点遮罩关闭，未通过校验时保持打开并阻断下发 -->
   <doc-page gray title="弹出层中的新建表单">
     <div class="mx-4">
-      <s-button block aria-label="新建生产工单" @click="visible = true">新建生产工单</s-button>
+      <s-button block @click="visible = true">新建生产工单</s-button>
     </div>
     <s-dialog
       v-model:visible="visible"

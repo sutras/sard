@@ -1,6 +1,5 @@
 <template>
-  <!-- 演示带图标的模块入口：图标统一收进 32×32 圆角色块，仅报警中心用危险色，其余用主色，避免图标字重差异显得杂乱 -->
-  <s-list aria-label="业务模块入口">
+  <s-list>
     <s-list-item title="备件出入库" description="立库 A 区 · 3 条待办" hover arrow #icon>
       <span class="module-icon"><demo-icon name="upload" /></span>
     </s-list-item>

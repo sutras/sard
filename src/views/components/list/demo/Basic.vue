@@ -1,6 +1,5 @@
 <template>
-  <!-- 演示设备台账列表：标题为设备位号，值为状态词，描述为「设备编号 · 产线 / 工位」 -->
-  <s-list aria-label="设备台账列表">
+  <s-list>
     <s-list-item
       title="CNC-Lathe-01"
       value="运行中"

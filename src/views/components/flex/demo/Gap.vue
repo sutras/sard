@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：看板栅格排布｜Gap 用法演示 -->
   <s-flex vertical gap="large">
     <s-radio-group v-model="gap" direction="horizontal" :options="flexGap" />
 

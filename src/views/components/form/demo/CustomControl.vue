@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：自定义表单控件：备件单价（金额 + 币种），校验单价必须大于 0 -->
   <doc-page gray title="自定义表单控件">
     <s-form :model="formState" ref="formRef">
       <s-form-item name="price" label="备件单价" :rules="[{ validator: checkPrice }]">

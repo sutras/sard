@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：现场处置动作选择（确认报警 / 转派维修 / 停机）｜Cancel 用法演示 -->
   <s-button @click="visible = true">显示</s-button>
   <s-action-sheet v-model:visible="visible" show-cancel :item-list="itemList" @select="onSelect" />
 </template>

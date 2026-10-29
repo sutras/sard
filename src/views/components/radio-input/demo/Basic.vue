@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：风险等级单选｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-radio-input

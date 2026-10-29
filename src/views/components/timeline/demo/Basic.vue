@@ -1,6 +1,5 @@
 <template>
-  <!-- 工业语境：停机处置时间线 —— 从报警触发到恢复生产，每一步都带责任角色与时间戳 -->
-  <s-timeline aria-label="停机处置时间线">
+  <s-timeline>
     <s-timeline-item
       v-for="(item, index) in events"
       :key="index"

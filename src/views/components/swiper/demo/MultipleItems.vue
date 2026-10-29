@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间看板轮播｜MultipleItems 用法演示 -->
   <s-swiper :slides-per-view="3" :space-between="20" show-indicator>
     <s-swiper-item v-for="(item, index) in list" :key="index">
       <div

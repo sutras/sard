@@ -1,6 +1,5 @@
 <template>
-  <!-- 工业语境：报警未读数取报警中心未确认条数，我的入口用红点提示待办授权 -->
-  <s-tabbar v-model="value" aria-label="移动巡检端主导航">
+  <s-tabbar v-model="value">
     <s-tabbar-item :value="0" label="设备" #icon>
       <demo-icon name="cnc" />
     </s-tabbar-item>

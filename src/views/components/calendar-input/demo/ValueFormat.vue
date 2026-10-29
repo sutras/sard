@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：保养计划日期选择，含停机窗口校验｜ValueFormat 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-calendar-input

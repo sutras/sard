@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警处置单分享给维修班｜Disabled 用法演示 -->
   <s-button @click="visible = true">转派处置单</s-button>
 
   <s-share-sheet v-model:visible="visible" show-cancel @select="onSelect">

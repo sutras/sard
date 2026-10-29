@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间看板轮播｜AutoPlay 用法演示 -->
   <s-swiper autoplay show-indicator :delay="3000" loop :space-between="20">
     <s-swiper-item v-for="(item, index) in list" :key="index">
       <div

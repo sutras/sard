@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：字段文本与单位｜LineClamp 用法演示 -->
   <s-text :line-clamp="2" style="max-width: 300px">
     该设备本周累计报警 3
     次，均为安全门联锁断开（E-1042），已更换双通道开关并完成联锁复检，处置记录见

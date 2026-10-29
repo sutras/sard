@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：厂区 / 产线 / 设备树｜CheckStrictly 用法演示 -->
   <doc-page gray title="严格选择">
     <s-tree
       :data="treeData"

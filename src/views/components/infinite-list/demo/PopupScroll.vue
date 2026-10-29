@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：万级报警记录滚动加载｜PopupScroll 用法演示 -->
   <s-button @click="visible = true">显示弹窗</s-button>
 
   <s-popup v-model:visible="visible" effect="slide-bottom">

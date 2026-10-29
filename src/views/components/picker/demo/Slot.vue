@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：产线选择，选项用「状态灯 + 产线名 + 状态词」表达，与看板上的信号灯语义一致｜Slot 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-picker

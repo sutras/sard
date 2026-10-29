@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警记录分页加载｜WithRefresh 用法演示 -->
   <div
     class="overflow-y-auto rounded-lg"
     style="height: 300px; border: 1px solid var(--s-border-color)"

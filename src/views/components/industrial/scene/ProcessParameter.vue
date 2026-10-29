@@ -1,17 +1,10 @@
 <template>
-  <!-- 场景二：工艺参数录入与防错 —— 量程校验、联锁前置、审批弹窗三段式阻断 -->
   <div class="scene">
     <s-alert type="warning" show-icon role="status" data-alarm-level="warning">
       EQ-2023-204 当前处于「联锁未验证」状态，参数变更须先完成光栅自检。
     </s-alert>
 
-    <s-form
-      ref="formRef"
-      :model="form"
-      :rules="rules"
-      label-width="7em"
-      aria-label="工艺参数录入表单"
-    >
+    <s-form ref="formRef" :model="form" :rules="rules" label-width="7em">
       <s-form-item label="设定温度" name="temperature">
         <s-input v-model="form.temperature" inlaid clearable placeholder="量程 0–120 °C" />
       </s-form-item>
@@ -36,9 +29,7 @@
         />
       </s-form-item>
       <s-form-item>
-        <s-button block aria-label="提交参数变更，需工艺工程师审批" @click="onSubmit">
-          提交工艺工程师审批
-        </s-button>
+        <s-button block @click="onSubmit">提交工艺工程师审批</s-button>
       </s-form-item>
     </s-form>
   </div>

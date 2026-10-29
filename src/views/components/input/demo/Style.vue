@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：输入框样式定制（车间大屏高对比度） -->
   <div style="padding: 5px 10px; background: var(--s-gray-400)">
     <s-input
       v-model="value"

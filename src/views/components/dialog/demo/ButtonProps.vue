@@ -1,6 +1,5 @@
 <template>
-  <!-- 演示危险操作按钮属性：停机/报废类确认按钮使用 danger 实心，与常规确认在视觉上分级 -->
-  <s-list card aria-label="危险操作确认列表">
+  <s-list card>
     <s-list-item arrow hover title="暂停产线（可恢复）" @click="showAlert" />
     <s-list-item arrow hover title="报废在制批次（不可逆）" @click="showConfirm" />
   </s-list>

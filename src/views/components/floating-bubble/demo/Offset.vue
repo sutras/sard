@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：大屏悬浮报警计数｜Offset 用法演示 -->
   <s-floating-bubble v-model:offset="offset" axis="both">
     <demo-icon name="chat-dots" size="24px" />
   </s-floating-bubble>

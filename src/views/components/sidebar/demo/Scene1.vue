@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：产线侧边索引｜Scene1 用法演示 -->
   <doc-page title="场景应用" padding="0">
     <s-scroll-spy v-model="value" :style="{ height: scrollViewHeight }">
       <div style="display: flex">

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：点检项与安全前置勾选｜Indeterminate 用法演示 -->
   <s-checkbox
     v-model:checked="allChecked"
     :indeterminate="isIndeterminate"

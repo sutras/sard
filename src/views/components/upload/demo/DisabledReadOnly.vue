@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：点检照片与报告上传｜DisabledReadOnly 用法演示 -->
   <doc-title>只读</doc-title>
   <s-upload
     :model-value="[

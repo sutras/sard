@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：班次与时间粒度切换｜Icon 用法演示 -->
   <s-segmented v-model="value" :options="options">
     <s-segmented-item v-for="(option, index) in options" :key="index" :value="option.value">
       <div class="flex flex-col items-center py-1.5">

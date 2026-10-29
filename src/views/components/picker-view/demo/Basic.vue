@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：单列产线选择，滚动即改变当前值｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-picker-view v-model:value="value">

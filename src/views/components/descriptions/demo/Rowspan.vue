@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备台账字段展示（编号 / 位号 / 量程 / 联锁）｜Rowspan 用法演示 -->
   <s-descriptions :columns="2" bordered label-width="5em">
     <s-descriptions-item label="头像" :rowspan="2">
       <s-avatar />

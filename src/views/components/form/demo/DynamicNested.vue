@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：嵌套字段：设备 → 工位 → 参数 -->
   <doc-page gray title="动态增减嵌套字段">
     <s-form ref="formRef" :model="dynamicValidateForm">
       <s-form-item v-for="(user, index) in dynamicValidateForm.users" :key="user.id">

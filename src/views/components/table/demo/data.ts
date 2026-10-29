@@ -73,12 +73,12 @@ export const multiColumns: TableColumnProps[] = [
       {
         label: '设备编号',
         prop: 'code',
-        width: 118,
+        width: 60,
       },
       {
         label: '产线',
         prop: 'line',
-        width: 100,
+        width: 60,
       },
     ],
   },
@@ -116,7 +116,7 @@ export const multiColumns: TableColumnProps[] = [
   {
     label: '操作',
     prop: 'action',
-    width: 84,
+    width: 40,
     fixed: 'end',
     slot: 'action',
   },

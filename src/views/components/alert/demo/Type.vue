@@ -1,5 +1,4 @@
 <template>
-  <!-- 演示四级告警语义：primary=点检提醒，success=联锁验证通过，warning=参数越限预警，danger=设备报警需停机 -->
   <s-alert type="primary" role="status" data-alarm-level="info">
     提示：注塑二线 10:00 计划换模，请提前完成模温机点检。
   </s-alert>

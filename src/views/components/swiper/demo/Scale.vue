@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间看板轮播｜Scale 用法演示 -->
   <s-swiper v-model="current" :slides-per-view="2" centered-slides>
     <s-swiper-item v-for="(item, index) in list" :key="index">
       <div

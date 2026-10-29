@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备多选弹层｜Remote 用法演示 -->
   <div>
     <s-select-popout
       ref="selectPopout"

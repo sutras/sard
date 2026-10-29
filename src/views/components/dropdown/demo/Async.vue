@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备按产线筛选与班次切换｜Async 用法演示 -->
   <s-dropdown direction="up">
     <s-dropdown-item
       v-model="value1"

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：按班次日期条切换历史数据｜DisabledDate 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-date-strip

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：产线 / 班次选择｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-picker-input

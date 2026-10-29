@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备铭牌与批次条码，扫码枪直读｜Format 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-segmented v-model="format" :options="formatOptions" :ellipsis="false" />

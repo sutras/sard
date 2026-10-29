@@ -1,6 +1,5 @@
 <template>
-  <!-- 工业语境：巡检端底部导航的「选中态包底」写法，用 active 给图标套一层主色圆底 -->
-  <s-tabbar v-model="value" aria-label="移动巡检端主导航">
+  <s-tabbar v-model="value">
     <s-tabbar-item :value="0" label="设备" #icon="{ active }">
       <span class="nav-icon" :class="{ 'nav-icon--active': active }">
         <demo-icon name="cnc" />

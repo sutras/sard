@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：短信验证登录（班组长临时授权） -->
   <doc-page gray title="手机号登录">
     <s-form ref="formRef" :model="formState" :show-error="false" class="auth-form">
       <s-form-item

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：万级报警记录滚动加载｜Basic 用法演示 -->
   <s-infinite-list
     :request="request"
     style="height: 240px; overflow-y: auto; border: 1px var(--s-border-color) solid"

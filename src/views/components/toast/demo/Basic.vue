@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：工单下发、授权与联锁校验的回执轻提示｜Basic 用法演示 -->
   <s-list card>
     <s-list-item hover arrow title="普通文本：下发回执" @click="onToast" />
     <s-list-item hover arrow title="长文本：报警处置说明" @click="onLongToast" />

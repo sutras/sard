@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：班次单选弹层｜Basic 用法演示 -->
   <s-radio-popout
     v-model="value"
     v-model:visible="visible"

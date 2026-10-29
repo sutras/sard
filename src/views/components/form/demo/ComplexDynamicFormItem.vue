@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：按车间选产线、逐条维护节拍，车间切换后已选产线自动清空 -->
   <doc-page gray title="复杂的动态增减表单项">
     <s-form ref="formRef" :model="dynamicValidateForm">
       <s-form-item name="area" label="车间" :rules="[{ required: true, message: '请选择车间' }]">

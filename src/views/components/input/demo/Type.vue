@@ -1,5 +1,4 @@
 <template>
-  <!-- 占位即 type 取值：text / tel / digit / number / password，后两项叠加 show-eye 与 clearable -->
   <s-input v-model="text" placeholder="text" type="text" />
   <s-input v-model="tel" placeholder="tel" type="tel" />
   <s-input v-model="digit" placeholder="digit" type="digit" />

@@ -1,10 +1,5 @@
 <template>
-  <!-- 工业语境：启停与联锁开关｜Loading 用法演示 -->
-  <s-switch
-    v-model="checked"
-    :before-update="beforeUpdate"
-    aria-label="停机申请开关，等待 MES 回执"
-  />
+  <s-switch v-model="checked" :before-update="beforeUpdate" />
 </template>
 
 <script setup lang="ts">

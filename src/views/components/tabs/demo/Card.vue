@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备详情分区（参数 / 报警 / 点检）｜Card 用法演示 -->
   <s-tabs v-model="value" :options="options" type="card"></s-tabs>
 </template>
 

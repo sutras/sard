@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：数据采集与下发等待态｜Progress 用法演示 -->
   <div class="text-2xl">
     <s-loading :animated="false" :progress="progress" type="circular" />
     <s-loading :animated="false" :progress="progress" type="clock" />

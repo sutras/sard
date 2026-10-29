@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：巡检快捷入口（扫码 / 报修 / 急停）｜Color 用法演示 -->
   <s-fab background="linear-gradient(300deg, rgb(245, 52, 35) 0%, rgb(246, 127, 72) 100%)">
     <s-fab-item name="扫码报修" background="rgb(59, 190, 136)" @click="onClick('扫码报修')">
       <demo-icon name="scan" />

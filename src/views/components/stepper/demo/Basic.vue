@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：数量与参数步进输入｜Basic 用法演示 -->
   <s-stepper placeholder="数量" input-width="52px" v-model="value" @change="onChange" />
   <div>当前值：{{ value ?? '未填写' }}</div>
 </template>

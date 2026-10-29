@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：受控登录：工号 + 授权码 -->
   <doc-page gray title="登录框">
     <s-form :model="formState" ref="formRef">
       <s-form-item

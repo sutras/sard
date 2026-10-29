@@ -1,5 +1,4 @@
 <template>
-  <!-- 场景四：设备实体建模 —— 拖拽实体图标生成标准化语义描述，供采集网关与看板共用 -->
   <div class="scene">
     <p class="scene__hint">
       从图标库拖拽实体到画布，自动带出 deviceType / unitCode /
@@ -8,7 +7,7 @@
 
     <EntityModeling />
 
-    <s-descriptions label-width="7em" bordered aria-label="实体语义字段规范">
+    <s-descriptions label-width="7em" bordered>
       <s-descriptions-item label="deviceType">设备类型枚举，与采集侧模型库对齐</s-descriptions-item>
       <s-descriptions-item label="unitCode">位号，现场铭牌唯一，禁止重复</s-descriptions-item>
       <s-descriptions-item label="minValue / maxValue">

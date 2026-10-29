@@ -1,5 +1,4 @@
 <template>
-  <!-- 演示带图标告警：图标区分提示/通过/预警/报警四类，巡检人员在强光车间可先按图标识别 -->
   <s-alert show-icon type="primary" role="status" data-alarm-level="info">
     提示：本班次点检任务剩余 3 项未完成（ST-04 / ST-05 / ST-13）。
   </s-alert>

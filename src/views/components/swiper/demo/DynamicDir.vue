@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间看板轮播｜DynamicDir 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-segmented v-model="vertical" :options="options" />

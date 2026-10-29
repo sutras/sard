@@ -1,9 +1,7 @@
 <template>
-  <!-- 演示工艺参数录入：数值输入配单位后缀，量程写进提示语，避免操作工凭记忆填值 -->
   <s-input
     v-model="value"
     placeholder="设定温度 例 92（量程 −20 ~ 120）"
-    aria-label="设定温度，单位摄氏度，量程 0 到 120"
     data-param="set-temperature"
     data-unit="°C"
     data-min="0"

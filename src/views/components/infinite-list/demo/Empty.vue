@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：万级报警记录滚动加载｜Empty 用法演示 -->
   <p class="mb-4">下拉刷新再次请求数据：</p>
 
   <s-pull-down-refresh

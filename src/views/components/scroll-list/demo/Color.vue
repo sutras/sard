@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备列表滚动｜Color 用法演示 -->
   <s-scroll-list
     scrollbar-bg="rgba(var(--s-color-danger-rgb), 0.2)"
     thumb-bg="var(--s-color-danger)"

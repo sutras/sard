@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：停机窗口与保养倒计时｜Update 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-count-down

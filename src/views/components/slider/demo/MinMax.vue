@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：参数连续调节（转速 / 温度）｜MinMax 用法演示 -->
   <doc-title>值的范围：[-50, 50]</doc-title>
   <s-slider :model-value="0" show-value :min="-50" :max="50" />
 

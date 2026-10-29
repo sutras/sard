@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备按产线筛选与班次切换｜Disabled 用法演示 -->
   <s-dropdown disabled>
     <s-dropdown-item :options="options1" model-value="1" />
     <s-dropdown-item :options="options2" model-value="2" />

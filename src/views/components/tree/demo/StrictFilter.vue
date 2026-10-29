@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：厂区 / 产线 / 设备树｜StrictFilter 用法演示 -->
   <doc-page gray title="严格的树节点过滤">
     <div style="padding: 16px; background: var(--s-bg-color-container)">
       <s-input v-model="searchString" placeholder="输入设备位号过滤关键词" />

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：批量选择设备或工单｜Search 用法演示 -->
   <s-checkbox-popout
     v-model="value"
     v-model:visible="visible"

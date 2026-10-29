@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：产线选择弹层｜Cascaded 用法演示 -->
   <s-picker-popout
     v-model="value"
     v-model:visible="visible"

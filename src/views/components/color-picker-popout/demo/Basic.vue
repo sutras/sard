@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：看板配色选择弹层｜Basic 用法演示 -->
   <s-color-picker-popout
     v-model:visible="visible"
     v-model="color"

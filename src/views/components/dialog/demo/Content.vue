@@ -1,6 +1,5 @@
 <template>
-  <!-- 演示受控操作登录：班组长授权后方可执行停机/改参，授权失败则弹窗保持打开 -->
-  <s-list card aria-label="受控操作入口">
+  <s-list card>
     <s-list-item arrow hover title="班组长授权（进入受控操作）" @click="visible = true" />
   </s-list>
 

@@ -1,6 +1,5 @@
 <template>
-  <!-- 演示等待 MES 回执的异步关闭：下发指令期间按钮 loading 且禁止重复提交与误关闭 -->
-  <s-list card aria-label="异步下发确认列表">
+  <s-list card>
     <s-list-item arrow hover title="下发工单（等待 MES 回执）" @click="showAlert" />
     <s-list-item arrow hover title="撤销工单（等待回执）" @click="showConfirm" />
   </s-list>

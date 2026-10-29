@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：按班次日期条切换历史数据｜Type 用法演示 -->
   <s-list card title="单选">
     <s-list-item>
       <s-date-strip v-model="singleValue" />

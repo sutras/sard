@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：自定义图标用于报警入口，图标形状与告警等级一一对应｜Icon 用法演示 -->
   <s-toast v-model:visible="visible" title="3 条未确认报警" #icon>
     <demo-icon name="bell" size="32px" color="var(--s-color-danger)" />
   </s-toast>

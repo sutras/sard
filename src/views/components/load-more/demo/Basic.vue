@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警记录分页加载｜Basic 用法演示 -->
   <div
     ref="scroll"
     class="overflow-y-auto rounded-lg"

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警记录分页加载｜FullPage 用法演示 -->
   <doc-page gray title="页面触底加载">
     <s-list>
       <s-list-item v-for="item in listData" :key="item.code" :title="item.name" />

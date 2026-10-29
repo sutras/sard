@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：中间鼓起的「报修」入口，现场发现异常时一键发起临时工单，需班组长确认后生效 -->
   <s-tabbar v-model="value">
     <s-tabbar-item :value="0" label="设备" #icon>
       <demo-icon name="cnc" />

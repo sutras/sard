@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：按工艺域折叠参数面板，避免大屏首屏信息过载｜HideBorder 用法演示 -->
   <s-accordion v-model="value" hide-border>
     <s-accordion-item title="主轴参数" name="1">主轴转速 1200 rpm，振动 1.2 mm/s</s-accordion-item>
     <s-accordion-item title="液压参数" name="2">系统压力 12.5 MPa，油温 46 °C</s-accordion-item>

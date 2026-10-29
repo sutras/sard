@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备多选弹层｜CustomOption 用法演示 -->
   <s-select-popout v-model="value" v-model:visible="visible" title="选择产线" @change="onChange">
     <div class="grid grid-cols-2 gap-2 px-4 pb-2">
       <s-select-option

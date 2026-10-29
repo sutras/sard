@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：班次与时间粒度切换｜OnlyIcon 用法演示 -->
   <s-segmented v-model="value" :options="options">
     <s-segmented-item v-for="option in options" :value="option.value">
       <demo-icon :name="option.icon" />

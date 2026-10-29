@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警现场大图查看｜Basic 用法演示 -->
   <s-grid :columns="3" square :gap="8">
     <s-grid-item v-for="(url, index) in urls" :key="url">
       <s-image

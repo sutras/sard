@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警照片瀑布流｜TrueCase 用法演示 -->
   <doc-page title="真实案例">
     <s-waterfall class="mx-4" @load="onLoad">
       <s-waterfall-item v-for="(item, index) in list" :key="index" #default="{ onLoad }">

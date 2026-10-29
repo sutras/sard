@@ -1,40 +1,47 @@
 <template>
-  <!-- 工业语境：设备参数卡｜Basic 用法演示 -->
   <s-card>
-    <div :class="bem.e('group')">
-      <div :class="bem.e('caption')">
-        普通文本
-        <span :class="bem.e('note')">超出即省略</span>
+    <div>
+      <div class="mb-2">
+        <s-text size="small" tag="strong">普通文本</s-text>
+        <s-text size="small" color="tertiary" class="ml-2">超出即省略</s-text>
       </div>
-      <div :class="bem.e('coupon')">
-        <div :class="bem.e('amount')">
-          <span :class="bem.e('symbol')">OEE</span>
-          <span :class="bem.e('value')">87.3</span>
+      <div
+        class="flex items-center gap-3.5 rounded-xl bg-(--s-bg-color-layout) px-3.5 py-3 text-[17px] leading-snug"
+      >
+        <div
+          class="flex h-[64px] w-[64px] shrink-0 flex-col items-center justify-center gap-0.5 rounded-lg bg-(--s-bg-color-container) font-semibold text-(--s-color-primary)"
+        >
+          <span class="text-[10px] tracking-[0.06em] opacity-75">OEE</span>
+          <span class="text-[16px] tabular-nums">87.3</span>
         </div>
-        <div :class="bem.e('info')">
-          <div :class="bem.e('title')">
+        <div class="min-w-0 flex-1">
+          <div class="font-semibold">
             <s-ellipsis :content="couponLong" />
           </div>
-          <div :class="bem.e('desc')">机加工一线 · ST-04</div>
+          <s-text tag="div" size="small" color="tertiary" class="mt-0.5">机加工一线 · ST-04</s-text>
         </div>
       </div>
     </div>
 
-    <div :class="[bem.e('group'), bem.e('group', 'last')]">
-      <div :class="bem.e('caption')">
-        TextShrink
-        <span :class="bem.e('note')">缩到 {{ sizeText }} 完整显示</span>
+    <div class="mt-6">
+      <div class="mb-2">
+        <s-text size="small" tag="strong">TextShrink</s-text>
+        <s-text size="small" color="tertiary" class="ml-2">缩到 {{ sizeText }} 完整显示</s-text>
       </div>
-      <div :class="bem.e('coupon')">
-        <div :class="bem.e('amount')">
-          <span :class="bem.e('symbol')">OEE</span>
-          <span :class="bem.e('value')">87.3</span>
+      <div
+        class="flex items-center gap-3.5 rounded-xl bg-(--s-bg-color-layout) px-3.5 py-3 text-[17px] leading-snug"
+      >
+        <div
+          class="flex h-[64px] w-[64px] shrink-0 flex-col items-center justify-center gap-0.5 rounded-lg bg-(--s-bg-color-container) font-semibold text-(--s-color-primary)"
+        >
+          <span class="text-[10px] tracking-[0.06em] opacity-75">OEE</span>
+          <span class="text-[16px] tabular-nums">87.3</span>
         </div>
-        <div :class="bem.e('info')">
-          <div :class="bem.e('title')">
+        <div class="min-w-0 flex-1">
+          <div class="font-semibold">
             <s-text-shrink ref="shrink" :text="couponLong" />
           </div>
-          <div :class="bem.e('desc')">机加工一线 · ST-04</div>
+          <s-text tag="div" size="small" color="tertiary" class="mt-0.5">机加工一线 · ST-04</s-text>
         </div>
       </div>
     </div>
@@ -43,10 +50,7 @@
 
 <script setup lang="ts">
 import { computed, useTemplateRef } from 'vue'
-import { createBem } from '@/utils'
 import { couponLong } from './shared'
-
-const bem = createBem('text-shrink-demo-basic')
 
 const shrink = useTemplateRef<{ fontSize?: number }>('shrink')
 
@@ -55,84 +59,3 @@ const sizeText = computed(() => {
   return fontSize ? `${fontSize}px` : '…'
 })
 </script>
-
-<style lang="scss" scoped>
-@use '@/style/base.scss' as *;
-
-@include b(text-shrink-demo-basic) {
-  @include e(group) {
-    @include m(last) {
-      margin-top: 20px;
-    }
-  }
-
-  @include e(caption) {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-bottom: 8px;
-    font-size: var(--s-font-size-sm);
-    font-weight: var(--s-font-weight-bold);
-    color: var(--s-text-color-primary);
-  }
-
-  @include e(note) {
-    font-weight: var(--s-font-weight-normal);
-    color: var(--s-text-color-tertiary);
-  }
-
-  // 工艺文件卡片：这就是组件的真实宿主，宽度完全由布局决定
-  @include e(coupon) {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 12px;
-    border-radius: var(--s-border-radius-lg);
-    background: var(--s-bg-color-layout);
-    font-size: 17px;
-    line-height: 1.4;
-  }
-
-  @include e(amount) {
-    display: flex;
-    flex: none;
-    flex-direction: column;
-    gap: 2px;
-    align-items: center;
-    justify-content: center;
-    width: 64px;
-    height: 64px;
-    border-radius: var(--s-border-radius);
-    background: var(--s-bg-color-container);
-    color: var(--s-color-primary);
-    font-weight: var(--s-font-weight-bold);
-  }
-
-  @include e(symbol) {
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    opacity: 0.75;
-  }
-
-  @include e(value) {
-    font-size: var(--s-font-size-lg);
-    font-variant-numeric: tabular-nums;
-  }
-
-  // 设备参数区只负责撑满剩余宽度，min-width: 0 让它能被压缩
-  @include e(info) {
-    min-width: 0;
-    flex: 1;
-  }
-
-  @include e(title) {
-    font-weight: var(--s-font-weight-bold);
-  }
-
-  @include e(desc) {
-    margin-top: 2px;
-    font-size: var(--s-font-size-sm);
-    color: var(--s-text-color-tertiary);
-  }
-}
-</style>

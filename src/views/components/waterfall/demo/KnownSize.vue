@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警照片瀑布流｜KnownSize 用法演示 -->
   <doc-page title="已知宽高">
     <s-waterfall class="mx-4">
       <s-waterfall-item v-for="(item, index) in list" :key="index" #default="{ onLoad }">

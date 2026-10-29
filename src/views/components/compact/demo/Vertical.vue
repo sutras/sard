@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：看板紧凑排布｜Vertical 用法演示 -->
   <s-flex gap="medium">
     <s-compact direction="vertical">
       <s-button #icon>

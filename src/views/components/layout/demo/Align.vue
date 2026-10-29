@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：看板布局｜Align 用法演示 -->
   <div class="layout-align">
     <s-row v-for="item in alignTypes" :align="item">
       <s-col>

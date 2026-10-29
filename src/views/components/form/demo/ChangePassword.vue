@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：修改班组长授权码（需原授权码校验） -->
   <doc-page gray title="修改密码">
     <s-form ref="formRef" :model="formState" class="auth-form" :show-error="false">
       <s-form-item

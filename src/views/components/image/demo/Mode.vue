@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备与报警现场图片｜Mode 用法演示 -->
   <s-grid :columns="2" :gap="10" bordered>
     <s-grid-item v-for="mode in modes" :key="mode">
       <template #content>

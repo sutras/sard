@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间公告与安灯提示｜Dynamic 用法演示 -->
   <s-notice-bar>
     {{ text }}
   </s-notice-bar>

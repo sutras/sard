@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：厂区 / 产线 / 设备树｜Single 用法演示 -->
   <doc-page gray title="单一选择">
     <s-tree
       :data="treeData"

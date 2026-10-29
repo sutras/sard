@@ -1,5 +1,4 @@
 <template>
-  <!-- 演示状态徽标圆角样式：巡检端圆角复用同一状态词，保证监控大屏与移动端语义一致 -->
   <s-flex vertical gap="medium">
     <s-flex wrap gap="medium">
       <s-tag round variant="filled" color="default" data-status="STOP">停机</s-tag>

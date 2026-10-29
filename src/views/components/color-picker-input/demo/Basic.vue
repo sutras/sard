@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警灯与趋势线配色（受控）｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-color-picker-input

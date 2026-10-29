@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备按产线筛选与班次切换｜Separator 用法演示 -->
   <s-dropdown separator="shadow" direction="up">
     <s-dropdown-item v-model="value1" :options="options1" />
     <s-dropdown-item v-model="value2" :options="options2" />

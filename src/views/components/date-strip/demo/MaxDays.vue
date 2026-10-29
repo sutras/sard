@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：按班次日期条切换历史数据｜MaxDays 用法演示 -->
   <s-list card title="多选（最多3天）">
     <s-list-item>
       <s-date-strip

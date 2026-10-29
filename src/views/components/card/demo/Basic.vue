@@ -1,6 +1,5 @@
 <template>
-  <!-- 演示机台状态卡：标题为设备位号，右上角状态徽标取自状态机，正文给出带单位与量程的实时参数 -->
-  <s-card title="CNC-Lathe-01" aria-label="设备状态卡 CNC-Lathe-01" data-device-code="EQ-2024-017">
+  <s-card title="CNC-Lathe-01" data-device-code="EQ-2024-017">
     <template #extra>
       <s-tag color="success" variant="filled" size="small" round data-status="RUN">运行中</s-tag>
     </template>

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：班次与时间粒度切换｜Direction 用法演示 -->
   <s-flex gap="medium">
     <s-segmented v-model="value" :options="options" direction="vertical">
       <s-segmented-item v-for="option in options" :value="option.value">

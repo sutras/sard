@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：界面过渡动效｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <div class="h-25">

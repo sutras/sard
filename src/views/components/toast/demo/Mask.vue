@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：回读 MES 参数期间屏蔽操作区，防止二次下发｜Mask 用法演示 -->
   <s-list card>
     <s-list-item hover arrow title="显示背景" @click="showOverlayToast" />
     <s-list-item hover arrow title="透明背景" @click="showTransparentOverlayToast" />

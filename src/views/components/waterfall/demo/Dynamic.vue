@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警照片瀑布流｜Dynamic 用法演示 -->
   <doc-page title="结合下拉刷新与触底加载">
     <s-pull-down-refresh
       :loading="refreshing"

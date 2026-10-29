@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备维保验收单，用自定义结构贴合车间大屏｜Plain 用法演示 -->
   <doc-page title="自定义表单样式和结构" padding-bottom="0">
     <s-form-plain
       ref="formRef"

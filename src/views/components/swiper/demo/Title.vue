@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间看板轮播｜Title 用法演示 -->
   <div class="relative">
     <s-swiper v-model="current">
       <s-swiper-item v-for="(item, index) in list" :key="index">

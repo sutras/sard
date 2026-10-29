@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：点检项与安全前置勾选｜Custom3 用法演示 -->
   <s-checkbox-group v-model="value" #default="{ toggle }">
     <s-list card>
       <s-list-item

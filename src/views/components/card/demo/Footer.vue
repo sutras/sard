@@ -1,6 +1,5 @@
 <template>
-  <!-- 演示设备卡底部操作区：点检 / 报警 / 备件三个现场动作，均需在班组长看板内留痕 -->
-  <s-card title="注塑机-A2" aria-label="设备卡 注塑机-A2" data-device-code="EQ-2023-204">
+  <s-card title="注塑机-A2" data-device-code="EQ-2023-204">
     <template #extra>
       <s-tag color="danger" variant="filled" size="small" round data-status="ALARM">报警</s-tag>
     </template>
@@ -9,15 +8,15 @@
     <p>处置要求：复位前须完成光栅自检并记录联锁旁路编号。</p>
     <template #footer>
       <div class="flex items-center justify-around">
-        <s-button variant="link" color="secondary" auto-height aria-label="上报点检结果" #icon>
+        <s-button type="text" auto-height #icon>
           <demo-icon name="work-order" />
         </s-button>
         <s-divider vertical />
-        <s-button variant="link" color="secondary" auto-height aria-label="通知报警中心" #icon>
+        <s-button type="text" auto-height #icon>
           <demo-icon name="bell" />
         </s-button>
         <s-divider vertical />
-        <s-button variant="link" color="secondary" auto-height aria-label="申领备件" #icon>
+        <s-button type="text" auto-height #icon>
           <demo-icon name="warehouse" />
         </s-button>
       </div>

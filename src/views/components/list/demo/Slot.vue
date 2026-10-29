@@ -1,9 +1,8 @@
 <template>
-  <!-- 演示自定义内容行：开关控制联锁使能、徽标展示未确认报警、滑块设定转速，以及设备摘要卡与行内输入框 -->
-  <s-list aria-label="设备运行设置">
+  <s-list>
     <s-list-item title="联锁使能（仅维护模式可关）">
       <template #value>
-        <s-switch :model-value="true" aria-label="联锁使能开关" />
+        <s-switch :model-value="true" />
       </template>
     </s-list-item>
 
@@ -16,12 +15,7 @@
     <s-list-item title="主轴转速设定">
       <template #value>
         <div class="rpm">
-          <s-slider
-            :model-value="1200"
-            :min="0"
-            :max="3000"
-            aria-label="主轴转速设定，单位转每分"
-          />
+          <s-slider :model-value="1200" :min="0" :max="3000" />
           <span class="rpm__text">1200 rpm</span>
         </div>
       </template>
@@ -65,7 +59,7 @@ const pwd = ref('')
 }
 
 .rpm :deep(.s-slider) {
-  width: 132px;
+  width: 160px;
 }
 
 .rpm__text {

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：底部弹出层｜BeforeClose 用法演示 -->
   <s-list card>
     <s-list-item hover arrow title="紧凑弹出框" @click="compactVisible = true" />
     <s-list-item hover arrow title="宽松弹出框" @click="looseVisible = true" />

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警照片瀑布流｜Columns 用法演示 -->
   <doc-page title="自定义列数">
     <div class="mx-4">
       <s-slider v-model="columns" class="7" show-scale :min="1" :max="8" />

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：同一段记录在不同行数、位置、展开状态下重新计算截断点 -->
   <s-list card>
     <s-list-item>
       <s-segmented v-model="text" :options="contentOptions" />

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：班次与时间粒度切换｜Disabled 用法演示 -->
   <s-flex vertical gap="medium">
     <s-segmented v-model="value" :options="options" disabled />
     <s-segmented v-model="value" :options="options" />

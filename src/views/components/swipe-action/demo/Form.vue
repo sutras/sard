@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：列表项滑动操作（确认 / 转派）｜Form 用法演示 -->
   <s-form ref="formRef" :model="dynamicValidateForm" card>
     <s-form-item
       v-for="(user, index) in dynamicValidateForm.users"

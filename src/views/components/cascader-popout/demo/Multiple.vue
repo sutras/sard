@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：产线级联定位弹层｜Multiple 用法演示 -->
   <s-cascader-popout
     v-model="value"
     v-model:visible="visible"

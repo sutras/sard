@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：按班次日期条切换历史数据｜MinMax 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-date-strip v-model="value" :min="new Date(2024, 0, 5)" :max="new Date(2024, 0, 19)" />

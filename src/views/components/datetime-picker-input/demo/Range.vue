@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：工单计划开工时刻选择｜Range 用法演示 -->
   <s-form>
     <s-form-item label="开始时间" star-position="end" name="startTime">
       <s-datetime-picker-input

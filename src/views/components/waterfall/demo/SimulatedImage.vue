@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警照片瀑布流｜SimulatedImage 用法演示 -->
   <div class="relative box-border" :style="{ paddingTop }">
     <div class="absolute inset-0 flex justify-center items-center bg-(--s-fill-color)">
       <span>{{ meta.width }}</span>

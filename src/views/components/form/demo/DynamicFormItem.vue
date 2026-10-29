@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：动态增减点检项 -->
   <doc-page gray title="添加/删除表单项">
     <s-form ref="formRef" :model="dynamicValidateForm">
       <s-form-item

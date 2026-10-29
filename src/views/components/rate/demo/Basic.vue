@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备点检评分｜Basic 用法演示 -->
   <s-rate v-model="value" @change="onChange" />
 </template>
 

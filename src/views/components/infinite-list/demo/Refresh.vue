@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：万级报警记录滚动加载｜Refresh 用法演示 -->
   <s-infinite-list
     ref="infiniteList"
     :request="request"

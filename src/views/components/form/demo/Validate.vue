@@ -1,5 +1,4 @@
 <template>
-  <!-- 演示工艺参数录入与防错：温度/压力按设备量程校验，越限即阻断提交并提示量程区间 -->
   <doc-page gray title="表单校验">
     <s-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="8em">
       <s-form-item label="设备编号" name="device">
@@ -84,13 +83,8 @@
         />
       </s-form-item>
       <s-form-item>
-        <s-button @click="submitForm(ruleFormRef)" aria-label="提交参数变更申请">提交审批</s-button>
-        <s-button
-          variant="outlined"
-          @click="resetForm(ruleFormRef)"
-          style="margin-top: 10px"
-          aria-label="重置表单"
-        >
+        <s-button @click="submitForm(ruleFormRef)">提交审批</s-button>
+        <s-button variant="outlined" @click="resetForm(ruleFormRef)" style="margin-top: 10px">
           重置
         </s-button>
       </s-form-item>

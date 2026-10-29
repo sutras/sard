@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：底部弹出层｜Basic 用法演示 -->
   <s-list card>
     <s-list-item hover arrow title="弹出框" @click="visible = true" />
   </s-list>

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：看板卡片排序（工单优先级调整）｜Basic 用法演示 -->
   <s-list card>
     <s-dnd v-model:list="listData" #default="{ list }">
       <s-dnd-item v-for="{ data, key, itemInfo } in list" :item-info="itemInfo" :key="key">

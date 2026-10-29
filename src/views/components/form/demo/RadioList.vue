@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：风险等级单选列表 -->
   <s-radio-group v-model="value" #default="{ toggle }">
     <s-list hide-border>
       <s-list-item

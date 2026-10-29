@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：班前安全问答抽题｜Wheel 用法演示 -->
   <div class="disc">
     <div
       class="sectors"

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：点检照片与报告上传｜Mix 用法演示 -->
   <s-upload
     v-model="fileList"
     :media-type="['image', 'video']"

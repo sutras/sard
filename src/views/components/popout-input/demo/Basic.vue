@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：下拉选择输入｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-popout-input

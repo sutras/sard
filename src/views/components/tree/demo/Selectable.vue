@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：厂区 / 产线 / 设备树｜Selectable 用法演示 -->
   <doc-page gray title="可选择的">
     <s-list>
       <s-list-item hover arrow title="设置选中的节点" @click="setCheckedKeys" />

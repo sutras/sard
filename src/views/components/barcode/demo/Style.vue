@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备铭牌与批次条码，扫码枪直读｜Style 用法演示 -->
   <s-list card>
     <s-list-item title="模块宽度">
       <template #value>

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：排产与保养日历｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-calendar v-model="value" @change="onChange" />

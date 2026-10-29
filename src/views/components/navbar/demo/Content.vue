@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间看板顶部导航与权限入口｜Content 用法演示 -->
   <s-navbar flow>
     <template #start>
       <s-navbar-item reverse>

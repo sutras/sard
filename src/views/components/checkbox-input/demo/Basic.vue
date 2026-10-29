@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：安全前置项勾选（光栅自检 / 急停回路）｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-checkbox-input

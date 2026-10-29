@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：三列各自独立滚动，按 年 / 月 / 日 组装选择结果｜Multiple 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-picker-view v-model:value="value">

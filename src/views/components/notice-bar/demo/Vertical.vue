@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间公告与安灯提示｜Vertical 用法演示 -->
   <s-notice-bar vertical>
     <s-swiper vertical :interval="1500" loop style="height: 40px">
       <s-swiper-item>

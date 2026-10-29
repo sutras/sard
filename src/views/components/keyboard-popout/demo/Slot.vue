@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：参数数字键盘弹层｜Slot 用法演示 -->
   <s-list card>
     <s-list-item title="打开键盘" arrow hover @click="visible = true" />
     <s-keyboard-popout

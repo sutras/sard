@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：嵌套结构与分项校验信息 -->
   <doc-page gray title="嵌套结构与校验信息">
     <s-form :model="formState" ref="formRef">
       <s-form-item :name="['user', 'name']" label="操作员" :rules="[{ required: true }]">

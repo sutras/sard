@@ -1,5 +1,4 @@
 <template>
-  <!-- 演示三端尺寸一致性：small=表格行内，medium=移动巡检，large=监控大屏，同一状态词三种尺寸 -->
   <s-flex vertical gap="medium">
     <s-flex wrap align="center" gap="medium">
       <s-tag size="small" variant="solid" color="success" data-surface="table">运行中</s-tag>

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：参数锁定（审批中）与联锁状态只读 -->
   <doc-page gray title="表单只读和禁用">
     <s-list>
       <s-list-item title="只读">

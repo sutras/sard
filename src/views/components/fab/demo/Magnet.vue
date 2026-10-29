@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：巡检快捷入口（扫码 / 报修 / 急停）｜Magnet 用法演示 -->
   <s-fab draggable axis="both" magnet="x">
     <s-fab-item name="扫码报修" @click="onClick('扫码报修')">
       <demo-icon name="scan" />

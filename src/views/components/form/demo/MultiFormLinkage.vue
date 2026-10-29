@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：主表填产线、弹窗里逐个添加工位，列表回填到主表 -->
   <doc-page gray title="多表单联动">
     <s-form ref="formRef" :model="formState" label-width="100px">
       <s-form-item

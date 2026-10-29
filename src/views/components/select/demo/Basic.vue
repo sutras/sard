@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：按厂区分组的产线选择，组内条目足够多，滚动时组标题会吸顶｜Basic 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-select v-model="value" @change="onChange">

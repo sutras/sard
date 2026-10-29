@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备列表滚动｜Basic 用法演示 -->
   <s-scroll-list>
     <div class="flex flex-col gap-5">
       <div v-for="(row, i) in rows" :key="i" class="flex gap-8">

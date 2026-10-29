@@ -1,11 +1,9 @@
 <template>
-  <!-- 演示同一产线多工位合并单元格：产线列纵向合并，避免重复产线名干扰停机原因判读 -->
   <s-table
     bordered
     :columns="columns"
     :data="data"
     :span-method="spanMethod"
-    aria-label="按产线合并的停机原因表"
     data-scene="line-downtime-table"
   ></s-table>
 </template>

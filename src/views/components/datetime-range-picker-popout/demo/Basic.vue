@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：生产时段区间弹层｜Basic 用法演示 -->
   <s-datetime-range-picker-popout
     v-model="date"
     v-model:visible="visible"

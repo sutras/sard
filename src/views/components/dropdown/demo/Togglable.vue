@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备按产线筛选与班次切换｜Togglable 用法演示 -->
   <s-dropdown togglable direction="up">
     <s-dropdown-item v-model="value1" placeholder="按报警时间" :options="options1" />
     <s-dropdown-item v-model="value2" placeholder="班次" :options="options2" />

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：动态校验规则：按设备类型切换量程 -->
   <doc-page gray title="动态校验规则">
     <s-form ref="formRef" :model="formState">
       <s-form-item

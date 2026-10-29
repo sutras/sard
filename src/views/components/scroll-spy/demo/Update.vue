@@ -1,15 +1,18 @@
 <template>
-  <!-- 工业语境：车间清单边加载边追加锚点，新增内容同样可被追踪｜Update 用法演示 -->
   <div class="mb-1 text-sm">
     当前锚点：{{ currentName }}
     <span v-if="value">（{{ value }}）</span>
   </div>
 
-  <s-button v-if="target" style="margin: 5px 0" @click="value = target.code">
+  <s-button v-if="target" class="my-3" @click="value = target.code">
     跳到：{{ labelOf(target.code) }}
   </s-button>
 
-  <s-scroll-spy v-model="value" style="height: 200px; border: 1px solid var(--s-border-color)">
+  <s-scroll-spy
+    v-model="value"
+    style="height: 200px; border: 1px solid var(--s-border-color)"
+    class="rounded-lg"
+  >
     <template v-for="item in listData" :key="item.code">
       <s-scroll-spy-anchor :name="item.code" />
       <div class="sticky top-0 flex items-baseline gap-2 p-1 bg-(--s-bg-color-container)">

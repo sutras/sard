@@ -1,5 +1,4 @@
 <template>
-  <!-- 占位即配置项：自动高度 / 最小高度 / 最大高度 -->
   <s-input v-model="value" type="textarea" auto-height rows="1" placeholder="自动高度" />
   <s-input
     v-model="value2"

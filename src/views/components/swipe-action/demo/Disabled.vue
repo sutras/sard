@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：列表项滑动操作（确认 / 转派）｜Disabled 用法演示 -->
   <s-list card>
     <s-list-item style="padding: 1px 0 0 0">
       <s-swipe-action disabled>

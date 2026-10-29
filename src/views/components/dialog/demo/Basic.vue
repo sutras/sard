@@ -1,6 +1,5 @@
 <template>
-  <!-- 演示三类生产确认：工单下发（L2）、设备停机（L3 不可逆）、参数越限阻断提示 -->
-  <s-list card aria-label="生产确认操作列表">
+  <s-list card>
     <s-list-item
       arrow
       hover

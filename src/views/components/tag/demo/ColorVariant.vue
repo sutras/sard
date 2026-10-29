@@ -1,5 +1,4 @@
 <template>
-  <!-- 演示状态徽标色板：颜色即状态机语义（灰=停机，蓝=待机，绿=运行中，黄=维护中，红=报警） -->
   <s-flex vertical gap="medium">
     <s-flex wrap gap="medium">
       <s-tag variant="filled" color="default" data-status="STOP">停机</s-tag>

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备位号与批次号检索｜SearchButton 用法演示 -->
   <s-search placeholder="输入设备位号 / 批次号" search="查询" @search="onSearch" />
 </template>
 

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：厂区 / 产线 / 设备树｜Basic 用法演示 -->
   <doc-page gray title="基础使用">
     <s-tree :data="treeData" :node-keys="{ title: 'name', key: 'code' }" />
   </doc-page>

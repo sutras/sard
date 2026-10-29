@@ -1,5 +1,4 @@
 <template>
-  <!-- 演示色板单元：一个色块 + 令牌名 + 令牌值，供四组颜色示例复用 -->
   <div class="color-box">
     <div class="color-box__chip" :style="{ background: `var(${token})` }"></div>
     <div class="color-box__name">{{ name }}</div>

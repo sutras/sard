@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：按工艺域折叠参数面板，避免大屏首屏信息过载｜Slot 用法演示 -->
   <s-accordion v-model="value">
     <s-accordion-item name="1" extra="自定义扩展">
       <template #title>

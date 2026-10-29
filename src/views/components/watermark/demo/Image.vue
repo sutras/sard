@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：工艺文件水印（受控）｜Image 用法演示 -->
   <div style="position: relative; height: 240px">
     <s-watermark :image="image" :width="80" :height="80" />
   </div>

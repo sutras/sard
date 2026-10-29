@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：巡检悬浮面板｜Basic 用法演示 -->
   <doc-page gray title="基础使用">
     <s-floating-panel>
       <s-list>

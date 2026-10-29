@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：三种省略位置：头部（保留结论）、中部（保留首尾）、尾部（保留起因） -->
   <s-list card>
     <s-list-item>
       <s-ellipsis

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：计划开工时刻弹层选择｜Basic 用法演示 -->
   <s-datetime-picker-popout
     v-model="value"
     v-model:visible="visible"

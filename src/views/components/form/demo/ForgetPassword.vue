@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：找回授权码（工号 + 短信验证） -->
   <doc-page gray title="忘记密码">
     <s-form ref="formRef" :model="formState" :show-error="false" class="auth-form">
       <s-form-item

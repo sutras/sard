@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：厂区 / 产线 / 设备树｜Editable 用法演示 -->
   <doc-page gray title="可编辑的">
     <div class="flex m-3 gap-3 justify-center">
       <s-button @click="addRootNode">添加根节点</s-button>

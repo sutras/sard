@@ -1,52 +1,41 @@
 <template>
-  <!-- 场景一：车间设备监控 —— KpiCard 指标 + 机台状态表 + 状态徽标，同一状态词在三端保持一致 -->
   <div class="scene">
     <div class="scene__kpis">
-      <s-card aria-label="设备综合效率 OEE" data-metric="oee" data-unit="%">
+      <s-card data-metric="oee" data-unit="%">
         <p class="scene__kpi-label">设备综合效率 OEE</p>
         <p class="scene__kpi-value">
           87.3
           <span>%</span>
         </p>
-        <s-progress-bar :percent="87.3" status="success" aria-label="OEE 达成进度" />
+        <s-progress-bar :percent="87.3" status="success" />
       </s-card>
-      <s-card aria-label="良率" data-metric="yield" data-unit="%">
+      <s-card data-metric="yield" data-unit="%">
         <p class="scene__kpi-label">良率</p>
         <p class="scene__kpi-value">
           99.1
           <span>%</span>
         </p>
-        <s-progress-bar :percent="99.1" status="success" aria-label="良率" />
+        <s-progress-bar :percent="99.1" status="success" />
       </s-card>
-      <s-card aria-label="稼动率" data-metric="utilization" data-unit="%">
+      <s-card data-metric="utilization" data-unit="%">
         <p class="scene__kpi-label">稼动率</p>
         <p class="scene__kpi-value">
           91.4
           <span>%</span>
         </p>
-        <s-progress-bar :percent="91.4" aria-label="稼动率" />
+        <s-progress-bar :percent="91.4" />
       </s-card>
-      <s-card aria-label="单位能耗" data-metric="energy-per-unit" data-unit="kWh/件">
+      <s-card data-metric="energy-per-unit" data-unit="kWh/件">
         <p class="scene__kpi-label">单位能耗</p>
         <p class="scene__kpi-value">
           0.42
           <span>kWh/件</span>
         </p>
-        <s-progress-bar
-          :percent="62"
-          color="var(--s-color-warning)"
-          aria-label="单耗占基准值比例"
-        />
+        <s-progress-bar :percent="62" color="var(--s-color-warning)" />
       </s-card>
     </div>
 
-    <s-table
-      :columns="columns"
-      :data="rows"
-      underlined
-      aria-label="车间机台实时状态表"
-      data-scene="shopfloor-monitor"
-    >
+    <s-table :columns="columns" :data="rows" underlined data-scene="shopfloor-monitor">
       <template #status="{ row }">
         <s-tag :color="row.statusColor" variant="filled" size="small" round>
           {{ row.statusLabel }}
@@ -59,7 +48,7 @@
       </template>
     </s-table>
 
-    <div class="scene__consistency" role="note" aria-label="多端状态语义一致性示例">
+    <div class="scene__consistency" role="note">
       <p class="scene__consistency-title">同一「运行中」在三端的表达</p>
       <div class="scene__consistency-row">
         <span>监控大屏</span>

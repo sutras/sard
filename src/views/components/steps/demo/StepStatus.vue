@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：工单下发与报警处置流程｜StepStatus 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-steps :item-list="itemList" direction="vertical" />

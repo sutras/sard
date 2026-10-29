@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间看板轮播｜MultipleCenter 用法演示 -->
   <s-swiper
     :slides-per-view="3"
     :slides-per-group="2"

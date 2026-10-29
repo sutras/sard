@@ -1,6 +1,5 @@
 <template>
-  <!-- 工业语境：报警通道选中态用危险色，其余入口保持主色，避免全站泛红 -->
-  <s-tabbar v-model="value" active-color="var(--s-color-danger)" aria-label="移动巡检端主导航">
+  <s-tabbar v-model="value" active-color="var(--s-color-danger)">
     <s-tabbar-item :value="0" label="设备" #icon>
       <demo-icon name="cnc" />
     </s-tabbar-item>

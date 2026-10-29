@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：工位选择输入，前缀标注字段、后缀标注数据来源（MES）｜Slot 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-popout-input

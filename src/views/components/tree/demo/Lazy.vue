@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：厂区 / 产线 / 设备树｜Lazy 用法演示 -->
   <doc-page gray title="懒加载">
     <s-tree
       lazy

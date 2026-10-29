@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：产线侧边索引｜Line 用法演示 -->
   <s-sidebar v-model="value" line>
     <s-sidebar-item value="1" label="标签名称" />
     <s-sidebar-item value="2" label="标签名称" />

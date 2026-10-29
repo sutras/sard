@@ -1,5 +1,4 @@
 <template>
-  <!-- 演示报警态卡片样式：红色卡面承载 L3 级告警，卡片外观本身即是风险等级信号 -->
   <s-card
     style="
       --s-card-bg: var(--s-color-danger);
@@ -12,7 +11,6 @@
     title="L3 严重告警 · 空压机-C01"
     footer="需立即处置：30 min 内未复位将自动降载"
     hover
-    aria-label="L3 严重告警卡：空压机 C01 排气温度越限"
     role="alert"
     data-alarm-level="critical"
   >
@@ -21,12 +19,7 @@
     <p>处置链路：值班人员确认 → 班组长授权 → 降载或停机</p>
   </s-card>
 
-  <s-card
-    class="mt-7"
-    hover
-    aria-label="生产工单卡 WO-20241027-0083"
-    data-work-order="WO-20241027-0083"
-  >
+  <s-card class="mt-7" hover data-work-order="WO-20241027-0083">
     <template #icon>
       <s-text class="flex mt-1" color="primary" size="large">
         <PencilSquare />

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警现场照片裁剪后归档｜CropScale 用法演示 -->
   <s-button @click="onClick">选择报警照片</s-button>
 
   <s-image

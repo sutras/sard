@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：厂区 → 车间 → 产线 → 工位，逐级请求下级数据｜Lazy 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-cascader

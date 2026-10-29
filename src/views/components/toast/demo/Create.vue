@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：全局提示用于操作回执，独立实例分别固定在看板顶部与底部｜Create 用法演示 -->
   <s-list card>
     <s-list-item hover arrow title="同时显示多个提示" @click="onMultiple" />
     <s-list-item hover arrow title="独立控制显隐" @click="onIndependent" />

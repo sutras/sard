@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：状态色与看板配色｜ShowFormats 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-color-picker v-model="color" show-presets show-alpha show-format />

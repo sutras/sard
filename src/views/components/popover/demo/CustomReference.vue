@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：快捷操作气泡（点检 / 派工 / 停机）｜CustomReference 用法演示 -->
   <s-popover v-model:visible="visible" position="right" :reference="referenceRef">
     <s-menu @select="onSelect">
       <s-menu-item :value="1" label="早班" />

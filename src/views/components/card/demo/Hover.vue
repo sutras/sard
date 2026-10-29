@@ -1,12 +1,5 @@
 <template>
-  <!-- 演示可点击设备卡：点击进入设备详情（台账 / 参数趋势 / 报警历史），联锁未验证时以红色标注 -->
-  <s-card
-    title="压铸机-D03"
-    hover
-    aria-label="设备卡 压铸机-D03，可进入详情"
-    data-device-code="EQ-2023-076"
-    @click="onClick"
-  >
+  <s-card title="压铸机-D03" hover data-device-code="EQ-2023-076" @click="onClick">
     <template #extra>
       <s-tag color="default" variant="filled" size="small" round data-status="STOP">停机</s-tag>
     </template>

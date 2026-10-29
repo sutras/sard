@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：字段文本与单位｜Color 用法演示 -->
   <s-text class="mx-2" color="default">default 默认文本颜色</s-text>
   <s-text class="mx-2" color="secondary">secondary 次要文本颜色</s-text>
   <s-text class="mx-2" color="tertiary">tertiary 三级文本颜色</s-text>

@@ -1,5 +1,4 @@
 <template>
-  <!-- 演示 L3 严重告警：红色脉冲 + 「需立即处置」，脉冲仅用于最高等级，避免告警疲劳 -->
   <div class="critical-alarm">
     <s-alert type="danger" show-icon role="alert" data-alarm-level="critical" data-pulse="true">
       严重告警 · EQ-2021-009 空压机-C01 排气温度 88.9 °C，超量程上限 85 °C —— 需立即处置

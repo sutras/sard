@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：采集数据加载占位｜Contain 用法演示 -->
   <s-switch v-model="loading" style="margin-bottom: 10px" />
 
   <s-skeleton avatar title animated :loading="loading">

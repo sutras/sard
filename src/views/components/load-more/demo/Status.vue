@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：报警记录分页加载｜Status 用法演示 -->
   <div>
     <s-load-more disabled :status="status" @load="toast('加载数据')"></s-load-more>
 

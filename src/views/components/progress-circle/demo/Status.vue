@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：OEE 环形指标｜Status 用法演示 -->
   <s-flex gap="medium">
     <s-progress-circle :percent="value" status="success" />
     <s-progress-circle :percent="value" status="warning" />

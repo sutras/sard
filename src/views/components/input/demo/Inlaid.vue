@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：内嵌式输入：表单行内样式 -->
   <s-list>
     <s-list-item>
       <s-input v-model="username" inlaid clearable placeholder="操作员工号 例 A-1042" />

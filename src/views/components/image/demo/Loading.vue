@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备与报警现场图片｜Loading 用法演示 -->
   <s-segmented v-model="src" :options="options" />
 
   <div style="height: 160px; margin-top: 10px">

@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：参数区分隔｜Vertical 用法演示 -->
   <s-divider vertical />
   <span>文本</span>
   <s-divider vertical type="dashed"></s-divider>

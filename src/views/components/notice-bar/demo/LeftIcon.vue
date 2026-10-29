@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间公告与安灯提示｜LeftIcon 用法演示 -->
   <s-notice-bar>
     <template #left-icon>
       <demo-icon name="bell" size="16px" />

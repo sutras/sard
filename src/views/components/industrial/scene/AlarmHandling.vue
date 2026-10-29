@@ -1,5 +1,4 @@
 <template>
-  <!-- 场景三：报警处置 —— Alert 分级 + 现场操作按钮 + 授权弹窗，严重级需双前置才能下发停机 -->
   <div class="scene">
     <s-alert type="danger" show-icon role="alert" data-alarm-level="critical">
       E-1042 注塑机-A2 安全门联锁断开，液压单元已紧急泄压 —— 需立即处置
@@ -11,7 +10,7 @@
       I-0301 AGV-03 电量 21 %，已自动返回充电桩
     </s-alert>
 
-    <s-list card aria-label="报警处置动作">
+    <s-list card>
       <s-list-item title="确认告警（写入处置记录）" arrow hover @click="onAck" />
       <s-list-item title="转派维修班" arrow hover @click="onTransfer" />
       <s-list-item title="停机处置（需班组长授权）" arrow hover @click="visible = true" />

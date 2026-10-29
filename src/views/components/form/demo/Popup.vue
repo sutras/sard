@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：弹窗内新建生产工单，滚动到第一个校验失败字段并保持弹窗打开 -->
   <doc-page gray title="弹出框中的表单">
     <div class="mx-4">
       <s-button block @click="showForm = true">新建生产工单</s-button>

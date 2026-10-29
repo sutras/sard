@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：设备选择，选项里同时给出位号、运行状态与 OEE，替代只有名称的默认选项｜CustomOption 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-select-input

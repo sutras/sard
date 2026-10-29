@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：数量与参数步进输入｜Variant 用法演示 -->
   <s-switch v-model="disabled" checked-text="禁用输入" unchecked-text="可编辑" class="mb-5" />
 
   <s-flex vertical gap="medium">

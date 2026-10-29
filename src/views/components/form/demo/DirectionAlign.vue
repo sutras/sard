@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：标签与内容的对齐方式（窄屏巡检端） -->
   <doc-page gray title="方向与对齐">
     <doc-demo>
       <doc-title>排列方向</doc-title>

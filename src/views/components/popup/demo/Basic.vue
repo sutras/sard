@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：弹层容器｜Basic 用法演示 -->
   <s-popup v-model:visible="visible" :effect="effect">
     <div class="content">
       <s-button block @click="onClick">跳转</s-button>

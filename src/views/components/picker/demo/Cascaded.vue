@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：产线与班次选择器｜Cascaded 用法演示 -->
   <s-list card>
     <s-list-item>
       <s-picker

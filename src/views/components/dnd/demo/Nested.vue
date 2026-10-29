@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：工单下挂工艺参数，工单可拖拽排序、每张卡内的参数也可拖拽｜Nested 用法演示 -->
   <s-form-plain ref="formRef" :model="formModel" star-position="end">
     <s-dnd v-model:list="formModel.orders" #default="{ list }">
       <s-dnd-item
@@ -124,7 +123,7 @@
       <s-list-item>
         <s-button block variant="outlined" class="mb-2" @click="addOrder">新增工单</s-button>
         <s-button block class="mb-2" @click="submitForm()">提交</s-button>
-        <s-button block variant="outlined" color="secondary" @click="resetForm()">重置</s-button>
+        <s-button block type="secondary" @click="resetForm()">重置</s-button>
       </s-list-item>
     </s-list>
   </s-form-plain>
