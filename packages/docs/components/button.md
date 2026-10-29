@@ -18,6 +18,12 @@ group:
 
 <<< @demo/button/demo/ColorVariant.vue
 
+### 语法糖
+
+`type` 是 `color` 与 `variant` 的语法糖，传入后会覆盖两者，默认不生效。
+
+<<< @demo/button/demo/Type.vue
+
 ### 自定义颜色
 
 如果内置主题色不合适，可以自定义颜色。使用 `color` 和 `background` 属性定义字体颜色和背景色。
@@ -78,6 +84,7 @@ group:
 
 | 属性        | 描述                         | 类型                                                                                              | 默认值     |
 | ----------- | ---------------------------- | ------------------------------------------------------------------------------------------------- | ---------- |
+| type        | color 与 variant 的语法糖    | 'primary' \| 'secondary' \| 'dashed' \| 'text' \| 'link'                                          | -          |
 | variant     | 按钮变体                     | 'solid' \| 'outlined' \| 'dashed' \| 'filled' \| 'text' \| 'link'                                 | 'solid'    |
 | color       | 按钮主题色                   | 'primary' \| 'secondary' \| 'success' \| 'warning' \| 'danger' \| 'neutral' \| 'white' \| 'black' | 'primary'  |
 | size        | 按钮尺寸                     | 'xs' \| 'small' \| 'medium' \| 'large'                                                            | 'medium'   |
@@ -91,6 +98,16 @@ group:
 | ghost       | 幽灵按钮                     | boolean                                                                                           | false      |
 | auto-height | 是否自动高度                 | boolean                                                                                           | false      |
 | compact     | 紧凑样式，会去掉高度和内边距 | boolean                                                                                           | false      |
+
+传入 `type` 时会同时覆盖 `color` 与 `variant`，对应关系如下：
+
+| type        | color       | variant    |
+| ----------- | ----------- | ---------- |
+| 'primary'   | 'primary'   | 'solid'    |
+| 'secondary' | 'secondary' | 'outlined' |
+| 'dashed'    | 'secondary' | 'dashed'   |
+| 'text'      | 'secondary' | 'text'     |
+| 'link'      | 'primary'   | 'link'     |
 
 ### ButtonSlots
 
@@ -109,31 +126,32 @@ group:
 
 ### 样式变量
 
-| CSS 变量                      | 值                          |
-| ----------------------------- | --------------------------- |
-| `--s-button-height-xs`        | `var(--s-size-xl)`          |
-| `--s-button-padding-y-xs`     | `0`                         |
-| `--s-button-padding-x-xs`     | `6px`                       |
-| `--s-button-border-radius-xs` | `var(--s-border-radius-sm)` |
-| `--s-button-font-size-xs`     | `var(--s-font-size-sm)`     |
-| `--s-button-icon-size-xs`     | `var(--s-font-size-sm)`     |
-| `--s-button-height-sm`        | `var(--s-size-2xl)`         |
-| `--s-button-padding-y-sm`     | `0`                         |
-| `--s-button-padding-x-sm`     | `9px`                       |
-| `--s-button-border-radius-sm` | `var(--s-border-radius-sm)` |
-| `--s-button-font-size-sm`     | `var(--s-font-size-sm)`     |
-| `--s-button-icon-size-sm`     | `var(--s-font-size)`        |
-| `--s-button-height`           | `var(--s-size-3xl)`         |
-| `--s-button-padding-y`        | `0`                         |
-| `--s-button-padding-x`        | `11px`                      |
-| `--s-button-border-radius`    | `var(--s-border-radius)`    |
-| `--s-button-font-size`        | `var(--s-font-size)`        |
-| `--s-button-icon-size`        | `18px`                      |
-| `--s-button-height-lg`        | `var(--s-size-4xl)`         |
-| `--s-button-padding-y-lg`     | `0`                         |
-| `--s-button-padding-x-lg`     | `14px`                      |
-| `--s-button-border-radius-lg` | `var(--s-border-radius)`    |
-| `--s-button-font-size-lg`     | `var(--s-font-size-lg)`     |
-| `--s-button-icon-size-lg`     | `20px`                      |
-| `--s-button-outlined-bg`      | `var(--s-white)`            |
-| `--s-button-secondary-color`  | `var(--s-gray-800)`         |
+| CSS 变量                            | 值                          |
+| ----------------------------------- | --------------------------- |
+| `--s-button-height-xs`              | `var(--s-size-xl)`          |
+| `--s-button-padding-y-xs`           | `0`                         |
+| `--s-button-padding-x-xs`           | `6px`                       |
+| `--s-button-border-radius-xs`       | `var(--s-border-radius-sm)` |
+| `--s-button-font-size-xs`           | `var(--s-font-size-sm)`     |
+| `--s-button-icon-size-xs`           | `var(--s-font-size-sm)`     |
+| `--s-button-height-sm`              | `var(--s-size-2xl)`         |
+| `--s-button-padding-y-sm`           | `0`                         |
+| `--s-button-padding-x-sm`           | `9px`                       |
+| `--s-button-border-radius-sm`       | `var(--s-border-radius-sm)` |
+| `--s-button-font-size-sm`           | `var(--s-font-size-sm)`     |
+| `--s-button-icon-size-sm`           | `var(--s-font-size)`        |
+| `--s-button-height`                 | `var(--s-size-3xl)`         |
+| `--s-button-padding-y`              | `0`                         |
+| `--s-button-padding-x`              | `11px`                      |
+| `--s-button-border-radius`          | `var(--s-border-radius)`    |
+| `--s-button-font-size`              | `var(--s-font-size)`        |
+| `--s-button-icon-size`              | `18px`                      |
+| `--s-button-height-lg`              | `var(--s-size-4xl)`         |
+| `--s-button-padding-y-lg`           | `0`                         |
+| `--s-button-padding-x-lg`           | `14px`                      |
+| `--s-button-border-radius-lg`       | `var(--s-border-radius)`    |
+| `--s-button-font-size-lg`           | `var(--s-font-size-lg)`     |
+| `--s-button-icon-size-lg`           | `20px`                      |
+| `--s-button-outlined-bg`            | `var(--s-white)`            |
+| `--s-button-secondary-border-color` | `var(--s-gray-200)`         |
+| `--s-button-secondary-color`        | `var(--s-gray-800)`         |

@@ -19,7 +19,13 @@ import { computed, inject } from 'vue'
 import { createBem } from '../../utils'
 import Loading from '../loading/loading.vue'
 import { useFormContext } from '../form/common'
-import { type ButtonProps, type ButtonSlots, type ButtonEmits, defaultButtonProps } from './common'
+import {
+  type ButtonProps,
+  type ButtonSlots,
+  type ButtonEmits,
+  buttonTypeMap,
+  defaultButtonProps,
+} from './common'
 import { compactContextKey } from '../compact/common'
 
 const props = withDefaults(defineProps<ButtonProps>(), defaultButtonProps)
@@ -44,12 +50,19 @@ const onClick = (event: any) => {
 
 // ============================ style ============================
 
+// type 是 color + variant 的语法糖，传了就覆盖两者
+const preset = computed(() => (props.type ? buttonTypeMap[props.type] : undefined))
+
+const resolvedVariant = computed(() => preset.value?.variant ?? props.variant)
+
+const resolvedColor = computed(() => preset.value?.color ?? props.color)
+
 const buttonClass = computed(() => {
   return [
     bem.b(),
     bem.m(props.size),
-    bem.m(props.variant),
-    bem.m(`${props.variant}-${props.color}`),
+    bem.m(resolvedVariant.value),
+    bem.m(`${resolvedVariant.value}-${resolvedColor.value}`),
     bem.m('round', props.round),
     bem.m('square', props.square),
     bem.m('ghost', props.ghost),

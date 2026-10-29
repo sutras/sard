@@ -4,6 +4,10 @@
       <ColorVariant />
     </doc-demo>
 
+    <doc-demo title="语法糖">
+      <Type />
+    </doc-demo>
+
     <doc-demo title="自定义颜色">
       <Color />
     </doc-demo>
@@ -44,6 +48,7 @@
 
 <script setup lang="ts">
 import ColorVariant from './demo/ColorVariant.vue'
+import Type from './demo/Type.vue'
 import Color from './demo/Color.vue'
 import Round from './demo/Round.vue'
 import Square from './demo/Square.vue'

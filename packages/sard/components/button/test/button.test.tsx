@@ -33,6 +33,40 @@ describe('Button', () => {
     )
   })
 
+  test('type maps to variant and color', async () => {
+    const cases = [
+      ['primary', 'solid-primary'],
+      ['secondary', 'outlined-secondary'],
+      ['dashed', 'dashed-secondary'],
+      ['text', 'text-secondary'],
+      ['link', 'link-primary'],
+    ] as const
+
+    for (const [type, expected] of cases) {
+      const wrapper = mount(<Button type={type}>默认</Button>)
+
+      expect(wrapper.find('.s-button').classes()).toEqual(
+        expect.arrayContaining([`s-button--${expected}`]),
+      )
+    }
+  })
+
+  test('type takes precedence over variant and color', async () => {
+    const wrapper = mount(
+      <Button type="dashed" variant="filled" color="danger">
+        默认
+      </Button>,
+    )
+
+    const classes = wrapper.find('.s-button').classes()
+
+    expect(classes).toEqual(
+      expect.arrayContaining(['s-button--dashed', 's-button--dashed-secondary']),
+    )
+    expect(classes).not.toContain('s-button--filled')
+    expect(classes).not.toContain('s-button--filled-danger')
+  })
+
   test('size and shape modifiers', async () => {
     const wrapper = mount(
       <Button size="large" round square>
