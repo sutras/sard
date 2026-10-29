@@ -111,3 +111,4 @@ group: 数据展示
 | `--s-descriptions-item-padding-y`    | `var(--s-size-xs)`             |
 | `--s-descriptions-item-padding-x`    | `var(--s-size-sm)`             |
 | `--s-descriptions-border-color`      | `var(--s-border-color)`        |
+| `--s-descriptions-border-radius`     | `var(--s-border-radius)`       |

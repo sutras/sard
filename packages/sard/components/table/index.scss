@@ -4,7 +4,7 @@
 :root {
   #{css-var-name(table-border-color)}: css-var(border-color);
   #{css-var-name(table-bg)}: css-var(bg-color-container);
-  #{css-var-name(table-bg-striped)}: css-var(fill-color-tertiary);
+  #{css-var-name(table-bg-striped)}: css-var(fill-color-fourth);
 
   #{css-var-name(table-header-bg)}: css-var(bg-color-container);
 
@@ -22,7 +22,7 @@
   content: '';
   position: absolute;
   z-index: 3;
-  background: css-var(border-color);
+  background: css-var(table-border-color);
 }
 
 @mixin border-bottom {
@@ -107,7 +107,7 @@
 
   @include m(underlined) {
     @include e(cell) {
-      border-bottom: 1px solid css-var(border-color);
+      border-bottom: 1px solid css-var(table-border-color);
     }
 
     &::after {
@@ -126,13 +126,13 @@
     }
 
     table {
-      border-top: 1px solid css-var(border-color);
-      border-left: 1px solid css-var(border-color);
+      border-top: 1px solid css-var(table-border-color);
+      border-left: 1px solid css-var(table-border-color);
     }
 
     @include e(cell) {
-      border-right: 1px solid css-var(border-color);
-      border-bottom: 1px solid css-var(border-color);
+      border-right: 1px solid css-var(table-border-color);
+      border-bottom: 1px solid css-var(table-border-color);
     }
 
     &::before {

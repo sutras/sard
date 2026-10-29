@@ -83,6 +83,10 @@
     font-size: css-var(stepper-input-font-size);
     line-height: css-var(line-height-none);
     text-align: center;
+
+    @include is(disabled) {
+      @include disabled;
+    }
   }
 
   @include m(solid) {

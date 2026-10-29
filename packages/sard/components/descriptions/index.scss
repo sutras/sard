@@ -12,6 +12,7 @@
   #{css-var-name(descriptions-item-padding-x)}: css-var(size-sm);
 
   #{css-var-name(descriptions-border-color)}: css-var(border-color);
+  #{css-var-name(descriptions-border-radius)}: css-var(border-radius);
 }
 // #endregion variables
 
@@ -21,11 +22,26 @@
   column-gap: css-var(descriptions-item-padding-x);
   row-gap: css-var(descriptions-item-padding-y);
 
+  // 外框四边由覆盖层 ::after 统一绘制，子格只负责内部线（右、下）。
+  // 根元素自身不再持有任何一边，这样圆角环才是完整一笔，不会在右上、
+  // 右下、左下三处因「线归属不同元素」而断开；子格贴在圆角外的直角线
+  // 交给 overflow 裁掉，接上弧线。
   @include is(bordered) {
     column-gap: 0;
     row-gap: 0;
-    border-block-start: css-var(border-width) solid css-var(descriptions-border-color);
-    border-inline-start: css-var(border-width) solid css-var(descriptions-border-color);
+    position: relative;
+    border-radius: css-var(descriptions-border-radius);
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      border: css-var(border-width) solid css-var(descriptions-border-color);
+      border-radius: inherit;
+      pointer-events: none;
+    }
   }
 
   @include e(item-label) {
