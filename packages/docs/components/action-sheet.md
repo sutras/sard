@@ -47,8 +47,6 @@ group:
 可以使用插槽自定义内容，包括描述、取消按钮等。
 也可以使用默认插槽自定义动作项，此时需要使用 `action-sheet-item` 组件来构建动作项的布局。
 
-可使用 `action-sheet` 组件的插槽自定义内容。
-
 <<< @demo/action-sheet/demo/Slot.vue
 
 ## API

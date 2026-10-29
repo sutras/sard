@@ -1,5 +1,4 @@
 <template>
-  <!-- 工业语境：车间广播滚动｜Countries 用法演示 -->
   <div class="grid grid-cols-4 gap-y-2 gap-x-3">
     <div
       v-for="name in countryNamesCN"

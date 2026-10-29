@@ -1,28 +1,28 @@
 <template>
-  <!-- 工业语境：车间广播与安灯消息滚动｜Interact 用法演示 -->
   <div class="danmaku-box">
     <s-danmaku ref="danmaku" :list="list" loop />
   </div>
 
   <div class="toolbar">
-    <s-button size="small" color="secondary" @click="danmakuRef?.pause()">暂停</s-button>
-    <s-button size="small" color="secondary" @click="danmakuRef?.resume()">继续</s-button>
+    <s-button size="small" type="secondary" @click="danmakuRef?.pause()">暂停</s-button>
+    <s-button size="small" type="secondary" @click="danmakuRef?.resume()">继续</s-button>
     <s-button size="small" @click="send">发送弹幕</s-button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, useTemplateRef } from 'vue'
+import { comments } from './shared'
 
 const danmakuRef = useTemplateRef('danmaku')
 
-const list = ref(Array.from({ length: 10 }, (_, i) => `欢迎第 ${i + 1} 位观众`))
+const list = ref(comments.slice())
 
 let seq = 0
 
 const send = () => {
   seq++
-  danmakuRef.value?.send(`这是一条新发送的弹幕 ${seq}`)
+  danmakuRef.value?.send(`手动发送的弹幕 ${seq}`)
 }
 </script>
 

@@ -1,5 +1,4 @@
 <template>
-  <!-- 演示车间大屏满屏点检标准表：等级列固定，横向可比较各等级的点检频次与停机窗口 -->
   <div class="flex flex-col h-screen">
     <s-status-bar />
     <div class="flex-1 min-h-0 rounded-t-xl overflow-hidden mx-2">
@@ -20,7 +19,6 @@
             }
           }
         "
-        aria-label="设备点检与保养标准表"
         data-scene="maintenance-standard-wall"
       ></s-table>
     </div>
