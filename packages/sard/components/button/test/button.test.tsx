@@ -38,7 +38,7 @@ describe('Button', () => {
       ['primary', 'solid-primary'],
       ['secondary', 'outlined-secondary'],
       ['dashed', 'dashed-secondary'],
-      ['text', 'text-secondary'],
+      ['text', 'link-secondary'],
       ['link', 'link-primary'],
     ] as const
 
