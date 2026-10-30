@@ -1,3 +1,11 @@
+## <small>1.2.4 (2026-10-30)</small>
+
+- Bug Fixes: 编辑弹窗标题跟随语言切换 ([acff1e3](https://github.com/sutras/sard/commit/acff1e3))
+- Bug Fixes: 选项文本过长时省略显示 ([778950b](https://github.com/sutras/sard/commit/778950b))
+- Code Refactoring: 去掉模板头部说明注释与 aria-label ([2553e65](https://github.com/sutras/sard/commit/2553e65))
+- Features: 新增 input-width 属性用于设置输入框宽度 ([cf4818e](https://github.com/sutras/sard/commit/cf4818e))
+- Features: 新增 type 属性作为 color 与 variant 的语法糖 ([712ba4f](https://github.com/sutras/sard/commit/712ba4f))
+
 ## <small>1.2.3 (2026-10-26)</small>
 
 - Performance Improvements: 构建产物剔除模板注释 ([64e918d](https://github.com/sutras/sard/commit/64e918d))
