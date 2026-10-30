@@ -29,11 +29,16 @@ describe('Table', () => {
     // 验证表头和内容正确渲染
     expect(wrapper.find('thead').exists()).toBe(true)
     expect(wrapper.find('tbody').exists()).toBe(true)
-    expect(wrapper.text()).toContain('ID')
-    expect(wrapper.text()).toContain('姓名')
-    expect(wrapper.text()).toContain('城市')
-    expect(wrapper.text()).toContain('张三')
-    expect(wrapper.text()).toContain('广州')
+
+    const headerText = wrapper.find('thead').text()
+    partialColumns.forEach((column) => {
+      expect(headerText).toContain(column.label)
+    })
+
+    const firstRowText = wrapper.find('tbody tr').text()
+    expect(firstRowText).toContain(partialData[0].code)
+    expect(firstRowText).toContain(partialData[0].interlock)
+    expect(firstRowText).toContain(partialData[0].oee)
 
     // 验证表头 th 存在
     const headerCells = wrapper.findAll('thead th')
@@ -73,9 +78,10 @@ describe('Table', () => {
 
     // col 元素设置宽度
     const cols = wrapper.findAll('col')
-    expect(cols[0].attributes('style')).toContain('width: 40px')
-    expect(cols[1].attributes('style')).toContain('width: 100px')
-    expect(cols[2].attributes('style')).toContain('width: 80px')
+    expect(cols).toHaveLength(columns.length)
+    columns.forEach((column, index) => {
+      expect(cols[index].attributes('style')).toContain(`width: ${column.width}px`)
+    })
   })
 
   test('fixed column', async () => {
