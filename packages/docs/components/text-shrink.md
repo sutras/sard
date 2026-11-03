@@ -50,6 +50,14 @@ group: 数据展示
 
 <<< @demo/text-shrink/demo/Dynamic.vue
 
+### 使用插槽
+
+不传 `text`、直接写默认插槽也可以，内容与 `text` 属性等价地参与测量与缩放；两者同时提供时插槽优先。
+
+`text` 只能整段纯文本，插槽的价值在于可以对内容里的关键片段单独强调——比如告警词标红、时间点加粗，缩放行为与纯文本完全一致。插槽内容变化时组件也会自动重新适配，与 `text` 变化的行为一致。
+
+<<< @demo/text-shrink/demo/Slot.vue
+
 ### 缩放下限与截断
 
 字号缩到下限（默认 `1px`）仍放不下时停在下限：单行用 `text-overflow: ellipsis`，多行用 `line-clamp` 截断，两者都不会撑破容器。
@@ -72,10 +80,16 @@ group: 数据展示
 
 | 属性         | 描述                                                                   | 类型   | 默认值 |
 | ------------ | ---------------------------------------------------------------------- | ------ | ------ |
-| text         | 要渲染的纯文本，不解析 HTML                                            | string | `''`   |
+| text         | 要渲染的纯文本，不解析 HTML；提供默认插槽时被插槽内容取代              | string | `''`   |
 | maxLines     | 允许渲染的最大行数，值为 `1` 时等价于单行不换行                        | number | `1`    |
 | baseFontSize | 字号上界（px）。不传时在首次适配时读取根元素 computed font-size 并固化 | number | -      |
 | minFontSize  | 缩放下限（px）。需要等于或小于该字号才放得下时，停在该字号并显示省略号 | number | `1`    |
+
+### TextShrinkSlots
+
+| 插槽    | 描述                                               |
+| ------- | -------------------------------------------------- |
+| default | 自定义内容，与 `text` 属性等价，同时提供时插槽优先 |
 
 ### TextShrinkExpose
 
@@ -109,12 +123,12 @@ group: 数据展示
 
 所有测量都在**隐藏测量层**中完成（`position: absolute` + `visibility: hidden`），它脱离文档流，不会引起可见布局抖动；可见文本层只在最终结果确定后应用一次字号。
 
-测量本身只有一个隐藏节点，用 `Range` 读它的内容几何——单行读 `getBoundingClientRect().width`，多行读 `getClientRects().length`（每行对应一个 rect）。每轮只读一次几何，可用宽度整个搜索过程只读一次。
+测量本身只有一个隐藏节点，用 `Range` 读它的内容几何——单行读 `getBoundingClientRect().width`，多行读 `getClientRects()` 并按行盒 `top` 去重得到独立行数（内容含行内元素时，同一行会产生多个 rect）。每轮只读一次几何，可用宽度整个搜索过程只读一次。
 
 ### 单行与多行
 
 - `maxLines === 1`：测量与渲染都抑制换行（`white-space: nowrap`），按不换行计算文本宽度。
-- `maxLines > 1`：允许换行，直接数文本的行盒（`Range.getClientRects()`）判断是否超过 `maxLines`，不依赖 `line-height`（`line-height: normal` 在部分浏览器里拿不到 px 值）。
+- `maxLines > 1`：允许换行，直接数文本的独立行盒（`Range.getClientRects()` 按行盒 `top` 去重）判断是否超过 `maxLines`，不依赖 `line-height`（`line-height: normal` 在部分浏览器里拿不到 px 值）。
 
 ### 溢出兜底
 
@@ -155,14 +169,16 @@ group: 数据展示
 ### 重算时机
 
 - `text`、`maxLines`、`baseFontSize`、`minFontSize` 变化时重算；
+- 默认插槽的内容变化时通过 `MutationObserver` 重算（插槽内容不经过 props，watch 捕捉不到）；
 - 根元素尺寸变化时通过 `ResizeObserver` 重算（只关心宽度，避免字号变化引起的高度变化触发循环）；
 - 同一帧内的多次变更用 `requestAnimationFrame` 合帧；
 - 网页字体加载完成后会再适配一次（字体不同，字符宽度会变）；
-- 组件卸载时断开 `ResizeObserver`、取消未执行的 `requestAnimationFrame`。
+- 组件卸载时断开 `ResizeObserver` 与 `MutationObserver`、取消未执行的 `requestAnimationFrame`。
 
 ## 注意事项
 
 - `text` 只作为纯文本渲染，不会解析 HTML。
+- 默认插槽里建议只放文本与行内元素（如 `<b>`、`<a>`、`<span>`），组件按行盒测量与截断，块级元素没有「缩放到 N 行内」的语义。
 - 文本里的换行符会被 `white-space` 规则折叠（单行 `nowrap`、多行 `normal`），组件不会按 `\n` 分行；需要保留换行请自行拆成多段。
 - `min-font-size` 大于 `base-font-size` 时按 `base-font-size` 处理（组件只会缩小字号，不会放大）；传 `0`、负数或非数值时回退到 `1`。
 - 容器窄到几像素时组件会停在下限并截断，不会死循环，但此时已无阅读价值，建议用 `min-font-size` 提前止损。

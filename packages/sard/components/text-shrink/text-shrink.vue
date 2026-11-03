@@ -5,10 +5,13 @@
          word-spacing、white-space、word-break、text-transform…）由继承自动对齐：
          兄弟节点之间不会互相继承，那种结构只能在 JS 里逐个搬运属性，搬漏一个就量不准。
          测量层绝对定位、脱离文档流，不影响可见文本的布局与固有宽度。
-         用 v-text 而不是插值，保证它的内容永远是一个文本节点，Range 才能直接选它来数行。 -->
+         测量层与可见层渲染同一份内容（插槽或 text），Range 选测量层全部内容来量几何；
+         插槽内容可能含多个行内元素，每行会产出多个 rect，数行时按 top 去重。 -->
     <div ref="text" :class="textClass" :style="textStyle">
-      <div ref="measure" :class="measureClass" aria-hidden="true" v-text="props.text"></div>
-      {{ props.text }}
+      <div ref="measure" :class="measureClass" aria-hidden="true">
+        <slot>{{ props.text }}</slot>
+      </div>
+      <slot>{{ props.text }}</slot>
     </div>
   </div>
 </template>
@@ -43,6 +46,8 @@ const SIZE_TOLERANCE = 0.05
 const WIDTH_TOLERANCE = 0.5
 /** 单行按宽度外推分割点的次数上限，之后回到二分保证收敛 */
 const INTERPOLATION_LIMIT = 2
+/** 数行时判定两个行盒在同一行的 top 容差（px） */
+const LINE_TOP_TOLERANCE = 0.5
 /** 首次读到的 computed font-size 不可信时的兜底基准 */
 const FALLBACK_BASE_FONT_SIZE = 16
 
@@ -132,28 +137,45 @@ function getRange() {
 /**
  * 以指定字号测量一次：写入字号后只读一次几何。
  * 单行读 Range 宽度（测量层此时不换行，宽度可以超出容器）；
- * 多行读 Range 的 rect 个数，一个文本节点每行对应一个 rect。
+ * 多行数 Range 的独立行数（行盒按 top 去重，兼容内容含多个行内元素）。
  * 读写之间会强制一次布局，所以不需要等 Vue 更新。
  */
 function probeAt(size: number, available: number): ProbeResult {
   const measure = measureRef.value
-  const node = measure?.firstChild
   const selection = getRange()
 
-  // 空文本 / 尚未挂载时视为放得下，不写样式也不读几何
-  if (!measure || !node || node.nodeType !== 3 || !selection) {
+  // 空内容 / 尚未挂载时视为放得下，不写样式也不读几何
+  if (!measure || !measure.hasChildNodes() || !selection) {
     return { fits: true, width: 0 }
   }
 
   measure.style.fontSize = `${size}px`
-  selection.selectNodeContents(node)
+  selection.selectNodeContents(measure)
 
   if (singleLine.value) {
     const { width } = selection.getBoundingClientRect()
     return { fits: width <= available + SIZE_TOLERANCE, width }
   }
 
-  return { fits: selection.getClientRects().length <= lines.value, width: 0 }
+  return { fits: countLines(selection) <= lines.value, width: 0 }
+}
+
+/** 数 Range 覆盖的独立行数：同一行的多个行内片段 top 相同，按 top 去重 */
+function countLines(selection: Range): number {
+  const rects = selection.getClientRects()
+  const tops: number[] = []
+
+  for (let index = 0; index < rects.length; index += 1) {
+    const rect = rects[index]
+    if (rect.width === 0 && rect.height === 0) {
+      continue
+    }
+    if (!tops.some((top) => Math.abs(top - rect.top) < LINE_TOP_TOLERANCE)) {
+      tops.push(rect.top)
+    }
+  }
+
+  return tops.length
 }
 
 /**
@@ -268,6 +290,7 @@ const cancelFrame = (handle: number) => {
 let rafId = 0
 let disposed = false
 let resizeObserver: ResizeObserver | undefined
+let mutationObserver: MutationObserver | undefined
 /** 上一次适配时的宽度，用来跳过 ResizeObserver 的重复回调 */
 let observedWidth = -1
 
@@ -287,6 +310,7 @@ function scheduleFit() {
 }
 
 // text / maxLines / baseFontSize / minFontSize 变化时重算，且始终以固化的基准字号重新搜索
+// （插槽内容的变化由 MutationObserver 负责触发）
 watch(
   () => [props.text, props.maxLines, props.baseFontSize, props.minFontSize],
   () => {
@@ -315,6 +339,17 @@ onMounted(() => {
     resizeObserver.observe(rootRef.value)
   }
 
+  // 插槽内容变化不经过 props，watch 捕捉不到；盯住测量层的子节点与文本，
+  // 变化时重新适配。与 props 变化同时触发时由 rAF 合帧
+  if (typeof MutationObserver !== 'undefined' && measureRef.value) {
+    mutationObserver = new MutationObserver(scheduleFit)
+    mutationObserver.observe(measureRef.value, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+    })
+  }
+
   // 网页字体加载完成后字符宽度会变，再适配一次；
   // 字体已经就绪时首次适配用的就是最终字形，不需要再算一遍
   if (typeof document !== 'undefined' && document.fonts && document.fonts.status !== 'loaded') {
@@ -330,6 +365,8 @@ onBeforeUnmount(() => {
   disposed = true
   resizeObserver?.disconnect()
   resizeObserver = undefined
+  mutationObserver?.disconnect()
+  mutationObserver = undefined
 
   if (rafId !== 0) {
     cancelFrame(rafId)

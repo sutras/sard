@@ -20,6 +20,10 @@
       <Dynamic />
     </doc-demo>
 
+    <doc-demo title="使用插槽">
+      <Slot />
+    </doc-demo>
+
     <doc-demo title="缩放下限与截断">
       <Overflow />
     </doc-demo>
@@ -38,4 +42,5 @@ import MaxLines from './demo/MaxLines.vue'
 import MinFontSize from './demo/MinFontSize.vue'
 import Overflow from './demo/Overflow.vue'
 import Resize from './demo/Resize.vue'
+import Slot from './demo/Slot.vue'
 </script>

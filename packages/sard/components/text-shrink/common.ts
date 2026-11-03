@@ -2,7 +2,7 @@ import { type Ref } from 'vue'
 import { type DefaultProps } from '../config'
 
 export interface TextShrinkProps {
-  /** 要渲染的纯文本，不解析 HTML */
+  /** 要渲染的纯文本，不解析 HTML；提供默认插槽时被插槽内容取代 */
   text?: string
   /** 允许渲染的最大行数，1 表示单行不换行 */
   maxLines?: number
@@ -21,7 +21,10 @@ export const defaultTextShrinkProps: DefaultProps<TextShrinkProps> = {
   minFontSize: 1,
 }
 
-export interface TextShrinkSlots {}
+export interface TextShrinkSlots {
+  /** 自定义内容，与 text 属性二选一，插槽优先；内容变化时自动重新适配 */
+  default?(props: Record<string, never>): any
+}
 
 export interface TextShrinkEmits {}
 

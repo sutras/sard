@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, test, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { nextTick } from 'vue'
+import { defineComponent, h, nextTick, ref } from 'vue'
 
 import TextShrink from '../text-shrink.vue'
 
@@ -9,16 +9,16 @@ const LINE_HEIGHT = 1.5
 const TEXT_LENGTH = 20
 const TEXT = 'a'.repeat(TEXT_LENGTH)
 
-const createRect = (width: number, height: number) =>
+const createRect = (width: number, height: number, top = 0) =>
   ({
     width,
     height,
     x: 0,
-    y: 0,
-    top: 0,
+    y: top,
+    top,
     left: 0,
     right: width,
-    bottom: height,
+    bottom: top + height,
     toJSON: () => ({}),
   }) as DOMRect
 
@@ -50,8 +50,9 @@ function mockLayout(stats?: { probes: number }, subpixel = 0) {
     }
     const { length, size } = textOf(this.startContainer)
     const count = Math.max(1, Math.ceil((length * size) / AVAILABLE_WIDTH))
-    return Array.from({ length: count }, () =>
-      createRect(AVAILABLE_WIDTH, size * LINE_HEIGHT),
+    // 每行的行盒 top 随行高递增，与真实布局一致；同一行的多个片段 top 相同
+    return Array.from({ length: count }, (_, index) =>
+      createRect(AVAILABLE_WIDTH, size * LINE_HEIGHT, index * size * LINE_HEIGHT),
     ) as unknown as DOMRectList
   })
 
@@ -358,6 +359,92 @@ describe('TextShrink', () => {
     expect(fontSizeOf(wrapper)).toBe('10px')
     // 二分本身需要 ~9 轮（每轮只读 1 次几何），旧实现每轮读 2 次
     expect(stats.probes).toBeLessThanOrEqual(14)
+  })
+
+  test('默认插槽内容与 text 属性等价地参与缩放', async () => {
+    restoreLayout = mockLayout()
+    const wrapper = mount(TextShrink, { slots: { default: () => TEXT } })
+    await nextTick()
+
+    expect(fontSizeOf(wrapper)).toBe('5px')
+    expect(visibleTextOf(wrapper)).toBe(TEXT)
+  })
+
+  test('提供插槽时优先于 text 属性', async () => {
+    restoreLayout = mockLayout()
+    const wrapper = mount(TextShrink, {
+      props: { text: 'fallback' },
+      slots: { default: () => TEXT },
+    })
+    await nextTick()
+
+    expect(fontSizeOf(wrapper)).toBe('5px')
+    expect(visibleTextOf(wrapper)).toBe(TEXT)
+  })
+
+  test('插槽内容变化时自动重新适配', async () => {
+    restoreLayout = mockLayout()
+    const content = ref(TEXT)
+    const Host = defineComponent({
+      setup() {
+        return () => h(TextShrink, null, { default: () => content.value })
+      },
+    })
+    const wrapper = mount(Host)
+    await nextTick()
+
+    expect(fontSizeOf(wrapper)).toBe('5px')
+
+    // 5 个字符在基准 16px 下宽 80px，放得下，应回到基准字号
+    content.value = 'abcde'
+    await flushFrame()
+
+    expect(fontSizeOf(wrapper)).toBe('16px')
+  })
+
+  test('插槽内容含行内元素时正常缩放', async () => {
+    restoreLayout = mockLayout()
+    const slots = { default: () => h('span', [h('b', TEXT.slice(0, 10)), h('i', TEXT.slice(10))]) }
+    const wrapper = mount(TextShrink, { props: { maxLines: 2 }, slots })
+    await nextTick()
+
+    // 整段 20 个字符 × 字号 ≤ 2 行 × 100px ⇒ 字号 ≤ 10px
+    expect(fontSizeOf(wrapper)).toBe('10px')
+    expect(wrapper.find('.s-text-shrink__text').classes()).toContain('s-text-shrink__text--clamp')
+  })
+
+  test('行内元素把一行拆成多个同 top 的 rect 时只算一行', async () => {
+    restoreLayout = mockLayout()
+
+    const sizeOfRange = (range: Range) => {
+      const container = range.startContainer
+      const host = container.nodeType === 1 ? (container as Element) : container.parentElement
+      const measure = host?.closest('.s-text-shrink__measure') as HTMLElement | null
+      return {
+        length: container.textContent?.length ?? 0,
+        size: Number.parseFloat(measure?.style.fontSize ?? '') || 16,
+      }
+    }
+
+    // 覆盖假布局：每个逻辑行输出 2 个 top 相同的 rect，模拟一行被行内元素拆成两个片段。
+    // 不去重的话，2 行会被数成 4 行，字号会被错误地缩到 5px
+    const restorePair = patchRangeMethod('getClientRects', function (this: Range) {
+      const { length, size } = sizeOfRange(this)
+      const count = Math.max(1, Math.ceil((length * size) / AVAILABLE_WIDTH))
+      const rects: DOMRect[] = []
+      for (let line = 0; line < count; line += 1) {
+        const top = line * size * LINE_HEIGHT
+        rects.push(createRect(AVAILABLE_WIDTH / 2, size * LINE_HEIGHT, top))
+        rects.push(createRect(AVAILABLE_WIDTH / 2, size * LINE_HEIGHT, top))
+      }
+      return rects as unknown as DOMRectList
+    })
+
+    const wrapper = mount(TextShrink, { props: { text: TEXT, maxLines: 2 } })
+    await nextTick()
+
+    expect(fontSizeOf(wrapper)).toBe('10px')
+    restorePair()
   })
 
   test('卸载时断开 ResizeObserver 并取消未执行的 rAF', async () => {
