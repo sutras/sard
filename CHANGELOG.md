@@ -1,3 +1,7 @@
+## <small>1.2.5 (2026-11-03)</small>
+
+- Features: 添加默认插槽 ([80b8eb7](https://github.com/sutras/sard/commit/80b8eb7))
+
 ## <small>1.2.4 (2026-10-30)</small>
 
 - Bug Fixes: 编辑弹窗标题跟随语言切换 ([acff1e3](https://github.com/sutras/sard/commit/acff1e3))
