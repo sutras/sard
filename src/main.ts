@@ -17,6 +17,7 @@ import router from './router'
 import zhCN from 'sard/locale/lang/zh-CN'
 import enUS from 'sard/locale/lang/en-US'
 import arSA from 'sard/locale/lang/ar-SA'
+import ruRU from 'sard/locale/lang/ru-RU'
 
 import './bridge'
 import { registerDemoComponents } from './components'
@@ -49,6 +50,7 @@ function setupI18n(app: App) {
       zhCN,
       enUS,
       arSA,
+      ruRU,
     },
     'zhCN',
   )

@@ -119,6 +119,7 @@ const langOptions = [
   { label: '中文', value: 'zhCN' },
   { label: 'English', value: 'enUS' },
   { label: 'العربية', value: 'arSA' },
+  { label: 'Русский', value: 'ruRU' },
 ]
 
 const localeLabel = computed(() => langOptions.find((item) => item.value === locale.value)!.label)
