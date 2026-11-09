@@ -1,3 +1,7 @@
+## <small>1.2.6 (2026-11-09)</small>
+
+- Features: 新增俄语 ([019c9fc](https://github.com/sutras/sard/commit/019c9fc))
+
 ## <small>1.2.5 (2026-11-03)</small>
 
 - Features: 添加默认插槽 ([80b8eb7](https://github.com/sutras/sard/commit/80b8eb7))
